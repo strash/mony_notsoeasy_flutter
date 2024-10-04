@@ -1,9 +1,9 @@
 .PHONY: update icons run run_local_android run_local_ios build_android test
 
-# ifneq (,$(wildcard ./.env))
-#     include .env
-#     export
-# endif
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
 
 ifneq (,$(wildcard ./.version))
     include .version
