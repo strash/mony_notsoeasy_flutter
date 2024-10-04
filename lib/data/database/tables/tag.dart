@@ -1,15 +1,6 @@
 import "package:drift/drift.dart";
-import "package:mony_app/common/extensions/string.dart";
+import "package:mony_app/data/database/tables/base_table.dart";
 
-final class Tags extends Table {
-  @override
-  Set<TextColumn> get primaryKey => {id};
-
-  TextColumn get id => text().clientDefault(() => ExString.random(20))();
-
-  DateTimeColumn get created => dateTime().withDefault(currentDateAndTime)();
-
-  DateTimeColumn get updated => dateTime().withDefault(currentDateAndTime)();
-
+final class Tags extends BaseTable {
   TextColumn get title => text().unique()();
 }

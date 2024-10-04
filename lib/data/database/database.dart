@@ -1,10 +1,6 @@
 import "package:drift/drift.dart";
 import "package:drift_flutter/drift_flutter.dart";
-import "package:mony_app/data/database/tables/account.dart";
-import "package:mony_app/data/database/tables/category.dart";
-import "package:mony_app/data/database/tables/expense.dart";
-import "package:mony_app/data/database/tables/expense_tag.dart";
-import "package:mony_app/data/database/tables/tag.dart";
+import "package:mony_app/data/database/tables/tables.dart";
 
 part "database.g.dart";
 
