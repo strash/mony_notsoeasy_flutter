@@ -1,0 +1,19 @@
+include: package:lint/analysis_options.yaml
+
+linter:
+  rules:
+    sort_constructors_first: false
+    prefer_double_quotes: true
+    lines_longer_than_80_chars: true
+
+analyzer:
+  errors:
+    prefer_if_elements_to_conditional_expressions: ignore
+    todo: info
+  # errors:
+  #   invalid_annotation_target: ignore
+  exclude:
+    - '**.freezed.dart'
+    - '**.g.dart'
+    - 'lib/firebase_options.dart'
+
