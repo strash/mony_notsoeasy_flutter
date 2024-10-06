@@ -25,12 +25,11 @@ final class MigrationService {
 }
 
 abstract base class BaseMigration {
-  final currentDateTime = "strftime('%Y-%m-%d %H:%M:%fZ')";
-
   // TODO: устанавливать значения по-умолчанию для id, created и updated
-  // id:      lower(hex(randomblob(10)))
-  // created: strftime('%Y-%m-%d %H:%M:%fZ')
-  // updated: strftime('%Y-%m-%d %H:%M:%fZ')
+  // для created, updated устанавливать DateTime.now().toUtc().toIso8601String()
+  // а для id ExString.random(20)
+
+  // TODO: а также обновлять updated при изменении строки
   late final defaultColumns = """
 id      TEXT PRIMARY KEY NOT NULL,
 created TEXT NOT NULL,
@@ -51,17 +50,6 @@ updated TEXT NOT NULL
     return """
 CREATE ${unique ? "UNIQUE" : ""} INDEX _${tableName}__${columns.join("__")}_idx
 ON $tableName (${columns.join(", ")});
-""";
-  }
-
-  String createTriggerToUpdateUpdated(String tableName) {
-    return """
-CREATE TRIGGER _${tableName}__update_updated_trgr
-AFTER UPDATE ON $tableName
-FOR EACH ROW
-BEGIN
-    UPDATE $tableName SET updated = $currentDateTime WHERE id = NEW.id;
-END;
 """;
   }
 
