@@ -27,10 +27,11 @@ final class MigrationService {
 abstract base class BaseMigration {
   final currentDateTime = "strftime('%Y-%m-%d %H:%M:%fZ')";
 
+  // TODO: устанавливать вручную это поля
   late final defaultColumns = """
-id      TEXT PRIMARY KEY DEFAULT ('r'||lower(hex(randomblob(10)))) NOT NULL,
-created TEXT DEFAULT $currentDateTime NOT NULL,
-updated TEXT DEFAULT $currentDateTime NOT NULL
+id      TEXT PRIMARY KEY NOT NULL,
+created TEXT NOT NULL,
+updated TEXT NOT NULL
 """;
 
   String createIndex(

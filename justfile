@@ -20,7 +20,6 @@ migrate name:
 
 run:
 	flutter run --debug --pub \
-		# --flavor=stage_flavor \
 		--dart-define-from-file=.env \
 		--dart-define-from-file=.version
 

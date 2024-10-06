@@ -21,10 +21,10 @@ CREATE TABLE categories (
   late final _expenses = """
 CREATE TABLE expenses (
 	$defaultColumns,
-	amount   REAL DEFAULT 0                NOT NULL,
-	date     TEXT DEFAULT $currentDateTime NOT NULL,
-	note     TEXT DEFAULT ''               NOT NULL,
-	account  TEXT                          NOT NULL,
+	amount   REAL DEFAULT 0  NOT NULL,
+	date     TEXT            NOT NULL,
+	note     TEXT DEFAULT '' NOT NULL,
+	account  TEXT            NOT NULL,
 	category TEXT,
 
 	FOREIGN KEY (account)  REFERENCES accounts   (id) ON DELETE CASCADE,
