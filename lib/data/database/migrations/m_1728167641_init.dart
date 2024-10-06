@@ -67,9 +67,9 @@ CREATE TABLE expense_tags (
     batch.execute(createTriggerToUpdateUpdated("categories"));
     // expenses
     batch.execute(_expenses);
-    batch.execute(createIndex("expenses", ["account"]));
-    batch.execute(createIndex("expenses", ["category"]));
-    batch.execute(createIndex("expenses", ["account", "category"]));
+    batch.execute(createIndex("expenses", ["account"], false));
+    batch.execute(createIndex("expenses", ["category"], false));
+    batch.execute(createIndex("expenses", ["account", "category"], false));
     batch.execute(createTriggerToUpdateUpdated("expenses"));
     // tags
     batch.execute(_tags);
