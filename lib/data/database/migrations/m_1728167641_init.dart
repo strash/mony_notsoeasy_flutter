@@ -25,7 +25,7 @@ CREATE TABLE expenses (
 	date     TEXT            NOT NULL,
 	note     TEXT DEFAULT '' NOT NULL,
 	account  TEXT            NOT NULL,
-	category TEXT,
+	category TEXT            NOT NULL,
 
 	FOREIGN KEY (account)  REFERENCES accounts   (id) ON DELETE CASCADE,
 	FOREIGN KEY (category) REFERENCES categories (id) ON DELETE CASCADE
