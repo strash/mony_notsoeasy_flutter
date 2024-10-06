@@ -4,7 +4,7 @@ import "package:mony_app/data/database/database.dart";
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  final db = AppDatabase();
+  final db = AppDatabase.instance();
 
   runApp(const MonyApp());
 }
