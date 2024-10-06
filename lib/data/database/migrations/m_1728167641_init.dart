@@ -60,24 +60,24 @@ CREATE TABLE expense_tags (
     // accounts
     batch.execute(_accounts);
     batch.execute(createIndex("accounts", ["title", "type"]));
-    batch.execute(createTrigger("accounts"));
+    batch.execute(createTriggerToUpdateUpdated("accounts"));
     // categories
     batch.execute(_category);
     batch.execute(createIndex("categories", ["title", "icon"]));
-    batch.execute(createTrigger("categories"));
+    batch.execute(createTriggerToUpdateUpdated("categories"));
     // expenses
     batch.execute(_expenses);
     batch.execute(createIndex("expenses", ["account"]));
     batch.execute(createIndex("expenses", ["category"]));
     batch.execute(createIndex("expenses", ["account", "category"]));
-    batch.execute(createTrigger("expenses"));
+    batch.execute(createTriggerToUpdateUpdated("expenses"));
     // tags
     batch.execute(_tags);
-    batch.execute(createTrigger("tags"));
+    batch.execute(createTriggerToUpdateUpdated("tags"));
     // expense tags
     batch.execute(_expenseTags);
     batch.execute(createIndex("expense_tags", ["expense", "tag"]));
-    batch.execute(createTrigger("expense_tags"));
+    batch.execute(createTriggerToUpdateUpdated("expense_tags"));
     await batch.commit();
   }
 

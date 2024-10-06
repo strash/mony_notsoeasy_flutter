@@ -27,7 +27,10 @@ final class MigrationService {
 abstract base class BaseMigration {
   final currentDateTime = "strftime('%Y-%m-%d %H:%M:%fZ')";
 
-  // TODO: устанавливать вручную это поля
+  // TODO: устанавливать значения по-умолчанию для id, created и updated
+  // id:      lower(hex(randomblob(10)))
+  // created: strftime('%Y-%m-%d %H:%M:%fZ')
+  // updated: strftime('%Y-%m-%d %H:%M:%fZ')
   late final defaultColumns = """
 id      TEXT PRIMARY KEY NOT NULL,
 created TEXT NOT NULL,
@@ -51,7 +54,7 @@ ON $tableName (${columns.join(", ")});
 """;
   }
 
-  String createTrigger(String tableName) {
+  String createTriggerToUpdateUpdated(String tableName) {
     return """
 CREATE TRIGGER _${tableName}__update_updated_trgr
 AFTER UPDATE ON $tableName
