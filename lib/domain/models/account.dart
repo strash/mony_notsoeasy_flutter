@@ -3,7 +3,18 @@ import "package:sealed_currencies/sealed_currencies.dart";
 
 part "account.freezed.dart";
 
-enum EAccountType { cash, debit, credit, savings, investment }
+enum EAccountType {
+  cash(value: "cash"),
+  debit(value: "debit"),
+  credit(value: "credit"),
+  savings(value: "savings"),
+  investment(value: "investment"),
+  ;
+
+  final String value;
+
+  const EAccountType({required this.value});
+}
 
 @freezed
 final class AccountModel with _$AccountModel {
@@ -21,21 +32,8 @@ extension EAccountTypeEx on EAccountType {
   static EAccountType get defaultValue => EAccountType.debit;
 
   static EAccountType from(String type) {
-    return EAccountType.values.where((e) => e.name == type).firstOrNull ??
+    return EAccountType.values.where((e) => e.value == type).firstOrNull ??
         defaultValue;
-  }
-
-  // NOTE: на случай, если вдруг переименую енумы эти константы для db
-  // остануться
-  /// Constant name
-  String get toName {
-    return switch (this) {
-      EAccountType.cash => "cash",
-      EAccountType.debit => "debit",
-      EAccountType.credit => "credit",
-      EAccountType.savings => "savings",
-      EAccountType.investment => "investment",
-    };
   }
 
   String get description {

@@ -24,7 +24,7 @@ final class AccountDatabaseFactoryImpl
       created: model.created.toUtc().toIso8601String(),
       updated: model.updated.toUtc().toIso8601String(),
       title: model.title,
-      type: model.type.toName,
+      type: model.type.value,
       currencyCode: model.currency.code,
     );
   }
