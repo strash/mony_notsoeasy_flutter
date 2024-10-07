@@ -12,7 +12,7 @@ final class AccountDatabaseFactoryImpl
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
       updated: DateTime.tryParse(dto.updated)?.toLocal() ?? DateTime.now(),
       title: dto.title,
-      type: EAccountTypeEx.from(dto.type),
+      type: EAccountType.from(dto.type),
       currency: FiatCurrency.fromCode(dto.currencyCode),
     );
   }

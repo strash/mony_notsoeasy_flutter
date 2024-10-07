@@ -4,9 +4,9 @@ import "package:sealed_currencies/sealed_currencies.dart";
 part "account.freezed.dart";
 
 enum EAccountType {
-  cash(value: "cash"),
   debit(value: "debit"),
   credit(value: "credit"),
+  cash(value: "cash"),
   savings(value: "savings"),
   investment(value: "investment"),
   ;
@@ -14,6 +14,13 @@ enum EAccountType {
   final String value;
 
   const EAccountType({required this.value});
+
+  static EAccountType get defaultValue => EAccountType.debit;
+
+  static EAccountType from(String type) {
+    return EAccountType.values.where((e) => e.value == type).firstOrNull ??
+        defaultValue;
+  }
 }
 
 @freezed
@@ -29,18 +36,11 @@ final class AccountModel with _$AccountModel {
 }
 
 extension EAccountTypeEx on EAccountType {
-  static EAccountType get defaultValue => EAccountType.debit;
-
-  static EAccountType from(String type) {
-    return EAccountType.values.where((e) => e.value == type).firstOrNull ??
-        defaultValue;
-  }
-
   String get description {
     return switch (this) {
-      EAccountType.cash => "Наличные",
       EAccountType.debit => "Дебетовый счет",
       EAccountType.credit => "Кредитный счет",
+      EAccountType.cash => "Наличные",
       EAccountType.savings => "Вклад или накопительный счет",
       EAccountType.investment => "Инвестиционный счет",
     };

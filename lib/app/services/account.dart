@@ -46,10 +46,10 @@ final class AccountService {
     if (obj is! AccountUpdateValueObject) throw ArgumentError.value(obj);
     final AccountUpdateValueObject(:title, :type, :currencyCode, :model) = obj;
     final newModel = model.copyWith(
+      updated: DateTime.now(),
       title: title ?? model.title,
       type: type ?? model.type,
       currency: FiatCurrency.maybeFromCode(currencyCode) ?? model.currency,
-      updated: DateTime.now(),
     );
     await _accountRepo.update(_accountFactory.to(newModel));
     return newModel;
