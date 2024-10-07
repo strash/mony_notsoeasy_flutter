@@ -8,17 +8,26 @@ final class ExpenseDatabaseFactoryImpl
   final CategoryDto _categoryDto;
   final List<TagDto> _tags;
 
+  final AccountDatabaseFactoryImpl _accountFactory;
+  final CategoryDatabaseFactoryImpl _categoryFactory;
+  final TagDatabaseFactoryImpl _tagFactory;
+
   ExpenseDatabaseFactoryImpl({
     required AccountDto accountDto,
     required CategoryDto categoryDto,
     required List<TagDto> tags,
+    required AccountDatabaseFactoryImpl accountFactory,
+    required CategoryDatabaseFactoryImpl categoryFactory,
+    required TagDatabaseFactoryImpl tagFactory,
   })  : _tags = tags,
         _categoryDto = categoryDto,
-        _accountDto = accountDto;
+        _accountDto = accountDto,
+        _accountFactory = accountFactory,
+        _categoryFactory = categoryFactory,
+        _tagFactory = tagFactory;
 
   @override
   ExpenseModel from(ExpenseDto dto) {
-    final tagDatabaseFactoryImpl = TagDatabaseFactoryImpl();
     return ExpenseModel(
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
@@ -26,11 +35,11 @@ final class ExpenseDatabaseFactoryImpl
       amout: dto.amout.toDouble(),
       date: DateTime.tryParse(dto.date)?.toLocal() ?? DateTime.now(),
       note: dto.note,
-      account: AccountDatabaseFactoryImpl().from(_accountDto),
-      category: CategoryDatabaseFactoryImpl().from(_categoryDto),
-      tags: _tags.map<TagModel>((e) {
-        return tagDatabaseFactoryImpl.from(e);
-      }).toList(growable: false),
+      account: _accountFactory.from(_accountDto),
+      category: _categoryFactory.from(_categoryDto),
+      tags: _tags
+          .map<TagModel>((e) => _tagFactory.from(e))
+          .toList(growable: false),
     );
   }
 

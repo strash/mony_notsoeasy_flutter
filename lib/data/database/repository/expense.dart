@@ -20,7 +20,7 @@ final class _Impl
   const _Impl({required this.database});
 
   @override
-  Future<List<ExpenseDto>?> getAll([
+  Future<List<ExpenseDto>> getAll([
     String? where,
     List<String>? whereArgs,
   ]) async {
@@ -41,7 +41,7 @@ final class _Impl
   }
 
   @override
-  Future<List<ExpenseDto>?> getMany(
+  Future<List<ExpenseDto>> getMany(
     int limit,
     int offset, [
     String? where,

@@ -1,9 +1,9 @@
 abstract class IDatabaseRepository<T> {
   const IDatabaseRepository();
 
-  Future<List<T>?> getAll([String? where, List<String>? whereArgs]);
+  Future<List<T>> getAll([String? where, List<String>? whereArgs]);
 
-  Future<List<T>?> getMany(
+  Future<List<T>> getMany(
     int limit,
     int offset, [
     String? where,

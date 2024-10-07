@@ -27,6 +27,7 @@ extension EAccountTypeEx on EAccountType {
 
   // NOTE: на случай, если вдруг переименую енумы эти константы для db
   // остануться
+  /// Constant name
   String get toName {
     return switch (this) {
       EAccountType.cash => "cash",
