@@ -1,5 +1,5 @@
 import "package:freezed_annotation/freezed_annotation.dart";
-import "package:mony_app/domain/domain.dart";
+import "package:mony_app/domain/models/models.dart";
 
 part "expense.freezed.dart";
 
@@ -9,9 +9,9 @@ final class ExpenseModel with _$ExpenseModel {
     required String id,
     required DateTime created,
     required DateTime updated,
-    required num amout,
+    required double amout,
     required DateTime date,
-    @Default("") String note,
+    required String note,
     required AccountModel account,
     required CategoryModel category,
     required List<TagModel> tags,

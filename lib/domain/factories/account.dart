@@ -1,0 +1,31 @@
+import "package:mony_app/data/database/dto/dto.dart";
+import "package:mony_app/data/database/factories/factories.dart";
+import "package:mony_app/domain/domain.dart";
+import "package:sealed_currencies/sealed_currencies.dart";
+
+final class AccountDatabaseFactoryImpl
+    implements IAccountDatabaseFactory<AccountModel> {
+  @override
+  AccountModel from(AccountDto dto) {
+    return AccountModel(
+      id: dto.id,
+      created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
+      updated: DateTime.tryParse(dto.updated)?.toLocal() ?? DateTime.now(),
+      title: dto.title,
+      type: EAccountTypeEx.from(dto.type),
+      currency: FiatCurrency.fromCode(dto.currencyCode),
+    );
+  }
+
+  @override
+  AccountDto to(AccountModel model) {
+    return AccountDto(
+      id: model.id,
+      created: model.created.toUtc().toIso8601String(),
+      updated: model.updated.toUtc().toIso8601String(),
+      title: model.title,
+      type: model.type,
+      currencyCode: model.currency.code,
+    );
+  }
+}

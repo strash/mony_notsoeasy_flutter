@@ -9,10 +9,8 @@ final class ExpenseTagDto with _$ExpenseTagDto {
     required String id,
     required String created,
     required String updated,
-    // ignore: invalid_annotation_target
-    @JsonKey(name: "expense") required String expenseId,
-    // ignore: invalid_annotation_target
-    @JsonKey(name: "tag") required String tagId,
+    required String expenseId,
+    required String tagId,
   }) = _ExpenseTagDto;
 
   factory ExpenseTagDto.fromJson(Map<String, dynamic> json) =>

@@ -5,48 +5,49 @@ final class M1728167641Init extends BaseMigration {
   late final _accounts = """
 CREATE TABLE accounts (
 	$defaultColumns,
-	title TEXT DEFAULT '' NOT NULL,
-	type  TEXT DEFAULT '' NOT NULL
+	title         TEXT DEFAULT ''    NOT NULL,
+	type          TEXT DEFAULT ''    NOT NULL,
+	currency_code TEXT DEFAULT 'RUB' NOT NULL
 );
 """;
 
   late final _category = """
 CREATE TABLE categories (
 	$defaultColumns,
-	title TEXT NOT NULL,
-	icon  TEXT DEFAULT ''
+	title TEXT DEFAULT '' NOT NULL,
+	icon  TEXT DEFAULT '' NOT NULL
 );
 """;
 
   late final _expenses = """
 CREATE TABLE expenses (
 	$defaultColumns,
-	amount   REAL DEFAULT 0  NOT NULL,
-	date     TEXT            NOT NULL,
-	note     TEXT DEFAULT '' NOT NULL,
-	account  TEXT            NOT NULL,
-	category TEXT            NOT NULL,
+	amount      REAL DEFAULT 0  NOT NULL,
+	date        TEXT DEFAULT '' NOT NULL,
+	note        TEXT DEFAULT '' NOT NULL,
+	account_id  TEXT DEFAULT '' NOT NULL,
+	category_id TEXT DEFAULT '' NOT NULL,
 
-	FOREIGN KEY (account)  REFERENCES accounts   (id) ON DELETE CASCADE,
-	FOREIGN KEY (category) REFERENCES categories (id) ON DELETE CASCADE
+	FOREIGN KEY (account_id)  REFERENCES accounts   (id) ON DELETE CASCADE,
+	FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
 );
 """;
 
   late final _tags = """
 CREATE TABLE tags (
 	$defaultColumns,
-	title TEXT UNIQUE NOT NULL
+	title TEXT UNIQUE DEFAULT '' NOT NULL
 );
 """;
 
   late final _expenseTags = """
 CREATE TABLE expense_tags (
 	$defaultColumns,
-	expense TEXT NOT NULL,
-	tag TEXT NOT NULL,
+	expense_id TEXT DEFAULT '' NOT NULL,
+	tag_id     TEXT DEFAULT '' NOT NULL,
 
-	FOREIGN KEY (expense) REFERENCES expenses (id) ON DELETE CASCADE,
-	FOREIGN KEY (tag)     REFERENCES tags     (id) ON DELETE CASCADE
+	FOREIGN KEY (expense_id) REFERENCES expenses (id) ON DELETE CASCADE,
+	FOREIGN KEY (tag_id)     REFERENCES tags     (id) ON DELETE CASCADE
 );
 """;
 

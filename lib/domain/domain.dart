@@ -1,4 +1,2 @@
-export "./account.dart";
-export "./category.dart";
-export "./expense.dart";
-export "./tag.dart";
+export "./factories/factories.dart";
+export "./models/models.dart";

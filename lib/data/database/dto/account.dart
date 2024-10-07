@@ -11,6 +11,7 @@ final class AccountDto with _$AccountDto {
     required String updated,
     required String title,
     required String type,
+    required String currencyCode,
   }) = _AccountDto;
 
   factory AccountDto.fromJson(Map<String, dynamic> json) =>

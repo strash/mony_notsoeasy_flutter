@@ -32,8 +32,8 @@ abstract base class BaseMigration {
   // TODO: а также обновлять updated при изменении строки
   late final defaultColumns = """
 id      TEXT PRIMARY KEY NOT NULL,
-created TEXT NOT NULL,
-updated TEXT NOT NULL
+created TEXT DEFAULT ''  NOT NULL,
+updated TEXT DEFAULT ''  NOT NULL
 """;
 
   String createIndex(

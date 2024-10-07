@@ -11,11 +11,9 @@ final class ExpenseDto with _$ExpenseDto {
     required String updated,
     required num amout,
     required String date,
-    @Default("") String note,
-    // ignore: invalid_annotation_target
-    @JsonKey(name: "account") required String accountId,
-    // ignore: invalid_annotation_target
-    @JsonKey(name: "category") required String categoryId,
+    required String note,
+    required String accountId,
+    required String categoryId,
   }) = _ExpenseDto;
 
   factory ExpenseDto.fromJson(Map<String, dynamic> json) =>
