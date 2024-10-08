@@ -4,13 +4,13 @@ default:
 	@just --list
 
 update:
-	flutter pub upgrade --major-versions
+	@flutter pub upgrade --major-versions
 
 icons:
-	echo " 1. open Android Studio\n 2. File > Open... > \"android\"\n 3. use \"res\" folder"
+	@echo " 1. open Android Studio\n 2. File > Open... > \"android\"\n 3. use \"res\" folder"
 
 build:
-	dart run build_runner build
+	@dart run build_runner build
 
 migrate name:
 	@bash migrate.sh \
@@ -19,25 +19,25 @@ migrate name:
 		"M$(date +%s){{uppercamelcase(name)}}"
 
 run:
-	flutter run --debug --pub \
+	@flutter run --debug --pub \
 		--dart-define-from-file=.env \
 		--dart-define-from-file=.version
 
 # run_local_ios:
-# 	flutter run --debug --pub \
+# 	@flutter run --debug --pub \
 # 		--flavor=local_flavor \
 # 		--dart-define-from-file=.env.local.ios \
 # 		--dart-define-from-file=.version
 #
 # run_local_android:
-# 	flutter run --debug --pub \
+# 	@flutter run --debug --pub \
 # 		--flavor=local_flavor \
 # 		--dart-define-from-file=.env.local.android \
 # 		--dart-define-from-file=.version
 
 # TODO тут из другого проекта пример
 # build_android:
-# 	flutter test --test-randomize-ordering-seed=random --reporter=compact && \
+# 	@flutter test --test-randomize-ordering-seed=random --reporter=compact && \
 # 		flutter build appbundle --tree-shake-icons --release --pub \
 # 		--flavor=prod_flavor \
 # 		--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
@@ -56,4 +56,4 @@ run:
 # 		zip -r symbols.zip ./x86_64 ./arm64-v8a ./armeabi-v7a
 
 test:
-	flutter test --reporter=compact
+	@flutter test --reporter=compact

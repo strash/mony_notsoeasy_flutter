@@ -1,23 +1,22 @@
+import "dart:math";
+
 import "package:mony_app/data/database/migrations/migrations.dart";
 import "package:sqflite/sqflite.dart";
 
 final class MigrationService {
   final List<BaseMigration> _migrations = [
     M1728167641Init(),
+    M1728413017SeedDefaultCategories(),
   ];
 
-  BaseMigration? getFor(int version) {
-    if (version < 1) {
-      throw ArgumentError.value(
-        version,
-        "MIGRATION: Version can't be less than 1",
-      );
-    }
-    final migrations = _migrations.elementAtOrNull(version - 1);
+  BaseMigration? getFor(int oldVersion, int newVersion) {
+    final isUp = oldVersion < newVersion;
+    final index = min(0, isUp ? newVersion - 1 : newVersion);
+    final migrations = _migrations.elementAtOrNull(index);
     if (migrations == null) {
       throw ArgumentError.value(
         migrations,
-        "MIGRATION: No migrations for $version version were found",
+        "MIGRATION: No migrations for $index version were found",
       );
     }
     return migrations;
@@ -25,35 +24,13 @@ final class MigrationService {
 }
 
 abstract base class BaseMigration {
-  // TODO: устанавливать значения по-умолчанию для id, created и updated
-  // для created, updated устанавливать DateTime.now().toUtc().toIso8601String()
-  // а для id ExString.random(20)
-
-  // TODO: а также обновлять updated при изменении строки
   late final defaultColumns = """
 id      TEXT PRIMARY KEY NOT NULL,
 created TEXT DEFAULT ''  NOT NULL,
 updated TEXT DEFAULT ''  NOT NULL
 """;
 
-  String createIndex(
-    String tableName,
-    List<String> columns, [
-    bool unique = true,
-  ]) {
-    if (columns.isEmpty) {
-      throw ArgumentError.value(
-        columns,
-        "MIGRATION: Columns should contain at least one column",
-      );
-    }
-    return """
-CREATE ${unique ? "UNIQUE" : ""} INDEX _${tableName}__${columns.join("__")}_idx
-ON $tableName (${columns.join(", ")});
-""";
-  }
+  Future<void> up(Database db);
 
-  Future<void> up(Database db, int oldVersion, int newVersion);
-
-  Future<void> down(Database db, int oldVersion, int newVersion);
+  Future<void> down(Database db);
 }

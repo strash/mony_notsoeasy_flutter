@@ -37,15 +37,13 @@ class AppDatabase {
         await db.execute("PRAGMA foreign_keys = ON");
       },
       onCreate: (db, version) async {
-        await _migrations.getFor(1)?.up(db, 0, 1);
+        await _migrations.getFor(0, 1)?.up(db);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
-        await _migrations.getFor(schemaVersion)?.up(db, oldVersion, newVersion);
+        await _migrations.getFor(oldVersion, newVersion)?.up(db);
       },
       onDowngrade: (db, oldVersion, newVersion) async {
-        await _migrations
-            .getFor(schemaVersion)
-            ?.down(db, oldVersion, newVersion);
+        await _migrations.getFor(oldVersion, newVersion)?.down(db);
       },
     );
   }

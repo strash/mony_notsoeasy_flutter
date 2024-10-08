@@ -4,7 +4,7 @@ part "tag.freezed.dart";
 part "tag.g.dart";
 
 @freezed
-final class TagDto with _$TagDto {
+class TagDto with _$TagDto {
   const factory TagDto({
     required String id,
     required String created,

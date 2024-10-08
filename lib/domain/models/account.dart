@@ -24,7 +24,7 @@ enum EAccountType {
 }
 
 @freezed
-final class AccountModel with _$AccountModel {
+class AccountModel with _$AccountModel {
   const factory AccountModel({
     required String id,
     required DateTime created,

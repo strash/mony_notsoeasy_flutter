@@ -4,7 +4,7 @@ part "expense_tag.freezed.dart";
 part "expense_tag.g.dart";
 
 @freezed
-final class ExpenseTagDto with _$ExpenseTagDto {
+class ExpenseTagDto with _$ExpenseTagDto {
   const factory ExpenseTagDto({
     required String id,
     required String created,

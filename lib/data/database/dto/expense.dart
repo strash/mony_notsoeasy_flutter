@@ -4,12 +4,13 @@ part "expense.freezed.dart";
 part "expense.g.dart";
 
 @freezed
-final class ExpenseDto with _$ExpenseDto {
+class ExpenseDto with _$ExpenseDto {
   const factory ExpenseDto({
     required String id,
     required String created,
     required String updated,
     required num amout,
+    required String type,
     required String date,
     required String note,
     required String accountId,
