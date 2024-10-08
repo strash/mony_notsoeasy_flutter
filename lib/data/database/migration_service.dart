@@ -30,7 +30,9 @@ created TEXT DEFAULT ''  NOT NULL,
 updated TEXT DEFAULT ''  NOT NULL
 """;
 
+  /// Migrate UP
   Future<void> up(Database db);
 
+  /// Migrate DOWN
   Future<void> down(Database db);
 }

@@ -21,6 +21,7 @@ final class M1728167641Init extends BaseMigration {
   final _categoriesTitle = "title";
   final _categoriesIcon = "icon";
   final _categoriesSort = "sort";
+  final _categoriesColor = "color";
   final _categoriesExpenseType = "expense_type";
   // EXPENSES
   final _expenses = "expenses";
@@ -77,6 +78,7 @@ CREATE TABLE $_categories (
 	$_categoriesTitle       TEXT    DEFAULT ''                     NOT NULL,
 	$_categoriesIcon        TEXT    DEFAULT ''                     NOT NULL,
 	$_categoriesSort        INTEGER DEFAULT 0                      NOT NULL,
+	$_categoriesColor       TEXT    DEFAULT '0xFFFFFFFF'           NOT NULL,
 	$_categoriesExpenseType TEXT    DEFAULT '$_defaultExpenseType' NOT NULL
 );
 """;
