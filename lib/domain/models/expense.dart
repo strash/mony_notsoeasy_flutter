@@ -32,6 +32,7 @@ class ExpenseModel with _$ExpenseModel {
     required String note,
     required AccountModel account,
     required CategoryModel category,
+    // TODO: нужен expenseTagId чтобы иметь возможность удалить его и отвязать тэг
     required List<TagModel> tags,
   }) = _ExpenseModel;
 }
