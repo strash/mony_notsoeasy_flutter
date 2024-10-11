@@ -10,7 +10,7 @@ class MonyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       key: appNavigatorKey,
-      title: "MonyApp",
+      title: "Mony App",
       routerDelegate: NavigatorDelegate(),
       supportedLocales: const [
         Locale("en", "EN"),
