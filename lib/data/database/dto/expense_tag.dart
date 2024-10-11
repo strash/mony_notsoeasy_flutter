@@ -9,8 +9,8 @@ class ExpenseTagDto with _$ExpenseTagDto {
     required String id,
     required String created,
     required String updated,
-    required String expenseId,
     required String tagId,
+    required String title,
   }) = _ExpenseTagDto;
 
   factory ExpenseTagDto.fromJson(Map<String, dynamic> json) =>

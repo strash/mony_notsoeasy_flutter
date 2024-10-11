@@ -6,25 +6,25 @@ final class ExpenseDatabaseFactoryImpl
     implements IExpenseDatabaseFactory<ExpenseModel> {
   final AccountDto _accountDto;
   final CategoryDto _categoryDto;
-  final List<TagDto> _tags;
+  final List<ExpenseTagDto> _tags;
 
   final AccountDatabaseFactoryImpl _accountFactory;
   final CategoryDatabaseFactoryImpl _categoryFactory;
-  final TagDatabaseFactoryImpl _tagFactory;
+  final ExpenseTagDatabaseFactoryImpl _expenseTagFactory;
 
   ExpenseDatabaseFactoryImpl({
     required AccountDto accountDto,
     required CategoryDto categoryDto,
-    required List<TagDto> tags,
+    required List<ExpenseTagDto> tags,
     required AccountDatabaseFactoryImpl accountFactory,
     required CategoryDatabaseFactoryImpl categoryFactory,
-    required TagDatabaseFactoryImpl tagFactory,
+    required ExpenseTagDatabaseFactoryImpl expenseTagFactory,
   })  : _tags = tags,
         _categoryDto = categoryDto,
         _accountDto = accountDto,
         _accountFactory = accountFactory,
         _categoryFactory = categoryFactory,
-        _tagFactory = tagFactory;
+        _expenseTagFactory = expenseTagFactory;
 
   @override
   ExpenseModel from(ExpenseDto dto) {
@@ -39,7 +39,7 @@ final class ExpenseDatabaseFactoryImpl
       account: _accountFactory.from(_accountDto),
       category: _categoryFactory.from(_categoryDto),
       tags: _tags
-          .map<TagModel>((e) => _tagFactory.from(e))
+          .map<ExpenseTagModel>((e) => _expenseTagFactory.from(e))
           .toList(growable: false),
     );
   }
