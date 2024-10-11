@@ -15,10 +15,12 @@ extension on NavBarTabItem {
 
 class NavBarTabComponent extends StatelessWidget {
   final int index;
+  final double height;
 
   const NavBarTabComponent({
     super.key,
     required this.index,
+    required this.height,
   });
 
   @override
@@ -31,7 +33,7 @@ class NavBarTabComponent extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: () => viewModel.tab = index,
       child: SizedBox.fromSize(
-        size: const Size.fromHeight(70.0),
+        size: Size.fromHeight(height),
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short4,
           curve: Curves.easeInOutQuad,
@@ -45,8 +47,8 @@ class NavBarTabComponent extends StatelessWidget {
             return Center(
               child: SvgPicture.asset(
                 tab.icon,
-                width: 34.0,
-                height: 34.0,
+                width: 32.0,
+                height: 32.0,
                 colorFilter: ColorFilter.mode(color!, BlendMode.srcIn),
               ),
             );

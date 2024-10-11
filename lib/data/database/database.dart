@@ -2,6 +2,10 @@ import "package:mony_app/data/database/migration_service.dart";
 import "package:path/path.dart" as path;
 import "package:sqflite/sqflite.dart";
 
+export "./dto/dto.dart";
+export "./factories/factories.dart";
+export "./repository/repository.dart";
+
 class AppDatabase {
   Future<Database>? _db;
   final _migrations = MigrationService();

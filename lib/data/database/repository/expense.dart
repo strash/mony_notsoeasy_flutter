@@ -1,6 +1,4 @@
 import "package:mony_app/data/database/database.dart";
-import "package:mony_app/data/database/dto/dto.dart";
-import "package:mony_app/data/database/repository/repository.dart";
 import "package:sqflite/sqflite.dart";
 
 abstract base class ExpenseDatabaseRepository {

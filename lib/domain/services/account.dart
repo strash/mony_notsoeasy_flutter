@@ -1,4 +1,3 @@
-import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/string.dart";
 import "package:mony_app/data/database/repository/repository.dart";
 import "package:mony_app/domain/domain.dart";
@@ -8,6 +7,8 @@ final class AccountService {
   final AccountDatabaseRepository _accountRepo;
   final AccountDatabaseFactoryImpl _accountFactory;
 
+  static const int kPerPage = 10;
+
   AccountService({
     required AccountDatabaseRepository accountRepo,
     required AccountDatabaseFactoryImpl accountFactory,
@@ -16,6 +17,16 @@ final class AccountService {
 
   Future<List<AccountModel>> getAll() async {
     final data = await _accountRepo.getAll();
+    return data
+        .map<AccountModel>((e) => _accountFactory.from(e))
+        .toList(growable: false);
+  }
+
+  Future<List<AccountModel>> getMany(int page) async {
+    final data = await _accountRepo.getMany(
+      limit: kPerPage,
+      offset: kPerPage * page,
+    );
     return data
         .map<AccountModel>((e) => _accountFactory.from(e))
         .toList(growable: false);

@@ -4,6 +4,8 @@ import "package:mony_app/features/navbar/components/components.dart";
 import "package:mony_app/features/navbar/page/view_model.dart";
 
 class NavBarView extends StatelessWidget {
+  static const double kTabHeight = 56.0;
+
   const NavBarView({super.key});
 
   @override
@@ -35,7 +37,7 @@ class NavBarView extends StatelessWidget {
                 bottom: 0.0,
                 child: SizedBox(
                   width: viewSize.width,
-                  height: 70.0 + viewPadding.bottom,
+                  height: kTabHeight + viewPadding.bottom,
                   child: ColoredBox(
                     color: theme.colorScheme.surfaceContainerHighest,
                     child: Column(
@@ -47,7 +49,10 @@ class NavBarView extends StatelessWidget {
                             children:
                                 List.generate(NavBarTabItem.length, (index) {
                               return Expanded(
-                                child: NavBarTabComponent(index: index),
+                                child: NavBarTabComponent(
+                                  index: index,
+                                  height: kTabHeight,
+                                ),
                               );
                             }),
                           ),

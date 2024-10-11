@@ -10,9 +10,9 @@ final class ViewModel<S extends ViewModelState> extends InheritedWidget {
   final S viewModel;
 
   const ViewModel({
+    super.key,
     required this.viewModel,
     required super.child,
-    super.key,
   });
 
   static S? maybeOf<S extends ViewModelState>(BuildContext context) {
@@ -27,5 +27,7 @@ final class ViewModel<S extends ViewModelState> extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(covariant ViewModel oldWidget) => true;
+  bool updateShouldNotify(ViewModel<S> oldWidget) {
+    return true;
+  }
 }

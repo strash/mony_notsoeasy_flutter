@@ -7,5 +7,5 @@ void main() async {
   final appDatabase = AppDatabase.instance();
   await appDatabase.db;
 
-  runApp(const MonyApp());
+  runApp(MonyApp(database: appDatabase));
 }
