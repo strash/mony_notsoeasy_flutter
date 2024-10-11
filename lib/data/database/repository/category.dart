@@ -3,11 +3,21 @@ import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/repository/repository.dart";
 import "package:sqflite/sqflite.dart";
 
-abstract base class CategoryDatabaseRepository
-    extends IDatabaseRepository<CategoryDto> {
+abstract base class CategoryDatabaseRepository {
   const factory CategoryDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
+  Future<List<CategoryDto>> getAll();
+
+  Future<List<CategoryDto>> getMany({required int limit, required int offset});
+
+  Future<CategoryDto?> getOne({required String id});
+
+  Future<void> create({required CategoryDto dto});
+
+  Future<void> update({required CategoryDto dto});
+
+  Future<void> delete({required String id});
 }
 
 final class _Impl
@@ -20,18 +30,10 @@ final class _Impl
   const _Impl({required this.database});
 
   @override
-  Future<List<CategoryDto>> getAll([
-    String? where,
-    List<String>? whereArgs,
-  ]) async {
+  Future<List<CategoryDto>> getAll() async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.query(
-        table,
-        orderBy: "title ASC",
-        where: where,
-        whereArgs: whereArgs,
-      );
+      final maps = await db.query(table, orderBy: "sort ASC");
       return List.generate(
         maps.length,
         (index) => CategoryDto.fromJson(maps.elementAt(index)),
@@ -41,21 +43,17 @@ final class _Impl
   }
 
   @override
-  Future<List<CategoryDto>> getMany(
-    int limit,
-    int offset, [
-    String? where,
-    List<String>? whereArgs,
-  ]) async {
+  Future<List<CategoryDto>> getMany({
+    required int limit,
+    required int offset,
+  }) async {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
         table,
         limit: limit,
         offset: offset,
-        orderBy: "title ASC",
-        where: where,
-        whereArgs: whereArgs,
+        orderBy: "sort ASC",
       );
       return List.generate(
         maps.length,
@@ -66,7 +64,7 @@ final class _Impl
   }
 
   @override
-  Future<CategoryDto?> getOne(String id) async {
+  Future<CategoryDto?> getOne({required String id}) async {
     return resolve(() async {
       final db = await database.db;
       final map = await db.query(
@@ -80,7 +78,7 @@ final class _Impl
   }
 
   @override
-  Future<void> create(CategoryDto dto) async {
+  Future<void> create({required CategoryDto dto}) async {
     return resolve(() async {
       final db = await database.db;
       await db.insert(
@@ -92,7 +90,7 @@ final class _Impl
   }
 
   @override
-  Future<void> update(CategoryDto dto) async {
+  Future<void> update({required CategoryDto dto}) async {
     return resolve(() async {
       final db = await database.db;
       await db.update(
@@ -106,7 +104,7 @@ final class _Impl
   }
 
   @override
-  Future<void> delete(String id) async {
+  Future<void> delete({required String id}) async {
     return resolve(() async {
       final db = await database.db;
       await db.delete(

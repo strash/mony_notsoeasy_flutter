@@ -3,10 +3,25 @@ import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/repository/repository.dart";
 import "package:sqflite/sqflite.dart";
 
-abstract base class TagDatabaseRepository extends IDatabaseRepository<TagDto> {
+abstract base class TagDatabaseRepository {
   const factory TagDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
+
+  Future<List<TagDto>> getAll();
+
+  Future<List<TagDto>> getMany({
+    required int limit,
+    required int offset,
+  });
+
+  Future<TagDto?> getOne({required String id});
+
+  Future<void> create({required TagDto dto});
+
+  Future<void> update({required TagDto dto});
+
+  Future<void> delete({required String id});
 }
 
 final class _Impl
@@ -19,18 +34,10 @@ final class _Impl
   const _Impl({required this.database});
 
   @override
-  Future<List<TagDto>> getAll([
-    String? where,
-    List<String>? whereArgs,
-  ]) async {
+  Future<List<TagDto>> getAll() async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.query(
-        table,
-        orderBy: "title ASC",
-        where: where,
-        whereArgs: whereArgs,
-      );
+      final maps = await db.query(table, orderBy: "title ASC");
       return List.generate(
         maps.length,
         (index) => TagDto.fromJson(maps.elementAt(index)),
@@ -40,12 +47,10 @@ final class _Impl
   }
 
   @override
-  Future<List<TagDto>> getMany(
-    int limit,
-    int offset, [
-    String? where,
-    List<String>? whereArgs,
-  ]) async {
+  Future<List<TagDto>> getMany({
+    required int limit,
+    required int offset,
+  }) async {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
@@ -53,8 +58,6 @@ final class _Impl
         limit: limit,
         offset: offset,
         orderBy: "title ASC",
-        where: where,
-        whereArgs: whereArgs,
       );
       return List.generate(
         maps.length,
@@ -65,7 +68,7 @@ final class _Impl
   }
 
   @override
-  Future<TagDto?> getOne(String id) async {
+  Future<TagDto?> getOne({required String id}) async {
     return resolve(() async {
       final db = await database.db;
       final map = await db.query(
@@ -79,7 +82,7 @@ final class _Impl
   }
 
   @override
-  Future<void> create(TagDto dto) async {
+  Future<void> create({required TagDto dto}) async {
     return resolve(() async {
       final db = await database.db;
       await db.insert(
@@ -91,7 +94,7 @@ final class _Impl
   }
 
   @override
-  Future<void> update(TagDto dto) async {
+  Future<void> update({required TagDto dto}) async {
     return resolve(() async {
       final db = await database.db;
       await db.update(
@@ -105,7 +108,7 @@ final class _Impl
   }
 
   @override
-  Future<void> delete(String id) async {
+  Future<void> delete({required String id}) async {
     return resolve(() async {
       final db = await database.db;
       await db.delete(

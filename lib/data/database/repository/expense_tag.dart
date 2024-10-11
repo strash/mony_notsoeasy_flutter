@@ -3,11 +3,27 @@ import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/repository/repository.dart";
 import "package:sqflite/sqflite.dart";
 
-abstract base class ExpenseTagDatabaseRepository
-    extends IDatabaseRepository<ExpenseTagDto> {
+abstract base class ExpenseTagDatabaseRepository {
   const factory ExpenseTagDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
+
+  Future<List<ExpenseTagDto>> getAll({required String expenseId});
+
+  Future<List<ExpenseTagDto>> getMany({
+    required String expenseId,
+    required int limit,
+    required int offset,
+  });
+
+  Future<ExpenseTagDto?> getOne({required String id});
+
+  Future<void> create({
+    required String expenseId,
+    required ExpenseTagDto dto,
+  });
+
+  Future<void> delete({required String id});
 }
 
 final class _Impl
@@ -20,16 +36,17 @@ final class _Impl
   const _Impl({required this.database});
 
   @override
-  Future<List<ExpenseTagDto>> getAll([
-    String? where,
-    List<String>? whereArgs,
-  ]) async {
+  Future<List<ExpenseTagDto>> getAll({required String expenseId}) async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.query(
-        table,
-        where: where,
-        whereArgs: whereArgs,
+      final maps = await db.rawQuery(
+        """
+SELECT et.id, et.created, et.updated, et.tag_id, t.title
+FROM $table AS et
+JOIN tags AS t ON et.tag_id = t.id
+WHERE et.expense_id = ?;
+""",
+        [expenseId],
       );
       return List.generate(
         maps.length,
@@ -40,20 +57,21 @@ final class _Impl
   }
 
   @override
-  Future<List<ExpenseTagDto>> getMany(
-    int limit,
-    int offset, [
-    String? where,
-    List<String>? whereArgs,
-  ]) async {
+  Future<List<ExpenseTagDto>> getMany({
+    required String expenseId,
+    required int limit,
+    required int offset,
+  }) async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.query(
-        table,
-        limit: limit,
-        offset: offset,
-        where: where,
-        whereArgs: whereArgs,
+      final maps = await db.rawQuery(
+        """
+SELECT et.id, et.created, et.updated, et.tag_id, t.title
+FROM $table AS et
+JOIN tags AS t ON et.tag_id = t.id
+WHERE et.expense_id = ? LIMIT ? OFFSET ?;
+""",
+        [expenseId, limit, offset],
       );
       return List.generate(
         maps.length,
@@ -64,13 +82,17 @@ final class _Impl
   }
 
   @override
-  Future<ExpenseTagDto?> getOne(String id) async {
+  Future<ExpenseTagDto?> getOne({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      final map = await db.query(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
+      final map = await db.rawQuery(
+        """
+SELECT et.id, et.created, et.updated, et.tag_id, t.title
+FROM $table AS et
+JOIN tags AS t ON et.tag_id = t.id
+WHERE et.id = ? LIMIT 1;
+""",
+        [id],
       );
       if (map.isEmpty) return null;
       return ExpenseTagDto.fromJson(map.first);
@@ -78,33 +100,24 @@ final class _Impl
   }
 
   @override
-  Future<void> create(ExpenseTagDto dto) async {
+  Future<void> create({
+    required String expenseId,
+    required ExpenseTagDto dto,
+  }) async {
     return resolve(() async {
       final db = await database.db;
+      final map = dto.toJson()..remove("title");
+      map["expense_id"] = expenseId;
       await db.insert(
         table,
-        dto.toJson(),
+        map,
         conflictAlgorithm: ConflictAlgorithm.rollback,
       );
     });
   }
 
   @override
-  Future<void> update(ExpenseTagDto dto) async {
-    return resolve(() async {
-      final db = await database.db;
-      await db.update(
-        table,
-        dto.toJson(),
-        where: "id = ?",
-        whereArgs: [dto.id],
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    });
-  }
-
-  @override
-  Future<void> delete(String id) async {
+  Future<void> delete({required String id}) async {
     return resolve(() async {
       final db = await database.db;
       await db.delete(

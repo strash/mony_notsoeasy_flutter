@@ -22,7 +22,7 @@ final class AccountService {
   }
 
   Future<AccountModel?> getOne(String id) async {
-    final data = await _accountRepo.getOne(id);
+    final data = await _accountRepo.getOne(id: id);
     if (data == null) return null;
     return _accountFactory.from(data);
   }
@@ -38,7 +38,7 @@ final class AccountService {
       type: type,
       currency: FiatCurrency.fromCode(currencyCode),
     );
-    await _accountRepo.create(_accountFactory.to(model));
+    await _accountRepo.create(dto: _accountFactory.to(model));
     return model;
   }
 
@@ -51,11 +51,11 @@ final class AccountService {
       type: type ?? model.type,
       currency: FiatCurrency.maybeFromCode(currencyCode) ?? model.currency,
     );
-    await _accountRepo.update(_accountFactory.to(newModel));
+    await _accountRepo.update(dto: _accountFactory.to(newModel));
     return newModel;
   }
 
   Future<void> delete(String id) async {
-    await _accountRepo.delete(id);
+    await _accountRepo.delete(id: id);
   }
 }

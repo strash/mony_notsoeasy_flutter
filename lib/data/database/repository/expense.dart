@@ -3,11 +3,22 @@ import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/repository/repository.dart";
 import "package:sqflite/sqflite.dart";
 
-abstract base class ExpenseDatabaseRepository
-    extends IDatabaseRepository<ExpenseDto> {
+abstract base class ExpenseDatabaseRepository {
   const factory ExpenseDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
+
+  Future<List<ExpenseDto>> getAll();
+
+  Future<List<ExpenseDto>> getMany({required int limit, required int offset});
+
+  Future<ExpenseDto?> getOne({required String id});
+
+  Future<void> create({required ExpenseDto dto});
+
+  Future<void> update({required ExpenseDto dto});
+
+  Future<void> delete({required String id});
 }
 
 final class _Impl
@@ -20,18 +31,10 @@ final class _Impl
   const _Impl({required this.database});
 
   @override
-  Future<List<ExpenseDto>> getAll([
-    String? where,
-    List<String>? whereArgs,
-  ]) async {
+  Future<List<ExpenseDto>> getAll() async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.query(
-        table,
-        orderBy: "date DESC",
-        where: where,
-        whereArgs: whereArgs,
-      );
+      final maps = await db.query(table, orderBy: "date DESC");
       return List.generate(
         maps.length,
         (index) => ExpenseDto.fromJson(maps.elementAt(index)),
@@ -41,12 +44,10 @@ final class _Impl
   }
 
   @override
-  Future<List<ExpenseDto>> getMany(
-    int limit,
-    int offset, [
-    String? where,
-    List<String>? whereArgs,
-  ]) async {
+  Future<List<ExpenseDto>> getMany({
+    required int limit,
+    required int offset,
+  }) async {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
@@ -54,8 +55,6 @@ final class _Impl
         limit: limit,
         offset: offset,
         orderBy: "date DESC",
-        where: where,
-        whereArgs: whereArgs,
       );
       return List.generate(
         maps.length,
@@ -66,7 +65,7 @@ final class _Impl
   }
 
   @override
-  Future<ExpenseDto?> getOne(String id) async {
+  Future<ExpenseDto?> getOne({required String id}) async {
     return resolve(() async {
       final db = await database.db;
       final map = await db.query(
@@ -80,7 +79,7 @@ final class _Impl
   }
 
   @override
-  Future<void> create(ExpenseDto dto) async {
+  Future<void> create({required ExpenseDto dto}) async {
     return resolve(() async {
       final db = await database.db;
       await db.insert(
@@ -92,7 +91,7 @@ final class _Impl
   }
 
   @override
-  Future<void> update(ExpenseDto dto) async {
+  Future<void> update({required ExpenseDto dto}) async {
     return resolve(() async {
       final db = await database.db;
       await db.update(
@@ -106,7 +105,7 @@ final class _Impl
   }
 
   @override
-  Future<void> delete(String id) async {
+  Future<void> delete({required String id}) async {
     return resolve(() async {
       final db = await database.db;
       await db.delete(
