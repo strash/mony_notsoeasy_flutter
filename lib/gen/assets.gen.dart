@@ -17,8 +17,13 @@ class $AssetsIconsGen {
   String get listBulletBelowRectangle =>
       'assets/icons/list.bullet.below.rectangle.svg';
 
+  /// File path: assets/icons/person.crop.circle.fill.badge.plus.svg
+  String get personCropCircleFillBadgePlus =>
+      'assets/icons/person.crop.circle.fill.badge.plus.svg';
+
   /// List of all assets
-  List<String> get values => [gearshapeFill, listBulletBelowRectangle];
+  List<String> get values =>
+      [gearshapeFill, listBulletBelowRectangle, personCropCircleFillBadgePlus];
 }
 
 class Assets {
