@@ -1,6 +1,9 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 
+// TODO: подумать как сделать менее специализированно.
+// эта вьюха подходит для NavBar но для других вьюх не подходит.
+// плюс view_model тоже заточена под NavBar
 class NavigatorView extends StatelessWidget {
   final int index;
   final List<Page> pages;

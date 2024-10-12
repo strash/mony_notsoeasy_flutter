@@ -1,6 +1,10 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
-import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/app/app.dart";
+import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
+import "package:provider/provider.dart";
 
 class NavigatorViewModelBuilder extends StatefulWidget {
   const NavigatorViewModelBuilder({super.key});
@@ -12,6 +16,10 @@ class NavigatorViewModelBuilder extends StatefulWidget {
 
 final class NavigatorViewModel
     extends ViewModelState<NavigatorViewModelBuilder> {
+  bool? _hasAccounts;
+
+  late final StreamSubscription<Event> _subscription;
+
   late final routes = List.generate(NavBarTabItem.length, (index) {
     return MaterialPageRoute(
       builder: (context) {
@@ -43,11 +51,59 @@ final class NavigatorViewModel
     }
   }
 
+  Future<bool> _checkFlow() async {
+    final accountService = context.read<AccountService>();
+    return (await accountService.getAll()).isNotEmpty;
+  }
+
+  Future<void> _onData(Event event) async {
+    if (event is EventAccountCreated && event.sender is! NavigatorViewModel) {
+      _hasAccounts = await _checkFlow();
+      setProtectedState(() {});
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      _subscription = ViewModel.of<AppEventService>(context).listen(_onData);
+      _hasAccounts = await _checkFlow();
+      setProtectedState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget child = const Scaffold(
+      body: Center(child: CircularProgressIndicator.adaptive()),
+    );
+    final hasAccounts = _hasAccounts;
+    if (hasAccounts != null) {
+      if (!hasAccounts) {
+        child = HeroControllerScope.none(
+          child: Navigator(
+            onGenerateRoute: (settings) {
+              return MaterialPageRoute(
+                builder: (context) => const StartScreenPage(),
+              );
+            },
+          ),
+        );
+      } else {
+        child = const NavBarPage();
+      }
+    }
+
     return ViewModel<NavigatorViewModel>(
       viewModel: this,
-      child: const NavBarPage(),
+      child: child,
     );
   }
 }

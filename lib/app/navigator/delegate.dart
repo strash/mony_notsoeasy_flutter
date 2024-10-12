@@ -1,5 +1,5 @@
 import "package:flutter/widgets.dart";
-import "package:mony_app/app/navigator/page/view_model.dart";
+import "package:mony_app/app/app.dart";
 
 final class NavigatorDelegate extends RouterDelegate<Object> {
   @override

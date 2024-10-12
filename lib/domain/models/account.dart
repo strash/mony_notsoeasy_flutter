@@ -31,6 +31,7 @@ class AccountModel with _$AccountModel {
     required DateTime updated,
     required String title,
     required EAccountType type,
+    // TODO: добавить цвет
     required FiatCurrency currency,
     // TODO: добавить изначальную сумму
     // TODO: при создании аккаунта предлагать вбить "сколько сейчас на счету"
