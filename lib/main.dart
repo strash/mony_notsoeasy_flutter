@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/data/database/database.dart";
 
 void main() async {
@@ -7,5 +8,11 @@ void main() async {
   final appDatabase = AppDatabase.instance();
   await appDatabase.db;
 
-  runApp(MonyApp(database: appDatabase));
+  runApp(
+    AppEventServiceBuilder(
+      child: MonyApp(
+        database: appDatabase,
+      ),
+    ),
+  );
 }
