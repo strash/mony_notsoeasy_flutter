@@ -18,7 +18,7 @@ class StartView extends StatelessWidget {
           children: [
             // TODO: добавить логотип
             // -> app name
-            Expanded(
+            Flexible(
               child: SizedBox.expand(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

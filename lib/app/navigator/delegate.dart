@@ -29,6 +29,7 @@ final class NavigatorDelegate extends RouterDelegate<Object> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<EventAccountCreated>(
+      // TODO: слушать еще удаление аккаунта
       stream: _eventService.stream
           .where((e) => e is EventAccountCreated)
           .distinct()
