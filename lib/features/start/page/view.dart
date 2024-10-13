@@ -51,7 +51,7 @@ class StartScreenView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(50.0).r,
+                        padding: EdgeInsets.fromLTRB(20.w, .0, 20.w, 40.h),
                         child: FilledButton(
                           onPressed: () {
                             viewModel.onButtonStartPressed(context);
