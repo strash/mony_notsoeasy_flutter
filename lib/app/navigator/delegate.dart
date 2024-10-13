@@ -28,8 +28,11 @@ final class NavigatorDelegate extends RouterDelegate<Object> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Event>(
-      stream: _eventService.stream,
+    return StreamBuilder<EventAccountCreated>(
+      stream: _eventService.stream
+          .where((e) => e is EventAccountCreated)
+          .distinct()
+          .cast<EventAccountCreated>(),
       builder: (context, snapshot) {
         return FutureBuilder<bool?>(
           future: _checkAccounts(),
