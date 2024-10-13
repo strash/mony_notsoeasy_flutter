@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/navbar/page/view_model.dart";
@@ -47,8 +48,8 @@ class NavBarTabComponent extends StatelessWidget {
             return Center(
               child: SvgPicture.asset(
                 tab.icon,
-                width: 32.0,
-                height: 32.0,
+                width: 32.r,
+                height: 32.r,
                 colorFilter: ColorFilter.mode(color!, BlendMode.srcIn),
               ),
             );

@@ -1,10 +1,11 @@
 import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/features/navbar/components/components.dart";
 import "package:mony_app/features/navbar/page/view_model.dart";
 
 class NavBarView extends StatelessWidget {
-  static const double kTabHeight = 56.0;
+  static final double kTabHeight = 56.h;
 
   const NavBarView({super.key});
 
@@ -25,9 +26,9 @@ class NavBarView extends StatelessWidget {
               IndexedStack(
                 index: viewModel.tab,
                 children: List<Widget>.generate(NavBarTabItem.length, (index) {
-                  return NavigatorView(
-                    index: index,
-                    pages: const [],
+                  return NavigatorWrapper(
+                    navigatorKey: viewModel.getNavigatorTabKey(index),
+                    onGenerateRoute: viewModel.onGenerateRoute,
                   );
                 }),
               ),

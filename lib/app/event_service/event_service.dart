@@ -21,6 +21,8 @@ final class AppEventServiceBuilder extends StatefulWidget {
 final class AppEventService extends ViewModelState<AppEventServiceBuilder> {
   final _subject = BehaviorSubject<Event>();
 
+  Stream<Event> get stream => _subject.stream;
+
   StreamSubscription<Event> listen(void Function(Event event) onData) {
     return _subject.stream.listen(onData);
   }

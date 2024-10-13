@@ -1,7 +1,17 @@
-import "package:flutter/widgets.dart";
+import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/features/features.dart";
 
 final class NavigatorDelegate extends RouterDelegate<Object> {
+  final AppEventService _eventService;
+  final Future<bool> Function() _checkAccounts;
+
+  NavigatorDelegate({
+    required AppEventService eventService,
+    required Future<bool> Function() checkAccounts,
+  })  : _checkAccounts = checkAccounts,
+        _eventService = eventService;
+
   @override
   Future<bool> popRoute() async {
     return false;
@@ -18,6 +28,27 @@ final class NavigatorDelegate extends RouterDelegate<Object> {
 
   @override
   Widget build(BuildContext context) {
-    return const NavigatorViewModelBuilder();
+    return StreamBuilder<Event>(
+      stream: _eventService.stream,
+      builder: (context, snapshot) {
+        return FutureBuilder<bool?>(
+          future: _checkAccounts(),
+          builder: (context, fSnapshot) {
+            Widget child = const Scaffold(
+              body: Center(child: CircularProgressIndicator.adaptive()),
+            );
+            final hasAccounts = fSnapshot.data;
+            if (hasAccounts != null) {
+              if (hasAccounts) {
+                child = const NavBarPage();
+              } else {
+                child = const StartScreenPage();
+              }
+            }
+            return child;
+          },
+        );
+      },
+    );
   }
 }

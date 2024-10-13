@@ -1,3 +1,2 @@
 export "./delegate.dart";
-export "./page/view.dart";
-export "./page/view_model.dart";
+export "./navigator_wrapper.dart";
