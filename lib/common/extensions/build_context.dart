@@ -13,7 +13,14 @@ extension BuildContextEx on BuildContext {
     return navigator.push<T>(
       noTransition
           ? PageRouteBuilder(
-              transitionsBuilder: (context, _, __, child) => child,
+              transitionDuration: const Duration(milliseconds: 200),
+              reverseTransitionDuration: const Duration(milliseconds: 200),
+              transitionsBuilder: (context, animation, __, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
               pageBuilder: (context, _, __) => page,
             )
           : MaterialPageRoute(builder: (context) => page),

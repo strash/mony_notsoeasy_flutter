@@ -1,5 +1,6 @@
 export "./feed/feed.dart";
 export "./navbar/navbar.dart";
 export "./settings/settings.dart";
-export "./start_screen/start_screen.dart";
-export "./start_screen_new_account/start_screen_new_account.dart";
+export "./start/start.dart";
+export "./start_new_account/start_new_account.dart";
+export "./start_new_account_create/start_new_account_create.dart";

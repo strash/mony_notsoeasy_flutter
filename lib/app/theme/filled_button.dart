@@ -4,9 +4,7 @@ final _filledButtonThemeData = FilledButtonThemeData(
   style: FilledButton.styleFrom(
     elevation: 0.0,
     enableFeedback: true,
-    padding: const EdgeInsets.symmetric(
-      horizontal: 20.0,
-    ).w,
+    padding: const EdgeInsets.symmetric(horizontal: 20.0).w,
     splashFactory: NoSplash.splashFactory,
     shape: SmoothRectangleBorder(
       borderRadius: SmoothBorderRadius.all(

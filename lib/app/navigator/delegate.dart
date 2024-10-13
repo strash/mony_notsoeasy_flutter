@@ -45,7 +45,7 @@ final class NavigatorDelegate extends RouterDelegate<Object> {
               if (hasAccounts) {
                 child = const NavBarPage();
               } else {
-                child = const StartScreenPage();
+                child = const StartPage();
               }
             }
             return child;

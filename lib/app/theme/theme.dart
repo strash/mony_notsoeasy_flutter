@@ -4,33 +4,25 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 
+part "./app_bar.dart";
+part "./colorscheme.dart";
 part "./filled_button.dart";
+part "./text_form_field.dart";
 
 const _primary = Color(0xFF08218A);
 const _secondary = Color(0xFF009143);
 const _tertiary = Color(0xFF313030);
 
 final lightTheme = ThemeData(
-  colorScheme: SeedColorScheme.fromSeeds(
-    primaryKey: _primary,
-    secondaryKey: _secondary,
-    tertiaryKey: _tertiary,
-    useExpressiveOnContainerColors: true,
-    respectMonochromeSeed: true,
-    tones: FlexTones.vividSurfaces(Brightness.light),
-  ),
+  colorScheme: _lightColorScheme,
+  appBarTheme: _lightAppBarTheme,
   filledButtonTheme: _filledButtonThemeData,
+  inputDecorationTheme: _lightFormFieldTheme,
 );
 
 final darkTheme = ThemeData(
-  colorScheme: SeedColorScheme.fromSeeds(
-    brightness: Brightness.dark,
-    primaryKey: _primary,
-    secondaryKey: _secondary,
-    tertiaryKey: _tertiary,
-    useExpressiveOnContainerColors: true,
-    respectMonochromeSeed: true,
-    tones: FlexTones.vividSurfaces(Brightness.dark),
-  ),
+  colorScheme: _darkColorScheme,
+  appBarTheme: _darkAppBarTheme,
   filledButtonTheme: _filledButtonThemeData,
+  inputDecorationTheme: _darkFormFieldTheme,
 );

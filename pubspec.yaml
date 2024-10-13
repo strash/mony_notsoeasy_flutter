@@ -36,23 +36,5 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/fonts/
 
-  # fonts:
-  #   - family: SFProDisplay
-  #     fonts:
-  #       - asset: assets/fonts/SFProDisplay/SF-Pro-Display-Regular.otf
-  #         weight: 400
-  #       - asset: assets/fonts/SFProDisplay/SF-Pro-Display-Medium.otf
-  #         weight: 500
-  #       - asset: assets/fonts/SFProDisplay/SF-Pro-Display-Semibold.otf
-  #         weight: 600
-  #   - family: SFProRounded
-  #     fonts:
-  #       - asset: assets/fonts/SFProRounded/SF-Pro-Rounded-Regular.otf
-  #         weight: 400
-  #       - asset: assets/fonts/SFProRounded/SF-Pro-Rounded-Medium.otf
-  #         weight: 500
-  #       - asset: assets/fonts/SFProRounded/SF-Pro-Rounded-Semibold.otf
-  #         weight: 600
-  #       - asset: assets/fonts/SFProRounded/SF-Pro-Rounded-Bold.otf
-  #         weight: 700

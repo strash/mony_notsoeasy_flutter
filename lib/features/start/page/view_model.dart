@@ -1,25 +1,23 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/view_model/view_model.dart";
-import "package:mony_app/features/start_screen/page/view.dart";
-import "package:mony_app/features/start_screen/use_case/use_case.dart";
+import "package:mony_app/features/start/page/view.dart";
+import "package:mony_app/features/start/use_case/use_case.dart";
 
-final class StartScreenViewModelBuilder extends StatefulWidget {
-  const StartScreenViewModelBuilder({super.key});
+final class StartViewModelBuilder extends StatefulWidget {
+  const StartViewModelBuilder({super.key});
 
   @override
-  ViewModelState<StartScreenViewModelBuilder> createState() =>
-      StartScreenViewModel();
+  ViewModelState<StartViewModelBuilder> createState() => StartViewModel();
 }
 
-final class StartScreenViewModel
-    extends ViewModelState<StartScreenViewModelBuilder> {
+final class StartViewModel extends ViewModelState<StartViewModelBuilder> {
   final onButtonStartPressed = OnButtonStartPressedUseCase();
 
   @override
   Widget build(BuildContext context) {
-    return ViewModel<StartScreenViewModel>(
+    return ViewModel<StartViewModel>(
       viewModel: this,
-      child: const StartScreenView(),
+      child: const StartView(),
     );
   }
 }

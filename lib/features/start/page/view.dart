@@ -2,14 +2,14 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/view_model/view_model.dart";
-import "package:mony_app/features/start_screen/page/view_model.dart";
+import "package:mony_app/features/start/page/view_model.dart";
 
-class StartScreenView extends StatelessWidget {
-  const StartScreenView({super.key});
+class StartView extends StatelessWidget {
+  const StartView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ViewModel.of<StartScreenViewModel>(context);
+    final viewModel = ViewModel.of<StartViewModel>(context);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -51,7 +51,7 @@ class StartScreenView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(20.w, .0, 20.w, 40.h),
+                        padding: EdgeInsets.fromLTRB(15.w, .0, 15.w, 40.h),
                         child: FilledButton(
                           onPressed: () {
                             viewModel.onButtonStartPressed(context);

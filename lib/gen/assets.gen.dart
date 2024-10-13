@@ -7,8 +7,15 @@
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
+class $AssetsFontsGen {
+  const $AssetsFontsGen();
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
+
+  /// File path: assets/icons/chevron.backward.svg
+  String get chevronBackward => 'assets/icons/chevron.backward.svg';
 
   /// File path: assets/icons/gearshape.fill.svg
   String get gearshapeFill => 'assets/icons/gearshape.fill.svg';
@@ -22,12 +29,17 @@ class $AssetsIconsGen {
       'assets/icons/person.crop.circle.fill.badge.plus.svg';
 
   /// List of all assets
-  List<String> get values =>
-      [gearshapeFill, listBulletBelowRectangle, personCropCircleFillBadgePlus];
+  List<String> get values => [
+        chevronBackward,
+        gearshapeFill,
+        listBulletBelowRectangle,
+        personCropCircleFillBadgePlus
+      ];
 }
 
 class Assets {
   Assets._();
 
+  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
 }
