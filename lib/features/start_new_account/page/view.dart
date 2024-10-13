@@ -19,7 +19,7 @@ class StartNewAccountView extends StatelessWidget {
         child: Column(
           children: [
             // -> icon
-            Expanded(
+            Flexible(
               child: Center(
                 child: SvgPicture.asset(
                   Assets.icons.personCropCircleFillBadgePlus,
