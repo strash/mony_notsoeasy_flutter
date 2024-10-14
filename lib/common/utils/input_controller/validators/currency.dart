@@ -9,7 +9,7 @@ final class CurrencyValidator implements IInputValidator {
   @override
   String? call(String? value) {
     if (value != null && value.trim().isNotEmpty && !_regEx.hasMatch(value)) {
-      return 'Неверный формат. Допустимые символы: "-0-9.,"';
+      return 'Допустимый формат: "123.45" или "-0,12"';
     }
     return null;
   }
