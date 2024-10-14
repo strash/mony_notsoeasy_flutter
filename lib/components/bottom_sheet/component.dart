@@ -4,23 +4,20 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app.dart";
 
 class BottomSheetComponent extends StatelessWidget {
-  final EdgeInsets viewPaddings;
-  final WidgetBuilder builder;
+  final Widget child;
 
   const BottomSheetComponent({
     super.key,
-    required this.viewPaddings,
-    required this.builder,
+    required this.child,
   });
 
   static Future<T?> show<T>(
     BuildContext context, {
-    required WidgetBuilder builder,
+    required Widget child,
   }) {
     final navigator = appNavigatorKey.currentState;
     if (navigator == null) return Future.value();
     final theme = Theme.of(context);
-    final viewPaddings = MediaQuery.viewPaddingOf(context);
 
     return navigator.push(
       ModalBottomSheetRoute<T>(
@@ -28,10 +25,7 @@ class BottomSheetComponent extends StatelessWidget {
           return Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              BottomSheetComponent(
-                viewPaddings: viewPaddings,
-                builder: builder,
-              ),
+              BottomSheetComponent(child: child),
             ],
           );
         },
@@ -74,12 +68,7 @@ class BottomSheetComponent extends StatelessWidget {
           const _BottomSheetHandleComponent(),
 
           // -> content
-          Flexible(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: viewPaddings.bottom + 8.h),
-              child: builder(context),
-            ),
-          ),
+          Flexible(child: child),
         ],
       ),
     );
