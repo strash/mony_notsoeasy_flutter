@@ -6,21 +6,22 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-export "./select_entry.dart";
+export "./controller.dart";
+part "./select_entry.dart";
 
 class SelectComponent<T> extends StatefulWidget {
+  final SelectController<T?> controller;
   final Widget? placeholder;
   final Widget? activeEntry;
   final List<SelectEntryComponent<T>> Function(BuildContext context)
       entryBuilder;
-  final void Function(T? selected) onSelect;
 
   const SelectComponent({
     super.key,
+    required this.controller,
     this.placeholder,
     this.activeEntry,
     required this.entryBuilder,
-    required this.onSelect,
   });
 
   @override
@@ -32,16 +33,26 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
 
   Future<void> _onTap(BuildContext context) async {
     setState(() => _isActive = true);
+    final viewPaddings = MediaQuery.viewPaddingOf(context);
+    final entries = widget.entryBuilder(context);
     final value = await BottomSheetComponent.show<T>(
       context,
-      builder: (context) {
-        return Column(children: widget.entryBuilder(context));
-      },
+      child: ListView.builder(
+        shrinkWrap: true,
+        padding: EdgeInsets.only(bottom: viewPaddings.bottom + 20.h),
+        itemCount: entries.length,
+        itemBuilder: (context, index) {
+          return _EntryValueProvider<T>(
+            controller: widget.controller,
+            child: SizedBox(
+              child: entries.elementAt(index),
+            ),
+          );
+        },
+      ),
     );
+    if (value != null) widget.controller.value = value;
     setState(() => _isActive = false);
-    if (context.mounted) {
-      widget.onSelect(value);
-    }
   }
 
   @override
@@ -82,19 +93,26 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // -> placeholder
-                    if (widget.activeEntry == null)
-                      Text(
-                        placeholderText,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.robotoFlex(
-                          fontSize: 15.sp,
-                          color: theme.colorScheme.onSurfaceVariant
-                              .withOpacity(0.4),
-                        ),
-                      )
-                    else
-                      widget.activeEntry!,
+                    Flexible(
+                      child: widget.activeEntry == null
+                          ? Text(
+                              placeholderText,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.robotoFlex(
+                                fontSize: 15.sp,
+                                color: theme.colorScheme.onSurfaceVariant
+                                    .withOpacity(0.4),
+                              ),
+                            )
+                          : DefaultTextStyle(
+                              style: GoogleFonts.robotoFlex(
+                                fontSize: 15.sp,
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
+                              child: widget.activeEntry!,
+                            ),
+                    ),
 
                     // -> icon
                     Padding(
@@ -117,5 +135,31 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
         ),
       ),
     );
+  }
+}
+
+final class _EntryValueProvider<T> extends InheritedWidget {
+  final SelectController<T?> controller;
+
+  const _EntryValueProvider({
+    required super.child,
+    required this.controller,
+  });
+
+  static SelectController<T?>? maybeOf<T>(BuildContext context) {
+    final p =
+        context.dependOnInheritedWidgetOfExactType<_EntryValueProvider<T>>();
+    return p?.controller;
+  }
+
+  static SelectController<T?> of<T>(BuildContext context) {
+    final result = maybeOf<T>(context);
+    if (result == null) throw ArgumentError.value(context);
+    return result;
+  }
+
+  @override
+  bool updateShouldNotify(_EntryValueProvider<T> oldWidget) {
+    return controller.value != oldWidget.controller.value;
   }
 }
