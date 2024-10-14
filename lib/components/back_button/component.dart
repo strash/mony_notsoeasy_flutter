@@ -16,7 +16,7 @@ class BackButtonComponent extends StatelessWidget {
       onTap: navigator.maybePop<void>,
       child: Center(
         child: Padding(
-          padding: EdgeInsets.only(right: 16.w),
+          padding: EdgeInsets.only(right: 10.w),
           child: SvgPicture.asset(
             width: 28.r,
             height: 28.r,

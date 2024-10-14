@@ -1,9 +1,11 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/start_new_account_create/page/view_model.dart";
+import "package:sealed_currencies/sealed_currencies.dart";
 
 class StartNewAccountCreateView extends StatelessWidget {
   const StartNewAccountCreateView({super.key});
@@ -11,6 +13,8 @@ class StartNewAccountCreateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = ViewModel.of<StartNewAccountCreateViewModel>(context);
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -41,7 +45,7 @@ class StartNewAccountCreateView extends StatelessWidget {
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       autovalidateMode: AutovalidateMode.disabled,
                       decoration: const InputDecoration(
-                        hintText: "Название счета",
+                        hintText: "название счета",
                         counterText: "",
                       ),
                     ),
@@ -50,7 +54,7 @@ class StartNewAccountCreateView extends StatelessWidget {
                     // -> type
                     TextFormField(
                       decoration: InputDecoration(
-                        hintText: "Тип счета",
+                        hintText: "тип счета",
                         counterText: "",
                       ),
                     ),
@@ -59,7 +63,7 @@ class StartNewAccountCreateView extends StatelessWidget {
                     // -> color
                     TextFormField(
                       decoration: InputDecoration(
-                        hintText: "Цвет",
+                        hintText: "цвет",
                         counterText: "",
                       ),
                     ),
@@ -69,6 +73,7 @@ class StartNewAccountCreateView extends StatelessWidget {
                       children: [
                         // -> balance
                         Flexible(
+                          flex: 4,
                           child: TextFormField(
                             key: viewModel.balanceController.key,
                             focusNode: viewModel.balanceController.focus,
@@ -86,7 +91,7 @@ class StartNewAccountCreateView extends StatelessWidget {
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             autovalidateMode: AutovalidateMode.onUnfocus,
                             decoration: const InputDecoration(
-                              hintText: "Текущий баланс",
+                              hintText: "текущий баланс",
                               counterText: "",
                             ),
                             onFieldSubmitted:
@@ -97,21 +102,64 @@ class StartNewAccountCreateView extends StatelessWidget {
 
                         // -> currency
                         Flexible(
-                          child: SelectComponent<String>(
-                            placeholder: Text("Валюта"),
-                            onSelect: (value) {
-                              print(value);
-                            },
-                            entryBuilder: (context) {
-                              return List.generate(50, (index) {
-                                return SelectEntryComponent(
-                                  value: "value $index",
-                                  enabled: index != 1,
-                                  selected: index == 2,
-                                  child: Text(
-                                      "Value ya yayaya yayayayaya yaya yaya ya ya ya $index"),
-                                );
-                              });
+                          flex: 2,
+                          child: ListenableBuilder(
+                            listenable: viewModel.currencyController,
+                            builder: (context, child) {
+                              final value = viewModel.currencyController.value;
+
+                              return SelectComponent<FiatCurrency>(
+                                controller: viewModel.currencyController,
+                                placeholder: const Text("валюта"),
+                                activeEntry: value != null
+                                    ? Text(
+                                        value.code,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      )
+                                    : null,
+                                entryBuilder: (context) {
+                                  final list = List.of(
+                                    FiatCurrency.list,
+                                    growable: false,
+                                  )..sort((a, b) => a.code.compareTo(b.code));
+
+                                  return List.generate(list.length, (index) {
+                                    final item = list.elementAt(index);
+                                    final desc =
+                                        viewModel.getCurrencyDescription(item);
+
+                                    return SelectEntryComponent(
+                                      value: item,
+                                      child: Row(
+                                        children: [
+                                          // -> code
+                                          SizedBox(
+                                            width: 48.w,
+                                            child: Text(
+                                              item.code,
+                                              style: GoogleFonts.robotoFlex(
+                                                fontWeight: FontWeight.w500,
+                                                color:
+                                                    theme.colorScheme.tertiary,
+                                              ),
+                                            ),
+                                          ),
+
+                                          // -> name
+                                          Flexible(
+                                            child: Text(
+                                              desc,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                                },
+                              );
                             },
                           ),
                         ),

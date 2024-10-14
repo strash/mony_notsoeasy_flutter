@@ -78,6 +78,9 @@ class StartNewAccountView extends StatelessWidget {
 
                       // -> button import data
                       FilledButton(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: theme.colorScheme.secondary,
+                        ),
                         onPressed: () {
                           viewModel.onImportDataPressed(context);
                         },
