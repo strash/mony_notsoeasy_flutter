@@ -37,18 +37,18 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
     final entries = widget.entryBuilder(context);
     final value = await BottomSheetComponent.show<T>(
       context,
-      child: ListView.builder(
-        shrinkWrap: true,
-        padding: EdgeInsets.only(bottom: viewPaddings.bottom + 20.h),
-        itemCount: entries.length,
-        itemBuilder: (context, index) {
-          return _EntryValueProvider<T>(
-            controller: widget.controller,
-            child: SizedBox(
+      child: _EntryValueProvider<T>(
+        controller: widget.controller,
+        child: ListView.builder(
+          shrinkWrap: true,
+          padding: EdgeInsets.only(bottom: viewPaddings.bottom + 20.h),
+          itemCount: entries.length,
+          itemBuilder: (context, index) {
+            return SizedBox(
               child: entries.elementAt(index),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
     if (value != null) widget.controller.value = value;
