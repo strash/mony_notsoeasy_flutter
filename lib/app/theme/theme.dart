@@ -9,10 +9,6 @@ part "./colorscheme.dart";
 part "./filled_button.dart";
 part "./text_form_field.dart";
 
-const _primary = Color(0xFF08218A);
-const _secondary = Color(0xFF009143);
-const _tertiary = Color(0xFF313030);
-
 final lightTheme = ThemeData(
   colorScheme: _lightColorScheme,
   appBarTheme: _lightAppBarTheme,

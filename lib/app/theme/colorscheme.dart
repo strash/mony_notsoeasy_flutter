@@ -1,6 +1,10 @@
 part of "./theme.dart";
 
-const _variant = FlexSchemeVariant.oneHue;
+const _primary = Color(0xFF08218A);
+const _secondary = Color(0xFF009143);
+const _tertiary = Color(0xFF313030);
+
+const _variant = FlexSchemeVariant.fruitSalad;
 
 final _lightColorScheme = SeedColorScheme.fromSeeds(
   primaryKey: _primary,
