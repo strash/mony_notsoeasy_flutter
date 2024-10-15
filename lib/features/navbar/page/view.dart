@@ -1,8 +1,11 @@
+import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:flutter_svg/svg.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/features/navbar/components/components.dart";
 import "package:mony_app/features/navbar/page/view_model.dart";
+import "package:mony_app/gen/assets.gen.dart";
 
 class NavBarView extends StatelessWidget {
   static final double kTabHeight = 56.h;
@@ -15,6 +18,7 @@ class NavBarView extends StatelessWidget {
     final theme = Theme.of(context);
     final viewSize = MediaQuery.sizeOf(context);
     final viewPadding = MediaQuery.viewPaddingOf(context);
+    final halfTabs = (NavBarTabItem.length * 0.5).toInt();
 
     return StreamBuilder<NavBarTabItem>(
       stream: viewModel.tabStream,
@@ -49,15 +53,63 @@ class NavBarView extends StatelessWidget {
                         Expanded(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children:
-                                List.generate(NavBarTabItem.length, (index) {
-                              return Expanded(
-                                child: NavBarTabComponent(
-                                  index: index,
-                                  height: kTabHeight,
+                            children: [
+                              // -> left part
+                              ...NavBarTabItem.values.take(halfTabs).map((e) {
+                                return Expanded(
+                                  child: NavBarTabComponent(
+                                    index: e.index,
+                                    height: kTabHeight,
+                                  ),
+                                );
+                              }),
+
+                              // -> button plus
+                              Expanded(
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    viewModel.onAddExpensePressed(context);
+                                  },
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: theme.colorScheme.onSurface,
+                                      borderRadius: SmoothBorderRadius.all(
+                                        SmoothRadius(
+                                          cornerRadius: 17.r,
+                                          cornerSmoothing: 1.0,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 18.w,
+                                        vertical: 6.h,
+                                      ),
+                                      child: SvgPicture.asset(
+                                        Assets.icons.plus,
+                                        width: 32.r,
+                                        height: 32.r,
+                                        colorFilter: ColorFilter.mode(
+                                          theme.colorScheme.surface,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              );
-                            }),
+                              ),
+
+                              // -> rigth part
+                              ...NavBarTabItem.values.skip(halfTabs).map((e) {
+                                return Expanded(
+                                  child: NavBarTabComponent(
+                                    index: e.index,
+                                    height: kTabHeight,
+                                  ),
+                                );
+                              }),
+                            ],
                           ),
                         ),
 
