@@ -1,8 +1,26 @@
 part of "./component.dart";
 
 final class Palette {
-  // Color get random {
-  // }
+  Color get randomColor {
+    final list = [
+      monochrome.colors,
+      richElectricBlue.colors,
+      brandeisBlue.colors,
+      oceanBlue.colors,
+      darkOrchid.colors,
+      maroon.colors,
+      oriolesOrange.colors,
+      blazeOrange.colors,
+      chromeYellow.colors,
+      filippineYellow.colors,
+      maximumYellow.colors,
+      pear.colors,
+      apple.colors,
+    ];
+    final rng = Random(DateTime.now().millisecondsSinceEpoch);
+    final palette = list.elementAt(rng.nextInt(list.length));
+    return palette.elementAt(rng.nextInt(palette.length));
+  }
 
   List<List<Color>> get grid12x10 {
     final List<List<Color>> list = [
