@@ -14,6 +14,12 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/checkmark.bold.svg
+  String get checkmarkBold => 'assets/icons/checkmark.bold.svg';
+
+  /// File path: assets/icons/checkmark.semibold.svg
+  String get checkmarkSemibold => 'assets/icons/checkmark.semibold.svg';
+
   /// File path: assets/icons/checkmark.svg
   String get checkmark => 'assets/icons/checkmark.svg';
 
@@ -34,14 +40,20 @@ class $AssetsIconsGen {
   String get personCropCircleFillBadgePlus =>
       'assets/icons/person.crop.circle.fill.badge.plus.svg';
 
+  /// File path: assets/icons/plus.svg
+  String get plus => 'assets/icons/plus.svg';
+
   /// List of all assets
   List<String> get values => [
+        checkmarkBold,
+        checkmarkSemibold,
         checkmark,
         chevronBackward,
         chevronUpChevronDown,
         gearshapeFill,
         listBulletBelowRectangle,
-        personCropCircleFillBadgePlus
+        personCropCircleFillBadgePlus,
+        plus
       ];
 }
 

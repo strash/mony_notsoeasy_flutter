@@ -620,18 +620,18 @@ packages:
     dependency: "direct main"
     description:
       name: sealed_currencies
-      sha256: d02f259ffa25fa1b227478edd00ffb7bc78860168611be97aab4bcab984b9a69
+      sha256: b8aa884a4b5c061883d818e8e58f62b9057d59530b71660e4ced4edfa6b514fc
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.0"
+    version: "1.5.1"
   sealed_languages:
     dependency: transitive
     description:
       name: sealed_languages
-      sha256: "060ef61bf1b42cccdf18d065707ed9a75905fe7b78a6e65aec9a2e876489253e"
+      sha256: fbe2763bfac54ee8a52674c61588c4f1f9f260fd7db3782cbff3d154e952a918
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.0"
+    version: "1.5.1"
   shelf:
     dependency: transitive
     description:
