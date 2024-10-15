@@ -5,6 +5,13 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text("Settings")));
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: 100,
+        itemBuilder: (context, index) {
+          return Text("item $index");
+        },
+      ),
+    );
   }
 }

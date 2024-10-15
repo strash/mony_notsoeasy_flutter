@@ -30,17 +30,27 @@ class NavBarViewModelBuilder extends StatefulWidget {
 final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
   final _tabController = BehaviorSubject<NavBarTabItem>();
 
-  final _routes = List.generate(NavBarTabItem.length, (index) {
-    return switch (NavBarTabItem.from(index)) {
+  final _routes = NavBarTabItem.values.map((e) {
+    return switch (e) {
       NavBarTabItem.feed => const FeedPage(),
       NavBarTabItem.settings => const SettingsPage(),
     };
-  });
+  }).toList(growable: false);
 
-  final _navigatorTabKeys = List.generate(NavBarTabItem.length, (index) {
-    final item = NavBarTabItem.from(index);
-    return GlobalKey<NavigatorState>(debugLabel: "Tab $item");
-  });
+  final _navigatorTabKeys = NavBarTabItem.values.map((e) {
+    return GlobalKey<NavigatorState>(debugLabel: "Tab $e");
+  }).toList(growable: false);
+
+  GlobalKey<NavigatorState> getNavigatorTabKey(NavBarTabItem tab) {
+    return _navigatorTabKeys.elementAt(tab.index);
+  }
+
+  Route<dynamic> onGenerateRoute(NavBarTabItem tab, RouteSettings settings) {
+    return MaterialPageRoute(
+      settings: settings,
+      builder: (context) => _routes.elementAt(tab.index),
+    );
+  }
 
   Stream<NavBarTabItem> get tabStream => _tabController.stream;
 
@@ -74,14 +84,6 @@ final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
       case false:
       // TODO: тут поидеи можно сообщать экрану, что он может скролить до верха
     }
-  }
-
-  GlobalKey<NavigatorState> getNavigatorTabKey(int index) {
-    return _navigatorTabKeys.elementAt(index);
-  }
-
-  Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    return MaterialPageRoute(builder: (context) => _routes.elementAt(tab));
   }
 
   @override

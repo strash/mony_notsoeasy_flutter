@@ -25,12 +25,14 @@ class NavBarView extends StatelessWidget {
               // -> pages
               IndexedStack(
                 index: viewModel.tab,
-                children: List<Widget>.generate(NavBarTabItem.length, (index) {
+                children: NavBarTabItem.values.map((e) {
                   return NavigatorWrapper(
-                    navigatorKey: viewModel.getNavigatorTabKey(index),
-                    onGenerateRoute: viewModel.onGenerateRoute,
+                    navigatorKey: viewModel.getNavigatorTabKey(e),
+                    onGenerateRoute: (settings) {
+                      return viewModel.onGenerateRoute(e, settings);
+                    },
                   );
-                }),
+                }).toList(growable: false),
               ),
 
               // -> navbar
@@ -40,7 +42,7 @@ class NavBarView extends StatelessWidget {
                   width: viewSize.width,
                   height: kTabHeight + viewPadding.bottom,
                   child: ColoredBox(
-                    color: theme.colorScheme.surfaceContainerHighest,
+                    color: theme.colorScheme.surface,
                     child: Column(
                       children: [
                         // -> tabs

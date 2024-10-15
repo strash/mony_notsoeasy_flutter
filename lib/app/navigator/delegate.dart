@@ -1,27 +1,26 @@
 import "package:flutter/material.dart";
+import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/domain/services/account.dart";
 import "package:mony_app/features/features.dart";
 
-final class NavigatorDelegate extends RouterDelegate<Object> {
+final class NavigatorDelegate extends RouterDelegate<Object>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<Object> {
   final AppEventService _eventService;
-  final Future<bool> Function() _checkAccounts;
+  final AccountService _accountService;
 
   NavigatorDelegate({
     required AppEventService eventService,
-    required Future<bool> Function() checkAccounts,
-  })  : _checkAccounts = checkAccounts,
+    required AccountService accountService,
+  })  : _accountService = accountService,
         _eventService = eventService;
 
-  @override
-  Future<bool> popRoute() async {
-    return false;
+  Future<bool> _checkAccounts() async {
+    return (await _accountService.getAll()).isNotEmpty;
   }
 
   @override
-  void addListener(VoidCallback listener) {}
-
-  @override
-  void removeListener(VoidCallback listener) {}
+  GlobalKey<NavigatorState>? get navigatorKey => appNavigatorKey;
 
   @override
   Future<void> setNewRoutePath(Object? configuration) async {}
@@ -30,24 +29,19 @@ final class NavigatorDelegate extends RouterDelegate<Object> {
   Widget build(BuildContext context) {
     return StreamBuilder<Event>(
       // TODO: слушать еще удаление аккаунта
-      stream: _eventService.stream.where((e) {
-        return e is EventAccountCreated;
+      stream: _eventService.stream.where((event) {
+        return event is EventAccountCreated;
       }),
       builder: (context, snapshot) {
-        // TODO: почему-то не меняется экран при создании аккаунта
-        return FutureBuilder<bool?>(
+        return FutureBuilder<bool>(
           future: _checkAccounts(),
           builder: (context, fSnapshot) {
             Widget child = const Scaffold(
               body: Center(child: CircularProgressIndicator.adaptive()),
             );
-            final hasAccounts = fSnapshot.data;
-            if (hasAccounts != null) {
-              if (hasAccounts) {
-                child = const NavBarPage();
-              } else {
-                child = const StartPage();
-              }
+            if (fSnapshot.hasData) {
+              final hasAccounts = fSnapshot.data!;
+              child = hasAccounts ? const NavBarPage() : const StartPage();
             }
             return child;
           },

@@ -1,5 +1,3 @@
-import "dart:async";
-
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
@@ -10,10 +8,6 @@ final appNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "app_key");
 
 class MonyApp extends StatelessWidget {
   const MonyApp({super.key});
-
-  Future<bool> _checkFlow(AccountService accountService) async {
-    return (await accountService.getAll()).isNotEmpty;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +22,9 @@ class MonyApp extends StatelessWidget {
           title: "Mony App",
           routerDelegate: NavigatorDelegate(
             eventService: eventService,
-            checkAccounts: () => _checkFlow(accountService),
+            accountService: accountService,
           ),
           // TODO: добавить смену темы через AppEventService
-          // themeMode: ThemeMode.system,
           theme: lightTheme,
           darkTheme: darkTheme,
           supportedLocales: const [

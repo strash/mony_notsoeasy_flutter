@@ -23,11 +23,14 @@ final class OnCreateAccountPressedUseCase
     final accountService = context.read<AccountService>();
     final eventService = ViewModel.of<AppEventService>(context);
     final account = await accountService.create(value);
-    eventService.notify(
-      EventAccountCreated(
-        sender: StartNewAccountCreateViewModel,
-        account: account,
-      ),
-    );
+    if (context.mounted) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      eventService.notify(
+        EventAccountCreated(
+          sender: StartNewAccountCreateViewModel,
+          account: account,
+        ),
+      );
+    }
   }
 }
