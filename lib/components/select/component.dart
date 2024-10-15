@@ -89,7 +89,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                 color: theme.colorScheme.surfaceContainer,
               ),
               child: Padding(
-                padding: EdgeInsets.only(left: 15.w, right: 10.w),
+                padding: EdgeInsets.only(left: 15.w, right: 7.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
