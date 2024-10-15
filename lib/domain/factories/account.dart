@@ -1,3 +1,6 @@
+import "dart:ui";
+
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/factories/factories.dart";
 import "package:mony_app/domain/domain.dart";
@@ -14,6 +17,8 @@ final class AccountDatabaseFactoryImpl
       title: dto.title,
       type: EAccountType.from(dto.type),
       currency: FiatCurrency.fromCode(dto.currencyCode),
+      color: Color(int.tryParse(dto.color) ?? 0xFFFFFFFF),
+      balance: dto.balance.toDouble(),
     );
   }
 
@@ -26,6 +31,8 @@ final class AccountDatabaseFactoryImpl
       title: model.title,
       type: model.type.value,
       currencyCode: model.currency.code,
+      color: model.color.toHexadecimal(),
+      balance: model.balance,
     );
   }
 }

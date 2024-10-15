@@ -12,6 +12,8 @@ class AccountDto with _$AccountDto {
     required String title,
     required String type,
     required String currencyCode,
+    required String color,
+    required num balance,
   }) = _AccountDto;
 
   factory AccountDto.fromJson(Map<String, dynamic> json) =>

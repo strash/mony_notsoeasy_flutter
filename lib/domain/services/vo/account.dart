@@ -1,3 +1,5 @@
+import "dart:ui";
+
 import "package:freezed_annotation/freezed_annotation.dart";
 import "package:mony_app/domain/models/models.dart";
 
@@ -9,6 +11,8 @@ sealed class AccountValueObject with _$AccountValueObject {
     required String title,
     required EAccountType type,
     required String currencyCode,
+    required Color color,
+    @Default(0.0) double balance,
   }) = AccountCreateValueObject;
 
   const factory AccountValueObject.update({
@@ -16,5 +20,7 @@ sealed class AccountValueObject with _$AccountValueObject {
     String? title,
     EAccountType? type,
     String? currencyCode,
+    Color? color,
+    double? balance,
   }) = AccountUpdateValueObject;
 }

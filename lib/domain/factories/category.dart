@@ -1,5 +1,6 @@
 import "dart:ui";
 
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/factories/factories.dart";
 import "package:mony_app/domain/domain.dart";
@@ -22,7 +23,6 @@ final class CategoryDatabaseFactoryImpl
 
   @override
   CategoryDto to(CategoryModel model) {
-    final String color = model.color.value.toRadixString(16).toUpperCase();
     return CategoryDto(
       id: model.id,
       created: model.created.toUtc().toIso8601String(),
@@ -30,7 +30,7 @@ final class CategoryDatabaseFactoryImpl
       title: model.title,
       icon: model.icon,
       sort: model.sort,
-      color: "0x${color.padLeft(8, "0")}",
+      color: model.color.toHexadecimal(),
       expenseType: model.expenseType.value,
     );
   }
