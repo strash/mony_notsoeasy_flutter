@@ -25,6 +25,14 @@ final class InputController {
     this.validationStrategy = EInputValidationStrategy.any,
   });
 
+  void addListener(VoidCallback listener) {
+    controller.addListener(listener);
+  }
+
+  void removeListener(VoidCallback listener) {
+    controller.removeListener(listener);
+  }
+
   void onTapOutside(PointerDownEvent event) {
     if (focus.hasFocus) {
       validator(text);
