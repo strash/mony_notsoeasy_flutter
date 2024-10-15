@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/navbar/page/view.dart";
+import "package:mony_app/features/navbar/use_case/use_case.dart";
 import "package:rxdart/subjects.dart";
 
 enum NavBarTabItem {
@@ -29,6 +30,7 @@ class NavBarViewModelBuilder extends StatefulWidget {
 
 final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
   final _tabController = BehaviorSubject<NavBarTabItem>();
+  final onAddExpensePressed = OnAddExpensePressedUseCase();
 
   final _routes = NavBarTabItem.values.map((e) {
     return switch (e) {
