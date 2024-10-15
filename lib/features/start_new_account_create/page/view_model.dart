@@ -35,12 +35,14 @@ final class StartNewAccountCreateViewModel
   late final _lang = NaturalLanguage.maybeFromCodeShort(_locale.countryCode);
 
   AccountValueObject get value {
+    String balance = balanceController.text.trim();
+    balance = balance.replaceAll(",", ".");
     return AccountValueObject.create(
       title: titleController.text.trim(),
       color: colorController.value ?? Palette().randomColor,
       type: typeController.value ?? EAccountType.defaultValue,
       currencyCode: currencyController.value?.code ?? "USD",
-      balance: double.tryParse(balanceController.text.trim()) ?? 0.0,
+      balance: double.tryParse(balance) ?? 0.0,
     );
   }
 
