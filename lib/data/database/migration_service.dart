@@ -1,5 +1,6 @@
 import "dart:math";
 
+import "package:flutter/foundation.dart";
 import "package:mony_app/data/database/migrations/migrations.dart";
 import "package:sqflite/sqflite.dart";
 
@@ -7,19 +8,24 @@ final class MigrationService {
   final List<BaseMigration> _migrations = [
     M1728167641Init(),
     M1728413017SeedDefaultCategories(),
+    M1728991478AddColorAndBalanceColumnsToAccounts(),
   ];
 
-  BaseMigration? getFor(int oldVersion, int newVersion) {
-    final isUp = oldVersion < newVersion;
-    final index = min(0, isUp ? newVersion - 1 : newVersion);
-    final migrations = _migrations.elementAtOrNull(index);
-    if (migrations == null) {
-      throw ArgumentError.value(
-        migrations,
-        "MIGRATION: No migrations for $index version were found",
-      );
+  Iterable<BaseMigration> getFor(int from, int to) {
+    // NOTE: initial migration
+    if (from == 0 && to == 1) return _migrations.take(1);
+    final list = List<BaseMigration>.from(_migrations).toList(growable: false);
+    final isUp = from < to;
+    final (lhs, rhs) = (max(0, from), max(0, to));
+    final begin = min(lhs, rhs);
+    final range = (max(from, to) - min(from, to)).toInt();
+    final migrations = list.skip(begin).take(range);
+    final m = (isUp ? migrations : migrations.toList(growable: false).reversed);
+    if (kDebugMode) {
+      final fold = m.fold("\n", (prev, e) => "$prev\t -> ${e.runtimeType}\n");
+      print("💿 MIGRATIONS: ${isUp ? "🆙" : "🔽"} from $from to $to: $fold");
     }
-    return migrations;
+    return m;
   }
 }
 

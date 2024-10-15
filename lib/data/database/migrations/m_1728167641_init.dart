@@ -64,7 +64,7 @@ final class M1728167641Init extends BaseMigration {
 
   // queries
   late final _accountsQuery = """
-CREATE TABLE $_accounts (
+CREATE TABLE IF NOT EXISTS $_accounts (
 	$defaultColumns,
 	$_accountsTitle        TEXT DEFAULT ''                      NOT NULL,
 	$_accountsType         TEXT DEFAULT '$_defaultAccountType'  NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE $_accounts (
 """;
 
   late final _categoryQuery = """
-CREATE TABLE $_categories (
+CREATE TABLE IF NOT EXISTS $_categories (
 	$defaultColumns,
 	$_categoriesTitle       TEXT    DEFAULT ''                     NOT NULL,
 	$_categoriesIcon        TEXT    DEFAULT ''                     NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE $_categories (
 """;
 
   late final _expensesQuery = """
-CREATE TABLE $_expenses (
+CREATE TABLE IF NOT EXISTS $_expenses (
 	$defaultColumns,
 	$_expensesAmount     REAL DEFAULT 0                      NOT NULL,
 	$_expensesType       TEXT DEFAULT '$_defaultExpenseType' NOT NULL,
@@ -99,14 +99,14 @@ CREATE TABLE $_expenses (
 """;
 
   late final _tagsQuery = """
-CREATE TABLE $_tags (
+CREATE TABLE IF NOT EXISTS $_tags (
 	$defaultColumns,
 	$_tagsTitle TEXT UNIQUE DEFAULT '' NOT NULL
 );
 """;
 
   late final _expenseTagsQuery = """
-CREATE TABLE $_expenseTags (
+CREATE TABLE IF NOT EXISTS $_expenseTags (
 	$defaultColumns,
 	$_expenseTagsExpenseId TEXT DEFAULT '' NOT NULL,
 	$_expenseTagsTagId     TEXT DEFAULT '' NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE $_expenseTags (
     }
     final indexName = _getIndexName(table: table, columns: columns);
     return """
-CREATE ${unique ? "UNIQUE" : ""} INDEX $indexName
+CREATE ${unique ? "UNIQUE" : ""} INDEX IF NOT EXISTS $indexName
 ON $table (${columns.join(", ")});
 """;
   }
