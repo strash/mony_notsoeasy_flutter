@@ -1,4 +1,4 @@
-import "package:flutter/foundation.dart";
+part of "./component.dart";
 
 final class SelectController<T> extends ChangeNotifier {
   T _value;

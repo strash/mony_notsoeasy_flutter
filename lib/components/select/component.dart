@@ -6,8 +6,9 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-export "./controller.dart";
-part "./select_entry.dart";
+part "./controller.dart";
+part "./item.dart";
+part "./provider.dart";
 
 class SelectComponent<T> extends StatefulWidget {
   final SelectController<T?> controller;
@@ -37,7 +38,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
     final entries = widget.entryBuilder(context);
     final value = await BottomSheetComponent.show<T>(
       context,
-      child: _EntryValueProvider<T>(
+      child: _ValueProvider<T>(
         controller: widget.controller,
         child: ListView.builder(
           shrinkWrap: true,
@@ -62,7 +63,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
     if (widget.placeholder != null && widget.placeholder is Text) {
       placeholderText = (widget.placeholder! as Text).data ?? "";
     }
-    final primary = theme.colorScheme.primary;
+    final accent = theme.colorScheme.secondary;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -72,8 +73,8 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short2,
           tween: ColorTween(
-            begin: primary.withOpacity(0.0),
-            end: primary.withOpacity(_isActive ? 1.0 : 0.0),
+            begin: accent.withOpacity(0.0),
+            end: accent.withOpacity(_isActive ? 1.0 : 0.0),
           ),
           builder: (context, color, child) {
             return DecoratedBox(
@@ -121,10 +122,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                         Assets.icons.chevronUpChevronDown,
                         width: 24.r,
                         height: 24.r,
-                        colorFilter: ColorFilter.mode(
-                          theme.colorScheme.primary,
-                          BlendMode.srcIn,
-                        ),
+                        colorFilter: ColorFilter.mode(accent, BlendMode.srcIn),
                       ),
                     ),
                   ],
@@ -135,31 +133,5 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
         ),
       ),
     );
-  }
-}
-
-final class _EntryValueProvider<T> extends InheritedWidget {
-  final SelectController<T?> controller;
-
-  const _EntryValueProvider({
-    required super.child,
-    required this.controller,
-  });
-
-  static SelectController<T?>? maybeOf<T>(BuildContext context) {
-    final p =
-        context.dependOnInheritedWidgetOfExactType<_EntryValueProvider<T>>();
-    return p?.controller;
-  }
-
-  static SelectController<T?> of<T>(BuildContext context) {
-    final result = maybeOf<T>(context);
-    if (result == null) throw ArgumentError.value(context);
-    return result;
-  }
-
-  @override
-  bool updateShouldNotify(_EntryValueProvider<T> oldWidget) {
-    return controller.value != oldWidget.controller.value;
   }
 }
