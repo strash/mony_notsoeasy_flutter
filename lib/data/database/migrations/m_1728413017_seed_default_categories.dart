@@ -32,7 +32,7 @@ INSERT INTO $_categories (
 	$_categoriesIcon,
 	$_categoriesSort,
 	$_categoriesExpenseType
-) VALUES('$id', '$date', '$title', '$icon', $sort, '$expenseType');
+) VALUES('$id', '$date', '$date', '$title', '$icon', $sort, '$expenseType');
 """;
   }
 
