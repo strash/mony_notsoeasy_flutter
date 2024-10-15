@@ -16,7 +16,7 @@ final _filledButtonThemeData = FilledButtonThemeData(
     ),
     minimumSize: Size.square(48.r),
     textStyle: GoogleFonts.robotoFlex(
-      fontSize: 15.sp,
+      fontSize: 16.sp,
       fontWeight: FontWeight.w600,
     ),
   ),

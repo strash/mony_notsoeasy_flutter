@@ -101,15 +101,16 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.robotoFlex(
-                                fontSize: 15.sp,
+                                fontSize: 16.sp,
                                 color: theme.colorScheme.onSurfaceVariant
                                     .withOpacity(0.4),
                               ),
                             )
                           : DefaultTextStyle(
                               style: GoogleFonts.robotoFlex(
-                                fontSize: 15.sp,
+                                fontSize: 16.sp,
                                 color: theme.colorScheme.onSurfaceVariant,
+                                fontWeight: FontWeight.w500,
                               ),
                               child: widget.activeEntry!,
                             ),

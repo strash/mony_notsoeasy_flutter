@@ -50,7 +50,7 @@ class StartNewAccountCreateView extends StatelessWidget {
                             autovalidateMode: AutovalidateMode.disabled,
                             style: GoogleFonts.robotoFlex(
                               color: theme.colorScheme.onSurface,
-                              fontSize: 15.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w400,
                             ),
                             decoration: const InputDecoration(
@@ -99,7 +99,7 @@ class StartNewAccountCreateView extends StatelessWidget {
                       autovalidateMode: AutovalidateMode.onUnfocus,
                       style: GoogleFonts.robotoFlex(
                         color: theme.colorScheme.onSurface,
-                        fontSize: 15.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w400,
                       ),
                       decoration: const InputDecoration(

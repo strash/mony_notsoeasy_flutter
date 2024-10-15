@@ -31,7 +31,7 @@ WidgetStateTextStyle _labelStyle(ColorScheme scheme) {
     }
     return GoogleFonts.robotoFlex(
       color: color,
-      fontSize: 15.sp,
+      fontSize: 16.sp,
       fontWeight: FontWeight.w400,
     );
   });
@@ -47,7 +47,7 @@ WidgetStateTextStyle _hintInputStyle(ColorScheme scheme) {
     }
     return GoogleFonts.robotoFlex(
       color: color,
-      fontSize: 15.sp,
+      fontSize: 16.sp,
       fontWeight: FontWeight.w400,
     );
   });
