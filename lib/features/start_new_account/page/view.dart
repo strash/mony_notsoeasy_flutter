@@ -23,10 +23,10 @@ class StartNewAccountView extends StatelessWidget {
               child: Center(
                 child: SvgPicture.asset(
                   Assets.icons.personCropCircleFillBadgePlus,
-                  width: 100.r,
-                  height: 100.r,
+                  width: 150.r,
+                  height: 150.r,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.surfaceContainerHighest,
+                    theme.colorScheme.surfaceContainerLowest,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -79,7 +79,7 @@ class StartNewAccountView extends StatelessWidget {
                       // -> button import data
                       FilledButton(
                         style: FilledButton.styleFrom(
-                          backgroundColor: theme.colorScheme.secondary,
+                          backgroundColor: theme.colorScheme.tertiary,
                         ),
                         onPressed: () {
                           viewModel.onImportDataPressed(context);

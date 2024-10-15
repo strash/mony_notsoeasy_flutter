@@ -22,7 +22,7 @@ class BackButtonComponent extends StatelessWidget {
             height: 28.r,
             Assets.icons.chevronBackward,
             colorFilter: ColorFilter.mode(
-              theme.colorScheme.primary,
+              theme.colorScheme.secondary,
               BlendMode.srcIn,
             ),
           ),

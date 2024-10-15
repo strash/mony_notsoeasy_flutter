@@ -48,11 +48,7 @@ class BottomSheetComponent extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Color.lerp(
-          theme.colorScheme.surfaceContainer,
-          theme.colorScheme.surface,
-          0.7,
-        ),
+        color: theme.colorScheme.surface,
         borderRadius: SmoothBorderRadius.all(
           SmoothRadius(
             cornerRadius: 26.r,

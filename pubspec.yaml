@@ -8,7 +8,6 @@ environment:
 
 dependencies:
   figma_squircle: ^0.5.3
-  flex_seed_scheme: ^3.4.1
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.3
