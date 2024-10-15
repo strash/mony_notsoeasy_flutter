@@ -42,7 +42,7 @@ class NavBarTabComponent extends StatelessWidget {
             begin: theme.colorScheme.onSurface,
             end: viewModel.tab == index
                 ? theme.colorScheme.primary
-                : theme.colorScheme.onSurface,
+                : theme.colorScheme.tertiary,
           ),
           builder: (context, color, child) {
             return Center(

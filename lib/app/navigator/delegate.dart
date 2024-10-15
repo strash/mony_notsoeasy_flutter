@@ -28,13 +28,13 @@ final class NavigatorDelegate extends RouterDelegate<Object> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<EventAccountCreated>(
+    return StreamBuilder<Event>(
       // TODO: слушать еще удаление аккаунта
-      stream: _eventService.stream
-          .where((e) => e is EventAccountCreated)
-          .distinct()
-          .cast<EventAccountCreated>(),
+      stream: _eventService.stream.where((e) {
+        return e is EventAccountCreated;
+      }),
       builder: (context, snapshot) {
+        // TODO: почему-то не меняется экран при создании аккаунта
         return FutureBuilder<bool?>(
           future: _checkAccounts(),
           builder: (context, fSnapshot) {

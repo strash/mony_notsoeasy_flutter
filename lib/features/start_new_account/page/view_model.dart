@@ -13,7 +13,7 @@ final class StartNewAccountViewModelBuilder extends StatefulWidget {
 
 final class StartNewAccountViewModel
     extends ViewModelState<StartNewAccountViewModelBuilder> {
-  final onCreateAccountPressed = OnCreatAccountPressedUseCase();
+  final onCreateAccountPressed = OnCreateAccountPressedUseCase();
   final onImportDataPressed = OnImportDataPressedUseCase();
 
   @override

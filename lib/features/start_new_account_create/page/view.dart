@@ -47,7 +47,6 @@ class StartNewAccountCreateView extends StatelessWidget {
                             textInputAction: TextInputAction.done,
                             maxLength: 200,
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            autovalidateMode: AutovalidateMode.disabled,
                             style: GoogleFonts.robotoFlex(
                               color: theme.colorScheme.onSurface,
                               fontSize: 16.sp,
@@ -96,7 +95,7 @@ class StartNewAccountCreateView extends StatelessWidget {
                       textInputAction: TextInputAction.done,
                       maxLength: 50,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                      autovalidateMode: AutovalidateMode.onUnfocus,
+                      autovalidateMode: AutovalidateMode.always,
                       style: GoogleFonts.robotoFlex(
                         color: theme.colorScheme.onSurface,
                         fontSize: 16.sp,
@@ -112,7 +111,13 @@ class StartNewAccountCreateView extends StatelessWidget {
 
                     // -> submit
                     FilledButton(
-                      onPressed: () {},
+                      onPressed: viewModel.isSubmitEnabled
+                          ? () {
+                              final action = viewModel.onCreateAccountPressed;
+                              action.value = viewModel.value;
+                              action(context);
+                            }
+                          : null,
                       child: const Text("Создать счет"),
                     ),
                   ],
