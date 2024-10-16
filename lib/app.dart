@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_localizations/flutter_localizations.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/domain.dart";
@@ -27,6 +28,11 @@ class MonyApp extends StatelessWidget {
           // TODO: добавить смену темы через AppEventService
           theme: lightTheme,
           darkTheme: darkTheme,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           supportedLocales: const [
             Locale("en", "EN"),
             Locale("ru", "RU"),
