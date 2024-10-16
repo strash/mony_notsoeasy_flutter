@@ -26,8 +26,26 @@ class $AssetsIconsGen {
   /// File path: assets/icons/chevron.backward.svg
   String get chevronBackward => 'assets/icons/chevron.backward.svg';
 
+  /// File path: assets/icons/chevron.forward.svg
+  String get chevronForward => 'assets/icons/chevron.forward.svg';
+
   /// File path: assets/icons/chevron.up.chevron.down.svg
   String get chevronUpChevronDown => 'assets/icons/chevron.up.chevron.down.svg';
+
+  /// File path: assets/icons/document.badge.arrow.down.fill.svg
+  String get documentBadgeArrowDownFill =>
+      'assets/icons/document.badge.arrow.down.fill.svg';
+
+  /// File path: assets/icons/document.badge.arrow.up.fill.svg
+  String get documentBadgeArrowUpFill =>
+      'assets/icons/document.badge.arrow.up.fill.svg';
+
+  /// File path: assets/icons/exclamationmark.circle.fill.svg
+  String get exclamationmarkCircleFill =>
+      'assets/icons/exclamationmark.circle.fill.svg';
+
+  /// File path: assets/icons/exclamationmark.circle.svg
+  String get exclamationmarkCircle => 'assets/icons/exclamationmark.circle.svg';
 
   /// File path: assets/icons/gearshape.fill.svg
   String get gearshapeFill => 'assets/icons/gearshape.fill.svg';
@@ -43,17 +61,30 @@ class $AssetsIconsGen {
   /// File path: assets/icons/plus.svg
   String get plus => 'assets/icons/plus.svg';
 
+  /// File path: assets/icons/square.and.arrow.down.svg
+  String get squareAndArrowDown => 'assets/icons/square.and.arrow.down.svg';
+
+  /// File path: assets/icons/widget.small.badge.plus.svg
+  String get widgetSmallBadgePlus => 'assets/icons/widget.small.badge.plus.svg';
+
   /// List of all assets
   List<String> get values => [
         checkmarkBold,
         checkmarkSemibold,
         checkmark,
         chevronBackward,
+        chevronForward,
         chevronUpChevronDown,
+        documentBadgeArrowDownFill,
+        documentBadgeArrowUpFill,
+        exclamationmarkCircleFill,
+        exclamationmarkCircle,
         gearshapeFill,
         listBulletBelowRectangle,
         personCropCircleFillBadgePlus,
-        plus
+        plus,
+        squareAndArrowDown,
+        widgetSmallBadgePlus
       ];
 }
 
