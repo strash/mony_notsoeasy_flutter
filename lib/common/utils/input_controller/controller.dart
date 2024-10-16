@@ -1,5 +1,5 @@
 import "package:flutter/widgets.dart";
-import "package:mony_app/common/utils/input_controller/validators/validators.dart";
+import "package:mony_app/common/common.dart";
 
 export "./validators/validators.dart";
 

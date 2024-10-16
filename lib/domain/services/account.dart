@@ -1,4 +1,4 @@
-import "package:mony_app/common/extensions/string.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/data/database/repository/repository.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:sealed_currencies/sealed_currencies.dart";

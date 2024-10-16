@@ -1,6 +1,6 @@
 import "dart:ui";
 
-import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/factories/factories.dart";
 import "package:mony_app/domain/domain.dart";

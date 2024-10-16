@@ -1,4 +1,4 @@
-import "package:mony_app/common/extensions/string.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/data/database/migration_service.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:sqflite/sqflite.dart";
