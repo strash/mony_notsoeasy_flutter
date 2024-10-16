@@ -4,15 +4,15 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/features/start_new_account_create/components/components.dart";
-import "package:mony_app/features/start_new_account_create/page/view_model.dart";
+import "package:mony_app/features/start_account_create/components/components.dart";
+import "package:mony_app/features/start_account_create/page/view_model.dart";
 
-class StartNewAccountCreateView extends StatelessWidget {
-  const StartNewAccountCreateView({super.key});
+class StartAccountCreateView extends StatelessWidget {
+  const StartAccountCreateView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ViewModel.of<StartNewAccountCreateViewModel>(context);
+    final viewModel = ViewModel.of<StartAccountCreateViewModel>(context);
     final theme = Theme.of(context);
 
     return Scaffold(

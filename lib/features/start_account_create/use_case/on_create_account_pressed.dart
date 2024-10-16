@@ -1,7 +1,7 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/start_new_account_create/page/view_model.dart";
+import "package:mony_app/features/start_account_create/page/view_model.dart";
 import "package:provider/provider.dart";
 
 final class OnCreateAccountPressedUseCase
@@ -27,7 +27,7 @@ final class OnCreateAccountPressedUseCase
       Navigator.of(context).popUntil((route) => route.isFirst);
       eventService.notify(
         EventAccountCreated(
-          sender: StartNewAccountCreateViewModel,
+          sender: StartAccountCreateViewModel,
           account: account,
         ),
       );

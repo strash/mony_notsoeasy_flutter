@@ -1,22 +1,22 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/view_model/view_model.dart";
-import "package:mony_app/common/utils/utils.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/start_new_account_create/page/view.dart";
-import "package:mony_app/features/start_new_account_create/use_case/use_case.dart";
+import "package:mony_app/features/start_account_create/page/view.dart";
+import "package:mony_app/features/start_account_create/use_case/use_case.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
-final class StartNewAccountCreateViewModelBuilder extends StatefulWidget {
-  const StartNewAccountCreateViewModelBuilder({super.key});
+final class StartAccountCreateViewModelBuilder extends StatefulWidget {
+  const StartAccountCreateViewModelBuilder({super.key});
 
   @override
-  ViewModelState<StartNewAccountCreateViewModelBuilder> createState() =>
-      StartNewAccountCreateViewModel();
+  ViewModelState<StartAccountCreateViewModelBuilder> createState() =>
+      StartAccountCreateViewModel();
 }
 
-final class StartNewAccountCreateViewModel
-    extends ViewModelState<StartNewAccountCreateViewModelBuilder> {
+final class StartAccountCreateViewModel
+    extends ViewModelState<StartAccountCreateViewModelBuilder> {
   final titleController = InputController();
   final colorController = ColorPickerController(Palette().randomColor);
   final typeController =
@@ -100,9 +100,9 @@ final class StartNewAccountCreateViewModel
 
   @override
   Widget build(BuildContext context) {
-    return ViewModel<StartNewAccountCreateViewModel>(
+    return ViewModel<StartAccountCreateViewModel>(
       viewModel: this,
-      child: const StartNewAccountCreateView(),
+      child: const StartAccountCreateView(),
     );
   }
 }

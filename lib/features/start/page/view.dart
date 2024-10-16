@@ -28,7 +28,7 @@ class StartView extends StatelessWidget {
                       style: GoogleFonts.robotoFlex(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w400,
-                        color: theme.colorScheme.onSurface.withOpacity(0.7),
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                     Text(
@@ -36,6 +36,7 @@ class StartView extends StatelessWidget {
                       style: GoogleFonts.golosText(
                         fontSize: 40.sp,
                         fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
                   ],
