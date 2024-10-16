@@ -1,3 +1,6 @@
+import "dart:io";
+
+import "package:flutter/foundation.dart";
 import "package:mony_app/data/database/migration_service.dart";
 import "package:path/path.dart" as path;
 import "package:sqflite/sqflite.dart";
@@ -32,13 +35,23 @@ class AppDatabase {
   }
 
   Future<Database> _openDb() async {
-    final dbPath = await getDatabasesPath();
+    String dbPath = await getDatabasesPath();
+    if (kDebugMode) {
+      const pathToLocalDB = String.fromEnvironment("DEV_PATH_TO_LOCAL_DB");
+      if (pathToLocalDB.isNotEmpty) {
+        final dir = Directory(pathToLocalDB);
+        final exists = await dir.exists();
+        if (!exists) await dir.create(recursive: true);
+        dbPath = dir.path;
+      }
+    }
     final pathToDatabase = path.join(dbPath, dbName);
     return await openDatabase(
       pathToDatabase,
       version: schemaVersion,
       onConfigure: (db) async {
         await db.execute("PRAGMA foreign_keys = ON");
+        await db.rawQuery("PRAGMA journal_mode = WAL");
       },
       onCreate: (db, version) async {
         _migrations.getFor(0, version).forEach((e) async => await e.up(db));
