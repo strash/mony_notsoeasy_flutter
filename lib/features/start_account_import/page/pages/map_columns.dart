@@ -3,12 +3,13 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/start_account_import/components/components.dart";
-import "package:mony_app/features/start_account_import/page/page.dart";
+import "package:mony_app/features/start_account_import/page/event.dart";
+import "package:mony_app/features/start_account_import/page/view_model.dart";
 
-class ImportLoadedCsvSummaryPage extends StatelessWidget {
+class ImportMapColumnsPage extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportLoadedCsvSummaryPage({
+  const ImportMapColumnsPage({
     super.key,
     this.event,
   });
@@ -28,7 +29,7 @@ class ImportLoadedCsvSummaryPage extends StatelessWidget {
             children: [
               // -> title
               Text(
-                "Красивый у тебя CSV 👍",
+                'Колонка "${viewModel.currentColumn}"',
                 style: GoogleFonts.golosText(
                   fontSize: 20.sp,
                   color: theme.colorScheme.onSurface,
@@ -39,8 +40,9 @@ class ImportLoadedCsvSummaryPage extends StatelessWidget {
 
               // -> description
               Text(
-                "Нам удалось найти ${viewModel.numberOfEntries}.\n"
-                'Проверь — все ли в порядке.\nЕсли да, то жми "Дальше".',
+                "Выбери подходящую колонку,\n"
+                "значение в которой подходит\n"
+                'к колонке "${viewModel.currentColumn}".',
                 style: GoogleFonts.robotoFlex(
                   fontSize: 15.sp,
                   height: 1.3.sp,

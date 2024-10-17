@@ -3,6 +3,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/features/features.dart";
+import "package:mony_app/features/start_account_import/components/components.dart";
 
 class StartAccountImportView extends StatelessWidget {
   const StartAccountImportView({super.key});
@@ -13,45 +14,91 @@ class StartAccountImportView extends StatelessWidget {
     final viewModel = ViewModel.of<StartAccountImportViewModel>(context);
 
     return Scaffold(
-      body: StreamBuilder<ImportModelEvent>(
+      body: StreamBuilder<ImportEvent>(
         stream: viewModel.stream,
         builder: (context, snapshot) {
           final event = snapshot.data;
 
-          return CustomScrollView(
-            slivers: [
-              // -> appbar
-              TweenAnimationBuilder<int>(
-                duration: Durations.long4,
-                tween: IntTween(begin: 0, end: viewModel.progress),
-                builder: (context, progress, child) {
-                  return AppBarComponent(title: "$progress%");
-                },
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              CustomScrollView(
+                slivers: [
+                  // -> appbar
+                  TweenAnimationBuilder<int>(
+                    duration: Durations.long4,
+                    tween: IntTween(begin: 0, end: viewModel.progress),
+                    builder: (context, progress, child) {
+                      return AppBarComponent(title: "$progress%");
+                    },
+                  ),
+
+                  // -> content
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: 20.h,
+                        bottom: viewPadding.bottom + 20.h + 48.h + 20.h,
+                      ),
+                      child: AnimatedSwitcher(
+                        duration: Durations.medium3,
+                        child: switch (event) {
+                          // 1 step
+                          ImportEventInitial() ||
+                          ImportEventLoadingCsv() ||
+                          ImportEventErrorLoadingCsv() =>
+                            ImportLoadCsvPage(event: event),
+                          // 2 step
+                          ImportEventCsvLoaded() =>
+                            ImportLoadedCsvSummaryPage(event: event),
+                          // 3 step
+                          ImportEventMapAccount() ||
+                          ImportEventMapAmount() ||
+                          ImportEventMapExpenseType() ||
+                          ImportEventMapDate() ||
+                          ImportEventMapCategory() ||
+                          ImportEventMapTag() ||
+                          ImportEventMapNote() =>
+                            ImportMapColumnsPage(event: event),
+                          // // just in case
+                          null => const Center(
+                              child: CircularProgressIndicator.adaptive(),
+                            ),
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
-              // -> content
-              SliverFillRemaining(
-                hasScrollBody: false,
+              // -> controls
+              Positioned(
+                left: 0.0,
+                right: 0.0,
+                bottom: viewPadding.bottom + 20.h,
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 20.h,
-                    bottom: 40.h + viewPadding.bottom,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15.w),
                   child: AnimatedSwitcher(
                     duration: Durations.medium3,
                     child: switch (event) {
                       // 1 step
-                      ImportModelEventInitial() ||
-                      ImportModelEventLoadingCsv() ||
-                      ImportModelEventErrorLoadingCsv() =>
-                        ImportLoadCsvPage(event: event),
+                      ImportEventInitial() ||
+                      ImportEventLoadingCsv() ||
+                      ImportEventErrorLoadingCsv() =>
+                        SelectFileButtonComponent(event: event),
                       // 2 step
-                      ImportModelEventCsvloaded() =>
-                        ImportLoadedCsvSummaryPage(event: event),
+                      ImportEventCsvLoaded() ||
+                      // 3 step
+                      ImportEventMapAccount() ||
+                      ImportEventMapAmount() ||
+                      ImportEventMapExpenseType() ||
+                      ImportEventMapDate() ||
+                      ImportEventMapCategory() ||
+                      ImportEventMapTag() ||
+                      ImportEventMapNote() =>
+                        BackwardForwardButtonsComponent(event: event),
                       // just in case
-                      ImportModelEvent() || null => const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        ),
+                      null => const SizedBox(),
                     },
                   ),
                 ),

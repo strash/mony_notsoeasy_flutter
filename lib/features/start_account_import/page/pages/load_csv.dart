@@ -2,12 +2,11 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class ImportLoadCsvPage extends StatelessWidget {
-  final ImportModelEvent? event;
+  final ImportEvent? event;
 
   const ImportLoadCsvPage({
     super.key,
@@ -17,14 +16,13 @@ class ImportLoadCsvPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = ViewModel.of<StartAccountImportViewModel>(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.fromLTRB(25.w, .0, 25.w, 40.h),
-          child: Column(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // -> title
@@ -53,20 +51,17 @@ class ImportLoadCsvPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        const Spacer(),
+          SizedBox(height: 40.h),
 
-        // -> loader
-        if (event is ImportModelEventLoadingCsv)
-          const Center(
-            child: CircularProgressIndicator.adaptive(),
-          ),
+          // -> loader
+          if (event is ImportEventLoadingCsv)
+            const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
 
-        // -> error
-        if (event is ImportModelEventErrorLoadingCsv)
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
-            child: Row(
+          // -> error
+          if (event is ImportEventErrorLoadingCsv)
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SvgPicture.asset(
@@ -92,35 +87,8 @@ class ImportLoadCsvPage extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        const Spacer(),
-
-        // -> button select file
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: FilledButton(
-            onPressed: event is ImportModelEventInitial
-                ? () => viewModel.onSelectFilePressed(context)
-                : null,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Выбрать файл"),
-                SizedBox(width: 8.w),
-                SvgPicture.asset(
-                  Assets.icons.documentBadgeArrowDownFill,
-                  width: 22.r,
-                  height: 22.r,
-                  colorFilter: ColorFilter.mode(
-                    theme.colorScheme.onTertiary,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
