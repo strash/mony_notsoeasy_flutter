@@ -61,6 +61,15 @@ class $AssetsIconsGen {
   /// File path: assets/icons/plus.svg
   String get plus => 'assets/icons/plus.svg';
 
+  /// File path: assets/icons/repeat.circle.fill.svg
+  String get repeatCircleFill => 'assets/icons/repeat.circle.fill.svg';
+
+  /// File path: assets/icons/repeat.circle.svg
+  String get repeatCircle => 'assets/icons/repeat.circle.svg';
+
+  /// File path: assets/icons/repeat.svg
+  String get repeat => 'assets/icons/repeat.svg';
+
   /// File path: assets/icons/square.and.arrow.down.svg
   String get squareAndArrowDown => 'assets/icons/square.and.arrow.down.svg';
 
@@ -83,6 +92,9 @@ class $AssetsIconsGen {
         listBulletBelowRectangle,
         personCropCircleFillBadgePlus,
         plus,
+        repeatCircleFill,
+        repeatCircle,
+        repeat,
         squareAndArrowDown,
         widgetSmallBadgePlus
       ];
