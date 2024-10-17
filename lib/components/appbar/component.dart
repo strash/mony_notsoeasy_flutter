@@ -6,13 +6,17 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/back_button/component.dart";
 
 class AppBarComponent extends StatelessWidget {
+  final bool useSliver;
   final Widget? leading;
   final String title;
   final Widget? trailing;
   final bool automaticallyImplyLeading;
 
+  static final double height = 50.h;
+
   const AppBarComponent({
     super.key,
+    this.useSliver = true,
     this.leading,
     required this.title,
     this.trailing,
@@ -21,12 +25,23 @@ class AppBarComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewPadding = MediaQuery.viewPaddingOf(context);
+
+    if (!useSliver) {
+      return _AppBar(
+        leading: leading,
+        title: title,
+        trailing: trailing,
+        viewPadding: viewPadding,
+        automaticallyImplyLeading: automaticallyImplyLeading,
+      );
+    }
     return SliverPersistentHeader(
       delegate: _AppBarDelegate(
         title: title,
         leading: leading,
         trailing: trailing,
-        viewPadding: MediaQuery.viewPaddingOf(context),
+        viewPadding: viewPadding,
         automaticallyImplyLeading: automaticallyImplyLeading,
       ),
       pinned: true,
@@ -49,7 +64,45 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
     required this.automaticallyImplyLeading,
   });
 
-  final double height = 50.h;
+  @override
+  double get maxExtent => viewPadding.top + AppBarComponent.height;
+
+  @override
+  double get minExtent => viewPadding.top + AppBarComponent.height;
+
+  @override
+  bool shouldRebuild(_AppBarDelegate oldDelegate) {
+    return true;
+  }
+
+  @override
+  Widget build(BuildContext context, double _, bool __) {
+    return _AppBar(
+      leading: leading,
+      title: title,
+      trailing: trailing,
+      viewPadding: viewPadding,
+      automaticallyImplyLeading: automaticallyImplyLeading,
+    );
+  }
+}
+
+class _AppBar extends StatelessWidget {
+  final Widget? leading;
+  final String title;
+  final Widget? trailing;
+  final EdgeInsets viewPadding;
+  final bool automaticallyImplyLeading;
+
+  const _AppBar({
+    required this.leading,
+    required this.title,
+    required this.trailing,
+    required this.viewPadding,
+    required this.automaticallyImplyLeading,
+  });
+
+  double get minExtent => viewPadding.top + AppBarComponent.height;
 
   TextStyle _titleStyle(BuildContext context) {
     final theme = Theme.of(context);
@@ -76,26 +129,11 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => viewPadding.top + height;
-
-  @override
-  double get minExtent => viewPadding.top + height;
-
-  @override
-  bool shouldRebuild(_AppBarDelegate oldDelegate) {
-    return true;
-  }
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final width = MediaQuery.sizeOf(context).width;
     final padding = 4.w;
-    final maxWidthForTitle = width - (height + padding) * 2.0;
+    final maxWidthForTitle = width - (AppBarComponent.height + padding) * 2.0;
     final maxTitleSizeBetweenLeadingAndTrailing =
         _titleSize(context, maxWidthForTitle);
     final needSpace =
@@ -118,8 +156,8 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
                     children: [
                       // -> leading
                       SizedBox(
-                        width: hasLeadingWidth ? 10.w : height,
-                        height: height,
+                        width: hasLeadingWidth ? 10.w : AppBarComponent.height,
+                        height: AppBarComponent.height,
                         child: leading == null && automaticallyImplyLeading
                             ? const BackButtonComponent()
                             : leading,
@@ -141,8 +179,10 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
 
                       // -> trailing
                       SizedBox(
-                        width: trailing == null && needSpace ? 10.w : height,
-                        height: height,
+                        width: trailing == null && needSpace
+                            ? 10.w
+                            : AppBarComponent.height,
+                        height: AppBarComponent.height,
                         child: trailing,
                       ),
                     ],
