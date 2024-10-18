@@ -5,10 +5,10 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-class ImportLoadCsvPage extends StatelessWidget {
+class ImportLoadCsvComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportLoadCsvPage({
+  const ImportLoadCsvComponent({
     super.key,
     required this.event,
   });

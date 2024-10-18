@@ -41,10 +41,7 @@ class BackwardForwardButtonsComponent extends StatelessWidget {
             foregroundColor: theme.colorScheme.onTertiary,
           ),
           onPressed: backEnabled
-              ? () {
-                  viewModel.onBackPressed.value = event;
-                  viewModel.onBackPressed(context);
-                }
+              ? () => viewModel.onBackwardPressed(context, event)
               : null,
           child: IgnorePointer(
             child: SvgPicture.asset(
@@ -64,10 +61,7 @@ class BackwardForwardButtonsComponent extends StatelessWidget {
         Expanded(
           child: FilledButton(
             onPressed: forwardEnabled
-                ? () {
-                    viewModel.onForwardPressed.value = event;
-                    viewModel.onForwardPressed(context);
-                  }
+                ? () => viewModel.onForwardPressed(context, event)
                 : null,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

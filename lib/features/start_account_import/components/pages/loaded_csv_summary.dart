@@ -5,10 +5,10 @@ import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/start_account_import/components/components.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
 
-class ImportLoadedCsvSummaryPage extends StatelessWidget {
+class ImportLoadedCsvSummaryComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportLoadedCsvSummaryPage({
+  const ImportLoadedCsvSummaryComponent({
     super.key,
     this.event,
   });
@@ -39,7 +39,8 @@ class ImportLoadedCsvSummaryPage extends StatelessWidget {
 
               // -> description
               Text(
-                "Нам удалось найти ${viewModel.numberOfEntries}.\n"
+                "Нам удалось найти "
+                "${viewModel.onNumberOfEntriesRequested(context)}.\n"
                 'Проверь — все ли в порядке.\nЕсли да, то жми "Дальше".',
                 style: GoogleFonts.robotoFlex(
                   fontSize: 15.sp,
@@ -81,7 +82,7 @@ class ImportLoadedCsvSummaryPage extends StatelessWidget {
                       ),
                       Text(
                         "${viewModel.currentEntryIndex + 1} из "
-                        "${viewModel.numberOfEntries}",
+                        "${viewModel.onNumberOfEntriesRequested(context)}",
                         style: GoogleFonts.robotoFlex(
                           fontSize: 12.sp,
                           color: theme.colorScheme.onSurfaceVariant,

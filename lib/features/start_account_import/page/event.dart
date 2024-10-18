@@ -1,5 +1,3 @@
-import "package:mony_app/domain/domain.dart";
-
 sealed class ImportEvent {}
 
 // step 1
@@ -10,10 +8,7 @@ final class ImportEventLoadingCsv extends ImportEvent {}
 final class ImportEventErrorLoadingCsv extends ImportEvent {}
 
 // step 2
-final class ImportEventCsvLoaded extends ImportEvent {
-  final ImportedCsvValueObject? csv;
-  ImportEventCsvLoaded(this.csv);
-}
+final class ImportEventCsvLoaded extends ImportEvent {}
 
 // step 3
 final class ImportEventMapAccount extends ImportEvent {}

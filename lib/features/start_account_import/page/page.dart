@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import "package:mony_app/features/start_account_import/page/view_model.dart";
 
 export "./event.dart";
-export "./pages/pages.dart";
 export "./view_model.dart";
 
 class StartAccountImportPage extends StatelessWidget {

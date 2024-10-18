@@ -6,10 +6,10 @@ import "package:mony_app/features/start_account_import/components/components.dar
 import "package:mony_app/features/start_account_import/page/event.dart";
 import "package:mony_app/features/start_account_import/page/view_model.dart";
 
-class ImportMapColumnsPage extends StatelessWidget {
+class ImportMapColumnsComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportMapColumnsPage({
+  const ImportMapColumnsComponent({
     super.key,
     this.event,
   });
@@ -83,7 +83,7 @@ class ImportMapColumnsPage extends StatelessWidget {
                       ),
                       Text(
                         "${viewModel.currentEntryIndex + 1} из "
-                        "${viewModel.numberOfEntries}",
+                        "${viewModel.onNumberOfEntriesRequested(context)}",
                         style: GoogleFonts.robotoFlex(
                           fontSize: 12.sp,
                           color: theme.colorScheme.onSurfaceVariant,

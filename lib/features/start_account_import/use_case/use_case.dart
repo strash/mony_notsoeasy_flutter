@@ -1,5 +1,9 @@
 export "./on_backward_pressed.dart";
 export "./on_column_selected.dart";
+export "./on_current_csv_entry_requested.dart";
 export "./on_forward_pressed.dart";
+export "./on_import_event_changed.dart";
+export "./on_number_of_entries_requested.dart";
 export "./on_rotate_entry_pressed.dart";
 export "./on_select_file_pressed.dart";
+export "./on_selected_column_name_requested.dart";

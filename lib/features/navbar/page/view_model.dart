@@ -30,6 +30,9 @@ class NavBarViewModelBuilder extends StatefulWidget {
 
 final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
   final _tabController = BehaviorSubject<NavBarTabItem>();
+
+  Stream<NavBarTabItem> get tabStream => _tabController.stream;
+
   final onAddExpensePressed = OnAddExpensePressedUseCase();
 
   final _routes = NavBarTabItem.values.map((e) {
@@ -53,8 +56,6 @@ final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
       builder: (context) => _routes.elementAt(tab.index),
     );
   }
-
-  Stream<NavBarTabItem> get tabStream => _tabController.stream;
 
   NavBarTabItem _tab = NavBarTabItem.defaultValue;
 

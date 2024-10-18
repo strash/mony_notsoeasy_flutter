@@ -15,7 +15,7 @@ class StartAccountImportView extends StatelessWidget {
 
     return Scaffold(
       body: StreamBuilder<ImportEvent>(
-        stream: viewModel.stream,
+        stream: viewModel.subject.stream,
         builder: (context, snapshot) {
           final event = snapshot.data;
 
@@ -27,7 +27,8 @@ class StartAccountImportView extends StatelessWidget {
                   // -> appbar
                   TweenAnimationBuilder<int>(
                     duration: Durations.long4,
-                    tween: IntTween(begin: 0, end: viewModel.progress),
+                    tween:
+                        IntTween(begin: 0, end: viewModel.progressPercentage),
                     builder: (context, progress, child) {
                       return AppBarComponent(title: "$progress%");
                     },
@@ -47,10 +48,10 @@ class StartAccountImportView extends StatelessWidget {
                           ImportEventInitial() ||
                           ImportEventLoadingCsv() ||
                           ImportEventErrorLoadingCsv() =>
-                            ImportLoadCsvPage(event: event),
+                            ImportLoadCsvComponent(event: event),
                           // 2 step
                           ImportEventCsvLoaded() =>
-                            ImportLoadedCsvSummaryPage(event: event),
+                            ImportLoadedCsvSummaryComponent(event: event),
                           // 3 step
                           ImportEventMapAccount() ||
                           ImportEventMapAmount() ||
@@ -59,7 +60,7 @@ class StartAccountImportView extends StatelessWidget {
                           ImportEventMapCategory() ||
                           ImportEventMapTag() ||
                           ImportEventMapNote() =>
-                            ImportMapColumnsPage(event: event),
+                            ImportMapColumnsComponent(event: event),
                           // // just in case
                           null => const Center(
                               child: CircularProgressIndicator.adaptive(),

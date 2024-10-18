@@ -2,31 +2,14 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
-import "package:rxdart/subjects.dart";
 
 final class OnBackwardPressedUseCase
     extends BaseValueUseCase<ImportEvent?, Future<void>> {
-  final BehaviorSubject<ImportEvent> _subject;
-
-  ImportEvent? _value;
-
-  OnBackwardPressedUseCase({
-    required BehaviorSubject<ImportEvent> subject,
-  }) : _subject = subject;
-
   @override
-  set value(ImportEvent? newValue) {
-    _value = newValue;
-  }
-
-  @override
-  ImportEvent? get value => _value;
-
-  @override
-  Future<void> action(BuildContext context) async {
-    final value = this.value;
+  Future<void> action(BuildContext context, ImportEvent? value) async {
     if (value == null) throw ArgumentError.notNull();
     final viewModel = ViewModel.of<StartAccountImportViewModel>(context);
+    final subject = viewModel.subject;
     // reset column
     viewModel.setProtectedState(() {
       final columns = viewModel.mappedCsvColumns;
@@ -53,23 +36,24 @@ final class OnBackwardPressedUseCase
             ImportEventErrorLoadingCsv():
         return;
       case ImportEventCsvLoaded():
-        _subject.add(ImportEventInitial());
+        subject.add(ImportEventInitial());
       case ImportEventMapAccount():
-        _subject.add(ImportEventCsvLoaded(null));
+        subject.add(ImportEventCsvLoaded());
       case ImportEventMapAmount():
-        _subject.add(ImportEventMapAccount());
+        subject.add(ImportEventMapAccount());
       case ImportEventMapExpenseType():
-        _subject.add(ImportEventMapAmount());
+        subject.add(ImportEventMapAmount());
       case ImportEventMapDate():
-        _subject.add(ImportEventMapExpenseType());
+        subject.add(ImportEventMapExpenseType());
       case ImportEventMapCategory():
-        _subject.add(ImportEventMapDate());
+        subject.add(ImportEventMapDate());
       case ImportEventMapTag():
-        _subject.add(ImportEventMapCategory());
+        subject.add(ImportEventMapCategory());
       case ImportEventMapNote():
-        _subject.add(ImportEventMapTag());
+        subject.add(ImportEventMapTag());
     }
-    viewModel.backward();
-    this.value = null;
+    viewModel.setProtectedState(() {
+      viewModel.progress--;
+    });
   }
 }

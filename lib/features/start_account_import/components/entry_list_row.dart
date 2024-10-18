@@ -20,7 +20,8 @@ class EntryListRowComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = ViewModel.of<StartAccountImportViewModel>(context);
-    final columnName = viewModel.selectedColumnName(entry.key);
+    final columnName =
+        viewModel.onSelectedColumnNameRequested(context, entry.key);
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 34.h),
@@ -29,11 +30,10 @@ class EntryListRowComponent extends StatelessWidget {
         onTap: () {
           final event = this.event;
           if (event == null || columnName != null) return;
-          viewModel.onColumnSelected.value = (
-            event: event,
-            column: entry.key,
+          viewModel.onColumnSelected(
+            context,
+            (event: event, column: entry.key),
           );
-          viewModel.onColumnSelected(context);
         },
         child: Stack(
           fit: StackFit.expand,
