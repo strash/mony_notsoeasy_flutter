@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_localizations/flutter_localizations.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:provider/provider.dart";
 
@@ -12,7 +13,7 @@ class MonyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final eventService = ViewModel.of<AppEventService>(context);
+    final eventService = context.viewModel<AppEventService>();
     final accountService = context.read<AccountService>();
 
     return ScreenUtilInit(

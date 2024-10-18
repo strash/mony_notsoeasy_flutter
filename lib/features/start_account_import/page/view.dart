@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
-import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/start_account_import/components/components.dart";
@@ -11,7 +11,7 @@ class StartAccountImportView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.viewPaddingOf(context);
-    final viewModel = ViewModel.of<StartAccountImportViewModel>(context);
+    final viewModel = context.viewModel<StartAccountImportViewModel>();
 
     return Scaffold(
       body: StreamBuilder<ImportEvent>(

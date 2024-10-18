@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app.dart";
+import "package:mony_app/app/view_model/view_model.dart";
 
 extension BuildContextEx on BuildContext {
   Future<T?> go<T>(
@@ -25,5 +26,9 @@ extension BuildContextEx on BuildContext {
             )
           : MaterialPageRoute(builder: (context) => page),
     );
+  }
+
+  T viewModel<T extends ViewModelState<StatefulWidget>>() {
+    return ViewModel.of<T>(this);
   }
 }

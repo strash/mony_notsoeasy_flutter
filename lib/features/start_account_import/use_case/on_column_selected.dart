@@ -1,6 +1,6 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
-import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
 
 typedef TOnColumnSelectedValue = ({ImportEvent event, String column});
@@ -9,7 +9,7 @@ final class OnColumnSelectedUseCase
     extends BaseValueUseCase<TOnColumnSelectedValue, void> {
   @override
   void action(BuildContext context, TOnColumnSelectedValue value) {
-    final viewModel = ViewModel.of<StartAccountImportViewModel>(context);
+    final viewModel = context.viewModel<StartAccountImportViewModel>();
     final columns = viewModel.mappedCsvColumns;
     viewModel.setProtectedState(() {
       if (value.event is ImportEventMapAccount) {

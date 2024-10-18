@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/components/components.dart";
 import "package:mony_app/features/navbar/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -14,7 +15,7 @@ class NavBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ViewModel.of<NavBarViewModel>(context);
+    final viewModel = context.viewModel<NavBarViewModel>();
     final theme = Theme.of(context);
     final viewSize = MediaQuery.sizeOf(context);
     final viewPadding = MediaQuery.viewPaddingOf(context);

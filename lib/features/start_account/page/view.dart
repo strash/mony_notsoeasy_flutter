@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
@@ -11,7 +11,7 @@ class StartAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ViewModel.of<StartAccountViewModel>(context);
+    final viewModel = context.viewModel<StartAccountViewModel>();
     final theme = Theme.of(context);
 
     return Scaffold(

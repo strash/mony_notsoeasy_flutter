@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start/page/view_model.dart";
 
 class StartView extends StatelessWidget {
@@ -9,7 +9,7 @@ class StartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ViewModel.of<StartViewModel>(context);
+    final viewModel = context.viewModel<StartViewModel>();
     final theme = Theme.of(context);
 
     return Scaffold(

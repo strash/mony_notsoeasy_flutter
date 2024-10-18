@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/features/feed/page/page.dart";
 
@@ -8,7 +8,7 @@ class FeedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ViewModel.of<FeedViewModel>(context);
+    final viewModel = context.viewModel<FeedViewModel>();
 
     return Scaffold(
       body: Center(

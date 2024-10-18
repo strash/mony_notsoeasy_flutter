@@ -1,13 +1,13 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
-import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
 
 final class OnSelectedColumnNameRequestedUseCase
     extends BaseValueUseCase<String, String?> {
   @override
   String? action(BuildContext context, String value) {
-    final viewModel = ViewModel.of<StartAccountImportViewModel>(context);
+    final viewModel = context.viewModel<StartAccountImportViewModel>();
     final columns = viewModel.mappedCsvColumns;
     if (columns.account == value) {
       return "Счет";
