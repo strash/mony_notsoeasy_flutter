@@ -11,8 +11,11 @@ abstract base class BaseUseCase<T> {
   }
 }
 
-abstract base class BaseValueUseCase<V, T> extends BaseUseCase<T> {
-  set value(V newValue);
+abstract base class BaseValueUseCase<V, T> {
+  T action(BuildContext context, V value);
 
-  V get value;
+  T call(BuildContext context, V value) {
+    if (!context.mounted) throw ArgumentError.value(context);
+    return action(context, value);
+  }
 }
