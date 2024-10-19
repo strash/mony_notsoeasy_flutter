@@ -1,5 +1,3 @@
-import "dart:async";
-
 import "package:flutter/material.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/features.dart";
@@ -29,9 +27,10 @@ class NavBarViewModelBuilder extends StatefulWidget {
 }
 
 final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
-  final _tabController = BehaviorSubject<NavBarTabItem>();
+  final subject =
+      BehaviorSubject<NavBarTabItem>.seeded(NavBarTabItem.defaultValue);
 
-  Stream<NavBarTabItem> get tabStream => _tabController.stream;
+  NavBarTabItem currentTab = NavBarTabItem.defaultValue;
 
   final _routes = NavBarTabItem.values.map((e) {
     return switch (e) {
@@ -55,41 +54,9 @@ final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
     );
   }
 
-  NavBarTabItem _tab = NavBarTabItem.defaultValue;
-
-  int get tab => _tab.index;
-
-  set tab(int index) {
-    final newTab = NavBarTabItem.from(index);
-    if (_tab == newTab) {
-      popTabToRoot(newTab);
-    } else {
-      _tab = newTab;
-      _tabController.add(_tab);
-    }
-  }
-
-  void setTab(NavBarTabItem newTab) {
-    tab = newTab.index;
-  }
-
-  void popTabToRoot(NavBarTabItem tab) {
-    final key = _navigatorTabKeys.elementAt(tab.index);
-    final navigatorState = key.currentState;
-    if (navigatorState == null) return;
-    switch (navigatorState.canPop()) {
-      // закрываем все экраны в текущем табе до первого
-      case true:
-        navigatorState.popUntil((route) => route.isFirst);
-      // если нечего закрывать, то скролим наверх
-      case false:
-      // TODO: тут поидеи можно сообщать экрану, что он может скролить до верха
-    }
-  }
-
   @override
   void dispose() {
-    _tabController.close();
+    subject.close();
     super.dispose();
   }
 
@@ -97,7 +64,10 @@ final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
   Widget build(BuildContext context) {
     return ViewModel<NavBarViewModel>(
       viewModel: this,
-      useCases: [() => OnAddExpensePressed()],
+      useCases: [
+        () => OnAddExpensePressed(),
+        () => OnTabChangeRequested(),
+      ],
       child: const NavBarView(),
     );
   }

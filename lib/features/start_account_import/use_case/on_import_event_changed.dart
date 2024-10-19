@@ -5,24 +5,24 @@ import "package:mony_app/features/start_account_import/page/page.dart";
 final class OnImportEventChanged
     extends UseCase<void, StartAccountImportViewModel> {
   @override
-  void call(BuildContext context, [StartAccountImportViewModel? value]) {
-    if (value == null) throw ArgumentError.notNull();
-    value.subject.listen((event) {
-      value.setProtectedState(() {
+  void call(BuildContext context, [StartAccountImportViewModel? viewModel]) {
+    if (viewModel == null) throw ArgumentError.notNull();
+    viewModel.subject.listen((event) {
+      viewModel.setProtectedState(() {
         if (event case ImportEventMapAccount()) {
-          value.currentColumn = "Счет";
+          viewModel.currentColumn = "Счет";
         } else if (event case ImportEventMapAmount()) {
-          value.currentColumn = "Сумма транзакции";
+          viewModel.currentColumn = "Сумма транзакции";
         } else if (event case ImportEventMapExpenseType()) {
-          value.currentColumn = "Тип транзакции";
+          viewModel.currentColumn = "Тип транзакции";
         } else if (event case ImportEventMapDate()) {
-          value.currentColumn = "Дата транзакции";
+          viewModel.currentColumn = "Дата транзакции";
         } else if (event case ImportEventMapCategory()) {
-          value.currentColumn = "Категория транзакции";
+          viewModel.currentColumn = "Категория транзакции";
         } else if (event case ImportEventMapTag()) {
-          value.currentColumn = "Тег транзакции";
+          viewModel.currentColumn = "Тег транзакции";
         } else if (event case ImportEventMapNote()) {
-          value.currentColumn = "Заметка транзакции";
+          viewModel.currentColumn = "Заметка транзакции";
         }
       });
     });

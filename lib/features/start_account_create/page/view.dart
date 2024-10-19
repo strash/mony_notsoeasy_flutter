@@ -114,8 +114,7 @@ class StartAccountCreateView extends StatelessWidget {
                     // -> submit
                     FilledButton(
                       onPressed: viewModel.isSubmitEnabled
-                          ? () =>
-                              onCreateAccountPressed(context, viewModel.value)
+                          ? () => onCreateAccountPressed(context)
                           : null,
                       child: const Text("Создать счет"),
                     ),

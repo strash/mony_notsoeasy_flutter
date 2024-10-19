@@ -24,14 +24,14 @@ class NavBarView extends StatelessWidget {
     final onAddExpensePressed = viewModel<OnAddExpensePressed>();
 
     return StreamBuilder<NavBarTabItem>(
-      stream: viewModel.tabStream,
+      stream: viewModel.subject.stream,
       builder: (context, snapshot) {
         return Scaffold(
           body: Stack(
             children: [
               // -> pages
               IndexedStack(
-                index: viewModel.tab,
+                index: viewModel.currentTab.index,
                 children: NavBarTabItem.values.map((e) {
                   return NavigatorWrapper(
                     navigatorKey: viewModel.getNavigatorTabKey(e),

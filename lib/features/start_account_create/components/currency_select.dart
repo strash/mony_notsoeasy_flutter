@@ -4,6 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/select/component.dart";
 import "package:mony_app/features/start_account_create/page/view_model.dart";
+import "package:mony_app/features/start_account_create/use_case/use_case.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 class CurrencySelectComponent extends StatelessWidget {
@@ -11,8 +12,9 @@ class CurrencySelectComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.viewModel<StartAccountCreateViewModel>();
     final theme = Theme.of(context);
+    final viewModel = context.viewModel<StartAccountCreateViewModel>();
+    final currencyDescription = viewModel<OnCurrencyDescriptionRequested>();
 
     return ListenableBuilder(
       listenable: viewModel.currencyController,
@@ -35,7 +37,7 @@ class CurrencySelectComponent extends StatelessWidget {
 
             return List.generate(list.length, (index) {
               final item = list.elementAt(index);
-              final desc = viewModel.getCurrencyDescription(item);
+              final desc = currencyDescription(context, item);
 
               return SelectEntryComponent(
                 value: item,

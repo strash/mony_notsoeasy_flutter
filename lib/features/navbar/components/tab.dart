@@ -3,6 +3,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/page/view_model.dart";
+import "package:mony_app/features/navbar/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 extension on NavBarTabItem {
@@ -28,11 +29,12 @@ class NavBarTabComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<NavBarViewModel>();
+    final onTabChanged = viewModel<OnTabChangeRequested>();
     final tab = NavBarTabItem.from(index);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => viewModel.tab = index,
+      onTap: () => onTabChanged(context, tab),
       child: SizedBox.fromSize(
         size: Size.fromHeight(height),
         child: TweenAnimationBuilder<Color?>(
@@ -40,7 +42,7 @@ class NavBarTabComponent extends StatelessWidget {
           curve: Curves.easeInOutQuad,
           tween: ColorTween(
             begin: theme.colorScheme.onSurface,
-            end: viewModel.tab == index
+            end: viewModel.currentTab == tab
                 ? theme.colorScheme.onSurface
                 : theme.colorScheme.onSurfaceVariant,
           ),
@@ -50,7 +52,10 @@ class NavBarTabComponent extends StatelessWidget {
                 tab.icon,
                 width: 32.r,
                 height: 32.r,
-                colorFilter: ColorFilter.mode(color!, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                  color ?? theme.colorScheme.onSurface,
+                  BlendMode.srcIn,
+                ),
               ),
             );
           },
