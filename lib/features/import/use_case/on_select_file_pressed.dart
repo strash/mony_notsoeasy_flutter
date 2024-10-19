@@ -8,7 +8,7 @@ import "package:provider/provider.dart";
 final class OnSelectFilePressed extends UseCase<void, dynamic> {
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
-    final viewModel = context.viewModel<StartAccountImportViewModel>();
+    final viewModel = context.viewModel<ImportViewModel>();
     final subject = viewModel.subject;
     try {
       subject.add(ImportEventLoadingCsv());

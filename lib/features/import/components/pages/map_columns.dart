@@ -2,9 +2,9 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/features/start_account_import/components/components.dart";
-import "package:mony_app/features/start_account_import/start_account_import.dart";
-import "package:mony_app/features/start_account_import/use_case/use_case.dart";
+import "package:mony_app/features/import/components/components.dart";
+import "package:mony_app/features/import/import.dart";
+import "package:mony_app/features/import/use_case/use_case.dart";
 
 class ImportMapColumnsComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -17,9 +17,10 @@ class ImportMapColumnsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<StartAccountImportViewModel>();
+    final viewModel = context.viewModel<ImportViewModel>();
     final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
-    final onNumberOfEntriesRequested = viewModel<OnNumberOfEntriesRequested>();
+    final numberOfEntries = viewModel.numberOfEntriesDescription;
+    final currentColumnToMap = viewModel.mappedColumns.lastOrNull;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +32,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
             children: [
               // -> title
               Text(
-                'Колонка "${viewModel.currentColumn}"',
+                'Колонка "${currentColumnToMap?.column.title ?? ""}"',
                 style: GoogleFonts.golosText(
                   fontSize: 20.sp,
                   color: theme.colorScheme.onSurface,
@@ -44,7 +45,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
               Text(
                 "Выбери подходящую колонку,\n"
                 "значение в которой подходит\n"
-                'к колонке "${viewModel.currentColumn}".',
+                'к колонке "${currentColumnToMap?.column.title ?? ""}".',
                 style: GoogleFonts.robotoFlex(
                   fontSize: 15.sp,
                   height: 1.3.sp,
@@ -85,7 +86,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                       ),
                       Text(
                         "${viewModel.currentEntryIndex + 1} из "
-                        "${onNumberOfEntriesRequested(context)}",
+                        "$numberOfEntries",
                         style: GoogleFonts.robotoFlex(
                           fontSize: 12.sp,
                           color: theme.colorScheme.onSurfaceVariant,

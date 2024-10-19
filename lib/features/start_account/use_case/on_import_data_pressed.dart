@@ -6,6 +6,6 @@ import "package:mony_app/features/features.dart";
 final class OnImportDataPressed extends UseCase<void, dynamic> {
   @override
   void call(BuildContext context, [dynamic _]) {
-    context.go(const StartAccountImportPage());
+    context.go(const ImportPage());
   }
 }

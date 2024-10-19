@@ -3,15 +3,15 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/features/features.dart";
-import "package:mony_app/features/start_account_import/components/components.dart";
+import "package:mony_app/features/import/components/components.dart";
 
-class StartAccountImportView extends StatelessWidget {
-  const StartAccountImportView({super.key});
+class ImportView extends StatelessWidget {
+  const ImportView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.viewPaddingOf(context);
-    final viewModel = context.viewModel<StartAccountImportViewModel>();
+    final viewModel = context.viewModel<ImportViewModel>();
 
     return Scaffold(
       body: StreamBuilder<ImportEvent>(
@@ -53,13 +53,9 @@ class StartAccountImportView extends StatelessWidget {
                           ImportEventCsvLoaded() =>
                             ImportLoadedCsvSummaryComponent(event: event),
                           // 3 step
-                          ImportEventMapAccount() ||
-                          ImportEventMapAmount() ||
-                          ImportEventMapExpenseType() ||
-                          ImportEventMapDate() ||
-                          ImportEventMapCategory() ||
-                          ImportEventMapTag() ||
-                          ImportEventMapNote() =>
+                          ImportEventMappingColumns() ||
+                          ImportEventValidatingMappedColumns() ||
+                          ImportEventErrorMappingColumns() =>
                             ImportMapColumnsComponent(event: event),
                           // // just in case
                           null => const Center(
@@ -90,13 +86,9 @@ class StartAccountImportView extends StatelessWidget {
                       // 2 step
                       ImportEventCsvLoaded() ||
                       // 3 step
-                      ImportEventMapAccount() ||
-                      ImportEventMapAmount() ||
-                      ImportEventMapExpenseType() ||
-                      ImportEventMapDate() ||
-                      ImportEventMapCategory() ||
-                      ImportEventMapTag() ||
-                      ImportEventMapNote() =>
+                      ImportEventMappingColumns() ||
+                      ImportEventValidatingMappedColumns() ||
+                      ImportEventErrorMappingColumns() =>
                         BackwardForwardButtonsComponent(event: event),
                       // just in case
                       null => const SizedBox(),

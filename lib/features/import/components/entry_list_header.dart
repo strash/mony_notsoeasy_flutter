@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/features/start_account_import/components/components.dart";
+import "package:mony_app/features/import/components/components.dart";
 
 class EntryListHeaderComponent extends StatelessWidget {
   const EntryListHeaderComponent({super.key});

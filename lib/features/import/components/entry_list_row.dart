@@ -3,9 +3,9 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/features/start_account_import/components/components.dart";
-import "package:mony_app/features/start_account_import/start_account_import.dart";
-import "package:mony_app/features/start_account_import/use_case/use_case.dart";
+import "package:mony_app/features/import/components/components.dart";
+import "package:mony_app/features/import/import.dart";
+import "package:mony_app/features/import/use_case/use_case.dart";
 
 class EntryListRowComponent extends StatelessWidget {
   final MapEntry<String, String> entry;
@@ -20,10 +20,10 @@ class EntryListRowComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<StartAccountImportViewModel>();
-    final requestColumnName = viewModel<OnSelectedColumnNameRequested>();
-    final columnName = requestColumnName(context, entry.key);
+    final viewModel = context.viewModel<ImportViewModel>();
+    final columnName = viewModel.getShortTitle(entry.key);
     final onColumnSelected = viewModel<OnColumnSelected>();
+    final isOccupied = viewModel.isOccupied(entry.key);
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 34.h),
@@ -31,8 +31,8 @@ class EntryListRowComponent extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () {
           final event = this.event;
-          if (event == null || columnName != null) return;
-          onColumnSelected(context, (event: event, column: entry.key));
+          if (event == null) return;
+          onColumnSelected(context, entry.key);
         },
         child: Stack(
           fit: StackFit.expand,
@@ -87,16 +87,14 @@ class EntryListRowComponent extends StatelessWidget {
                       size: Size.fromWidth(
                         EntryListComponent.columnWidth + 16.w,
                       ),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.secondary,
-                          borderRadius: SmoothBorderRadius.all(
-                            SmoothRadius(
-                              cornerRadius: 10.r,
-                              cornerSmoothing: 1.0,
-                            ),
-                          ),
+                      child: TweenAnimationBuilder<Color?>(
+                        tween: ColorTween(
+                          begin: theme.colorScheme.secondary,
+                          end: isOccupied
+                              ? theme.colorScheme.tertiary
+                              : theme.colorScheme.secondary,
                         ),
+                        duration: Durations.short2,
                         child: Padding(
                           padding: EdgeInsets.only(left: 8.w),
                           child: Align(
@@ -114,6 +112,20 @@ class EntryListRowComponent extends StatelessWidget {
                             ),
                           ),
                         ),
+                        builder: (context, color, child) {
+                          return DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: SmoothBorderRadius.all(
+                                SmoothRadius(
+                                  cornerRadius: 10.r,
+                                  cornerSmoothing: 1.0,
+                                ),
+                              ),
+                            ),
+                            child: child,
+                          );
+                        },
                       ),
                     ),
                   ],

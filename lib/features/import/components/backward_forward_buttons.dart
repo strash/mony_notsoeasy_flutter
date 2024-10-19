@@ -3,7 +3,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/features.dart";
-import "package:mony_app/features/start_account_import/use_case/use_case.dart";
+import "package:mony_app/features/import/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class BackwardForwardButtonsComponent extends StatelessWidget {
@@ -17,23 +17,22 @@ class BackwardForwardButtonsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<StartAccountImportViewModel>();
+    final viewModel = context.viewModel<ImportViewModel>();
     final onBackwardPressed = viewModel<OnBackwardPressed>();
     final onForwardPressed = viewModel<OnForwardPressed>();
     final backEnabled = event is! ImportEventInitial &&
         event is! ImportEventLoadingCsv &&
         event is! ImportEventErrorLoadingCsv;
+    final currentColumn = viewModel.currentColumn;
+    final currentMappedColumn = viewModel.mappedColumns.lastOrNull;
     final forwardEnabled = event is ImportEventCsvLoaded ||
-        event is ImportEventMapAccount ||
-        event is ImportEventMapAmount &&
-            viewModel.mappedCsvColumns.amount != null ||
-        event is ImportEventMapExpenseType ||
-        event is ImportEventMapDate &&
-            viewModel.mappedCsvColumns.date != null ||
-        event is ImportEventMapCategory &&
-            viewModel.mappedCsvColumns.category != null ||
-        event is ImportEventMapTag ||
-        event is ImportEventMapNote;
+        (event is ImportEventMappingColumns ||
+                event is ImportEventValidatingMappedColumns) &&
+            currentColumn != null &&
+            (currentColumn.isRequired &&
+                    currentMappedColumn != null &&
+                    currentMappedColumn.entryKey != null ||
+                !currentColumn.isRequired);
 
     return Row(
       children: [

@@ -2,9 +2,9 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/features/start_account_import/components/components.dart";
-import "package:mony_app/features/start_account_import/start_account_import.dart";
-import "package:mony_app/features/start_account_import/use_case/use_case.dart";
+import "package:mony_app/features/import/components/components.dart";
+import "package:mony_app/features/import/import.dart";
+import "package:mony_app/features/import/use_case/use_case.dart";
 
 class ImportLoadedCsvSummaryComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -17,9 +17,9 @@ class ImportLoadedCsvSummaryComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<StartAccountImportViewModel>();
+    final viewModel = context.viewModel<ImportViewModel>();
     final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
-    final onNumberOfEntriesRequested = viewModel<OnNumberOfEntriesRequested>();
+    final numberOfEntries = viewModel.numberOfEntriesDescription;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +42,7 @@ class ImportLoadedCsvSummaryComponent extends StatelessWidget {
 
               // -> description
               Text(
-                "Нам удалось найти ${onNumberOfEntriesRequested(context)}.\n"
+                "Нам удалось найти $numberOfEntries.\n"
                 'Проверь — все ли в порядке.\nЕсли да, то жми "Дальше".',
                 style: GoogleFonts.robotoFlex(
                   fontSize: 15.sp,
@@ -84,7 +84,7 @@ class ImportLoadedCsvSummaryComponent extends StatelessWidget {
                       ),
                       Text(
                         "${viewModel.currentEntryIndex + 1} из "
-                        "${onNumberOfEntriesRequested(context)}",
+                        "$numberOfEntries",
                         style: GoogleFonts.robotoFlex(
                           fontSize: 12.sp,
                           color: theme.colorScheme.onSurfaceVariant,
