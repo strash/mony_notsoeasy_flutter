@@ -21,7 +21,7 @@ class EntryListRowComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final columnName = viewModel.getShortTitle(entry.key);
+    final columnName = viewModel.getColumnTitle(entry.key);
     final onColumnSelected = viewModel<OnColumnSelected>();
     final isOccupied = viewModel.isOccupied(entry.key);
 

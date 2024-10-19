@@ -18,23 +18,24 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
               ..add((column: EImportColumn.defaultValue, entryKey: null)),
           );
           viewModel.currentColumn = EImportColumn.defaultValue;
-          viewModel.progress++;
         });
       case ImportEventMappingColumns():
-        final col = EImportColumn.from(viewModel.mappedColumns.length);
-        // TODO: переходить на следующий шаг
-        if (col == null) {
-          return;
+        final nextCol = EImportColumn.from(viewModel.mappedColumns.length);
+        if (nextCol == null) {
+          subject.add(ImportEventValidatingMappedColumns());
+        } else {
+          viewModel.setProtectedState(() {
+            viewModel.mappedColumns = List.from(
+              viewModel.mappedColumns..add((column: nextCol, entryKey: null)),
+            );
+            viewModel.currentColumn = nextCol;
+          });
         }
-        viewModel.setProtectedState(() {
-          viewModel.mappedColumns = List.from(
-            viewModel.mappedColumns..add((column: col, entryKey: null)),
-          );
-          viewModel.currentColumn = col;
-          viewModel.progress++;
-        });
       default:
-        return;
+        break;
     }
+    viewModel.setProtectedState(() {
+      viewModel.progress++;
+    });
   }
 }

@@ -1,3 +1,5 @@
+import "dart:math";
+
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/app/view_model/view_model.dart";
@@ -17,6 +19,7 @@ final class ImportViewModelBuilder extends StatefulWidget {
 
 typedef TMappedColumn = ({EImportColumn column, String? entryKey});
 
+// TODO: для счетов еще нужно мапать все, если колонка была выбрана
 final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   final subject = BehaviorSubject<ImportEvent>.seeded(ImportEventInitial());
 
@@ -29,25 +32,25 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
 
   ImportedCsvValueObject? csv;
 
-  Map<String, String>? get currentEntry {
-    return csv?.entries.elementAtOrNull(currentEntryIndex);
-  }
-
   int currentEntryIndex = 0;
 
+  Map<String, String>? get currentEntry =>
+      csv?.entries.elementAtOrNull(currentEntryIndex);
+
   EImportColumn? currentColumn;
+
   List<TMappedColumn> mappedColumns = [];
 
-  String? getShortTitle(String entryKey) {
+  String? getColumnTitle(String entryKey) {
     return mappedColumns
         .where((e) => e.entryKey == entryKey)
         .firstOrNull
         ?.column
-        .shortTitle;
+        .title;
   }
 
   bool isOccupied(String entryKey) {
-    final occupied = mappedColumns.take(mappedColumns.length - 1);
+    final occupied = mappedColumns.take(max(0, mappedColumns.length - 1));
     return occupied.any((e) => e.entryKey == entryKey);
   }
 
@@ -80,6 +83,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
         () => OnForwardPressed(),
         () => OnRotateEntryPressed(),
         () => OnColumnSelected(),
+        () => OnColumnInfoPressed(),
       ],
       child: const ImportView(),
     );

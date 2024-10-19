@@ -53,10 +53,11 @@ class ImportView extends StatelessWidget {
                           ImportEventCsvLoaded() =>
                             ImportLoadedCsvSummaryComponent(event: event),
                           // 3 step
-                          ImportEventMappingColumns() ||
+                          ImportEventMappingColumns() =>
+                            ImportMapColumnsComponent(event: event),
                           ImportEventValidatingMappedColumns() ||
                           ImportEventErrorMappingColumns() =>
-                            ImportMapColumnsComponent(event: event),
+                            ImportMapColumnsValidationComponent(event: event),
                           // // just in case
                           null => const Center(
                               child: CircularProgressIndicator.adaptive(),
