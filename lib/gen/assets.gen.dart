@@ -50,6 +50,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/gearshape.fill.svg
   String get gearshapeFill => 'assets/icons/gearshape.fill.svg';
 
+  /// File path: assets/icons/info.circle.svg
+  String get infoCircle => 'assets/icons/info.circle.svg';
+
   /// File path: assets/icons/list.bullet.below.rectangle.svg
   String get listBulletBelowRectangle =>
       'assets/icons/list.bullet.below.rectangle.svg';
@@ -89,6 +92,7 @@ class $AssetsIconsGen {
         exclamationmarkCircleFill,
         exclamationmarkCircle,
         gearshapeFill,
+        infoCircle,
         listBulletBelowRectangle,
         personCropCircleFillBadgePlus,
         plus,
