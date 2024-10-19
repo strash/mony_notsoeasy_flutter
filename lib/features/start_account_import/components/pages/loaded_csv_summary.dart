@@ -3,7 +3,8 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account_import/components/components.dart";
-import "package:mony_app/features/start_account_import/page/page.dart";
+import "package:mony_app/features/start_account_import/start_account_import.dart";
+import "package:mony_app/features/start_account_import/use_case/use_case.dart";
 
 class ImportLoadedCsvSummaryComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -17,6 +18,8 @@ class ImportLoadedCsvSummaryComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<StartAccountImportViewModel>();
+    final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
+    final onNumberOfEntriesRequested = viewModel<OnNumberOfEntriesRequested>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,8 +42,7 @@ class ImportLoadedCsvSummaryComponent extends StatelessWidget {
 
               // -> description
               Text(
-                "Нам удалось найти "
-                "${viewModel.onNumberOfEntriesRequested(context)}.\n"
+                "Нам удалось найти ${onNumberOfEntriesRequested(context)}.\n"
                 'Проверь — все ли в порядке.\nЕсли да, то жми "Дальше".',
                 style: GoogleFonts.robotoFlex(
                   fontSize: 15.sp,
@@ -65,7 +67,7 @@ class ImportLoadedCsvSummaryComponent extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 25.w),
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: () => viewModel.onRotateEntryPressed(context),
+            onTap: () => onRotateEntryPressed(context),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h),
               child: Row(
@@ -82,7 +84,7 @@ class ImportLoadedCsvSummaryComponent extends StatelessWidget {
                       ),
                       Text(
                         "${viewModel.currentEntryIndex + 1} из "
-                        "${viewModel.onNumberOfEntriesRequested(context)}",
+                        "${onNumberOfEntriesRequested(context)}",
                         style: GoogleFonts.robotoFlex(
                           fontSize: 12.sp,
                           color: theme.colorScheme.onSurfaceVariant,

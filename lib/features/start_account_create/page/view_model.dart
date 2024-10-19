@@ -27,8 +27,6 @@ final class StartAccountCreateViewModel
     validators: [CurrencyValidator()],
   );
 
-  final onCreateAccountPressed = OnCreateAccountPressedUseCase();
-
   bool isSubmitEnabled = false;
 
   late final _locale = Localizations.localeOf(context);
@@ -102,6 +100,7 @@ final class StartAccountCreateViewModel
   Widget build(BuildContext context) {
     return ViewModel<StartAccountCreateViewModel>(
       viewModel: this,
+      useCases: [() => OnCreateAccountPressed()],
       child: const StartAccountCreateView(),
     );
   }

@@ -5,10 +5,10 @@ import "package:mony_app/features/start_account_import/page/page.dart";
 
 typedef TOnColumnSelectedValue = ({ImportEvent event, String column});
 
-final class OnColumnSelectedUseCase
-    extends BaseValueUseCase<TOnColumnSelectedValue, void> {
+final class OnColumnSelected extends UseCase<void, TOnColumnSelectedValue> {
   @override
-  void action(BuildContext context, TOnColumnSelectedValue value) {
+  void call(BuildContext context, [TOnColumnSelectedValue? value]) {
+    if (value == null) throw ArgumentError.notNull();
     final viewModel = context.viewModel<StartAccountImportViewModel>();
     final columns = viewModel.mappedCsvColumns;
     viewModel.setProtectedState(() {

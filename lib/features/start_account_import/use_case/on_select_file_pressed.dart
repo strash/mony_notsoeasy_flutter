@@ -5,9 +5,9 @@ import "package:mony_app/domain/services/csv_import_export.dart";
 import "package:mony_app/features/features.dart";
 import "package:provider/provider.dart";
 
-final class OnSelectFilePressedUseCase extends BaseUseCase<Future<void>> {
+final class OnSelectFilePressed extends UseCase<void, dynamic> {
   @override
-  Future<void> action(BuildContext context) async {
+  Future<void> call(BuildContext context, [dynamic _]) async {
     final viewModel = context.viewModel<StartAccountImportViewModel>();
     final subject = viewModel.subject;
     try {

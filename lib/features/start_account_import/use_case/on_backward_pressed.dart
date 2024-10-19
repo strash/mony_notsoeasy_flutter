@@ -3,10 +3,9 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
 
-final class OnBackwardPressedUseCase
-    extends BaseValueUseCase<ImportEvent?, Future<void>> {
+final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
   @override
-  Future<void> action(BuildContext context, ImportEvent? value) async {
+  Future<void> call(BuildContext context, [ImportEvent? value]) async {
     if (value == null) throw ArgumentError.notNull();
     final viewModel = context.viewModel<StartAccountImportViewModel>();
     final subject = viewModel.subject;

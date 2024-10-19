@@ -13,13 +13,14 @@ final class StartAccountViewModelBuilder extends StatefulWidget {
 
 final class StartAccountViewModel
     extends ViewModelState<StartAccountViewModelBuilder> {
-  final onCreateAccountPressed = OnCreateAccountPressedUseCase();
-  final onImportDataPressed = OnImportDataPressedUseCase();
-
   @override
   Widget build(BuildContext context) {
     return ViewModel<StartAccountViewModel>(
       viewModel: this,
+      useCases: [
+        () => OnCreateAccountPressed(),
+        () => OnImportDataPressed(),
+      ],
       child: const StartAccountView(),
     );
   }

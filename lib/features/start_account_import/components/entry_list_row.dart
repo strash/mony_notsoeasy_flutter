@@ -4,7 +4,8 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account_import/components/components.dart";
-import "package:mony_app/features/start_account_import/page/page.dart";
+import "package:mony_app/features/start_account_import/start_account_import.dart";
+import "package:mony_app/features/start_account_import/use_case/use_case.dart";
 
 class EntryListRowComponent extends StatelessWidget {
   final MapEntry<String, String> entry;
@@ -20,8 +21,9 @@ class EntryListRowComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<StartAccountImportViewModel>();
-    final columnName =
-        viewModel.onSelectedColumnNameRequested(context, entry.key);
+    final requestColumnName = viewModel<OnSelectedColumnNameRequested>();
+    final columnName = requestColumnName(context, entry.key);
+    final onColumnSelected = viewModel<OnColumnSelected>();
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 34.h),
@@ -30,10 +32,7 @@ class EntryListRowComponent extends StatelessWidget {
         onTap: () {
           final event = this.event;
           if (event == null || columnName != null) return;
-          viewModel.onColumnSelected(
-            context,
-            (event: event, column: entry.key),
-          );
+          onColumnSelected(context, (event: event, column: entry.key));
         },
         child: Stack(
           fit: StackFit.expand,

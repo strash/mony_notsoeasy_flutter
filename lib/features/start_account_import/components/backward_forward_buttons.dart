@@ -3,6 +3,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/features.dart";
+import "package:mony_app/features/start_account_import/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class BackwardForwardButtonsComponent extends StatelessWidget {
@@ -17,6 +18,8 @@ class BackwardForwardButtonsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<StartAccountImportViewModel>();
+    final onBackwardPressed = viewModel<OnBackwardPressed>();
+    final onForwardPressed = viewModel<OnForwardPressed>();
     final backEnabled = event is! ImportEventInitial &&
         event is! ImportEventLoadingCsv &&
         event is! ImportEventErrorLoadingCsv;
@@ -40,9 +43,8 @@ class BackwardForwardButtonsComponent extends StatelessWidget {
             backgroundColor: theme.colorScheme.tertiary,
             foregroundColor: theme.colorScheme.onTertiary,
           ),
-          onPressed: backEnabled
-              ? () => viewModel.onBackwardPressed(context, event)
-              : null,
+          onPressed:
+              backEnabled ? () => onBackwardPressed(context, event) : null,
           child: IgnorePointer(
             child: SvgPicture.asset(
               Assets.icons.chevronBackward,
@@ -60,9 +62,8 @@ class BackwardForwardButtonsComponent extends StatelessWidget {
         // -> button next
         Expanded(
           child: FilledButton(
-            onPressed: forwardEnabled
-                ? () => viewModel.onForwardPressed(context, event)
-                : null,
+            onPressed:
+                forwardEnabled ? () => onForwardPressed(context, event) : null,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

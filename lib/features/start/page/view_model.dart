@@ -11,12 +11,11 @@ final class StartViewModelBuilder extends StatefulWidget {
 }
 
 final class StartViewModel extends ViewModelState<StartViewModelBuilder> {
-  final onButtonStartPressed = OnButtonStartPressedUseCase();
-
   @override
   Widget build(BuildContext context) {
     return ViewModel<StartViewModel>(
       viewModel: this,
+      useCases: [() => OnButtonStartPressed()],
       child: const StartView(),
     );
   }

@@ -3,7 +3,8 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account_import/components/components.dart";
-import "package:mony_app/features/start_account_import/page/page.dart";
+import "package:mony_app/features/start_account_import/start_account_import.dart";
+import "package:mony_app/features/start_account_import/use_case/use_case.dart";
 
 class EntryListComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -20,7 +21,8 @@ class EntryListComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<StartAccountImportViewModel>();
-    final entry = viewModel.onCurrentCsvEntryRequested(context);
+    final requestEntry = viewModel<OnCurrentCsvEntryRequested>();
+    final entry = requestEntry(context);
 
     if (entry == null) return const SizedBox();
 

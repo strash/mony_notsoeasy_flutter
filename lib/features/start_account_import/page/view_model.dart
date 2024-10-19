@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/start_account_import/page/event.dart";
 import "package:mony_app/features/start_account_import/page/view.dart";
+import "package:mony_app/features/start_account_import/start_account_import.dart";
 import "package:mony_app/features/start_account_import/use_case/use_case.dart";
 import "package:rxdart/subjects.dart";
 
@@ -17,15 +17,6 @@ final class StartAccountImportViewModelBuilder extends StatefulWidget {
 final class StartAccountImportViewModel
     extends ViewModelState<StartAccountImportViewModelBuilder> {
   final subject = BehaviorSubject<ImportEvent>.seeded(ImportEventInitial());
-
-  late final onSelectFilePressed = OnSelectFilePressedUseCase();
-  late final onBackwardPressed = OnBackwardPressedUseCase();
-  late final onForwardPressed = OnForwardPressedUseCase();
-  final onRotateEntryPressed = OnRotateEntryPressedUseCase();
-  final onColumnSelected = OnColumnSelectedUseCase();
-  final onCurrentCsvEntryRequested = OnCurrentCsvEntryRequestedUseCase();
-  final onNumberOfEntriesRequested = OnNumberOfEntriesRequestedUseCase();
-  final onSelectedColumnNameRequested = OnSelectedColumnNameRequestedUseCase();
 
   int progress = 0;
 
@@ -54,7 +45,7 @@ final class StartAccountImportViewModel
   @override
   void initState() {
     super.initState();
-    OnImportEventChangedUseCase().call(context, this);
+    OnImportEventChanged().call(context, this);
   }
 
   @override
@@ -67,6 +58,16 @@ final class StartAccountImportViewModel
   Widget build(BuildContext context) {
     return ViewModel<StartAccountImportViewModel>(
       viewModel: this,
+      useCases: [
+        () => OnSelectFilePressed(),
+        () => OnBackwardPressed(),
+        () => OnForwardPressed(),
+        () => OnRotateEntryPressed(),
+        () => OnColumnSelected(),
+        () => OnCurrentCsvEntryRequested(),
+        () => OnNumberOfEntriesRequested(),
+        () => OnSelectedColumnNameRequested(),
+      ],
       child: const StartAccountImportView(),
     );
   }

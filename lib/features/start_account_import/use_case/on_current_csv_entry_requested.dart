@@ -3,10 +3,10 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
 
-final class OnCurrentCsvEntryRequestedUseCase
-    extends BaseUseCase<Map<String, String>?> {
+final class OnCurrentCsvEntryRequested
+    extends UseCase<Map<String, String>?, dynamic> {
   @override
-  Map<String, String>? action(BuildContext context) {
+  Map<String, String>? call(BuildContext context, [dynamic _]) {
     final viewModel = context.viewModel<StartAccountImportViewModel>();
     return viewModel.csv?.entries.elementAtOrNull(viewModel.currentEntryIndex);
   }

@@ -3,9 +3,9 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/features.dart";
 
-final class OnImportDataPressedUseCase extends BaseUseCase<void> {
+final class OnImportDataPressed extends UseCase<void, dynamic> {
   @override
-  void action(BuildContext context) {
+  void call(BuildContext context, [dynamic _]) {
     context.go(const StartAccountImportPage());
   }
 }

@@ -5,15 +5,17 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/start_account_create/components/components.dart";
-import "package:mony_app/features/start_account_create/page/view_model.dart";
+import "package:mony_app/features/start_account_create/start_account_create.dart";
+import "package:mony_app/features/start_account_create/use_case/use_case.dart";
 
 class StartAccountCreateView extends StatelessWidget {
   const StartAccountCreateView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.viewModel<StartAccountCreateViewModel>();
     final theme = Theme.of(context);
+    final viewModel = context.viewModel<StartAccountCreateViewModel>();
+    final onCreateAccountPressed = viewModel<OnCreateAccountPressed>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -112,10 +114,8 @@ class StartAccountCreateView extends StatelessWidget {
                     // -> submit
                     FilledButton(
                       onPressed: viewModel.isSubmitEnabled
-                          ? () {
-                              final action = viewModel.onCreateAccountPressed;
-                              action(context, viewModel.value);
-                            }
+                          ? () =>
+                              onCreateAccountPressed(context, viewModel.value)
                           : null,
                       child: const Text("Создать счет"),
                     ),

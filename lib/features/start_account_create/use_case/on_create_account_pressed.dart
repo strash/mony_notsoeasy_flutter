@@ -5,10 +5,11 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/start_account_create/page/view_model.dart";
 import "package:provider/provider.dart";
 
-final class OnCreateAccountPressedUseCase
-    extends BaseValueUseCase<AccountValueObject, Future<void>> {
+final class OnCreateAccountPressed
+    extends UseCase<Future<void>, AccountValueObject> {
   @override
-  Future<void> action(BuildContext context, AccountValueObject value) async {
+  Future<void> call(BuildContext context, [AccountValueObject? value]) async {
+    if (value == null) throw ArgumentError.notNull();
     final accountService = context.read<AccountService>();
     final eventService = context.viewModel<AppEventService>();
     final account = await accountService.create(value);

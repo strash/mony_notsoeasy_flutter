@@ -5,7 +5,8 @@ import "package:flutter_svg/svg.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/components/components.dart";
-import "package:mony_app/features/navbar/page/view_model.dart";
+import "package:mony_app/features/navbar/navbar.dart";
+import "package:mony_app/features/navbar/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class NavBarView extends StatelessWidget {
@@ -15,11 +16,12 @@ class NavBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.viewModel<NavBarViewModel>();
     final theme = Theme.of(context);
     final viewSize = MediaQuery.sizeOf(context);
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final halfTabs = (NavBarTabItem.length * 0.5).toInt();
+    final viewModel = context.viewModel<NavBarViewModel>();
+    final onAddExpensePressed = viewModel<OnAddExpensePressed>();
 
     return StreamBuilder<NavBarTabItem>(
       stream: viewModel.tabStream,
@@ -69,9 +71,7 @@ class NavBarView extends StatelessWidget {
                               Expanded(
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    viewModel.onAddExpensePressed(context);
-                                  },
+                                  onTap: () => onAddExpensePressed(context),
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
                                       color: theme.colorScheme.onSurface,

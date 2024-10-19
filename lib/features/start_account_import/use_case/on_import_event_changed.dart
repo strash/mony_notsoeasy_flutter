@@ -2,10 +2,11 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
 
-final class OnImportEventChangedUseCase
-    extends BaseValueUseCase<StartAccountImportViewModel, void> {
+final class OnImportEventChanged
+    extends UseCase<void, StartAccountImportViewModel> {
   @override
-  void action(BuildContext context, StartAccountImportViewModel value) {
+  void call(BuildContext context, [StartAccountImportViewModel? value]) {
+    if (value == null) throw ArgumentError.notNull();
     value.subject.listen((event) {
       value.setProtectedState(() {
         if (event case ImportEventMapAccount()) {

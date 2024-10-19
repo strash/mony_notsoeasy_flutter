@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/features/start_account_import/page/page.dart";
+import "package:mony_app/features/start_account_import/start_account_import.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class ImportLoadCsvComponent extends StatelessWidget {

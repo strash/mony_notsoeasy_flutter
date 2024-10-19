@@ -3,8 +3,8 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account_import/components/components.dart";
-import "package:mony_app/features/start_account_import/page/event.dart";
-import "package:mony_app/features/start_account_import/page/view_model.dart";
+import "package:mony_app/features/start_account_import/start_account_import.dart";
+import "package:mony_app/features/start_account_import/use_case/use_case.dart";
 
 class ImportMapColumnsComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -18,6 +18,8 @@ class ImportMapColumnsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<StartAccountImportViewModel>();
+    final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
+    final onNumberOfEntriesRequested = viewModel<OnNumberOfEntriesRequested>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +68,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 25.w),
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: () => viewModel.onRotateEntryPressed(context),
+            onTap: () => onRotateEntryPressed(context),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h),
               child: Row(
@@ -83,7 +85,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                       ),
                       Text(
                         "${viewModel.currentEntryIndex + 1} из "
-                        "${viewModel.onNumberOfEntriesRequested(context)}",
+                        "${onNumberOfEntriesRequested(context)}",
                         style: GoogleFonts.robotoFlex(
                           fontSize: 12.sp,
                           color: theme.colorScheme.onSurfaceVariant,

@@ -3,7 +3,8 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/features/start_account/page/view_model.dart";
+import "package:mony_app/features/start_account/start_account.dart";
+import "package:mony_app/features/start_account/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class StartAccountView extends StatelessWidget {
@@ -11,8 +12,10 @@ class StartAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.viewModel<StartAccountViewModel>();
     final theme = Theme.of(context);
+    final viewModel = context.viewModel<StartAccountViewModel>();
+    final onCreateAccountPressed = viewModel<OnCreateAccountPressed>();
+    final onImportDataPressed = viewModel<OnImportDataPressed>();
 
     return Scaffold(
       body: SafeArea(
@@ -76,9 +79,7 @@ class StartAccountView extends StatelessWidget {
                 children: [
                   // -> button create account
                   FilledButton(
-                    onPressed: () {
-                      viewModel.onCreateAccountPressed(context);
-                    },
+                    onPressed: () => onCreateAccountPressed(context),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -103,9 +104,7 @@ class StartAccountView extends StatelessWidget {
                     style: FilledButton.styleFrom(
                       backgroundColor: theme.colorScheme.tertiary,
                     ),
-                    onPressed: () {
-                      viewModel.onImportDataPressed(context);
-                    },
+                    onPressed: () => onImportDataPressed(context),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

@@ -33,8 +33,6 @@ final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
 
   Stream<NavBarTabItem> get tabStream => _tabController.stream;
 
-  final onAddExpensePressed = OnAddExpensePressedUseCase();
-
   final _routes = NavBarTabItem.values.map((e) {
     return switch (e) {
       NavBarTabItem.feed => const FeedPage(),
@@ -99,6 +97,7 @@ final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
   Widget build(BuildContext context) {
     return ViewModel<NavBarViewModel>(
       viewModel: this,
+      useCases: [() => OnAddExpensePressed()],
       child: const NavBarView(),
     );
   }

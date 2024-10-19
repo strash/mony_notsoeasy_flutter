@@ -4,9 +4,9 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account_import/page/page.dart";
 
-final class OnNumberOfEntriesRequestedUseCase extends BaseUseCase<String> {
+final class OnNumberOfEntriesRequested extends UseCase<String, dynamic> {
   @override
-  String action(BuildContext context) {
+  String call(BuildContext context, [dynamic _]) {
     final viewModel = context.viewModel<StartAccountImportViewModel>();
     final csv = viewModel.csv;
     if (csv == null || csv.entries.isEmpty) return "0 записей";
