@@ -3,12 +3,12 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/color_picker/component.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/start_account_create/page/view_model.dart";
+import "package:mony_app/features/account_create/page/view_model.dart";
 import "package:provider/provider.dart";
 
 final class OnCreateAccountPressed extends UseCase<Future<void>, dynamic> {
   AccountValueObject _value(BuildContext context) {
-    final viewModel = context.viewModel<StartAccountCreateViewModel>();
+    final viewModel = context.viewModel<AccountCreateViewModel>();
     final balance =
         viewModel.balanceController.text.trim().replaceAll(",", ".");
     return AccountValueObject.create(
@@ -29,7 +29,7 @@ final class OnCreateAccountPressed extends UseCase<Future<void>, dynamic> {
       Navigator.of(context).popUntil((route) => route.isFirst);
       eventService.notify(
         EventAccountCreated(
-          sender: StartAccountCreateViewModel,
+          sender: AccountCreateViewModel,
           account: account,
         ),
       );

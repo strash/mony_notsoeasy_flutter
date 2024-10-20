@@ -4,17 +4,17 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/features/start_account_create/components/components.dart";
-import "package:mony_app/features/start_account_create/start_account_create.dart";
-import "package:mony_app/features/start_account_create/use_case/use_case.dart";
+import "package:mony_app/features/account_create/account_create.dart";
+import "package:mony_app/features/account_create/components/components.dart";
+import "package:mony_app/features/account_create/use_case/use_case.dart";
 
-class StartAccountCreateView extends StatelessWidget {
-  const StartAccountCreateView({super.key});
+class AccountCreateView extends StatelessWidget {
+  const AccountCreateView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<StartAccountCreateViewModel>();
+    final viewModel = context.viewModel<AccountCreateViewModel>();
     final onCreateAccountPressed = viewModel<OnCreateAccountPressed>();
 
     return Scaffold(
