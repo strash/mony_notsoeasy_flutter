@@ -8,8 +8,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/import/import.dart";
 import "package:mony_app/features/import/page/view.dart";
 import "package:mony_app/features/import/use_case/use_case.dart";
-import "package:mony_app/features/import/validator/validator.dart"
-    as column_validator;
+import "package:mony_app/features/import/validator/validator.dart";
 import "package:rxdart/subjects.dart";
 
 final class ImportViewModelBuilder extends StatefulWidget {
@@ -29,8 +28,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
 
   int get progressPercentage => (progress * 100 / _totalProgress).round();
 
-  // TODO: указать правильное количество шагов
-  final _totalProgress = 11;
+  final _totalProgress = 12;
 
   ImportedCsvValueObject? csv;
 
@@ -69,7 +67,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
     };
   }
 
-  List<column_validator.ValidationResult> columnValidationResults = [];
+  List<ValidationResult> columnValidationResults = [];
 
   @override
   void dispose() {

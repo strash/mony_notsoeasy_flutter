@@ -58,6 +58,8 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
           });
         }
       case ImportEventMappingColumnsValidated():
+        subject.add(ImportEventMapAccounts());
+      case ImportEventMapAccounts():
       // TODO: next step
       case ImportEventInitial() ||
             ImportEventLoadingCsv() ||

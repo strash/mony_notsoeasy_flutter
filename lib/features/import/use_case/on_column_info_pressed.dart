@@ -18,41 +18,49 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
     final theme = Theme.of(context);
     BottomSheetComponent.show<void>(
       context,
-      child: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: viewSize.height * 0.4),
-          child: Padding(
-            padding:
-                EdgeInsets.fromLTRB(25.w, 0.0, 25.w, viewPadding.bottom + 20.h),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // -> title
-                Text(
-                  currentColumn.title,
-                  style: GoogleFonts.golosText(
-                    fontSize: 20.sp,
-                    color: theme.colorScheme.onSurface,
-                    fontWeight: FontWeight.w500,
+      expand: false,
+      builder: (context, scrollController) {
+        return SingleChildScrollView(
+          controller: scrollController,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: viewSize.height * 0.4),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                25.w,
+                0.0,
+                25.w,
+                viewPadding.bottom + 20.h,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // -> title
+                  Text(
+                    currentColumn.title,
+                    style: GoogleFonts.golosText(
+                      fontSize: 20.sp,
+                      color: theme.colorScheme.onSurface,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                SizedBox(height: 15.h),
+                  SizedBox(height: 15.h),
 
-                // -> description
-                Text(
-                  currentColumn.description,
-                  style: GoogleFonts.robotoFlex(
-                    fontSize: 15.sp,
-                    height: 1.3.sp,
-                    color: theme.colorScheme.onSurfaceVariant,
+                  // -> description
+                  Text(
+                    currentColumn.description,
+                    style: GoogleFonts.robotoFlex(
+                      fontSize: 15.sp,
+                      height: 1.3.sp,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

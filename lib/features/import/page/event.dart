@@ -18,3 +18,6 @@ final class ImportEventValidatingMappedColumns extends ImportEvent {}
 final class ImportEventErrorMappingColumns extends ImportEvent {}
 
 final class ImportEventMappingColumnsValidated extends ImportEvent {}
+
+// step 4 (map/create accounts)
+final class ImportEventMapAccounts extends ImportEvent {}

@@ -14,6 +14,7 @@ class ImportView extends StatelessWidget {
     final viewModel = context.viewModel<ImportViewModel>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: StreamBuilder<ImportEvent>(
         stream: viewModel.subject.stream,
         builder: (context, snapshot) {
@@ -59,6 +60,8 @@ class ImportView extends StatelessWidget {
                           ImportEventErrorMappingColumns() ||
                           ImportEventMappingColumnsValidated() =>
                             ImportMapColumnsValidationComponent(event: event),
+                          ImportEventMapAccounts() =>
+                            ImportMapAccountsComponent(event: event),
                           // // just in case
                           null => const Center(
                               child: CircularProgressIndicator.adaptive(),
@@ -91,7 +94,8 @@ class ImportView extends StatelessWidget {
                       ImportEventMappingColumns() ||
                       ImportEventValidatingMappedColumns() ||
                       ImportEventErrorMappingColumns() ||
-                      ImportEventMappingColumnsValidated() =>
+                      ImportEventMappingColumnsValidated() ||
+                      ImportEventMapAccounts() =>
                         BackwardForwardButtonsComponent(event: event),
                       // just in case
                       null => const SizedBox(),

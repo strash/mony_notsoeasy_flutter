@@ -32,6 +32,8 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
             ImportEventErrorMappingColumns() ||
             ImportEventMappingColumnsValidated():
         subject.add(ImportEventMappingColumns());
+      case ImportEventMapAccounts():
+        subject.add(ImportEventMappingColumnsValidated());
     }
     viewModel.setProtectedState(() {
       viewModel.progress--;
