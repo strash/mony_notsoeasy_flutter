@@ -1,4 +1,4 @@
-export "./currency.dart";
+export "./amount.dart";
 
 abstract interface class IInputValidator {
   String? call(String? value);

@@ -22,9 +22,9 @@ final class StartAccountCreateViewModel
   final typeController =
       SelectController<EAccountType?>(EAccountType.defaultValue);
   final currencyController =
-      SelectController<FiatCurrency?>(FiatCurrency.fromCode("USD"));
+      SelectController<FiatCurrency?>(FiatCurrency.fromCode("RUB"));
   final balanceController = InputController(
-    validators: [CurrencyValidator()],
+    validators: [AmountValidator()],
   );
 
   bool isSubmitEnabled = false;
