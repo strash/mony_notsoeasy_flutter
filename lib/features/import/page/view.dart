@@ -56,7 +56,8 @@ class ImportView extends StatelessWidget {
                           ImportEventMappingColumns() =>
                             ImportMapColumnsComponent(event: event),
                           ImportEventValidatingMappedColumns() ||
-                          ImportEventErrorMappingColumns() =>
+                          ImportEventErrorMappingColumns() ||
+                          ImportEventMappingColumnsValidated() =>
                             ImportMapColumnsValidationComponent(event: event),
                           // // just in case
                           null => const Center(
@@ -89,7 +90,8 @@ class ImportView extends StatelessWidget {
                       // 3 step
                       ImportEventMappingColumns() ||
                       ImportEventValidatingMappedColumns() ||
-                      ImportEventErrorMappingColumns() =>
+                      ImportEventErrorMappingColumns() ||
+                      ImportEventMappingColumnsValidated() =>
                         BackwardForwardButtonsComponent(event: event),
                       // just in case
                       null => const SizedBox(),

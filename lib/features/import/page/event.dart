@@ -16,3 +16,5 @@ final class ImportEventMappingColumns extends ImportEvent {}
 final class ImportEventValidatingMappedColumns extends ImportEvent {}
 
 final class ImportEventErrorMappingColumns extends ImportEvent {}
+
+final class ImportEventMappingColumnsValidated extends ImportEvent {}

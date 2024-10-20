@@ -9,7 +9,7 @@ final class OnColumnSelected extends UseCase<void, String> {
     if (entryKey == null) throw ArgumentError.notNull();
     final viewModel = context.viewModel<ImportViewModel>();
     final currentMappedColumn = viewModel.mappedColumns.lastOrNull;
-    if (currentMappedColumn == null) throw ArgumentError.notNull();
+    if (currentMappedColumn == null) return;
 
     final newValue = currentMappedColumn.entryKey == entryKey ? null : entryKey;
 

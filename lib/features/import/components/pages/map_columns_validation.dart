@@ -1,7 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/features/import/import.dart";
+import "package:mony_app/gen/assets.gen.dart";
 
 class ImportMapColumnsValidationComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -14,10 +17,16 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // final viewModel = context.viewModel<ImportViewModel>();
+    final viewModel = context.viewModel<ImportViewModel>();
+    String description = "Один момент, проверяются данные.";
+    if (event is ImportEventErrorMappingColumns) {
+      description = "Найдены ошибки.";
+    } else if (event is ImportEventMappingColumnsValidated) {
+      description = "Все ок! Можно продолжать.";
+    }
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -37,7 +46,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
 
               // -> description
               Text(
-                "Перед тем как продолжить, нужно проверить данные.",
+                description,
                 style: GoogleFonts.robotoFlex(
                   fontSize: 15.sp,
                   height: 1.3.sp,
@@ -48,6 +57,68 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
           ),
         ),
         SizedBox(height: 40.h),
+
+        // -> validation results
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: viewModel.columnValidationResults.map((e) {
+              return TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0.0, end: 1.0),
+                duration: Durations.short4,
+                builder: (context, opacity, child) {
+                  return Opacity(
+                    opacity: opacity,
+                    child: Row(
+                      children: [
+                        // -> icon
+                        SvgPicture.asset(
+                          e.ok != null
+                              ? Assets.icons.checkmark
+                              : Assets.icons.exclamationmarkCircle,
+                          width: 20.r,
+                          height: 20.r,
+                          colorFilter: ColorFilter.mode(
+                            e.ok != null
+                                ? theme.colorScheme.secondary
+                                : theme.colorScheme.error,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+
+                        // -> result
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 2.h,
+                            ),
+                            child: Text(
+                              e.ok != null ? e.ok! : e.error!,
+                              style: GoogleFonts.robotoFlex(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: e.ok != null
+                                    ? theme.colorScheme.onSurface
+                                    : theme.colorScheme.error,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }).toList(growable: false),
+          ),
+        ),
+        SizedBox(height: 40.h),
+
+        // -> loader
+        if (event is ImportEventValidatingMappedColumns)
+          const Center(child: CircularProgressIndicator.adaptive()),
       ],
     );
   }

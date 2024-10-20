@@ -96,7 +96,7 @@ class EntryListRowComponent extends StatelessWidget {
                         ),
                         duration: Durations.short2,
                         child: Padding(
-                          padding: EdgeInsets.only(left: 8.w),
+                          padding: EdgeInsets.symmetric(horizontal: 8.w),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(

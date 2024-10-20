@@ -29,7 +29,8 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
           subject.add(ImportEventCsvLoaded());
         }
       case ImportEventValidatingMappedColumns() ||
-            ImportEventErrorMappingColumns():
+            ImportEventErrorMappingColumns() ||
+            ImportEventMappingColumnsValidated():
         subject.add(ImportEventMappingColumns());
     }
     viewModel.setProtectedState(() {

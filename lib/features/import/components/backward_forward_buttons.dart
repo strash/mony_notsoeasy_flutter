@@ -26,13 +26,13 @@ class BackwardForwardButtonsComponent extends StatelessWidget {
     final currentColumn = viewModel.currentColumn;
     final currentMappedColumn = viewModel.mappedColumns.lastOrNull;
     final forwardEnabled = event is ImportEventCsvLoaded ||
-        (event is ImportEventMappingColumns ||
-                event is ImportEventValidatingMappedColumns) &&
+        (event is ImportEventMappingColumns &&
             currentColumn != null &&
             (currentColumn.isRequired &&
                     currentMappedColumn != null &&
                     currentMappedColumn.entryKey != null ||
-                !currentColumn.isRequired);
+                !currentColumn.isRequired)) ||
+        event is ImportEventMappingColumnsValidated;
 
     return Row(
       children: [
