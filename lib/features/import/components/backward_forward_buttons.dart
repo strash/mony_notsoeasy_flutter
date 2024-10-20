@@ -22,7 +22,8 @@ class BackwardForwardButtonsComponent extends StatelessWidget {
     final onForwardPressed = viewModel<OnForwardPressed>();
     final backEnabled = event is! ImportEventInitial &&
         event is! ImportEventLoadingCsv &&
-        event is! ImportEventErrorLoadingCsv;
+        event is! ImportEventErrorLoadingCsv &&
+        event is! ImportEventValidatingMappedColumns;
     final currentColumn = viewModel.currentColumn;
     final currentMappedColumn = viewModel.mappedColumns.lastOrNull;
     final forwardEnabled = event is ImportEventCsvLoaded ||
