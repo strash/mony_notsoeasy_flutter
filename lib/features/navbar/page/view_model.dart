@@ -67,6 +67,7 @@ final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
       useCases: [
         () => OnAddExpensePressed(),
         () => OnTabChangeRequested(),
+        () => OnPopTabsToRootRequested(),
       ],
       child: const NavBarView(),
     );

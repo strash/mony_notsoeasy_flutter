@@ -4,35 +4,20 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/color_picker/component.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account_create/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnCreateAccountPressed extends UseCase<Future<void>, dynamic> {
-  AccountValueObject _value(BuildContext context) {
+  @override
+  Future<void> call(BuildContext context, [dynamic _]) async {
     final viewModel = context.viewModel<AccountCreateViewModel>();
     final balance =
         viewModel.balanceController.text.trim().replaceAll(",", ".");
-    return AccountValueObject.create(
+    final vo = AccountValueObject.create(
       title: viewModel.titleController.text.trim(),
       color: viewModel.colorController.value ?? Palette().randomColor,
       type: viewModel.typeController.value ?? EAccountType.defaultValue,
-      currencyCode: viewModel.currencyController.value?.code ?? "USD",
+      currencyCode: viewModel.currencyController.value?.code ?? "RUB",
       balance: double.tryParse(balance) ?? 0.0,
     );
-  }
-
-  @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
-    final accountService = context.read<AccountService>();
-    final eventService = context.viewModel<AppEventService>();
-    final account = await accountService.create(_value(context));
-    if (context.mounted) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      eventService.notify(
-        EventAccountCreated(
-          sender: AccountCreateViewModel,
-          account: account,
-        ),
-      );
-    }
+    Navigator.of(context).pop<AccountValueObject>(vo);
   }
 }

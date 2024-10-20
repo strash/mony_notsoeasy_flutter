@@ -8,7 +8,12 @@ import "package:mony_app/features/account_create/use_case/use_case.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 final class AccountCreateViewModelBuilder extends StatefulWidget {
-  const AccountCreateViewModelBuilder({super.key});
+  final ScrollController scrollController;
+
+  const AccountCreateViewModelBuilder({
+    super.key,
+    required this.scrollController,
+  });
 
   @override
   ViewModelState<AccountCreateViewModelBuilder> createState() =>
@@ -79,7 +84,9 @@ final class AccountCreateViewModel
         () => OnCreateAccountPressed(),
         () => OnCurrencyDescriptionRequested(),
       ],
-      child: const AccountCreateView(),
+      child: AccountCreateView(
+        scrollController: widget.scrollController,
+      ),
     );
   }
 }

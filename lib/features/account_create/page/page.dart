@@ -4,10 +4,15 @@ import "package:mony_app/features/account_create/page/view_model.dart";
 export "./view_model.dart";
 
 class AccountCreatePage extends StatelessWidget {
-  const AccountCreatePage({super.key});
+  final ScrollController scrollController;
+
+  const AccountCreatePage({
+    super.key,
+    required this.scrollController,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const AccountCreateViewModelBuilder();
+    return AccountCreateViewModelBuilder(scrollController: scrollController);
   }
 }

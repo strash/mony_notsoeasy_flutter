@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
@@ -9,7 +10,12 @@ import "package:mony_app/features/account_create/components/components.dart";
 import "package:mony_app/features/account_create/use_case/use_case.dart";
 
 class AccountCreateView extends StatelessWidget {
-  const AccountCreateView({super.key});
+  final ScrollController scrollController;
+
+  const AccountCreateView({
+    super.key,
+    required this.scrollController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +25,13 @@ class AccountCreateView extends StatelessWidget {
 
     return Scaffold(
       body: CustomScrollView(
+        controller: scrollController,
         slivers: [
           // -> appbar
-          const AppBarComponent(title: "Новый счет"),
+          const AppBarComponent(
+            title: "Новый счет",
+            showDragHandle: true,
+          ),
 
           SliverPadding(
             padding: EdgeInsets.symmetric(

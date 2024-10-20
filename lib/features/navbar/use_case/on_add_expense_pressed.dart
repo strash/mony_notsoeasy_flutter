@@ -6,6 +6,11 @@ import "package:mony_app/features/new_expense/page/page.dart";
 final class OnAddExpensePressed extends UseCase<void, dynamic> {
   @override
   void call(BuildContext context, [dynamic _]) {
-    BottomSheetComponent.show(context, child: const NewExpensePage());
+    BottomSheetComponent.show(
+      context,
+      builder: (context, scrollController) {
+        return const NewExpensePage();
+      },
+    );
   }
 }

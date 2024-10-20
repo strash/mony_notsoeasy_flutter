@@ -18,6 +18,7 @@ class StartAccountView extends StatelessWidget {
     final onImportDataPressed = viewModel<OnImportDataPressed>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [

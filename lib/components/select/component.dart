@@ -14,6 +14,7 @@ class SelectComponent<T> extends StatefulWidget {
   final SelectController<T?> controller;
   final Widget? placeholder;
   final Widget? activeEntry;
+  final bool expand;
   final List<SelectEntryComponent<T>> Function(BuildContext context)
       entryBuilder;
 
@@ -22,6 +23,7 @@ class SelectComponent<T> extends StatefulWidget {
     required this.controller,
     this.placeholder,
     this.activeEntry,
+    this.expand = false,
     required this.entryBuilder,
   });
 
@@ -38,19 +40,24 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
     final entries = widget.entryBuilder(context);
     final value = await BottomSheetComponent.show<T>(
       context,
-      child: _ValueProvider<T>(
-        controller: widget.controller,
-        child: ListView.builder(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(bottom: viewPaddings.bottom + 20.h),
-          itemCount: entries.length,
-          itemBuilder: (context, index) {
-            return SizedBox(
-              child: entries.elementAt(index),
-            );
-          },
-        ),
-      ),
+      expand: widget.expand,
+      initialChildSize: 0.5,
+      builder: (context, scrollController) {
+        return _ValueProvider<T>(
+          controller: widget.controller,
+          child: ListView.builder(
+            controller: widget.expand ? scrollController : null,
+            shrinkWrap: true,
+            padding: EdgeInsets.only(bottom: viewPaddings.bottom + 20.h),
+            itemCount: entries.length,
+            itemBuilder: (context, index) {
+              return SizedBox(
+                child: entries.elementAt(index),
+              );
+            },
+          ),
+        );
+      },
     );
     if (value != null) widget.controller.value = value;
     setState(() => _isActive = false);

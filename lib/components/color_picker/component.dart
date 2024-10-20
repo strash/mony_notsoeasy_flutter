@@ -28,10 +28,13 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
     setState(() => _isActive = true);
     final value = await BottomSheetComponent.show<Color?>(
       context,
-      child: _ValueProvider(
-        controller: widget.controller,
-        child: const _ColorGrid(),
-      ),
+      initialChildSize: 0.55,
+      builder: (context, scrollController) {
+        return _ValueProvider(
+          controller: widget.controller,
+          child: const _ColorGrid(),
+        );
+      },
     );
     if (value != null) widget.controller.value = value;
     setState(() => _isActive = false);

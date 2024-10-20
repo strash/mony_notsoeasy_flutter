@@ -3,13 +3,14 @@ import "dart:ui";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/components/back_button/component.dart";
+import "package:mony_app/components/components.dart";
 
 class AppBarComponent extends StatelessWidget {
   final bool useSliver;
   final Widget? leading;
   final String title;
   final Widget? trailing;
+  final bool showDragHandle;
   final bool automaticallyImplyLeading;
 
   static final double height = 50.h;
@@ -20,6 +21,7 @@ class AppBarComponent extends StatelessWidget {
     this.leading,
     required this.title,
     this.trailing,
+    this.showDragHandle = false,
     this.automaticallyImplyLeading = true,
   });
 
@@ -33,6 +35,7 @@ class AppBarComponent extends StatelessWidget {
         title: title,
         trailing: trailing,
         viewPadding: viewPadding,
+        showDragHandle: showDragHandle,
         automaticallyImplyLeading: automaticallyImplyLeading,
       );
     }
@@ -42,6 +45,7 @@ class AppBarComponent extends StatelessWidget {
         leading: leading,
         trailing: trailing,
         viewPadding: viewPadding,
+        showDragHandle: showDragHandle,
         automaticallyImplyLeading: automaticallyImplyLeading,
       ),
       pinned: true,
@@ -54,6 +58,7 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
   final String title;
   final Widget? trailing;
   final EdgeInsets viewPadding;
+  final bool showDragHandle;
   final bool automaticallyImplyLeading;
 
   _AppBarDelegate({
@@ -61,14 +66,20 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
     required this.title,
     required this.trailing,
     required this.viewPadding,
+    required this.showDragHandle,
     required this.automaticallyImplyLeading,
   });
 
-  @override
-  double get maxExtent => viewPadding.top + AppBarComponent.height;
+  double get handleExtent =>
+      showDragHandle ? BottomSheetHandleComponent.height : 0.0;
 
   @override
-  double get minExtent => viewPadding.top + AppBarComponent.height;
+  double get maxExtent =>
+      viewPadding.top + AppBarComponent.height + handleExtent;
+
+  @override
+  double get minExtent =>
+      viewPadding.top + AppBarComponent.height + handleExtent;
 
   @override
   bool shouldRebuild(_AppBarDelegate oldDelegate) {
@@ -82,6 +93,7 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
       title: title,
       trailing: trailing,
       viewPadding: viewPadding,
+      showDragHandle: showDragHandle,
       automaticallyImplyLeading: automaticallyImplyLeading,
     );
   }
@@ -92,6 +104,7 @@ class _AppBar extends StatelessWidget {
   final String title;
   final Widget? trailing;
   final EdgeInsets viewPadding;
+  final bool showDragHandle;
   final bool automaticallyImplyLeading;
 
   const _AppBar({
@@ -99,10 +112,15 @@ class _AppBar extends StatelessWidget {
     required this.title,
     required this.trailing,
     required this.viewPadding,
+    required this.showDragHandle,
     required this.automaticallyImplyLeading,
   });
 
-  double get minExtent => viewPadding.top + AppBarComponent.height;
+  double get handleExtent =>
+      showDragHandle ? BottomSheetHandleComponent.height : 0.0;
+
+  double get minExtent =>
+      viewPadding.top + AppBarComponent.height + handleExtent;
 
   TextStyle _titleStyle(BuildContext context) {
     final theme = Theme.of(context);
@@ -148,17 +166,23 @@ class _AppBar extends StatelessWidget {
           child: SizedBox.fromSize(
             size: Size.fromHeight(minExtent),
             child: ColoredBox(
-              color: theme.colorScheme.surface.withOpacity(0.85),
+              color: theme.colorScheme.surface.withOpacity(0.75),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  // -> handle
+                  if (showDragHandle) const BottomSheetHandleComponent(),
+
+                  // -> the rest
                   Row(
                     children: [
                       // -> leading
                       SizedBox(
                         width: hasLeadingWidth ? 10.w : AppBarComponent.height,
                         height: AppBarComponent.height,
-                        child: leading == null && automaticallyImplyLeading
+                        child: leading == null &&
+                                showDragHandle == false &&
+                                automaticallyImplyLeading
                             ? const BackButtonComponent()
                             : leading,
                       ),
@@ -183,7 +207,11 @@ class _AppBar extends StatelessWidget {
                             ? 10.w
                             : AppBarComponent.height,
                         height: AppBarComponent.height,
-                        child: trailing,
+                        child: trailing == null &&
+                                showDragHandle &&
+                                automaticallyImplyLeading
+                            ? const CloseButtonComponent()
+                            : trailing,
                       ),
                     ],
                   ),

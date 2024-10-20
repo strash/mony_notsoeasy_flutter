@@ -79,6 +79,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/widget.small.badge.plus.svg
   String get widgetSmallBadgePlus => 'assets/icons/widget.small.badge.plus.svg';
 
+  /// File path: assets/icons/xmark.svg
+  String get xmark => 'assets/icons/xmark.svg';
+
   /// List of all assets
   List<String> get values => [
         checkmarkBold,
@@ -100,7 +103,8 @@ class $AssetsIconsGen {
         repeatCircle,
         repeat,
         squareAndArrowDown,
-        widgetSmallBadgePlus
+        widgetSmallBadgePlus,
+        xmark
       ];
 }
 

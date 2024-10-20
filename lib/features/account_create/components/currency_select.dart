@@ -31,6 +31,7 @@ class CurrencySelectComponent extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 )
               : null,
+          expand: true,
           entryBuilder: (context) {
             final list = List.of(FiatCurrency.list, growable: false)
               ..sort((a, b) => a.code.compareTo(b.code));

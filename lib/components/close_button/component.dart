@@ -3,8 +3,8 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-class BackButtonComponent extends StatelessWidget {
-  const BackButtonComponent({super.key});
+class CloseButtonComponent extends StatelessWidget {
+  const CloseButtonComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +15,13 @@ class BackButtonComponent extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: navigator.maybePop<void>,
       child: Center(
-        child: Padding(
-          padding: EdgeInsets.only(right: 10.w),
-          child: SvgPicture.asset(
-            Assets.icons.chevronBackward,
-            width: 28.r,
-            height: 28.r,
-            colorFilter: ColorFilter.mode(
-              theme.colorScheme.secondary,
-              BlendMode.srcIn,
-            ),
+        child: SvgPicture.asset(
+          Assets.icons.xmark,
+          width: 28.r,
+          height: 28.r,
+          colorFilter: ColorFilter.mode(
+            theme.colorScheme.secondary,
+            BlendMode.srcIn,
           ),
         ),
       ),

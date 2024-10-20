@@ -9,7 +9,7 @@ class _ColorGrid extends StatefulWidget {
 
 class _ColorGridState extends State<_ColorGrid> {
   Rect? _rect;
-  EdgeInsets _padding = EdgeInsets.zero;
+  final _padding = EdgeInsets.symmetric(horizontal: 10.r);
   final double _cursorThickness = 5.r;
   final _cursorInnerRadius = 9.r;
 
@@ -26,23 +26,11 @@ class _ColorGridState extends State<_ColorGrid> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      final viewPadding = MediaQuery.viewPaddingOf(context);
-      setState(() {
-        _padding =
-            EdgeInsets.fromLTRB(10.r, 0.0, 10.r, 50.r + viewPadding.bottom);
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final palette = Palette().grid12x10;
     final theme = Theme.of(context);
     final viewSize = MediaQuery.sizeOf(context);
-    final itemWidth = (viewSize.width - 10.r * 2) / 12;
+    final itemWidth = (viewSize.width - _padding.horizontal) / 12;
     final borderRadius = SmoothBorderRadius.all(
       SmoothRadius(
         cornerRadius: _cursorInnerRadius,
@@ -63,7 +51,7 @@ class _ColorGridState extends State<_ColorGrid> {
     return Padding(
       padding: _padding,
       child: SizedBox.fromSize(
-        size: Size(itemWidth * 12, itemWidth * 10),
+        size: itemSize,
         child: Stack(
           fit: StackFit.expand,
           clipBehavior: Clip.none,
@@ -110,7 +98,7 @@ class _ColorGridState extends State<_ColorGrid> {
                 rect: _rect!,
                 child: IgnorePointer(
                   child: SizedBox.fromSize(
-                    size: itemSize,
+                    size: Size.square(itemWidth),
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
