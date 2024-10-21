@@ -36,7 +36,6 @@ class NewExpenseView extends StatelessWidget {
           // -> keyboard
           Expanded(
             child: SeparatedComponent(
-              direction: Axis.vertical,
               itemCount: symbols.length,
               separatorBuilder: (context) => SizedBox(height: 10.r),
               itemBuilder: (context, index) {

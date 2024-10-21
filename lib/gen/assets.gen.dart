@@ -57,6 +57,9 @@ class $AssetsIconsGen {
   String get listBulletBelowRectangle =>
       'assets/icons/list.bullet.below.rectangle.svg';
 
+  /// File path: assets/icons/pencil.line.svg
+  String get pencilLine => 'assets/icons/pencil.line.svg';
+
   /// File path: assets/icons/person.crop.circle.fill.badge.plus.svg
   String get personCropCircleFillBadgePlus =>
       'assets/icons/person.crop.circle.fill.badge.plus.svg';
@@ -97,6 +100,7 @@ class $AssetsIconsGen {
         gearshapeFill,
         infoCircle,
         listBulletBelowRectangle,
+        pencilLine,
         personCropCircleFillBadgePlus,
         plus,
         repeatCircleFill,
