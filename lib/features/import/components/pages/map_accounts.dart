@@ -1,8 +1,12 @@
+import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/features/import/import.dart";
+import "package:mony_app/gen/assets.gen.dart";
 
 class ImportMapAccountsComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -16,13 +20,13 @@ class ImportMapAccountsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    // TODO: если нет ни одного счета, то "нужно создать", иначе "нужно добавить
-    // информацию"
-    String description = "Один момент, проверяются данные.";
-    if (event is ImportEventErrorMappingColumns) {
-      description = "Найдены ошибки.";
-    } else if (event is ImportEventMappingColumnsValidated) {
-      description = "Все ок! Можно продолжать.";
+    final accounts = viewModel.accounts;
+    String description =
+        "Нужно создать счет. К нему будут привязаны все транзакции.";
+    if (accounts.isNotEmpty) {
+      description = "Мы нашли ${viewModel.numberOfAccountsDescription}. "
+          "${accounts.length == 1 ? "Его" : "Их"} нужно дополнить информацией. "
+          "Это не займет много времени.";
     }
 
     return Column(
@@ -57,6 +61,73 @@ class ImportMapAccountsComponent extends StatelessWidget {
           ),
         ),
         SizedBox(height: 40.h),
+
+        // -> accounts
+        if (accounts.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.w),
+            child: SeparatedComponent(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              separatorBuilder: (context) => SizedBox(height: 10.h),
+              itemCount: accounts.length,
+              itemBuilder: (context, index) {
+                final account = accounts.entries.elementAt(index);
+
+                return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    print(account.key);
+                  },
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: theme.colorScheme.outlineVariant),
+                      borderRadius: SmoothBorderRadius.all(
+                        SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
+                      ),
+                      color:
+                          theme.colorScheme.surfaceContainer.withOpacity(0.5),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(25.w, 12.h, 20.w, 12.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // -> title
+                          Flexible(
+                            child: Text(
+                              account.key,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.robotoFlex(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: theme.colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+
+                          // -> icon edit
+                          SvgPicture.asset(
+                            Assets.icons.pencilLine,
+                            width: 24.r,
+                            height: 24.r,
+                            colorFilter: ColorFilter.mode(
+                              theme.colorScheme.secondary,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+        // TODO: кнопка создания единственного счета, если accounts пуст
       ],
     );
   }

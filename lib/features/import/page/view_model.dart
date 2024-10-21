@@ -20,7 +20,6 @@ final class ImportViewModelBuilder extends StatefulWidget {
 
 typedef TMappedColumn = ({EImportColumn column, String? entryKey});
 
-// TODO: для счетов еще нужно мапать все, если колонка была выбрана
 final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   final subject = BehaviorSubject<ImportEvent>.seeded(ImportEventInitial());
 
@@ -68,6 +67,19 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   }
 
   List<ValidationResult> columnValidationResults = [];
+
+  Map<String, AccountValueObject?> accounts = {};
+
+  String get numberOfAccountsDescription {
+    final count = accounts.length;
+    final formatter = NumberFormat.decimalPattern();
+    final formatted = formatter.format(count);
+    return switch (count.wordCaseHint) {
+      EWordCaseHint.nominative => "$formatted счет",
+      EWordCaseHint.genitive => "$formatted счета",
+      EWordCaseHint.accusative => "$formatted счетов",
+    };
+  }
 
   @override
   void dispose() {
