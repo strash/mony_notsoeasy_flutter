@@ -19,7 +19,8 @@ migrate name:
 		"M$(date +%s){{uppercamelcase(name)}}"
 
 run:
-	@flutter run --debug --pub \
+	@just update
+	@flutter run --debug \
 		--dart-define-from-file=.env \
 		--dart-define-from-file=.version
 
