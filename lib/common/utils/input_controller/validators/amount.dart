@@ -1,7 +1,7 @@
 import "package:mony_app/common/common.dart";
 
 const _pattern =
-    r"^-{0,1}0[.,][0-9]{1,2}$|^-{0,1}[1-9]?[0-9]*[.,]{0,1}[0-9]{1,2}$";
+    r"^[-+]{0,1}0[.,][0-9]{1,2}$|^[-+]{0,1}[1-9]?[0-9]*[.,]{0,1}[0-9]{1,2}$";
 
 final class AmountValidator implements IInputValidator {
   final RegExp _regEx = RegExp(_pattern);
