@@ -65,7 +65,7 @@ class BottomSheetComponent extends StatelessWidget {
       snap: true,
       snapSizes: expand ? [initialChildSize] : null,
       initialChildSize: initialChildSize,
-      minChildSize: expand ? minSize : min(0.999, initialChildSize - 0.001),
+      minChildSize: expand ? minSize : min(0.99, initialChildSize - 0.01),
       maxChildSize: expand ? 1.0 : initialChildSize,
       builder: (context, scrollController) {
         return Container(
