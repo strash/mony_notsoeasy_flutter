@@ -31,7 +31,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
         final validator = switch (column.column) {
           EImportColumn.account => AccountValidator(),
           EImportColumn.amount => AmountValidator(),
-          EImportColumn.expenseType => ExpenseTypeValidator(),
+          EImportColumn.transactionType => ExpenseTypeValidator(),
           EImportColumn.date => DateValidator(),
           EImportColumn.category => CategoryValidator(),
           EImportColumn.tag => TagValidator(),
@@ -59,7 +59,10 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
 
   void _onColumnsValidated(ImportViewModel viewModel) {
     final subject = viewModel.subject;
-    viewModel.setProtectedState(() => viewModel.accounts = {});
+    viewModel.setProtectedState(() {
+      viewModel.singleAccount = null;
+      viewModel.accounts = {};
+    });
     subject.add(ImportEventMapAccounts());
     final accountColumn = viewModel.mappedColumns.where((e) {
       return e.column == EImportColumn.account;

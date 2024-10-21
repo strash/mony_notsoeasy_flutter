@@ -4,7 +4,7 @@ import "package:mony_app/features/import/validator/validator.dart";
 final class ExpenseTypeValidator extends BaseValidator {
   @override
   ValidationResult validate(List<Map<String, String>> input, String key) {
-    const column = EImportColumn.expenseType;
+    const column = EImportColumn.transactionType;
     try {
       final Set<String> values = {};
       for (final element in input) {

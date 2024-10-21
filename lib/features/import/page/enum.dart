@@ -1,7 +1,7 @@
 enum EImportColumn {
   account,
   amount,
-  expenseType,
+  transactionType,
   date,
   category,
   tag,
@@ -26,7 +26,7 @@ extension EImportColumnEx on EImportColumn {
     return switch (this) {
       EImportColumn.account => "Счет",
       EImportColumn.amount => "Сумма",
-      EImportColumn.expenseType => "Тип транзакции",
+      EImportColumn.transactionType => "Тип транзакции",
       EImportColumn.date => "Дата",
       EImportColumn.category => "Категория",
       EImportColumn.tag => "Тег",
@@ -42,7 +42,7 @@ extension EImportColumnEx on EImportColumn {
       EImportColumn.amount => "В этой колонке должна быть сумма транзакции. "
           "Колонка не должна содержать запятых и символов/названий валют. "
           "Может содержать только цифры, точку и знаки +/-. Колонка обязательна.",
-      EImportColumn.expenseType => "В этой колонке может быть только два "
+      EImportColumn.transactionType => "В этой колонке может быть только два "
           "возможных значения: expense (трата) или income (доход). Могут "
           "называться иначе. Колонка не обязательна и ее можно пропустить. "
           "В этом случае будет произведена попытка понять тип транзакции из "

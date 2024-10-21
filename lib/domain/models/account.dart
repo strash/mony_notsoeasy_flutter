@@ -51,7 +51,7 @@ extension EAccountTypeEx on EAccountType {
       EAccountType.debit => "Дебетовый счет",
       EAccountType.credit => "Кредитный счет",
       EAccountType.cash => "Наличные",
-      EAccountType.savings => "Вклад или накопительный счет",
+      EAccountType.savings => "Вклад, накопительный счет",
       EAccountType.investment => "Инвестиционный счет",
     };
   }

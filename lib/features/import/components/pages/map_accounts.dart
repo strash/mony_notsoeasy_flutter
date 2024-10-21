@@ -18,9 +18,11 @@ class ImportMapAccountsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
+    final singleAccount = viewModel.singleAccount;
     final accounts = viewModel.accounts;
     String description =
-        "Нужно создать счет. К нему будут привязаны все транзакции.";
+        "Нужно создать счет. К нему будут привязаны все транзакции. "
+        "Позже можно будет создать другие счета.";
     if (accounts.isNotEmpty) {
       description = "Мы нашли ${viewModel.numberOfAccountsDescription}. "
           "${accounts.length == 1 ? "Его" : "Их"} нужно дополнить информацией. "
@@ -69,14 +71,18 @@ class ImportMapAccountsComponent extends StatelessWidget {
               separatorBuilder: (context) => SizedBox(height: 10.h),
               itemCount: accounts.length,
               itemBuilder: (context, index) {
-                final account = accounts.entries.elementAt(index);
+                final accountEntry = accounts.entries.elementAt(index);
 
-                return AccountItemComponent(account: account);
+                return AccountItemFromImportComponent(
+                  accountEntry: accountEntry,
+                );
               },
             ),
-          ),
+          )
 
-        // TODO: кнопка создания единственного счета, если accounts пуст
+        // -> single account
+        else
+          AccountItemLocalComponent(account: singleAccount),
       ],
     );
   }

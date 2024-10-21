@@ -100,6 +100,8 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
         () => OnColumnSelected(),
         () => OnColumnInfoPressed(),
         () => OnAccountButtonPressed(),
+        () => OnAccountLocalButtonPressedDecorator(),
+        () => OnAccountFromImportButtonPressedDecorator(),
       ],
       child: const ImportView(),
     );
