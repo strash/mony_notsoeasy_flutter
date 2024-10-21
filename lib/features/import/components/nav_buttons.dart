@@ -6,10 +6,10 @@ import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-class BackwardForwardButtonsComponent extends StatelessWidget {
+class NavigationButtonsComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const BackwardForwardButtonsComponent({
+  const NavigationButtonsComponent({
     super.key,
     this.event,
   });
@@ -33,7 +33,11 @@ class BackwardForwardButtonsComponent extends StatelessWidget {
                     currentMappedColumn != null &&
                     currentMappedColumn.entryKey != null ||
                 !currentColumn.isRequired)) ||
-        event is ImportEventMappingColumnsValidated;
+        event is ImportEventMappingColumnsValidated ||
+        (event is ImportEventMapAccounts &&
+            (viewModel.singleAccount != null ||
+                viewModel.accounts.isNotEmpty &&
+                    viewModel.accounts.entries.every((e) => e.value != null)));
 
     return Row(
       children: [

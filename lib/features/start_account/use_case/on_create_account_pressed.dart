@@ -4,19 +4,19 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/services/services.dart";
-import "package:mony_app/features/account_create/page/page.dart";
+import "package:mony_app/features/account_form/page/page.dart";
 import "package:provider/provider.dart";
 
 final class OnCreateAccountPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
-    final result = await BottomSheetComponent.show<AccountValueObject?>(
+    final result = await BottomSheetComponent.show<AccountVO?>(
       context,
       initialChildSize: 1.0,
       expand: false,
       showDragHandle: false,
       builder: (context, scrollController) {
-        return AccountCreatePage(scrollController: scrollController);
+        return AccountFormPage(scrollController: scrollController);
       },
     );
     if (result == null || !context.mounted) return;
@@ -27,7 +27,7 @@ final class OnCreateAccountPressed extends UseCase<Future<void>, dynamic> {
       Navigator.of(context).popUntil((route) => route.isFirst);
       eventService.notify(
         EventAccountCreated(
-          sender: AccountCreateViewModel,
+          sender: AccountFormViewModel,
           account: account,
         ),
       );

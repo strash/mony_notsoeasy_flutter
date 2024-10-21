@@ -1,12 +1,10 @@
-import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
-import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
+import "package:mony_app/features/import/components/components.dart";
 import "package:mony_app/features/import/import.dart";
-import "package:mony_app/gen/assets.gen.dart";
 
 class ImportMapAccountsComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -73,56 +71,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
               itemBuilder: (context, index) {
                 final account = accounts.entries.elementAt(index);
 
-                return GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    print(account.key);
-                  },
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      border:
-                          Border.all(color: theme.colorScheme.outlineVariant),
-                      borderRadius: SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
-                      ),
-                      color:
-                          theme.colorScheme.surfaceContainer.withOpacity(0.5),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(25.w, 12.h, 20.w, 12.h),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // -> title
-                          Flexible(
-                            child: Text(
-                              account.key,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.robotoFlex(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: theme.colorScheme.onSurface,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10.w),
-
-                          // -> icon edit
-                          SvgPicture.asset(
-                            Assets.icons.pencilLine,
-                            width: 24.r,
-                            height: 24.r,
-                            colorFilter: ColorFilter.mode(
-                              theme.colorScheme.secondary,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                return AccountItemComponent(account: account);
               },
             ),
           ),

@@ -96,7 +96,7 @@ class ImportView extends StatelessWidget {
                       ImportEventErrorMappingColumns() ||
                       ImportEventMappingColumnsValidated() ||
                       ImportEventMapAccounts() =>
-                        BackwardForwardButtonsComponent(event: event),
+                        NavigationButtonsComponent(event: event),
                       // just in case
                       null => const SizedBox(),
                     },

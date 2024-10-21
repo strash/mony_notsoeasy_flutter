@@ -29,7 +29,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
 
   final _totalProgress = 12;
 
-  ImportedCsvValueObject? csv;
+  ImportedCsvVO? csv;
 
   int currentEntryIndex = 0;
 
@@ -68,7 +68,8 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
 
   List<ValidationResult> columnValidationResults = [];
 
-  Map<String, AccountValueObject?> accounts = {};
+  AccountVO? singleAccount;
+  Map<String, AccountVO?> accounts = {};
 
   String get numberOfAccountsDescription {
     final count = accounts.length;
@@ -98,6 +99,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
         () => OnRotateEntryPressed(),
         () => OnColumnSelected(),
         () => OnColumnInfoPressed(),
+        () => OnAccountButtonPressed(),
       ],
       child: const ImportView(),
     );
