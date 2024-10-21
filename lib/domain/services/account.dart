@@ -38,15 +38,8 @@ final class AccountService {
     return _accountFactory.from(data);
   }
 
-  Future<AccountModel> create(AccountValueObject obj) async {
-    if (obj is! AccountCreateValueObject) throw ArgumentError.value(obj);
-    final AccountCreateValueObject(
-      :title,
-      :type,
-      :currencyCode,
-      :color,
-      :balance
-    ) = obj;
+  Future<AccountModel> create(AccountVO obj) async {
+    final AccountVO(:title, :type, :currencyCode, :color, :balance) = obj;
     final model = AccountModel(
       id: StringEx.random(20),
       created: DateTime.now(),
@@ -61,26 +54,9 @@ final class AccountService {
     return model;
   }
 
-  Future<AccountModel> update(AccountValueObject obj) async {
-    if (obj is! AccountUpdateValueObject) throw ArgumentError.value(obj);
-    final AccountUpdateValueObject(
-      :title,
-      :type,
-      :currencyCode,
-      :model,
-      :color,
-      :balance
-    ) = obj;
-    final newModel = model.copyWith(
-      updated: DateTime.now(),
-      title: title ?? model.title,
-      type: type ?? model.type,
-      currency: FiatCurrency.maybeFromCode(currencyCode) ?? model.currency,
-      color: color ?? model.color,
-      balance: balance ?? model.balance,
-    );
-    await _accountRepo.update(dto: _accountFactory.to(newModel));
-    return newModel;
+  Future<AccountModel> update(AccountModel model) async {
+    await _accountRepo.update(dto: _accountFactory.to(model));
+    return model;
   }
 
   Future<void> delete(String id) async {

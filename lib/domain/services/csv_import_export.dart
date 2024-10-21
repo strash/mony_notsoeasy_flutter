@@ -9,7 +9,7 @@ final class ImportExportService {
     required this.csvFilesystemRepository,
   });
 
-  Future<ImportedCsvValueObject?> read() async {
+  Future<ImportedCsvVO?> read() async {
     final content = await csvFilesystemRepository.read();
     if (content == null) return null;
     const converter = CsvToListConverter(
@@ -35,6 +35,6 @@ final class ImportExportService {
       }
       ++lineIndex;
     }
-    return ImportedCsvValueObject(columns: columns, entries: entries);
+    return ImportedCsvVO(columns: columns, entries: entries);
   }
 }
