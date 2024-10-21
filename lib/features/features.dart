@@ -1,4 +1,4 @@
-export "./account_create/account_create.dart";
+export "./account_form/account_form.dart";
 export "./feed/feed.dart";
 export "./import/import.dart";
 export "./navbar/navbar.dart";

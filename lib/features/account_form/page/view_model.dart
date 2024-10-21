@@ -3,36 +3,41 @@ import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/account_create/page/view.dart";
-import "package:mony_app/features/account_create/use_case/use_case.dart";
+import "package:mony_app/features/account_form/page/view.dart";
+import "package:mony_app/features/account_form/use_case/use_case.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
-final class AccountCreateViewModelBuilder extends StatefulWidget {
+final class AccountFormViewModelBuilder extends StatefulWidget {
+  final AccountVO? account;
   final ScrollController scrollController;
 
-  const AccountCreateViewModelBuilder({
+  const AccountFormViewModelBuilder({
     super.key,
+    this.account,
     required this.scrollController,
   });
 
   @override
-  ViewModelState<AccountCreateViewModelBuilder> createState() =>
-      AccountCreateViewModel();
+  ViewModelState<AccountFormViewModelBuilder> createState() =>
+      AccountFormViewModel();
 }
 
-final class AccountCreateViewModel
-    extends ViewModelState<AccountCreateViewModelBuilder> {
+final class AccountFormViewModel
+    extends ViewModelState<AccountFormViewModelBuilder> {
   final titleController = InputController();
   final colorController = ColorPickerController(Palette().randomColor);
   final typeController =
       SelectController<EAccountType?>(EAccountType.defaultValue);
-  final currencyController =
-      SelectController<FiatCurrency?>(FiatCurrency.fromCode("RUB"));
+  final currencyController = SelectController<FiatCurrency?>(
+    FiatCurrency.fromCode(kDefaultCurrencyCode),
+  );
   final balanceController = InputController(
     validators: [AmountValidator()],
   );
 
   bool isSubmitEnabled = false;
+
+  bool get isCreating => widget.account == null;
 
   void _listener() {
     setState(() {
@@ -52,11 +57,22 @@ final class AccountCreateViewModel
   @override
   void initState() {
     super.initState();
+    final account = widget.account;
+    if (account != null) {
+      titleController.text = account.title;
+      colorController.value = account.color;
+      typeController.value = account.type;
+      currencyController.value = FiatCurrency.fromCode(account.currencyCode);
+      balanceController.text = account.balance.toString();
+    }
     titleController.addListener(_listener);
     colorController.addListener(_listener);
     typeController.addListener(_listener);
     currencyController.addListener(_listener);
     balanceController.addListener(_listener);
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      _listener();
+    });
   }
 
   @override
@@ -78,13 +94,13 @@ final class AccountCreateViewModel
 
   @override
   Widget build(BuildContext context) {
-    return ViewModel<AccountCreateViewModel>(
+    return ViewModel<AccountFormViewModel>(
       viewModel: this,
       useCases: [
         () => OnCreateAccountPressed(),
         () => OnCurrencyDescriptionRequested(),
       ],
-      child: AccountCreateView(
+      child: AccountFormView(
         scrollController: widget.scrollController,
       ),
     );

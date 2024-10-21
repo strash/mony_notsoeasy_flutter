@@ -2,14 +2,14 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/select/component.dart";
 import "package:mony_app/domain/models/account.dart";
-import "package:mony_app/features/account_create/page/view_model.dart";
+import "package:mony_app/features/account_form/page/view_model.dart";
 
 class TypeSelectComponent extends StatelessWidget {
   const TypeSelectComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.viewModel<AccountCreateViewModel>();
+    final viewModel = context.viewModel<AccountFormViewModel>();
 
     return ListenableBuilder(
       listenable: viewModel.typeController,

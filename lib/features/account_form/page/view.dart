@@ -2,16 +2,17 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/features/account_create/account_create.dart";
-import "package:mony_app/features/account_create/components/components.dart";
-import "package:mony_app/features/account_create/use_case/use_case.dart";
+import "package:mony_app/features/account_form/account_form.dart";
+import "package:mony_app/features/account_form/components/components.dart";
+import "package:mony_app/features/account_form/use_case/use_case.dart";
 
-class AccountCreateView extends StatelessWidget {
+class AccountFormView extends StatelessWidget {
   final ScrollController scrollController;
 
-  const AccountCreateView({
+  const AccountFormView({
     super.key,
     required this.scrollController,
   });
@@ -19,16 +20,17 @@ class AccountCreateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<AccountCreateViewModel>();
+    final viewModel = context.viewModel<AccountFormViewModel>();
     final onCreateAccountPressed = viewModel<OnCreateAccountPressed>();
+    final isCreating = viewModel.isCreating;
 
     return Scaffold(
       body: CustomScrollView(
         controller: scrollController,
         slivers: [
           // -> appbar
-          const AppBarComponent(
-            title: "Новый счет",
+          AppBarComponent(
+            title: isCreating ? "Новый счет" : "Редактирование счета",
             showDragHandle: true,
           ),
 
@@ -56,7 +58,7 @@ class AccountCreateView extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             textCapitalization: TextCapitalization.sentences,
                             textInputAction: TextInputAction.done,
-                            maxLength: 200,
+                            maxLength: kMaxTitleLength,
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             style: GoogleFonts.robotoFlex(
                               color: theme.colorScheme.onSurface,
@@ -104,7 +106,7 @@ class AccountCreateView extends StatelessWidget {
                         decimal: true,
                       ),
                       textInputAction: TextInputAction.done,
-                      maxLength: 50,
+                      maxLength: kMaxAmountLength,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       autovalidateMode: AutovalidateMode.always,
                       style: GoogleFonts.robotoFlex(
@@ -125,7 +127,9 @@ class AccountCreateView extends StatelessWidget {
                       onPressed: viewModel.isSubmitEnabled
                           ? () => onCreateAccountPressed(context)
                           : null,
-                      child: const Text("Создать счет"),
+                      child: Text(
+                        isCreating ? "Создать счет" : "Сохранить счет",
+                      ),
                     ),
                   ],
                 ),
