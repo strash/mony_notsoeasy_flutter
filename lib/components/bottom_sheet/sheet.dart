@@ -34,16 +34,11 @@ class BottomSheetComponent extends StatelessWidget {
     return navigator.push(
       ModalBottomSheetRoute<T>(
         builder: (context) {
-          return Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              BottomSheetComponent(
-                initialChildSize: initialChildSize,
-                expand: expand,
-                showDragHandle: showDragHandle,
-                builder: builder,
-              ),
-            ],
+          return BottomSheetComponent(
+            initialChildSize: initialChildSize,
+            expand: expand,
+            showDragHandle: showDragHandle,
+            builder: builder,
           );
         },
         useSafeArea: true,
