@@ -50,9 +50,6 @@ class ImportView extends StatelessWidget {
                           ImportEventLoadingCsv() ||
                           ImportEventErrorLoadingCsv() =>
                             ImportLoadCsvComponent(event: event),
-                          // 2 step
-                          ImportEventCsvLoaded() =>
-                            ImportLoadedCsvSummaryComponent(event: event),
                           // 3 step
                           ImportEventMappingColumns() =>
                             ImportMapColumnsComponent(event: event),
@@ -62,7 +59,11 @@ class ImportView extends StatelessWidget {
                             ImportMapColumnsValidationComponent(event: event),
                           ImportEventMapAccounts() =>
                             ImportMapAccountsComponent(event: event),
-                          // // just in case
+                          ImportEventMapTransactionType() =>
+                            ImportMapTransactionTypePage(event: event),
+                          ImportEventMapCategories() =>
+                            ImportMapCategoriesPage(event: event),
+                          // just in case
                           null => const Center(
                               child: CircularProgressIndicator.adaptive(),
                             ),
@@ -83,19 +84,19 @@ class ImportView extends StatelessWidget {
                   child: AnimatedSwitcher(
                     duration: Durations.medium3,
                     child: switch (event) {
-                      // 1 step
+                      // button select file
                       ImportEventInitial() ||
                       ImportEventLoadingCsv() ||
                       ImportEventErrorLoadingCsv() =>
                         SelectFileButtonComponent(event: event),
-                      // 2 step
-                      ImportEventCsvLoaded() ||
-                      // 3 step
+                      // backward/forward buttons
                       ImportEventMappingColumns() ||
                       ImportEventValidatingMappedColumns() ||
                       ImportEventErrorMappingColumns() ||
                       ImportEventMappingColumnsValidated() ||
-                      ImportEventMapAccounts() =>
+                      ImportEventMapAccounts() ||
+                      ImportEventMapTransactionType() ||
+                      ImportEventMapCategories() =>
                         NavigationButtonsComponent(event: event),
                       // just in case
                       null => const SizedBox(),

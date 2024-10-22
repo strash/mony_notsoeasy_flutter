@@ -26,8 +26,7 @@ class NavigationButtonsComponent extends StatelessWidget {
         event is! ImportEventValidatingMappedColumns;
     final currentColumn = viewModel.currentColumn;
     final currentMappedColumn = viewModel.mappedColumns.lastOrNull;
-    final forwardEnabled = event is ImportEventCsvLoaded ||
-        (event is ImportEventMappingColumns &&
+    final forwardEnabled = (event is ImportEventMappingColumns &&
             currentColumn != null &&
             (currentColumn.isRequired &&
                     currentMappedColumn != null &&
@@ -37,7 +36,11 @@ class NavigationButtonsComponent extends StatelessWidget {
         (event is ImportEventMapAccounts &&
             (viewModel.singleAccount != null ||
                 viewModel.accounts.isNotEmpty &&
-                    viewModel.accounts.entries.every((e) => e.value != null)));
+                    viewModel.accounts.entries
+                        .every((e) => e.value != null))) ||
+        event is ImportEventMapTransactionType &&
+            viewModel.mappedExpenseTransactionType != null &&
+            viewModel.mappedIncomeTransactionType != null;
 
     return Row(
       children: [

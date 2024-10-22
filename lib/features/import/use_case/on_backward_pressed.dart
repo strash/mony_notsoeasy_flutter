@@ -15,18 +15,17 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
             ImportEventLoadingCsv() ||
             ImportEventErrorLoadingCsv():
         return;
-      case ImportEventCsvLoaded():
-        subject.add(ImportEventInitial());
       case ImportEventMappingColumns():
         viewModel.setProtectedState(() {
           if (viewModel.mappedColumns.isNotEmpty) {
-            viewModel.mappedColumns =
-                List.from(viewModel.mappedColumns..removeLast());
+            viewModel.mappedColumns = List.from(
+              viewModel.mappedColumns..removeLast(),
+            );
           }
           viewModel.currentColumn = viewModel.mappedColumns.lastOrNull?.column;
         });
         if (viewModel.mappedColumns.isEmpty) {
-          subject.add(ImportEventCsvLoaded());
+          subject.add(ImportEventInitial());
         }
       case ImportEventValidatingMappedColumns() ||
             ImportEventErrorMappingColumns() ||
@@ -34,6 +33,20 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
         subject.add(ImportEventMappingColumns());
       case ImportEventMapAccounts():
         subject.add(ImportEventMappingColumnsValidated());
+      case ImportEventMapTransactionType():
+        subject.add(ImportEventMapAccounts());
+        viewModel.setProtectedState(() {
+          viewModel.additionalSteps--;
+          viewModel.mappedExpenseTransactionType = null;
+          viewModel.mappedIncomeTransactionType = null;
+          viewModel.isTransactionsExpenses = true;
+        });
+      case ImportEventMapCategories():
+        if (viewModel.hasMappedTransactionType) {
+          subject.add(ImportEventMapTransactionType());
+        } else {
+          subject.add(ImportEventMapAccounts());
+        }
     }
     viewModel.setProtectedState(() {
       viewModel.progress--;

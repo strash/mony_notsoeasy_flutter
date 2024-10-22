@@ -5,18 +5,6 @@ import "package:mony_app/features/import/import.dart";
 import "package:mony_app/features/import/validator/validator.dart";
 
 final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
-  void _onCsvLoaded(ImportViewModel viewModel) {
-    final subject = viewModel.subject;
-    subject.add(ImportEventMappingColumns());
-    viewModel.setProtectedState(() {
-      viewModel.mappedColumns = List.from(
-        viewModel.mappedColumns
-          ..add((column: EImportColumn.defaultValue, entryKey: null)),
-      );
-      viewModel.currentColumn = EImportColumn.defaultValue;
-    });
-  }
-
   Future<void> _onMappingColumns(ImportViewModel viewModel) async {
     final subject = viewModel.subject;
     final nextCol = EImportColumn.from(viewModel.mappedColumns.length);
@@ -83,18 +71,32 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     });
   }
 
+  void _onAccountsMapped(ImportViewModel viewModel) {
+    if (viewModel.hasMappedTransactionType) {
+      viewModel.subject.add(ImportEventMapTransactionType());
+      viewModel.setProtectedState(() {
+        viewModel.additionalSteps++;
+      });
+    } else {
+      viewModel.subject.add(ImportEventMapCategories());
+    }
+    viewModel.mapTransactionTypes();
+  }
+
   @override
   Future<void> call(BuildContext context, [ImportEvent? event]) async {
     if (event == null) throw ArgumentError.notNull();
     final viewModel = context.viewModel<ImportViewModel>();
     switch (event) {
-      case ImportEventCsvLoaded():
-        _onCsvLoaded(viewModel);
       case ImportEventMappingColumns():
         await _onMappingColumns(viewModel);
       case ImportEventMappingColumnsValidated():
         _onColumnsValidated(viewModel);
       case ImportEventMapAccounts():
+        _onAccountsMapped(viewModel);
+      case ImportEventMapTransactionType():
+        viewModel.subject.add(ImportEventMapCategories());
+      case ImportEventMapCategories():
       // TODO: next step
       case ImportEventInitial() ||
             ImportEventLoadingCsv() ||

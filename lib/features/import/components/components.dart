@@ -1,9 +1,10 @@
 export "./account/item_from_import.dart";
 export "./account/item_local.dart";
 export "./account/item_setted.dart";
+export "./columns_table/header.dart";
+export "./columns_table/row.dart";
+export "./columns_table/table.dart";
 export "./nav_buttons.dart";
 export "./pages/pages.dart";
 export "./select_file_button.dart";
-export "./table/header.dart";
-export "./table/row.dart";
-export "./table/table.dart";
+export "./types_table/table.dart";

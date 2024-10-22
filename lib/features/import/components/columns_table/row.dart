@@ -21,7 +21,7 @@ class EntryListRowComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final columnName = viewModel.getColumnTitle(entry.key);
+    final column = viewModel.getColumn(entry.key);
     final onColumnSelected = viewModel<OnColumnSelected>();
     final isOccupied = viewModel.isOccupied(entry.key);
 
@@ -78,7 +78,7 @@ class EntryListRowComponent extends StatelessWidget {
             // -> selection
             AnimatedOpacity(
               duration: Durations.short2,
-              opacity: columnName != null ? 1.0 : 0.0,
+              opacity: column != null ? 1.0 : 0.0,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 3.h),
                 child: Row(
@@ -100,7 +100,7 @@ class EntryListRowComponent extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              columnName ?? "",
+                              column?.title ?? "",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.golosText(

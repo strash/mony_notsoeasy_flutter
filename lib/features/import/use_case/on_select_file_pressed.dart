@@ -15,12 +15,17 @@ final class OnSelectFilePressed extends UseCase<void, dynamic> {
       final service = context.read<ImportExportService>();
       final csv = await service.read();
       if (!context.mounted) return;
-      if (csv != null) {
+      if (csv != null && csv.entries.isNotEmpty) {
+        subject.add(ImportEventMappingColumns());
         viewModel.setProtectedState(() {
           viewModel.csv = csv;
+          viewModel.mappedColumns = List.from(
+            viewModel.mappedColumns
+              ..add((column: EImportColumn.defaultValue, entryKey: null)),
+          );
+          viewModel.currentColumn = EImportColumn.defaultValue;
           viewModel.progress++;
         });
-        subject.add(ImportEventCsvLoaded());
       } else {
         subject.add(ImportEventInitial());
       }
