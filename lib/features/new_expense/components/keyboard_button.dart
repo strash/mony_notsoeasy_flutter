@@ -19,14 +19,16 @@ class SymbolButtonComponent extends StatelessWidget {
     final isSubmit = symbol == "submit";
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: isSubmit
             ? theme.colorScheme.secondary
             : theme.colorScheme.surfaceContainer,
-        borderRadius: SmoothBorderRadius.all(
-          SmoothRadius(
-            cornerRadius: 20.r,
-            cornerSmoothing: 1.0,
+        shape: SmoothRectangleBorder(
+          borderRadius: SmoothBorderRadius.all(
+            SmoothRadius(
+              cornerRadius: 20.r,
+              cornerSmoothing: 1.0,
+            ),
           ),
         ),
       ),

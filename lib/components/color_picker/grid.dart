@@ -82,11 +82,13 @@ class _ColorGridState extends State<_ColorGrid> {
             // -> border
             IgnorePointer(
               child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: borderRadius,
-                  border: Border.all(
-                    color: theme.colorScheme.onSurface.withOpacity(0.1),
-                    strokeAlign: CircularProgressIndicator.strokeAlignOutside,
+                decoration: ShapeDecoration(
+                  shape: SmoothRectangleBorder(
+                    borderRadius: borderRadius,
+                    side: BorderSide(
+                      color: theme.colorScheme.onSurface.withOpacity(0.1),
+                      strokeAlign: CircularProgressIndicator.strokeAlignOutside,
+                    ),
                   ),
                 ),
               ),
@@ -104,9 +106,11 @@ class _ColorGridState extends State<_ColorGrid> {
                       children: [
                         // -> shadow
                         DecoratedBox(
-                          decoration: BoxDecoration(
-                            borderRadius: cursorBorderRadius,
-                            boxShadow: [
+                          decoration: ShapeDecoration(
+                            shape: SmoothRectangleBorder(
+                              borderRadius: cursorBorderRadius,
+                            ),
+                            shadows: [
                               BoxShadow(
                                 color: shadow,
                                 blurRadius: 10.0,
@@ -123,9 +127,11 @@ class _ColorGridState extends State<_ColorGrid> {
                             padding: EdgeInsets.all(_cursorThickness),
                           ),
                           child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              borderRadius: cursorBorderRadius,
+                            decoration: ShapeDecoration(
                               color: theme.colorScheme.surfaceContainerHighest,
+                              shape: SmoothRectangleBorder(
+                                borderRadius: cursorBorderRadius,
+                              ),
                             ),
                           ),
                         ),

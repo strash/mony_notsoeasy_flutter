@@ -70,9 +70,11 @@ class BottomSheetComponent extends StatelessWidget {
       builder: (context, scrollController) {
         return Container(
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
+          decoration: ShapeDecoration(
             color: theme.colorScheme.surface,
-            borderRadius: SmoothBorderRadius.all(radius),
+            shape: SmoothRectangleBorder(
+              borderRadius: SmoothBorderRadius.all(radius),
+            ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,

@@ -31,12 +31,14 @@ class AccountItemLocalComponent extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () => onAccountPressed.call(context, account),
         child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(color: theme.colorScheme.outlineVariant),
-            borderRadius: SmoothBorderRadius.all(
-              SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
-            ),
+          decoration: ShapeDecoration(
             color: theme.colorScheme.surfaceContainer.withOpacity(0.5),
+            shape: SmoothRectangleBorder(
+              side: BorderSide(color: theme.colorScheme.outlineVariant),
+              borderRadius: SmoothBorderRadius.all(
+                SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
+              ),
+            ),
           ),
           child: account == null
               ? const _Unsetted()

@@ -43,8 +43,7 @@ class ImportMapTransactionTypePage extends StatelessWidget {
 
               // -> description
               Text(
-                "Известно, что типов всего два, но не известно какой из них "
-                "какой. Являются ли транзакции в этой таблице расходами?",
+                "Являются ли транзакции в этой таблице расходами?",
                 style: GoogleFonts.robotoFlex(
                   fontSize: 15.sp,
                   height: 1.3.sp,
@@ -70,12 +69,14 @@ class ImportMapTransactionTypePage extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onTap: () => onSwitchPressed(context, transactionsByType),
             child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: theme.colorScheme.outlineVariant),
-                borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
-                ),
+              decoration: ShapeDecoration(
                 color: theme.colorScheme.surfaceContainer.withOpacity(0.5),
+                shape: SmoothRectangleBorder(
+                  side: BorderSide(color: theme.colorScheme.outlineVariant),
+                  borderRadius: SmoothBorderRadius.all(
+                    SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
+                  ),
+                ),
               ),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(25.w, 5.h, 15.w, 5.h),

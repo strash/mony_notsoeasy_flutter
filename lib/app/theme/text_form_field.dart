@@ -2,14 +2,52 @@ part of "./theme.dart";
 
 final _padding = EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h);
 
-InputBorder _getBorder(Color color) {
-  return OutlineInputBorder(
-    gapPadding: 0.0,
-    borderSide: BorderSide(color: color),
-    borderRadius: SmoothBorderRadius.all(
-      SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
-    ),
-  );
+final class SmoothInputBorder extends InputBorder {
+  final Color color;
+
+  final SmoothRectangleBorder _shape;
+
+  SmoothInputBorder(this.color)
+      : _shape = SmoothRectangleBorder(
+          side: BorderSide(color: color),
+          borderRadius: SmoothBorderRadius.all(
+            SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
+          ),
+        );
+
+  @override
+  InputBorder copyWith({BorderSide? borderSide}) => SmoothInputBorder(color);
+
+  @override
+  EdgeInsetsGeometry get dimensions => _shape.dimensions;
+
+  @override
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
+    return _shape.getInnerPath(rect);
+  }
+
+  @override
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
+    return _shape.getOuterPath(rect);
+  }
+
+  @override
+  bool get isOutline => true;
+
+  @override
+  void paint(
+    Canvas canvas,
+    Rect rect, {
+    double? gapStart,
+    double gapExtent = 0.0,
+    double gapPercentage = 0.0,
+    TextDirection? textDirection,
+  }) {
+    _shape.paint(canvas, rect);
+  }
+
+  @override
+  ShapeBorder scale(double t) => _shape.scale(t);
 }
 
 WidgetStateColor _iconColor(ColorScheme scheme) {
@@ -73,19 +111,19 @@ WidgetStateTextStyle _underInputStyle(ColorScheme scheme) {
 
 final _lightFormFieldTheme = InputDecorationTheme(
   activeIndicatorBorder: BorderSide(width: 2, color: _lightColorScheme.outline),
-  border: _getBorder(const Color(0x00000000)),
+  border: SmoothInputBorder(const Color(0x00000000)),
   contentPadding: _padding,
-  disabledBorder: _getBorder(const Color(0x00000000)),
-  enabledBorder: _getBorder(const Color(0x00000000)),
-  errorBorder: _getBorder(_lightColorScheme.error),
+  disabledBorder: SmoothInputBorder(const Color(0x00000000)),
+  enabledBorder: SmoothInputBorder(const Color(0x00000000)),
+  errorBorder: SmoothInputBorder(_lightColorScheme.error),
   errorMaxLines: 10,
   errorStyle: _labelStyle(_lightColorScheme),
   fillColor: _lightColorScheme.surfaceContainer,
   filled: true,
   floatingLabelBehavior: FloatingLabelBehavior.never,
   floatingLabelStyle: _labelStyle(_lightColorScheme),
-  focusedBorder: _getBorder(_lightColorScheme.secondary),
-  focusedErrorBorder: _getBorder(_lightColorScheme.error),
+  focusedBorder: SmoothInputBorder(_lightColorScheme.secondary),
+  focusedErrorBorder: SmoothInputBorder(_lightColorScheme.error),
   helperMaxLines: 10,
   helperStyle: _underInputStyle(_lightColorScheme),
   hintFadeDuration: Durations.short2,
@@ -103,19 +141,19 @@ final _lightFormFieldTheme = InputDecorationTheme(
 
 final _darkFormFieldTheme = InputDecorationTheme(
   activeIndicatorBorder: BorderSide(width: 2, color: _darkColorScheme.outline),
-  border: _getBorder(const Color(0x00000000)),
+  border: SmoothInputBorder(const Color(0x00000000)),
   contentPadding: _padding,
-  disabledBorder: _getBorder(const Color(0x00000000)),
-  enabledBorder: _getBorder(const Color(0x00000000)),
-  errorBorder: _getBorder(_darkColorScheme.error),
+  disabledBorder: SmoothInputBorder(const Color(0x00000000)),
+  enabledBorder: SmoothInputBorder(const Color(0x00000000)),
+  errorBorder: SmoothInputBorder(_darkColorScheme.error),
   errorMaxLines: 10,
   errorStyle: _labelStyle(_darkColorScheme),
   fillColor: _darkColorScheme.surfaceContainer,
   filled: true,
   floatingLabelBehavior: FloatingLabelBehavior.never,
   floatingLabelStyle: _labelStyle(_darkColorScheme),
-  focusedBorder: _getBorder(_darkColorScheme.secondary),
-  focusedErrorBorder: _getBorder(_darkColorScheme.error),
+  focusedBorder: SmoothInputBorder(_darkColorScheme.secondary),
+  focusedErrorBorder: SmoothInputBorder(_darkColorScheme.error),
   helperMaxLines: 10,
   helperStyle: _underInputStyle(_darkColorScheme),
   hintFadeDuration: Durations.short2,

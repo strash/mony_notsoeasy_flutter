@@ -59,13 +59,15 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
           builder: (context, color, child) {
             // -> background
             return DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: theme.colorScheme.surfaceContainer,
-                border: Border.all(color: color!),
-                borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(
-                    cornerRadius: 15.r,
-                    cornerSmoothing: 1.0,
+                shape: SmoothRectangleBorder(
+                  side: BorderSide(color: color!),
+                  borderRadius: SmoothBorderRadius.all(
+                    SmoothRadius(
+                      cornerRadius: 15.r,
+                      cornerSmoothing: 1.0,
+                    ),
                   ),
                 ),
               ),
@@ -77,15 +79,17 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
                     final color = widget.controller.value;
                     // -> color
                     return DecoratedBox(
-                      decoration: BoxDecoration(
+                      decoration: ShapeDecoration(
                         color: color ?? const Color(0x00FFFFFF),
-                        border: Border.all(
-                          color: theme.colorScheme.onSurface.withOpacity(0.1),
-                        ),
-                        borderRadius: SmoothBorderRadius.all(
-                          SmoothRadius(
-                            cornerRadius: 10.r,
-                            cornerSmoothing: 1.0,
+                        shape: SmoothRectangleBorder(
+                          side: BorderSide(
+                            color: theme.colorScheme.onSurface.withOpacity(0.1),
+                          ),
+                          borderRadius: SmoothBorderRadius.all(
+                            SmoothRadius(
+                              cornerRadius: 10.r,
+                              cornerSmoothing: 1.0,
+                            ),
                           ),
                         ),
                       ),

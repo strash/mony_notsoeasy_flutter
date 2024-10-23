@@ -25,10 +25,12 @@ class BottomSheetHandleComponent extends StatelessWidget {
             width: 46.w,
             height: 4.h,
             child: DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: theme.colorScheme.onSurfaceVariant.withOpacity(0.5),
-                borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 2.r, cornerSmoothing: 1.0),
+                shape: SmoothRectangleBorder(
+                  borderRadius: SmoothBorderRadius.all(
+                    SmoothRadius(cornerRadius: 2.r, cornerSmoothing: 1.0),
+                  ),
                 ),
               ),
             ),

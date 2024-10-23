@@ -85,15 +85,17 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
           ),
           builder: (context, color, child) {
             return DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(color: color!),
-                borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(
-                    cornerRadius: 15.r,
-                    cornerSmoothing: 1.0,
+              decoration: ShapeDecoration(
+                color: theme.colorScheme.surfaceContainer,
+                shape: SmoothRectangleBorder(
+                  side: BorderSide(color: color!),
+                  borderRadius: SmoothBorderRadius.all(
+                    SmoothRadius(
+                      cornerRadius: 15.r,
+                      cornerSmoothing: 1.0,
+                    ),
                   ),
                 ),
-                color: theme.colorScheme.surfaceContainer,
               ),
               child: Padding(
                 padding: EdgeInsets.only(left: 15.w, right: 7.w),

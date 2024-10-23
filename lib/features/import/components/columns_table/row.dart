@@ -114,12 +114,14 @@ class EntryListRowComponent extends StatelessWidget {
                         ),
                         builder: (context, color, child) {
                           return DecoratedBox(
-                            decoration: BoxDecoration(
+                            decoration: ShapeDecoration(
                               color: color,
-                              borderRadius: SmoothBorderRadius.all(
-                                SmoothRadius(
-                                  cornerRadius: 10.r,
-                                  cornerSmoothing: 1.0,
+                              shape: SmoothRectangleBorder(
+                                borderRadius: SmoothBorderRadius.all(
+                                  SmoothRadius(
+                                    cornerRadius: 10.r,
+                                    cornerSmoothing: 1.0,
+                                  ),
                                 ),
                               ),
                             ),

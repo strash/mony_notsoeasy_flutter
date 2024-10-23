@@ -25,10 +25,12 @@ class EntryListComponent extends StatelessWidget {
     if (entry == null) return const SizedBox();
 
     return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: theme.colorScheme.surfaceContainer,
-        borderRadius: SmoothBorderRadius.all(
-          SmoothRadius(cornerRadius: 20.r, cornerSmoothing: 1.0),
+        shape: SmoothRectangleBorder(
+          borderRadius: SmoothBorderRadius.all(
+            SmoothRadius(cornerRadius: 20.r, cornerSmoothing: 1.0),
+          ),
         ),
       ),
       child: Padding(

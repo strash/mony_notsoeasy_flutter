@@ -26,15 +26,17 @@ class AccountSettedButtonComponent extends StatelessWidget {
             width: 8.w,
             height: 42.h,
             child: DecoratedBox(
-              decoration: BoxDecoration(
+              decoration: ShapeDecoration(
                 color: account.color,
-                border: Border.all(
-                  color: theme.colorScheme.onSurface.withOpacity(0.1),
-                ),
-                borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(
-                    cornerRadius: 4.r,
-                    cornerSmoothing: 1.0,
+                shape: SmoothRectangleBorder(
+                  side: BorderSide(
+                    color: theme.colorScheme.onSurface.withOpacity(0.1),
+                  ),
+                  borderRadius: SmoothBorderRadius.all(
+                    SmoothRadius(
+                      cornerRadius: 4.r,
+                      cornerSmoothing: 1.0,
+                    ),
                   ),
                 ),
               ),
