@@ -1,5 +1,5 @@
-abstract interface class IFactory<FDto, TOther> {
-  TOther toModel(FDto dto);
+abstract interface class IFactory<TDto, TOther> {
+  TOther toModel(TDto dto);
 
-  FDto toDto(TOther other);
+  TDto toDto(TOther other);
 }
