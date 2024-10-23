@@ -1,4 +1,5 @@
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/color_picker/component.dart";
 import "package:mony_app/data/database/migration_service.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:sqflite/sqflite.dart";
@@ -6,6 +7,8 @@ import "package:sqflite/sqflite.dart";
 typedef _CategoryValueObject = ({String icon, String title});
 
 final class M1728413017SeedDefaultCategories extends BaseMigration {
+  final _pelette = Palette();
+
   final _categories = "categories";
   final _categoriesId = "id";
   final _categoriesCreated = "created";
@@ -13,6 +16,7 @@ final class M1728413017SeedDefaultCategories extends BaseMigration {
   final _categoriesTitle = "title";
   final _categoriesIcon = "icon";
   final _categoriesSort = "sort";
+  final _categoriesColor = "color";
   final _categoriesExpenseType = "expense_type";
 
   String _getInsertQuery({
@@ -23,6 +27,7 @@ final class M1728413017SeedDefaultCategories extends BaseMigration {
   }) {
     final id = StringEx.random(20);
     final date = DateTime.now().toUtc().toIso8601String();
+    final color = _pelette.randomColor.toHexadecimal();
     return """
 INSERT INTO $_categories (
 	$_categoriesId,
@@ -31,8 +36,18 @@ INSERT INTO $_categories (
 	$_categoriesTitle,
 	$_categoriesIcon,
 	$_categoriesSort,
+	$_categoriesColor,
 	$_categoriesExpenseType
-) VALUES('$id', '$date', '$date', '$title', '$icon', $sort, '$expenseType');
+) VALUES(
+	'$id',
+	'$date',
+	'$date',
+	'$title',
+	'$icon',
+	$sort,
+	'$color',
+	'$expenseType'
+	);
 """;
   }
 

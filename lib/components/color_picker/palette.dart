@@ -17,7 +17,7 @@ final class Palette {
       pear.colors,
       apple.colors,
     ];
-    final rng = Random(DateTime.now().millisecondsSinceEpoch);
+    final rng = Random();
     final palette = list.elementAt(rng.nextInt(list.length));
     return palette.elementAt(rng.nextInt(palette.length));
   }
