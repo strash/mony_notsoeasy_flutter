@@ -17,9 +17,9 @@ void main() async {
       child: MultiProvider(
         providers: [
           // -> import/export service
-          Provider<ImportExportService>(
+          Provider<DomainImportExportService>(
             create: (context) {
-              return ImportExportService(
+              return DomainImportExportService(
                 csvFilesystemRepository: CsvFilesystemRepository(
                   filePicker: FilePicker.platform,
                 ),
@@ -28,11 +28,21 @@ void main() async {
           ),
 
           // -> account service
-          Provider<AccountService>(
+          Provider<DomainAccountService>(
             create: (context) {
-              return AccountService(
+              return DomainAccountService(
                 accountRepo: AccountDatabaseRepository(database: appDatabase),
                 accountFactory: AccountDatabaseFactoryImpl(),
+              );
+            },
+          ),
+
+          // -> category service
+          Provider<DomainCategoryService>(
+            create: (context) {
+              return DomainCategoryService(
+                categoryRepo: CategoryDatabaseRepository(database: appDatabase),
+                categoryFactory: CategoryDatabaseFactoryImpl(),
               );
             },
           ),

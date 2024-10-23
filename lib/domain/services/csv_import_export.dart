@@ -2,15 +2,15 @@ import "package:csv/csv.dart";
 import "package:mony_app/data/filesystem/filesystem.dart";
 import "package:mony_app/domain/services/vo/imported_csv.dart";
 
-final class ImportExportService {
-  final CsvFilesystemRepository csvFilesystemRepository;
+final class DomainImportExportService {
+  final CsvFilesystemRepository _csvFilesystemRepository;
 
-  ImportExportService({
-    required this.csvFilesystemRepository,
-  });
+  DomainImportExportService({
+    required CsvFilesystemRepository csvFilesystemRepository,
+  }) : _csvFilesystemRepository = csvFilesystemRepository;
 
   Future<ImportedCsvVO?> read() async {
-    final content = await csvFilesystemRepository.read();
+    final content = await _csvFilesystemRepository.read();
     if (content == null) return null;
     const converter = CsvToListConverter(
       convertEmptyTo: EmptyValue.NULL,

@@ -1,65 +1,66 @@
-import "package:mony_app/common/common.dart";
-import "package:mony_app/data/database/repository/repository.dart";
+import "package:mony_app/data/database/repository/account.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
-final class AccountService {
+final class DomainAccountService extends BaseDomainService {
   final AccountDatabaseRepository _accountRepo;
   final AccountDatabaseFactoryImpl _accountFactory;
 
-  static const int kPerPage = 10;
+  @override
+  final int perPage = 20;
 
-  AccountService({
+  DomainAccountService({
     required AccountDatabaseRepository accountRepo,
     required AccountDatabaseFactoryImpl accountFactory,
   })  : _accountRepo = accountRepo,
         _accountFactory = accountFactory;
 
   Future<List<AccountModel>> getAll() async {
-    final data = await _accountRepo.getAll();
-    return data
-        .map<AccountModel>((e) => _accountFactory.from(e))
+    final dtos = await _accountRepo.getAll();
+    return dtos
+        .map<AccountModel>(_accountFactory.toModel)
         .toList(growable: false);
   }
 
-  Future<List<AccountModel>> getMany(int page) async {
-    final data = await _accountRepo.getMany(
-      limit: kPerPage,
-      offset: kPerPage * page,
+  Future<List<AccountModel>> getMany({required int page}) async {
+    final dtos = await _accountRepo.getMany(
+      limit: perPage,
+      offset: offset(page),
     );
-    return data
-        .map<AccountModel>((e) => _accountFactory.from(e))
+    return dtos
+        .map<AccountModel>(_accountFactory.toModel)
         .toList(growable: false);
   }
 
-  Future<AccountModel?> getOne(String id) async {
-    final data = await _accountRepo.getOne(id: id);
-    if (data == null) return null;
-    return _accountFactory.from(data);
+  Future<AccountModel?> getOne({required String id}) async {
+    final dto = await _accountRepo.getOne(id: id);
+    if (dto == null) return null;
+    return _accountFactory.toModel(dto);
   }
 
-  Future<AccountModel> create(AccountVO obj) async {
-    final AccountVO(:title, :type, :currencyCode, :color, :balance) = obj;
+  Future<AccountModel> create({required AccountVO vo}) async {
+    final AccountVO(:title, :type, :currencyCode, :color, :balance) = vo;
+    final defaultColumns = newDefaultColumns;
     final model = AccountModel(
-      id: StringEx.random(20),
-      created: DateTime.now(),
-      updated: DateTime.now(),
+      id: defaultColumns.id,
+      created: defaultColumns.now,
+      updated: defaultColumns.now,
       title: title,
       type: type,
       currency: FiatCurrency.fromCode(currencyCode),
       color: color,
       balance: balance,
     );
-    await _accountRepo.create(dto: _accountFactory.to(model));
+    await _accountRepo.create(dto: _accountFactory.toDto(model));
     return model;
   }
 
-  Future<AccountModel> update(AccountModel model) async {
-    await _accountRepo.update(dto: _accountFactory.to(model));
+  Future<AccountModel> update({required AccountModel model}) async {
+    await _accountRepo.update(dto: _accountFactory.toDto(model));
     return model;
   }
 
-  Future<void> delete(String id) async {
+  Future<void> delete({required String id}) async {
     await _accountRepo.delete(id: id);
   }
 }

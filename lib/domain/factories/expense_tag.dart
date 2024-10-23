@@ -5,7 +5,7 @@ import "package:mony_app/domain/domain.dart";
 final class ExpenseTagDatabaseFactoryImpl
     implements IExpenceTagDatabaseFactory<ExpenseTagModel> {
   @override
-  ExpenseTagModel from(ExpenseTagDto dto) {
+  ExpenseTagModel toModel(ExpenseTagDto dto) {
     return ExpenseTagModel(
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
@@ -16,7 +16,7 @@ final class ExpenseTagDatabaseFactoryImpl
   }
 
   @override
-  ExpenseTagDto to(ExpenseTagModel model) {
+  ExpenseTagDto toDto(ExpenseTagModel model) {
     return ExpenseTagDto(
       id: model.id,
       created: model.created.toUtc().toIso8601String(),

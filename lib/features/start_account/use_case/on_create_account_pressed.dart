@@ -20,9 +20,9 @@ final class OnCreateAccountPressed extends UseCase<Future<void>, dynamic> {
       },
     );
     if (result == null || !context.mounted) return;
-    final accountService = context.read<AccountService>();
+    final accountService = context.read<DomainAccountService>();
     final eventService = context.viewModel<AppEventService>();
-    final account = await accountService.create(result);
+    final account = await accountService.create(vo: result);
     if (context.mounted) {
       Navigator.of(context).popUntil((route) => route.isFirst);
       eventService.notify(

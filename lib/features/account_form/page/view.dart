@@ -3,7 +3,6 @@ import "package:flutter/services.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/account_form/account_form.dart";
 import "package:mony_app/features/account_form/components/components.dart";

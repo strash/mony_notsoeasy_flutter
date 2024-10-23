@@ -4,7 +4,7 @@ import "package:mony_app/domain/domain.dart";
 
 final class TagDatabaseFactoryImpl implements ITagDatabaseFactory<TagModel> {
   @override
-  TagModel from(TagDto dto) {
+  TagModel toModel(TagDto dto) {
     return TagModel(
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
@@ -14,7 +14,7 @@ final class TagDatabaseFactoryImpl implements ITagDatabaseFactory<TagModel> {
   }
 
   @override
-  TagDto to(TagModel model) {
+  TagDto toDto(TagModel model) {
     return TagDto(
       id: model.id,
       created: model.created.toUtc().toIso8601String(),

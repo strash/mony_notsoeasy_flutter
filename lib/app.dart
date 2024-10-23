@@ -14,7 +14,7 @@ class MonyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eventService = context.viewModel<AppEventService>();
-    final accountService = context.read<AccountService>();
+    final accountService = context.read<DomainAccountService>();
 
     return ScreenUtilInit(
       designSize: const Size(393.0, 852.0),

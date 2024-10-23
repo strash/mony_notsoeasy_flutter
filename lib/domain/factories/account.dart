@@ -9,7 +9,7 @@ import "package:sealed_currencies/sealed_currencies.dart";
 final class AccountDatabaseFactoryImpl
     implements IAccountDatabaseFactory<AccountModel> {
   @override
-  AccountModel from(AccountDto dto) {
+  AccountModel toModel(AccountDto dto) {
     return AccountModel(
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
@@ -23,7 +23,7 @@ final class AccountDatabaseFactoryImpl
   }
 
   @override
-  AccountDto to(AccountModel model) {
+  AccountDto toDto(AccountModel model) {
     return AccountDto(
       id: model.id,
       created: model.created.toUtc().toIso8601String(),

@@ -7,11 +7,11 @@ import "package:mony_app/features/features.dart";
 final class NavigatorDelegate extends RouterDelegate<Object>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<Object> {
   final AppEventService _eventService;
-  final AccountService _accountService;
+  final DomainAccountService _accountService;
 
   NavigatorDelegate({
     required AppEventService eventService,
-    required AccountService accountService,
+    required DomainAccountService accountService,
   })  : _accountService = accountService,
         _eventService = eventService;
 

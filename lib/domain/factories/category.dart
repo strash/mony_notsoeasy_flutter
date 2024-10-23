@@ -8,7 +8,7 @@ import "package:mony_app/domain/domain.dart";
 final class CategoryDatabaseFactoryImpl
     implements ICategoryDatabaseFactory<CategoryModel> {
   @override
-  CategoryModel from(CategoryDto dto) {
+  CategoryModel toModel(CategoryDto dto) {
     return CategoryModel(
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
@@ -22,7 +22,7 @@ final class CategoryDatabaseFactoryImpl
   }
 
   @override
-  CategoryDto to(CategoryModel model) {
+  CategoryDto toDto(CategoryModel model) {
     return CategoryDto(
       id: model.id,
       created: model.created.toUtc().toIso8601String(),

@@ -29,6 +29,7 @@ class NavBarView extends StatelessWidget {
         return Scaffold(
           body: Stack(
             children: [
+              // TODO: добавить `SoftEdgeBlur` под навбар
               // -> pages
               IndexedStack(
                 index: viewModel.currentTab.index,

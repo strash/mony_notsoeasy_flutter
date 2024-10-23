@@ -27,7 +27,7 @@ final class ExpenseDatabaseFactoryImpl
         _expenseTagFactory = expenseTagFactory;
 
   @override
-  ExpenseModel from(ExpenseDto dto) {
+  ExpenseModel toModel(ExpenseDto dto) {
     return ExpenseModel(
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
@@ -36,16 +36,16 @@ final class ExpenseDatabaseFactoryImpl
       type: EExpenseType.from(dto.type),
       date: DateTime.tryParse(dto.date)?.toLocal() ?? DateTime.now(),
       note: dto.note,
-      account: _accountFactory.from(_accountDto),
-      category: _categoryFactory.from(_categoryDto),
+      account: _accountFactory.toModel(_accountDto),
+      category: _categoryFactory.toModel(_categoryDto),
       tags: _tags
-          .map<ExpenseTagModel>((e) => _expenseTagFactory.from(e))
+          .map<ExpenseTagModel>(_expenseTagFactory.toModel)
           .toList(growable: false),
     );
   }
 
   @override
-  ExpenseDto to(ExpenseModel model) {
+  ExpenseDto toDto(ExpenseModel model) {
     return ExpenseDto(
       id: model.id,
       created: model.created.toUtc().toIso8601String(),
