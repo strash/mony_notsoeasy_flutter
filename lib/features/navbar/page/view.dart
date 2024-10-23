@@ -6,7 +6,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/components/components.dart";
 import "package:mony_app/features/navbar/navbar.dart";
-import "package:mony_app/features/navbar/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class NavBarView extends StatelessWidget {

@@ -5,7 +5,7 @@ import "package:mony_app/components/color_picker/component.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
 
-final class OnCreateAccountPressed extends UseCase<Future<void>, dynamic> {
+final class OnSumbitAccountPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
     final viewModel = context.viewModel<AccountFormViewModel>();

@@ -4,7 +4,6 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
-import "package:mony_app/features/import/use_case/on_account_button_pressed.dart";
 
 final class OnAccountFromImportButtonPressedDecorator
     extends UseCase<Future<void>, MapEntry<String, AccountVO?>> {

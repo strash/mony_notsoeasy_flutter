@@ -1,7 +1,6 @@
 import "package:mony_app/common/utils/input_controller/validators/amount.dart"
     as input_validator;
 import "package:mony_app/features/import/page/page.dart";
-import "package:mony_app/features/import/validator/validator.dart";
 
 final class AmountValidator extends BaseValidator {
   @override

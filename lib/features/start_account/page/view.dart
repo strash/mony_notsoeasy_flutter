@@ -4,7 +4,6 @@ import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start_account/start_account.dart";
-import "package:mony_app/features/start_account/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class StartAccountView extends StatelessWidget {

@@ -2,7 +2,6 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/import/import.dart";
-import "package:mony_app/features/import/validator/validator.dart";
 
 final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
   Future<void> _onMappingColumns(ImportViewModel viewModel) async {

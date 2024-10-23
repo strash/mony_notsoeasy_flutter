@@ -6,7 +6,6 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/account_form/account_form.dart";
 import "package:mony_app/features/account_form/components/components.dart";
-import "package:mony_app/features/account_form/use_case/use_case.dart";
 
 class AccountFormView extends StatelessWidget {
   final ScrollController scrollController;
@@ -20,7 +19,7 @@ class AccountFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<AccountFormViewModel>();
-    final onCreateAccountPressed = viewModel<OnCreateAccountPressed>();
+    final onCreateAccountPressed = viewModel<OnSumbitAccountPressed>();
     final isCreating = viewModel.isCreating;
 
     return Scaffold(

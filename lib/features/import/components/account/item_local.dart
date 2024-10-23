@@ -7,7 +7,6 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/import/components/components.dart";
 import "package:mony_app/features/import/page/view_model.dart";
-import "package:mony_app/features/import/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class AccountItemLocalComponent extends StatelessWidget {

@@ -3,6 +3,8 @@ import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/start_account/page/view.dart";
 import "package:mony_app/features/start_account/use_case/use_case.dart";
 
+export "../use_case/use_case.dart";
+
 final class StartAccountViewModelBuilder extends StatefulWidget {
   const StartAccountViewModelBuilder({super.key});
 

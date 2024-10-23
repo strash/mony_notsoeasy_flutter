@@ -2,8 +2,9 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/navbar/page/view.dart";
-import "package:mony_app/features/navbar/use_case/use_case.dart";
 import "package:rxdart/subjects.dart";
+
+export "../use_case/use_case.dart";
 
 enum NavBarTabItem {
   feed,

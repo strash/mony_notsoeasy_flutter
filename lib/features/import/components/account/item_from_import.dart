@@ -7,7 +7,6 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/import/components/components.dart";
 import "package:mony_app/features/import/page/view_model.dart";
-import "package:mony_app/features/import/use_case/on_account_from_import_button_pressed_decorator.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class AccountItemFromImportComponent extends StatelessWidget {

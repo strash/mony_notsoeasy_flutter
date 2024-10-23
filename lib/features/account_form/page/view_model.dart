@@ -7,6 +7,8 @@ import "package:mony_app/features/account_form/page/view.dart";
 import "package:mony_app/features/account_form/use_case/use_case.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
+export "../use_case/use_case.dart";
+
 final class AccountFormViewModelBuilder extends StatefulWidget {
   final AccountVO? account;
   final ScrollController scrollController;
@@ -97,7 +99,7 @@ final class AccountFormViewModel
     return ViewModel<AccountFormViewModel>(
       viewModel: this,
       useCases: [
-        () => OnCreateAccountPressed(),
+        () => OnSumbitAccountPressed(),
         () => OnCurrencyDescriptionRequested(),
       ],
       child: AccountFormView(
