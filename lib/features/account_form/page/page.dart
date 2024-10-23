@@ -6,19 +6,14 @@ export "./view_model.dart";
 
 class AccountFormPage extends StatelessWidget {
   final AccountVO? account;
-  final ScrollController scrollController;
 
   const AccountFormPage({
     super.key,
     this.account,
-    required this.scrollController,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AccountFormViewModelBuilder(
-      account: account,
-      scrollController: scrollController,
-    );
+    return AccountFormViewModelBuilder(account: account);
   }
 }

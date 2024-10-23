@@ -9,7 +9,12 @@ class _ColorGrid extends StatefulWidget {
 
 class _ColorGridState extends State<_ColorGrid> {
   Rect? _rect;
-  final _padding = EdgeInsets.symmetric(horizontal: 10.r);
+  late final _padding = EdgeInsets.fromLTRB(
+    10.r,
+    0.0,
+    10.r,
+    MediaQuery.viewPaddingOf(context).bottom + 20.h,
+  );
   final double _cursorThickness = 5.r;
   final _cursorInnerRadius = 9.r;
 

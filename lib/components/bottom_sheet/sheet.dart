@@ -1,5 +1,3 @@
-import "dart:math";
-
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
@@ -7,25 +5,19 @@ import "package:mony_app/app.dart";
 import "package:mony_app/components/bottom_sheet/handle.dart";
 
 class BottomSheetComponent extends StatelessWidget {
-  final double initialChildSize;
-  final bool expand;
   final bool showDragHandle;
-  final ScrollableWidgetBuilder builder;
+  final WidgetBuilder builder;
 
   const BottomSheetComponent({
     super.key,
-    required this.initialChildSize,
-    required this.expand,
     required this.showDragHandle,
     required this.builder,
   });
 
   static Future<T?> show<T>(
     BuildContext context, {
-    double initialChildSize = 0.6,
-    bool expand = true,
     bool showDragHandle = true,
-    required ScrollableWidgetBuilder builder,
+    required WidgetBuilder builder,
   }) {
     final navigator = appNavigatorKey.currentState;
     if (navigator == null) return Future.value();
@@ -35,8 +27,6 @@ class BottomSheetComponent extends StatelessWidget {
       ModalBottomSheetRoute<T>(
         builder: (context) {
           return BottomSheetComponent(
-            initialChildSize: initialChildSize,
-            expand: expand,
             showDragHandle: showDragHandle,
             builder: builder,
           );
@@ -58,37 +48,26 @@ class BottomSheetComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final radius = SmoothRadius(cornerRadius: 26.r, cornerSmoothing: 1.0);
-    final minSize = min(0.5, initialChildSize);
 
-    return DraggableScrollableSheet(
-      expand: false,
-      snap: true,
-      snapSizes: expand ? [initialChildSize] : null,
-      initialChildSize: initialChildSize,
-      minChildSize: expand ? minSize : min(0.99, initialChildSize - 0.01),
-      maxChildSize: expand ? 1.0 : initialChildSize,
-      builder: (context, scrollController) {
-        return Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: ShapeDecoration(
-            color: theme.colorScheme.surface,
-            shape: SmoothRectangleBorder(
-              borderRadius: SmoothBorderRadius.all(radius),
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // -> handle
-              if (showDragHandle) const BottomSheetHandleComponent(),
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: ShapeDecoration(
+        color: theme.colorScheme.surface,
+        shape: SmoothRectangleBorder(
+          borderRadius: SmoothBorderRadius.all(radius),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // -> handle
+          if (showDragHandle) const BottomSheetHandleComponent(),
 
-              // -> content
-              Flexible(child: builder(context, scrollController)),
-            ],
-          ),
-        );
-      },
+          // -> content
+          Flexible(child: builder(context)),
+        ],
+      ),
     );
   }
 }

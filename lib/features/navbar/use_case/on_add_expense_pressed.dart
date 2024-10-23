@@ -8,7 +8,7 @@ final class OnAddExpensePressed extends UseCase<void, dynamic> {
   void call(BuildContext context, [dynamic _]) {
     BottomSheetComponent.show(
       context,
-      builder: (context, scrollController) {
+      builder: (context) {
         return const NewExpensePage();
       },
     );

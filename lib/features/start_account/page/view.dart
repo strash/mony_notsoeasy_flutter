@@ -13,7 +13,7 @@ class StartAccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<StartAccountViewModel>();
-    final onCreateAccountPressed = viewModel<OnCreateAccountPressed>();
+    final onCreateAccountPressed = viewModel<OnShowAccountFormPressed>();
     final onImportDataPressed = viewModel<OnImportDataPressed>();
 
     return Scaffold(

@@ -7,16 +7,14 @@ import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/account_form/page/page.dart";
 import "package:provider/provider.dart";
 
-final class OnCreateAccountPressed extends UseCase<Future<void>, dynamic> {
+final class OnShowAccountFormPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
     final result = await BottomSheetComponent.show<AccountVO?>(
       context,
-      initialChildSize: 1.0,
-      expand: false,
       showDragHandle: false,
-      builder: (context, scrollController) {
-        return AccountFormPage(scrollController: scrollController);
+      builder: (context) {
+        return const AccountFormPage();
       },
     );
     if (result == null || !context.mounted) return;

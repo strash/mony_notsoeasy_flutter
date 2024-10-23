@@ -11,12 +11,10 @@ export "../use_case/use_case.dart";
 
 final class AccountFormViewModelBuilder extends StatefulWidget {
   final AccountVO? account;
-  final ScrollController scrollController;
 
   const AccountFormViewModelBuilder({
     super.key,
     this.account,
-    required this.scrollController,
   });
 
   @override
@@ -102,9 +100,7 @@ final class AccountFormViewModel
         () => OnSumbitAccountPressed(),
         () => OnCurrencyDescriptionRequested(),
       ],
-      child: AccountFormView(
-        scrollController: widget.scrollController,
-      ),
+      child: const AccountFormView(),
     );
   }
 }

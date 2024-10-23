@@ -40,13 +40,10 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
     final entries = widget.entryBuilder(context);
     final value = await BottomSheetComponent.show<T>(
       context,
-      expand: widget.expand,
-      initialChildSize: 0.5,
-      builder: (context, scrollController) {
+      builder: (context) {
         return _ValueProvider<T>(
           controller: widget.controller,
           child: ListView.builder(
-            controller: widget.expand ? scrollController : null,
             shrinkWrap: true,
             padding: EdgeInsets.only(bottom: viewPaddings.bottom + 20.h),
             itemCount: entries.length,

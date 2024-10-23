@@ -20,7 +20,7 @@ final class StartAccountViewModel
     return ViewModel<StartAccountViewModel>(
       viewModel: this,
       useCases: [
-        () => OnCreateAccountPressed(),
+        () => OnShowAccountFormPressed(),
         () => OnImportDataPressed(),
       ],
       child: const StartAccountView(),

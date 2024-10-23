@@ -12,14 +12,9 @@ final class OnAccountButtonPressed
   Future<AccountVO?> call(BuildContext context, [AccountVO? value]) async {
     final result = await BottomSheetComponent.show<AccountVO?>(
       context,
-      initialChildSize: 1.0,
-      expand: false,
       showDragHandle: false,
-      builder: (context, scrollController) {
-        return AccountFormPage(
-          account: value,
-          scrollController: scrollController,
-        );
+      builder: (context) {
+        return AccountFormPage(account: value);
       },
     );
     return result;

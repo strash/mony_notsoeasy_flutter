@@ -18,10 +18,8 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
     final theme = Theme.of(context);
     BottomSheetComponent.show<void>(
       context,
-      expand: false,
-      builder: (context, scrollController) {
+      builder: (context) {
         return SingleChildScrollView(
-          controller: scrollController,
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: viewSize.height * 0.4),
             child: Padding(
