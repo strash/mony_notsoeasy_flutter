@@ -19,6 +19,13 @@ typedef TTransactionsByType = ({
   Set<String> types,
 });
 
+// either a model is linked to a category or a new vo is created
+typedef TMappedCategory = ({
+  String title,
+  CategoryModel? linkedModel,
+  CategoryVO? vo,
+});
+
 final class ImportViewModelBuilder extends StatefulWidget {
   const ImportViewModelBuilder({super.key});
 
@@ -165,6 +172,30 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
       mappedIncomeTransactionType =
           !isTransactionsExpenses ? showedType : otherType;
     });
+  }
+
+  // for categories mapping
+
+  final Map<EExpenseType, List<CategoryModel>> categoryModels = {
+    EExpenseType.expense: const [],
+    EExpenseType.income: const [],
+  };
+
+  final Map<EExpenseType, List<TMappedCategory>> mappedCategories = {
+    EExpenseType.expense: const [],
+    EExpenseType.income: const [],
+  };
+
+  String get numberOfCategoriesDescription {
+    final count = mappedCategories[EExpenseType.expense]!.length +
+        mappedCategories[EExpenseType.income]!.length;
+    final formatter = NumberFormat.decimalPattern();
+    final formatted = formatter.format(count);
+    return switch (count.wordCaseHint) {
+      EWordCaseHint.nominative => "$formatted категория",
+      EWordCaseHint.genitive => "$formatted категории",
+      EWordCaseHint.accusative => "$formatted категорий",
+    };
   }
 
   @override
