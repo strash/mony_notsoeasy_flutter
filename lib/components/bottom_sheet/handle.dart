@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 
 class BottomSheetHandleComponent extends StatelessWidget {
-  static final double height = 40.h;
+  static final double height = 20.h;
 
   const BottomSheetHandleComponent();
 

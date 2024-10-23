@@ -62,7 +62,11 @@ class BottomSheetComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // -> handle
-          if (showDragHandle) const BottomSheetHandleComponent(),
+          if (showDragHandle)
+            Padding(
+              padding: EdgeInsets.only(bottom: 20.h),
+              child: const BottomSheetHandleComponent(),
+            ),
 
           // -> content
           Flexible(child: builder(context)),
