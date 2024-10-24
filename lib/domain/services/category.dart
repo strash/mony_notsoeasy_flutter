@@ -14,8 +14,11 @@ final class DomainCategoryService extends BaseDomainService {
   })  : _categoryRepo = categoryRepo,
         _categoryFactory = categoryFactory;
 
-  Future<List<CategoryModel>> getAll({EExpenseType? expenseType}) async {
-    final dtos = await _categoryRepo.getAll(expenseType: expenseType?.value);
+  Future<List<CategoryModel>> getAll({
+    ETransactionType? transactionType,
+  }) async {
+    final dtos =
+        await _categoryRepo.getAll(transactionType: transactionType?.value);
     return dtos
         .map<CategoryModel>(_categoryFactory.toModel)
         .toList(growable: false);
@@ -23,12 +26,12 @@ final class DomainCategoryService extends BaseDomainService {
 
   Future<List<CategoryModel>> getMany({
     required int page,
-    EExpenseType? expenseType,
+    ETransactionType? transactionType,
   }) async {
     final dtos = await _categoryRepo.getMany(
       limit: perPage,
       offset: offset(page),
-      expenseType: expenseType?.value,
+      transactionType: transactionType?.value,
     );
     return dtos
         .map<CategoryModel>(_categoryFactory.toModel)
@@ -42,7 +45,7 @@ final class DomainCategoryService extends BaseDomainService {
   }
 
   Future<CategoryModel> create({required CategoryVO vo}) async {
-    final CategoryVO(:title, :icon, :sort, :color, :expenseType) = vo;
+    final CategoryVO(:title, :icon, :sort, :color, :transactionType) = vo;
     final defaultColumns = newDefaultColumns;
     final model = CategoryModel(
       id: defaultColumns.id,
@@ -52,7 +55,7 @@ final class DomainCategoryService extends BaseDomainService {
       icon: icon,
       sort: sort,
       color: color,
-      expenseType: expenseType,
+      transactionType: transactionType,
     );
     await _categoryRepo.create(dto: _categoryFactory.toDto(model));
     return model;

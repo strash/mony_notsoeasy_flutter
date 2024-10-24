@@ -2,51 +2,51 @@ import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/factories/factories.dart";
 import "package:mony_app/domain/domain.dart";
 
-final class ExpenseDatabaseFactoryImpl
-    implements IExpenseDatabaseFactory<ExpenseModel> {
+final class TransactionDatabaseFactoryImpl
+    implements ITransactionDatabaseFactory<TransactionModel> {
   final AccountDto _accountDto;
   final CategoryDto _categoryDto;
-  final List<ExpenseTagDto> _tags;
+  final List<TransactionTagDto> _tags;
 
   final AccountDatabaseFactoryImpl _accountFactory;
   final CategoryDatabaseFactoryImpl _categoryFactory;
-  final ExpenseTagDatabaseFactoryImpl _expenseTagFactory;
+  final TransactionTagDatabaseFactoryImpl _transactionTagFactory;
 
-  ExpenseDatabaseFactoryImpl({
+  TransactionDatabaseFactoryImpl({
     required AccountDto accountDto,
     required CategoryDto categoryDto,
-    required List<ExpenseTagDto> tags,
+    required List<TransactionTagDto> tags,
     required AccountDatabaseFactoryImpl accountFactory,
     required CategoryDatabaseFactoryImpl categoryFactory,
-    required ExpenseTagDatabaseFactoryImpl expenseTagFactory,
+    required TransactionTagDatabaseFactoryImpl transactionTagFactory,
   })  : _tags = tags,
         _categoryDto = categoryDto,
         _accountDto = accountDto,
         _accountFactory = accountFactory,
         _categoryFactory = categoryFactory,
-        _expenseTagFactory = expenseTagFactory;
+        _transactionTagFactory = transactionTagFactory;
 
   @override
-  ExpenseModel toModel(ExpenseDto dto) {
-    return ExpenseModel(
+  TransactionModel toModel(TransactionDto dto) {
+    return TransactionModel(
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
       updated: DateTime.tryParse(dto.updated)?.toLocal() ?? DateTime.now(),
       amout: dto.amout.toDouble(),
-      type: EExpenseType.from(dto.type),
+      type: ETransactionType.from(dto.type),
       date: DateTime.tryParse(dto.date)?.toLocal() ?? DateTime.now(),
       note: dto.note,
       account: _accountFactory.toModel(_accountDto),
       category: _categoryFactory.toModel(_categoryDto),
       tags: _tags
-          .map<ExpenseTagModel>(_expenseTagFactory.toModel)
+          .map<TransactionTagModel>(_transactionTagFactory.toModel)
           .toList(growable: false),
     );
   }
 
   @override
-  ExpenseDto toDto(ExpenseModel model) {
-    return ExpenseDto(
+  TransactionDto toDto(TransactionModel model) {
+    return TransactionDto(
       id: model.id,
       created: model.created.toUtc().toIso8601String(),
       updated: model.updated.toUtc().toIso8601String(),

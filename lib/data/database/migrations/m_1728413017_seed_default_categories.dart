@@ -17,13 +17,13 @@ final class M1728413017SeedDefaultCategories extends BaseMigration {
   final _categoriesIcon = "icon";
   final _categoriesSort = "sort";
   final _categoriesColor = "color";
-  final _categoriesExpenseType = "expense_type";
+  final _categoriesTransactionType = "transaction_type";
 
   String _getInsertQuery({
     required String title,
     required String icon,
     required int sort,
-    required String expenseType,
+    required String transactionType,
   }) {
     final id = StringEx.random(20);
     final date = DateTime.now().toUtc().toIso8601String();
@@ -37,7 +37,7 @@ INSERT INTO $_categories (
 	$_categoriesIcon,
 	$_categoriesSort,
 	$_categoriesColor,
-	$_categoriesExpenseType
+	$_categoriesTransactionType
 ) VALUES(
 	'$id',
 	'$date',
@@ -46,7 +46,7 @@ INSERT INTO $_categories (
 	'$icon',
 	$sort,
 	'$color',
-	'$expenseType'
+	'$transactionType'
 	);
 """;
   }
@@ -74,7 +74,7 @@ INSERT INTO $_categories (
           icon: category.$2.icon,
           title: category.$2.title,
           sort: category.$1,
-          expenseType: EExpenseType.expense.value,
+          transactionType: ETransactionType.expense.value,
         ),
       );
     }
@@ -95,7 +95,7 @@ INSERT INTO $_categories (
           icon: category.$2.icon,
           title: category.$2.title,
           sort: category.$1,
-          expenseType: EExpenseType.income.value,
+          transactionType: ETransactionType.income.value,
         ),
       );
     }

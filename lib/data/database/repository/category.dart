@@ -5,12 +5,12 @@ abstract base class CategoryDatabaseRepository {
   const factory CategoryDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
-  Future<List<CategoryDto>> getAll({String? expenseType});
+  Future<List<CategoryDto>> getAll({String? transactionType});
 
   Future<List<CategoryDto>> getMany({
     required int limit,
     required int offset,
-    String? expenseType,
+    String? transactionType,
   });
 
   Future<CategoryDto?> getOne({required String id});
@@ -32,13 +32,13 @@ final class _Impl
   const _Impl({required this.database});
 
   @override
-  Future<List<CategoryDto>> getAll({String? expenseType}) async {
+  Future<List<CategoryDto>> getAll({String? transactionType}) async {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
         table,
-        where: expenseType != null ? "expense_type = ?" : null,
-        whereArgs: expenseType != null ? [expenseType] : null,
+        where: transactionType != null ? "transaction_type = ?" : null,
+        whereArgs: transactionType != null ? [transactionType] : null,
         orderBy: "sort ASC",
       );
       return List.generate(
@@ -53,7 +53,7 @@ final class _Impl
   Future<List<CategoryDto>> getMany({
     required int limit,
     required int offset,
-    String? expenseType,
+    String? transactionType,
   }) async {
     return resolve(() async {
       final db = await database.db;
@@ -61,8 +61,8 @@ final class _Impl
         table,
         limit: limit,
         offset: offset,
-        where: expenseType != null ? "expense_type = ?" : null,
-        whereArgs: expenseType != null ? [expenseType] : null,
+        where: transactionType != null ? "transaction_type = ?" : null,
+        whereArgs: transactionType != null ? [transactionType] : null,
         orderBy: "sort ASC",
       );
       return List.generate(

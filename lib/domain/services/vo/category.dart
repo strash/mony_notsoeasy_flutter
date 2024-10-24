@@ -1,6 +1,6 @@
 import "package:flutter/rendering.dart";
 import "package:freezed_annotation/freezed_annotation.dart";
-import "package:mony_app/domain/models/expense.dart";
+import "package:mony_app/domain/models/transaction.dart";
 
 part "category.freezed.dart";
 
@@ -11,6 +11,6 @@ class CategoryVO with _$CategoryVO {
     required String icon,
     required int sort,
     required Color color,
-    required EExpenseType expenseType,
+    required ETransactionType transactionType,
   }) = _CategoryVO;
 }

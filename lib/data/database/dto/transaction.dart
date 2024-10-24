@@ -1,11 +1,11 @@
 import "package:freezed_annotation/freezed_annotation.dart";
 
-part "expense.freezed.dart";
-part "expense.g.dart";
+part "transaction.freezed.dart";
+part "transaction.g.dart";
 
 @freezed
-class ExpenseDto with _$ExpenseDto {
-  const factory ExpenseDto({
+class TransactionDto with _$TransactionDto {
+  const factory TransactionDto({
     required String id,
     required String created,
     required String updated,
@@ -15,8 +15,8 @@ class ExpenseDto with _$ExpenseDto {
     required String note,
     required String accountId,
     required String categoryId,
-  }) = _ExpenseDto;
+  }) = _TransactionDto;
 
-  factory ExpenseDto.fromJson(Map<String, dynamic> json) =>
-      _$ExpenseDtoFromJson(json);
+  factory TransactionDto.fromJson(Map<String, dynamic> json) =>
+      _$TransactionDtoFromJson(json);
 }

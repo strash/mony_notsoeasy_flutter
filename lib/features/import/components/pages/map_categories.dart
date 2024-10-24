@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/domain/models/expense.dart";
+import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
 
 class ImportMapCategoriesPage extends StatelessWidget {
@@ -18,8 +18,8 @@ class ImportMapCategoriesPage extends StatelessWidget {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final categories = viewModel.mappedCategories;
-    final expenses = categories[EExpenseType.expense]!;
-    final income = categories[EExpenseType.income]!;
+    final expenses = categories[ETransactionType.expense]!;
+    final income = categories[ETransactionType.income]!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,23 +61,56 @@ class ImportMapCategoriesPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: expenses.map((e) {
-                return Text(e.title);
-              }).toList(growable: false),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Категории расходов",
+                  style: GoogleFonts.golosText(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.tertiary,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: expenses.map((e) {
+                    return Text(e.title);
+                  }).toList(growable: false),
+                ),
+              ],
             ),
           ),
-        SizedBox(height: 40.h),
+        SizedBox(height: 20.h),
 
         // -> income categories
         if (income.isNotEmpty)
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.w),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: income.map((e) {
-                return Text(e.title);
-              }).toList(growable: false),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Категории доходов",
+                  style: GoogleFonts.golosText(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.tertiary,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: income.map((e) {
+                    return Text(
+                      e.title,
+                      style: GoogleFonts.golosText(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.tertiary,
+                      ),
+                    );
+                  }).toList(growable: false),
+                ),
+              ],
             ),
           ),
       ],

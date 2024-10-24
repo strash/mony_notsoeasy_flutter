@@ -38,8 +38,8 @@ class NavigationButtonsComponent extends StatelessWidget {
                     viewModel.accounts.entries
                         .every((e) => e.value != null))) ||
         event is ImportEventMapTransactionType &&
-            viewModel.mappedExpenseTransactionType != null &&
-            viewModel.mappedIncomeTransactionType != null;
+            viewModel.mappedTransactionTypeExpense != null &&
+            viewModel.mappedTransactionTypeIncome != null;
 
     return Row(
       children: [

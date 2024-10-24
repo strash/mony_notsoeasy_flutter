@@ -13,7 +13,7 @@ class CategoryDto with _$CategoryDto {
     required String icon,
     required int sort,
     required String color,
-    required String expenseType,
+    required String transactionType,
   }) = _CategoryDto;
 
   factory CategoryDto.fromJson(Map<String, dynamic> json) =>

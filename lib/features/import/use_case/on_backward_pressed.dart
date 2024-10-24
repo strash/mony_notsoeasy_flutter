@@ -1,7 +1,7 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/domain/models/expense.dart";
+import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/import/page/page.dart";
 
 final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
@@ -38,8 +38,8 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
         subject.add(ImportEventMapAccounts());
         viewModel.setProtectedState(() {
           viewModel.additionalSteps--;
-          viewModel.mappedExpenseTransactionType = null;
-          viewModel.mappedIncomeTransactionType = null;
+          viewModel.mappedTransactionTypeExpense = null;
+          viewModel.mappedTransactionTypeIncome = null;
           viewModel.isTransactionsExpenses = true;
         });
       case ImportEventMapCategories():
@@ -49,8 +49,8 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
           subject.add(ImportEventMapAccounts());
         }
         viewModel.setProtectedState(() {
-          viewModel.mappedCategories[EExpenseType.expense] = const [];
-          viewModel.mappedCategories[EExpenseType.income] = const [];
+          viewModel.mappedCategories[ETransactionType.expense] = const [];
+          viewModel.mappedCategories[ETransactionType.income] = const [];
         });
     }
     viewModel.setProtectedState(() {

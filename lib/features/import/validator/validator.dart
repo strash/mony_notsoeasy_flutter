@@ -2,9 +2,9 @@ export "./account.dart";
 export "./amount.dart";
 export "./category.dart";
 export "./date.dart";
-export "./expense_type.dart";
 export "./note.dart";
 export "./tag.dart";
+export "./transaction_type.dart";
 
 final class ValidationResult {
   final String? ok;

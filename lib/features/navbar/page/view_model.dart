@@ -66,7 +66,7 @@ final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
     return ViewModel<NavBarViewModel>(
       viewModel: this,
       useCases: [
-        () => OnAddExpensePressed(),
+        () => OnAddTransactionPressed(),
         () => OnTabChangeRequested(),
         () => OnPopTabsToRootRequested(),
       ],

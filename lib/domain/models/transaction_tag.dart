@@ -1,14 +1,14 @@
 import "package:freezed_annotation/freezed_annotation.dart";
 
-part "expense_tag.freezed.dart";
+part "transaction_tag.freezed.dart";
 
 @freezed
-class ExpenseTagModel with _$ExpenseTagModel {
-  const factory ExpenseTagModel({
+class TransactionTagModel with _$TransactionTagModel {
+  const factory TransactionTagModel({
     required String id,
     required DateTime created,
     required DateTime updated,
     required String tagId,
     required String title,
-  }) = _ExpenseTagModel;
+  }) = _TransactionTagModel;
 }

@@ -107,8 +107,8 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
 
   // for transaction type mapping
 
-  String? mappedExpenseTransactionType;
-  String? mappedIncomeTransactionType;
+  String? mappedTransactionTypeExpense;
+  String? mappedTransactionTypeIncome;
 
   bool isTransactionsExpenses = true;
 
@@ -167,28 +167,28 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
       }
     }
     setState(() {
-      mappedExpenseTransactionType =
+      mappedTransactionTypeExpense =
           isTransactionsExpenses ? showedType : otherType;
-      mappedIncomeTransactionType =
+      mappedTransactionTypeIncome =
           !isTransactionsExpenses ? showedType : otherType;
     });
   }
 
   // for categories mapping
 
-  final Map<EExpenseType, List<CategoryModel>> categoryModels = {
-    EExpenseType.expense: const [],
-    EExpenseType.income: const [],
+  final Map<ETransactionType, List<CategoryModel>> categoryModels = {
+    ETransactionType.expense: const [],
+    ETransactionType.income: const [],
   };
 
-  final Map<EExpenseType, List<TMappedCategory>> mappedCategories = {
-    EExpenseType.expense: const [],
-    EExpenseType.income: const [],
+  final Map<ETransactionType, List<TMappedCategory>> mappedCategories = {
+    ETransactionType.expense: const [],
+    ETransactionType.income: const [],
   };
 
   String get numberOfCategoriesDescription {
-    final count = mappedCategories[EExpenseType.expense]!.length +
-        mappedCategories[EExpenseType.income]!.length;
+    final count = mappedCategories[ETransactionType.expense]!.length +
+        mappedCategories[ETransactionType.income]!.length;
     final formatter = NumberFormat.decimalPattern();
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {

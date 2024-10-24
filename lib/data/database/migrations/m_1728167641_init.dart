@@ -7,7 +7,7 @@ typedef _IndexValueObject = ({String table, List<String> columns, bool unique});
 
 final class M1728167641Init extends BaseMigration {
   // defaults
-  final _defaultExpenseType = EExpenseType.defaultValue.value;
+  final _defaultTransactionType = ETransactionType.defaultValue.value;
   final _defaultAccountType = EAccountType.defaultValue.value;
   final _defaultCurrencyCode = kDefaultCurrencyCode;
 
@@ -23,42 +23,42 @@ final class M1728167641Init extends BaseMigration {
   final _categoriesIcon = "icon";
   final _categoriesSort = "sort";
   final _categoriesColor = "color";
-  final _categoriesExpenseType = "expense_type";
-  // EXPENSES
-  final _expenses = "expenses";
-  final _expensesAmount = "amount";
-  final _expensesType = "type";
-  final _expensesDate = "date";
-  final _expensesNote = "note";
-  final _expensesAccountId = "account_id";
-  final _expensesCategoryId = "category_id";
+  final _categoriesTransactionType = "transaction_type";
+  // TRANSACTIONS
+  final _transactions = "transactions";
+  final _transactionsAmount = "amount";
+  final _transactionsType = "type";
+  final _transactionsDate = "date";
+  final _transactionsNote = "note";
+  final _transactionsAccountId = "account_id";
+  final _transactionssCategoryId = "category_id";
   // TAGS
   final _tags = "tags";
   final _tagsTitle = "title";
-  // EXPENSE TAGS
-  final _expenseTags = "expense_tags";
-  final _expenseTagsExpenseId = "expense_id";
-  final _expenseTagsTagId = "tag_id";
+  // TRANSACTION TAGS
+  final _transactionTags = "transaction_tags";
+  final _transactionTagsTransactionId = "transaction_id";
+  final _transactionTagsTagId = "tag_id";
 
   // indexes
   late final _indexes = <_IndexValueObject>[
     (table: _accounts, columns: [_accountsTitle, _accountsType], unique: true),
-    (table: _categories, columns: [_categoriesExpenseType], unique: false),
+    (table: _categories, columns: [_categoriesTransactionType], unique: false),
     (
       table: _categories,
-      columns: [_categoriesTitle, _categoriesIcon, _categoriesExpenseType],
+      columns: [_categoriesTitle, _categoriesIcon, _categoriesTransactionType],
       unique: true
     ),
-    (table: _expenses, columns: [_expensesAccountId], unique: false),
-    (table: _expenses, columns: [_expensesCategoryId], unique: false),
+    (table: _transactions, columns: [_transactionsAccountId], unique: false),
+    (table: _transactions, columns: [_transactionssCategoryId], unique: false),
     (
-      table: _expenses,
-      columns: [_expensesAccountId, _expensesCategoryId],
+      table: _transactions,
+      columns: [_transactionsAccountId, _transactionssCategoryId],
       unique: false
     ),
     (
-      table: _expenseTags,
-      columns: [_expenseTagsExpenseId, _expenseTagsTagId],
+      table: _transactionTags,
+      columns: [_transactionTagsTransactionId, _transactionTagsTagId],
       unique: true
     ),
   ];
@@ -76,26 +76,26 @@ CREATE TABLE IF NOT EXISTS $_accounts (
   late final _categoryQuery = """
 CREATE TABLE IF NOT EXISTS $_categories (
 	$defaultColumns,
-	$_categoriesTitle       TEXT    DEFAULT ''                     NOT NULL,
-	$_categoriesIcon        TEXT    DEFAULT ''                     NOT NULL,
-	$_categoriesSort        INTEGER DEFAULT 0                      NOT NULL,
-	$_categoriesColor       TEXT    DEFAULT '0xFFFFFFFF'           NOT NULL,
-	$_categoriesExpenseType TEXT    DEFAULT '$_defaultExpenseType' NOT NULL
+	$_categoriesTitle           TEXT    DEFAULT ''                     NOT NULL,
+	$_categoriesIcon            TEXT    DEFAULT ''                     NOT NULL,
+	$_categoriesSort            INTEGER DEFAULT 0                      NOT NULL,
+	$_categoriesColor           TEXT    DEFAULT '0xFFFFFFFF'           NOT NULL,
+	$_categoriesTransactionType TEXT    DEFAULT '$_defaultTransactionType' NOT NULL
 );
 """;
 
-  late final _expensesQuery = """
-CREATE TABLE IF NOT EXISTS $_expenses (
+  late final _transictonsQuery = """
+CREATE TABLE IF NOT EXISTS $_transactions (
 	$defaultColumns,
-	$_expensesAmount     REAL DEFAULT 0                      NOT NULL,
-	$_expensesType       TEXT DEFAULT '$_defaultExpenseType' NOT NULL,
-	$_expensesDate       TEXT DEFAULT ''                     NOT NULL,
-	$_expensesNote       TEXT DEFAULT ''                     NOT NULL,
-	$_expensesAccountId  TEXT DEFAULT ''                     NOT NULL,
-	$_expensesCategoryId TEXT DEFAULT ''                     NOT NULL,
+	$_transactionsAmount      REAL DEFAULT 0                          NOT NULL,
+	$_transactionsType        TEXT DEFAULT '$_defaultTransactionType' NOT NULL,
+	$_transactionsDate        TEXT DEFAULT ''                         NOT NULL,
+	$_transactionsNote        TEXT DEFAULT ''                         NOT NULL,
+	$_transactionsAccountId   TEXT DEFAULT ''                         NOT NULL,
+	$_transactionssCategoryId TEXT DEFAULT ''                         NOT NULL,
 
-	FOREIGN KEY ($_expensesAccountId)  REFERENCES $_accounts   (id) ON DELETE CASCADE,
-	FOREIGN KEY ($_expensesCategoryId) REFERENCES $_categories (id) ON DELETE CASCADE
+	FOREIGN KEY ($_transactionsAccountId)   REFERENCES $_accounts   (id) ON DELETE CASCADE,
+	FOREIGN KEY ($_transactionssCategoryId) REFERENCES $_categories (id) ON DELETE CASCADE
 );
 """;
 
@@ -106,14 +106,14 @@ CREATE TABLE IF NOT EXISTS $_tags (
 );
 """;
 
-  late final _expenseTagsQuery = """
-CREATE TABLE IF NOT EXISTS $_expenseTags (
+  late final _transactionTagsQuery = """
+CREATE TABLE IF NOT EXISTS $_transactionTags (
 	$defaultColumns,
-	$_expenseTagsExpenseId TEXT DEFAULT '' NOT NULL,
-	$_expenseTagsTagId     TEXT DEFAULT '' NOT NULL,
+	$_transactionTagsTransactionId TEXT DEFAULT '' NOT NULL,
+	$_transactionTagsTagId         TEXT DEFAULT '' NOT NULL,
 
-	FOREIGN KEY ($_expenseTagsExpenseId) REFERENCES $_expenses (id) ON DELETE CASCADE,
-	FOREIGN KEY ($_expenseTagsTagId)     REFERENCES $_tags     (id) ON DELETE CASCADE
+	FOREIGN KEY ($_transactionTagsTransactionId) REFERENCES $_transactions (id) ON DELETE CASCADE,
+	FOREIGN KEY ($_transactionTagsTagId)         REFERENCES $_tags         (id) ON DELETE CASCADE
 );
 """;
 
@@ -154,9 +154,9 @@ ON $table (${columns.join(", ")});
     final tables = [
       _accountsQuery,
       _categoryQuery,
-      _expensesQuery,
+      _transictonsQuery,
       _tagsQuery,
-      _expenseTagsQuery,
+      _transactionTagsQuery,
     ];
     for (final tableQuery in tables) {
       batch.execute(tableQuery);
@@ -182,9 +182,9 @@ ON $table (${columns.join(", ")});
     }
     // drop tables
     final tables = [
-      _expenseTags,
+      _transactionTags,
       _tags,
-      _expenses,
+      _transactions,
       _categories,
       _accounts,
     ];

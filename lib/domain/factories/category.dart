@@ -17,7 +17,7 @@ final class CategoryDatabaseFactoryImpl
       icon: dto.icon,
       sort: dto.sort,
       color: Color(int.tryParse(dto.color) ?? 0xFFFFFFFF),
-      expenseType: EExpenseType.from(dto.expenseType),
+      transactionType: ETransactionType.from(dto.transactionType),
     );
   }
 
@@ -31,7 +31,7 @@ final class CategoryDatabaseFactoryImpl
       icon: model.icon,
       sort: model.sort,
       color: model.color.toHexadecimal(),
-      expenseType: model.expenseType.value,
+      transactionType: model.transactionType.value,
     );
   }
 }

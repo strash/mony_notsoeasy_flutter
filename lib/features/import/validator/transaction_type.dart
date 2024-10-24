@@ -1,7 +1,7 @@
 import "package:mony_app/features/import/page/enum.dart";
 import "package:mony_app/features/import/validator/validator.dart";
 
-final class ExpenseTypeValidator extends BaseValidator {
+final class TransactionTypeValidator extends BaseValidator {
   @override
   ValidationResult validate(List<Map<String, String>> input, String key) {
     const column = EImportColumn.transactionType;

@@ -20,7 +20,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
         final validator = switch (column.column) {
           EImportColumn.account => AccountValidator(),
           EImportColumn.amount => AmountValidator(),
-          EImportColumn.transactionType => ExpenseTypeValidator(),
+          EImportColumn.transactionType => TransactionTypeValidator(),
           EImportColumn.date => DateValidator(),
           EImportColumn.category => CategoryValidator(),
           EImportColumn.tag => TagValidator(),
@@ -92,7 +92,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     DomainCategoryService categoryService,
   ) async {
     // group imported categories
-    final implyTypeFromAmount = viewModel.mappedExpenseTransactionType == null;
+    final implyTypeFromAmount = viewModel.mappedTransactionTypeExpense == null;
     final Set<String> importExp = {};
     final Set<String> importInc = {};
     for (final e in viewModel.csv!.entries) {
@@ -119,7 +119,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
           importInc.add(category);
         }
       } else {
-        if (transactionType == viewModel.mappedExpenseTransactionType) {
+        if (transactionType == viewModel.mappedTransactionTypeExpense) {
           importExp.add(category);
         } else {
           importInc.add(category);
@@ -127,20 +127,22 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       }
     }
     viewModel.setProtectedState(() {
-      viewModel.mappedCategories[EExpenseType.expense] = importExp.map((e) {
+      viewModel.mappedCategories[ETransactionType.expense] = importExp.map((e) {
         return (title: e, linkedModel: null, vo: null);
       }).toList(growable: false);
-      viewModel.mappedCategories[EExpenseType.income] = importInc.map((e) {
+      viewModel.mappedCategories[ETransactionType.income] = importInc.map((e) {
         return (title: e, linkedModel: null, vo: null);
       }).toList(growable: false);
     });
     // load built-in categories
-    final exp = await categoryService.getAll(expenseType: EExpenseType.expense);
-    final inc = await categoryService.getAll(expenseType: EExpenseType.income);
+    final exp =
+        await categoryService.getAll(transactionType: ETransactionType.expense);
+    final inc =
+        await categoryService.getAll(transactionType: ETransactionType.income);
     viewModel.subject.add(ImportEventMapCategories());
     viewModel.setProtectedState(() {
-      viewModel.categoryModels[EExpenseType.expense] = exp;
-      viewModel.categoryModels[EExpenseType.income] = inc;
+      viewModel.categoryModels[ETransactionType.expense] = exp;
+      viewModel.categoryModels[ETransactionType.income] = inc;
     });
   }
 

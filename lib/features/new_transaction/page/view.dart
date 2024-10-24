@@ -2,10 +2,10 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/features/new_expense/components/components.dart";
+import "package:mony_app/features/new_transaction/components/components.dart";
 
-class NewExpenseView extends StatelessWidget {
-  const NewExpenseView({super.key});
+class NewTransactionView extends StatelessWidget {
+  const NewTransactionView({super.key});
 
   @override
   Widget build(BuildContext context) {

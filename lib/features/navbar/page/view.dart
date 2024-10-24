@@ -20,7 +20,7 @@ class NavBarView extends StatelessWidget {
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final halfTabs = (NavBarTabItem.length * 0.5).toInt();
     final viewModel = context.viewModel<NavBarViewModel>();
-    final onAddExpensePressed = viewModel<OnAddExpensePressed>();
+    final onAddTransactionPressed = viewModel<OnAddTransactionPressed>();
 
     return StreamBuilder<NavBarTabItem>(
       stream: viewModel.subject.stream,
@@ -71,7 +71,7 @@ class NavBarView extends StatelessWidget {
                               Expanded(
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.opaque,
-                                  onTap: () => onAddExpensePressed(context),
+                                  onTap: () => onAddTransactionPressed(context),
                                   child: DecoratedBox(
                                     decoration: ShapeDecoration(
                                       color: theme.colorScheme.onSurface,

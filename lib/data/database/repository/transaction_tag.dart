@@ -1,24 +1,24 @@
 import "package:mony_app/data/database/database.dart";
 import "package:sqflite/sqflite.dart";
 
-abstract base class ExpenseTagDatabaseRepository {
-  const factory ExpenseTagDatabaseRepository({
+abstract base class TransactionTagDatabaseRepository {
+  const factory TransactionTagDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
 
-  Future<List<ExpenseTagDto>> getAll({required String expenseId});
+  Future<List<TransactionTagDto>> getAll({required String transactionId});
 
-  Future<List<ExpenseTagDto>> getMany({
-    required String expenseId,
+  Future<List<TransactionTagDto>> getMany({
+    required String transactionId,
     required int limit,
     required int offset,
   });
 
-  Future<ExpenseTagDto?> getOne({required String id});
+  Future<TransactionTagDto?> getOne({required String id});
 
   Future<void> create({
-    required String expenseId,
-    required ExpenseTagDto dto,
+    required String transactionId,
+    required TransactionTagDto dto,
   });
 
   Future<void> delete({required String id});
@@ -26,15 +26,17 @@ abstract base class ExpenseTagDatabaseRepository {
 
 final class _Impl
     with DatabaseRepositoryMixin
-    implements ExpenseTagDatabaseRepository {
+    implements TransactionTagDatabaseRepository {
   final AppDatabase database;
 
-  String get table => "expense_tags";
+  String get table => "transaction_tags";
 
   const _Impl({required this.database});
 
   @override
-  Future<List<ExpenseTagDto>> getAll({required String expenseId}) async {
+  Future<List<TransactionTagDto>> getAll({
+    required String transactionId,
+  }) async {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.rawQuery(
@@ -42,21 +44,21 @@ final class _Impl
 SELECT et.id, et.created, et.updated, et.tag_id, t.title
 FROM $table AS et
 JOIN tags AS t ON et.tag_id = t.id
-WHERE et.expense_id = ?;
+WHERE et.transaction_id = ?;
 """,
-        [expenseId],
+        [transactionId],
       );
       return List.generate(
         maps.length,
-        (index) => ExpenseTagDto.fromJson(maps.elementAt(index)),
+        (index) => TransactionTagDto.fromJson(maps.elementAt(index)),
         growable: false,
       );
     });
   }
 
   @override
-  Future<List<ExpenseTagDto>> getMany({
-    required String expenseId,
+  Future<List<TransactionTagDto>> getMany({
+    required String transactionId,
     required int limit,
     required int offset,
   }) async {
@@ -67,20 +69,20 @@ WHERE et.expense_id = ?;
 SELECT et.id, et.created, et.updated, et.tag_id, t.title
 FROM $table AS et
 JOIN tags AS t ON et.tag_id = t.id
-WHERE et.expense_id = ? LIMIT ? OFFSET ?;
+WHERE et.transaction_id = ? LIMIT ? OFFSET ?;
 """,
-        [expenseId, limit, offset],
+        [transactionId, limit, offset],
       );
       return List.generate(
         maps.length,
-        (index) => ExpenseTagDto.fromJson(maps.elementAt(index)),
+        (index) => TransactionTagDto.fromJson(maps.elementAt(index)),
         growable: false,
       );
     });
   }
 
   @override
-  Future<ExpenseTagDto?> getOne({required String id}) async {
+  Future<TransactionTagDto?> getOne({required String id}) async {
     return resolve(() async {
       final db = await database.db;
       final map = await db.rawQuery(
@@ -93,19 +95,19 @@ WHERE et.id = ? LIMIT 1;
         [id],
       );
       if (map.isEmpty) return null;
-      return ExpenseTagDto.fromJson(map.first);
+      return TransactionTagDto.fromJson(map.first);
     });
   }
 
   @override
   Future<void> create({
-    required String expenseId,
-    required ExpenseTagDto dto,
+    required String transactionId,
+    required TransactionTagDto dto,
   }) async {
     return resolve(() async {
       final db = await database.db;
       final map = dto.toJson()..remove("title");
-      map["expense_id"] = expenseId;
+      map["transaction_id"] = transactionId;
       await db.insert(
         table,
         map,
