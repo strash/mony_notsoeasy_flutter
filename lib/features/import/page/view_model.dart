@@ -219,6 +219,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
         () => OnAccountLocalButtonPressedDecorator(),
         () => OnAccountFromImportButtonPressedDecorator(),
         () => OnIsTransactionExpensesSwitchPressed(),
+        () => OnCategoryButtonPressed(),
       ],
       child: const ImportView(),
     );

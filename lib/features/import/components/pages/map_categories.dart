@@ -4,6 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
+import "package:mony_app/features/import/components/category/category.dart";
 
 class ImportMapCategoriesPage extends StatelessWidget {
   final ImportEvent? event;
@@ -20,6 +21,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
     final categories = viewModel.mappedCategories;
     final expenses = categories[ETransactionType.expense]!;
     final income = categories[ETransactionType.income]!;
+    final onCategoryPressed = viewModel<OnCategoryButtonPressed>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,60 +60,19 @@ class ImportMapCategoriesPage extends StatelessWidget {
 
         // -> expense categories
         if (expenses.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Категории расходов",
-                  style: GoogleFonts.golosText(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: theme.colorScheme.tertiary,
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: expenses.map((e) {
-                    return Text(e.title);
-                  }).toList(growable: false),
-                ),
-              ],
-            ),
+          ImportCategoryItemComponent(
+            transactionType: ETransactionType.expense,
+            categories: expenses,
+            onTap: onCategoryPressed,
           ),
-        SizedBox(height: 20.h),
+        if (expenses.isNotEmpty) SizedBox(height: 30.h),
 
         // -> income categories
         if (income.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Категории доходов",
-                  style: GoogleFonts.golosText(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: theme.colorScheme.tertiary,
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: income.map((e) {
-                    return Text(
-                      e.title,
-                      style: GoogleFonts.golosText(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: theme.colorScheme.tertiary,
-                      ),
-                    );
-                  }).toList(growable: false),
-                ),
-              ],
-            ),
+          ImportCategoryItemComponent(
+            transactionType: ETransactionType.income,
+            categories: income,
+            onTap: onCategoryPressed,
           ),
       ],
     );
