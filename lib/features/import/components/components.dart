@@ -2,6 +2,7 @@ export "./account/item_from_import.dart";
 export "./account/item_local.dart";
 export "./account/item_setted.dart";
 export "./category/category.dart";
+export "./category/select_action_sheet.dart";
 export "./columns_table/header.dart";
 export "./columns_table/row.dart";
 export "./columns_table/table.dart";

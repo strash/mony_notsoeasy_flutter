@@ -40,7 +40,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   int progress = 0;
 
   int get progressPercentage {
-    return (progress * 100 / (_totalProgress + additionalSteps)).round();
+    return (progress * 100 / max(1, _totalProgress + additionalSteps)).round();
   }
 
   final _totalProgress = 11;

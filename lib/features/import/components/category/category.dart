@@ -9,7 +9,7 @@ import "package:mony_app/features/import/page/view_model.dart";
 class ImportCategoryItemComponent extends StatelessWidget {
   final ETransactionType transactionType;
   final List<TMappedCategory> categories;
-  final UseCase<void, TPressedCategoryValue> onTap;
+  final UseCase<Future<void>, TPressedCategoryValue> onTap;
 
   const ImportCategoryItemComponent({
     super.key,

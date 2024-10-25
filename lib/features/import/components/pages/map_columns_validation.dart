@@ -75,8 +75,8 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                         // -> icon
                         SvgPicture.asset(
                           e.ok != null
-                              ? Assets.icons.checkmark
-                              : Assets.icons.exclamationmarkCircle,
+                              ? Assets.icons.checkmarkCircleFill
+                              : Assets.icons.exclamationmarkCircleFill,
                           width: 20.r,
                           height: 20.r,
                           colorFilter: ColorFilter.mode(

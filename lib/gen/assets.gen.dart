@@ -13,6 +13,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/checkmark.bold.svg
   String get checkmarkBold => 'assets/icons/checkmark.bold.svg';
 
+  /// File path: assets/icons/checkmark.circle.fill.svg
+  String get checkmarkCircleFill => 'assets/icons/checkmark.circle.fill.svg';
+
   /// File path: assets/icons/checkmark.semibold.svg
   String get checkmarkSemibold => 'assets/icons/checkmark.semibold.svg';
 
@@ -49,6 +52,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/info.circle.svg
   String get infoCircle => 'assets/icons/info.circle.svg';
 
+  /// File path: assets/icons/link.badge.plus.svg
+  String get linkBadgePlus => 'assets/icons/link.badge.plus.svg';
+
   /// File path: assets/icons/list.bullet.below.rectangle.svg
   String get listBulletBelowRectangle =>
       'assets/icons/list.bullet.below.rectangle.svg';
@@ -84,6 +90,7 @@ class $AssetsIconsGen {
   /// List of all assets
   List<String> get values => [
         checkmarkBold,
+        checkmarkCircleFill,
         checkmarkSemibold,
         checkmark,
         chevronBackward,
@@ -95,6 +102,7 @@ class $AssetsIconsGen {
         exclamationmarkCircle,
         gearshapeFill,
         infoCircle,
+        linkBadgePlus,
         listBulletBelowRectangle,
         pencilLine,
         personCropCircleFillBadgePlus,

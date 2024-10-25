@@ -52,7 +52,7 @@ const _lightColorScheme = ColorScheme(
 
 const _darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
-  error: Color(0xFFE55C69),
+  error: Color(0xFFEE7783),
   errorContainer: Color(0xFF663338),
   inversePrimary: Color(0xFF2A414D),
   inverseSurface: Color(0xFFB3BEC4),
