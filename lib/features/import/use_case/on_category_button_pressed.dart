@@ -3,8 +3,8 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
+import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/components/components.dart";
-import "package:mony_app/features/import/page/view_model.dart";
 
 final class OnCategoryButtonPressed
     extends UseCase<Future<void>, TPressedCategoryValue> {
@@ -54,7 +54,15 @@ final class OnCategoryButtonPressed
       }
       // show new category form
     } else if (sheetResult == EImportCategoryMenuAction.create) {
-      print("do some shit");
+      final createResult = await BottomSheetComponent.show<CategoryVO?>(
+        context,
+        showDragHandle: false,
+        builder: (context, bottom) {
+          return CategoryFormPage(keyboardHeight: bottom);
+        },
+      );
+      if (createResult == null) return;
+      print(createResult);
     }
   }
 }

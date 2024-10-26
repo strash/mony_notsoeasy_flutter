@@ -15,8 +15,8 @@ final class AccountFormViewModelBuilder extends StatefulWidget {
 
   const AccountFormViewModelBuilder({
     super.key,
-    this.account,
     required this.keyboardHeight,
+    this.account,
   });
 
   @override
@@ -38,8 +38,6 @@ final class AccountFormViewModel
   );
 
   bool isSubmitEnabled = false;
-
-  bool get isCreating => widget.account == null;
 
   void _listener() {
     setState(() {
