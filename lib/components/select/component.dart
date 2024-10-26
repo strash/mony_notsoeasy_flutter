@@ -36,16 +36,15 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
 
   Future<void> _onTap(BuildContext context) async {
     setState(() => _isActive = true);
-    final viewPaddings = MediaQuery.viewPaddingOf(context);
     final entries = widget.entryBuilder(context);
     final value = await BottomSheetComponent.show<T>(
       context,
-      builder: (context) {
+      builder: (context, bottom) {
         return _ValueProvider<T>(
           controller: widget.controller,
           child: ListView.builder(
             shrinkWrap: true,
-            padding: EdgeInsets.only(bottom: viewPaddings.bottom + 20.h),
+            padding: EdgeInsets.only(bottom: 40.h + bottom),
             itemCount: entries.length,
             itemBuilder: (context, index) {
               return entries.elementAt(index);

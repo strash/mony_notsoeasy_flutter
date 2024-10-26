@@ -55,6 +55,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/link.badge.plus.svg
   String get linkBadgePlus => 'assets/icons/link.badge.plus.svg';
 
+  /// File path: assets/icons/link.svg
+  String get link => 'assets/icons/link.svg';
+
   /// File path: assets/icons/list.bullet.below.rectangle.svg
   String get listBulletBelowRectangle =>
       'assets/icons/list.bullet.below.rectangle.svg';
@@ -84,6 +87,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/widget.small.badge.plus.svg
   String get widgetSmallBadgePlus => 'assets/icons/widget.small.badge.plus.svg';
 
+  /// File path: assets/icons/widget.small.svg
+  String get widgetSmall => 'assets/icons/widget.small.svg';
+
   /// File path: assets/icons/xmark.svg
   String get xmark => 'assets/icons/xmark.svg';
 
@@ -103,6 +109,7 @@ class $AssetsIconsGen {
         gearshapeFill,
         infoCircle,
         linkBadgePlus,
+        link,
         listBulletBelowRectangle,
         pencilLine,
         personCropCircleFillBadgePlus,
@@ -112,6 +119,7 @@ class $AssetsIconsGen {
         repeat,
         squareAndArrowDown,
         widgetSmallBadgePlus,
+        widgetSmall,
         xmark
       ];
 }

@@ -14,7 +14,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       viewModel.columnValidationResults.length = 0;
       if (viewModel.csv == null) return;
       for (final column in viewModel.mappedColumns) {
-        await Future.delayed(const Duration(milliseconds: 300));
+        await Future.delayed(const Duration(milliseconds: 150));
         final entryKey = column.entryKey;
         if (entryKey == null) continue;
         final validator = switch (column.column) {

@@ -1,7 +1,9 @@
 part of "./component.dart";
 
 class _ColorGrid extends StatefulWidget {
-  const _ColorGrid();
+  final double bottom;
+
+  const _ColorGrid(this.bottom);
 
   @override
   State<_ColorGrid> createState() => _ColorGridState();
@@ -13,7 +15,7 @@ class _ColorGridState extends State<_ColorGrid> {
     10.r,
     0.0,
     10.r,
-    MediaQuery.viewPaddingOf(context).bottom + 20.h,
+    widget.bottom + 40.h,
   );
   final double _cursorThickness = 5.r;
   final _cursorInnerRadius = 9.r;

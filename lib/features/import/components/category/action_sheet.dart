@@ -25,14 +25,27 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
           // -> icon
           const Spacer(),
           Center(
-            child: SvgPicture.asset(
-              Assets.icons.linkBadgePlus,
-              width: 100.r,
-              height: 100.r,
-              colorFilter: ColorFilter.mode(
-                theme.colorScheme.surfaceContainer,
-                BlendMode.srcIn,
-              ),
+            child: Stack(
+              children: [
+                SvgPicture.asset(
+                  Assets.icons.link,
+                  width: 100.r,
+                  height: 100.r,
+                  colorFilter: ColorFilter.mode(
+                    theme.colorScheme.tertiaryContainer,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                SvgPicture.asset(
+                  Assets.icons.linkBadgePlus,
+                  width: 100.r,
+                  height: 100.r,
+                  colorFilter: ColorFilter.mode(
+                    theme.colorScheme.secondary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ],
             ),
           ),
           const Spacer(),

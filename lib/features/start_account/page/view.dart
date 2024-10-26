@@ -24,14 +24,27 @@ class StartAccountView extends StatelessWidget {
             // -> icon
             const Spacer(),
             Center(
-              child: SvgPicture.asset(
-                Assets.icons.widgetSmallBadgePlus,
-                width: 150.r,
-                height: 150.r,
-                colorFilter: ColorFilter.mode(
-                  theme.colorScheme.surfaceContainer,
-                  BlendMode.srcIn,
-                ),
+              child: Stack(
+                children: [
+                  SvgPicture.asset(
+                    Assets.icons.widgetSmall,
+                    width: 150.r,
+                    height: 150.r,
+                    colorFilter: ColorFilter.mode(
+                      theme.colorScheme.tertiaryContainer,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  SvgPicture.asset(
+                    Assets.icons.widgetSmallBadgePlus,
+                    width: 150.r,
+                    height: 150.r,
+                    colorFilter: ColorFilter.mode(
+                      theme.colorScheme.secondary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ],
               ),
             ),
             const Spacer(),

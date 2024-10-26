@@ -13,8 +13,8 @@ final class OnShowAccountFormPressed extends UseCase<Future<void>, dynamic> {
     final result = await BottomSheetComponent.show<AccountVO?>(
       context,
       showDragHandle: false,
-      builder: (context) {
-        return const AccountFormPage();
+      builder: (context, bottom) {
+        return AccountFormPage(keyboardHeight: bottom);
       },
     );
     if (result == null || !context.mounted) return;

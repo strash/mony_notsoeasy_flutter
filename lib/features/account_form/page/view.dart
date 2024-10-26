@@ -8,8 +8,11 @@ import "package:mony_app/features/account_form/account_form.dart";
 import "package:mony_app/features/account_form/components/components.dart";
 
 class AccountFormView extends StatelessWidget {
+  final double keyboardHeight;
+
   const AccountFormView({
     super.key,
+    required this.keyboardHeight,
   });
 
   @override
@@ -20,6 +23,7 @@ class AccountFormView extends StatelessWidget {
     final isCreating = viewModel.isCreating;
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         // -> appbar
         AppBarComponent(
@@ -35,6 +39,7 @@ class AccountFormView extends StatelessWidget {
           ),
           child: Form(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
@@ -127,6 +132,8 @@ class AccountFormView extends StatelessWidget {
             ),
           ),
         ),
+
+        SizedBox(height: 40.h + keyboardHeight),
       ],
     );
   }

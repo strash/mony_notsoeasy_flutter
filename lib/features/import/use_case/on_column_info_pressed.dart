@@ -14,21 +14,16 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
     if (currentColumn == null) throw ArgumentError.notNull();
 
     final viewSize = MediaQuery.sizeOf(context);
-    final viewPadding = MediaQuery.viewPaddingOf(context);
     final theme = Theme.of(context);
+
     BottomSheetComponent.show<void>(
       context,
-      builder: (context) {
+      builder: (context, bottom) {
         return SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: viewSize.height * 0.4),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                25.w,
-                0.0,
-                25.w,
-                viewPadding.bottom + 20.h,
-              ),
+              padding: EdgeInsets.fromLTRB(25.w, 0.0, 25.w, bottom + 40.h),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,

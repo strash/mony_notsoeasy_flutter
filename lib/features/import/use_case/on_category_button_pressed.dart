@@ -18,7 +18,9 @@ final class OnCategoryButtonPressed
     final sheetResult =
         await BottomSheetComponent.show<EImportCategoryMenuAction?>(
       context,
-      builder: (context) => const ImportCategoryActionBottomSheetComponent(),
+      builder: (context, bottom) {
+        return const ImportCategoryActionBottomSheetComponent();
+      },
     );
     if (sheetResult == null || !context.mounted) return;
     final viewModel = context.viewModel<ImportViewModel>();
@@ -28,8 +30,10 @@ final class OnCategoryButtonPressed
       if (models == null) return;
       final selectResult = await BottomSheetComponent.show<CategoryModel?>(
         context,
-        builder: (context) {
-          return ImportCategorySelectBottomSheetCotponent(categories: models);
+        builder: (context, bottom) {
+          return ImportCategorySelectBottomSheetCotponent(
+            categories: models,
+          );
         },
       );
       if (selectResult != null) {

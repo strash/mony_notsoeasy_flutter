@@ -10,11 +10,13 @@ import "package:sealed_currencies/sealed_currencies.dart";
 export "../use_case/use_case.dart";
 
 final class AccountFormViewModelBuilder extends StatefulWidget {
+  final double keyboardHeight;
   final AccountVO? account;
 
   const AccountFormViewModelBuilder({
     super.key,
     this.account,
+    required this.keyboardHeight,
   });
 
   @override
@@ -100,7 +102,7 @@ final class AccountFormViewModel
         () => OnSumbitAccountPressed(),
         () => OnCurrencyDescriptionRequested(),
       ],
-      child: const AccountFormView(),
+      child: AccountFormView(keyboardHeight: widget.keyboardHeight),
     );
   }
 }

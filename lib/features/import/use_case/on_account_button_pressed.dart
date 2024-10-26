@@ -13,8 +13,11 @@ final class OnAccountButtonPressed
     final result = await BottomSheetComponent.show<AccountVO?>(
       context,
       showDragHandle: false,
-      builder: (context) {
-        return AccountFormPage(account: value);
+      builder: (context, bottom) {
+        return AccountFormPage(
+          account: value,
+          keyboardHeight: bottom,
+        );
       },
     );
     return result;

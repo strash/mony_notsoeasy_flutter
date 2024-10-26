@@ -18,7 +18,7 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
     final theme = Theme.of(context);
     final bottom = MediaQuery.viewPaddingOf(context).bottom;
 
-    return Padding(
+    return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(15.w, .0, 15.w, 40.h + bottom),
       child: Wrap(
         spacing: 8.r,

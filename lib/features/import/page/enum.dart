@@ -1,14 +1,14 @@
 enum EImportColumn {
-  account,
   amount,
-  transactionType,
   date,
   category,
+  transactionType,
+  account,
   tag,
   note,
   ;
 
-  static EImportColumn get defaultValue => account;
+  static EImportColumn get defaultValue => amount;
 
   static EImportColumn? from(int index) {
     return values.elementAtOrNull(index);
