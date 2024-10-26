@@ -4,7 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
-import "package:mony_app/features/import/components/category/category.dart";
+import "package:mony_app/features/import/components/category/category_block.dart";
 
 class ImportMapCategoriesPage extends StatelessWidget {
   final ImportEvent? event;
@@ -22,6 +22,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
     final expenses = categories[ETransactionType.expense]!;
     final income = categories[ETransactionType.income]!;
     final onCategoryPressed = viewModel<OnCategoryButtonPressed>();
+    final onCategoryReseted = viewModel<OnCategoryResetPressed>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -60,19 +61,21 @@ class ImportMapCategoriesPage extends StatelessWidget {
 
         // -> expense categories
         if (expenses.isNotEmpty)
-          ImportCategoryItemComponent(
+          ImportCategoryBlockComponent(
             transactionType: ETransactionType.expense,
             categories: expenses,
             onTap: onCategoryPressed,
+            onReset: onCategoryReseted,
           ),
         if (expenses.isNotEmpty) SizedBox(height: 30.h),
 
         // -> income categories
         if (income.isNotEmpty)
-          ImportCategoryItemComponent(
+          ImportCategoryBlockComponent(
             transactionType: ETransactionType.income,
             categories: income,
             onTap: onCategoryPressed,
+            onReset: onCategoryReseted,
           ),
       ],
     );

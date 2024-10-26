@@ -48,9 +48,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
             padding: EdgeInsets.only(bottom: viewPaddings.bottom + 20.h),
             itemCount: entries.length,
             itemBuilder: (context, index) {
-              return SizedBox(
-                child: entries.elementAt(index),
-              );
+              return entries.elementAt(index);
             },
           ),
         );

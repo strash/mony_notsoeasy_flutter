@@ -3,6 +3,7 @@ export "./on_account_from_import_button_pressed_decorator.dart";
 export "./on_account_local_button_pressed_decorator.dart";
 export "./on_backward_pressed.dart";
 export "./on_category_button_pressed.dart";
+export "./on_category_reset_pressed.dart";
 export "./on_column_info_pressed.dart";
 export "./on_column_selected.dart";
 export "./on_forward_pressed.dart";

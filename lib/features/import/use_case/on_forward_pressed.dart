@@ -129,10 +129,10 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     viewModel.setProtectedState(() {
       viewModel.mappedCategories[ETransactionType.expense] = importExp.map((e) {
         return (title: e, linkedModel: null, vo: null);
-      }).toList(growable: false);
+      }).toList();
       viewModel.mappedCategories[ETransactionType.income] = importInc.map((e) {
         return (title: e, linkedModel: null, vo: null);
-      }).toList(growable: false);
+      }).toList();
     });
     // load built-in categories
     final exp =

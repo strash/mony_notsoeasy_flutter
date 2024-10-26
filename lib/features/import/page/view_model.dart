@@ -26,6 +26,11 @@ typedef TMappedCategory = ({
   CategoryVO? vo,
 });
 
+typedef TPressedCategoryValue = ({
+  ETransactionType transactionType,
+  TMappedCategory category,
+});
+
 final class ImportViewModelBuilder extends StatefulWidget {
   const ImportViewModelBuilder({super.key});
 
@@ -220,6 +225,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
         () => OnAccountFromImportButtonPressedDecorator(),
         () => OnIsTransactionExpensesSwitchPressed(),
         () => OnCategoryButtonPressed(),
+        () => OnCategoryResetPressed(),
       ],
       child: const ImportView(),
     );
