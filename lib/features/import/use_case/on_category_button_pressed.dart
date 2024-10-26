@@ -14,6 +14,7 @@ final class OnCategoryButtonPressed
     TPressedCategoryValue? value,
   ]) async {
     if (value == null) throw ArgumentError.notNull();
+
     // show action menu
     final sheetResult =
         await BottomSheetComponent.show<EImportCategoryMenuAction?>(
@@ -24,10 +25,11 @@ final class OnCategoryButtonPressed
     );
     if (sheetResult == null || !context.mounted) return;
     final viewModel = context.viewModel<ImportViewModel>();
+    final models = viewModel.categoryModels[value.transactionType];
+    if (models == null) return;
+
     // show category model selector
     if (sheetResult == EImportCategoryMenuAction.link) {
-      final models = viewModel.categoryModels[value.transactionType];
-      if (models == null) return;
       final selectResult = await BottomSheetComponent.show<CategoryModel?>(
         context,
         builder: (context, bottom) {
@@ -52,13 +54,26 @@ final class OnCategoryButtonPressed
                 ..insert(index, category);
         });
       }
-      // show new category form
-    } else if (sheetResult == EImportCategoryMenuAction.create) {
+    }
+
+    // show new category form
+    if (context.mounted && sheetResult == EImportCategoryMenuAction.create) {
+      final category = value.category.vo ??
+          CategoryVO(
+            title: value.category.title,
+            icon: "",
+            sort: models.length,
+            color: Palette().randomColor,
+            transactionType: value.transactionType,
+          );
       final createResult = await BottomSheetComponent.show<CategoryVO?>(
         context,
         showDragHandle: false,
         builder: (context, bottom) {
-          return CategoryFormPage(keyboardHeight: bottom);
+          return CategoryFormPage(
+            category: category,
+            keyboardHeight: bottom,
+          );
         },
       );
       if (createResult == null) return;

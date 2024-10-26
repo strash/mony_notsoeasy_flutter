@@ -7,12 +7,12 @@ import "package:mony_app/features/category_form/page/view.dart";
 
 final class CategoryFormViewModelBuilder extends StatefulWidget {
   final double keyboardHeight;
-  final CategoryVO? account;
+  final CategoryVO? category;
 
   const CategoryFormViewModelBuilder({
     super.key,
     required this.keyboardHeight,
-    this.account,
+    this.category,
   });
 
   @override
@@ -38,10 +38,10 @@ final class CategoryFormViewModel
   @override
   void initState() {
     super.initState();
-    final account = widget.account;
-    if (account != null) {
-      titleController.text = account.title;
-      colorController.value = account.color;
+    final category = widget.category;
+    if (category != null) {
+      titleController.text = category.title;
+      colorController.value = category.color;
     }
     titleController.addListener(_listener);
     colorController.addListener(_listener);
