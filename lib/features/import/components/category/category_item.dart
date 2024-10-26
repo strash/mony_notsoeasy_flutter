@@ -76,10 +76,11 @@ class ImportCategoryItemComponent extends StatelessWidget {
               // -> icon
               if (icon != null)
                 Padding(
-                  padding: EdgeInsets.only(right: 3.w),
+                  padding: EdgeInsets.only(right: 3.w, bottom: 1.h),
                   child: Text(
                     icon,
                     style: theme.textTheme.bodyLarge?.copyWith(
+                      height: .0,
                       fontSize: 18.sp,
                     ),
                   ),
@@ -88,7 +89,7 @@ class ImportCategoryItemComponent extends StatelessWidget {
               // -> title
               Flexible(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 6.h),
+                  padding: EdgeInsets.only(top: 5.h, bottom: 7.h),
                   child: Text(
                     title,
                     maxLines: 1,

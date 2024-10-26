@@ -49,10 +49,11 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
                   children: [
                     // -> icon
                     Padding(
-                      padding: EdgeInsets.only(right: 3.w),
+                      padding: EdgeInsets.only(right: 3.w, bottom: 1.h),
                       child: Text(
                         e.icon,
                         style: theme.textTheme.bodyLarge?.copyWith(
+                          height: .0,
                           fontSize: 18.sp,
                         ),
                       ),
@@ -61,7 +62,7 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
                     // -> title
                     Flexible(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6.h),
+                        padding: EdgeInsets.only(top: 5.h, bottom: 7.h),
                         child: Text(
                           e.title,
                           maxLines: 1,

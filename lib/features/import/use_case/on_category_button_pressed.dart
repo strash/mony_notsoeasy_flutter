@@ -52,6 +52,7 @@ final class OnCategoryButtonPressed
                 ..insert(index, category);
         });
       }
+      // show new category form
     } else if (sheetResult == EImportCategoryMenuAction.create) {
       print("do some shit");
     }
