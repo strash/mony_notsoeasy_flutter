@@ -182,13 +182,12 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   // for categories mapping
 
   final Map<ETransactionType, List<CategoryModel>> categoryModels = {
-    ETransactionType.expense: const [],
-    ETransactionType.income: const [],
+    for (final value in ETransactionType.values) value: const <CategoryModel>[],
   };
 
   final Map<ETransactionType, List<TMappedCategory>> mappedCategories = {
-    ETransactionType.expense: const [],
-    ETransactionType.income: const [],
+    for (final value in ETransactionType.values)
+      value: const <TMappedCategory>[],
   };
 
   String get numberOfCategoriesDescription {
