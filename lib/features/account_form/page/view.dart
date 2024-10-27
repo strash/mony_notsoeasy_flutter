@@ -41,6 +41,7 @@ class AccountFormView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // -> title
                     Expanded(
@@ -55,6 +56,7 @@ class AccountFormView extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         maxLength: kMaxTitleLength,
                         maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        autovalidateMode: AutovalidateMode.always,
                         style: GoogleFonts.robotoFlex(
                           color: theme.colorScheme.onSurface,
                           fontSize: 16.sp,
