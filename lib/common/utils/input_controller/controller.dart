@@ -10,14 +10,14 @@ final class InputController {
   final focus = FocusNode();
   final controller = TextEditingController();
   final EInputValidationStrategy validationStrategy;
-  final List<IInputValidator> validators;
+  List<IInputValidator> validators;
 
   String get text => controller.text;
 
   set text(String value) => controller.text = value;
 
   bool get isValid {
-    return key.currentState?.validate() ?? false;
+    return validator(text)?.isEmpty ?? true;
   }
 
   InputController({
@@ -31,6 +31,16 @@ final class InputController {
 
   void removeListener(VoidCallback listener) {
     controller.removeListener(listener);
+  }
+
+  void addValidator<T extends IInputValidator>(T validator) {
+    if (!validators.any((e) => e is T)) {
+      validators = List<T>.from(validators)..add(validator);
+    }
+  }
+
+  void removeValidator<T extends IInputValidator>() {
+    validators = List<T>.from(validators.where((e) => e is! T));
   }
 
   void onTapOutside(PointerDownEvent event) {
