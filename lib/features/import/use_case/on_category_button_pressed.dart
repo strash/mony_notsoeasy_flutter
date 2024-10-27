@@ -15,15 +15,21 @@ final class OnCategoryButtonPressed
   ]) async {
     if (value == null) throw ArgumentError.notNull();
 
-    // show action menu
-    final sheetResult =
-        await BottomSheetComponent.show<EImportCategoryMenuAction?>(
-      context,
-      builder: (context, bottom) {
-        return const ImportCategoryActionBottomSheetComponent();
-      },
-    );
-    if (sheetResult == null || !context.mounted) return;
+    EImportCategoryMenuAction? sheetResult;
+    if (value.category.vo == null && value.category.linkedModel == null) {
+      // show action menu
+      sheetResult = await BottomSheetComponent.show<EImportCategoryMenuAction?>(
+        context,
+        builder: (context, bottom) {
+          return const ImportCategoryActionBottomSheetComponent();
+        },
+      );
+      if (sheetResult == null || !context.mounted) return;
+    } else if (value.category.vo != null) {
+      sheetResult = EImportCategoryMenuAction.create;
+    } else if (value.category.linkedModel != null) {
+      sheetResult = EImportCategoryMenuAction.link;
+    }
     final viewModel = context.viewModel<ImportViewModel>();
     final models = viewModel.categoryModels[value.transactionType];
     if (models == null) return;
