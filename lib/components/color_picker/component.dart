@@ -15,7 +15,10 @@ part "./item.dart";
 class ColorPickerComponent extends StatefulWidget {
   final ColorPickerController controller;
 
-  const ColorPickerComponent({super.key, required this.controller});
+  const ColorPickerComponent({
+    super.key,
+    required this.controller,
+  });
 
   @override
   State<ColorPickerComponent> createState() => _ColorPickerComponentState();

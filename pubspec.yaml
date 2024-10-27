@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   csv: ^6.0.0
+  emoji_picker_flutter: ^3.1.0
   figma_squircle: ^0.5.3
   file_picker: ^8.1.2
   flutter:

@@ -27,6 +27,8 @@ final class OnCategoryButtonPressed
     final viewModel = context.viewModel<ImportViewModel>();
     final models = viewModel.categoryModels[value.transactionType];
     if (models == null) return;
+    final mapped = viewModel.mappedCategories[value.transactionType]!;
+    final index = mapped.indexOf(value.category);
 
     // show category model selector
     if (sheetResult == EImportCategoryMenuAction.link) {
@@ -39,8 +41,6 @@ final class OnCategoryButtonPressed
         },
       );
       if (selectResult != null) {
-        final mapped = viewModel.mappedCategories[value.transactionType]!;
-        final index = mapped.indexOf(value.category);
         if (index == -1) return;
         viewModel.setProtectedState(() {
           final category = (
@@ -72,12 +72,23 @@ final class OnCategoryButtonPressed
         builder: (context, bottom) {
           return CategoryFormPage(
             category: category,
+            transactionType: value.transactionType,
             keyboardHeight: bottom,
           );
         },
       );
-      if (createResult == null) return;
-      print(createResult);
+      if (createResult == null || index == -1) return;
+      viewModel.setProtectedState(() {
+        final category = (
+          title: value.category.title,
+          linkedModel: null,
+          vo: createResult.copyWith(),
+        );
+        viewModel.mappedCategories[value.transactionType] =
+            List<TMappedCategory>.from(mapped)
+              ..removeAt(index)
+              ..insert(index, category);
+      });
     }
   }
 }

@@ -19,7 +19,7 @@ class AccountFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<AccountFormViewModel>();
-    final onCreateAccountPressed = viewModel<OnSumbitAccountPressed>();
+    final onSubmitAccountPressed = viewModel<OnSumbitAccountPressed>();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -120,7 +120,7 @@ class AccountFormView extends StatelessWidget {
                 // -> submit
                 FilledButton(
                   onPressed: viewModel.isSubmitEnabled
-                      ? () => onCreateAccountPressed(context)
+                      ? () => onSubmitAccountPressed(context)
                       : null,
                   child: const Text("Сохранить"),
                 ),

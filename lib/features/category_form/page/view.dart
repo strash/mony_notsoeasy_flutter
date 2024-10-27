@@ -4,8 +4,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/appbar/component.dart";
-import "package:mony_app/components/color_picker/component.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/features/features.dart";
 
 class CategoryFormView extends StatelessWidget {
@@ -20,6 +19,7 @@ class CategoryFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<CategoryFormViewModel>();
+    final onSubmitCategoryPressed = viewModel<OnSubmitCategoryPressed>();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -44,7 +44,10 @@ class CategoryFormView extends StatelessWidget {
                 Row(
                   children: [
                     // -> emoji
-                    // TODO: добавить эмодзи
+                    EmojiPickerComponent(
+                      controller: viewModel.emojiController,
+                    ),
+                    const RSizedBox(width: 10.0),
 
                     // -> title
                     Expanded(
@@ -82,10 +85,9 @@ class CategoryFormView extends StatelessWidget {
 
                 // -> submit
                 FilledButton(
-                  onPressed: () {},
-                  // onPressed: viewModel.isSubmitEnabled
-                  //     ? () => onCreateAccountPressed(context)
-                  //     : null,
+                  onPressed: viewModel.isSubmitEnabled
+                      ? () => onSubmitCategoryPressed(context)
+                      : null,
                   child: const Text("Сохранить"),
                 ),
               ],
