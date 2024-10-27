@@ -15,15 +15,19 @@ final class DomainAccountService extends BaseDomainService {
   })  : _accountRepo = accountRepo,
         _accountFactory = accountFactory;
 
-  Future<List<AccountModel>> getAll() async {
-    final dtos = await _accountRepo.getAll();
+  Future<List<AccountModel>> getAll({EAccountType? type}) async {
+    final dtos = await _accountRepo.getAll(type: type?.value);
     return dtos
         .map<AccountModel>(_accountFactory.toModel)
         .toList(growable: false);
   }
 
-  Future<List<AccountModel>> getMany({required int page}) async {
+  Future<List<AccountModel>> getMany({
+    EAccountType? type,
+    required int page,
+  }) async {
     final dtos = await _accountRepo.getMany(
+      type: type?.value,
       limit: perPage,
       offset: offset(page),
     );

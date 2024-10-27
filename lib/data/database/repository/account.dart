@@ -6,9 +6,13 @@ abstract base class AccountDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
-  Future<List<AccountDto>> getAll();
+  Future<List<AccountDto>> getAll({String? type});
 
-  Future<List<AccountDto>> getMany({required int limit, required int offset});
+  Future<List<AccountDto>> getMany({
+    String? type,
+    required int limit,
+    required int offset,
+  });
 
   Future<AccountDto?> getOne({required String id});
 
@@ -29,10 +33,15 @@ final class _Impl
   const _Impl({required this.database});
 
   @override
-  Future<List<AccountDto>> getAll() async {
+  Future<List<AccountDto>> getAll({String? type}) async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.query(table, orderBy: "title ASC");
+      final maps = await db.query(
+        table,
+        orderBy: "title ASC",
+        where: type != null ? "type = ?" : null,
+        whereArgs: type != null ? [type] : null,
+      );
       return List.generate(
         maps.length,
         (index) => AccountDto.fromJson(maps.elementAt(index)),
@@ -43,6 +52,7 @@ final class _Impl
 
   @override
   Future<List<AccountDto>> getMany({
+    String? type,
     required int limit,
     required int offset,
   }) async {
@@ -53,6 +63,8 @@ final class _Impl
         limit: limit,
         offset: offset,
         orderBy: "title ASC",
+        where: type != null ? "type = ?" : null,
+        whereArgs: type != null ? [type] : null,
       );
       return List.generate(
         maps.length,
