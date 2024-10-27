@@ -24,3 +24,6 @@ final class ImportEventMapTransactionType extends ImportEvent {}
 
 // map categories
 final class ImportEventMapCategories extends ImportEvent {}
+
+// import to db
+final class ImportEventToDb extends ImportEvent {}

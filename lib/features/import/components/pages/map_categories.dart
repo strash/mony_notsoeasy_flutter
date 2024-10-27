@@ -45,9 +45,9 @@ class ImportMapCategoriesPage extends StatelessWidget {
 
               // -> description
               Text(
-                "Мы нашли ${viewModel.numberOfCategoriesDescription}. "
-                "Их нужно либо привязать к предустановленным категориям, "
-                "либо дополнить информацией, чтобы создать новую.",
+                "Я нашел ${viewModel.numberOfCategoriesDescription}. "
+                "Их нужно привязать к предустановленным категориям, "
+                "либо дополнить информацией.",
                 style: GoogleFonts.robotoFlex(
                   fontSize: 15.sp,
                   height: 1.3.sp,

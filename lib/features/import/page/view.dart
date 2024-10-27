@@ -63,6 +63,8 @@ class ImportView extends StatelessWidget {
                             ImportMapTransactionTypePage(event: event),
                           ImportEventMapCategories() =>
                             ImportMapCategoriesPage(event: event),
+                          ImportEventToDb() =>
+                            ImportImportToDbPage(event: event),
                           // just in case
                           null => const Center(
                               child: CircularProgressIndicator.adaptive(),
@@ -99,7 +101,7 @@ class ImportView extends StatelessWidget {
                       ImportEventMapCategories() =>
                         NavigationButtonsComponent(event: event),
                       // just in case
-                      null => const SizedBox(),
+                      ImportEventToDb() || null => const SizedBox(),
                     },
                   ),
                 ),

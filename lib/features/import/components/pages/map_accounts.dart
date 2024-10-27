@@ -24,7 +24,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
         "Нужно создать счет. К нему будут привязаны все транзакции. "
         "Позже можно будет создать другие счета.";
     if (accounts.isNotEmpty) {
-      description = "Мы нашли ${viewModel.numberOfAccountsDescription}. "
+      description = "Я нашел ${viewModel.numberOfAccountsDescription}. "
           "${accounts.length == 1 ? "Его" : "Их"} нужно дополнить информацией. "
           "Это не займет много времени.";
     }

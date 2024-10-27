@@ -14,7 +14,8 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
     switch (event) {
       case ImportEventInitial() ||
             ImportEventLoadingCsv() ||
-            ImportEventErrorLoadingCsv():
+            ImportEventErrorLoadingCsv() ||
+            ImportEventToDb():
         return;
       case ImportEventMappingColumns():
         viewModel.setProtectedState(() {

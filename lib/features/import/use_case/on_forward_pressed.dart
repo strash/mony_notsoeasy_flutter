@@ -161,12 +161,13 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       case ImportEventMapTransactionType():
         _onTransactionTypesMapped(viewModel, categoryService);
       case ImportEventMapCategories():
-      // TODO: next step
+        viewModel.subject.add(ImportEventToDb());
       case ImportEventInitial() ||
             ImportEventLoadingCsv() ||
             ImportEventErrorLoadingCsv() ||
             ImportEventValidatingMappedColumns() ||
-            ImportEventErrorMappingColumns():
+            ImportEventErrorMappingColumns() ||
+            ImportEventToDb():
         break;
     }
     viewModel.setProtectedState(() {
