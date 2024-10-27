@@ -42,11 +42,12 @@ final class M1728167641Init extends BaseMigration {
 
   // indexes
   late final _indexes = <_IndexValueObject>[
+    (table: _accounts, columns: [_accountsType], unique: false),
     (table: _accounts, columns: [_accountsTitle, _accountsType], unique: true),
     (table: _categories, columns: [_categoriesTransactionType], unique: false),
     (
       table: _categories,
-      columns: [_categoriesTitle, _categoriesIcon, _categoriesTransactionType],
+      columns: [_categoriesTitle, _categoriesTransactionType],
       unique: true
     ),
     (table: _transactions, columns: [_transactionsAccountId], unique: false),
