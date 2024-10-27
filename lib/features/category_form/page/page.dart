@@ -8,12 +8,14 @@ class CategoryFormPage extends StatelessWidget {
   final double keyboardHeight;
   final ETransactionType transactionType;
   final CategoryVO? category;
+  final List<String> titles;
 
   const CategoryFormPage({
     super.key,
     required this.keyboardHeight,
     required this.transactionType,
-    this.category,
+    required this.category,
+    required this.titles,
   });
 
   @override
@@ -22,6 +24,7 @@ class CategoryFormPage extends StatelessWidget {
       keyboardHeight: keyboardHeight,
       transactionType: transactionType,
       category: category,
+      titles: titles,
     );
   }
 }

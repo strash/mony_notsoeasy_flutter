@@ -6,6 +6,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category_form/page/view.dart";
 import "package:mony_app/features/category_form/use_case/use_case.dart";
+import "package:provider/provider.dart";
 
 export "../use_case/use_case.dart";
 
@@ -13,12 +14,14 @@ final class CategoryFormViewModelBuilder extends StatefulWidget {
   final double keyboardHeight;
   final ETransactionType transactionType;
   final CategoryVO? category;
+  final List<String> titles;
 
   const CategoryFormViewModelBuilder({
     super.key,
     required this.keyboardHeight,
     required this.transactionType,
-    this.category,
+    required this.category,
+    required this.titles,
   });
 
   @override
@@ -36,6 +39,8 @@ final class CategoryFormViewModel
 
   ETransactionType get transactionType => widget.transactionType;
 
+  final List<String> _titles = [];
+
   void _listener() {
     setState(() {
       isSubmitEnabled = titleController.isValid &&
@@ -43,6 +48,15 @@ final class CategoryFormViewModel
           colorController.value != null &&
           emojiController.text.isNotEmpty;
     });
+  }
+
+  Future<void> _fetchData() async {
+    final service = context.read<DomainCategoryService>();
+    final data = await service.getAll(transactionType: widget.transactionType);
+    _titles.addAll(
+      data.map((e) => e.title).toList(growable: true)..addAll(widget.titles),
+    );
+    titleController.addValidator(CategoryTitleValidator(titles: _titles));
   }
 
   @override
@@ -61,6 +75,7 @@ final class CategoryFormViewModel
     emojiController.addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _listener();
+      _fetchData();
     });
   }
 

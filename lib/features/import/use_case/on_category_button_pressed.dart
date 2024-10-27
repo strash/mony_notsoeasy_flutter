@@ -80,6 +80,10 @@ final class OnCategoryButtonPressed
             category: category,
             transactionType: value.transactionType,
             keyboardHeight: bottom,
+            titles: viewModel.mappedCategories[value.transactionType]!
+                .where((e) => e.vo != null && e.vo != value.category.vo)
+                .map((e) => e.vo!.title)
+                .toList(growable: false),
           );
         },
       );
