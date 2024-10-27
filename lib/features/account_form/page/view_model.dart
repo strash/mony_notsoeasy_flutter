@@ -43,7 +43,7 @@ final class AccountFormViewModel
   bool isSubmitEnabled = false;
 
   final Map<EAccountType, List<String>> _titles = {
-    for (final value in EAccountType.values) value: const <String>[],
+    for (final value in EAccountType.values) value: const [],
   };
 
   void _listener() {
