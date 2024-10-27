@@ -16,6 +16,7 @@ final class OnShowAccountFormPressed extends UseCase<Future<void>, dynamic> {
       builder: (context, bottom) {
         return AccountFormPage(
           keyboardHeight: bottom,
+          account: null,
           titles: const {},
         );
       },

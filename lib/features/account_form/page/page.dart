@@ -13,7 +13,7 @@ class AccountFormPage extends StatelessWidget {
   const AccountFormPage({
     super.key,
     required this.keyboardHeight,
-    this.account,
+    required this.account,
     required this.titles,
   });
 

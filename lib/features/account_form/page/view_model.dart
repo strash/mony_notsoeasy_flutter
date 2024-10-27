@@ -42,7 +42,7 @@ final class AccountFormViewModel
 
   bool isSubmitEnabled = false;
 
-  final Map<EAccountType, List<String>> _accounts = {
+  final Map<EAccountType, List<String>> _titles = {
     for (final value in EAccountType.values) value: const <String>[],
   };
 
@@ -61,30 +61,27 @@ final class AccountFormViewModel
     });
   }
 
-  Future<void> _fetchAccounts() async {
+  Future<void> _fetchData() async {
     final service = context.read<DomainAccountService>();
-    final accounts = await Future.wait(
+    final data = await Future.wait(
       EAccountType.values.map((e) => service.getAll(type: e)),
     );
-    for (final list in accounts) {
+    for (final list in data) {
       if (list.isEmpty) continue;
-      final account = list.first;
-      _accounts[account.type] =
+      _titles[list.first.type] =
           List<String>.from(list.map<String>((e) => e.title));
     }
     for (final element in widget.titles.entries) {
-      _accounts[element.key] = List<String>.from(_accounts[element.key]!)
+      _titles[element.key] = List<String>.from(_titles[element.key]!)
         ..addAll(element.value);
     }
     _updateTitleController();
   }
 
   void _updateTitleController() {
-    titleController.removeValidator<AccountValidator>();
-    titleController.addValidator<AccountValidator>(
-      AccountValidator(
-        titles: List<String>.from(_accounts[typeController.value]!),
-      ),
+    titleController.removeValidator<AccountTitleValidator>();
+    titleController.addValidator(
+      AccountTitleValidator(titles: _titles[typeController.value]!),
     );
     _listener();
   }
@@ -108,7 +105,7 @@ final class AccountFormViewModel
     balanceController.addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _listener();
-      _fetchAccounts();
+      _fetchData();
     });
   }
 
