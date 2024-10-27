@@ -190,8 +190,8 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   };
 
   String get numberOfCategoriesDescription {
-    final count = mappedCategories[ETransactionType.expense]!.length +
-        mappedCategories[ETransactionType.income]!.length;
+    final count = mappedCategories.entries
+        .fold<int>(0, (prev, curr) => prev + curr.value.length);
     final formatter = NumberFormat.decimalPattern();
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {
