@@ -9,6 +9,7 @@ class TransactionTagDto with _$TransactionTagDto {
     required String id,
     required String created,
     required String updated,
+    required String transactionId,
     required String tagId,
     required String title,
   }) = _TransactionTagDto;

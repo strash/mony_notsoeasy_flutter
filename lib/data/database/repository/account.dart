@@ -6,7 +6,7 @@ abstract base class AccountDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
-  Future<List<AccountDto>> getAll({String? type});
+  Future<List<AccountDto>> getAll({String? type, List<String>? ids});
 
   Future<List<AccountDto>> getMany({
     String? type,
@@ -32,15 +32,34 @@ final class _Impl
 
   const _Impl({required this.database});
 
+  (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
+    final (String? type, List<String>? ids) input = (type, ids);
+    String getIn(List<String> items) {
+      return List.filled(items.length, "?").join(", ");
+    }
+
+    switch (input) {
+      case (final String a, final List<String> b):
+        return ("type = ? AND id IN (${getIn(b)})", [a, ...b]);
+      case (final String a, null):
+        return ("type = ?", [a]);
+      case (null, final List<String> b):
+        return ("id IN (${getIn(b)})", b);
+      default:
+        return (null, null);
+    }
+  }
+
   @override
-  Future<List<AccountDto>> getAll({String? type}) async {
+  Future<List<AccountDto>> getAll({String? type, List<String>? ids}) async {
     return resolve(() async {
       final db = await database.db;
+      final where = _getWhere(type, ids);
       final maps = await db.query(
         table,
         orderBy: "title ASC",
-        where: type != null ? "type = ?" : null,
-        whereArgs: type != null ? [type] : null,
+        where: where.$1,
+        whereArgs: where.$2,
       );
       return List.generate(
         maps.length,

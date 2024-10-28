@@ -5,7 +5,10 @@ abstract base class CategoryDatabaseRepository {
   const factory CategoryDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
-  Future<List<CategoryDto>> getAll({String? transactionType});
+  Future<List<CategoryDto>> getAll({
+    String? transactionType,
+    List<String>? ids,
+  });
 
   Future<List<CategoryDto>> getMany({
     required int limit,
@@ -31,14 +34,36 @@ final class _Impl
 
   const _Impl({required this.database});
 
+  (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
+    final (String? type, List<String>? ids) input = (type, ids);
+    String getIn(List<String> items) {
+      return List.filled(items.length, "?").join(", ");
+    }
+
+    switch (input) {
+      case (final String a, final List<String> b):
+        return ("transaction_type = ? AND id IN (${getIn(b)})", [a, ...b]);
+      case (final String a, null):
+        return ("transaction_type = ?", [a]);
+      case (null, final List<String> b):
+        return ("id IN (${getIn(b)})", b);
+      default:
+        return (null, null);
+    }
+  }
+
   @override
-  Future<List<CategoryDto>> getAll({String? transactionType}) async {
+  Future<List<CategoryDto>> getAll({
+    String? transactionType,
+    List<String>? ids,
+  }) async {
     return resolve(() async {
       final db = await database.db;
+      final where = _getWhere(transactionType, ids);
       final maps = await db.query(
         table,
-        where: transactionType != null ? "transaction_type = ?" : null,
-        whereArgs: transactionType != null ? [transactionType] : null,
+        where: where.$1,
+        whereArgs: where.$2,
         orderBy: "sort ASC",
       );
       return List.generate(

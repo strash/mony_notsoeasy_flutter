@@ -8,18 +8,7 @@ abstract base class TransactionTagDatabaseRepository {
 
   Future<List<TransactionTagDto>> getAll({required String transactionId});
 
-  Future<List<TransactionTagDto>> getMany({
-    required String transactionId,
-    required int limit,
-    required int offset,
-  });
-
-  Future<TransactionTagDto?> getOne({required String id});
-
-  Future<void> create({
-    required String transactionId,
-    required TransactionTagDto dto,
-  });
+  Future<void> create({required TransactionTagDto dto});
 
   Future<void> delete({required String id});
 }
@@ -41,7 +30,13 @@ final class _Impl
       final db = await database.db;
       final maps = await db.rawQuery(
         """
-SELECT et.id, et.created, et.updated, et.tag_id, t.title
+SELECT
+	et.id,
+	et.created,
+	et.updated,
+	et.tag_id,
+	et.transaction_id,
+	t.title
 FROM $table AS et
 JOIN tags AS t ON et.tag_id = t.id
 WHERE et.transaction_id = ?;
@@ -57,60 +52,12 @@ WHERE et.transaction_id = ?;
   }
 
   @override
-  Future<List<TransactionTagDto>> getMany({
-    required String transactionId,
-    required int limit,
-    required int offset,
-  }) async {
+  Future<void> create({required TransactionTagDto dto}) async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.rawQuery(
-        """
-SELECT et.id, et.created, et.updated, et.tag_id, t.title
-FROM $table AS et
-JOIN tags AS t ON et.tag_id = t.id
-WHERE et.transaction_id = ? LIMIT ? OFFSET ?;
-""",
-        [transactionId, limit, offset],
-      );
-      return List.generate(
-        maps.length,
-        (index) => TransactionTagDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
-    });
-  }
-
-  @override
-  Future<TransactionTagDto?> getOne({required String id}) async {
-    return resolve(() async {
-      final db = await database.db;
-      final map = await db.rawQuery(
-        """
-SELECT et.id, et.created, et.updated, et.tag_id, t.title
-FROM $table AS et
-JOIN tags AS t ON et.tag_id = t.id
-WHERE et.id = ? LIMIT 1;
-""",
-        [id],
-      );
-      if (map.isEmpty) return null;
-      return TransactionTagDto.fromJson(map.first);
-    });
-  }
-
-  @override
-  Future<void> create({
-    required String transactionId,
-    required TransactionTagDto dto,
-  }) async {
-    return resolve(() async {
-      final db = await database.db;
-      final map = dto.toJson()..remove("title");
-      map["transaction_id"] = transactionId;
       await db.insert(
         table,
-        map,
+        dto.toJson()..remove("title"),
         conflictAlgorithm: ConflictAlgorithm.rollback,
       );
     });
