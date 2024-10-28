@@ -6,6 +6,7 @@ export "./on_category_button_pressed.dart";
 export "./on_category_reset_pressed.dart";
 export "./on_column_info_pressed.dart";
 export "./on_column_selected.dart";
+export "./on_done_mapping.dart";
 export "./on_forward_pressed.dart";
 export "./on_is_transaction_expenses_switch_pressed.dart";
 export "./on_rotate_entry_pressed.dart";

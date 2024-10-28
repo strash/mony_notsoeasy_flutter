@@ -46,6 +46,34 @@ void main() async {
               );
             },
           ),
+
+          // -> tag service
+          Provider<DomainTagService>(
+            create: (context) {
+              return DomainTagService(
+                tagRepo: TagDatabaseRepository(database: appDatabase),
+                tagFactory: TagDatabaseFactoryImpl(),
+              );
+            },
+          ),
+
+          // -> transaction service
+          Provider<DomainTransactionService>(
+            create: (context) {
+              return DomainTransactionService(
+                transactionRepo:
+                    TransactionDatabaseRepository(database: appDatabase),
+                transactionTagRepo:
+                    TransactionTagDatabaseRepository(database: appDatabase),
+                accountRepo: AccountDatabaseRepository(database: appDatabase),
+                categoryRepo: CategoryDatabaseRepository(database: appDatabase),
+                transactionFactory: TransactionDatabaseFactoryImpl(),
+                transactionTagFactory: TransactionTagDatabaseFactoryImpl(),
+                accountFactory: AccountDatabaseFactoryImpl(),
+                categoryFactory: CategoryDatabaseFactoryImpl(),
+              );
+            },
+          ),
         ],
         child: const MonyApp(),
       ),

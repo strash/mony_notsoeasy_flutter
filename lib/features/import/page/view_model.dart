@@ -224,6 +224,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
         () => OnIsTransactionExpensesSwitchPressed(),
         () => OnCategoryButtonPressed(),
         () => OnCategoryResetPressed(),
+        () => OnDoneMapping(),
       ],
       child: const ImportView(),
     );

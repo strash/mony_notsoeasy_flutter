@@ -162,6 +162,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
         _onTransactionTypesMapped(viewModel, categoryService);
       case ImportEventMapCategories():
         viewModel.subject.add(ImportEventToDb());
+        viewModel<OnDoneMapping>().call(context);
       case ImportEventInitial() ||
             ImportEventLoadingCsv() ||
             ImportEventErrorLoadingCsv() ||
