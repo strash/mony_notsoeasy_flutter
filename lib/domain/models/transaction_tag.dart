@@ -8,6 +8,7 @@ class TransactionTagModel with _$TransactionTagModel {
     required String id,
     required DateTime created,
     required DateTime updated,
+    required String transactionId,
     required String tagId,
     required String title,
   }) = _TransactionTagModel;

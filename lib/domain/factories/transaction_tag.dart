@@ -10,6 +10,7 @@ final class TransactionTagDatabaseFactoryImpl
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
       updated: DateTime.tryParse(dto.updated)?.toLocal() ?? DateTime.now(),
+      transactionId: dto.transactionId,
       tagId: dto.tagId,
       title: dto.title,
     );
@@ -21,6 +22,7 @@ final class TransactionTagDatabaseFactoryImpl
       id: model.id,
       created: model.created.toUtc().toIso8601String(),
       updated: model.updated.toUtc().toIso8601String(),
+      transactionId: model.transactionId,
       tagId: model.tagId,
       title: model.title,
     );

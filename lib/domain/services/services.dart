@@ -3,6 +3,8 @@ import "package:mony_app/common/extensions/extensions.dart";
 export "./account.dart";
 export "./category.dart";
 export "./csv_import_export.dart";
+export "./tag.dart";
+export "./transaction.dart";
 export "./vo/vo.dart";
 
 typedef TNewDefaultColumns = ({String id, DateTime now});

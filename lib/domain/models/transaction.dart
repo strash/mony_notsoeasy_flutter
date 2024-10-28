@@ -1,5 +1,5 @@
 import "package:freezed_annotation/freezed_annotation.dart";
-import "package:mony_app/domain/models/models.dart";
+import "package:mony_app/domain/domain.dart";
 
 part "transaction.freezed.dart";
 
