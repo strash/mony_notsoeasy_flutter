@@ -32,9 +32,14 @@ final class DomainTransactionService extends BaseDomainService {
   @override
   int get perPage => 40;
 
-  // TODO: фильтровать по счету или категории
-  Future<List<TransactionModel>> getAll() async {
-    final dtos = await _transactionRepo.getAll();
+  Future<List<TransactionModel>> getAll({
+    String? accountId,
+    String? categoryId,
+  }) async {
+    final dtos = await _transactionRepo.getAll(
+      accountId: accountId,
+      categoryId: categoryId,
+    );
     final Set<String> accountIds = {};
     final Set<String> categoryIds = {};
     for (final element in dtos) {
@@ -44,7 +49,7 @@ final class DomainTransactionService extends BaseDomainService {
     final accountDtos =
         await _accountRepo.getAll(ids: accountIds.toList(growable: false));
     final categoryDtos =
-        await _categoryRepo.getAll(ids: accountIds.toList(growable: false));
+        await _categoryRepo.getAll(ids: categoryIds.toList(growable: false));
     final tagDtos = await Future.wait<List<TransactionTagDto>>(
       dtos.map<Future<List<TransactionTagDto>>>((e) {
         return _transactionTagRepo.getAll(transactionId: e.id);
@@ -70,11 +75,16 @@ final class DomainTransactionService extends BaseDomainService {
     return models;
   }
 
-  // TODO: фильтровать по счету или категории
-  Future<List<TransactionModel>> getMany({required int page}) async {
+  Future<List<TransactionModel>> getMany({
+    required int page,
+    String? accountId,
+    String? categoryId,
+  }) async {
     final dtos = await _transactionRepo.getMany(
       limit: perPage,
       offset: offset(page),
+      accountId: accountId,
+      categoryId: categoryId,
     );
     final Set<String> accountIds = {};
     final Set<String> categoryIds = {};
@@ -85,7 +95,7 @@ final class DomainTransactionService extends BaseDomainService {
     final accountDtos =
         await _accountRepo.getAll(ids: accountIds.toList(growable: false));
     final categoryDtos =
-        await _categoryRepo.getAll(ids: accountIds.toList(growable: false));
+        await _categoryRepo.getAll(ids: categoryIds.toList(growable: false));
     final tagDtos = await Future.wait<List<TransactionTagDto>>(
       dtos.map<Future<List<TransactionTagDto>>>((e) {
         return _transactionTagRepo.getAll(transactionId: e.id);

@@ -6,11 +6,16 @@ abstract base class TransactionDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
-  Future<List<TransactionDto>> getAll();
+  Future<List<TransactionDto>> getAll({
+    String? accountId,
+    String? categoryId,
+  });
 
   Future<List<TransactionDto>> getMany({
     required int limit,
     required int offset,
+    String? accountId,
+    String? categoryId,
   });
 
   Future<TransactionDto?> getOne({required String id});
@@ -31,11 +36,35 @@ final class _Impl
 
   const _Impl({required this.database});
 
+  (String?, List<Object>?) _getWhere(String? accountId, String? categoryId) {
+    final (String? accountId, String? categoryId) input =
+        (accountId, categoryId);
+    switch (input) {
+      case (final String a, final String b):
+        return ("account_id = ? AND category_id = ?", [a, b]);
+      case (final String a, null):
+        return ("account_id = ?", [a]);
+      case (null, final String b):
+        return ("category_id = ?", [b]);
+      default:
+        return (null, null);
+    }
+  }
+
   @override
-  Future<List<TransactionDto>> getAll() async {
+  Future<List<TransactionDto>> getAll({
+    String? accountId,
+    String? categoryId,
+  }) async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.query(table, orderBy: "date DESC");
+      final where = _getWhere(accountId, categoryId);
+      final maps = await db.query(
+        table,
+        orderBy: "date DESC",
+        where: where.$1,
+        whereArgs: where.$2,
+      );
       return List.generate(
         maps.length,
         (index) => TransactionDto.fromJson(maps.elementAt(index)),
@@ -48,14 +77,19 @@ final class _Impl
   Future<List<TransactionDto>> getMany({
     required int limit,
     required int offset,
+    String? accountId,
+    String? categoryId,
   }) async {
     return resolve(() async {
       final db = await database.db;
+      final where = _getWhere(accountId, categoryId);
       final maps = await db.query(
         table,
         limit: limit,
         offset: offset,
         orderBy: "date DESC",
+        where: where.$1,
+        whereArgs: where.$2,
       );
       return List.generate(
         maps.length,

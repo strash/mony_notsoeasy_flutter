@@ -8,6 +8,9 @@ import "package:provider/provider.dart";
 final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
+    const int wait = 3;
+    final start = DateTime.now();
+
     final viewModel = context.viewModel<ImportViewModel>();
     final accountService = context.read<DomainAccountService>();
     final categoryService = context.read<DomainCategoryService>();
@@ -16,6 +19,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     final appService = context.viewModel<AppEventService>();
 
     // -> accounts
+
     const String singleAccountId = "__single_account__";
     final Map<String, AccountModel> accounts = {};
     if (viewModel.singleAccount != null) {
@@ -29,6 +33,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     }
 
     // -> categories
+
     final Map<ETransactionType, Map<String, CategoryModel>> categories = {
       for (final type in ETransactionType.values) type: {},
     };
@@ -45,6 +50,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     }
 
     // -> tags
+
     final Map<String, TagModel> tags = {};
     if (viewModel.mappedColumns.any((e) => e.column == EImportColumn.tag)) {
       final Set<String> tagTitles = {};
@@ -61,6 +67,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     }
 
     // -> transactions
+
     final List<TransactionModel> transactions = [];
     final typeColumn = viewModel.mappedColumns
         .where((e) => e.column == EImportColumn.transactionType)
@@ -68,14 +75,16 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     for (final element in viewModel.csv!.entries) {
       ETransactionType transactionType = ETransactionType.defaultValue;
       for (final MapEntry(:key, :value) in element.entries) {
-        if (typeColumn != null && key == typeColumn.entryKey) {
+        if (typeColumn != null &&
+            typeColumn.entryKey != null &&
+            key == typeColumn.entryKey) {
           if (value == viewModel.mappedTransactionTypeExpense) {
             transactionType = ETransactionType.expense;
           } else if (value == viewModel.mappedTransactionTypeIncome) {
             transactionType = ETransactionType.income;
           }
           break;
-        } else if (typeColumn == null &&
+        } else if ((typeColumn == null || typeColumn.entryKey == null) &&
             viewModel.getColumn(key) == EImportColumn.amount) {
           final amount = double.parse(value);
           transactionType =
@@ -118,8 +127,26 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
       if (transaction != null) transactions.add(transaction);
     }
 
-    // TODO: высчитывать какая получается сумма после всех
-    // транзакций и ее устанавливать как изначальную
+    // -> update account balance
+
+    for (final MapEntry(key: _, :value) in accounts.entries) {
+      final transactions = await transactionService.getAll(accountId: value.id);
+      await accountService.update(
+        model: value.copyWith(
+          balance: value.balance -
+              transactions.fold(0, (prev, next) => prev + next.amout),
+        ),
+      );
+    }
+
+    // -> wait a bit
+
+    final diff = DateTime.now().difference(start);
+    if (diff.inSeconds < wait) {
+      await Future.delayed(const Duration(seconds: wait) - diff);
+    }
+
+    // -> go to the main screen
 
     if (context.mounted) {
       Navigator.of(context).popUntil((route) => route.isFirst);
