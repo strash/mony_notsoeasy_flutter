@@ -165,7 +165,7 @@ final class DomainTransactionService extends BaseDomainService {
     return model.buildModel();
   }
 
-  // TODO: update
+  // TODO: update (don't forget to update `update`)
 
   Future<void> delete({required String id}) async {
     await _transactionRepo.delete(id: id);

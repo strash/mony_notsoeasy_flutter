@@ -46,7 +46,9 @@ final class DomainTagService extends BaseDomainService {
   }
 
   Future<TagModel> update({required TagModel model}) async {
-    await _tagRepo.update(dto: _tagFactory.toDto(model));
+    await _tagRepo.update(
+      dto: _tagFactory.toDto(model.copyWith(updated: DateTime.now())),
+    );
     return model;
   }
 

@@ -60,7 +60,9 @@ final class DomainAccountService extends BaseDomainService {
   }
 
   Future<AccountModel> update({required AccountModel model}) async {
-    await _accountRepo.update(dto: _accountFactory.toDto(model));
+    await _accountRepo.update(
+      dto: _accountFactory.toDto(model.copyWith(updated: DateTime.now())),
+    );
     return model;
   }
 

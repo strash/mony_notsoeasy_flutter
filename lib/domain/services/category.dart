@@ -62,7 +62,9 @@ final class DomainCategoryService extends BaseDomainService {
   }
 
   Future<CategoryModel> update({required CategoryModel model}) async {
-    await _categoryRepo.update(dto: _categoryFactory.toDto(model));
+    await _categoryRepo.update(
+      dto: _categoryFactory.toDto(model.copyWith(updated: DateTime.now())),
+    );
     return model;
   }
 
