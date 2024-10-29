@@ -16,12 +16,10 @@ extension on NavBarTabItem {
 
 class NavBarTabComponent extends StatelessWidget {
   final int index;
-  final double height;
 
   const NavBarTabComponent({
     super.key,
     required this.index,
-    required this.height,
   });
 
   @override
@@ -34,31 +32,28 @@ class NavBarTabComponent extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onTabChanged(context, tab),
-      child: SizedBox.fromSize(
-        size: Size.fromHeight(height),
-        child: TweenAnimationBuilder<Color?>(
-          duration: Durations.short4,
-          curve: Curves.easeInOutQuad,
-          tween: ColorTween(
-            begin: theme.colorScheme.onSurface,
-            end: viewModel.currentTab == tab
-                ? theme.colorScheme.onSurface
-                : theme.colorScheme.onSurfaceVariant,
-          ),
-          builder: (context, color, child) {
-            return Center(
-              child: SvgPicture.asset(
-                tab.icon,
-                width: 32.r,
-                height: 32.r,
-                colorFilter: ColorFilter.mode(
-                  color ?? theme.colorScheme.onSurface,
-                  BlendMode.srcIn,
-                ),
-              ),
-            );
-          },
+      child: TweenAnimationBuilder<Color?>(
+        duration: Durations.short3,
+        curve: Curves.easeInOutQuad,
+        tween: ColorTween(
+          begin: theme.colorScheme.onSurface,
+          end: viewModel.currentTab == tab
+              ? theme.colorScheme.onSurface
+              : theme.colorScheme.onSurfaceVariant,
         ),
+        builder: (context, color, child) {
+          return Center(
+            child: SvgPicture.asset(
+              tab.icon,
+              width: 28.r,
+              height: 28.r,
+              colorFilter: ColorFilter.mode(
+                color ?? theme.colorScheme.onSurface,
+                BlendMode.srcIn,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -9,7 +10,12 @@ class SettingsView extends StatelessWidget {
       body: ListView.builder(
         itemCount: 100,
         itemBuilder: (context, index) {
-          return Text("item $index");
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            child: Text(
+              "Some cool item $index right there and there",
+            ),
+          );
         },
       ),
     );
