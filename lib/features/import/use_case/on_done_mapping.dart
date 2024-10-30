@@ -11,6 +11,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     const int wait = 3;
     final start = DateTime.now();
 
+    final navigator = Navigator.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final accountService = context.read<DomainAccountService>();
     final categoryService = context.read<DomainCategoryService>();
@@ -148,15 +149,11 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
 
     // -> go to the main screen
 
-    if (context.mounted) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      appService.notify(
-        Event.accountCreated(
-          sender: ImportViewModel,
-          account: accounts.entries.map((e) => e.value).first,
-        ),
-      );
-    }
+    final account = accounts.entries.map((e) => e.value).first;
+    navigator.popUntil((route) => route.isFirst);
+    appService.notify(
+      EventAccountCreated(sender: ImportViewModel, account: account),
+    );
   }
 }
 
