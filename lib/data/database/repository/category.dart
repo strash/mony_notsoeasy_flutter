@@ -35,12 +35,11 @@ final class _Impl
   const _Impl({required this.database});
 
   (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
-    final (String? type, List<String>? ids) input = (type, ids);
     String getIn(List<String> items) {
       return List.filled(items.length, "?").join(", ");
     }
 
-    switch (input) {
+    switch ((type, ids)) {
       case (final String a, final List<String> b):
         return ("transaction_type = ? AND id IN (${getIn(b)})", [a, ...b]);
       case (final String a, null):

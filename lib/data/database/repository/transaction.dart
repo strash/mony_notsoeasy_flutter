@@ -37,9 +37,7 @@ final class _Impl
   const _Impl({required this.database});
 
   (String?, List<Object>?) _getWhere(String? accountId, String? categoryId) {
-    final (String? accountId, String? categoryId) input =
-        (accountId, categoryId);
-    switch (input) {
+    switch ((accountId, categoryId)) {
       case (final String a, final String b):
         return ("account_id = ? AND category_id = ?", [a, b]);
       case (final String a, null):
