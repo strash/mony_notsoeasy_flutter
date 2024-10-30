@@ -24,28 +24,24 @@ class SeparatedComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final lenght = itemCount * 2 - 1;
     int count = 0;
+    final children = List.generate(lenght, (index) {
+      if (index.isOdd) return separatorBuilder(context);
+      return itemBuilder(context, count++);
+    }).toList(growable: false);
 
-    switch (direction) {
-      case Axis.horizontal:
-        return Row(
+    return switch (direction) {
+      Axis.horizontal => Row(
           mainAxisSize: mainAxisSize,
           mainAxisAlignment: mainAxisAlignment,
           crossAxisAlignment: crossAxisAlignment,
-          children: List.generate(lenght, (index) {
-            if (index.isOdd) return separatorBuilder(context);
-            return itemBuilder(context, count++);
-          }),
-        );
-      case Axis.vertical:
-        return Column(
+          children: children,
+        ),
+      Axis.vertical => Column(
           mainAxisSize: mainAxisSize,
           mainAxisAlignment: mainAxisAlignment,
           crossAxisAlignment: crossAxisAlignment,
-          children: List.generate(lenght, (index) {
-            if (index.isOdd) return separatorBuilder(context);
-            return itemBuilder(context, count++);
-          }),
-        );
-    }
+          children: children,
+        ),
+    };
   }
 }
