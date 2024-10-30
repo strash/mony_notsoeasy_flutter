@@ -1,13 +1,11 @@
 import "dart:async";
 
 import "package:flutter/material.dart";
-import "package:freezed_annotation/freezed_annotation.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:rxdart/subjects.dart";
 
 part "./event.dart";
-part "event_service.freezed.dart";
 
 final class AppEventServiceBuilder extends StatefulWidget {
   final Widget child;

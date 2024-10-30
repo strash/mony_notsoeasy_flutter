@@ -1,9 +1,10 @@
 part of "./event_service.dart";
 
-@freezed
-sealed class Event with _$Event {
-  const factory Event.accountCreated({
-    required Type sender,
-    required AccountModel account,
-  }) = EventAccountCreated;
+sealed class Event {}
+
+final class EventAccountCreated extends Event {
+  final Type sender;
+  final AccountModel account;
+
+  EventAccountCreated({required this.sender, required this.account});
 }

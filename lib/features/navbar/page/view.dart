@@ -10,6 +10,7 @@ import "package:mony_app/features/navbar/navbar.dart";
 
 class NavBarView extends StatelessWidget {
   static final double kTabHeight = 54.h;
+  static final double kBottomMargin = 8.r;
   static const double kSigma = 18.0;
   static final double kRadius = 20.r;
 
@@ -20,7 +21,7 @@ class NavBarView extends StatelessWidget {
     final theme = Theme.of(context);
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final viewModel = context.viewModel<NavBarViewModel>();
-    final margin = viewPadding.bottom + 8.r;
+    final margin = viewPadding.bottom + kBottomMargin;
 
     return StreamBuilder<NavBarTabItem>(
       stream: viewModel.subject.stream,

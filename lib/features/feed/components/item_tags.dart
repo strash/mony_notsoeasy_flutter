@@ -55,12 +55,12 @@ class FeedItemTagsComponent extends StatelessWidget {
                       vertical: 1.5.h,
                     ),
                     child: Text(
-                      "#${tag.title}",
+                      tag.title,
                       maxLines: 1,
                       style: GoogleFonts.robotoFlex(
                         fontSize: 13.sp,
                         height: .0,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w500,
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
