@@ -64,7 +64,7 @@ class CategoryFormView extends StatelessWidget {
                         maxLength: kMaxTitleLength,
                         maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         autovalidateMode: AutovalidateMode.always,
-                        style: GoogleFonts.robotoFlex(
+                        style: GoogleFonts.golosText(
                           color: theme.colorScheme.onSurface,
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w400,

@@ -53,7 +53,7 @@ class AccountSettedButtonComponent extends StatelessWidget {
                   account.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.robotoFlex(
+                  style: GoogleFonts.golosText(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                     color: theme.colorScheme.onSurface,
@@ -65,7 +65,7 @@ class AccountSettedButtonComponent extends StatelessWidget {
                   account.type.description,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.robotoFlex(
+                  style: GoogleFonts.golosText(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                     color: theme.colorScheme.onSurfaceVariant,

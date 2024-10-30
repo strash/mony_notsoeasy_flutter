@@ -18,7 +18,7 @@ const _lightColorScheme = ColorScheme(
   onSecondaryFixed: Color(0xFF0C1012),
   onSecondaryFixedVariant: Color(0xFF0C1012),
   onSurface: Color(0xFF0C1012),
-  onSurfaceVariant: Color(0xFF5C6B73),
+  onSurfaceVariant: Color(0xFF71848E),
   onTertiary: Color(0xFFDAE2E5),
   onTertiaryContainer: Color(0xFF4D5F66),
   onTertiaryFixed: Color(0xFF0C1012),

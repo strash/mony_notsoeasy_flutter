@@ -43,7 +43,7 @@ class ImportMapTransactionTypePage extends StatelessWidget {
               // -> description
               Text(
                 "Являются ли транзакции в этой таблице расходами?",
-                style: GoogleFonts.robotoFlex(
+                style: GoogleFonts.golosText(
                   fontSize: 15.sp,
                   height: 1.3.sp,
                   color: theme.colorScheme.onSurfaceVariant,
@@ -86,7 +86,7 @@ class ImportMapTransactionTypePage extends StatelessWidget {
                       viewModel.isTransactionsExpenses
                           ? "Да, это расходы"
                           : "Нет, это доходы",
-                      style: GoogleFonts.robotoFlex(
+                      style: GoogleFonts.golosText(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                         color: theme.colorScheme.secondary,

@@ -26,7 +26,7 @@ class StartView extends StatelessWidget {
                   children: [
                     Text(
                       "Добро пожаловать в",
-                      style: GoogleFonts.robotoFlex(
+                      style: GoogleFonts.golosText(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w400,
                         color: theme.colorScheme.onSurfaceVariant,

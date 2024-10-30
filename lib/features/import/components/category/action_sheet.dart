@@ -71,7 +71,7 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
             'называться "Продукты".\n\nЕсли не хочешь привязывать, можно '
             "оставить оригинальную категорию, но тогда ее нужно будет "
             "дополнить некоторыми данными.",
-            style: GoogleFonts.robotoFlex(
+            style: GoogleFonts.golosText(
               fontSize: 15.sp,
               height: 1.3.sp,
               color: theme.colorScheme.onSurface,

@@ -65,7 +65,7 @@ class _Unsetted extends StatelessWidget {
             "Добавить счет",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.robotoFlex(
+            style: GoogleFonts.golosText(
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
               color: theme.colorScheme.onSurface,

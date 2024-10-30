@@ -79,7 +79,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                 "Выбери подходящую колонку,\n"
                 "значение в которой подходит\n"
                 'к колонке "${currentMappedColumn?.title ?? ""}".',
-                style: GoogleFonts.robotoFlex(
+                style: GoogleFonts.golosText(
                   fontSize: 15.sp,
                   height: 1.3.sp,
                   color: theme.colorScheme.onSurfaceVariant,
@@ -112,7 +112,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                     children: [
                       Text(
                         "Следующая запись",
-                        style: GoogleFonts.robotoFlex(
+                        style: GoogleFonts.golosText(
                           fontSize: 14.sp,
                           color: theme.colorScheme.secondary,
                         ),
@@ -120,7 +120,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                       Text(
                         "${viewModel.currentEntryIndex + 1} из "
                         "$numberOfEntries",
-                        style: GoogleFonts.robotoFlex(
+                        style: GoogleFonts.golosText(
                           fontSize: 12.sp,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),

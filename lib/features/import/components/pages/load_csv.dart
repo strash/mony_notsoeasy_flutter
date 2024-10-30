@@ -43,7 +43,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
                 "называться иначе, это не страшно.\n\nУбедись, что в значениях "
                 'колонки "сумма" нет символов валюты. И перед копейками не '
                 "запятая, а точка. А дальше разберемся!",
-                style: GoogleFonts.robotoFlex(
+                style: GoogleFonts.golosText(
                   fontSize: 15.sp,
                   height: 1.3.sp,
                   color: theme.colorScheme.onSurfaceVariant,
@@ -78,7 +78,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
                   child: Text(
                     "Не получилось прочитать файл. Либо он испорчен, либо "
                     "пуст. Попробуй загрузить другой файл.",
-                    style: GoogleFonts.robotoFlex(
+                    style: GoogleFonts.golosText(
                       fontSize: 15.sp,
                       height: 1.3.sp,
                       color: theme.colorScheme.error,

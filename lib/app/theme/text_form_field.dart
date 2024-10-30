@@ -67,7 +67,7 @@ WidgetStateTextStyle _labelStyle(ColorScheme scheme) {
     } else if (state.contains(WidgetState.focused)) {
       color = scheme.onSurface;
     }
-    return GoogleFonts.robotoFlex(
+    return GoogleFonts.golosText(
       color: color,
       fontSize: 16.sp,
       fontWeight: FontWeight.w400,
@@ -83,7 +83,7 @@ WidgetStateTextStyle _hintInputStyle(ColorScheme scheme) {
     } else if (state.contains(WidgetState.focused)) {
       color = scheme.onSurfaceVariant.withOpacity(0.6);
     }
-    return GoogleFonts.robotoFlex(
+    return GoogleFonts.golosText(
       color: color,
       fontSize: 16.sp,
       fontWeight: FontWeight.w400,
@@ -101,7 +101,7 @@ WidgetStateTextStyle _underInputStyle(ColorScheme scheme) {
     } else if (state.contains(WidgetState.error)) {
       color = scheme.error;
     }
-    return GoogleFonts.robotoFlex(
+    return GoogleFonts.golosText(
       color: color,
       fontSize: 13.sp,
       fontWeight: FontWeight.w400,

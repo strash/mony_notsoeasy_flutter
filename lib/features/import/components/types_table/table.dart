@@ -110,7 +110,7 @@ class TypesTableComponent extends StatelessWidget {
                   textAlign: e.$2.key == EImportColumn.amount
                       ? TextAlign.right
                       : TextAlign.left,
-                  style: GoogleFonts.robotoFlex(
+                  style: GoogleFonts.golosText(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                     color: theme.colorScheme.tertiary,
@@ -140,7 +140,7 @@ class TypesTableComponent extends StatelessWidget {
                     textAlign: r.$2.key == EImportColumn.amount
                         ? TextAlign.right
                         : TextAlign.left,
-                    style: GoogleFonts.robotoFlex(
+                    style: GoogleFonts.golosText(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w400,
                       color: theme.colorScheme.onSurface,

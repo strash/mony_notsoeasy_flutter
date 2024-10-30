@@ -73,7 +73,7 @@ class StartAccountView extends StatelessWidget {
                     "создать другие счета.\n\nСейчас можно либо создать "
                     "новый счет, либо импортировать свои данные в виде "
                     "CSV файла.",
-                    style: GoogleFonts.robotoFlex(
+                    style: GoogleFonts.golosText(
                       fontSize: 15.sp,
                       height: 1.3.sp,
                       color: theme.colorScheme.onSurfaceVariant,
@@ -123,7 +123,7 @@ class StartAccountView extends StatelessWidget {
                       children: [
                         Text(
                           "Импорт из CSV",
-                          style: GoogleFonts.robotoFlex(
+                          style: GoogleFonts.golosText(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
                             color: theme.colorScheme.onTertiary,

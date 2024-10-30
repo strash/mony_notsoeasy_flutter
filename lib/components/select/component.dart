@@ -103,14 +103,14 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                               placeholderText,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.robotoFlex(
+                              style: GoogleFonts.golosText(
                                 fontSize: 16.sp,
                                 color: theme.colorScheme.onSurfaceVariant
                                     .withOpacity(0.4),
                               ),
                             )
                           : DefaultTextStyle(
-                              style: GoogleFonts.robotoFlex(
+                              style: GoogleFonts.golosText(
                                 fontSize: 16.sp,
                                 color: theme.colorScheme.onSurfaceVariant,
                                 fontWeight: FontWeight.w500,

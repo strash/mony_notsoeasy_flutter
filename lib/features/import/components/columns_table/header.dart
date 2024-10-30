@@ -24,7 +24,7 @@ class EntryListHeaderComponent extends StatelessWidget {
                   "Колонки",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.robotoFlex(
+                  style: GoogleFonts.golosText(
                     fontSize: 14.sp,
                     height: 1.3.sp,
                     fontWeight: FontWeight.w600,
@@ -48,7 +48,7 @@ class EntryListHeaderComponent extends StatelessWidget {
                   "Значения",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.robotoFlex(
+                  style: GoogleFonts.golosText(
                     fontSize: 14.sp,
                     height: 1.3.sp,
                     fontWeight: FontWeight.w600,

@@ -28,7 +28,7 @@ class SelectEntryComponent<T> extends StatelessWidget {
             listenable: provider,
             child: Flexible(
               child: DefaultTextStyle(
-                style: GoogleFonts.robotoFlex(
+                style: GoogleFonts.golosText(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
                   color: theme.colorScheme.onSurface,

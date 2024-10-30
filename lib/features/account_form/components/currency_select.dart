@@ -48,7 +48,7 @@ class CurrencySelectComponent extends StatelessWidget {
                       width: 48.w,
                       child: Text(
                         item.code,
-                        style: GoogleFonts.robotoFlex(
+                        style: GoogleFonts.golosText(
                           fontWeight: FontWeight.w500,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),

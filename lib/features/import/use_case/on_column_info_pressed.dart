@@ -42,7 +42,7 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
                   // -> description
                   Text(
                     currentColumn.description,
-                    style: GoogleFonts.robotoFlex(
+                    style: GoogleFonts.golosText(
                       fontSize: 15.sp,
                       height: 1.3.sp,
                       color: theme.colorScheme.onSurfaceVariant,

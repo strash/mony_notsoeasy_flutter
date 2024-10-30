@@ -51,7 +51,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
               // -> description
               Text(
                 description,
-                style: GoogleFonts.robotoFlex(
+                style: GoogleFonts.golosText(
                   fontSize: 15.sp,
                   height: 1.3.sp,
                   color: theme.colorScheme.onSurfaceVariant,
