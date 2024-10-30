@@ -20,16 +20,16 @@ class FeedItemComponent extends StatelessWidget {
     final theme = Theme.of(context);
     final viewSize = MediaQuery.sizeOf(context);
     final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h);
-    final iconDimension = 40.r;
-    final gapBetweenIconAndContent = 10.w;
-    final contentWidth = viewSize.width -
-        padding.horizontal -
-        iconDimension -
-        gapBetweenIconAndContent;
+    final iconDimension = 46.r;
+    final horizontalGap = 10.w;
+    final contentWidth =
+        viewSize.width - padding.horizontal - iconDimension - horizontalGap;
 
     final categoryColors =
         getCategoryColors(context, transaction.category.color);
     final currencyFormatter = transaction.account.currency;
+    String formattedAmount = currencyFormatter.format(transaction.amout);
+    if (!transaction.amout.isNegative) formattedAmount = "+$formattedAmount";
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: viewSize.width),
@@ -45,6 +45,9 @@ class FeedItemComponent extends StatelessWidget {
                 decoration: ShapeDecoration(
                   color: categoryColors.bg,
                   shape: SmoothRectangleBorder(
+                    side: BorderSide(
+                      color: categoryColors.border.withOpacity(.3),
+                    ),
                     borderRadius: SmoothBorderRadius.all(
                       SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
                     ),
@@ -58,7 +61,7 @@ class FeedItemComponent extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: gapBetweenIconAndContent),
+            SizedBox(width: horizontalGap),
 
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: contentWidth),
@@ -76,10 +79,9 @@ class FeedItemComponent extends StatelessWidget {
                           transaction.category.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.robotoFlex(
+                          style: GoogleFonts.golosText(
                             fontSize: 16.sp,
-                            height: .0,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
                             color: categoryColors.text,
                           ),
                         ),
@@ -88,11 +90,10 @@ class FeedItemComponent extends StatelessWidget {
 
                       // -> amount
                       Text(
-                        currencyFormatter.format(transaction.amout),
+                        formattedAmount,
                         style: GoogleFonts.golosText(
                           fontSize: 16.sp,
-                          height: .0,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: transaction.amout.isNegative
                               ? theme.colorScheme.onSurface
                               : theme.colorScheme.secondary,
@@ -100,6 +101,7 @@ class FeedItemComponent extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(height: 1.h),
 
                   // -> middle row
                   ConstrainedBox(
@@ -123,7 +125,21 @@ class FeedItemComponent extends StatelessWidget {
                   ),
 
                   // -> note
-                  if (transaction.note.isNotEmpty) Text(transaction.note),
+                  if (transaction.note.isNotEmpty)
+                    Padding(
+                      padding: EdgeInsets.only(top: 5.h),
+                      child: Text(
+                        transaction.note,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.golosText(
+                          fontSize: 15.sp,
+                          height: 1.2,
+                          fontWeight: FontWeight.w400,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

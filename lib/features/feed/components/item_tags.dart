@@ -20,12 +20,10 @@ class FeedItemTagsComponent extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final stop = 1.0 - (20.0 / constraints.maxWidth);
-
         return ShaderMask(
           shaderCallback: (rect) {
             return LinearGradient(
-              stops: [stop, 1.0],
+              stops: [(1.0 - (20.0 / constraints.maxWidth)), 1.0],
               colors: const [Color(0xFFFFFFFF), Color(0x00FFFFFF)],
             ).createShader(rect);
           },
@@ -42,7 +40,7 @@ class FeedItemTagsComponent extends StatelessWidget {
 
                 return DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: theme.colorScheme.surfaceContainer.withOpacity(.8),
+                    color: theme.colorScheme.surfaceContainer,
                     shape: SmoothRectangleBorder(
                       borderRadius: SmoothBorderRadius.all(
                         SmoothRadius(cornerRadius: 5.r, cornerSmoothing: 1.0),
@@ -50,15 +48,12 @@ class FeedItemTagsComponent extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 5.w,
-                      vertical: 1.5.h,
-                    ),
+                    padding: EdgeInsets.fromLTRB(5.w, .0, 5.w, 1.5.h),
                     child: Text(
                       tag.title,
                       maxLines: 1,
-                      style: GoogleFonts.robotoFlex(
-                        fontSize: 13.sp,
+                      style: GoogleFonts.golosText(
+                        fontSize: 14.sp,
                         height: .0,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).colorScheme.onSurfaceVariant,

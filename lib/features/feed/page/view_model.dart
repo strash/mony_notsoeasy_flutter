@@ -20,17 +20,18 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   final subject = BehaviorSubject<FeedEvent>();
   final scrollController = ScrollController();
 
-  final List<TransactionModel> transactions = [];
+  List<TransactionModel> transactions = [];
   late final _transactionService = context.read<DomainTransactionService>();
   int _page = 0;
   bool _canLoadMore = true;
 
   Future<void> _fetchTransactions() async {
     if (!_canLoadMore) return;
-    final data = await _transactionService.getMany(page: _page);
+    final data = await _transactionService.getMany(page: _page++);
     _canLoadMore = data.isNotEmpty;
-    setState(() => transactions.addAll(data));
-    _page++;
+    setState(() {
+      transactions = List<TransactionModel>.from(transactions)..addAll(data);
+    });
   }
 
   void _scrollListener(FeedEventScrolledToBottom event) {

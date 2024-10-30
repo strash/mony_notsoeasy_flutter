@@ -13,15 +13,6 @@ class FeedItemTimeComponent extends StatelessWidget {
 
   double get margin => 6.w;
 
-  TextStyle _getStyle(BuildContext context) {
-    return GoogleFonts.golosText(
-      fontSize: 14.sp,
-      height: .0,
-      fontWeight: FontWeight.w400,
-      color: Theme.of(context).colorScheme.onSurfaceVariant,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final timeFormatter = DateFormat.Hm();
@@ -31,7 +22,12 @@ class FeedItemTimeComponent extends StatelessWidget {
       child: Text(
         timeFormatter.format(date),
         maxLines: 1,
-        style: _getStyle(context),
+        style: GoogleFonts.golosText(
+          fontSize: 16.sp,
+          height: .0,
+          fontWeight: FontWeight.w400,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
       ),
     );
   }
