@@ -1,6 +1,17 @@
 import "dart:math";
 
 extension DoubleEx on double {
+  /// Returns rounded double number to a specified number of decimal places.
+  ///
+  /// Example:
+  /// ```dart
+  /// double value = 1.23000001;
+  /// double roundedValue = value.roundToFraction(2); // 1.23
+  /// ```
+  double roundToFraction(int length) {
+    return double.parse(toStringAsFixed(length));
+  }
+
   /// Returns wrapped value between `min` inclusive and `max` exclusive.
   ///
   /// Example:
