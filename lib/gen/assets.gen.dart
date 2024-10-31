@@ -62,6 +62,9 @@ class $AssetsIconsGen {
   String get listBulletBelowRectangle =>
       'assets/icons/list.bullet.below.rectangle.svg';
 
+  /// File path: assets/icons/magnifyingglass.svg
+  String get magnifyingglass => 'assets/icons/magnifyingglass.svg';
+
   /// File path: assets/icons/pencil.line.svg
   String get pencilLine => 'assets/icons/pencil.line.svg';
 
@@ -111,6 +114,7 @@ class $AssetsIconsGen {
         linkBadgePlus,
         link,
         listBulletBelowRectangle,
+        magnifyingglass,
         pencilLine,
         personCropCircleFillBadgePlus,
         plus,

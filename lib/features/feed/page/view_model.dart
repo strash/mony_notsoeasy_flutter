@@ -26,13 +26,31 @@ class FeedViewModelBuilder extends StatefulWidget {
 final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   final subject = BehaviorSubject<FeedEvent>();
   final scrollController = ScrollController();
+  final pageController = PageController();
 
   late final _transactionService = context.read<DomainTransactionService>();
+  late final _accountService = context.read<DomainAccountService>();
+
+  List<AccountModel> accounts = [];
+
+  void _pageListener() {
+    print("yaya");
+  }
 
   int _page = 0;
   bool _canLoadMore = true;
   List<TransactionModel> _transactions = [];
   List<TFeedItem> feed = [];
+
+  FiatCurrency? get sectionCurrency {
+    if (_transactions.isEmpty) return null;
+    return _transactions.first.account.currency;
+  }
+
+  Future<void> _fetchAccounts() async {
+    final data = await _accountService.getAll();
+    setState(() => accounts = data);
+  }
 
   Future<void> _fetchTransactions() async {
     if (!_canLoadMore) return;
@@ -42,11 +60,6 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
       ..addAll(data)
       ..sort((a, b) => b.date.compareTo(a.date));
     setState(() => feed = _getFeed());
-  }
-
-  FiatCurrency? get sectionCurrency {
-    if (_transactions.isEmpty) return null;
-    return _transactions.first.account.currency;
   }
 
   List<TFeedItem> _getFeed() {
@@ -64,20 +77,17 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     });
     for (final element in list.indexed) {
       final item = element.$2;
-      if (item.type == EFeedItem.section) {
-        final range = list.skip(element.$1 + 1).takeWhile((e) {
-          return e.type == EFeedItem.transaction;
-        });
-        list[element.$1] = (
-          type: item.type,
-          value: (
-            (item.value as (DateTime, double)).$1,
-            range.fold<double>(.0, (prev, curr) {
-              return prev + (curr.value as TransactionModel).amount;
-            }).roundToFraction(2),
-          ),
-        );
-      }
+      if (item.type == EFeedItem.transaction) continue;
+      final range = list.skip(element.$1 + 1).takeWhile((e) {
+        return e.type == EFeedItem.transaction;
+      });
+      final value = (
+        (item.value as (DateTime, double)).$1,
+        range.fold<double>(.0, (prev, curr) {
+          return prev + (curr.value as TransactionModel).amount;
+        }).roundToFraction(2),
+      );
+      list[element.$1] = (type: item.type, value: value);
     }
     return list;
   }
@@ -86,23 +96,29 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   void initState() {
     super.initState();
 
+    pageController.addListener(_pageListener);
+
     subject.whereType<FeedEventScrolledToBottom>().throttle((e) {
       return TimerStream<FeedEvent>(e, const Duration(milliseconds: 400));
     }).listen((e) => _fetchTransactions());
 
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      _fetchTransactions();
-
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       final navbar = context.viewModel<NavbarViewModel>();
       navbar.subject.whereType<NavbarEventScrollToTopRequested>().listen((e) {
         navbar.returnToTop(scrollController);
       });
+
+      await _fetchAccounts();
+      await _fetchTransactions();
     });
   }
 
   @override
   void dispose() {
+    pageController.removeListener(_pageListener);
+
     scrollController.dispose();
+    pageController.dispose();
     subject.close();
     super.dispose();
   }
