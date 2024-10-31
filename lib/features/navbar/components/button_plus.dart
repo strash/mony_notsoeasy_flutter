@@ -15,7 +15,7 @@ class NavBarButtonPlusComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<NavBarViewModel>();
+    final viewModel = context.viewModel<NavbarViewModel>();
     final onAddTransactionPressed = viewModel<OnAddTransactionPressed>();
 
     return GestureDetector(
@@ -24,16 +24,16 @@ class NavBarButtonPlusComponent extends StatelessWidget {
       child: ClipSmoothRect(
         radius: SmoothBorderRadius.all(
           SmoothRadius(
-            cornerRadius: NavBarView.kRadius,
+            cornerRadius: NavbarView.kRadius,
             cornerSmoothing: 1.0,
           ),
         ),
         child: SizedBox(
-          width: NavBarView.kTabHeight * 1.618033,
+          width: NavbarView.kTabHeight * 1.618033,
           child: BackdropFilter(
             filter: ImageFilter.blur(
-              sigmaX: NavBarView.kSigma,
-              sigmaY: NavBarView.kSigma,
+              sigmaX: NavbarView.kSigma,
+              sigmaY: NavbarView.kSigma,
               tileMode: TileMode.repeated,
             ),
             child: ColoredBox(

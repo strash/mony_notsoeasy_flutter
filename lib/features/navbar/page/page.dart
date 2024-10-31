@@ -3,11 +3,11 @@ import "package:mony_app/features/features.dart";
 
 export "./view_model.dart";
 
-class NavBarPage extends StatelessWidget {
-  const NavBarPage({super.key});
+class NavbarPage extends StatelessWidget {
+  const NavbarPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const NavBarViewModelBuilder();
+    return const NavbarViewModelBuilder();
   }
 }

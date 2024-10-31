@@ -3,18 +3,18 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/page/page.dart";
 
-final class OnTabChangeRequested extends UseCase<void, NavBarTabItem> {
+final class OnTabChangeRequested extends UseCase<void, NavbarTabItem> {
   @override
-  void call(BuildContext context, [NavBarTabItem? value]) {
+  void call(BuildContext context, [NavbarTabItem? value]) {
     if (value == null) throw ArgumentError.notNull();
-    final viewModel = context.viewModel<NavBarViewModel>();
+    final viewModel = context.viewModel<NavbarViewModel>();
     final popTabToRoot = viewModel<OnPopTabsToRootRequested>();
 
     if (viewModel.currentTab == value) {
       popTabToRoot(context, value);
     } else {
       viewModel.currentTab = value;
-      viewModel.subject.add(value);
+      viewModel.subject.add(NavbarEventTabChanged(value));
     }
   }
 }

@@ -5,50 +5,59 @@ import "package:mony_app/features/navbar/page/view.dart";
 import "package:rxdart/subjects.dart";
 
 export "../use_case/use_case.dart";
+export "./event.dart";
 
-enum NavBarTabItem {
+enum NavbarTabItem {
   feed,
   settings,
   ;
 
-  static int get length => NavBarTabItem.values.length;
+  static int get length => NavbarTabItem.values.length;
 
-  static NavBarTabItem get defaultValue => NavBarTabItem.feed;
+  static NavbarTabItem get defaultValue => NavbarTabItem.feed;
 
-  static NavBarTabItem from(int index) {
-    return NavBarTabItem.values.elementAt(index);
+  static NavbarTabItem from(int index) {
+    return NavbarTabItem.values.elementAt(index);
   }
 }
 
-class NavBarViewModelBuilder extends StatefulWidget {
-  const NavBarViewModelBuilder({super.key});
+class NavbarViewModelBuilder extends StatefulWidget {
+  const NavbarViewModelBuilder({super.key});
 
   @override
-  ViewModelState<NavBarViewModelBuilder> createState() => NavBarViewModel();
+  ViewModelState<NavbarViewModelBuilder> createState() => NavbarViewModel();
 }
 
-final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
-  final subject =
-      BehaviorSubject<NavBarTabItem>.seeded(NavBarTabItem.defaultValue);
+final class NavbarViewModel extends ViewModelState<NavbarViewModelBuilder> {
+  final subject = BehaviorSubject<NavbarEvent>.seeded(
+    NavbarEventTabChanged(NavbarTabItem.defaultValue),
+  );
 
-  NavBarTabItem currentTab = NavBarTabItem.defaultValue;
+  NavbarTabItem currentTab = NavbarTabItem.defaultValue;
 
-  final _routes = NavBarTabItem.values.map((e) {
+  final _routes = NavbarTabItem.values.map((e) {
     return switch (e) {
-      NavBarTabItem.feed => const FeedPage(),
-      NavBarTabItem.settings => const SettingsPage(),
+      NavbarTabItem.feed => const FeedPage(),
+      NavbarTabItem.settings => const SettingsPage(),
     };
   }).toList(growable: false);
 
-  final _navigatorTabKeys = NavBarTabItem.values.map((e) {
+  final _navigatorTabKeys = NavbarTabItem.values.map((e) {
     return GlobalKey<NavigatorState>(debugLabel: "Tab $e");
   }).toList(growable: false);
 
-  GlobalKey<NavigatorState> getNavigatorTabKey(NavBarTabItem tab) {
+  GlobalKey<NavigatorState> getNavigatorTabKey(NavbarTabItem tab) {
     return _navigatorTabKeys.elementAt(tab.index);
   }
 
-  Route<dynamic> onGenerateRoute(NavBarTabItem tab, RouteSettings settings) {
+  // helper for uniform behavior
+  void returnToTop(ScrollController scrollController) {
+    const curve = Curves.easeInOut;
+    const duration = Duration(milliseconds: 500);
+    scrollController.animateTo(.0, duration: duration, curve: curve);
+  }
+
+  Route<dynamic> onGenerateRoute(NavbarTabItem tab, RouteSettings settings) {
     return MaterialPageRoute(
       settings: settings,
       builder: (context) => _routes.elementAt(tab.index),
@@ -63,14 +72,15 @@ final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModel<NavBarViewModel>(
+    return ViewModel<NavbarViewModel>(
       viewModel: this,
       useCases: [
         () => OnAddTransactionPressed(),
         () => OnTabChangeRequested(),
         () => OnPopTabsToRootRequested(),
+        () => OnTopOfScreenPressed(),
       ],
-      child: const NavBarView(),
+      child: const NavbarView(),
     );
   }
 }
