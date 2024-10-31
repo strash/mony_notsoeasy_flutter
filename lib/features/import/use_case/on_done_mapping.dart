@@ -135,7 +135,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
       await accountService.update(
         model: value.copyWith(
           balance: value.balance -
-              transactions.fold(0, (prev, next) => prev + next.amout),
+              transactions.fold(0, (prev, next) => prev + next.amount),
         ),
       );
     }

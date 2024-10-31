@@ -15,17 +15,17 @@ class FeedItemTimeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timeFormatter = DateFormat.Hm();
+    final formatter = DateFormat.Hm();
 
     return Padding(
       padding: EdgeInsets.only(right: margin),
       child: Text(
-        timeFormatter.format(date),
+        formatter.format(date),
         maxLines: 1,
         style: GoogleFonts.golosText(
           fontSize: 16.sp,
           height: .0,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
       ),

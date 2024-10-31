@@ -26,7 +26,7 @@ class TransactionModel with _$TransactionModel {
     required String id,
     required DateTime created,
     required DateTime updated,
-    required double amout,
+    required double amount,
     required ETransactionType type,
     required DateTime date,
     required String note,
