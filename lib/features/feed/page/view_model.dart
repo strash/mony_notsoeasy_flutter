@@ -4,6 +4,7 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:mony_app/features/feed/page/view.dart";
+import "package:mony_app/features/navbar/page/page.dart";
 import "package:provider/provider.dart";
 import "package:rxdart/rxdart.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
@@ -91,6 +92,11 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _fetchTransactions();
+
+      final navbar = context.viewModel<NavbarViewModel>();
+      navbar.subject.whereType<NavbarEventScrollToTopRequested>().listen((e) {
+        navbar.returnToTop(scrollController);
+      });
     });
   }
 

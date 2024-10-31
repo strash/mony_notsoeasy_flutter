@@ -19,7 +19,7 @@ class FeedItemComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewSize = MediaQuery.sizeOf(context);
-    final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h);
+    final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h);
     final iconDimension = 46.r;
     final horizontalGap = 10.w;
     final contentWidth =

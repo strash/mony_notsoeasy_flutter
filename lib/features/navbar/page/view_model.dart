@@ -52,6 +52,7 @@ final class NavbarViewModel extends ViewModelState<NavbarViewModelBuilder> {
 
   // helper for uniform behavior
   void returnToTop(ScrollController scrollController) {
+    if (!scrollController.hasClients) return;
     const curve = Curves.easeInOut;
     const duration = Duration(milliseconds: 500);
     scrollController.animateTo(.0, duration: duration, curve: curve);
