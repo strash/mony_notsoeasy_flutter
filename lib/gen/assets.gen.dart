@@ -84,6 +84,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/repeat.svg
   String get repeat => 'assets/icons/repeat.svg';
 
+  /// File path: assets/icons/sparkles.svg
+  String get sparkles => 'assets/icons/sparkles.svg';
+
   /// File path: assets/icons/square.and.arrow.down.svg
   String get squareAndArrowDown => 'assets/icons/square.and.arrow.down.svg';
 
@@ -121,6 +124,7 @@ class $AssetsIconsGen {
         repeatCircleFill,
         repeatCircle,
         repeat,
+        sparkles,
         squareAndArrowDown,
         widgetSmallBadgePlus,
         widgetSmall,

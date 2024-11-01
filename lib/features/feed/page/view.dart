@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/features/features.dart";
 import "package:mony_app/features/feed/components/components.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
 import "package:mony_app/features/navbar/page/view.dart";
@@ -10,7 +11,9 @@ class FeedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomOffset = MediaQuery.paddingOf(context).bottom +
+    final viewPadding = MediaQuery.paddingOf(context);
+
+    final bottomOffset = viewPadding.bottom +
         NavbarView.kBottomMargin * 2.0 +
         NavbarView.kTabHeight +
         50.h;
@@ -57,41 +60,65 @@ class FeedView extends StatelessWidget {
                 controller: scrollControllers.elementAt(pageIndex),
                 physics: const BouncingScrollPhysics(),
                 slivers: [
-                  // -> feed
+                  // -> account
                   SliverPadding(
                     padding: EdgeInsets.only(
-                      top: bottomOffset,
-                      bottom: bottomOffset,
+                      left: 20.w,
+                      right: 20.w,
+                      top: viewPadding.top + 70.h,
                     ),
-                    sliver: SliverList.builder(
-                      itemCount: page.feed.length,
-                      findChildIndexCallback: (key) {
-                        final id = (key as ValueKey<String>).value;
-                        return page.feed.indexWhere((e) {
-                          return switch (e) {
-                            FeedItemSection() => id == e.date.toString(),
-                            FeedItemTransaction() => id == e.transaction.id,
-                          };
-                        });
-                      },
-                      itemBuilder: (context, index) {
-                        final item = page.feed.elementAt(index);
-
-                        switch (item) {
-                          case FeedItemSection():
-                            return FeedSectionComponent(
-                              key: ValueKey<String>(item.date.toString()),
-                              section: item,
-                            );
-                          case FeedItemTransaction():
-                            return FeedItemComponent(
-                              key: ValueKey<String>(item.transaction.id),
-                              transaction: item.transaction,
-                            );
-                        }
-                      },
+                    sliver: SliverToBoxAdapter(
+                      child: FeedAccountComponent(page: page),
                     ),
                   ),
+
+                  // -> empty state
+                  if (page.feed.isEmpty)
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          bottom: NavbarView.kTabHeight +
+                              NavbarView.kBottomMargin * 2.0 +
+                              20.h,
+                        ),
+                        child: const FeedEmptyStateComponent(),
+                      ),
+                    )
+
+                  // -> feed
+                  else
+                    SliverPadding(
+                      padding: EdgeInsets.only(bottom: bottomOffset),
+                      sliver: SliverList.builder(
+                        itemCount: page.feed.length,
+                        findChildIndexCallback: (key) {
+                          final id = (key as ValueKey<String>).value;
+                          return page.feed.indexWhere((e) {
+                            return switch (e) {
+                              FeedItemSection() => id == e.date.toString(),
+                              FeedItemTransaction() => id == e.transaction.id,
+                            };
+                          });
+                        },
+                        itemBuilder: (context, index) {
+                          final item = page.feed.elementAt(index);
+
+                          switch (item) {
+                            case FeedItemSection():
+                              return FeedSectionComponent(
+                                key: ValueKey<String>(item.date.toString()),
+                                section: item,
+                              );
+                            case FeedItemTransaction():
+                              return FeedItemComponent(
+                                key: ValueKey<String>(item.transaction.id),
+                                transaction: item.transaction,
+                              );
+                          }
+                        },
+                      ),
+                    ),
                 ],
               );
             },

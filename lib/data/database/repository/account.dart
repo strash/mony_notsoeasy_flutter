@@ -56,7 +56,7 @@ final class _Impl
       final where = _getWhere(type, ids);
       final maps = await db.query(
         table,
-        orderBy: "title ASC",
+        orderBy: "created ASC",
         where: where.$1,
         whereArgs: where.$2,
       );
