@@ -6,6 +6,8 @@ abstract base class AccountDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
+  Future<List<AccountBalanceDto>> getBalance({List<String>? ids});
+
   Future<List<AccountDto>> getAll({String? type, List<String>? ids});
 
   Future<List<AccountDto>> getMany({
@@ -32,21 +34,49 @@ final class _Impl
 
   const _Impl({required this.database});
 
-  (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
-    String getIn(List<String> items) {
-      return List.filled(items.length, "?").join(", ");
-    }
+  String _getIn(List<String> items) {
+    return List.filled(items.length, "?").join(", ");
+  }
 
+  (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
     switch ((type, ids)) {
       case (final String a, final List<String> b):
-        return ("type = ? AND id IN (${getIn(b)})", [a, ...b]);
+        return ("type = ? AND id IN (${_getIn(b)})", [a, ...b]);
       case (final String a, null):
         return ("type = ?", [a]);
       case (null, final List<String> b):
-        return ("id IN (${getIn(b)})", b);
+        return ("id IN (${_getIn(b)})", b);
       default:
         return (null, null);
     }
+  }
+
+  @override
+  Future<List<AccountBalanceDto>> getBalance({List<String>? ids}) async {
+    return resolve(() async {
+      final db = await database.db;
+      final where = ids != null ? "WHERE a.id IN (${_getIn(ids)})" : "";
+      final maps = await db.rawQuery(
+        """
+SELECT
+	a.id,
+	a.currency_code,
+	a.balance,
+	SUM(t.amount) AS total_amount,
+	(a.balance + SUM(t.amount)) AS total_sum
+FROM accounts AS a
+JOIN transactions AS t ON a.id = t.account_id
+$where
+GROUP BY a.id;
+""",
+        ids,
+      );
+      return List.generate(
+        maps.length,
+        (index) => AccountBalanceDto.fromJson(maps.elementAt(index)),
+        growable: false,
+      );
+    });
   }
 
   @override

@@ -38,12 +38,14 @@ sealed class FeedPageState {
 
 final class FeedPageStateAllAccounts extends FeedPageState {
   final List<AccountModel> accounts;
+  final List<AccountBalanceModel> balances;
 
   FeedPageStateAllAccounts({
     required super.page,
     required super.canLoadMore,
     required super.feed,
     required this.accounts,
+    required this.balances,
   });
 
   FeedPageStateAllAccounts copyWith({
@@ -52,24 +54,28 @@ final class FeedPageStateAllAccounts extends FeedPageState {
     double? scrollPosition,
     List<FeedItem>? feed,
     List<AccountModel>? accounts,
+    List<AccountBalanceModel>? balances,
   }) {
     return FeedPageStateAllAccounts(
       page: page ?? this.page,
       canLoadMore: canLoadMore ?? this.canLoadMore,
       feed: feed ?? this.feed,
       accounts: accounts ?? this.accounts,
+      balances: balances ?? this.balances,
     );
   }
 }
 
 final class FeedPageStateSingleAccount extends FeedPageState {
   final AccountModel account;
+  final AccountBalanceModel balance;
 
   FeedPageStateSingleAccount({
     required super.page,
     required super.canLoadMore,
     required super.feed,
     required this.account,
+    required this.balance,
   });
 
   FeedPageStateSingleAccount copyWith({
@@ -78,12 +84,14 @@ final class FeedPageStateSingleAccount extends FeedPageState {
     double? scrollPosition,
     List<FeedItem>? feed,
     AccountModel? account,
+    AccountBalanceModel? balance,
   }) {
     return FeedPageStateSingleAccount(
       page: page ?? this.page,
       canLoadMore: canLoadMore ?? this.canLoadMore,
       feed: feed ?? this.feed,
       account: account ?? this.account,
+      balance: balance ?? this.balance,
     );
   }
 }

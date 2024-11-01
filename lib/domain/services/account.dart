@@ -5,6 +5,7 @@ import "package:sealed_currencies/sealed_currencies.dart";
 final class DomainAccountService extends BaseDomainService {
   final AccountDatabaseRepository _accountRepo;
   final AccountDatabaseFactoryImpl _accountFactory;
+  final AccountBalanceDatabaseFactoryImpl _accountBalanceFactory;
 
   @override
   final int perPage = 20;
@@ -12,8 +13,17 @@ final class DomainAccountService extends BaseDomainService {
   DomainAccountService({
     required AccountDatabaseRepository accountRepo,
     required AccountDatabaseFactoryImpl accountFactory,
+    required AccountBalanceDatabaseFactoryImpl accountBalanceFactory,
   })  : _accountRepo = accountRepo,
-        _accountFactory = accountFactory;
+        _accountFactory = accountFactory,
+        _accountBalanceFactory = accountBalanceFactory;
+
+  Future<List<AccountBalanceModel>> getBalance({List<String>? ids}) async {
+    final dtos = await _accountRepo.getBalance(ids: ids);
+    return dtos
+        .map<AccountBalanceModel>(_accountBalanceFactory.toModel)
+        .toList(growable: false);
+  }
 
   Future<List<AccountModel>> getAll({EAccountType? type}) async {
     final dtos = await _accountRepo.getAll(type: type?.value);

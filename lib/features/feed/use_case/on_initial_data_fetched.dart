@@ -15,6 +15,7 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel>
 
     final List<FeedPageState> pages = [];
     final accounts = await accountService.getAll();
+    final balances = await accountService.getBalance();
 
     if (accounts.length > 1) {
       final transactions = await transactionService.getMany(page: 0)
@@ -25,6 +26,7 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel>
           canLoadMore: true,
           feed: transformToFeed(transactions),
           accounts: accounts,
+          balances: balances,
         ),
       );
     }
@@ -39,6 +41,7 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel>
           canLoadMore: true,
           feed: transformToFeed(transactions),
           account: account,
+          balance: balances.singleWhere((e) => e.id == account.id),
         ),
       );
     }

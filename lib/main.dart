@@ -33,6 +33,7 @@ void main() async {
               return DomainAccountService(
                 accountRepo: AccountDatabaseRepository(database: appDatabase),
                 accountFactory: AccountDatabaseFactoryImpl(),
+                accountBalanceFactory: AccountBalanceDatabaseFactoryImpl(),
               );
             },
           ),

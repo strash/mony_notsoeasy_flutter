@@ -99,16 +99,16 @@ class FeedAccountComponent extends StatelessWidget {
         // -> sums
         switch (page) {
           final FeedPageStateAllAccounts page => Column(
-              children: page.accounts.map((e) {
+              children: page.balances.map((e) {
                 return Text(
-                  e.currency.format(e.balance.roundToFraction(2)),
+                  e.currency.format(e.totalSum.roundToFraction(2)),
                   style: _getStyle(context),
                 );
               }).toList(growable: false),
             ),
           final FeedPageStateSingleAccount page => Text(
-              page.account.currency
-                  .format(page.account.balance.roundToFraction(2)),
+              page.balance.currency
+                  .format(page.balance.totalSum.roundToFraction(2)),
               style: _getStyle(context),
             ),
         },
