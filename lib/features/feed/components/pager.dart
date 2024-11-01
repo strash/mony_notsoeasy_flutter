@@ -29,62 +29,64 @@ class FeedPagerComponent extends StatelessWidget {
           radius: SmoothBorderRadius.all(
             SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
           ),
+          // TODO: при переключении страниц показывать пэйджер и прятать поиск
           child: BackdropFilter(
             filter: ImageFilter.blur(
               sigmaX: NavbarView.kSigma,
               sigmaY: NavbarView.kSigma,
-              tileMode: TileMode.repeated,
             ),
-            child: SizedBox(
-              width: 80.w,
-              height: 30.h,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  ColoredBox(
-                    color: theme.colorScheme.surfaceContainer.withOpacity(.4),
-                    child: Center(
-                      child: SmoothPageIndicator(
-                        controller: viewModel.pageController,
-                        count: viewModel.accounts.length,
-                        effect: ScrollingDotsEffect(
-                          dotWidth: 7.r,
-                          dotHeight: 7.r,
-                          dotColor: theme.colorScheme.tertiaryContainer,
-                          activeDotColor: theme.colorScheme.tertiary,
-                          activeDotScale: 1.0,
-                          spacing: 5.w,
-                          strokeWidth: .0,
+            child: ColoredBox(
+              color: theme.colorScheme.surfaceContainer.withOpacity(.3),
+              child: SizedBox(
+                width: 80.w,
+                height: 30.h,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    // -> pagination
+                    if (viewModel.pages.isNotEmpty)
+                      Center(
+                        child: SmoothPageIndicator(
+                          controller: viewModel.pageController,
+                          count: viewModel.pages.length,
+                          effect: ScrollingDotsEffect(
+                            dotWidth: 7.r,
+                            dotHeight: 7.r,
+                            dotColor: theme.colorScheme.tertiaryContainer,
+                            activeDotColor: theme.colorScheme.tertiary,
+                            activeDotScale: 1.0,
+                            spacing: 5.w,
+                            strokeWidth: .0,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
 
-                  // -> icon search
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        Assets.icons.magnifyingglass,
-                        width: 14.r,
-                        height: 14.r,
-                        colorFilter: ColorFilter.mode(
-                          theme.colorScheme.onSurface,
-                          BlendMode.srcIn,
+                    // -> icon search
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          Assets.icons.magnifyingglass,
+                          width: 14.r,
+                          height: 14.r,
+                          colorFilter: ColorFilter.mode(
+                            theme.colorScheme.onSurfaceVariant,
+                            BlendMode.srcIn,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        "поиск",
-                        style: GoogleFonts.golosText(
-                          fontSize: 13.sp,
-                          color: theme.colorScheme.onSurface,
+                        SizedBox(width: 4.w),
+                        Text(
+                          "поиск",
+                          style: GoogleFonts.golosText(
+                            fontSize: 13.sp,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

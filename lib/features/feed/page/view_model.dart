@@ -1,20 +1,14 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:mony_app/features/feed/page/view.dart";
 import "package:mony_app/features/navbar/page/page.dart";
-import "package:provider/provider.dart";
 import "package:rxdart/rxdart.dart";
-import "package:sealed_currencies/sealed_currencies.dart";
 
 export "../use_case/use_case.dart";
 export "./event.dart";
-
-enum EFeedItem { section, transaction }
-
-typedef TFeedItem = ({EFeedItem type, Object value});
+export "./state.dart";
 
 class FeedViewModelBuilder extends StatefulWidget {
   const FeedViewModelBuilder({super.key});
@@ -25,99 +19,57 @@ class FeedViewModelBuilder extends StatefulWidget {
 
 final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   final subject = BehaviorSubject<FeedEvent>();
-  final scrollController = ScrollController();
+
+  final _fetchData = OnDataFetched();
+
   final pageController = PageController();
+  final List<ScrollController> scrollControllers = [];
+  final List<double> scrollPositions = [];
 
-  late final _transactionService = context.read<DomainTransactionService>();
-  late final _accountService = context.read<DomainAccountService>();
+  List<FeedPageState> pages = [];
 
-  List<AccountModel> accounts = [];
-
-  void _pageListener() {
-    print("yaya");
-  }
-
-  int _page = 0;
-  bool _canLoadMore = true;
-  List<TransactionModel> _transactions = [];
-  List<TFeedItem> feed = [];
-
-  FiatCurrency? get sectionCurrency {
-    if (_transactions.isEmpty) return null;
-    return _transactions.first.account.currency;
-  }
-
-  Future<void> _fetchAccounts() async {
-    final data = await _accountService.getAll();
-    setState(() => accounts = data);
-  }
-
-  Future<void> _fetchTransactions() async {
-    if (!_canLoadMore) return;
-    final data = await _transactionService.getMany(page: _page++);
-    _canLoadMore = data.isNotEmpty;
-    _transactions = List<TransactionModel>.from(_transactions)
-      ..addAll(data)
-      ..sort((a, b) => b.date.compareTo(a.date));
-    setState(() => feed = _getFeed());
-  }
-
-  List<TFeedItem> _getFeed() {
-    if (_transactions.isEmpty) return const [];
-    final first = _transactions.first;
-    final init = [
-      (type: EFeedItem.section, value: (first.date, .0)),
-      (type: EFeedItem.transaction, value: first),
-    ];
-    final list = _transactions.foldValue<List<TFeedItem>>(init, (prev, curr) {
-      final tran = (type: EFeedItem.transaction, value: curr);
-      if (prev.date.isSameDate(curr.date)) return <TFeedItem>[tran];
-      final section = (type: EFeedItem.section, value: (curr.date, .0));
-      return <TFeedItem>[section, tran];
-    });
-    for (final element in list.indexed) {
-      final item = element.$2;
-      if (item.type == EFeedItem.transaction) continue;
-      final range = list.skip(element.$1 + 1).takeWhile((e) {
-        return e.type == EFeedItem.transaction;
-      });
-      final value = (
-        (item.value as (DateTime, double)).$1,
-        range.fold<double>(.0, (prev, curr) {
-          return prev + (curr.value as TransactionModel).amount;
-        }).roundToFraction(2),
-      );
-      list[element.$1] = (type: item.type, value: value);
-    }
-    return list;
+  int get currentPageIndex {
+    if (!pageController.hasClients) return 0;
+    return pageController.page?.toInt() ?? 0;
   }
 
   @override
   void initState() {
     super.initState();
 
-    pageController.addListener(_pageListener);
-
+    final ctx = context;
     subject.whereType<FeedEventScrolledToBottom>().throttle((e) {
       return TimerStream<FeedEvent>(e, const Duration(milliseconds: 400));
-    }).listen((e) => _fetchTransactions());
+    }).listen((e) {
+      final value = (viewModel: this, pageIndex: e.pageIndex);
+      if (ctx.mounted) _fetchData(ctx, value);
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       final navbar = context.viewModel<NavbarViewModel>();
       navbar.subject.whereType<NavbarEventScrollToTopRequested>().listen((e) {
-        navbar.returnToTop(scrollController);
+        navbar.returnToTop(scrollControllers.elementAt(currentPageIndex));
       });
 
-      await _fetchAccounts();
-      await _fetchTransactions();
+      OnInitialDataFetched().call(context, this).then((_) {
+        for (final element in pages.indexed) {
+          final scrollController = ScrollController();
+          scrollController.addListener(() {
+            if (!ctx.mounted) return;
+            OnScroll().call(ctx, (viewModel: this, pageIndex: element.$1));
+          });
+          scrollControllers.add(scrollController);
+          scrollPositions.add(.0);
+        }
+      });
     });
   }
 
   @override
   void dispose() {
-    pageController.removeListener(_pageListener);
-
-    scrollController.dispose();
+    for (final e in scrollControllers) {
+      e.dispose();
+    }
     pageController.dispose();
     subject.close();
     super.dispose();
@@ -128,16 +80,9 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     return ViewModel<FeedViewModel>(
       viewModel: this,
       useCases: [
-        () => OnScroll(),
+        () => OnPageChanged(),
       ],
-      child: Builder(
-        builder: (context) {
-          late final onScroll = this<OnScroll>();
-          scrollController.addListener(() => onScroll(context));
-
-          return const FeedView();
-        },
-      ),
+      child: const FeedView(),
     );
   }
 }
