@@ -49,22 +49,23 @@ class FeedAccountComponent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // -> color
-            Padding(
-              padding: EdgeInsets.only(top: 2.h),
-              child: SizedBox.square(
-                dimension: 10.r,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: _getColor(context),
-                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                    border: Border.all(
-                      color: theme.colorScheme.onSurface.withOpacity(0.2),
+            if (page is FeedPageStateSingleAccount)
+              Padding(
+                padding: EdgeInsets.only(top: 2.h),
+                child: SizedBox.square(
+                  dimension: 10.r,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: _getColor(context),
+                      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                      border: Border.all(
+                        color: theme.colorScheme.onSurface.withOpacity(0.2),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(width: 6.w),
+            if (page is FeedPageStateSingleAccount) SizedBox(width: 6.w),
 
             // -> title
             Flexible(
