@@ -1,3 +1,5 @@
+import "dart:math";
+
 import "package:flutter/widgets.dart";
 
 class SeparatedComponent extends StatelessWidget {
@@ -22,7 +24,7 @@ class SeparatedComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lenght = itemCount * 2 - 1;
+    final lenght = max(0, itemCount * 2 - 1);
     int count = 0;
     final children = List.generate(lenght, (index) {
       if (index.isOdd) return separatorBuilder(context);
