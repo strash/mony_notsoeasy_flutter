@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
@@ -80,6 +81,19 @@ class FeedAccountComponent extends StatelessWidget {
             ),
           ],
         ),
+
+        // -> account type
+        switch (page) {
+          FeedPageStateAllAccounts() => const SizedBox(),
+          final FeedPageStateSingleAccount page => Text(
+              page.account.type.description,
+              style: GoogleFonts.golosText(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+        },
         SizedBox(height: 10.h),
 
         // -> sums
