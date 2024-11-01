@@ -10,7 +10,6 @@ class TransactionDto with _$TransactionDto {
     required String created,
     required String updated,
     required num amount,
-    required String type,
     required String date,
     required String note,
     required String accountId,

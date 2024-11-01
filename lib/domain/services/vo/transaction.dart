@@ -7,7 +7,6 @@ part "transaction.freezed.dart";
 class TransactionVO with _$TransactionVO {
   const factory TransactionVO({
     required double amout,
-    required ETransactionType type,
     required DateTime date,
     required String note,
     required String accountId,

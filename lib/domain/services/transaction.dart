@@ -128,7 +128,6 @@ final class DomainTransactionService extends BaseDomainService {
       created: defaultColumns.now.toUtc().toIso8601String(),
       updated: defaultColumns.now.toUtc().toIso8601String(),
       amount: vo.amout,
-      type: vo.type.value,
       date: vo.date.toUtc().toIso8601String(),
       note: vo.note,
       accountId: vo.accountId,

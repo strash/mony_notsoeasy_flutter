@@ -93,7 +93,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
           break;
         }
       }
-      final vo = _TransactionBuilder()..addType(transactionType);
+      final vo = _TransactionBuilder();
       if (viewModel.singleAccount != null) {
         vo.addAccountId(accounts[singleAccountId]!.id);
       }
@@ -159,7 +159,6 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
 
 final class _TransactionBuilder {
   double? amount;
-  ETransactionType? type;
   DateTime? date;
   String? note;
   String? accountId;
@@ -168,11 +167,6 @@ final class _TransactionBuilder {
 
   _TransactionBuilder addAmount(double value) {
     amount = value;
-    return this;
-  }
-
-  _TransactionBuilder addType(ETransactionType value) {
-    type = value;
     return this;
   }
 
@@ -203,12 +197,10 @@ final class _TransactionBuilder {
 
   TransactionVO build() {
     final amount = this.amount;
-    final type = this.type;
     final date = this.date;
     final accountId = this.accountId;
     final categoryId = this.categoryId;
     if (amount == null ||
-        type == null ||
         date == null ||
         accountId == null ||
         categoryId == null) {
@@ -216,7 +208,6 @@ final class _TransactionBuilder {
     }
     return TransactionVO(
       amout: amount,
-      type: type,
       date: date,
       note: note ?? "",
       accountId: accountId,

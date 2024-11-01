@@ -9,6 +9,7 @@ final class MigrationService {
     M1728167641Init(),
     M1728413017SeedDefaultCategories(),
     M1728991478AddColorAndBalanceColumnsToAccounts(),
+    M1730475693RemoveTypeColumnFromTransactions(),
   ];
 
   Iterable<BaseMigration> getFor(int from, int to) {
