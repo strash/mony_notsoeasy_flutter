@@ -32,9 +32,9 @@ class FeedAccountComponent extends StatelessWidget {
   TextStyle _getStyle(BuildContext context) {
     final theme = Theme.of(context);
     return GoogleFonts.golosText(
-      fontSize: 30.sp,
+      fontSize: 40.sp,
       color: theme.colorScheme.onSurface,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w600,
     );
   }
 
@@ -47,11 +47,12 @@ class FeedAccountComponent extends StatelessWidget {
         // -> top row
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // -> color
             if (page is FeedPageStateSingleAccount)
               Padding(
-                padding: EdgeInsets.only(top: 2.h),
+                padding: EdgeInsets.only(top: 6.h, right: 6.w),
                 child: SizedBox.square(
                   dimension: 10.r,
                   child: DecoratedBox(
@@ -65,16 +66,15 @@ class FeedAccountComponent extends StatelessWidget {
                   ),
                 ),
               ),
-            if (page is FeedPageStateSingleAccount) SizedBox(width: 6.w),
 
             // -> title
             Flexible(
               child: Text(
                 _title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
                 style: GoogleFonts.golosText(
                   fontSize: 16.sp,
+                  height: 1.2,
                   fontWeight: FontWeight.w500,
                   color: theme.colorScheme.onSurface,
                 ),
@@ -82,6 +82,7 @@ class FeedAccountComponent extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(height: 4.h),
 
         // -> account type
         switch (page) {
@@ -98,21 +99,23 @@ class FeedAccountComponent extends StatelessWidget {
         SizedBox(height: 10.h),
 
         // -> sums
-        switch (page) {
-          final FeedPageStateAllAccounts page => Column(
-              children: page.balances.map((e) {
-                return Text(
-                  e.currency.format(e.totalSum.roundToFraction(2)),
-                  style: _getStyle(context),
-                );
-              }).toList(growable: false),
-            ),
-          final FeedPageStateSingleAccount page => Text(
-              page.balance.currency
-                  .format(page.balance.totalSum.roundToFraction(2)),
-              style: _getStyle(context),
-            ),
-        },
+        FittedBox(
+          child: switch (page) {
+            final FeedPageStateAllAccounts page => Column(
+                children: page.balances.map((e) {
+                  return Text(
+                    e.currency.format(e.totalSum.roundToFraction(2)),
+                    style: _getStyle(context),
+                  );
+                }).toList(growable: false),
+              ),
+            final FeedPageStateSingleAccount page => Text(
+                page.balance.currency
+                    .format(page.balance.totalSum.roundToFraction(2)),
+                style: _getStyle(context),
+              ),
+          },
+        ),
         SizedBox(height: 10.h),
       ],
     );

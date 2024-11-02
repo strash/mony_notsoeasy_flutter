@@ -9,6 +9,24 @@ import "package:mony_app/features/navbar/page/view.dart";
 class FeedView extends StatelessWidget {
   const FeedView({super.key});
 
+  ValueKey<String> _getPageKey(FeedPageState page) {
+    return ValueKey<String>(
+      switch (page) {
+        FeedPageStateAllAccounts() => page.accounts.map((e) => e.id).join(),
+        FeedPageStateSingleAccount() => page.account.id,
+      },
+    );
+  }
+
+  ValueKey<String> _getFeedItemKey(FeedItem feedItem) {
+    return ValueKey<String>(
+      switch (feedItem) {
+        FeedItemSection() => feedItem.date.toString(),
+        FeedItemTransaction() => feedItem.transaction.id,
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.paddingOf(context);
@@ -30,35 +48,28 @@ class FeedView extends StatelessWidget {
           PageView.builder(
             restorationId: "feed_pages",
             controller: viewModel.pageController,
-            physics: const PageScrollPhysics(parent: BouncingScrollPhysics()),
-            onPageChanged: (index) {
-              onPageChanged(context, index);
-            },
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(
+                parent: PageScrollPhysics(),
+              ),
+            ),
+            onPageChanged: (index) => onPageChanged(context, index),
             findChildIndexCallback: (key) {
               final id = (key as ValueKey<String>).value;
               return viewModel.pages.indexWhere((page) {
-                return switch (page) {
-                  FeedPageStateAllAccounts() =>
-                    id == page.accounts.map((e) => e.id).join(),
-                  FeedPageStateSingleAccount() => id == page.account.id,
-                };
+                return id == _getPageKey(page).value;
               });
             },
             itemCount: viewModel.pages.length,
             itemBuilder: (context, pageIndex) {
               final page = viewModel.pages.elementAt(pageIndex);
-              final ValueKey<String> key;
-              switch (page) {
-                case FeedPageStateAllAccounts():
-                  key = ValueKey(page.accounts.map((e) => e.id).join());
-                case FeedPageStateSingleAccount():
-                  key = ValueKey(page.account.id);
-              }
 
               return CustomScrollView(
-                key: key,
+                key: _getPageKey(page),
                 controller: scrollControllers.elementAt(pageIndex),
-                physics: const BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
                 slivers: [
                   // -> account
                   SliverPadding(
@@ -94,28 +105,23 @@ class FeedView extends StatelessWidget {
                         itemCount: page.feed.length,
                         findChildIndexCallback: (key) {
                           final id = (key as ValueKey<String>).value;
-                          return page.feed.indexWhere((e) {
-                            return switch (e) {
-                              FeedItemSection() => id == e.date.toString(),
-                              FeedItemTransaction() => id == e.transaction.id,
-                            };
+                          return page.feed.indexWhere((feedItem) {
+                            return id == _getFeedItemKey(feedItem).value;
                           });
                         },
                         itemBuilder: (context, index) {
-                          final item = page.feed.elementAt(index);
+                          final feedItem = page.feed.elementAt(index);
 
-                          switch (item) {
-                            case FeedItemSection():
-                              return FeedSectionComponent(
-                                key: ValueKey<String>(item.date.toString()),
-                                section: item,
-                              );
-                            case FeedItemTransaction():
-                              return FeedItemComponent(
-                                key: ValueKey<String>(item.transaction.id),
-                                transaction: item.transaction,
-                              );
-                          }
+                          return switch (feedItem) {
+                            FeedItemSection() => FeedSectionComponent(
+                                key: _getFeedItemKey(feedItem),
+                                section: feedItem,
+                              ),
+                            FeedItemTransaction() => FeedItemComponent(
+                                key: _getFeedItemKey(feedItem),
+                                transaction: feedItem.transaction,
+                              )
+                          };
                         },
                       ),
                     ),

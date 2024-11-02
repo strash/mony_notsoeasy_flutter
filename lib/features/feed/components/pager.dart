@@ -66,7 +66,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
               sigmaY: NavbarView.kSigma,
             ),
             child: ColoredBox(
-              color: theme.colorScheme.surfaceContainer.withOpacity(.3),
+              color: theme.colorScheme.surfaceContainer.withOpacity(.5),
               child: SizedBox(
                 width: 80.w,
                 height: 30.h,
