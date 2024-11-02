@@ -3,48 +3,38 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/features/new_transaction/components/components.dart";
 
-class SymbolButtonComponent extends StatelessWidget {
-  final String symbol;
+class NewTransactionSymbolButtonComponent extends StatelessWidget {
+  final ButtonType button;
 
-  const SymbolButtonComponent({
+  const NewTransactionSymbolButtonComponent({
     super.key,
-    required this.symbol,
+    required this.button,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isSubmit = symbol == "submit";
 
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: isSubmit
-            ? theme.colorScheme.secondary
-            : theme.colorScheme.surfaceContainer,
-        shape: SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius.all(
-            SmoothRadius(
-              cornerRadius: 20.r,
-              cornerSmoothing: 1.0,
+    return AspectRatio(
+      aspectRatio: 1.618033,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: button.color,
+          shape: SmoothRectangleBorder(
+            borderRadius: SmoothBorderRadius.all(
+              SmoothRadius(
+                cornerRadius: 20.r,
+                cornerSmoothing: 1.0,
+              ),
             ),
           ),
         ),
-      ),
-      child: Center(
-        child: isSubmit
-            ? SvgPicture.asset(
-                Assets.icons.checkmarkSemibold,
-                width: 40.r,
-                height: 40.r,
-                colorFilter: ColorFilter.mode(
-                  theme.colorScheme.surface,
-                  BlendMode.srcIn,
-                ),
-              )
-            : Text(
-                symbol,
+        child: Center(
+          child: switch (button) {
+            final ButtonTypeSymbol button => Text(
+                button.number,
                 style: GoogleFonts.golosText(
                   fontSize: 34.sp,
                   fontWeight: FontWeight.w400,
@@ -52,6 +42,17 @@ class SymbolButtonComponent extends StatelessWidget {
                   decoration: TextDecoration.none,
                 ),
               ),
+            final ButtonTypeAction button => SvgPicture.asset(
+                button.icon,
+                width: 36.r,
+                height: 36.r,
+                colorFilter: ColorFilter.mode(
+                  theme.colorScheme.surface,
+                  BlendMode.srcIn,
+                ),
+              ),
+          },
+        ),
       ),
     );
   }
