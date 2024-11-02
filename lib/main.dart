@@ -1,5 +1,6 @@
 import "package:file_picker/file_picker.dart";
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/data/database/database.dart";
@@ -9,6 +10,9 @@ import "package:provider/provider.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  GoogleFonts.config.allowRuntimeFetching = false;
+
   final appDatabase = AppDatabase.instance();
   await appDatabase.db;
 
