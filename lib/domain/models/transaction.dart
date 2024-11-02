@@ -34,3 +34,12 @@ class TransactionModel with _$TransactionModel {
     required List<TransactionTagModel> tags,
   }) = _TransactionModel;
 }
+
+extension ETransactionTypeEx on ETransactionType {
+  String get description {
+    return switch (this) {
+      ETransactionType.expense => "Расход",
+      ETransactionType.income => "Доход",
+    };
+  }
+}
