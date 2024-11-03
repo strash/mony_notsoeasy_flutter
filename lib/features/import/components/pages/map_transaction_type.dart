@@ -1,8 +1,8 @@
-import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/components/components.dart";
 
@@ -18,7 +18,6 @@ class ImportMapTransactionTypePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final onSwitchPressed = viewModel<OnIsTransactionExpensesSwitchPressed>();
     final transactionsByType = viewModel.transactionsByType;
 
     return Column(
@@ -62,45 +61,10 @@ class ImportMapTransactionTypePage extends StatelessWidget {
         SizedBox(height: 30.h),
 
         // -> select
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => onSwitchPressed(context, transactionsByType),
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: theme.colorScheme.surfaceContainer.withOpacity(0.5),
-                shape: SmoothRectangleBorder(
-                  side: BorderSide(color: theme.colorScheme.outlineVariant),
-                  borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
-                  ),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(25.w, 5.h, 15.w, 5.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      viewModel.isTransactionsExpenses
-                          ? "Да, это расходы"
-                          : "Нет, это доходы",
-                      style: GoogleFonts.golosText(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: theme.colorScheme.secondary,
-                      ),
-                    ),
-                    Switch.adaptive(
-                      value: viewModel.isTransactionsExpenses,
-                      onChanged: (value) =>
-                          onSwitchPressed(context, transactionsByType),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+        Center(
+          child: TabGroupComponent(
+            values: ETypeDecision.values,
+            controller: viewModel.transactionTypeDecisionController,
           ),
         ),
       ],

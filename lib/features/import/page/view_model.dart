@@ -2,8 +2,10 @@ import "dart:math";
 
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
+import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/import/import.dart";
 import "package:mony_app/features/import/page/view.dart";
@@ -30,6 +32,20 @@ typedef TPressedCategoryValue = ({
   ETransactionType transactionType,
   TMappedCategory category,
 });
+
+enum ETypeDecision implements IDescriptable {
+  isExpense,
+  isNotExpense,
+  ;
+
+  @override
+  String get description {
+    return switch (this) {
+      ETypeDecision.isExpense => "Это расходы",
+      ETypeDecision.isNotExpense => "Это доходы",
+    };
+  }
+}
 
 final class ImportViewModelBuilder extends StatefulWidget {
   const ImportViewModelBuilder({super.key});
@@ -115,7 +131,12 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   String? mappedTransactionTypeExpense;
   String? mappedTransactionTypeIncome;
 
-  bool isTransactionsExpenses = true;
+  final transactionTypeDecisionController =
+      TabGroupController(ETypeDecision.isExpense);
+
+  void _transactionTypeDecisionListener() {
+    mapTransactionTypes();
+  }
 
   bool get hasMappedTransactionType {
     return mappedColumns.any((e) {
@@ -172,10 +193,14 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
       }
     }
     setState(() {
-      mappedTransactionTypeExpense =
-          isTransactionsExpenses ? showedType : otherType;
-      mappedTransactionTypeIncome =
-          !isTransactionsExpenses ? showedType : otherType;
+      switch (transactionTypeDecisionController.value) {
+        case ETypeDecision.isExpense:
+          mappedTransactionTypeExpense = showedType;
+          mappedTransactionTypeIncome = otherType;
+        case ETypeDecision.isNotExpense:
+          mappedTransactionTypeExpense = otherType;
+          mappedTransactionTypeIncome = showedType;
+      }
     });
   }
 
@@ -202,8 +227,18 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    transactionTypeDecisionController
+        .addListener(_transactionTypeDecisionListener);
+  }
+
+  @override
   void dispose() {
     subject.close();
+    transactionTypeDecisionController
+        .removeListener(_transactionTypeDecisionListener);
+    transactionTypeDecisionController.dispose();
     super.dispose();
   }
 
@@ -221,7 +256,6 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
         () => OnAccountButtonPressed(),
         () => OnAccountLocalButtonPressedDecorator(),
         () => OnAccountFromImportButtonPressedDecorator(),
-        () => OnIsTransactionExpensesSwitchPressed(),
         () => OnCategoryButtonPressed(),
         () => OnCategoryResetPressed(),
         () => OnDoneMapping(),

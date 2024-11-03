@@ -41,7 +41,8 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
           viewModel.additionalSteps--;
           viewModel.mappedTransactionTypeExpense = null;
           viewModel.mappedTransactionTypeIncome = null;
-          viewModel.isTransactionsExpenses = true;
+          viewModel.transactionTypeDecisionController.value =
+              ETypeDecision.isExpense;
         });
       case ImportEventMapCategories():
         if (viewModel.hasMappedTransactionType) {
