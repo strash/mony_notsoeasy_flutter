@@ -1,4 +1,6 @@
-enum EImportColumn {
+import "package:mony_app/app/descriptable/descriptable.dart";
+
+enum EImportColumn implements IDescriptable {
   amount,
   date,
   category,
@@ -13,9 +15,7 @@ enum EImportColumn {
   static EImportColumn? from(int index) {
     return values.elementAtOrNull(index);
   }
-}
 
-extension EImportColumnEx on EImportColumn {
   bool get isRequired {
     return this == EImportColumn.amount ||
         this == EImportColumn.date ||
@@ -34,6 +34,7 @@ extension EImportColumnEx on EImportColumn {
     };
   }
 
+  @override
   String get description {
     return switch (this) {
       EImportColumn.account => "В этой колонке должно быть название счета, "

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/navbar/page/view.dart";
@@ -7,7 +8,7 @@ import "package:rxdart/subjects.dart";
 export "../use_case/use_case.dart";
 export "./event.dart";
 
-enum NavbarTabItem {
+enum NavbarTabItem implements IDescriptable {
   feed,
   settings,
   ;
@@ -18,6 +19,14 @@ enum NavbarTabItem {
 
   static NavbarTabItem from(int index) {
     return NavbarTabItem.values.elementAt(index);
+  }
+
+  @override
+  String get description {
+    return switch (this) {
+      NavbarTabItem.feed => "Лента",
+      NavbarTabItem.settings => "Настройки",
+    };
   }
 }
 

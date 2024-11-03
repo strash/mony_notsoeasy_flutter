@@ -1,11 +1,12 @@
 import "dart:ui";
 
 import "package:freezed_annotation/freezed_annotation.dart";
+import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 part "account.freezed.dart";
 
-enum EAccountType {
+enum EAccountType implements IDescriptable {
   debit(value: "debit"),
   credit(value: "credit"),
   cash(value: "cash"),
@@ -22,6 +23,17 @@ enum EAccountType {
   static EAccountType from(String type) {
     return EAccountType.values.where((e) => e.value == type).firstOrNull ??
         defaultValue;
+  }
+
+  @override
+  String get description {
+    return switch (this) {
+      EAccountType.debit => "Дебетовый счет",
+      EAccountType.credit => "Кредитный счет",
+      EAccountType.cash => "Наличные",
+      EAccountType.savings => "Вклад, накопительный счет",
+      EAccountType.investment => "Инвестиционный счет",
+    };
   }
 }
 
@@ -41,16 +53,4 @@ class AccountModel with _$AccountModel {
     required Color color,
     required double balance,
   }) = _AccountModel;
-}
-
-extension EAccountTypeEx on EAccountType {
-  String get description {
-    return switch (this) {
-      EAccountType.debit => "Дебетовый счет",
-      EAccountType.credit => "Кредитный счет",
-      EAccountType.cash => "Наличные",
-      EAccountType.savings => "Вклад, накопительный счет",
-      EAccountType.investment => "Инвестиционный счет",
-    };
-  }
 }

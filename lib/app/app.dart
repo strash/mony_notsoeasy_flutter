@@ -1,3 +1,4 @@
+export "./descriptable/descriptable.dart";
 export "./event_service/event_service.dart";
 export "./navigator/navigator.dart";
 export "./theme/theme.dart";

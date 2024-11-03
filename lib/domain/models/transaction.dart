@@ -1,9 +1,10 @@
 import "package:freezed_annotation/freezed_annotation.dart";
+import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/domain/domain.dart";
 
 part "transaction.freezed.dart";
 
-enum ETransactionType {
+enum ETransactionType implements IDescriptable {
   expense(value: "expense"),
   income(value: "income"),
   ;
@@ -17,6 +18,14 @@ enum ETransactionType {
   static ETransactionType from(String type) {
     return ETransactionType.values.where((e) => e.value == type).firstOrNull ??
         defaultValue;
+  }
+
+  @override
+  String get description {
+    return switch (this) {
+      ETransactionType.expense => "Расход",
+      ETransactionType.income => "Доход",
+    };
   }
 }
 
@@ -33,13 +42,4 @@ class TransactionModel with _$TransactionModel {
     required CategoryModel category,
     required List<TransactionTagModel> tags,
   }) = _TransactionModel;
-}
-
-extension ETransactionTypeEx on ETransactionType {
-  String get description {
-    return switch (this) {
-      ETransactionType.expense => "Расход",
-      ETransactionType.income => "Доход",
-    };
-  }
 }
