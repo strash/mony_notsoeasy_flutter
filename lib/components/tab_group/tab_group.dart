@@ -11,11 +11,13 @@ part "./tab_group_item.dart";
 class TabGroupComponent<T extends IDescriptable> extends StatefulWidget {
   final List<T> values;
   final TabGroupController<T> controller;
+  final void Function(T value)? onSelected;
 
   const TabGroupComponent({
     super.key,
     required this.values,
     required this.controller,
+    this.onSelected,
   });
 
   @override
@@ -135,7 +137,12 @@ class _TabGroupComponentState<T extends IDescriptable>
                       isActive: value == widget.controller.value,
                       rectNotifier: _rectNotifier,
                       parent: _getBox,
-                      onTap: (T newValue) => widget.controller.value = newValue,
+                      onTap: (T newValue) {
+                        widget.controller.value = newValue;
+                        if (widget.onSelected != null) {
+                          widget.onSelected!.call(newValue);
+                        }
+                      },
                     );
                   }).toList(growable: false),
                 );
