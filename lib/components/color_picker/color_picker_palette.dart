@@ -1,4 +1,4 @@
-part of "./component.dart";
+part of "./color_picker.dart";
 
 final class Palette {
   Color get randomColor {

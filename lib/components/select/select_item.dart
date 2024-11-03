@@ -1,4 +1,4 @@
-part of "./component.dart";
+part of "./select.dart";
 
 class SelectEntryComponent<T> extends StatelessWidget {
   final T value;

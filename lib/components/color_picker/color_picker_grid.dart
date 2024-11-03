@@ -1,4 +1,4 @@
-part of "./component.dart";
+part of "./color_picker.dart";
 
 class _ColorGrid extends StatefulWidget {
   final double bottom;

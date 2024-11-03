@@ -1,4 +1,4 @@
-part of "./component.dart";
+part of "./color_picker.dart";
 
 final class _CursorClipper extends CustomClipper<Path> {
   final EdgeInsets padding;

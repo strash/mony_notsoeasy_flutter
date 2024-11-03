@@ -1,4 +1,4 @@
-part of "./component.dart";
+part of "./select.dart";
 
 final class SelectController<T> extends ChangeNotifier {
   T _value;

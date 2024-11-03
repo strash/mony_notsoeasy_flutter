@@ -1,4 +1,4 @@
-part of "./component.dart";
+part of "./select.dart";
 
 final class _ValueProvider<T> extends InheritedWidget {
   final SelectController<T?> controller;

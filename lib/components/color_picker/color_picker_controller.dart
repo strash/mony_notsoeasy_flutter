@@ -1,4 +1,4 @@
-part of "./component.dart";
+part of "./color_picker.dart";
 
 final class ColorPickerController extends ChangeNotifier {
   ColorPickerController(Color? color) : _value = color;
