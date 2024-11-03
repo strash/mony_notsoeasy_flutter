@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 

@@ -1,7 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
+import "package:mony_app/domain/models/transaction.dart";
+import "package:mony_app/features/features.dart";
 import "package:mony_app/features/new_transaction/components/components.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
@@ -38,6 +41,8 @@ class NewTransactionView extends StatelessWidget {
     ];
     final gap = 6.r;
 
+    final viewModel = context.viewModel<NewTransactionViewModel>();
+
     return Padding(
       padding: EdgeInsets.fromLTRB(10.w, 0.0, 10.w, viewPadding.bottom + 10.h),
       child: Column(
@@ -46,7 +51,10 @@ class NewTransactionView extends StatelessWidget {
             child: Column(
               children: [
                 // -> type
-                const NewTransactionTypeSwitchComponent(),
+                TabGroupComponent(
+                  values: ETransactionType.values,
+                  controller: viewModel.typeController,
+                ),
                 SizedBox(height: 20.h),
 
                 // -> amount
