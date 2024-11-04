@@ -106,13 +106,13 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                               style: GoogleFonts.golosText(
                                 fontSize: 16.sp,
                                 color: theme.colorScheme.onSurfaceVariant
-                                    .withOpacity(0.4),
+                                    .withOpacity(.6),
                               ),
                             )
                           : DefaultTextStyle(
                               style: GoogleFonts.golosText(
                                 fontSize: 16.sp,
-                                color: theme.colorScheme.onSurfaceVariant,
+                                color: theme.colorScheme.onSurface,
                                 fontWeight: FontWeight.w500,
                               ),
                               child: widget.activeEntry!,
@@ -120,14 +120,11 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                     ),
 
                     // -> icon
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.w),
-                      child: SvgPicture.asset(
-                        Assets.icons.chevronUpChevronDown,
-                        width: 24.r,
-                        height: 24.r,
-                        colorFilter: ColorFilter.mode(accent, BlendMode.srcIn),
-                      ),
+                    SvgPicture.asset(
+                      Assets.icons.chevronUpChevronDown,
+                      width: 24.r,
+                      height: 24.r,
+                      colorFilter: ColorFilter.mode(accent, BlendMode.srcIn),
                     ),
                   ],
                 ),

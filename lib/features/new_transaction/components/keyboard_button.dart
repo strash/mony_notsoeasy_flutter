@@ -24,10 +24,7 @@ class NewTransactionSymbolButtonComponent extends StatelessWidget {
           color: button.color,
           shape: SmoothRectangleBorder(
             borderRadius: SmoothBorderRadius.all(
-              SmoothRadius(
-                cornerRadius: 20.r,
-                cornerSmoothing: 1.0,
-              ),
+              SmoothRadius(cornerRadius: 20.r, cornerSmoothing: 1.0),
             ),
           ),
         ),
@@ -37,7 +34,7 @@ class NewTransactionSymbolButtonComponent extends StatelessWidget {
                 button.number,
                 style: GoogleFonts.golosText(
                   fontSize: 34.sp,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   color: theme.colorScheme.onSurface,
                   decoration: TextDecoration.none,
                 ),

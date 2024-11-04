@@ -110,7 +110,7 @@ GROUP BY a.id;
         table,
         limit: limit,
         offset: offset,
-        orderBy: "title ASC",
+        orderBy: "created ASC",
         where: type != null ? "type = ?" : null,
         whereArgs: type != null ? [type] : null,
       );
