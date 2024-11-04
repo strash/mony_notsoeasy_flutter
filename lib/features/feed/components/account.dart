@@ -66,35 +66,40 @@ class FeedAccountComponent extends StatelessWidget {
                 ),
               ),
 
-            // -> title
-            Flexible(
-              child: Text(
-                _title,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.golosText(
-                  fontSize: 16.sp,
-                  height: 1.2,
-                  fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onSurface,
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // -> title
+                Flexible(
+                  child: Text(
+                    _title,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.golosText(
+                      fontSize: 16.sp,
+                      height: 1.2,
+                      fontWeight: FontWeight.w500,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
                 ),
-              ),
+
+                // -> account type
+                switch (page) {
+                  FeedPageStateAllAccounts() => const SizedBox(),
+                  final FeedPageStateSingleAccount page => Text(
+                      page.account.type.description,
+                      style: GoogleFonts.golosText(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                },
+              ],
             ),
           ],
         ),
-        SizedBox(height: 4.h),
-
-        // -> account type
-        switch (page) {
-          FeedPageStateAllAccounts() => const SizedBox(),
-          final FeedPageStateSingleAccount page => Text(
-              page.account.type.description,
-              style: GoogleFonts.golosText(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-        },
         SizedBox(height: 10.h),
 
         // -> sums
