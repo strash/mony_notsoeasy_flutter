@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/components/calendar/component.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
@@ -21,6 +22,7 @@ final class NewTransactionViewModel
   final accountController = SelectController<AccountModel?>(null);
   final expenseCategoryController = SelectController<CategoryModel?>(null);
   final incomeCategoryController = SelectController<CategoryModel?>(null);
+  final dateController = CalendarController(DateTime.now());
 
   List<AccountModel> accounts = [];
   Map<ETransactionType, List<CategoryModel>> categories = {
@@ -39,6 +41,7 @@ final class NewTransactionViewModel
     accountController.dispose();
     expenseCategoryController.dispose();
     incomeCategoryController.dispose();
+    dateController.dispose();
     super.dispose();
   }
 
@@ -46,6 +49,9 @@ final class NewTransactionViewModel
   Widget build(BuildContext context) {
     return ViewModel<NewTransactionViewModel>(
       viewModel: this,
+      useCases: [
+        () => OnDatePressed(),
+      ],
       child: const NewTransactionView(),
     );
   }
