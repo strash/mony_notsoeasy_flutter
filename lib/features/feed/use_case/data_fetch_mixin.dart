@@ -21,7 +21,7 @@ mixin DataFetchMixin {
     // transform transactions to the list of transactions and sections
     final feed = transactions.foldValue<List<FeedItem>>(init, (prev, curr) {
       final transaction = FeedItemTransaction(transaction: curr);
-      if (prev.date.isSameDate(curr.date)) return [transaction];
+      if (prev.date.isSameDateAs(curr.date)) return [transaction];
       final section = FeedItemSection(date: curr.date, total: {});
       return <FeedItem>[section, transaction];
     });
