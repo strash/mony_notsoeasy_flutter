@@ -31,27 +31,27 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
     DateTime date,
   ) {
     final theme = Theme.of(context);
+    final isNow = DateTime.now().isSameDateAs(date);
 
     return ListenableBuilder(
       listenable: controller,
       builder: (context, child) {
         final isActive = controller.value?.isSameDateAs(date) ?? false;
-        final isNow = DateTime.now().isSameDateAs(date);
 
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () => controller.value = date,
           child: Padding(
-            padding: EdgeInsets.all(3.r),
+            padding: EdgeInsets.all(2.r),
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: switch (isActive) {
-                  true => theme.colorScheme.primary,
+                  true => theme.colorScheme.secondary,
                   false => isNow ? theme.colorScheme.tertiaryContainer : null,
                 },
                 shape: SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 16.r, cornerSmoothing: 1.0),
+                    SmoothRadius(cornerRadius: 18.r, cornerSmoothing: 1.0),
                   ),
                 ),
               ),
@@ -60,11 +60,11 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
                   date.day.toString(),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.golosText(
-                    fontSize: 18.sp,
+                    fontSize: 20.sp,
                     height: 1.0,
                     fontWeight: FontWeight.w500,
                     color: isActive
-                        ? theme.colorScheme.onPrimary
+                        ? theme.colorScheme.onSecondary
                         : theme.colorScheme.onSurface,
                   ),
                 ),

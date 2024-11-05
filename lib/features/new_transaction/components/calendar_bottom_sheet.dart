@@ -64,15 +64,27 @@ class _NewTransactionCalendarBottomSheetComponentState
           padding: EdgeInsets.fromLTRB(15.w, .0, 15.w, 20.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
             children: [
               // -> visible month
-              Text(
-                _monthDescription,
-                style: GoogleFonts.golosText(
-                  fontSize: 20.sp,
-                  letterSpacing: -0.1,
-                  fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onSurface,
+              AnimatedSwitcher(
+                duration: Durations.medium1,
+                switchInCurve: Curves.easeInOut,
+                switchOutCurve: Curves.easeInOut,
+                child: SizedBox(
+                  key: Key(_monthDescription),
+                  width: 180.w,
+                  child: Text(
+                    _monthDescription,
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.golosText(
+                      fontSize: 20.sp,
+                      letterSpacing: -0.1,
+                      fontWeight: FontWeight.w500,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
                 ),
               ),
 
@@ -82,18 +94,17 @@ class _NewTransactionCalendarBottomSheetComponentState
                 onTap: isSameMonth
                     ? null
                     : () => widget.controller.moveTo(DateTime.now()),
-                child: Padding(
-                  padding: EdgeInsets.all(5.r),
-                  child: Text(
-                    "Сегодня",
-                    style: GoogleFonts.golosText(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w500,
-                      color: isSameMonth
-                          ? theme.colorScheme.onSurfaceVariant
-                          : theme.colorScheme.secondary,
-                    ),
+                child: AnimatedDefaultTextStyle(
+                  duration: Durations.short4,
+                  curve: Curves.easeInOut,
+                  style: GoogleFonts.golosText(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
+                    color: isSameMonth
+                        ? theme.colorScheme.onSurfaceVariant
+                        : theme.colorScheme.secondary,
                   ),
+                  child: const Text("Сегодня"),
                 ),
               ),
             ],
