@@ -3,67 +3,231 @@ import "dart:ui";
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/time/component.dart";
+import "package:mony_app/components/time/time_proxy.dart";
 
-class TimePopupComponent extends StatelessWidget {
+class TimePopupComponent extends StatefulWidget {
+  final TimeController controller;
   final VoidCallback onTapOutside;
   final Rect initialRect;
 
   const TimePopupComponent({
     super.key,
+    required this.controller,
     required this.onTapOutside,
     required this.initialRect,
   });
 
   @override
+  State<TimePopupComponent> createState() => _TimePopupComponentState();
+}
+
+class _TimePopupComponentState extends State<TimePopupComponent>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  final _wheelSize = 200.r;
+
+  void _animatiosStatusListener(AnimationStatus status) {
+    if (status == AnimationStatus.dismissed) widget.onTapOutside();
+  }
+
+  void _onTapOutside() {
+    if (_controller.status != AnimationStatus.reverse) _controller.reverse();
+  }
+
+  Rect get _wheelRect {
+    final offset = 10.r;
+    final size = MediaQuery.sizeOf(context);
+    final init = widget.initialRect;
+    final isOnRight = init.left + _wheelSize > size.width;
+    final isOnTop = init.top + init.height + offset + _wheelSize > size.height;
+    Rect rect = Rect.fromLTWH(init.left, init.top, _wheelSize, _wheelSize);
+    if (isOnRight) rect = rect.shift(-Offset(_wheelSize - init.width, .0));
+    if (!isOnTop) {
+      rect = rect.shift(Offset(.0, init.height + offset));
+    } else {
+      rect = rect.shift(-Offset(.0, _wheelSize + offset));
+    }
+    return rect;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Durations.short3,
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: .0, end: 1.0)
+        .chain(CurveTween(curve: Curves.easeInOut))
+        .animate(_controller);
+    _controller.addStatusListener(_animatiosStatusListener);
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.removeStatusListener(_animatiosStatusListener);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTapOutside,
-      child: SizedBox.expand(
-        child: RepaintBoundary(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: Stack(
-              children: [
-                ColoredBox(
-                  color: theme.colorScheme.surfaceDim.withOpacity(0.3),
+    return SizedBox.expand(
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context, child) {
+          final value = _animation.value;
+          final sigma = value * 15.0;
+
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              // -> canceler
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: _onTapOutside,
+              ),
+
+              // -> time proxy
+              Positioned.fromRect(
+                rect: widget.initialRect,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: _onTapOutside,
+                  child: ListenableBuilder(
+                    listenable: widget.controller,
+                    builder: (context, child) {
+                      return TimeProxyComponent(
+                        time: widget.controller.formattedValue,
+                      );
+                    },
+                  ),
                 ),
-                Positioned.fromRect(
-                  rect: initialRect,
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: theme.colorScheme.surfaceContainerHighest,
-                      shape: SmoothRectangleBorder(
-                        borderRadius: SmoothBorderRadius.all(
+              ),
+
+              // -> wheel
+              Positioned.fromRect(
+                rect: _wheelRect,
+                child: Transform.scale(
+                  scale: value.remap(.0, 1.0, .8, 1.0),
+                  child: Opacity(
+                    opacity: value,
+                    child: RepaintBoundary(
+                      child: ClipSmoothRect(
+                        radius: SmoothBorderRadius.all(
                           SmoothRadius(
-                            cornerRadius: 12.r,
+                            cornerRadius: 20.r,
                             cornerSmoothing: 1.0,
                           ),
                         ),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 15.w,
-                        vertical: 8.h,
-                      ),
-                      child: Text(
-                        "10:25",
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20.0,
-                          height: 1.0,
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaX: sigma,
+                            sigmaY: sigma,
+                          ),
+                          child: ColoredBox(
+                            color: theme.colorScheme.surfaceContainer
+                                .withOpacity(.85),
+                            child: Stack(
+                              children: [
+                                // -> decal
+                                Align(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10.w,
+                                    ),
+                                    child: SizedBox.fromSize(
+                                      size: Size.fromHeight(36.h),
+                                      child: DecoratedBox(
+                                        decoration: ShapeDecoration(
+                                          color: theme.colorScheme.onSurface
+                                              .withOpacity(.07),
+                                          shape: SmoothRectangleBorder(
+                                            borderRadius:
+                                                SmoothBorderRadius.all(
+                                              SmoothRadius(
+                                                cornerRadius: 10.r,
+                                                cornerSmoothing: 1.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                // -> colon
+                                Align(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(bottom: 6.h),
+                                    child: Text(
+                                      ":",
+                                      style: GoogleFonts.golosText(
+                                        textStyle: theme.textTheme.bodyMedium,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w500,
+                                        decoration: TextDecoration.none,
+                                        color:
+                                            theme.colorScheme.onSurfaceVariant,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                // -> wheels
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 20.r),
+                                  child: Row(
+                                    children: [
+                                      // -> hours
+                                      Expanded(
+                                        child: TimeWheelComponent(
+                                          widget.controller.value.hour,
+                                          itemCount: 24,
+                                          isLeft: true,
+                                          offset: 36.w,
+                                          offAxisFraction: -.4,
+                                          onValueChanged:
+                                              widget.controller.setHours,
+                                        ),
+                                      ),
+
+                                      // -> minutes
+                                      Expanded(
+                                        child: TimeWheelComponent(
+                                          widget.controller.value.minute,
+                                          itemCount: 60,
+                                          isLeft: false,
+                                          offset: 36.w,
+                                          offAxisFraction: .4,
+                                          onValueChanged:
+                                              widget.controller.setMinutes,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
