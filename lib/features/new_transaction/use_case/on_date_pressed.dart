@@ -17,7 +17,8 @@ final class OnDatePressed extends UseCase<void, dynamic> {
       builder: (context, bottom) {
         return NewTransactionCalendarBottomSheetComponent(
           bottom: bottom,
-          controller: viewModel.dateController,
+          dateController: viewModel.dateController,
+          timeController: viewModel.timeController,
         );
       },
     );

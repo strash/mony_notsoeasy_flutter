@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
+import "package:intl/intl.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/components/calendar/component.dart";
 import "package:mony_app/components/components.dart";
+import "package:mony_app/components/time/component.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/new_transaction/page/view.dart";
@@ -23,11 +25,25 @@ final class NewTransactionViewModel
   final expenseCategoryController = SelectController<CategoryModel?>(null);
   final incomeCategoryController = SelectController<CategoryModel?>(null);
   final dateController = CalendarController(DateTime.now());
+  final timeController = TimeController(DateTime.now());
 
   List<AccountModel> accounts = [];
   Map<ETransactionType, List<CategoryModel>> categories = {
     for (final key in ETransactionType.values) key: const [],
   };
+
+  String get dateTimeDescription {
+    final formatter = DateFormat("d MMM yyyy").add_Hm();
+    final date = DateTime(
+      dateController.value!.year,
+      dateController.value!.month,
+      dateController.value!.day,
+      timeController.value.hour,
+      timeController.value.minute,
+      dateController.value!.second,
+    );
+    return formatter.format(date);
+  }
 
   @override
   void initState() {
@@ -42,6 +58,7 @@ final class NewTransactionViewModel
     expenseCategoryController.dispose();
     incomeCategoryController.dispose();
     dateController.dispose();
+    timeController.dispose();
     super.dispose();
   }
 

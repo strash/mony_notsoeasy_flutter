@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/new_transaction/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -16,7 +15,6 @@ class NewTransactionDatetimeComponent extends StatelessWidget {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<NewTransactionViewModel>();
     final onDatePressed = viewModel<OnDatePressed>();
-    final formatter = DateFormat("d MMM yyyy").add_Hm();
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -37,15 +35,15 @@ class NewTransactionDatetimeComponent extends StatelessWidget {
             children: [
               // -> date time
               ListenableBuilder(
-                listenable: viewModel.dateController,
+                listenable: Listenable.merge([
+                  viewModel.dateController,
+                  viewModel.timeController,
+                ]),
                 builder: (context, child) {
                   return Padding(
                     padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
                     child: Text(
-                      formatter.format(
-                        // TODO: соединять значения из даты и из времени
-                        viewModel.dateController.value ?? DateTime.now(),
-                      ),
+                      viewModel.dateTimeDescription,
                       style: GoogleFonts.golosText(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,
