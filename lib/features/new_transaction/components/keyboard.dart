@@ -32,7 +32,7 @@ class NewTransactionKeyboadrComponent extends StatelessWidget {
         ),
         ButtonTypeAction(
           color: Theme.of(context).colorScheme.secondary,
-          icon: Assets.icons.checkmarkSemibold,
+          icon: Assets.icons.checkmarkBold,
         ),
       ],
     ];
