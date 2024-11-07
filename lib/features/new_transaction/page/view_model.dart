@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/components/calendar/component.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/components/time/component.dart";
@@ -27,13 +28,16 @@ final class NewTransactionViewModel
   final incomeCategoryController = SelectController<CategoryModel?>(null);
   final dateController = CalendarController(DateTime.now());
   final timeController = TimeController(DateTime.now());
+  final tagScrollController = ScrollController();
+  final tagInput = InputController();
 
   List<AccountModel> accounts = [];
   Map<ETransactionType, List<CategoryModel>> categories = {
     for (final key in ETransactionType.values) key: const [],
   };
+  List<TagModel> tags = const [];
 
-  List<NewTransactionTag> attachedTags = [];
+  List<NewTransactionTag> attachedTags = const [];
 
   String get dateTimeDescription {
     final formatter = DateFormat("d MMM yyyy, HH:mm");
@@ -62,6 +66,8 @@ final class NewTransactionViewModel
     incomeCategoryController.dispose();
     dateController.dispose();
     timeController.dispose();
+    tagScrollController.dispose();
+    tagInput.dispose();
     super.dispose();
   }
 
@@ -71,6 +77,7 @@ final class NewTransactionViewModel
       viewModel: this,
       useCases: [
         () => OnDatePressed(),
+        () => OnAddTagPressed(),
       ],
       child: const NewTransactionView(),
     );

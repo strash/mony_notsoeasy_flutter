@@ -1,7 +1,8 @@
 export "./account.dart";
 export "./amount.dart";
 export "./background.dart";
-export "./calendar_bottom_sheet.dart";
+export "./bottom_sheet_calendar.dart";
+export "./bottom_sheet_tags.dart";
 export "./category.dart";
 export "./datetime.dart";
 export "./keyboard.dart";

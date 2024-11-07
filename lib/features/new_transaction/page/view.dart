@@ -15,73 +15,61 @@ class NewTransactionView extends StatelessWidget {
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final viewModel = context.viewModel<NewTransactionViewModel>();
 
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        // -> background
-        const NewTransactionBackgroundComponent(),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10.w, 0.0, 10.w, viewPadding.bottom + 10.h),
+      child: Column(
+        children: [
+          // -> the rest
+          Expanded(
+            child: Column(
+              children: [
+                // -> type
+                TabGroupComponent(
+                  values: ETransactionType.values,
+                  controller: viewModel.typeController,
+                ),
+                SizedBox(height: 40.h),
 
-        // -> form
-        Padding(
-          padding:
-              EdgeInsets.fromLTRB(10.w, 0.0, 10.w, viewPadding.bottom + 10.h),
-          child: Column(
-            children: [
-              // -> handler
-              const BottomSheetHandleComponent(),
+                // -> amount
+                const NewTransactionAmountComponent(),
+                SizedBox(height: 10.h),
 
-              // -> the rest
-              Expanded(
-                child: Column(
+                // -> date time
+                const NewTransactionDatetimeComponent(),
+
+                const Spacer(),
+
+                // -> note
+                Text("Note"),
+                SizedBox(height: 30.h),
+
+                // -> account and category
+                Flex(
+                  direction: Axis.horizontal,
                   children: [
-                    // -> type
-                    SizedBox(height: 10.h),
-                    TabGroupComponent(
-                      values: ETransactionType.values,
-                      controller: viewModel.typeController,
+                    // -> account
+                    const Flexible(child: NewTransactionAccountComponent()),
+                    SizedBox(width: 10.w),
+
+                    // -> category
+                    const Flexible(
+                      child: NewTransactionCategoryComponent(),
                     ),
-                    SizedBox(height: 40.h),
-
-                    // -> amount
-                    const NewTransactionAmountComponent(),
-                    SizedBox(height: 20.h),
-
-                    // -> date time
-                    const NewTransactionDatetimeComponent(),
-
-                    const Spacer(),
-
-                    // -> note
-                    Text("Note"),
-                    // SizedBox(height: 30.h),
-
-                    Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        // -> account
-                        const Flexible(child: NewTransactionAccountComponent()),
-                        SizedBox(width: 10.w),
-
-                        // -> category
-                        const Flexible(
-                            child: NewTransactionCategoryComponent()),
-                      ],
-                    ),
-                    SizedBox(height: 10.h),
-
-                    // -> tags
-                    const NewTransactionTagsComponent(),
-                    SizedBox(height: 10.h),
                   ],
                 ),
-              ),
+                SizedBox(height: 15.h),
 
-              // -> keyboard
-              const NewTransactionKeyboadrComponent(),
-            ],
+                // -> tags
+                const NewTransactionTagsComponent(),
+                SizedBox(height: 15.h),
+              ],
+            ),
           ),
-        ),
-      ],
+
+          // -> keyboard
+          const NewTransactionKeyboadrComponent(),
+        ],
+      ),
     );
   }
 }

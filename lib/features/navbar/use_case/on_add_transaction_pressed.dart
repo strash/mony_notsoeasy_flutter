@@ -8,7 +8,6 @@ final class OnAddTransactionPressed extends UseCase<void, dynamic> {
   void call(BuildContext context, [dynamic _]) {
     BottomSheetComponent.show(
       context,
-      showDragHandle: false,
       builder: (context, bottom) {
         return const NewTransactionPage();
       },

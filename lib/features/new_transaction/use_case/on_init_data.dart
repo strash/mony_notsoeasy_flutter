@@ -15,6 +15,7 @@ final class OnInitData extends UseCase<Future<void>, NewTransactionViewModel> {
     final accountService = context.read<DomainAccountService>();
     final categoryService = context.read<DomainCategoryService>();
     final transactionService = context.read<DomainTransactionService>();
+    final tagService = context.read<DomainTagService>();
 
     final accounts = await accountService.getAll();
 
@@ -30,12 +31,16 @@ final class OnInitData extends UseCase<Future<void>, NewTransactionViewModel> {
           : accounts.firstOrNull?.copyWith();
     });
 
+    // TODO: сортировать по последнему использованию и по типу транзакции
+    final tags = await tagService.getAll();
+
     viewModel.setProtectedState(() {
       viewModel.accounts = accounts;
       viewModel.categories = {
         ETransactionType.expense: expenseCategories,
         ETransactionType.income: incomeCategories,
       };
+      viewModel.tags = tags;
     });
   }
 }

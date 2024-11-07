@@ -23,10 +23,12 @@ class NewTransactionBackgroundComponent extends StatelessWidget {
     final brightness = MediaQuery.platformBrightnessOf(context);
     final viewModel = context.viewModel<NewTransactionViewModel>();
 
+    const stops = [.0, .4];
+
     const begin = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      stops: [.0, .4],
+      stops: stops,
       colors: [Color(0x00000000), Color(0x00000000)],
     );
 
@@ -40,7 +42,7 @@ class NewTransactionBackgroundComponent extends StatelessWidget {
         final end = LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: const [.0, .4],
+          stops: stops,
           colors: [
             color.withOpacity(brightness == Brightness.light ? .2 : .45),
             color.withOpacity(.0),
@@ -50,10 +52,7 @@ class NewTransactionBackgroundComponent extends StatelessWidget {
         return TweenAnimationBuilder<LinearGradient>(
           duration: Durations.medium2,
           curve: Curves.easeInOut,
-          tween: _GradientTween(
-            begin: begin,
-            end: end,
-          ),
+          tween: _GradientTween(begin: begin, end: end),
           builder: (context, gradient, child) {
             return DecoratedBox(
               decoration: BoxDecoration(gradient: gradient),
