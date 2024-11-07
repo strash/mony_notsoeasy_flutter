@@ -40,7 +40,7 @@ class _TimePopupComponentState extends State<TimePopupComponent>
   }
 
   Rect get _wheelRect {
-    final offset = 10.r;
+    final offset = 6.r;
     final size = MediaQuery.sizeOf(context);
     final init = widget.initialRect;
     final isOnRight = init.left + _wheelSize > size.width;
@@ -117,7 +117,7 @@ class _TimePopupComponentState extends State<TimePopupComponent>
               Positioned.fromRect(
                 rect: _wheelRect,
                 child: Transform.scale(
-                  scale: value.remap(.0, 1.0, .8, 1.0),
+                  scale: value.remap(.0, 1.0, .9, 1.0),
                   child: Opacity(
                     opacity: value,
                     child: RepaintBoundary(
@@ -145,11 +145,12 @@ class _TimePopupComponentState extends State<TimePopupComponent>
                                       horizontal: 10.w,
                                     ),
                                     child: SizedBox.fromSize(
-                                      size: Size.fromHeight(36.h),
+                                      size: Size.fromHeight(40.h),
                                       child: DecoratedBox(
                                         decoration: ShapeDecoration(
-                                          color: theme.colorScheme.onSurface
-                                              .withOpacity(.07),
+                                          color: theme
+                                              .colorScheme.tertiaryContainer
+                                              .withOpacity(.5),
                                           shape: SmoothRectangleBorder(
                                             borderRadius:
                                                 SmoothBorderRadius.all(
