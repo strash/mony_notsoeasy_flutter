@@ -15,7 +15,7 @@ class FeedItemTimeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = DateFormat.Hm();
+    final formatter = DateFormat("HH:mm");
 
     return Padding(
       padding: EdgeInsets.only(right: margin),

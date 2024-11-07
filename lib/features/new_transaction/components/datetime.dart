@@ -19,53 +19,57 @@ class NewTransactionDatetimeComponent extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onDatePressed(context),
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          shape: SmoothRectangleBorder(
-            side: BorderSide(color: theme.colorScheme.outline),
-            borderRadius: SmoothBorderRadius.all(
-              SmoothRadius(cornerRadius: 12.r, cornerSmoothing: 1.0),
+      child: SizedBox(
+        height: 38.h,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: theme.colorScheme.surfaceContainer,
+            shape: SmoothRectangleBorder(
+              // side: BorderSide(color: theme.colorScheme.outline),
+              borderRadius: SmoothBorderRadius.all(
+                SmoothRadius(cornerRadius: 13.r, cornerSmoothing: 1.0),
+              ),
             ),
           ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(left: 15.w, right: 9.w),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // -> date time
-              ListenableBuilder(
-                listenable: Listenable.merge([
-                  viewModel.dateController,
-                  viewModel.timeController,
-                ]),
-                builder: (context, child) {
-                  return Padding(
-                    padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
-                    child: Text(
-                      viewModel.dateTimeDescription,
-                      style: GoogleFonts.golosText(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: theme.colorScheme.onSurface,
+          child: Padding(
+            padding: EdgeInsets.only(left: 20.w, right: 10.w),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // -> date time
+                ListenableBuilder(
+                  listenable: Listenable.merge([
+                    viewModel.dateController,
+                    viewModel.timeController,
+                  ]),
+                  builder: (context, child) {
+                    return Padding(
+                      padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
+                      child: Text(
+                        viewModel.dateTimeDescription,
+                        style: GoogleFonts.golosText(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                          color: theme.colorScheme.onSurface,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(width: 6.w),
-
-              // -> icon
-              SvgPicture.asset(
-                Assets.icons.calendar,
-                width: 20.r,
-                height: 20.r,
-                colorFilter: ColorFilter.mode(
-                  theme.colorScheme.tertiary,
-                  BlendMode.srcIn,
+                    );
+                  },
                 ),
-              ),
-            ],
+                SizedBox(width: 6.w),
+
+                // -> icon
+                SvgPicture.asset(
+                  Assets.icons.calendar,
+                  width: 24.r,
+                  height: 24.r,
+                  colorFilter: ColorFilter.mode(
+                    theme.colorScheme.secondary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -50,7 +50,7 @@ class FeedItemTagsComponent extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(5.w, .0, 5.w, 1.5.h),
                     child: Text(
-                      tag.title,
+                      "#${tag.title}",
                       maxLines: 1,
                       style: GoogleFonts.golosText(
                         fontSize: 14.sp,

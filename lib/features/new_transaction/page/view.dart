@@ -15,56 +15,73 @@ class NewTransactionView extends StatelessWidget {
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final viewModel = context.viewModel<NewTransactionViewModel>();
 
-    return Padding(
-      padding: EdgeInsets.fromLTRB(10.w, 0.0, 10.w, viewPadding.bottom + 10.h),
-      child: Column(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                // -> type
-                TabGroupComponent(
-                  values: ETransactionType.values,
-                  controller: viewModel.typeController,
-                ),
-                SizedBox(height: 40.h),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // -> background
+        const NewTransactionBackgroundComponent(),
 
-                // -> amount
-                const NewTransactionAmountComponent(),
-                SizedBox(height: 10.h),
+        // -> form
+        Padding(
+          padding:
+              EdgeInsets.fromLTRB(10.w, 0.0, 10.w, viewPadding.bottom + 10.h),
+          child: Column(
+            children: [
+              // -> handler
+              const BottomSheetHandleComponent(),
 
-                // -> date time
-                const NewTransactionDatetimeComponent(),
-
-                const Spacer(),
-
-                // -> tags
-                Text("Tags"),
-
-                // -> note
-                Text("Note"),
-                SizedBox(height: 30.h),
-
-                Flex(
-                  direction: Axis.horizontal,
+              // -> the rest
+              Expanded(
+                child: Column(
                   children: [
-                    // -> account
-                    const Flexible(child: NewTransactionAccountComponent()),
-                    SizedBox(width: 10.w),
+                    // -> type
+                    SizedBox(height: 10.h),
+                    TabGroupComponent(
+                      values: ETransactionType.values,
+                      controller: viewModel.typeController,
+                    ),
+                    SizedBox(height: 40.h),
 
-                    // -> category
-                    const Flexible(child: NewTransactionCategoryComponent()),
+                    // -> amount
+                    const NewTransactionAmountComponent(),
+                    SizedBox(height: 20.h),
+
+                    // -> date time
+                    const NewTransactionDatetimeComponent(),
+
+                    const Spacer(),
+
+                    // -> note
+                    Text("Note"),
+                    // SizedBox(height: 30.h),
+
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        // -> account
+                        const Flexible(child: NewTransactionAccountComponent()),
+                        SizedBox(width: 10.w),
+
+                        // -> category
+                        const Flexible(
+                            child: NewTransactionCategoryComponent()),
+                      ],
+                    ),
+                    SizedBox(height: 10.h),
+
+                    // -> tags
+                    const NewTransactionTagsComponent(),
+                    SizedBox(height: 10.h),
                   ],
                 ),
-                SizedBox(height: 20.h),
-              ],
-            ),
-          ),
+              ),
 
-          // -> keyboard
-          const NewTransactionKeyboadrComponent(),
-        ],
-      ),
+              // -> keyboard
+              const NewTransactionKeyboadrComponent(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

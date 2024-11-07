@@ -9,6 +9,7 @@ import "package:mony_app/features/features.dart";
 import "package:mony_app/features/new_transaction/page/view.dart";
 
 export "../use_case/use_case.dart";
+export "./tag_vo.dart";
 
 final class NewTransactionViewModelBuilder extends StatefulWidget {
   const NewTransactionViewModelBuilder({super.key});
@@ -32,8 +33,10 @@ final class NewTransactionViewModel
     for (final key in ETransactionType.values) key: const [],
   };
 
+  List<NewTransactionTag> attachedTags = [];
+
   String get dateTimeDescription {
-    final formatter = DateFormat("d MMM yyyy").add_Hm();
+    final formatter = DateFormat("d MMM yyyy, HH:mm");
     final date = DateTime(
       dateController.value!.year,
       dateController.value!.month,
