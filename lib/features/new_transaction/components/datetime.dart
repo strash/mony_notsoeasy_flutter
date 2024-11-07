@@ -20,19 +20,18 @@ class NewTransactionDatetimeComponent extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: () => onDatePressed(context),
       child: SizedBox(
-        height: 38.h,
+        height: 34.h,
         child: DecoratedBox(
           decoration: ShapeDecoration(
-            color: theme.colorScheme.surfaceContainer,
             shape: SmoothRectangleBorder(
-              // side: BorderSide(color: theme.colorScheme.outline),
+              side: BorderSide(color: theme.colorScheme.outlineVariant),
               borderRadius: SmoothBorderRadius.all(
-                SmoothRadius(cornerRadius: 13.r, cornerSmoothing: 1.0),
+                SmoothRadius(cornerRadius: 14.r, cornerSmoothing: 1.0),
               ),
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.only(left: 20.w, right: 10.w),
+            padding: EdgeInsets.only(left: 15.w, right: 10.w),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -44,11 +43,11 @@ class NewTransactionDatetimeComponent extends StatelessWidget {
                   ]),
                   builder: (context, child) {
                     return Padding(
-                      padding: EdgeInsets.only(top: 4.h, bottom: 5.h),
+                      padding: EdgeInsets.only(bottom: 1.h),
                       child: Text(
                         viewModel.dateTimeDescription,
                         style: GoogleFonts.golosText(
-                          fontSize: 16.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: theme.colorScheme.onSurface,
                         ),
@@ -61,8 +60,8 @@ class NewTransactionDatetimeComponent extends StatelessWidget {
                 // -> icon
                 SvgPicture.asset(
                   Assets.icons.calendar,
-                  width: 24.r,
-                  height: 24.r,
+                  width: 20.r,
+                  height: 20.r,
                   colorFilter: ColorFilter.mode(
                     theme.colorScheme.secondary,
                     BlendMode.srcIn,
