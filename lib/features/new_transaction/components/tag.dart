@@ -3,23 +3,17 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/features/new_transaction/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class NewTransactionTagComponent extends StatelessWidget {
-  final NewTransactionTag tag;
+  final String title;
+  final bool showCloseIcon;
 
   const NewTransactionTagComponent({
     super.key,
-    required this.tag,
+    required this.title,
+    required this.showCloseIcon,
   });
-
-  String get _title {
-    return switch (tag) {
-      final NewTransactionTagVO odj => odj.vo.title,
-      final NewTransactionTagModel obj => obj.model.title,
-    };
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,30 +29,33 @@ class NewTransactionTagComponent extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 12.w, right: 8.w),
+        padding: EdgeInsets.only(left: 12.w, right: showCloseIcon ? 8.w : 12.w),
         child: Row(
           children: [
             // -> title
             Text(
-              _title,
+              title,
               style: GoogleFonts.golosText(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
                 color: theme.colorScheme.onSurface,
               ),
             ),
-            SizedBox(width: 3.w),
 
             // -> button remove
-            SvgPicture.asset(
-              Assets.icons.xmarkSemibold,
-              width: 16.r,
-              height: 16.r,
-              colorFilter: ColorFilter.mode(
-                theme.colorScheme.onSurfaceVariant,
-                BlendMode.srcIn,
+            if (showCloseIcon)
+              Padding(
+                padding: EdgeInsets.only(left: 3.w),
+                child: SvgPicture.asset(
+                  Assets.icons.xmarkSemibold,
+                  width: 16.r,
+                  height: 16.r,
+                  colorFilter: ColorFilter.mode(
+                    theme.colorScheme.onSurfaceVariant,
+                    BlendMode.srcIn,
+                  ),
+                ),
               ),
-            ),
           ],
         ),
       ),

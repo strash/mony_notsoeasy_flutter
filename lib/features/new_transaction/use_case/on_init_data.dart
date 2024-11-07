@@ -33,6 +33,7 @@ final class OnInitData extends UseCase<Future<void>, NewTransactionViewModel> {
 
     // TODO: сортировать по последнему использованию и по типу транзакции
     final tags = await tagService.getAll();
+    viewModel.displayedTags.value = tags;
 
     viewModel.setProtectedState(() {
       viewModel.accounts = accounts;

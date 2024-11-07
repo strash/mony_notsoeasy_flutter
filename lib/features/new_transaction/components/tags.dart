@@ -28,12 +28,8 @@ class NewTransactionTagsComponent extends StatelessWidget {
     final onAddTagPressed = viewModel<OnAddTagPressed>();
 
     return GestureDetector(
-      behavior: viewModel.attachedTags.isEmpty
-          ? HitTestBehavior.opaque
-          : HitTestBehavior.translucent,
-      onTap: viewModel.attachedTags.isEmpty
-          ? () => onAddTagPressed(context)
-          : null,
+      behavior: HitTestBehavior.translucent,
+      onTap: () => onAddTagPressed(context),
       child: SizedBox(
         height: height,
         child: Row(
@@ -48,9 +44,9 @@ class NewTransactionTagsComponent extends StatelessWidget {
                 child: switch (viewModel.attachedTags.isEmpty) {
                   // -> placeholder
                   true => Align(
+                      key: Key("tags_${viewModel.attachedTags.isEmpty}"),
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        key: Key("tags_${viewModel.attachedTags.isEmpty}"),
                         padding: EdgeInsets.only(left: 10.w),
                         child: Text(
                           "Добавь теги...",
@@ -66,7 +62,7 @@ class NewTransactionTagsComponent extends StatelessWidget {
                       key: Key("tags_${viewModel.attachedTags.isEmpty}"),
                       children: [
                         ListView.separated(
-                          controller: viewModel.tagScrollController,
+                          controller: controller,
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
                           separatorBuilder: (context, index) {
@@ -76,7 +72,16 @@ class NewTransactionTagsComponent extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final item =
                                 viewModel.attachedTags.elementAt(index);
-                            return NewTransactionTagComponent(tag: item);
+                            final title = switch (item) {
+                              final NewTransactionTagVO odj => odj.vo.title,
+                              final NewTransactionTagModel obj =>
+                                obj.model.title,
+                            };
+
+                            return NewTransactionTagComponent(
+                              title: title,
+                              showCloseIcon: true,
+                            );
                           },
                         ),
 
@@ -84,7 +89,7 @@ class NewTransactionTagsComponent extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: ListenableBuilder(
-                            listenable: viewModel.tagScrollController,
+                            listenable: controller,
                             builder: (context, child) {
                               if (!_isReady(controller)) {
                                 return const SizedBox();
@@ -105,7 +110,7 @@ class NewTransactionTagsComponent extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerRight,
                           child: ListenableBuilder(
-                            listenable: viewModel.tagScrollController,
+                            listenable: controller,
                             builder: (context, child) {
                               if (!_isReady(controller)) {
                                 return const SizedBox();

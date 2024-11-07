@@ -30,13 +30,14 @@ final class NewTransactionViewModel
   final timeController = TimeController(DateTime.now());
   final tagScrollController = ScrollController();
   final tagInput = InputController();
+  final bottomSheetTagScrollController = ScrollController();
 
   List<AccountModel> accounts = [];
   Map<ETransactionType, List<CategoryModel>> categories = {
     for (final key in ETransactionType.values) key: const [],
   };
   List<TagModel> tags = const [];
-
+  final displayedTags = ValueNotifier<List<TagModel>>([]);
   List<NewTransactionTag> attachedTags = const [];
 
   String get dateTimeDescription {
@@ -68,6 +69,8 @@ final class NewTransactionViewModel
     timeController.dispose();
     tagScrollController.dispose();
     tagInput.dispose();
+    displayedTags.dispose();
+    bottomSheetTagScrollController.dispose();
     super.dispose();
   }
 
