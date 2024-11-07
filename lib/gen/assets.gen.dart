@@ -100,6 +100,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/magnifyingglass.svg
   String get magnifyingglass => 'assets/icons/magnifyingglass.svg';
 
+  /// File path: assets/icons/number.svg
+  String get number => 'assets/icons/number.svg';
+
   /// File path: assets/icons/pencil.line.svg
   String get pencilLine => 'assets/icons/pencil.line.svg';
 
@@ -131,6 +134,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/widget.small.svg
   String get widgetSmall => 'assets/icons/widget.small.svg';
 
+  /// File path: assets/icons/xmark.bold.svg
+  String get xmarkBold => 'assets/icons/xmark.bold.svg';
+
+  /// File path: assets/icons/xmark.semibold.svg
+  String get xmarkSemibold => 'assets/icons/xmark.semibold.svg';
+
   /// File path: assets/icons/xmark.svg
   String get xmark => 'assets/icons/xmark.svg';
 
@@ -154,6 +163,7 @@ class $AssetsIconsGen {
         link,
         listBulletBelowRectangle,
         magnifyingglass,
+        number,
         pencilLine,
         personCropCircleFillBadgePlus,
         plus,
@@ -164,6 +174,8 @@ class $AssetsIconsGen {
         squareAndArrowDown,
         widgetSmallBadgePlus,
         widgetSmall,
+        xmarkBold,
+        xmarkSemibold,
         xmark
       ];
 }
