@@ -11,12 +11,6 @@ import "package:mony_app/gen/assets.gen.dart";
 class NewTransactionTagsComponent extends StatelessWidget {
   const NewTransactionTagsComponent({super.key});
 
-  bool _isReady(ScrollController controller) {
-    return controller.hasClients &&
-        controller.position.hasPixels &&
-        controller.position.haveDimensions;
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -91,7 +85,7 @@ class NewTransactionTagsComponent extends StatelessWidget {
                           child: ListenableBuilder(
                             listenable: controller,
                             builder: (context, child) {
-                              if (!_isReady(controller)) {
+                              if (!controller.isReady) {
                                 return const SizedBox();
                               }
 
@@ -112,7 +106,7 @@ class NewTransactionTagsComponent extends StatelessWidget {
                           child: ListenableBuilder(
                             listenable: controller,
                             builder: (context, child) {
-                              if (!_isReady(controller)) {
+                              if (!controller.isReady) {
                                 return const SizedBox();
                               }
 

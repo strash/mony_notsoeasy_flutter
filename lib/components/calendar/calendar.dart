@@ -61,10 +61,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
   }
 
   void _handlePosition() {
-    final hasClients = _controller.scrollController.hasClients;
-    final hasPixels = _controller.scrollController.position.hasPixels;
-    final haveDimensions = _controller.scrollController.position.haveDimensions;
-    if (_moving || !hasClients || !hasPixels || !haveDimensions) return;
+    if (_moving || !_controller.scrollController.isReady) return;
 
     final direction = _controller.scrollController.position.userScrollDirection;
     final pos = _controller.scrollController.position.pixels;
@@ -148,12 +145,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
     _controller.addEventListener(_controllerListener);
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      final scrollController = _controller.scrollController;
-      final hasClients = scrollController.hasClients;
-      final hasPixels = scrollController.position.hasPixels;
-      final haveDimensions = scrollController.position.haveDimensions;
-      if (!hasClients || !hasPixels || !haveDimensions) return;
-      scrollController.jumpTo(MediaQuery.sizeOf(context).width);
+      if (!_controller.scrollController.isReady) return;
+      _controller.scrollController.jumpTo(MediaQuery.sizeOf(context).width);
     });
   }
 

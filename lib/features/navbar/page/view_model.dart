@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:rxdart/subjects.dart";
@@ -61,7 +62,7 @@ final class NavbarViewModel extends ViewModelState<NavbarViewModelBuilder> {
 
   // helper for uniform behavior
   void returnToTop(ScrollController scrollController) {
-    if (!scrollController.hasClients) return;
+    if (!scrollController.isReady) return;
     const curve = Curves.easeInOut;
     const duration = Duration(milliseconds: 500);
     scrollController.animateTo(.0, duration: duration, curve: curve);

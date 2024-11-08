@@ -25,12 +25,6 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
     required this.onSubmitPressed,
   });
 
-  bool get _isReady {
-    return scrollController.hasClients &&
-        scrollController.position.hasPixels &&
-        scrollController.position.haveDimensions;
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -78,7 +72,9 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
                         child: ListenableBuilder(
                           listenable: scrollController,
                           builder: (context, child) {
-                            if (!_isReady) return const SizedBox();
+                            if (!scrollController.isReady) {
+                              return const SizedBox();
+                            }
 
                             final position = scrollController.position;
                             final isVisible = position.extentBefore > .0;
@@ -97,7 +93,9 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
                         child: ListenableBuilder(
                           listenable: scrollController,
                           builder: (context, child) {
-                            if (!_isReady) return const SizedBox();
+                            if (!scrollController.isReady) {
+                              return const SizedBox();
+                            }
 
                             final position = scrollController.position;
                             final isVisible = position.extentAfter > .0;

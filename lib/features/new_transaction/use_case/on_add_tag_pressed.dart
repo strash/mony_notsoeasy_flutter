@@ -69,11 +69,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     if (!context.mounted) return;
 
     viewModel.tagInput.text = "";
-    if (!controller.hasClients ||
-        !controller.position.hasPixels ||
-        !controller.position.haveDimensions) {
-      return;
-    }
+    if (!controller.isReady) return;
     controller.jumpTo(.0);
   }
 }

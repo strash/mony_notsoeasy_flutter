@@ -29,7 +29,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   List<FeedPageState> pages = [];
 
   int get currentPageIndex {
-    if (!pageController.hasClients) return 0;
+    if (!pageController.isReady) return 0;
     return pageController.page?.toInt() ?? 0;
   }
 
