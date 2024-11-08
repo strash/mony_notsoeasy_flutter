@@ -14,6 +14,14 @@ final class DomainTagService extends BaseDomainService {
   })  : _tagRepo = tagRepo,
         _tagFactory = tagFactory;
 
+  Future<List<TagModel>> getAllSortedBy({
+    required ETransactionType first,
+  }) async {
+    final order = first == ETransactionType.expense ? "ASC" : "DESC";
+    final dtos = await _tagRepo.getAllSortedBy(transactionTypeOrder: order);
+    return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
+  }
+
   Future<List<TagModel>> getAll() async {
     final dtos = await _tagRepo.getAll();
     return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);

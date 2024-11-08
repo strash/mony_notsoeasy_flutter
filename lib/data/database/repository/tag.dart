@@ -6,6 +6,8 @@ abstract base class TagDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
+  Future<List<TagDto>> getAllSortedBy({required String transactionTypeOrder});
+
   Future<List<TagDto>> getAll();
 
   Future<List<TagDto>> getMany({
@@ -30,6 +32,37 @@ final class _Impl
   String get table => "tags";
 
   const _Impl({required this.database});
+
+  @override
+  Future<List<TagDto>> getAllSortedBy({
+    required String transactionTypeOrder,
+  }) async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.rawQuery("""
+SELECT
+	id, created, updated, title
+FROM (
+	SELECT
+		t.*,
+		c.transaction_type,
+		MAX(tr.date) as date
+	FROM $table AS t
+	JOIN transaction_tags AS tt ON t.id = tt.tag_id
+	JOIN transactions AS tr ON tt.transaction_id = tr.id
+	JOIN categories AS c ON tr.category_id = c.id
+	GROUP BY t.id
+) ORDER BY
+	transaction_type $transactionTypeOrder,
+	date DESC;
+""");
+      return List.generate(
+        maps.length,
+        (index) => TagDto.fromJson(maps.elementAt(index)),
+        growable: false,
+      );
+    });
+  }
 
   @override
   Future<List<TagDto>> getAll() async {
