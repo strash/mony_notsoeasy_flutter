@@ -80,7 +80,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     final viewModel = formContext.viewModel<NewTransactionViewModel>();
     final input = viewModel.tagInput.text.trim();
     if (input.isEmpty) return;
-    // first check if theres allready a tag with this title
+    // first check if theres already a model with this title and use it
     for (final element in viewModel.displayedTags.value) {
       if (element.title.toLowerCase() == input.toLowerCase()) {
         viewModel.setProtectedState(() {
@@ -91,7 +91,16 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
         return;
       }
     }
-    // then create a new one
+    // then check if theres already an attached tag with this title
+    for (final element in viewModel.attachedTags) {
+      switch (element) {
+        case final NewTransactionTagVO tag:
+          if (tag.vo.title.toLowerCase() == input.toLowerCase()) return;
+        case final NewTransactionTagModel tag:
+          if (tag.model.title.toLowerCase() == input.toLowerCase()) return;
+      }
+    }
+    // finally create a new one
     viewModel.setProtectedState(() {
       viewModel.attachedTags =
           List<NewTransactionTag>.from(viewModel.attachedTags)
