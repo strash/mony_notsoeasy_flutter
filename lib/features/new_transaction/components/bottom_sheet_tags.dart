@@ -44,6 +44,25 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
               builder: (context, value, child) {
                 return Stack(
                   children: [
+                    // -> empty state
+                    AnimatedSwitcher(
+                      duration: Durations.medium2,
+                      switchInCurve: Curves.easeInOut,
+                      switchOutCurve: Curves.easeInOut,
+                      child: tags.value.isEmpty
+                          ? Center(
+                              child: Text(
+                                'Чтобы создать тег, нажми "Готово"',
+                                style: GoogleFonts.golosText(
+                                  fontSize: 15.sp,
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+
+                    // -> list of tags
                     ListView.separated(
                       controller: scrollController,
                       scrollDirection: Axis.horizontal,
@@ -55,13 +74,18 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
                       },
                       itemCount: value.length,
                       itemBuilder: (context, index) {
-                        final item = value.elementAt(index);
+                        final item = value.elementAtOrNull(index);
+                        if (item == null) return const SizedBox();
 
                         return GestureDetector(
                           onTap: () => onTagPressed(context, item),
                           child: NewTransactionTagComponent(
-                            title: item.title,
-                            showCloseIcon: false,
+                            builder: (context) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                child: Center(child: Text(item.title)),
+                              );
+                            },
                           ),
                         );
                       },
@@ -136,7 +160,7 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
             ),
             scrollPadding: EdgeInsets.zero,
             decoration: const InputDecoration(
-              hintText: "тег...",
+              hintText: "Ищи теги или создавай новые",
               counterText: "",
             ),
             onFieldSubmitted: (_) => onSubmitPressed(context),

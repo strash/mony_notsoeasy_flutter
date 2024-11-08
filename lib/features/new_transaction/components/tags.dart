@@ -20,6 +20,7 @@ class NewTransactionTagsComponent extends StatelessWidget {
     final viewModel = context.viewModel<NewTransactionViewModel>();
     final controller = viewModel.tagScrollController;
     final onAddTagPressed = viewModel<OnAddTagPressed>();
+    final onRemoveTagPressed = viewModel<OnRemoveTagPressed>();
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -67,7 +68,9 @@ class NewTransactionTagsComponent extends StatelessWidget {
                           itemCount: viewModel.attachedTags.length,
                           itemBuilder: (context, index) {
                             final item =
-                                viewModel.attachedTags.elementAt(index);
+                                viewModel.attachedTags.elementAtOrNull(index);
+                            if (item == null) return const SizedBox();
+
                             final title = switch (item) {
                               final NewTransactionTagVO odj => odj.vo.title,
                               final NewTransactionTagModel obj =>
@@ -75,8 +78,35 @@ class NewTransactionTagsComponent extends StatelessWidget {
                             };
 
                             return NewTransactionTagComponent(
-                              title: title,
-                              showCloseIcon: true,
+                              builder: (context) {
+                                return Padding(
+                                  padding:
+                                      EdgeInsets.only(left: 12.w, right: 8.w),
+                                  child: Row(
+                                    children: [
+                                      // -> title
+                                      Text(title),
+                                      SizedBox(width: 3.w),
+
+                                      // -> button remove
+                                      GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () =>
+                                            onRemoveTagPressed(context, item),
+                                        child: SvgPicture.asset(
+                                          Assets.icons.xmarkSemibold,
+                                          width: 16.r,
+                                          height: 16.r,
+                                          colorFilter: ColorFilter.mode(
+                                            theme.colorScheme.onSurfaceVariant,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             );
                           },
                         ),

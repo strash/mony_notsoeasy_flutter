@@ -80,6 +80,7 @@ final class NewTransactionViewModel
       useCases: [
         () => OnDatePressed(),
         () => OnAddTagPressed(),
+        () => OnRemoveTagPressed(),
       ],
       child: const NewTransactionView(),
     );

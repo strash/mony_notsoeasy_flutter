@@ -59,7 +59,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
             query: input,
             choices: filteredTags,
             getter: (e) => e.title,
-            cutoff: 50,
+            cutoff: 60,
           )
           .map((e) => e.choice)
           .toList(growable: false);
