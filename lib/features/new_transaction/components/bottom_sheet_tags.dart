@@ -36,82 +36,83 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // -> suggestions
-          if (tags.value.isNotEmpty)
-            SizedBox(
-              height: 34.h,
-              width: viewSize.width - 30.w,
-              child: ValueListenableBuilder(
-                valueListenable: tags,
-                builder: (context, value, child) {
-                  return Stack(
-                    children: [
-                      ListView.separated(
-                        controller: scrollController,
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        separatorBuilder: (context, index) {
-                          return SizedBox(width: 5.w);
-                        },
-                        itemCount: value.length,
-                        itemBuilder: (context, index) {
-                          final item = value.elementAt(index);
+          SizedBox(
+            height: 34.h,
+            width: viewSize.width - 30.w,
+            child: ValueListenableBuilder(
+              valueListenable: tags,
+              builder: (context, value, child) {
+                return Stack(
+                  children: [
+                    ListView.separated(
+                      controller: scrollController,
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      separatorBuilder: (context, index) {
+                        return SizedBox(width: 5.w);
+                      },
+                      itemCount: value.length,
+                      itemBuilder: (context, index) {
+                        final item = value.elementAt(index);
 
-                          return GestureDetector(
-                            onTap: () => onTagPressed(context, item),
-                            child: NewTransactionTagComponent(
-                              title: item.title,
-                              showCloseIcon: false,
-                            ),
+                        return GestureDetector(
+                          onTap: () => onTagPressed(context, item),
+                          child: NewTransactionTagComponent(
+                            title: item.title,
+                            showCloseIcon: false,
+                          ),
+                        );
+                      },
+                    ),
+
+                    // -> left gradient
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: ListenableBuilder(
+                        listenable: scrollController,
+                        builder: (context, child) {
+                          if (!scrollController.isReady) {
+                            return const SizedBox();
+                          }
+
+                          final position = scrollController.position;
+                          final isVisible = position.extentBefore > .0;
+
+                          return NewTransactionTagsGradientComponent(
+                            isVisible: isVisible,
+                            isLeft: true,
                           );
                         },
                       ),
+                    ),
 
-                      // -> left gradient
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: ListenableBuilder(
-                          listenable: scrollController,
-                          builder: (context, child) {
-                            if (!scrollController.isReady) {
-                              return const SizedBox();
-                            }
+                    // -> right gradient
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ListenableBuilder(
+                        listenable: scrollController,
+                        builder: (context, child) {
+                          if (!scrollController.isReady) {
+                            return const SizedBox();
+                          }
 
-                            final position = scrollController.position;
-                            final isVisible = position.extentBefore > .0;
+                          final position = scrollController.position;
+                          final isVisible = position.extentAfter > .0;
 
-                            return NewTransactionTagsGradientComponent(
-                              isVisible: isVisible,
-                              isLeft: true,
-                            );
-                          },
-                        ),
+                          return NewTransactionTagsGradientComponent(
+                            isVisible: isVisible,
+                            isLeft: false,
+                          );
+                        },
                       ),
-
-                      // -> right gradient
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ListenableBuilder(
-                          listenable: scrollController,
-                          builder: (context, child) {
-                            if (!scrollController.isReady) {
-                              return const SizedBox();
-                            }
-
-                            final position = scrollController.position;
-                            final isVisible = position.extentAfter > .0;
-
-                            return NewTransactionTagsGradientComponent(
-                              isVisible: isVisible,
-                              isLeft: false,
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
+                    ),
+                  ],
+                );
+              },
             ),
+          ),
           SizedBox(height: 15.h),
 
           // -> input
@@ -123,6 +124,7 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
             // onTapOutside: controller.onTapOutside,
             keyboardType: TextInputType.text,
             autofocus: true,
+            autocorrect: false,
             textInputAction: TextInputAction.done,
             maxLength: kMaxTitleLength,
             maxLengthEnforcement: MaxLengthEnforcement.enforced,

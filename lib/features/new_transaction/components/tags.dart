@@ -58,7 +58,9 @@ class NewTransactionTagsComponent extends StatelessWidget {
                         ListView.separated(
                           controller: controller,
                           scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics(),
+                          ),
                           separatorBuilder: (context, index) {
                             return SizedBox(width: 5.w);
                           },

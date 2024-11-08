@@ -36,7 +36,6 @@ final class NewTransactionViewModel
   Map<ETransactionType, List<CategoryModel>> categories = {
     for (final key in ETransactionType.values) key: const [],
   };
-  List<TagModel> tags = const [];
   final displayedTags = ValueNotifier<List<TagModel>>([]);
   List<NewTransactionTag> attachedTags = const [];
 
