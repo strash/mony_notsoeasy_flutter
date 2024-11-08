@@ -125,6 +125,7 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
             keyboardType: TextInputType.text,
             autofocus: true,
             autocorrect: false,
+            textCapitalization: TextCapitalization.sentences,
             textInputAction: TextInputAction.done,
             maxLength: kMaxTitleLength,
             maxLengthEnforcement: MaxLengthEnforcement.enforced,

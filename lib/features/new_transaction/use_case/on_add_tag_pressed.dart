@@ -92,10 +92,18 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
       }
     }
     // then check if theres already an attached tag with this title
-    for (final element in viewModel.attachedTags) {
-      switch (element) {
+    for (final (index, tag) in viewModel.attachedTags.indexed) {
+      switch (tag) {
         case final NewTransactionTagVO tag:
-          if (tag.vo.title.toLowerCase() == input.toLowerCase()) return;
+          // replace similar vo
+          if (tag.vo.title.toLowerCase() == input.toLowerCase()) {
+            viewModel.setProtectedState(() {
+              viewModel.attachedTags =
+                  List<NewTransactionTag>.from(viewModel.attachedTags)
+                    ..removeAt(index);
+            });
+            break;
+          }
         case final NewTransactionTagModel tag:
           if (tag.model.title.toLowerCase() == input.toLowerCase()) return;
       }
