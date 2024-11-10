@@ -31,6 +31,7 @@ final class NewTransactionViewModel
   final tagScrollController = ScrollController();
   final tagInput = InputController();
   final bottomSheetTagScrollController = ScrollController();
+  final noteInput = InputController();
 
   List<AccountModel> accounts = [];
   Map<ETransactionType, List<CategoryModel>> categories = {
@@ -70,6 +71,7 @@ final class NewTransactionViewModel
     tagInput.dispose();
     displayedTags.dispose();
     bottomSheetTagScrollController.dispose();
+    noteInput.dispose();
     super.dispose();
   }
 
@@ -81,6 +83,7 @@ final class NewTransactionViewModel
         () => OnDatePressed(),
         () => OnAddTagPressed(),
         () => OnRemoveTagPressed(),
+        () => OnNotePressed(),
       ],
       child: const NewTransactionView(),
     );
