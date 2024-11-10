@@ -15,7 +15,6 @@ class NewTransactionTagsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final height = 34.h;
-    const buttonAspectRatio = 1.4;
 
     final viewModel = context.viewModel<NewTransactionViewModel>();
     final controller = viewModel.tagScrollController;
@@ -28,9 +27,27 @@ class NewTransactionTagsComponent extends StatelessWidget {
       child: SizedBox(
         height: height,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // -> button add
+            GestureDetector(
+              onTap: () => onAddTagPressed(context),
+              child: SizedBox(
+                width: 46.w,
+                child: Center(
+                  child: SvgPicture.asset(
+                    Assets.icons.number,
+                    width: 24.r,
+                    height: 24.r,
+                    colorFilter: ColorFilter.mode(
+                      theme.colorScheme.secondary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
             Expanded(
               child: AnimatedSwitcher(
                 duration: Durations.short4,
@@ -41,14 +58,11 @@ class NewTransactionTagsComponent extends StatelessWidget {
                   true => Align(
                       key: Key("tags_${viewModel.attachedTags.isEmpty}"),
                       alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10.w),
-                        child: Text(
-                          "Добавь теги...",
-                          style: GoogleFonts.golosText(
-                            fontSize: 15.sp,
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
+                      child: Text(
+                        "Добавь теги...",
+                        style: GoogleFonts.golosText(
+                          fontSize: 15.sp,
+                          color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ),
@@ -155,25 +169,6 @@ class NewTransactionTagsComponent extends StatelessWidget {
                       ],
                     ),
                 },
-              ),
-            ),
-
-            // -> button add
-            GestureDetector(
-              onTap: () => onAddTagPressed(context),
-              child: AspectRatio(
-                aspectRatio: buttonAspectRatio,
-                child: Center(
-                  child: SvgPicture.asset(
-                    Assets.icons.number,
-                    width: 24.r,
-                    height: 24.r,
-                    colorFilter: ColorFilter.mode(
-                      theme.colorScheme.secondary,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
               ),
             ),
           ],

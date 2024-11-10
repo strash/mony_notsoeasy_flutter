@@ -28,20 +28,15 @@ class NewTransactionView extends StatelessWidget {
                   values: ETransactionType.values,
                   controller: viewModel.typeController,
                 ),
-                SizedBox(height: 40.h),
-
-                // -> amount
-                const NewTransactionAmountComponent(),
-                SizedBox(height: 10.h),
+                SizedBox(height: 30.h),
 
                 // -> date time
                 const NewTransactionDatetimeComponent(),
-
                 const Spacer(),
 
-                // -> note
-                Text("Note"),
-                SizedBox(height: 30.h),
+                // -> amount
+                const NewTransactionAmountComponent(),
+                const Spacer(),
 
                 // -> account and category
                 Flex(
@@ -61,6 +56,10 @@ class NewTransactionView extends StatelessWidget {
 
                 // -> tags
                 const NewTransactionTagsComponent(),
+                SizedBox(height: 15.h),
+
+                // -> note
+                const NewTransactionNoteComponent(),
                 SizedBox(height: 15.h),
               ],
             ),

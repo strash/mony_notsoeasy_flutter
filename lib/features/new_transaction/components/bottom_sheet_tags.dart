@@ -165,6 +165,8 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
             ),
             onFieldSubmitted: (_) => onSubmitPressed(context),
           ),
+
+          // -> bottom offset
           SizedBox(height: 15.h + keyboardHeight),
         ],
       ),
