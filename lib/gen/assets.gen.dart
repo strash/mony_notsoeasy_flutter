@@ -100,6 +100,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/magnifyingglass.svg
   String get magnifyingglass => 'assets/icons/magnifyingglass.svg';
 
+  /// File path: assets/icons/minus.svg
+  String get minus => 'assets/icons/minus.svg';
+
+  /// File path: assets/icons/note.text.svg
+  String get noteText => 'assets/icons/note.text.svg';
+
   /// File path: assets/icons/number.svg
   String get number => 'assets/icons/number.svg';
 
@@ -163,6 +169,8 @@ class $AssetsIconsGen {
         link,
         listBulletBelowRectangle,
         magnifyingglass,
+        minus,
+        noteText,
         number,
         pencilLine,
         personCropCircleFillBadgePlus,
