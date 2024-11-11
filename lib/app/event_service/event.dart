@@ -1,10 +1,13 @@
 part of "./event_service.dart";
 
-sealed class Event {}
-
-final class EventAccountCreated extends Event {
+sealed class Event {
   final Type sender;
+
+  const Event(this.sender);
+}
+
+final class EventAccountCreated<Type> extends Event {
   final AccountModel account;
 
-  EventAccountCreated({required this.sender, required this.account});
+  const EventAccountCreated({required this.account}) : super(Type);
 }

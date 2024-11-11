@@ -152,7 +152,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     final account = accounts.entries.map((e) => e.value).first;
     navigator.popUntil((route) => route.isFirst);
     appService.notify(
-      EventAccountCreated(sender: ImportViewModel, account: account),
+      EventAccountCreated<ImportViewModel>(account: account),
     );
   }
 }

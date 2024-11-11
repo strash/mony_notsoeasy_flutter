@@ -28,10 +28,7 @@ final class OnShowAccountFormPressed extends UseCase<Future<void>, dynamic> {
     if (context.mounted) {
       Navigator.of(context).popUntil((route) => route.isFirst);
       eventService.notify(
-        EventAccountCreated(
-          sender: AccountFormViewModel,
-          account: account,
-        ),
+        EventAccountCreated<AccountFormViewModel>(account: account),
       );
     }
   }
