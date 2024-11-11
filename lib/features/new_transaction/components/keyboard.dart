@@ -16,6 +16,7 @@ class NewTransactionKeyboadrComponent extends StatelessWidget {
     final theme = Theme.of(context);
     final gap = 6.r;
     final viewModel = context.viewModel<NewTransactionViewModel>();
+    final onHintAcceptPressed = viewModel<OnKeyboardHintAccepted>();
 
     return Stack(
       children: [
@@ -50,51 +51,52 @@ class NewTransactionKeyboadrComponent extends StatelessWidget {
         ),
 
         // -> hint
-        Positioned.fill(
-          child: ColoredBox(
-            color: theme.colorScheme.surface.withOpacity(.9),
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // -> icon
-                  SvgPicture.asset(
-                    Assets.icons.handPointUpLeft,
-                    width: 60.r,
-                    height: 60.r,
-                    colorFilter: ColorFilter.mode(
-                      theme.colorScheme.tertiary,
-                      BlendMode.srcIn,
+        if (!viewModel.isKeyboardHintAccepted)
+          Positioned.fill(
+            child: ColoredBox(
+              color: theme.colorScheme.surface.withOpacity(.9),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // -> icon
+                    SvgPicture.asset(
+                      Assets.icons.handPointUpLeft,
+                      width: 60.r,
+                      height: 60.r,
+                      colorFilter: ColorFilter.mode(
+                        theme.colorScheme.tertiary,
+                        BlendMode.srcIn,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10.h),
+                    SizedBox(height: 10.h),
 
-                  // -> info
-                  Text(
-                    "Чтобы удалить цифру,\n"
-                    "свайпай влево или враво\n"
-                    "по клавиатуре.",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.golosText(
-                      fontSize: 16.sp,
-                      color: theme.colorScheme.onSurface,
+                    // -> info
+                    Text(
+                      "Чтобы удалить цифру,\n"
+                      "свайпай влево или враво\n"
+                      "по клавиатуре.",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.golosText(
+                        fontSize: 16.sp,
+                        color: theme.colorScheme.onSurface,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 15.h),
+                    SizedBox(height: 15.h),
 
-                  // -> button ok
-                  FilledButton(
-                    onPressed: () {},
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30.w),
-                      child: const Text("OK"),
+                    // -> button ok
+                    FilledButton(
+                      onPressed: () => onHintAcceptPressed(context),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.w),
+                        child: const Text("OK"),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
       ],
     );
   }

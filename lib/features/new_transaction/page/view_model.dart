@@ -42,6 +42,8 @@ final class NewTransactionViewModel
 
   final noteInput = InputController();
 
+  bool isKeyboardHintAccepted = false;
+
   List<AccountModel> accounts = [];
   Map<ETransactionType, List<CategoryModel>> categories = {
     for (final key in ETransactionType.values) key: const [],
@@ -133,6 +135,7 @@ final class NewTransactionViewModel
         () => OnAddTagPressed(),
         () => OnRemoveTagPressed(),
         () => OnNotePressed(),
+        () => OnKeyboardHintAccepted(),
       ],
       child: const NewTransactionView(),
     );

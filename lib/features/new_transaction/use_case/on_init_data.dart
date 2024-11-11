@@ -12,6 +12,7 @@ final class OnInitData extends UseCase<Future<void>, NewTransactionViewModel> {
   ]) async {
     if (viewModel == null) throw ArgumentError.notNull();
 
+    final prefService = context.read<DomainSharedPrefenecesService>();
     final accountService = context.read<DomainAccountService>();
     final categoryService = context.read<DomainCategoryService>();
     final transactionService = context.read<DomainTransactionService>();
@@ -30,12 +31,16 @@ final class OnInitData extends UseCase<Future<void>, NewTransactionViewModel> {
           : accounts.firstOrNull?.copyWith();
     });
 
+    final isKeyboardHintAccepted =
+        await prefService.isNewTransactionKeyboardHintAccepted();
+
     viewModel.setProtectedState(() {
       viewModel.accounts = accounts;
       viewModel.categories = {
         ETransactionType.expense: expenseCategories,
         ETransactionType.income: incomeCategories,
       };
+      viewModel.isKeyboardHintAccepted = isKeyboardHintAccepted;
     });
   }
 }
