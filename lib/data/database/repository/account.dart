@@ -62,10 +62,10 @@ SELECT
 	a.id,
 	a.currency_code,
 	a.balance,
-	SUM(t.amount) AS total_amount,
-	(a.balance + SUM(t.amount)) AS total_sum
+	COALESCE(SUM(t.amount), 0.0) AS total_amount,
+	(a.balance + COALESCE(SUM(t.amount), 0.0)) AS total_sum
 FROM accounts AS a
-JOIN transactions AS t ON a.id = t.account_id
+LEFT JOIN transactions AS t ON a.id = t.account_id
 $where
 GROUP BY a.id;
 """,
