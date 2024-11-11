@@ -3,10 +3,10 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
-import "package:mony_app/data/database/database.dart";
-import "package:mony_app/data/filesystem/filesystem.dart";
+import "package:mony_app/data/data.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:provider/provider.dart";
+import "package:shared_preferences/shared_preferences.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +26,18 @@ void main() async {
               return DomainImportExportService(
                 csvFilesystemRepository: CsvFilesystemRepository(
                   filePicker: FilePicker.platform,
+                ),
+              );
+            },
+          ),
+
+          // -> shared preferences service
+          Provider<DomainSharedPrefenecesService>(
+            create: (context) {
+              return DomainSharedPrefenecesService(
+                sharedPrefencesRepository:
+                    SharedPreferencesLocalStorageRepository(
+                  preferences: SharedPreferencesAsync(),
                 ),
               );
             },
