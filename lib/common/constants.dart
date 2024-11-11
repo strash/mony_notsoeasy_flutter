@@ -1,4 +1,4 @@
-const kAmountPattern = r"^[-+]?(?:0|^[-+]?[1-9][0-9]*?)(?:[.,][0-9]{0,2})?$";
+const kAmountPattern = r"^[-+]?(?:0|^[-+]?[1-9]\d*?)(?:[.,]\d{0,2})?$";
 
 const kDefaultCurrencyCode = "RUB";
 
