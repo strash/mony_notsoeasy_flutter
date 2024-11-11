@@ -2,7 +2,7 @@ import "package:mony_app/data/database/repository/account.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
-final class DomainAccountService extends BaseDomainService {
+final class DomainAccountService extends BaseDatabaseService {
   final AccountDatabaseRepository _accountRepo;
   final AccountDatabaseFactoryImpl _accountFactory;
   final AccountBalanceDatabaseFactoryImpl _accountBalanceFactory;

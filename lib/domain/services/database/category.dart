@@ -1,7 +1,7 @@
 import "package:mony_app/data/database/repository/category.dart";
 import "package:mony_app/domain/domain.dart";
 
-final class DomainCategoryService extends BaseDomainService {
+final class DomainCategoryService extends BaseDatabaseService {
   final CategoryDatabaseRepository _categoryRepo;
   final CategoryDatabaseFactoryImpl _categoryFactory;
 

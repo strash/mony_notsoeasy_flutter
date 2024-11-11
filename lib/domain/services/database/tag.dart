@@ -1,7 +1,7 @@
 import "package:mony_app/data/database/database.dart";
 import "package:mony_app/domain/domain.dart";
 
-final class DomainTagService extends BaseDomainService {
+final class DomainTagService extends BaseDatabaseService {
   final TagDatabaseRepository _tagRepo;
   final TagDatabaseFactoryImpl _tagFactory;
 

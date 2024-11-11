@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
-import "package:mony_app/domain/services/account.dart";
+import "package:mony_app/domain/services/database/account.dart";
 import "package:mony_app/features/features.dart";
 
 final class NavigatorDelegate extends RouterDelegate<Object>

@@ -1,6 +1,6 @@
 import "package:csv/csv.dart";
 import "package:mony_app/data/filesystem/filesystem.dart";
-import "package:mony_app/domain/services/vo/imported_csv.dart";
+import "package:mony_app/domain/services/database/vo/imported_csv.dart";
 
 final class DomainImportExportService {
   final CsvFilesystemRepository _csvFilesystemRepository;

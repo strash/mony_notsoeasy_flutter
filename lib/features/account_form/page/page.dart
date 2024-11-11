@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/domain/models/account.dart";
-import "package:mony_app/domain/services/vo/vo.dart";
+import "package:mony_app/domain/services/database/vo/vo.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
 
 export "./view_model.dart";
