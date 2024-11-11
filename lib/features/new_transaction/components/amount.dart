@@ -56,15 +56,20 @@ class NewTransactionAmountComponent extends StatelessWidget {
               ),
 
               // -> amount value
-              Text(
-                "0",
-                style: GoogleFonts.golosText(
-                  fontSize: 50.sp,
-                  color: theme.colorScheme.onSurface,
-                  height: 1.0,
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.none,
-                ),
+              ValueListenableBuilder(
+                valueListenable: viewModel.amountNotifier,
+                builder: (context, value, child) {
+                  return Text(
+                    value,
+                    style: GoogleFonts.golosText(
+                      fontSize: 50.sp,
+                      color: theme.colorScheme.onSurface,
+                      height: 1.0,
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.none,
+                    ),
+                  );
+                },
               ),
             ],
           ),

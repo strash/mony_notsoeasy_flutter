@@ -29,7 +29,7 @@ final class NewTransactionViewModel
   final dateController = CalendarController(DateTime.now());
   final timeController = TimeController(DateTime.now());
 
-  final amountNotifier = ValueNotifier<String>("");
+  final amountNotifier = ValueNotifier<String>("0");
 
   final accountController = SelectController<AccountModel?>(null);
 
@@ -42,8 +42,6 @@ final class NewTransactionViewModel
 
   final noteInput = InputController();
 
-  bool isKeyboardHintAccepted = false;
-
   List<AccountModel> accounts = [];
   Map<ETransactionType, List<CategoryModel>> categories = {
     for (final key in ETransactionType.values) key: const [],
@@ -51,33 +49,49 @@ final class NewTransactionViewModel
   final displayedTags = ValueNotifier<List<TagModel>>([]);
   List<NewTransactionTag> attachedTags = const [];
 
+  bool isKeyboardHintAccepted = false;
+
   final RegExp regEx = RegExp(kAmountPattern);
   List<List<ButtonType>> get buttons {
     return [
+      // TODO: подумать как правильно дизейблить. возможно для этого отдельный
+      // паттерн написать в котором уменьшить количество символов после запятой
       ...List<List<ButtonType>>.generate(3, (rowIndex) {
         return List<ButtonType>.generate(3, (colIndex) {
           return ButtonTypeSymbol(
+            value: (colIndex + 1 + rowIndex * 3).toString(),
             color: Theme.of(context).colorScheme.surfaceContainer,
-            isEnabled: (value) => !regEx.hasMatch(value),
-            number: (colIndex + 1 + rowIndex * 3).toString(),
+            isEnabled: (value) {
+              final trim = value.trim();
+              return regEx.hasMatch(value) && trim.length != kMaxAmountLength;
+            },
           );
         });
       }),
       [
         ButtonTypeSymbol(
+          value: ".",
           color: Theme.of(context).colorScheme.surfaceContainer,
-          isEnabled: (value) => value.contains("."),
-          number: ".",
+          isEnabled: (value) {
+            final trim = value.trim();
+            return !value.contains(".") && trim.length != kMaxAmountLength;
+          },
         ),
         ButtonTypeSymbol(
+          value: "0",
           color: Theme.of(context).colorScheme.surfaceContainer,
-          isEnabled: (value) => !regEx.hasMatch(value),
-          number: "0",
+          isEnabled: (value) {
+            final trim = value.trim();
+            return regEx.hasMatch(value) && trim.length != kMaxAmountLength;
+          },
         ),
         ButtonTypeAction(
-          color: Theme.of(context).colorScheme.secondary,
-          isEnabled: (value) => value.trim().isNotEmpty,
           icon: Assets.icons.checkmarkBold,
+          color: Theme.of(context).colorScheme.secondary,
+          isEnabled: (value) {
+            final trim = value.trim();
+            return trim.isNotEmpty && trim != "0";
+          },
         ),
       ],
     ];
@@ -136,6 +150,7 @@ final class NewTransactionViewModel
         () => OnRemoveTagPressed(),
         () => OnNotePressed(),
         () => OnKeyboardHintAccepted(),
+        () => OnKeyPressed(),
       ],
       child: const NewTransactionView(),
     );

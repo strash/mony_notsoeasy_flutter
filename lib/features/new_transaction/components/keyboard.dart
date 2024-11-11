@@ -17,6 +17,7 @@ class NewTransactionKeyboadrComponent extends StatelessWidget {
     final gap = 6.r;
     final viewModel = context.viewModel<NewTransactionViewModel>();
     final onHintAcceptPressed = viewModel<OnKeyboardHintAccepted>();
+    final onKeyPressed = viewModel<OnKeyPressed>();
 
     return Stack(
       children: [
@@ -41,6 +42,7 @@ class NewTransactionKeyboadrComponent extends StatelessWidget {
                       return NewTransactionSymbolButtonComponent(
                         button: button,
                         value: value,
+                        onTap: onKeyPressed,
                       );
                     },
                   ),

@@ -8,12 +8,12 @@ sealed class ButtonType {
 }
 
 final class ButtonTypeSymbol extends ButtonType {
-  final String number;
+  final String value;
 
   ButtonTypeSymbol({
     required super.color,
     required super.isEnabled,
-    required this.number,
+    required this.value,
   });
 }
 
