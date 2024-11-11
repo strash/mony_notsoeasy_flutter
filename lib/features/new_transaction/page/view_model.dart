@@ -50,34 +50,36 @@ final class NewTransactionViewModel
   List<NewTransactionTag> attachedTags = const [];
 
   final RegExp regEx = RegExp(kAmountPattern);
-  late final List<List<ButtonType>> buttons = [
-    ...List<List<ButtonType>>.generate(3, (rowIndex) {
-      return List<ButtonType>.generate(3, (colIndex) {
-        return ButtonTypeSymbol(
+  List<List<ButtonType>> get buttons {
+    return [
+      ...List<List<ButtonType>>.generate(3, (rowIndex) {
+        return List<ButtonType>.generate(3, (colIndex) {
+          return ButtonTypeSymbol(
+            color: Theme.of(context).colorScheme.surfaceContainer,
+            isEnabled: (value) => !regEx.hasMatch(value),
+            number: (colIndex + 1 + rowIndex * 3).toString(),
+          );
+        });
+      }),
+      [
+        ButtonTypeSymbol(
+          color: Theme.of(context).colorScheme.surfaceContainer,
+          isEnabled: (value) => value.contains("."),
+          number: ".",
+        ),
+        ButtonTypeSymbol(
           color: Theme.of(context).colorScheme.surfaceContainer,
           isEnabled: (value) => !regEx.hasMatch(value),
-          number: (colIndex + 1 + rowIndex * 3).toString(),
-        );
-      });
-    }),
-    [
-      ButtonTypeSymbol(
-        color: Theme.of(context).colorScheme.surfaceContainer,
-        isEnabled: (value) => value.contains("."),
-        number: ".",
-      ),
-      ButtonTypeSymbol(
-        color: Theme.of(context).colorScheme.surfaceContainer,
-        isEnabled: (value) => !regEx.hasMatch(value),
-        number: "0",
-      ),
-      ButtonTypeAction(
-        color: Theme.of(context).colorScheme.secondary,
-        isEnabled: (value) => value.trim().isNotEmpty,
-        icon: Assets.icons.checkmarkBold,
-      ),
-    ],
-  ];
+          number: "0",
+        ),
+        ButtonTypeAction(
+          color: Theme.of(context).colorScheme.secondary,
+          isEnabled: (value) => value.trim().isNotEmpty,
+          icon: Assets.icons.checkmarkBold,
+        ),
+      ],
+    ];
+  }
 
   String get dateTimeDescription {
     final formatter = DateFormat("d MMM yyyy, HH:mm");
