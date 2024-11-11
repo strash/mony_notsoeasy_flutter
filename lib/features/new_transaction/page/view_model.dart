@@ -51,30 +51,27 @@ final class NewTransactionViewModel
 
   bool isKeyboardHintAccepted = false;
 
-  final RegExp regEx = RegExp(kAmountPattern);
+  final RegExp regEx = RegExp(r"\d*?[.,]\d{2}$");
   List<List<ButtonType>> get buttons {
-    return [
-      // TODO: подумать как правильно дизейблить. возможно для этого отдельный
-      // паттерн написать в котором уменьшить количество символов после запятой
-      ...List<List<ButtonType>>.generate(3, (rowIndex) {
-        return List<ButtonType>.generate(3, (colIndex) {
-          return ButtonTypeSymbol(
-            value: (colIndex + 1 + rowIndex * 3).toString(),
-            color: Theme.of(context).colorScheme.surfaceContainer,
-            isEnabled: (value) {
-              final trim = value.trim();
-              return regEx.hasMatch(value) && trim.length != kMaxAmountLength;
-            },
-          );
-        });
-      }),
-      [
+    return List<List<ButtonType>>.generate(3, (rowIndex) {
+      return List<ButtonType>.generate(3, (colIndex) {
+        return ButtonTypeSymbol(
+          value: (colIndex + 1 + rowIndex * 3).toString(),
+          color: Theme.of(context).colorScheme.surfaceContainer,
+          isEnabled: (value) {
+            final trim = value.trim();
+            return !regEx.hasMatch(trim) && trim.length != kMaxAmountLength;
+          },
+        );
+      });
+    })
+      ..add([
         ButtonTypeSymbol(
           value: ".",
           color: Theme.of(context).colorScheme.surfaceContainer,
           isEnabled: (value) {
             final trim = value.trim();
-            return !value.contains(".") && trim.length != kMaxAmountLength;
+            return !trim.contains(".") && trim.length != kMaxAmountLength;
           },
         ),
         ButtonTypeSymbol(
@@ -82,7 +79,7 @@ final class NewTransactionViewModel
           color: Theme.of(context).colorScheme.surfaceContainer,
           isEnabled: (value) {
             final trim = value.trim();
-            return regEx.hasMatch(value) && trim.length != kMaxAmountLength;
+            return !regEx.hasMatch(trim) && trim.length != kMaxAmountLength;
           },
         ),
         ButtonTypeAction(
@@ -93,8 +90,7 @@ final class NewTransactionViewModel
             return trim.isNotEmpty && trim != "0";
           },
         ),
-      ],
-    ];
+      ]);
   }
 
   String get dateTimeDescription {
