@@ -84,6 +84,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/gearshape.fill.svg
   String get gearshapeFill => 'assets/icons/gearshape.fill.svg';
 
+  /// File path: assets/icons/hand.point.up.left.svg
+  String get handPointUpLeft => 'assets/icons/hand.point.up.left.svg';
+
   /// File path: assets/icons/info.circle.svg
   String get infoCircle => 'assets/icons/info.circle.svg';
 
@@ -164,6 +167,7 @@ class $AssetsIconsGen {
         exclamationmarkCircleFill,
         exclamationmarkCircle,
         gearshapeFill,
+        handPointUpLeft,
         infoCircle,
         linkBadgePlus,
         link,
