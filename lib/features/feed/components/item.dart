@@ -2,10 +2,10 @@ import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:intl/intl.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/feed/components/components.dart";
-import "package:sealed_currencies/sealed_currencies.dart";
 
 class FeedItemComponent extends StatelessWidget {
   final TransactionModel transaction;
@@ -27,10 +27,11 @@ class FeedItemComponent extends StatelessWidget {
 
     final categoryColors =
         getCategoryColors(context, transaction.category.color);
-    final currencyFormatter = transaction.account.currency;
-    String formattedAmount =
-        currencyFormatter.format(transaction.amount.roundToFraction(2));
-    if (!transaction.amount.isNegative) formattedAmount = "+$formattedAmount";
+
+    final formatter = NumberFormat.currency(
+      name: transaction.account.currency.name,
+      symbol: transaction.account.currency.symbol,
+    );
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: viewSize.width),
@@ -91,7 +92,7 @@ class FeedItemComponent extends StatelessWidget {
 
                       // -> amount
                       Text(
-                        formattedAmount,
+                        formatter.format(transaction.amount),
                         style: GoogleFonts.golosText(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w500,

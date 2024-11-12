@@ -7,19 +7,30 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
+      body: ListView(
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Padding(
+        children: [
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-            child: Text(
-              "Some cool item $index right there and there",
+            child: const Text("Отображать копейки"),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            child: const Text(
+              "Тип транзакции по-умолчанию при создании транзакции",
             ),
-          );
-        },
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            child: const Text("Экспорт"),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            child: const Text("Импорт"),
+          ),
+        ],
       ),
     );
   }

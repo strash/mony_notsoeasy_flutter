@@ -36,7 +36,7 @@ mixin DataFetchMixin {
           for (final FeedItemTransaction item in sectionEntries) {
             final cur = item.transaction.account.currency;
             final value = total[cur] ?? .0;
-            total[cur] = (value + item.transaction.amount).roundToFraction(2);
+            total[cur] = value + item.transaction.amount;
           }
           feed[element.$1] = section.copyWith(total: total);
         case FeedItemTransaction():

@@ -4,7 +4,6 @@ import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/features/feed/page/state.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
-import "package:sealed_currencies/sealed_currencies.dart";
 
 class FeedSectionComponent extends StatelessWidget {
   final FeedItemSection section;
@@ -22,9 +21,12 @@ class FeedSectionComponent extends StatelessWidget {
       now.year != section.date.year ? "EEE, dd MMMM yyyy" : "EEE, dd MMMM",
     );
     final date = dateFormatter.format(section.date);
+
     final sum = section.total.entries.map((e) {
-      final res = e.key.format(e.value);
-      return e.value.isNegative ? res : "+$res";
+      return NumberFormat.currency(
+        name: e.key.name,
+        symbol: e.key.symbol,
+      ).format(e.value);
     }).join(", ");
 
     return Padding(

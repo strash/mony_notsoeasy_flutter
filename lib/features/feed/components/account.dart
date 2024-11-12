@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/common/extensions/extensions.dart";
+import "package:intl/intl.dart";
 import "package:mony_app/features/feed/page/page.dart";
-import "package:sealed_currencies/sealed_currencies.dart";
 
 class FeedAccountComponent extends StatelessWidget {
   final FeedPageState page;
@@ -108,14 +107,19 @@ class FeedAccountComponent extends StatelessWidget {
             final FeedPageStateAllAccounts page => Column(
                 children: page.balances.map((e) {
                   return Text(
-                    e.currency.format(e.totalSum.roundToFraction(2)),
+                    NumberFormat.currency(
+                      name: e.currency.name,
+                      symbol: e.currency.symbol,
+                    ).format(e.totalSum),
                     style: _getStyle(context),
                   );
                 }).toList(growable: false),
               ),
             final FeedPageStateSingleAccount page => Text(
-                page.balance.currency
-                    .format(page.balance.totalSum.roundToFraction(2)),
+                NumberFormat.currency(
+                  name: page.balance.currency.name,
+                  symbol: page.balance.currency.symbol,
+                ).format(page.balance.totalSum),
                 style: _getStyle(context),
               ),
           },
