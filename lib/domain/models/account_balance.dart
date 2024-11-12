@@ -13,3 +13,10 @@ class AccountBalanceModel with _$AccountBalanceModel {
     required double totalSum,
   }) = _AccountBalanceModel;
 }
+
+extension AccountBalanceModelListEx on List<AccountBalanceModel> {
+  List<AccountBalanceModel> merge(List<AccountBalanceModel> other) {
+    return List<AccountBalanceModel>.from(where((e) => !other.contains(e)))
+      ..addAll(other);
+  }
+}
