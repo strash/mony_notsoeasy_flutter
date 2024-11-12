@@ -114,6 +114,17 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
           List<NewTransactionTag>.from(viewModel.attachedTags)
             ..add(NewTransactionTagVO(TagVO(title: input)));
     });
+    // NOTE: wait before controller is attached
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      if (!formContext.mounted || !viewModel.tagScrollController.isReady) {
+        return;
+      }
+      viewModel.tagScrollController.animateTo(
+        viewModel.tagScrollController.position.maxScrollExtent,
+        duration: Durations.medium1,
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
