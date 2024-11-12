@@ -87,7 +87,15 @@ final class NewTransactionViewModel
           color: Theme.of(context).colorScheme.secondary,
           isEnabled: (value) {
             final trim = value.trim();
-            return trim.isNotEmpty && trim != "0";
+            final hasCategory = switch (typeController.value) {
+              ETransactionType.expense =>
+                expenseCategoryController.value != null,
+              ETransactionType.income => incomeCategoryController.value != null,
+            };
+            return trim.isNotEmpty &&
+                trim != "0" &&
+                accountController.value != null &&
+                hasCategory;
           },
         ),
       ]);

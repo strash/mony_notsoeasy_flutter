@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/feed/page/page.dart";
@@ -46,6 +47,11 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      final appService = context.viewModel<AppEventService>();
+      appService.listen(
+        (e) => OnAppStateChanged().call(context, (event: e, viewModel: this)),
+      );
+
       final navbar = context.viewModel<NavbarViewModel>();
       navbar.subject.whereType<NavbarEventScrollToTopRequested>().listen((e) {
         navbar.returnToTop(scrollControllers.elementAt(currentPageIndex));

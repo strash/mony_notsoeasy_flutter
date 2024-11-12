@@ -27,30 +27,40 @@ class NewTransactionKeyboadrComponent extends StatelessWidget {
           onHorizontalDragEnd: (details) {
             onDragEnded(context, details);
           },
-          child: SeparatedComponent(
-            itemCount: viewModel.buttons.length,
-            separatorBuilder: (context) => SizedBox(height: gap),
-            itemBuilder: (context, index) {
-              final row = viewModel.buttons.elementAt(index);
-
+          child: ListenableBuilder(
+            listenable: Listenable.merge([
+              viewModel.typeController,
+              viewModel.accountController,
+              viewModel.expenseCategoryController,
+              viewModel.incomeCategoryController,
+            ]),
+            builder: (context, child) {
               return SeparatedComponent(
-                direction: Axis.horizontal,
-                itemCount: row.length,
-                separatorBuilder: (context) => SizedBox(width: gap),
+                itemCount: viewModel.buttons.length,
+                separatorBuilder: (context) => SizedBox(height: gap),
                 itemBuilder: (context, index) {
-                  final button = row.elementAt(index);
+                  final row = viewModel.buttons.elementAt(index);
 
-                  return Expanded(
-                    child: ValueListenableBuilder(
-                      valueListenable: viewModel.amountNotifier,
-                      builder: (context, value, child) {
-                        return NewTransactionSymbolButtonComponent(
-                          button: button,
-                          value: value,
-                          onTap: onKeyPressed,
-                        );
-                      },
-                    ),
+                  return SeparatedComponent(
+                    direction: Axis.horizontal,
+                    itemCount: row.length,
+                    separatorBuilder: (context) => SizedBox(width: gap),
+                    itemBuilder: (context, index) {
+                      final button = row.elementAt(index);
+
+                      return Expanded(
+                        child: ValueListenableBuilder(
+                          valueListenable: viewModel.amountNotifier,
+                          builder: (context, value, child) {
+                            return NewTransactionSymbolButtonComponent(
+                              button: button,
+                              value: value,
+                              onTap: onKeyPressed,
+                            );
+                          },
+                        ),
+                      );
+                    },
                   );
                 },
               );

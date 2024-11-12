@@ -9,7 +9,7 @@ import "package:mony_app/features/new_transaction/components/components.dart";
 class NewTransactionSymbolButtonComponent extends StatelessWidget {
   final ButtonType button;
   final String value;
-  final UseCase<void, ButtonType> onTap;
+  final UseCase<Future<void>, ButtonType> onTap;
 
   const NewTransactionSymbolButtonComponent({
     super.key,

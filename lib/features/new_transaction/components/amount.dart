@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/new_transaction/page/view_model.dart";

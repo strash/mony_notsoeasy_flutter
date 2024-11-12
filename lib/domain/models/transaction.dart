@@ -43,3 +43,10 @@ class TransactionModel with _$TransactionModel {
     required List<TransactionTagModel> tags,
   }) = _TransactionModel;
 }
+
+extension TransactionModelListEx on List<TransactionModel> {
+  List<TransactionModel> merge(List<TransactionModel> other) {
+    return List<TransactionModel>.from(where((e) => !other.contains(e)))
+      ..addAll(other);
+  }
+}
