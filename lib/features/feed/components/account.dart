@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
+import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/features/feed/page/page.dart";
 
 class FeedAccountComponent extends StatelessWidget {
@@ -36,15 +37,38 @@ class FeedAccountComponent extends StatelessWidget {
     );
   }
 
+  String _format(AccountBalanceModel balance) {
+    return NumberFormat.currency(
+      name: balance.currency.name,
+      symbol: balance.currency.symbol,
+    ).format(balance.totalSum);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // -> top row
+        FittedBox(
+          child: switch (page) {
+            final FeedPageStateAllAccounts page => Column(
+                children: page.balances
+                    .map((e) => Text(_format(e), style: _getStyle(context)))
+                    .toList(growable: false),
+              ),
+            final FeedPageStateSingleAccount page => Text(
+                _format(page.balance),
+                style: _getStyle(context),
+              ),
+          },
+        ),
+        SizedBox(height: 10.h),
+
+        // -> sums
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // -> color
@@ -77,7 +101,7 @@ class FeedAccountComponent extends StatelessWidget {
                     style: GoogleFonts.golosText(
                       fontSize: 16.sp,
                       height: 1.2,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: theme.colorScheme.onSurface,
                     ),
                   ),
@@ -99,32 +123,7 @@ class FeedAccountComponent extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10.h),
-
-        // -> sums
-        FittedBox(
-          child: switch (page) {
-            final FeedPageStateAllAccounts page => Column(
-                children: page.balances.map((e) {
-                  return Text(
-                    NumberFormat.currency(
-                      name: e.currency.name,
-                      symbol: e.currency.symbol,
-                    ).format(e.totalSum),
-                    style: _getStyle(context),
-                  );
-                }).toList(growable: false),
-              ),
-            final FeedPageStateSingleAccount page => Text(
-                NumberFormat.currency(
-                  name: page.balance.currency.name,
-                  symbol: page.balance.currency.symbol,
-                ).format(page.balance.totalSum),
-                style: _getStyle(context),
-              ),
-          },
-        ),
-        SizedBox(height: 10.h),
+        SizedBox(height: 20.h),
       ],
     );
   }
