@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/new_transaction/page/view_model.dart";
@@ -14,6 +15,7 @@ class NewTransactionAmountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<NewTransactionViewModel>();
+    final formatter = NumberFormat.decimalPattern();
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -59,8 +61,10 @@ class NewTransactionAmountComponent extends StatelessWidget {
               ValueListenableBuilder(
                 valueListenable: viewModel.amountNotifier,
                 builder: (context, value, child) {
+                  final formattedValue = formatter.format(double.parse(value));
+
                   return Text(
-                    value,
+                    value.endsWith(".") ? "$formattedValue." : formattedValue,
                     style: GoogleFonts.golosText(
                       fontSize: 50.sp,
                       color: theme.colorScheme.onSurface,
