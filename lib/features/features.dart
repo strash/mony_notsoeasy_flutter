@@ -8,3 +8,4 @@ export "./settings/settings.dart";
 export "./start/start.dart";
 export "./start_account/start_account.dart";
 export "./stats/stats.dart";
+export "./transaction/transaction.dart";
