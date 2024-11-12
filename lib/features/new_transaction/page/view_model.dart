@@ -147,6 +147,7 @@ final class NewTransactionViewModel
         () => OnNotePressed(),
         () => OnKeyboardHintAccepted(),
         () => OnKeyPressed(),
+        () => OnHorizontalDragEnded(),
       ],
       child: const NewTransactionView(),
     );

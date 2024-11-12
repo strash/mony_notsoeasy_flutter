@@ -18,38 +18,44 @@ class NewTransactionKeyboadrComponent extends StatelessWidget {
     final viewModel = context.viewModel<NewTransactionViewModel>();
     final onHintAcceptPressed = viewModel<OnKeyboardHintAccepted>();
     final onKeyPressed = viewModel<OnKeyPressed>();
+    final onDragEnded = viewModel<OnHorizontalDragEnded>();
 
     return Stack(
       children: [
         // -> keyboard
-        SeparatedComponent(
-          itemCount: viewModel.buttons.length,
-          separatorBuilder: (context) => SizedBox(height: gap),
-          itemBuilder: (context, index) {
-            final row = viewModel.buttons.elementAt(index);
-
-            return SeparatedComponent(
-              direction: Axis.horizontal,
-              itemCount: row.length,
-              separatorBuilder: (context) => SizedBox(width: gap),
-              itemBuilder: (context, index) {
-                final button = row.elementAt(index);
-
-                return Expanded(
-                  child: ValueListenableBuilder(
-                    valueListenable: viewModel.amountNotifier,
-                    builder: (context, value, child) {
-                      return NewTransactionSymbolButtonComponent(
-                        button: button,
-                        value: value,
-                        onTap: onKeyPressed,
-                      );
-                    },
-                  ),
-                );
-              },
-            );
+        GestureDetector(
+          onHorizontalDragEnd: (details) {
+            onDragEnded(context, details);
           },
+          child: SeparatedComponent(
+            itemCount: viewModel.buttons.length,
+            separatorBuilder: (context) => SizedBox(height: gap),
+            itemBuilder: (context, index) {
+              final row = viewModel.buttons.elementAt(index);
+
+              return SeparatedComponent(
+                direction: Axis.horizontal,
+                itemCount: row.length,
+                separatorBuilder: (context) => SizedBox(width: gap),
+                itemBuilder: (context, index) {
+                  final button = row.elementAt(index);
+
+                  return Expanded(
+                    child: ValueListenableBuilder(
+                      valueListenable: viewModel.amountNotifier,
+                      builder: (context, value, child) {
+                        return NewTransactionSymbolButtonComponent(
+                          button: button,
+                          value: value,
+                          onTap: onKeyPressed,
+                        );
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
 
         // -> hint
