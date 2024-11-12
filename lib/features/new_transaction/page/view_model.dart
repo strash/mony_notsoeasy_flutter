@@ -106,6 +106,21 @@ final class NewTransactionViewModel
     return formatter.format(date);
   }
 
+  String get amountDescription {
+    final formatter = NumberFormat.decimalPattern();
+    final parsedValue = double.parse(amountNotifier.value);
+    final formattedValue = formatter.format(parsedValue);
+    if (amountNotifier.value.endsWith(".")) {
+      return "$formattedValue.";
+    } else if (amountNotifier.value.endsWith(".0")) {
+      return "$formattedValue.0";
+    } else if (amountNotifier.value.endsWith(".00")) {
+      return "$formattedValue.00";
+    } else {
+      return formattedValue;
+    }
+  }
+
   @override
   void initState() {
     super.initState();

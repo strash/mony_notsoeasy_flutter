@@ -15,7 +15,6 @@ class NewTransactionAmountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<NewTransactionViewModel>();
-    final formatter = NumberFormat.decimalPattern();
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -58,13 +57,11 @@ class NewTransactionAmountComponent extends StatelessWidget {
               ),
 
               // -> amount value
-              ValueListenableBuilder(
-                valueListenable: viewModel.amountNotifier,
-                builder: (context, value, child) {
-                  final formattedValue = formatter.format(double.parse(value));
-
+              ListenableBuilder(
+                listenable: viewModel.amountNotifier,
+                builder: (context, child) {
                   return Text(
-                    value.endsWith(".") ? "$formattedValue." : formattedValue,
+                    viewModel.amountDescription,
                     style: GoogleFonts.golosText(
                       fontSize: 50.sp,
                       color: theme.colorScheme.onSurface,
