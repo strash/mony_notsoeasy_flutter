@@ -35,7 +35,7 @@ class NewTransactionSymbolButtonComponent extends StatelessWidget {
             begin: button.color,
             end: isEnabled
                 ? button.color
-                : theme.colorScheme.surfaceContainer.withOpacity(.6),
+                : theme.colorScheme.surfaceContainer.withOpacity(.8),
           ),
           child: Center(
             child: AnimatedOpacity(

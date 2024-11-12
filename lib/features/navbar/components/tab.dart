@@ -8,7 +8,8 @@ import "package:mony_app/gen/assets.gen.dart";
 extension on NavbarTabItem {
   String get icon {
     return switch (this) {
-      NavbarTabItem.feed => Assets.icons.listBulletBelowRectangle,
+      NavbarTabItem.feed => Assets.icons.walletPassFill,
+      NavbarTabItem.stats => Assets.icons.chartBarFill,
       NavbarTabItem.settings => Assets.icons.gearshapeFill,
     };
   }

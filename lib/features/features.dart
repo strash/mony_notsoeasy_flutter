@@ -7,3 +7,4 @@ export "./new_transaction/new_transaction.dart";
 export "./settings/settings.dart";
 export "./start/start.dart";
 export "./start_account/start_account.dart";
+export "./stats/stats.dart";

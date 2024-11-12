@@ -11,6 +11,7 @@ export "./event.dart";
 
 enum NavbarTabItem implements IDescriptable {
   feed,
+  stats,
   settings,
   ;
 
@@ -26,6 +27,7 @@ enum NavbarTabItem implements IDescriptable {
   String get description {
     return switch (this) {
       NavbarTabItem.feed => "Лента",
+      NavbarTabItem.stats => "Статистика",
       NavbarTabItem.settings => "Настройки",
     };
   }
@@ -48,6 +50,7 @@ final class NavbarViewModel extends ViewModelState<NavbarViewModelBuilder> {
   final _routes = NavbarTabItem.values.map((e) {
     return switch (e) {
       NavbarTabItem.feed => const FeedPage(),
+      NavbarTabItem.stats => const StatsPage(),
       NavbarTabItem.settings => const SettingsPage(),
     };
   }).toList(growable: false);

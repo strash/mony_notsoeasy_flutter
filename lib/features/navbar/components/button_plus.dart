@@ -1,5 +1,3 @@
-import "dart:ui";
-
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
@@ -21,33 +19,28 @@ class NavBarButtonPlusComponent extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onAddTransactionPressed(context),
-      child: ClipSmoothRect(
-        radius: SmoothBorderRadius.all(
-          SmoothRadius(
-            cornerRadius: NavbarView.kRadius,
-            cornerSmoothing: 1.0,
-          ),
-        ),
-        child: SizedBox(
-          width: NavbarView.kTabHeight * 1.618033,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: NavbarView.kSigma,
-              sigmaY: NavbarView.kSigma,
-              tileMode: TileMode.repeated,
-            ),
-            child: ColoredBox(
-              color: theme.colorScheme.primary.withOpacity(.7),
-              child: Center(
-                child: SvgPicture.asset(
-                  Assets.icons.plus,
-                  width: 32.r,
-                  height: 32.r,
-                  colorFilter: ColorFilter.mode(
-                    theme.colorScheme.surface,
-                    BlendMode.srcIn,
-                  ),
+      child: SizedBox(
+        width: NavbarView.kTabHeight * 1.618033,
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: theme.colorScheme.primary,
+            shape: SmoothRectangleBorder(
+              borderRadius: SmoothBorderRadius.all(
+                SmoothRadius(
+                  cornerRadius: NavbarView.kRadius,
+                  cornerSmoothing: 1.0,
                 ),
+              ),
+            ),
+          ),
+          child: Center(
+            child: SvgPicture.asset(
+              Assets.icons.plusBold,
+              width: 32.r,
+              height: 32.r,
+              colorFilter: ColorFilter.mode(
+                theme.colorScheme.surface,
+                BlendMode.srcIn,
               ),
             ),
           ),

@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
-import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:mony_app/features/feed/page/view.dart";
@@ -15,7 +14,7 @@ class FeedViewModelBuilder extends StatefulWidget {
   const FeedViewModelBuilder({super.key});
 
   @override
-  State<FeedViewModelBuilder> createState() => FeedViewModel();
+  ViewModelState<FeedViewModelBuilder> createState() => FeedViewModel();
 }
 
 final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {

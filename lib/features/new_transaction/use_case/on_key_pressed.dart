@@ -1,6 +1,5 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
-import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
@@ -69,6 +68,8 @@ final class OnKeyPressed extends UseCase<Future<void>, ButtonType> {
           vo: transactionVO,
         );
 
+        navigator.pop();
+
         if (transactionModel == null) return;
         appService.notify(
           EventTransactionCreated(
@@ -76,8 +77,6 @@ final class OnKeyPressed extends UseCase<Future<void>, ButtonType> {
             transaction: transactionModel,
           ),
         );
-
-        navigator.pop();
     }
   }
 }
