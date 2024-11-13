@@ -3,8 +3,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/app/use_case/use_case.dart";
-import "package:mony_app/common/utils/color/color.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/import/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -26,24 +25,26 @@ class ImportCategoryItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
     final value = (transactionType: transactionType, category: category);
     final Color bg;
-    final Color border;
     final Color text;
     final String? icon;
     final String title;
     if (category.linkedModel != null) {
-      (:bg, :border, :text) =
-          getCategoryColors(context, category.linkedModel!.color);
+      bg = ex?.from(category.linkedModel!.colorName).color ??
+          theme.colorScheme.surfaceContainer;
+      text = theme.colorScheme.surface;
       icon = category.linkedModel!.icon;
       title = category.linkedModel!.title;
     } else if (category.vo != null) {
-      (:bg, :border, :text) = getCategoryColors(context, category.vo!.color);
+      bg = ex?.from(EColorName.from(category.vo!.colorName)).color ??
+          theme.colorScheme.surfaceContainer;
+      text = theme.colorScheme.surface;
       icon = category.vo!.icon;
       title = category.vo!.title;
     } else {
       bg = theme.colorScheme.surfaceContainer;
-      border = theme.colorScheme.tertiaryContainer;
       text = theme.colorScheme.onSurface;
       icon = null;
       title = category.title;
@@ -56,12 +57,8 @@ class ImportCategoryItemComponent extends StatelessWidget {
         decoration: ShapeDecoration(
           color: bg,
           shape: SmoothRectangleBorder(
-            side: BorderSide(color: border),
             borderRadius: SmoothBorderRadius.all(
-              SmoothRadius(
-                cornerRadius: 10.r,
-                cornerSmoothing: 1.0,
-              ),
+              SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
             ),
           ),
         ),
@@ -96,7 +93,7 @@ class ImportCategoryItemComponent extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.golosText(
                       fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: text,
                     ),
                   ),

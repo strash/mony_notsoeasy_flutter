@@ -1,15 +1,16 @@
 part of "./select.dart";
 
-final class _ValueProvider<T> extends InheritedWidget {
+final class _SelectValueProvider<T> extends InheritedWidget {
   final SelectController<T?> controller;
 
-  const _ValueProvider({
+  const _SelectValueProvider({
     required super.child,
     required this.controller,
   });
 
   static SelectController<T?>? maybeOf<T>(BuildContext context) {
-    final p = context.dependOnInheritedWidgetOfExactType<_ValueProvider<T>>();
+    final p =
+        context.dependOnInheritedWidgetOfExactType<_SelectValueProvider<T>>();
     return p?.controller;
   }
 
@@ -20,7 +21,7 @@ final class _ValueProvider<T> extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(_ValueProvider<T> oldWidget) {
+  bool updateShouldNotify(_SelectValueProvider<T> oldWidget) {
     return controller.value != oldWidget.controller.value;
   }
 }

@@ -12,7 +12,7 @@ class AccountDto with _$AccountDto {
     required String title,
     required String type,
     required String currencyCode,
-    required String color,
+    required String colorName,
     required num balance,
   }) = _AccountDto;
 

@@ -1,7 +1,6 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
 
@@ -20,7 +19,7 @@ final class OnAccountFromImportButtonPressedDecorator
           title: value.key,
           type: EAccountType.defaultValue,
           currencyCode: kDefaultCurrencyCode,
-          color: Palette().randomColor,
+          colorName: EColorName.random().name,
           balance: 0.0,
         );
     final result = await onAccountPressed(context, account);

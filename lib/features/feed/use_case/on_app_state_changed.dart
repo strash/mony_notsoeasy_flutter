@@ -44,7 +44,8 @@ final class OnAppStateChanged
               case final FeedPageStateAllAccounts page:
                 return page.copyWith(
                   feed: _addTransaction(transaction, page.feed),
-                  balances: page.balances.merge(balances),
+                  balances: page.balances.merge(balances)
+                    ..sort((a, b) => a.created.compareTo(b.created)),
                   canLoadMore: true,
                 );
               case final FeedPageStateSingleAccount page:

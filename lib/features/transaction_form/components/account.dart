@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/select/component.dart";
 import "package:mony_app/domain/models/account.dart";
@@ -15,12 +16,13 @@ class TransactionFormAccountComponent extends StatelessWidget {
 
   Widget _getColor(BuildContext context, AccountModel account) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
 
     return SizedBox.square(
       dimension: 10.r,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: account.color,
+          color: ex?.from(account.colorName).color ?? theme.colorScheme.primary,
           borderRadius: BorderRadius.all(Radius.circular(10.r)),
           border: Border.all(
             color: theme.colorScheme.onSurface.withOpacity(0.2),
@@ -34,11 +36,12 @@ class TransactionFormAccountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<TransactionFormViewModel>();
-    final account = viewModel.accountController.value;
 
     return ListenableBuilder(
       listenable: viewModel.accountController,
       builder: (context, child) {
+        final account = viewModel.accountController.value;
+
         return SelectComponent<AccountModel>(
           controller: viewModel.accountController,
           placeholder: const Text("Счет"),

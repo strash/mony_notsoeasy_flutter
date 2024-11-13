@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
@@ -30,7 +30,7 @@ final class AccountFormViewModelBuilder extends StatefulWidget {
 final class AccountFormViewModel
     extends ViewModelState<AccountFormViewModelBuilder> {
   final titleController = InputController();
-  final colorController = ColorPickerController(Palette().randomColor);
+  final colorController = NamedColorPickerController(EColorName.random());
   final typeController =
       SelectController<EAccountType?>(EAccountType.defaultValue);
   final currencyController = SelectController<FiatCurrency?>(
@@ -92,7 +92,7 @@ final class AccountFormViewModel
     final account = widget.account;
     if (account != null) {
       titleController.text = account.title;
-      colorController.value = account.color;
+      colorController.value = EColorName.from(account.colorName);
       typeController.value = account.type;
       currencyController.value = FiatCurrency.fromCode(account.currencyCode);
       balanceController.text = account.balance.toString();

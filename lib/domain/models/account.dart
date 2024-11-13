@@ -1,7 +1,5 @@
-import "dart:ui";
-
 import "package:freezed_annotation/freezed_annotation.dart";
-import "package:mony_app/app/descriptable/descriptable.dart";
+import "package:mony_app/app/app.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 part "account.freezed.dart";
@@ -50,7 +48,7 @@ class AccountModel with _$AccountModel {
     required String title,
     required EAccountType type,
     required FiatCurrency currency,
-    required Color color,
+    required EColorName colorName,
     required double balance,
   }) = _AccountModel;
 }

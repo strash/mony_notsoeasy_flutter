@@ -12,7 +12,7 @@ class CategoryDto with _$CategoryDto {
     required String title,
     required String icon,
     required int sort,
-    required String color,
+    required String colorName,
     required String transactionType,
   }) = _CategoryDto;
 

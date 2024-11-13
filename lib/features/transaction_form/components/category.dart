@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
@@ -10,8 +11,8 @@ class TransactionFormCategoryComponent extends StatelessWidget {
 
   Widget _getCategory(BuildContext context, CategoryModel category) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
     final style = DefaultTextStyle.of(context).style;
-    final color = getCategoryColors(context, category.color);
 
     return Row(
       children: [
@@ -32,7 +33,8 @@ class TransactionFormCategoryComponent extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: style.copyWith(
               fontWeight: FontWeight.w500,
-              color: color.text,
+              color: ex?.from(category.colorName).color ??
+                  theme.colorScheme.onSurface,
             ),
           ),
         ),

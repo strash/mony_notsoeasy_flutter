@@ -1,5 +1,5 @@
 import "package:flutter/widgets.dart";
-import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
@@ -69,7 +69,7 @@ final class OnCategoryButtonPressed
             title: value.category.title,
             icon: "",
             sort: models.length,
-            color: Palette().randomColor,
+            colorName: EColorName.random().name,
             transactionType: value.transactionType,
           );
       final createResult = await BottomSheetComponent.show<CategoryVO?>(

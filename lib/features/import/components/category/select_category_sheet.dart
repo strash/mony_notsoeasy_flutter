@@ -2,7 +2,7 @@ import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/common/common.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/domain.dart";
 
 class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
@@ -16,6 +16,7 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
     final bottom = MediaQuery.viewPaddingOf(context).bottom;
 
     return SingleChildScrollView(
@@ -24,21 +25,16 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
         spacing: 8.r,
         runSpacing: 8.r,
         children: categories.map((e) {
-          final (:bg, :border, :text) = getCategoryColors(context, e.color);
-
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => Navigator.of(context).pop<CategoryModel>(e),
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: bg,
+                color: ex?.from(e.colorName).color ??
+                    theme.colorScheme.surfaceContainer,
                 shape: SmoothRectangleBorder(
-                  side: BorderSide(color: border),
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(
-                      cornerRadius: 10.r,
-                      cornerSmoothing: 1.0,
-                    ),
+                    SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
                   ),
                 ),
               ),
@@ -69,8 +65,8 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.golosText(
                             fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: text,
+                            fontWeight: FontWeight.w600,
+                            color: theme.colorScheme.surface,
                           ),
                         ),
                       ),

@@ -1,7 +1,6 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/components/color_picker/component.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
 
@@ -13,7 +12,8 @@ final class OnSumbitAccountPressed extends UseCase<void, dynamic> {
         viewModel.balanceController.text.trim().replaceAll(",", ".");
     final vo = AccountVO(
       title: viewModel.titleController.text.trim(),
-      color: viewModel.colorController.value ?? Palette().randomColor,
+      colorName:
+          viewModel.colorController.value?.name ?? EColorName.random().name,
       type: viewModel.typeController.value ?? EAccountType.defaultValue,
       currencyCode:
           viewModel.currencyController.value?.code ?? kDefaultCurrencyCode,

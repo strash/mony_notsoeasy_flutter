@@ -40,7 +40,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
     final value = await BottomSheetComponent.show<T>(
       context,
       builder: (context, bottom) {
-        return _ValueProvider<T>(
+        return _SelectValueProvider<T>(
           controller: widget.controller,
           child: ListView.builder(
             shrinkWrap: true,

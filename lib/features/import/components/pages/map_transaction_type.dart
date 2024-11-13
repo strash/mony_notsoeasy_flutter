@@ -55,7 +55,7 @@ class ImportMapTransactionTypePage extends StatelessWidget {
 
         // -> table
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: TypesTableComponent(transactionsByType: transactionsByType),
         ),
         SizedBox(height: 30.h),

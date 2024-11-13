@@ -1,5 +1,3 @@
-import "dart:ui";
-
 import "package:freezed_annotation/freezed_annotation.dart";
 import "package:mony_app/domain/models/models.dart";
 
@@ -11,7 +9,7 @@ class AccountVO with _$AccountVO {
     required String title,
     required EAccountType type,
     required String currencyCode,
-    required Color color,
+    required String colorName,
     required double balance,
   }) = _AccountVO;
 }

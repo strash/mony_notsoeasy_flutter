@@ -1,7 +1,6 @@
 import "package:flutter/widgets.dart";
-import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/color_picker/component.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category_form/page/view_model.dart";
 import "package:provider/provider.dart";
@@ -17,7 +16,8 @@ final class OnSubmitCategoryPressed extends UseCase<Future<void>, dynamic> {
     );
     final vo = CategoryVO(
       title: viewModel.titleController.text.trim(),
-      color: viewModel.colorController.value ?? Palette().randomColor,
+      colorName:
+          viewModel.colorController.value?.name ?? EColorName.random().name,
       icon: viewModel.emojiController.text,
       sort: categories.length,
       transactionType: transactionType,

@@ -104,7 +104,7 @@ class FeedView extends StatelessWidget {
                     SliverPadding(
                       padding: EdgeInsets.only(bottom: bottomOffset),
                       sliver: SliverList.builder(
-                        itemCount: page.feed.length,
+                        itemCount: feed.length,
                         findChildIndexCallback: (key) {
                           final id = (key as ValueKey<String>).value;
                           return feed.indexWhere((feedItem) {

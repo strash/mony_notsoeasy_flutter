@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
-import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
-import "package:mony_app/components/color_picker/component.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category_form/page/view.dart";
@@ -32,7 +31,7 @@ final class CategoryFormViewModelBuilder extends StatefulWidget {
 final class CategoryFormViewModel
     extends ViewModelState<CategoryFormViewModelBuilder> {
   final titleController = InputController();
-  final colorController = ColorPickerController(Palette().randomColor);
+  final colorController = NamedColorPickerController(EColorName.random());
   final emojiController = InputController();
 
   bool isSubmitEnabled = false;
@@ -65,7 +64,7 @@ final class CategoryFormViewModel
     final category = widget.category;
     if (category != null) {
       titleController.text = category.title;
-      colorController.value = category.color;
+      colorController.value = EColorName.from(category.colorName);
       emojiController.text = category.icon.isNotEmpty ? category.icon : "😀";
     } else {
       emojiController.text = "😀";

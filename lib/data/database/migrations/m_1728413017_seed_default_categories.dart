@@ -1,14 +1,12 @@
+import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/components/color_picker/component.dart";
 import "package:mony_app/data/database/migration_service.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:sqflite/sqflite.dart";
 
-typedef _CategoryValueObject = ({String icon, String title});
+typedef _CategoryValueObject = ({String icon, String color, String title});
 
 final class M1728413017SeedDefaultCategories extends BaseMigration {
-  final _pelette = Palette();
-
   final _categories = "categories";
   final _categoriesId = "id";
   final _categoriesCreated = "created";
@@ -16,18 +14,18 @@ final class M1728413017SeedDefaultCategories extends BaseMigration {
   final _categoriesTitle = "title";
   final _categoriesIcon = "icon";
   final _categoriesSort = "sort";
-  final _categoriesColor = "color";
+  final _categoriesColorName = "color_name";
   final _categoriesTransactionType = "transaction_type";
 
   String _getInsertQuery({
     required String title,
     required String icon,
+    required String colorName,
     required int sort,
     required String transactionType,
   }) {
     final id = StringEx.random(20);
     final date = DateTime.now().toUtc().toIso8601String();
-    final color = _pelette.randomColor.toHexadecimal();
     return """
 INSERT INTO $_categories (
 	$_categoriesId,
@@ -36,7 +34,7 @@ INSERT INTO $_categories (
 	$_categoriesTitle,
 	$_categoriesIcon,
 	$_categoriesSort,
-	$_categoriesColor,
+	$_categoriesColorName,
 	$_categoriesTransactionType
 ) VALUES(
 	'$id',
@@ -45,7 +43,7 @@ INSERT INTO $_categories (
 	'$title',
 	'$icon',
 	$sort,
-	'$color',
+	'$colorName',
 	'$transactionType'
 	);
 """;
@@ -56,24 +54,30 @@ INSERT INTO $_categories (
     final batch = db.batch();
     // expense categories
     final expenseCategories = <_CategoryValueObject>[
-      (icon: "🛒", title: "Продукты"),
-      (icon: "🍔", title: "Еда"),
-      (icon: "😍", title: "Забота о себе"),
-      (icon: "🐶", title: "Питомцы"),
-      (icon: "🏠", title: "Аренда"),
-      (icon: "🚑", title: "Здоровье"),
-      (icon: "🚖", title: "Транспорт"),
-      (icon: "🔄", title: "Подписки"),
-      (icon: "🧦", title: "Гардероб"),
-      (icon: "🎁", title: "Подарки"),
-      (icon: "🪴", title: "Дом"),
+      (icon: "🛒", color: EColorName.red.name, title: "Продукты"),
+      (icon: "🍔", color: EColorName.philippineYellow.name, title: "Еда"),
+      (icon: "😍", color: EColorName.corn.name, title: "Забота о себе"),
+      (icon: "🐶", color: EColorName.cafeAuLait.name, title: "Питомцы"),
+      (icon: "🏠", color: EColorName.bananaYellow.name, title: "Аренда"),
+      (icon: "🚑", color: EColorName.inchworm.name, title: "Здоровье"),
+      (icon: "🚖", color: EColorName.americanOrange.name, title: "Транспорт"),
+      (icon: "🔄", color: EColorName.babyBlue.name, title: "Подписки"),
+      (
+        icon: "🧦",
+        color: EColorName.richBrilliantLavender.name,
+        title: "Гардероб"
+      ),
+      (icon: "🎁", color: EColorName.vividRaspberry.name, title: "Подарки"),
+      (icon: "🪴", color: EColorName.vividMalachite.name, title: "Дом"),
+      (icon: "💻", color: EColorName.cadet.name, title: "Девайсы"),
     ];
-    for (final category in expenseCategories.indexed) {
+    for (final (index, category) in expenseCategories.indexed) {
       batch.execute(
         _getInsertQuery(
-          icon: category.$2.icon,
-          title: category.$2.title,
-          sort: category.$1,
+          icon: category.icon,
+          title: category.title,
+          colorName: category.color,
+          sort: index,
           transactionType: ETransactionType.expense.value,
         ),
       );
@@ -81,20 +85,21 @@ INSERT INTO $_categories (
 
     // income categories
     final incomeCategories = <_CategoryValueObject>[
-      (icon: "🤑", title: "Зарплата"),
-      (icon: "💼", title: "Фриланс"),
-      (icon: "🧧", title: "Подарки"),
-      (icon: "💹", title: "Инверстиции"),
-      (icon: "🪙", title: "Чаевые"),
-      (icon: "💸", title: "Займ"),
-      (icon: "🧾", title: "Продажи"),
+      (icon: "🤑", color: EColorName.vividMalachite.name, title: "Зарплата"),
+      (icon: "💼", color: EColorName.azure.name, title: "Фриланс"),
+      (icon: "🧧", color: EColorName.red.name, title: "Подарки"),
+      (icon: "💹", color: EColorName.bananaYellow.name, title: "Инверстиции"),
+      (icon: "🪙", color: EColorName.inchworm.name, title: "Чаевые"),
+      (icon: "💸", color: EColorName.cafeAuLait.name, title: "Займ"),
+      (icon: "🧾", color: EColorName.majorelleBlue.name, title: "Продажи"),
     ];
-    for (final category in incomeCategories.indexed) {
+    for (final (index, category) in incomeCategories.indexed) {
       batch.execute(
         _getInsertQuery(
-          icon: category.$2.icon,
-          title: category.$2.title,
-          sort: category.$1,
+          icon: category.icon,
+          title: category.title,
+          colorName: category.color,
+          sort: index,
           transactionType: ETransactionType.income.value,
         ),
       );

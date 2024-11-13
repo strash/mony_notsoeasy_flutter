@@ -43,6 +43,12 @@ class AccountFormView extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // -> color picker
+                    NamedColorPickerComponent(
+                      controller: viewModel.colorController,
+                    ),
+                    SizedBox(width: 10.w),
+
                     // -> title
                     Expanded(
                       child: TextFormField(
@@ -67,12 +73,6 @@ class AccountFormView extends StatelessWidget {
                           counterText: "",
                         ),
                       ),
-                    ),
-                    const RSizedBox(width: 10.0),
-
-                    // -> color picker
-                    ColorPickerComponent(
-                      controller: viewModel.colorController,
                     ),
                   ],
                 ),

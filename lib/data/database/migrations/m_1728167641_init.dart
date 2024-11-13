@@ -22,7 +22,7 @@ final class M1728167641Init extends BaseMigration {
   final _categoriesTitle = "title";
   final _categoriesIcon = "icon";
   final _categoriesSort = "sort";
-  final _categoriesColor = "color";
+  final _categoriesColorName = "color_name";
   final _categoriesTransactionType = "transaction_type";
   // TRANSACTIONS
   final _transactions = "transactions";
@@ -77,10 +77,10 @@ CREATE TABLE IF NOT EXISTS $_accounts (
   late final _categoryQuery = """
 CREATE TABLE IF NOT EXISTS $_categories (
 	$defaultColumns,
-	$_categoriesTitle           TEXT    DEFAULT ''                     NOT NULL,
-	$_categoriesIcon            TEXT    DEFAULT ''                     NOT NULL,
-	$_categoriesSort            INTEGER DEFAULT 0                      NOT NULL,
-	$_categoriesColor           TEXT    DEFAULT '0xFFFFFFFF'           NOT NULL,
+	$_categoriesTitle           TEXT    DEFAULT ''                         NOT NULL,
+	$_categoriesIcon            TEXT    DEFAULT ''                         NOT NULL,
+	$_categoriesSort            INTEGER DEFAULT 0                          NOT NULL,
+	$_categoriesColorName       TEXT    DEFAULT ''                         NOT NULL,
 	$_categoriesTransactionType TEXT    DEFAULT '$_defaultTransactionType' NOT NULL
 );
 """;

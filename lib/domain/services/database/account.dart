@@ -1,3 +1,4 @@
+import "package:mony_app/app/app.dart";
 import "package:mony_app/data/database/repository/account.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
@@ -53,7 +54,7 @@ final class DomainAccountService extends BaseDatabaseService {
   }
 
   Future<AccountModel> create({required AccountVO vo}) async {
-    final AccountVO(:title, :type, :currencyCode, :color, :balance) = vo;
+    final AccountVO(:title, :type, :currencyCode, :colorName, :balance) = vo;
     final defaultColumns = newDefaultColumns;
     final model = AccountModel(
       id: defaultColumns.id,
@@ -62,7 +63,7 @@ final class DomainAccountService extends BaseDatabaseService {
       title: title,
       type: type,
       currency: FiatCurrency.fromCode(currencyCode),
-      color: color,
+      colorName: EColorName.from(colorName),
       balance: balance,
     );
     await _accountRepo.create(dto: _accountFactory.toDto(model));

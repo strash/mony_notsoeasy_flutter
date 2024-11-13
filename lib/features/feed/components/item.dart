@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
-import "package:mony_app/common/common.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/feed/components/components.dart";
 
@@ -18,15 +18,13 @@ class FeedItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
     final viewSize = MediaQuery.sizeOf(context);
     final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h);
     final iconDimension = 46.r;
     final horizontalGap = 10.w;
     final contentWidth =
         viewSize.width - padding.horizontal - iconDimension - horizontalGap;
-
-    final categoryColors =
-        getCategoryColors(context, transaction.category.color);
 
     final formatter = NumberFormat.currency(
       name: transaction.account.currency.name,
@@ -45,11 +43,9 @@ class FeedItemComponent extends StatelessWidget {
               dimension: iconDimension,
               child: DecoratedBox(
                 decoration: ShapeDecoration(
-                  color: categoryColors.bg,
+                  color: ex?.from(transaction.category.colorName).color ??
+                      theme.colorScheme.surfaceContainer,
                   shape: SmoothRectangleBorder(
-                    side: BorderSide(
-                      color: categoryColors.border.withOpacity(.3),
-                    ),
                     borderRadius: SmoothBorderRadius.all(
                       SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
                     ),
@@ -84,7 +80,7 @@ class FeedItemComponent extends StatelessWidget {
                           style: GoogleFonts.golosText(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w500,
-                            color: categoryColors.text,
+                            color: theme.colorScheme.onSurface,
                           ),
                         ),
                       ),

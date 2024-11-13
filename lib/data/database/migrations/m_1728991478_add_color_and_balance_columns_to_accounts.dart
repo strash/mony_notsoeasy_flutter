@@ -9,7 +9,7 @@ final class M1728991478AddColorAndBalanceColumnsToAccounts
   Future<void> up(Database db) async {
     final batch = db.batch();
     batch.execute("ALTER TABLE $_table "
-        "ADD COLUMN color TEXT DEFAULT '0xFFFFFFFF' NOT NULL;");
+        "ADD COLUMN color_name TEXT DEFAULT '' NOT NULL;");
     batch.execute("ALTER TABLE $_table "
         "ADD COLUMN balance REAL DEFAULT 0 NOT NULL;");
     await batch.commit();
@@ -18,7 +18,7 @@ final class M1728991478AddColorAndBalanceColumnsToAccounts
   @override
   Future<void> down(Database db) async {
     final batch = db.batch();
-    batch.execute("ALTER TABLE $_table DROP COLUMN color;");
+    batch.execute("ALTER TABLE $_table DROP COLUMN color_name;");
     batch.execute("ALTER TABLE $_table DROP COLUMN balance;");
     await batch.commit();
   }

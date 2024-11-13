@@ -63,11 +63,13 @@ SELECT
 	a.currency_code,
 	a.balance,
 	COALESCE(SUM(t.amount), 0.0) AS total_amount,
-	(a.balance + COALESCE(SUM(t.amount), 0.0)) AS total_sum
+	(a.balance + COALESCE(SUM(t.amount), 0.0)) AS total_sum,
+	a.created
 FROM accounts AS a
 LEFT JOIN transactions AS t ON a.id = t.account_id
 $where
-GROUP BY a.id;
+GROUP BY a.id
+ORDER BY a.created ASC;
 """,
         ids,
       );

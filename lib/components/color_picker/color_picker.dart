@@ -32,7 +32,7 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
     final value = await BottomSheetComponent.show<Color?>(
       context,
       builder: (context, bottom) {
-        return _ValueProvider(
+        return _ColorPickerValueProvider(
           controller: widget.controller,
           child: _ColorGrid(bottom),
         );

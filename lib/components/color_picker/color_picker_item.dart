@@ -17,7 +17,7 @@ class _ColorGridItem extends StatefulWidget {
 
 class _ColorGridItemState extends State<_ColorGridItem> {
   ColorPickerController get _controller {
-    return _ValueProvider.of(context);
+    return _ColorPickerValueProvider.of(context);
   }
 
   void _onTap() {

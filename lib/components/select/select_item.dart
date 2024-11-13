@@ -15,7 +15,7 @@ class SelectEntryComponent<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final provider = _ValueProvider.of<T>(context);
+    final provider = _SelectValueProvider.of<T>(context);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,

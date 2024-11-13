@@ -78,7 +78,7 @@ class CategoryFormView extends StatelessWidget {
                     const RSizedBox(width: 10.0),
 
                     // -> color picker
-                    ColorPickerComponent(
+                    NamedColorPickerComponent(
                       controller: viewModel.colorController,
                     ),
                   ],

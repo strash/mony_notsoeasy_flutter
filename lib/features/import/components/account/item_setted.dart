@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
@@ -14,6 +15,7 @@ class AccountSettedButtonComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
     final currency = FiatCurrency.fromCode(account.currencyCode);
     final formatter = NumberFormat.compact();
 
@@ -27,7 +29,8 @@ class AccountSettedButtonComponent extends StatelessWidget {
             height: 42.h,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: account.color,
+                color: ex?.from(EColorName.from(account.colorName)).color ??
+                    theme.colorScheme.onSurface,
                 shape: SmoothRectangleBorder(
                   side: BorderSide(
                     color: theme.colorScheme.onSurface.withOpacity(0.1),

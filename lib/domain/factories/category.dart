@@ -1,6 +1,4 @@
-import "dart:ui";
-
-import "package:mony_app/common/common.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/factories/factories.dart";
 import "package:mony_app/domain/domain.dart";
@@ -16,7 +14,7 @@ final class CategoryDatabaseFactoryImpl
       title: dto.title,
       icon: dto.icon,
       sort: dto.sort,
-      color: Color(int.tryParse(dto.color) ?? 0xFFFFFFFF),
+      colorName: EColorName.from(dto.colorName),
       transactionType: ETransactionType.from(dto.transactionType),
     );
   }
@@ -30,7 +28,7 @@ final class CategoryDatabaseFactoryImpl
       title: model.title,
       icon: model.icon,
       sort: model.sort,
-      color: model.color.toHexadecimal(),
+      colorName: model.colorName.name,
       transactionType: model.transactionType.value,
     );
   }

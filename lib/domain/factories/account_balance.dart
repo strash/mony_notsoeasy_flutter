@@ -13,6 +13,7 @@ final class AccountBalanceDatabaseFactoryImpl
       balance: dto.balance.toDouble(),
       totalAmount: dto.totalAmount.toDouble(),
       totalSum: dto.totalSum.toDouble(),
+      created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
     );
   }
 
@@ -24,6 +25,7 @@ final class AccountBalanceDatabaseFactoryImpl
       balance: model.balance,
       totalAmount: model.totalAmount,
       totalSum: model.totalSum,
+      created: model.created.toUtc().toIso8601String(),
     );
   }
 }

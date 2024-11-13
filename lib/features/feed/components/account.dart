@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
+import "package:mony_app/app/app.dart";
+import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
@@ -22,9 +24,11 @@ class FeedAccountComponent extends StatelessWidget {
 
   Color _getColor(BuildContext context) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
     return switch (page) {
       FeedPageStateAllAccounts() => theme.colorScheme.primary,
-      final FeedPageStateSingleAccount page => page.account.color,
+      final FeedPageStateSingleAccount page =>
+        ex?.from(page.account.colorName).color ?? theme.colorScheme.primary,
     };
   }
 
@@ -53,33 +57,19 @@ class FeedAccountComponent extends StatelessWidget {
         FittedBox(
           child: switch (page) {
             final FeedPageStateAllAccounts page => Column(
-                children: page.balances.map(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: page.balances.foldByCurrency().map(
                   (e) {
-                    return TweenAnimationBuilder<double>(
-                      duration: Durations.extralong4,
-                      curve: Curves.easeInOut,
-                      tween: Tween(begin: .0, end: e.totalSum),
-                      builder: (context, value, child) {
-                        return Text(
-                          _format(value, e.currency),
-                          style: _getStyle(context),
-                        );
-                      },
+                    return Text(
+                      _format(e.totalSum, e.currency),
+                      style: _getStyle(context),
                     );
                   },
                 ).toList(growable: false),
               ),
-            final FeedPageStateSingleAccount page =>
-              TweenAnimationBuilder<double>(
-                duration: Durations.extralong4,
-                curve: Curves.easeInOut,
-                tween: Tween(begin: .0, end: page.balance.totalSum),
-                builder: (context, value, child) {
-                  return Text(
-                    _format(value, page.balance.currency),
-                    style: _getStyle(context),
-                  );
-                },
+            final FeedPageStateSingleAccount page => Text(
+                _format(page.balance.totalSum, page.balance.currency),
+                style: _getStyle(context),
               ),
           },
         ),

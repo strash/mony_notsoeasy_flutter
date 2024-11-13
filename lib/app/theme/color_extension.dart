@@ -19,6 +19,18 @@ enum EColorName {
   richBrilliantLavender,
   orchid,
   cadet,
+  ;
+
+  static EColorName get defaultValue => vividMalachite;
+
+  static EColorName from(String name) {
+    return values.where((e) => e.name == name).singleOrNull ?? defaultValue;
+  }
+
+  static EColorName random() {
+    final rng = Random();
+    return values.elementAt(rng.nextInt(values.length));
+  }
 }
 
 @freezed
@@ -34,7 +46,7 @@ final class ColorExtension extends ThemeExtension<ColorExtension> {
 
   ColorExtension({required this.palette});
 
-  ColorWithName color(EColorName name) {
+  ColorWithName from(EColorName name) {
     return palette.singleWhere((e) => e.name == name);
   }
 
@@ -53,7 +65,7 @@ final class ColorExtension extends ThemeExtension<ColorExtension> {
     return ColorExtension(
       palette: palette.map((e) {
         return e.copyWith(
-          color: Color.lerp(e.color, other.color(e.name).color, t) ?? e.color,
+          color: Color.lerp(e.color, other.from(e.name).color, t) ?? e.color,
         );
       }).toList(growable: false),
     );

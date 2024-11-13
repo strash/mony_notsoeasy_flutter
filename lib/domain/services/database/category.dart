@@ -1,3 +1,4 @@
+import "package:mony_app/app/app.dart";
 import "package:mony_app/data/database/repository/category.dart";
 import "package:mony_app/domain/domain.dart";
 
@@ -45,7 +46,7 @@ final class DomainCategoryService extends BaseDatabaseService {
   }
 
   Future<CategoryModel> create({required CategoryVO vo}) async {
-    final CategoryVO(:title, :icon, :sort, :color, :transactionType) = vo;
+    final CategoryVO(:title, :icon, :sort, :colorName, :transactionType) = vo;
     final defaultColumns = newDefaultColumns;
     final model = CategoryModel(
       id: defaultColumns.id,
@@ -54,7 +55,7 @@ final class DomainCategoryService extends BaseDatabaseService {
       title: title,
       icon: icon,
       sort: sort,
-      color: color,
+      colorName: EColorName.from(colorName),
       transactionType: transactionType,
     );
     await _categoryRepo.create(dto: _categoryFactory.toDto(model));
