@@ -12,7 +12,7 @@ import "package:mony_app/features/transaction_form/page/view.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 export "../use_case/use_case.dart";
-export "./tag_vo.dart";
+export "./form_vo.dart";
 
 final class TransactionFormViewModelBuilder extends StatefulWidget {
   const TransactionFormViewModelBuilder({super.key});

@@ -4,7 +4,6 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/transaction_form/components/keyboard_button_type.dart";
-import "package:provider/provider.dart";
 
 final class OnKeyPressed
     extends UseCase<Future<void>, TransactionFormButtonType> {
@@ -16,34 +15,24 @@ final class OnKeyPressed
     if (button == null) throw ArgumentError.notNull();
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
-    final transactionService = context.read<DomainTransactionService>();
-    final tagService = context.read<DomainTagService>();
-    final appService = context.viewModel<AppEventService>();
-
     final navigator = Navigator.of(context);
 
-    final amount = viewModel.amountNotifier.value.trim();
+    final trimmedAmount = viewModel.amountNotifier.value.trim();
     switch (button) {
+      // -> all other buttons
       case TransactionFormButtonTypeSymbol():
-        if (amount == "0" && button.value != ".") {
+        if (trimmedAmount == "0" && button.value != ".") {
           viewModel.amountNotifier.value = button.value;
         } else {
-          viewModel.amountNotifier.value = amount + button.value;
+          viewModel.amountNotifier.value = trimmedAmount + button.value;
         }
+
+      // -> submit
       case TransactionFormButtonTypeAction():
-        if (amount.isEmpty) return;
+        if (trimmedAmount.isEmpty) return;
 
-        final List<TagModel> tagModels = await Future.wait(
-          viewModel.attachedTags.map((e) {
-            return switch (e) {
-              final TransactionFormTagVO tag => tagService.create(vo: tag.vo),
-              final TransactionTagFormModel tag => Future.value(tag.model),
-            };
-          }),
-        );
-
-        final parsedAmount = double.parse(amount);
-        final transactionVO = TransactionVO(
+        final parsedAmount = double.parse(trimmedAmount);
+        final transactionFormVO = TransactionFormVO(
           amout: viewModel.typeController.value == ETransactionType.expense
               ? .0 - parsedAmount
               : parsedAmount,
@@ -63,24 +52,10 @@ final class OnKeyPressed
             ETransactionType.income =>
               viewModel.incomeCategoryController.value!.id,
           },
-          tags: tagModels
-              .map((e) => TransactionTagVO(title: e.title, tagId: e.id))
-              .toList(growable: false),
+          tags: viewModel.attachedTags,
         );
 
-        final transactionModel = await transactionService.create(
-          vo: transactionVO,
-        );
-
-        navigator.pop();
-
-        if (transactionModel == null) return;
-        appService.notify(
-          EventTransactionCreated(
-            sender: TransactionFormViewModel,
-            transaction: transactionModel,
-          ),
-        );
+        navigator.pop<TransactionFormVO>(transactionFormVO);
     }
   }
 }
