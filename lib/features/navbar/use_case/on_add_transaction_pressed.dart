@@ -30,19 +30,21 @@ final class OnAddTransactionPressed extends UseCase<Future<void>, dynamic> {
       }),
     );
 
-    final transactionTagVOList = tagModels
-        .map((e) => TransactionTagVO(title: e.title, tagId: e.id))
-        .toList(growable: false);
-
     final transactionModel = await transactionService.create(
-      vo: result.toTransactionVO(transactionTagVOList),
+      vo: result.toTransactionVO().copyWith(
+            tags: tagModels
+                .map((e) => TransactionTagVO(title: e.title, tagId: e.id))
+                .toList(growable: false),
+          ),
     );
-    if (transactionModel == null) return;
-    appService.notify(
-      EventTransactionCreated(
-        sender: TransactionFormViewModel,
-        transaction: transactionModel,
-      ),
-    );
+
+    if (transactionModel != null) {
+      appService.notify(
+        EventTransactionCreated(
+          sender: TransactionFormViewModel,
+          transaction: transactionModel,
+        ),
+      );
+    }
   }
 }
