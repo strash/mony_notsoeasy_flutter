@@ -112,16 +112,17 @@ class FeedView extends StatelessWidget {
                           });
                         },
                         itemBuilder: (context, index) {
-                          final feedItem = feed.elementAt(index);
+                          final item = feed.elementAt(index);
+                          final key = _getFeedItemKey(item);
 
-                          return switch (feedItem) {
+                          return switch (item) {
                             FeedItemSection() => FeedSectionComponent(
-                                key: _getFeedItemKey(feedItem),
-                                section: feedItem,
+                                key: key,
+                                section: item,
                               ),
                             FeedItemTransaction() => FeedItemComponent(
-                                key: _getFeedItemKey(feedItem),
-                                transaction: feedItem.transaction,
+                                key: key,
+                                transaction: item.transaction,
                               )
                           };
                         },
