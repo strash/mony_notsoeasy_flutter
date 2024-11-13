@@ -5,14 +5,14 @@ import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/features/new_transaction/components/components.dart";
+import "package:mony_app/features/transaction_form/components/components.dart";
 
-class NewTransactionSymbolButtonComponent extends StatefulWidget {
-  final ButtonType button;
+class TransactionFormSymbolButtonComponent extends StatefulWidget {
+  final TransactionFormButtonType button;
   final String value;
-  final UseCase<Future<void>, ButtonType> onTap;
+  final UseCase<Future<void>, TransactionFormButtonType> onTap;
 
-  const NewTransactionSymbolButtonComponent({
+  const TransactionFormSymbolButtonComponent({
     super.key,
     required this.button,
     required this.value,
@@ -20,12 +20,12 @@ class NewTransactionSymbolButtonComponent extends StatefulWidget {
   });
 
   @override
-  State<NewTransactionSymbolButtonComponent> createState() =>
-      _NewTransactionSymbolButtonComponentState();
+  State<TransactionFormSymbolButtonComponent> createState() =>
+      _TransactionFormSymbolButtonComponentState();
 }
 
-class _NewTransactionSymbolButtonComponentState
-    extends State<NewTransactionSymbolButtonComponent>
+class _TransactionFormSymbolButtonComponentState
+    extends State<TransactionFormSymbolButtonComponent>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
@@ -89,7 +89,7 @@ class _NewTransactionSymbolButtonComponentState
                     duration: Durations.short4,
                     curve: Curves.easeInOut,
                     child: switch (widget.button) {
-                      final ButtonTypeSymbol button => Text(
+                      final TransactionFormButtonTypeSymbol button => Text(
                           button.value,
                           style: GoogleFonts.golosText(
                             fontSize: 34.sp,
@@ -98,7 +98,8 @@ class _NewTransactionSymbolButtonComponentState
                             decoration: TextDecoration.none,
                           ),
                         ),
-                      final ButtonTypeAction button => SvgPicture.asset(
+                      final TransactionFormButtonTypeAction button =>
+                        SvgPicture.asset(
                           button.icon,
                           width: 36.r,
                           height: 36.r,

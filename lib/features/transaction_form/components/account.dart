@@ -3,10 +3,10 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/select/component.dart";
 import "package:mony_app/domain/models/account.dart";
-import "package:mony_app/features/new_transaction/page/view_model.dart";
+import "package:mony_app/features/transaction_form/page/view_model.dart";
 
-class NewTransactionAccountComponent extends StatelessWidget {
-  const NewTransactionAccountComponent({super.key});
+class TransactionFormAccountComponent extends StatelessWidget {
+  const TransactionFormAccountComponent({super.key});
 
   String _getTitle(AccountModel account) {
     return "${account.title} "
@@ -33,7 +33,7 @@ class NewTransactionAccountComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
     final account = viewModel.accountController.value;
 
     return ListenableBuilder(

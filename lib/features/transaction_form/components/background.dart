@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
-import "package:mony_app/features/new_transaction/page/view_model.dart";
+import "package:mony_app/features/transaction_form/page/view_model.dart";
 
 final class _GradientTween extends Tween<LinearGradient> {
   _GradientTween({super.begin, super.end});
@@ -14,14 +14,14 @@ final class _GradientTween extends Tween<LinearGradient> {
   }
 }
 
-class NewTransactionBackgroundComponent extends StatelessWidget {
-  const NewTransactionBackgroundComponent({super.key});
+class TransactionFormBackgroundComponent extends StatelessWidget {
+  const TransactionFormBackgroundComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final brightness = MediaQuery.platformBrightnessOf(context);
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
 
     const stops = [.0, .4];
 

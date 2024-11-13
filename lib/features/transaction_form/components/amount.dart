@@ -4,16 +4,16 @@ import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
-import "package:mony_app/features/new_transaction/page/view_model.dart";
+import "package:mony_app/features/transaction_form/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-class NewTransactionAmountComponent extends StatelessWidget {
-  const NewTransactionAmountComponent({super.key});
+class TransactionFormAmountComponent extends StatelessWidget {
+  const TransactionFormAmountComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),

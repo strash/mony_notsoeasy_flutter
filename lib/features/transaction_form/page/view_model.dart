@@ -7,23 +7,23 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/components/time/component.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
-import "package:mony_app/features/new_transaction/components/keyboard_button_type.dart";
-import "package:mony_app/features/new_transaction/page/view.dart";
+import "package:mony_app/features/transaction_form/components/keyboard_button_type.dart";
+import "package:mony_app/features/transaction_form/page/view.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 export "../use_case/use_case.dart";
 export "./tag_vo.dart";
 
-final class NewTransactionViewModelBuilder extends StatefulWidget {
-  const NewTransactionViewModelBuilder({super.key});
+final class TransactionFormViewModelBuilder extends StatefulWidget {
+  const TransactionFormViewModelBuilder({super.key});
 
   @override
-  ViewModelState<NewTransactionViewModelBuilder> createState() =>
-      NewTransactionViewModel();
+  ViewModelState<TransactionFormViewModelBuilder> createState() =>
+      TransactionFormViewModel();
 }
 
-final class NewTransactionViewModel
-    extends ViewModelState<NewTransactionViewModelBuilder> {
+final class TransactionFormViewModel
+    extends ViewModelState<TransactionFormViewModelBuilder> {
   final typeController = TabGroupController(ETransactionType.defaultValue);
 
   final dateController = CalendarController(DateTime.now());
@@ -47,15 +47,15 @@ final class NewTransactionViewModel
     for (final key in ETransactionType.values) key: const [],
   };
   final displayedTags = ValueNotifier<List<TagModel>>([]);
-  List<NewTransactionTag> attachedTags = const [];
+  List<TransactionFormTag> attachedTags = const [];
 
   bool isKeyboardHintAccepted = false;
 
   final RegExp regEx = RegExp(r"\d*?[.,]\d{2}$");
-  List<List<ButtonType>> get buttons {
-    return List<List<ButtonType>>.generate(3, (rowIndex) {
-      return List<ButtonType>.generate(3, (colIndex) {
-        return ButtonTypeSymbol(
+  List<List<TransactionFormButtonType>> get buttons {
+    return List<List<TransactionFormButtonType>>.generate(3, (rowIndex) {
+      return List<TransactionFormButtonType>.generate(3, (colIndex) {
+        return TransactionFormButtonTypeSymbol(
           value: (colIndex + 1 + rowIndex * 3).toString(),
           color: Theme.of(context).colorScheme.surfaceContainer,
           isEnabled: (value) {
@@ -66,7 +66,7 @@ final class NewTransactionViewModel
       });
     })
       ..add([
-        ButtonTypeSymbol(
+        TransactionFormButtonTypeSymbol(
           value: ".",
           color: Theme.of(context).colorScheme.surfaceContainer,
           isEnabled: (value) {
@@ -74,7 +74,7 @@ final class NewTransactionViewModel
             return !trim.contains(".") && trim.length != kMaxAmountLength;
           },
         ),
-        ButtonTypeSymbol(
+        TransactionFormButtonTypeSymbol(
           value: "0",
           color: Theme.of(context).colorScheme.surfaceContainer,
           isEnabled: (value) {
@@ -82,7 +82,7 @@ final class NewTransactionViewModel
             return !regEx.hasMatch(trim) && trim.length != kMaxAmountLength;
           },
         ),
-        ButtonTypeAction(
+        TransactionFormButtonTypeAction(
           icon: Assets.icons.checkmarkBold,
           color: Theme.of(context).colorScheme.secondary,
           isEnabled: (value) {
@@ -161,7 +161,7 @@ final class NewTransactionViewModel
 
   @override
   Widget build(BuildContext context) {
-    return ViewModel<NewTransactionViewModel>(
+    return ViewModel<TransactionFormViewModel>(
       viewModel: this,
       useCases: [
         () => OnDatePressed(),
@@ -172,7 +172,7 @@ final class NewTransactionViewModel
         () => OnKeyPressed(),
         () => OnHorizontalDragEnded(),
       ],
-      child: const NewTransactionView(),
+      child: const TransactionFormView(),
     );
   }
 }

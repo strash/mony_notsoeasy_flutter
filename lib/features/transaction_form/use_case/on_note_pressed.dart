@@ -3,17 +3,17 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/features.dart";
-import "package:mony_app/features/new_transaction/components/components.dart";
+import "package:mony_app/features/transaction_form/components/components.dart";
 
 final class OnNotePressed extends UseCase<void, dynamic> {
   @override
   void call(BuildContext context, [dynamic _]) {
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
 
     BottomSheetComponent.show<void>(
       context,
       builder: (context, bottom) {
-        return NewTransactionBottomSheetNoteComponent(
+        return TransactionFormBottomSheetNoteComponent(
           inputController: viewModel.noteInput,
           keyboardHeight: bottom,
         );

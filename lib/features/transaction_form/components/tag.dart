@@ -3,10 +3,10 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 
-class NewTransactionTagComponent extends StatelessWidget {
+class TransactionFormTagComponent extends StatelessWidget {
   final WidgetBuilder builder;
 
-  const NewTransactionTagComponent({
+  const TransactionFormTagComponent({
     super.key,
     required this.builder,
   });

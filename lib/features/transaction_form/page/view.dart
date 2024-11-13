@@ -5,15 +5,15 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
-import "package:mony_app/features/new_transaction/components/components.dart";
+import "package:mony_app/features/transaction_form/components/components.dart";
 
-class NewTransactionView extends StatelessWidget {
-  const NewTransactionView({super.key});
+class TransactionFormView extends StatelessWidget {
+  const TransactionFormView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.viewPaddingOf(context);
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
 
     return Padding(
       padding: EdgeInsets.fromLTRB(10.w, 0.0, 10.w, viewPadding.bottom + 10.h),
@@ -31,11 +31,11 @@ class NewTransactionView extends StatelessWidget {
                 SizedBox(height: 30.h),
 
                 // -> date time
-                const NewTransactionDatetimeComponent(),
+                const TransactionFormDatetimeComponent(),
                 const Spacer(),
 
                 // -> amount
-                const NewTransactionAmountComponent(),
+                const TransactionFormAmountComponent(),
                 const Spacer(),
 
                 // -> account and category
@@ -43,30 +43,30 @@ class NewTransactionView extends StatelessWidget {
                   direction: Axis.horizontal,
                   children: [
                     // -> account
-                    const Flexible(child: NewTransactionAccountComponent()),
+                    const Flexible(child: TransactionFormAccountComponent()),
                     SizedBox(width: 10.w),
 
                     // -> category
                     const Flexible(
-                      child: NewTransactionCategoryComponent(),
+                      child: TransactionFormCategoryComponent(),
                     ),
                   ],
                 ),
                 SizedBox(height: 15.h),
 
                 // -> tags
-                const NewTransactionTagsComponent(),
+                const TransactionFormTagsComponent(),
                 SizedBox(height: 15.h),
 
                 // -> note
-                const NewTransactionNoteComponent(),
+                const TransactionFormNoteComponent(),
                 SizedBox(height: 15.h),
               ],
             ),
           ),
 
           // -> keyboard
-          const NewTransactionKeyboadrComponent(),
+          const TransactionFormKeyboadrComponent(),
         ],
       ),
     );

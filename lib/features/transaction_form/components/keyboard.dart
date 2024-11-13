@@ -4,18 +4,18 @@ import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/separated/component.dart";
-import "package:mony_app/features/new_transaction/components/keyboard_button.dart";
-import "package:mony_app/features/new_transaction/page/page.dart";
+import "package:mony_app/features/transaction_form/components/keyboard_button.dart";
+import "package:mony_app/features/transaction_form/page/page.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-class NewTransactionKeyboadrComponent extends StatelessWidget {
-  const NewTransactionKeyboadrComponent({super.key});
+class TransactionFormKeyboadrComponent extends StatelessWidget {
+  const TransactionFormKeyboadrComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final gap = 6.r;
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
     final onHintAcceptPressed = viewModel<OnKeyboardHintAccepted>();
     final onKeyPressed = viewModel<OnKeyPressed>();
     final onDragEnded = viewModel<OnHorizontalDragEnded>();
@@ -52,7 +52,7 @@ class NewTransactionKeyboadrComponent extends StatelessWidget {
                         child: ValueListenableBuilder(
                           valueListenable: viewModel.amountNotifier,
                           builder: (context, value, child) {
-                            return NewTransactionSymbolButtonComponent(
+                            return TransactionFormSymbolButtonComponent(
                               button: button,
                               value: value,
                               onTap: onKeyPressed,

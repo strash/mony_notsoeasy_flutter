@@ -1,7 +1,7 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/features/new_transaction/page/page.dart";
+import "package:mony_app/features/transaction_form/page/page.dart";
 
 final class OnAddTransactionPressed extends UseCase<void, dynamic> {
   @override
@@ -9,7 +9,7 @@ final class OnAddTransactionPressed extends UseCase<void, dynamic> {
     BottomSheetComponent.show(
       context,
       builder: (context, bottom) {
-        return const NewTransactionPage();
+        return const TransactionFormPage();
       },
     );
   }

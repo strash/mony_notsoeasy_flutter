@@ -4,16 +4,16 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/features/new_transaction/page/view_model.dart";
+import "package:mony_app/features/transaction_form/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-class NewTransactionDatetimeComponent extends StatelessWidget {
-  const NewTransactionDatetimeComponent({super.key});
+class TransactionFormDatetimeComponent extends StatelessWidget {
+  const TransactionFormDatetimeComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
     final onDatePressed = viewModel<OnDatePressed>();
 
     return GestureDetector(

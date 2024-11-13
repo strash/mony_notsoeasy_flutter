@@ -3,20 +3,20 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/features/new_transaction/components/tag.dart";
-import "package:mony_app/features/new_transaction/components/tags_gradient.dart";
-import "package:mony_app/features/new_transaction/page/view_model.dart";
+import "package:mony_app/features/transaction_form/components/tag.dart";
+import "package:mony_app/features/transaction_form/components/tags_gradient.dart";
+import "package:mony_app/features/transaction_form/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-class NewTransactionTagsComponent extends StatelessWidget {
-  const NewTransactionTagsComponent({super.key});
+class TransactionFormTagsComponent extends StatelessWidget {
+  const TransactionFormTagsComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final height = 34.h;
 
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
     final controller = viewModel.tagScrollController;
     final onAddTagPressed = viewModel<OnAddTagPressed>();
     final onRemoveTagPressed = viewModel<OnRemoveTagPressed>();
@@ -86,12 +86,12 @@ class NewTransactionTagsComponent extends StatelessWidget {
                             if (item == null) return const SizedBox();
 
                             final title = switch (item) {
-                              final NewTransactionTagVO odj => odj.vo.title,
-                              final NewTransactionTagModel obj =>
+                              final TransactionFormTagVO odj => odj.vo.title,
+                              final TransactionTagFormModel obj =>
                                 obj.model.title,
                             };
 
-                            return NewTransactionTagComponent(
+                            return TransactionFormTagComponent(
                               builder: (context) {
                                 return Padding(
                                   padding:
@@ -138,7 +138,7 @@ class NewTransactionTagsComponent extends StatelessWidget {
                               final position = controller.position;
                               final isVisible = position.extentBefore > .0;
 
-                              return NewTransactionTagsGradientComponent(
+                              return TransactionFormTagsGradientComponent(
                                 isVisible: isVisible,
                                 isLeft: true,
                               );
@@ -159,7 +159,7 @@ class NewTransactionTagsComponent extends StatelessWidget {
                               final position = controller.position;
                               final isVisible = position.extentAfter > .0;
 
-                              return NewTransactionTagsGradientComponent(
+                              return TransactionFormTagsGradientComponent(
                                 isVisible: isVisible,
                                 isLeft: false,
                               );

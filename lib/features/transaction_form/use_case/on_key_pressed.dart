@@ -3,15 +3,19 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
-import "package:mony_app/features/new_transaction/components/keyboard_button_type.dart";
+import "package:mony_app/features/transaction_form/components/keyboard_button_type.dart";
 import "package:provider/provider.dart";
 
-final class OnKeyPressed extends UseCase<Future<void>, ButtonType> {
+final class OnKeyPressed
+    extends UseCase<Future<void>, TransactionFormButtonType> {
   @override
-  Future<void> call(BuildContext context, [ButtonType? button]) async {
+  Future<void> call(
+    BuildContext context, [
+    TransactionFormButtonType? button,
+  ]) async {
     if (button == null) throw ArgumentError.notNull();
 
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
     final transactionService = context.read<DomainTransactionService>();
     final tagService = context.read<DomainTagService>();
     final appService = context.viewModel<AppEventService>();
@@ -20,20 +24,20 @@ final class OnKeyPressed extends UseCase<Future<void>, ButtonType> {
 
     final amount = viewModel.amountNotifier.value.trim();
     switch (button) {
-      case ButtonTypeSymbol():
+      case TransactionFormButtonTypeSymbol():
         if (amount == "0" && button.value != ".") {
           viewModel.amountNotifier.value = button.value;
         } else {
           viewModel.amountNotifier.value = amount + button.value;
         }
-      case ButtonTypeAction():
+      case TransactionFormButtonTypeAction():
         if (amount.isEmpty) return;
 
         final List<TagModel> tagModels = await Future.wait(
           viewModel.attachedTags.map((e) {
             return switch (e) {
-              final NewTransactionTagVO tag => tagService.create(vo: tag.vo),
-              final NewTransactionTagModel tag => Future.value(tag.model),
+              final TransactionFormTagVO tag => tagService.create(vo: tag.vo),
+              final TransactionTagFormModel tag => Future.value(tag.model),
             };
           }),
         );
@@ -73,7 +77,7 @@ final class OnKeyPressed extends UseCase<Future<void>, ButtonType> {
         if (transactionModel == null) return;
         appService.notify(
           EventTransactionCreated(
-            sender: NewTransactionViewModel,
+            sender: TransactionFormViewModel,
             transaction: transactionModel,
           ),
         );

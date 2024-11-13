@@ -3,10 +3,10 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/new_transaction/page/view_model.dart";
+import "package:mony_app/features/transaction_form/page/view_model.dart";
 
-class NewTransactionCategoryComponent extends StatelessWidget {
-  const NewTransactionCategoryComponent({super.key});
+class TransactionFormCategoryComponent extends StatelessWidget {
+  const TransactionFormCategoryComponent({super.key});
 
   Widget _getCategory(BuildContext context, CategoryModel category) {
     final theme = Theme.of(context);
@@ -42,7 +42,7 @@ class NewTransactionCategoryComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
 
     return ListenableBuilder(
       listenable: viewModel.typeController,

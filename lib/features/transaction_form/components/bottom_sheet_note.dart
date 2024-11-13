@@ -3,11 +3,11 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 
-class NewTransactionBottomSheetNoteComponent extends StatelessWidget {
+class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
   final InputController inputController;
   final double keyboardHeight;
 
-  const NewTransactionBottomSheetNoteComponent({
+  const TransactionFormBottomSheetNoteComponent({
     super.key,
     required this.inputController,
     required this.keyboardHeight,

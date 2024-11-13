@@ -7,12 +7,12 @@ import "package:mony_app/components/calendar/component.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/components/time/component.dart";
 
-class NewTransactionBottomSheetCalendarComponent extends StatefulWidget {
+class TransactionFormBottomSheetCalendarComponent extends StatefulWidget {
   final double bottom;
   final CalendarController dateController;
   final TimeController timeController;
 
-  const NewTransactionBottomSheetCalendarComponent({
+  const TransactionFormBottomSheetCalendarComponent({
     super.key,
     required this.bottom,
     required this.dateController,
@@ -20,12 +20,12 @@ class NewTransactionBottomSheetCalendarComponent extends StatefulWidget {
   });
 
   @override
-  State<NewTransactionBottomSheetCalendarComponent> createState() =>
-      _NewTransactionBottomSheetCalendarComponentState();
+  State<TransactionFormBottomSheetCalendarComponent> createState() =>
+      _TransactionFormBottomSheetCalendarComponentState();
 }
 
-class _NewTransactionBottomSheetCalendarComponentState
-    extends State<NewTransactionBottomSheetCalendarComponent> {
+class _TransactionFormBottomSheetCalendarComponentState
+    extends State<TransactionFormBottomSheetCalendarComponent> {
   late DateTime _visibleMonth;
 
   String _monthDescription = "";

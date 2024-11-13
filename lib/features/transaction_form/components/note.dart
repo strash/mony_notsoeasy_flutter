@@ -6,15 +6,15 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-class NewTransactionNoteComponent extends StatelessWidget {
-  const NewTransactionNoteComponent({super.key});
+class TransactionFormNoteComponent extends StatelessWidget {
+  const TransactionFormNoteComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final height = 36.h;
 
-    final viewModel = context.viewModel<NewTransactionViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
     final onNotePressed = viewModel<OnNotePressed>();
 
     return GestureDetector(

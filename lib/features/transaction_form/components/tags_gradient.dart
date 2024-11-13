@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 
-class NewTransactionTagsGradientComponent extends StatelessWidget {
+class TransactionFormTagsGradientComponent extends StatelessWidget {
   final bool isVisible;
   final bool isLeft;
 
-  const NewTransactionTagsGradientComponent({
+  const TransactionFormTagsGradientComponent({
     super.key,
     required this.isVisible,
     required this.isLeft,

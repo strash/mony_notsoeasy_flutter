@@ -4,10 +4,10 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/domain/models/tag.dart";
-import "package:mony_app/features/new_transaction/components/tag.dart";
-import "package:mony_app/features/new_transaction/components/tags_gradient.dart";
+import "package:mony_app/features/transaction_form/components/tag.dart";
+import "package:mony_app/features/transaction_form/components/tags_gradient.dart";
 
-class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
+class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
   final InputController inputController;
   final ValueNotifier<List<TagModel>> tags;
   final ScrollController scrollController;
@@ -15,7 +15,7 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
   final void Function(BuildContext context, TagModel tag) onTagPressed;
   final void Function(BuildContext context) onSubmitPressed;
 
-  const NewTransactionBottomSheetTagsComponent({
+  const TransactionFormBottomSheetTagsComponent({
     super.key,
     required this.inputController,
     required this.tags,
@@ -79,7 +79,7 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
 
                         return GestureDetector(
                           onTap: () => onTagPressed(context, item),
-                          child: NewTransactionTagComponent(
+                          child: TransactionFormTagComponent(
                             builder: (context) {
                               return Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -104,7 +104,7 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
                           final position = scrollController.position;
                           final isVisible = position.extentBefore > .0;
 
-                          return NewTransactionTagsGradientComponent(
+                          return TransactionFormTagsGradientComponent(
                             isVisible: isVisible,
                             isLeft: true,
                           );
@@ -125,7 +125,7 @@ class NewTransactionBottomSheetTagsComponent extends StatelessWidget {
                           final position = scrollController.position;
                           final isVisible = position.extentAfter > .0;
 
-                          return NewTransactionTagsGradientComponent(
+                          return TransactionFormTagsGradientComponent(
                             isVisible: isVisible,
                             isLeft: false,
                           );
