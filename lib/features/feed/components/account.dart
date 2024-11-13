@@ -4,6 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/features/feed/page/page.dart";
+import "package:sealed_currencies/sealed_currencies.dart";
 
 class FeedAccountComponent extends StatelessWidget {
   final FeedPageState page;
@@ -37,11 +38,9 @@ class FeedAccountComponent extends StatelessWidget {
     );
   }
 
-  String _format(AccountBalanceModel balance) {
-    return NumberFormat.currency(
-      name: balance.currency.name,
-      symbol: balance.currency.symbol,
-    ).format(balance.totalSum);
+  String _format(double value, FiatCurrency currency) {
+    return NumberFormat.currency(name: currency.name, symbol: currency.symbol)
+        .format(value);
   }
 
   @override
@@ -55,13 +54,33 @@ class FeedAccountComponent extends StatelessWidget {
         FittedBox(
           child: switch (page) {
             final FeedPageStateAllAccounts page => Column(
-                children: page.balances
-                    .map((e) => Text(_format(e), style: _getStyle(context)))
-                    .toList(growable: false),
+                children: page.balances.map(
+                  (e) {
+                    return TweenAnimationBuilder<double>(
+                      duration: Durations.extralong4,
+                      curve: Curves.easeInOut,
+                      tween: Tween(begin: .0, end: e.totalSum),
+                      builder: (context, value, child) {
+                        return Text(
+                          _format(value, e.currency),
+                          style: _getStyle(context),
+                        );
+                      },
+                    );
+                  },
+                ).toList(growable: false),
               ),
-            final FeedPageStateSingleAccount page => Text(
-                _format(page.balance),
-                style: _getStyle(context),
+            final FeedPageStateSingleAccount page =>
+              TweenAnimationBuilder<double>(
+                duration: Durations.extralong4,
+                curve: Curves.easeInOut,
+                tween: Tween(begin: .0, end: page.balance.totalSum),
+                builder: (context, value, child) {
+                  return Text(
+                    _format(value, page.balance.currency),
+                    style: _getStyle(context),
+                  );
+                },
               ),
           },
         ),
