@@ -6,8 +6,7 @@ import "package:provider/provider.dart";
 
 typedef TOnDataFetchedValue = ({FeedViewModel viewModel, int pageIndex});
 
-final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue>
-    with DataFetchMixin {
+final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue> {
   @override
   Future<void> call(BuildContext context, [TOnDataFetchedValue? value]) async {
     if (value == null) throw ArgumentError.notNull();
@@ -19,7 +18,7 @@ final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue>
     if (!currentPage.canLoadMore) return;
     final pageIndex = currentPage.page + 1;
     final data = await transactionService.getMany(page: pageIndex);
-    final transactions = transformToTransactions(currentPage.feed).merge(data)
+    final transactions = currentPage.feed.merge(data)
       ..sort((a, b) => b.date.compareTo(a.date));
 
     switch (viewModel.pages.elementAt(value.pageIndex)) {
@@ -27,7 +26,7 @@ final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue>
         viewModel.setProtectedState(() {
           viewModel.pages[value.pageIndex] = page.copyWith(
             page: pageIndex,
-            feed: transformToFeed(transactions),
+            feed: transactions,
             canLoadMore: data.isNotEmpty,
           );
         });
@@ -35,7 +34,7 @@ final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue>
         viewModel.setProtectedState(() {
           viewModel.pages[value.pageIndex] = page.copyWith(
             page: pageIndex,
-            feed: transformToFeed(transactions),
+            feed: transactions,
             canLoadMore: data.isNotEmpty,
           );
         });

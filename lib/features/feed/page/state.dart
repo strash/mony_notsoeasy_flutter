@@ -27,7 +27,7 @@ final class FeedItemTransaction extends FeedItem {
 sealed class FeedPageState {
   final int page;
   final bool canLoadMore;
-  final List<FeedItem> feed;
+  final List<TransactionModel> feed;
 
   FeedPageState({
     required this.page,
@@ -52,7 +52,7 @@ final class FeedPageStateAllAccounts extends FeedPageState {
     int? page,
     bool? canLoadMore,
     double? scrollPosition,
-    List<FeedItem>? feed,
+    List<TransactionModel>? feed,
     List<AccountModel>? accounts,
     List<AccountBalanceModel>? balances,
   }) {
@@ -82,7 +82,7 @@ final class FeedPageStateSingleAccount extends FeedPageState {
     int? page,
     bool? canLoadMore,
     double? scrollPosition,
-    List<FeedItem>? feed,
+    List<TransactionModel>? feed,
     AccountModel? account,
     AccountBalanceModel? balance,
   }) {
@@ -93,5 +93,13 @@ final class FeedPageStateSingleAccount extends FeedPageState {
       account: account ?? this.account,
       balance: balance ?? this.balance,
     );
+  }
+}
+
+extension FeedItemListEx on List<FeedItem> {
+  List<TransactionModel> toTransaction() {
+    return whereType<FeedItemTransaction>()
+        .map<TransactionModel>((e) => e.transaction)
+        .toList(growable: false);
   }
 }

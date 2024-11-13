@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/feed/components/components.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
@@ -63,6 +64,7 @@ class FeedView extends StatelessWidget {
             itemCount: viewModel.pages.length,
             itemBuilder: (context, pageIndex) {
               final page = viewModel.pages.elementAt(pageIndex);
+              final feed = page.feed.toFeed();
 
               return CustomScrollView(
                 key: _getPageKey(page),
@@ -105,12 +107,12 @@ class FeedView extends StatelessWidget {
                         itemCount: page.feed.length,
                         findChildIndexCallback: (key) {
                           final id = (key as ValueKey<String>).value;
-                          return page.feed.indexWhere((feedItem) {
+                          return feed.indexWhere((feedItem) {
                             return id == _getFeedItemKey(feedItem).value;
                           });
                         },
                         itemBuilder: (context, index) {
-                          final feedItem = page.feed.elementAt(index);
+                          final feedItem = feed.elementAt(index);
 
                           return switch (feedItem) {
                             FeedItemSection() => FeedSectionComponent(

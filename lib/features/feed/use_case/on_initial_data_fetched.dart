@@ -4,8 +4,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
 import "package:provider/provider.dart";
 
-final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel>
-    with DataFetchMixin {
+final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel> {
   @override
   Future<void> call(BuildContext context, [FeedViewModel? viewModel]) async {
     if (viewModel == null) throw ArgumentError.notNull();
@@ -24,7 +23,7 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel>
         FeedPageStateAllAccounts(
           page: 0,
           canLoadMore: true,
-          feed: transformToFeed(transactions),
+          feed: transactions,
           accounts: accounts,
           balances: balances,
         ),
@@ -39,7 +38,7 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel>
         FeedPageStateSingleAccount(
           page: 0,
           canLoadMore: true,
-          feed: transformToFeed(transactions),
+          feed: transactions,
           account: account,
           balance: balances.singleWhere((e) => e.id == account.id),
         ),

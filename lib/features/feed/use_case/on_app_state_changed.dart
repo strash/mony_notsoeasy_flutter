@@ -8,15 +8,13 @@ import "package:provider/provider.dart";
 typedef TOnAppStateChangedValue = ({FeedViewModel viewModel, Event event});
 
 final class OnAppStateChanged
-    extends UseCase<Future<void>, TOnAppStateChangedValue> with DataFetchMixin {
-  List<FeedItem> _addTransaction(
+    extends UseCase<Future<void>, TOnAppStateChangedValue> {
+  List<TransactionModel> _addTransaction(
     TransactionModel transaction,
-    List<FeedItem> transactions,
+    List<TransactionModel> transactions,
   ) {
-    return transformToFeed(
-      transformToTransactions(transactions).merge([transaction.copyWith()])
-        ..sort((a, b) => b.date.compareTo(a.date)),
-    );
+    return transactions.merge([transaction.copyWith()])
+      ..sort((a, b) => b.date.compareTo(a.date));
   }
 
   @override
