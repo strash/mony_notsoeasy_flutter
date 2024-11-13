@@ -1,10 +1,14 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:freezed_annotation/freezed_annotation.dart";
 import "package:google_fonts/google_fonts.dart";
+
+part "theme.freezed.dart";
 
 part "./app_bar.dart";
 part "./colorscheme.dart";
+part "./color_extension.dart";
 part "./filled_button.dart";
 part "./text_form_field.dart";
 
@@ -13,6 +17,7 @@ final lightTheme = ThemeData(
   appBarTheme: _lightAppBarTheme,
   filledButtonTheme: _filledButtonThemeData,
   inputDecorationTheme: _lightFormFieldTheme,
+  extensions: [lightColorEx],
 );
 
 final darkTheme = ThemeData(
@@ -20,4 +25,5 @@ final darkTheme = ThemeData(
   appBarTheme: _darkAppBarTheme,
   filledButtonTheme: _filledButtonThemeData,
   inputDecorationTheme: _darkFormFieldTheme,
+  extensions: [darkColorEx],
 );

@@ -99,3 +99,59 @@ const _darkColorScheme = ColorScheme(
   tertiaryFixed: Color(0xFF11171A),
   tertiaryFixedDim: Color(0xFF11171A),
 );
+
+final lightColorEx = ColorExtension(
+  palette: EColorName.values.map((e) {
+    return ColorWithName(
+      name: e,
+      color: switch (e) {
+        EColorName.cafeAuLait => const Color(0xFFA88358),
+        EColorName.mauvelous => const Color(0xFFEDA09B),
+        EColorName.vividRaspberry => const Color(0xFFFF0065),
+        EColorName.red => const Color(0xFFFF0000),
+        EColorName.americanOrange => const Color(0xFFFF8600),
+        EColorName.philippineYellow => const Color(0xFFFFC700),
+        EColorName.bananaYellow => const Color(0xFFF8D839),
+        EColorName.corn => const Color(0xFFF5EF63),
+        EColorName.inchworm => const Color(0xFF9CE26A),
+        EColorName.vividMalachite => const Color(0xFF00CF2B),
+        EColorName.babyBlue => const Color(0xFF83D0F1),
+        EColorName.blueBolt => const Color(0xFF00B0FF),
+        EColorName.azure => const Color(0xFF007EFF),
+        EColorName.majorelleBlue => const Color(0xFF5856E6),
+        EColorName.maximumBluePurple => const Color(0xFFA4A3F5),
+        EColorName.richBrilliantLavender => const Color(0xFFEEA8F7),
+        EColorName.orchid => const Color(0xFFDA6DE7),
+        EColorName.cadet => const Color(0xFF546872),
+      },
+    );
+  }).toList(growable: false),
+);
+
+final darkColorEx = ColorExtension(
+  palette: EColorName.values.map((e) {
+    return ColorWithName(
+      name: e,
+      color: switch (e) {
+        EColorName.cafeAuLait => const Color(0xFFD8A264),
+        EColorName.mauvelous => const Color(0xFFFFAEAA),
+        EColorName.vividRaspberry => const Color(0xFFFF0076),
+        EColorName.red => const Color(0xFFFF000A),
+        EColorName.americanOrange => const Color(0xFFFF9300),
+        EColorName.philippineYellow => const Color(0xFFFFD200),
+        EColorName.bananaYellow => const Color(0xFFF9DD53),
+        EColorName.corn => const Color(0xFFFFF474),
+        EColorName.inchworm => const Color(0xFFBBEE81),
+        EColorName.vividMalachite => const Color(0xFF00D925),
+        EColorName.babyBlue => const Color(0xFF9AD9F4),
+        EColorName.blueBolt => const Color(0xFF11C8FF),
+        EColorName.azure => const Color(0xFF008AFF),
+        EColorName.majorelleBlue => const Color(0xFF5E5CF7),
+        EColorName.maximumBluePurple => const Color(0xFFBBBAF7),
+        EColorName.richBrilliantLavender => const Color(0xFFF2BEF9),
+        EColorName.orchid => const Color(0xFFF373FF),
+        EColorName.cadet => const Color(0xFF7B8F98),
+      },
+    );
+  }).toList(growable: false),
+);
