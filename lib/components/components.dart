@@ -5,6 +5,7 @@ export "./calendar/calendar.dart";
 export "./close_button/component.dart";
 export "./color_picker/component.dart";
 export "./emoji_picker/component.dart";
+export "./named_color_picker/component.dart";
 export "./select/component.dart";
 export "./separated/component.dart";
 export "./tab_group/component.dart";
