@@ -1,11 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:intl/intl.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/features/feed/page/page.dart";
-import "package:sealed_currencies/sealed_currencies.dart";
 
 class FeedAccountComponent extends StatelessWidget {
   final FeedPageState page;
@@ -42,11 +41,6 @@ class FeedAccountComponent extends StatelessWidget {
     );
   }
 
-  String _format(double value, FiatCurrency currency) {
-    return NumberFormat.currency(name: currency.name, symbol: currency.symbol)
-        .format(value);
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -63,14 +57,20 @@ class FeedAccountComponent extends StatelessWidget {
                 children: page.balances.foldByCurrency().map(
                   (e) {
                     return Text(
-                      _format(e.totalSum, e.currency),
+                      e.totalSum.currency(
+                        name: e.currency.name,
+                        symbol: e.currency.symbol,
+                      ),
                       style: _getStyle(context),
                     );
                   },
                 ).toList(growable: false),
               ),
             final FeedPageStateSingleAccount page => Text(
-                _format(page.balance.totalSum, page.balance.currency),
+                page.balance.totalSum.currency(
+                  name: page.balance.currency.name,
+                  symbol: page.balance.currency.symbol,
+                ),
                 style: _getStyle(context),
               ),
           },

@@ -1,6 +1,21 @@
 import "dart:math";
 
+import "package:intl/intl.dart";
+
 extension DoubleEx on double {
+  String currency({
+    required String name,
+    required String? symbol,
+    bool showDecimal = true,
+  }) {
+    final formatter = NumberFormat.currency(
+      name: name,
+      symbol: symbol,
+      decimalDigits: showDecimal ? 2 : 0,
+    );
+    return formatter.format(this);
+  }
+
   /// Returns rounded double number to a specified number of decimal places.
   ///
   /// Example:
