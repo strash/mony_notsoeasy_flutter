@@ -14,22 +14,10 @@ class TransactionFormAccountComponent extends StatelessWidget {
         "(${account.currency.symbol ?? account.currency.code})";
   }
 
-  Widget _getColor(BuildContext context, AccountModel account) {
+  Color _getColor(BuildContext context, AccountModel account) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-
-    return SizedBox.square(
-      dimension: 10.r,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: ex?.from(account.colorName).color ?? theme.colorScheme.primary,
-          borderRadius: BorderRadius.all(Radius.circular(10.r)),
-          border: Border.all(
-            color: theme.colorScheme.onSurface.withOpacity(0.2),
-          ),
-        ),
-      ),
-    );
+    return ex?.from(account.colorName).color ?? theme.colorScheme.primary;
   }
 
   @override
@@ -46,23 +34,24 @@ class TransactionFormAccountComponent extends StatelessWidget {
           controller: viewModel.accountController,
           placeholder: const Text("Счет"),
           activeEntry: account != null
-              ? Row(
-                  children: [
-                    // -> color
-                    Padding(
-                      padding: EdgeInsets.only(top: 3.h, right: 6.w),
-                      child: _getColor(context, account),
-                    ),
-
-                    // -> title and currency symbol/code
-                    Flexible(
-                      child: Text(
-                        _getTitle(account),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+              // -> title and currency symbol/code
+              ? Builder(
+                  builder: (context) {
+                    return Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            _getTitle(account),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: DefaultTextStyle.of(context).style.copyWith(
+                                  color: _getColor(context, account),
+                                ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 )
               : null,
           entryBuilder: (context) {
@@ -76,12 +65,6 @@ class TransactionFormAccountComponent extends StatelessWidget {
                     return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // -> color
-                        Padding(
-                          padding: EdgeInsets.only(top: 6.h, right: 6.w),
-                          child: _getColor(context, e),
-                        ),
-
                         Flexible(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,8 +74,10 @@ class TransactionFormAccountComponent extends StatelessWidget {
                                 _getTitle(e),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style:
-                                    style.copyWith(fontWeight: FontWeight.w600),
+                                style: style.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: _getColor(context, e),
+                                ),
                               ),
 
                               // -> account type

@@ -1,3 +1,4 @@
+import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
@@ -12,18 +13,32 @@ class TransactionFormCategoryComponent extends StatelessWidget {
   Widget _getCategory(BuildContext context, CategoryModel category) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-    final style = DefaultTextStyle.of(context).style;
+    final color =
+        ex?.from(category.colorName).color ?? theme.colorScheme.onSurface;
 
     return Row(
       children: [
         // -> icon
-        Text(
-          category.icon,
-          style: theme.textTheme.headlineSmall?.copyWith(
-            height: .0,
+        SizedBox.square(
+          dimension: 36.r,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: color,
+              shape: SmoothRectangleBorder(
+                borderRadius: SmoothBorderRadius.all(
+                  SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
+                ),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                category.icon,
+                style: theme.textTheme.headlineSmall?.copyWith(height: .0),
+              ),
+            ),
           ),
         ),
-        SizedBox(width: 10.w),
+        SizedBox(width: 7.w),
 
         // -> title
         Flexible(
@@ -31,11 +46,6 @@ class TransactionFormCategoryComponent extends StatelessWidget {
             category.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: style.copyWith(
-              fontWeight: FontWeight.w500,
-              color: ex?.from(category.colorName).color ??
-                  theme.colorScheme.onSurface,
-            ),
           ),
         ),
       ],
@@ -61,6 +71,7 @@ class TransactionFormCategoryComponent extends StatelessWidget {
             return SelectComponent<CategoryModel>(
               controller: controller,
               placeholder: const Text("Категория"),
+              activeEntryPadding: EdgeInsets.symmetric(horizontal: 7.w),
               activeEntry: controller.value != null
                   ? Builder(
                       builder: (context) {

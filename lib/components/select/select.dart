@@ -12,6 +12,7 @@ part "./select_provider.dart";
 
 class SelectComponent<T> extends StatefulWidget {
   final SelectController<T?> controller;
+  final EdgeInsets? activeEntryPadding;
   final Widget? placeholder;
   final Widget? activeEntry;
   final bool expand;
@@ -21,6 +22,7 @@ class SelectComponent<T> extends StatefulWidget {
   const SelectComponent({
     super.key,
     required this.controller,
+    this.activeEntryPadding,
     this.placeholder,
     this.activeEntry,
     this.expand = false,
@@ -92,7 +94,10 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.only(left: 15.w, right: 7.w),
+                padding: (widget.activeEntryPadding != null &&
+                        widget.activeEntry != null)
+                    ? widget.activeEntryPadding!
+                    : EdgeInsets.only(left: 15.w, right: 7.w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
