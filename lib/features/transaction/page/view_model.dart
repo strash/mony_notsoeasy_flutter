@@ -1,9 +1,15 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/transaction/page/view.dart";
 
 final class TransactionViewModelBuilder extends StatefulWidget {
-  const TransactionViewModelBuilder({super.key});
+  final TransactionModel transaction;
+
+  const TransactionViewModelBuilder({
+    super.key,
+    required this.transaction,
+  });
 
   @override
   ViewModelState<TransactionViewModelBuilder> createState() =>
@@ -12,6 +18,8 @@ final class TransactionViewModelBuilder extends StatefulWidget {
 
 final class TransactionViewModel
     extends ViewModelState<TransactionViewModelBuilder> {
+  TransactionModel get transaction => widget.transaction;
+
   @override
   Widget build(BuildContext context) {
     return ViewModel<TransactionViewModel>(

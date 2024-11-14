@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
@@ -20,6 +22,10 @@ class FeedViewModelBuilder extends StatefulWidget {
 final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   final subject = BehaviorSubject<FeedEvent>();
 
+  late final StreamSubscription<Event> _appSub;
+  late final StreamSubscription<FeedEvent> _feedSub;
+  late final StreamSubscription<NavbarEvent> _navbarSub;
+
   final _fetchData = OnDataFetched();
 
   final pageController = PageController();
@@ -38,7 +44,8 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     super.initState();
 
     final ctx = context;
-    subject.whereType<FeedEventScrolledToBottom>().throttle((e) {
+    // -> feed
+    _feedSub = subject.whereType<FeedEventScrolledToBottom>().throttle((e) {
       return TimerStream<FeedEvent>(e, const Duration(milliseconds: 400));
     }).listen((e) {
       final value = (viewModel: this, pageIndex: e.pageIndex);
@@ -47,15 +54,19 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       final appService = context.viewModel<AppEventService>();
-      appService.listen(
+      _appSub = appService.listen(
         (e) => OnAppStateChanged().call(context, (event: e, viewModel: this)),
       );
 
+      // -> navbar
       final navbar = context.viewModel<NavbarViewModel>();
-      navbar.subject.whereType<NavbarEventScrollToTopRequested>().listen((e) {
+      _navbarSub = navbar.subject
+          .whereType<NavbarEventScrollToTopRequested>()
+          .listen((e) {
         navbar.returnToTop(scrollControllers.elementAt(currentPageIndex));
       });
 
+      // -> scroll controllers
       OnInitialDataFetched().call(context, this).then((_) {
         for (final element in pages.indexed) {
           final scrollController = ScrollController();
@@ -72,6 +83,9 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
   @override
   void dispose() {
+    _appSub.cancel();
+    _feedSub.cancel();
+    _navbarSub.cancel();
     for (final e in scrollControllers) {
       e.dispose();
     }
@@ -86,6 +100,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
       viewModel: this,
       useCases: [
         () => OnPageChanged(),
+        () => OnTransactionPressed(),
       ],
       child: const FeedView(),
     );

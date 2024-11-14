@@ -1,3 +1,4 @@
+import "dart:async";
 import "dart:ui";
 
 import "package:figma_squircle/figma_squircle.dart";
@@ -22,6 +23,8 @@ class FeedPagerComponent extends StatefulWidget {
 class _FeedPagerComponentState extends State<FeedPagerComponent> {
   final _subject = BehaviorSubject<bool>.seeded(false);
 
+  late final StreamSubscription<bool> _pageSub;
+
   bool _showPagination = true;
 
   void _pageListener() {
@@ -33,13 +36,14 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
   void initState() {
     super.initState();
 
-    _subject.debounceTime(const Duration(seconds: 1)).listen((e) {
+    _pageSub = _subject.debounceTime(const Duration(seconds: 1)).listen((e) {
       if (mounted) setState(() => _showPagination = e);
     });
   }
 
   @override
   void dispose() {
+    _pageSub.cancel();
     _subject.close();
     super.dispose();
   }
