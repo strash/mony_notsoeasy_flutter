@@ -25,14 +25,17 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
         spacing: 8.r,
         runSpacing: 8.r,
         children: categories.map((e) {
+          final color =
+              ex?.from(e.colorName).color ?? theme.colorScheme.surfaceContainer;
+
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => Navigator.of(context).pop<CategoryModel>(e),
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: ex?.from(e.colorName).color ??
-                    theme.colorScheme.surfaceContainer,
+                color: color.withOpacity(.25),
                 shape: SmoothRectangleBorder(
+                  side: BorderSide(color: color),
                   borderRadius: SmoothBorderRadius.all(
                     SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
                   ),
@@ -65,8 +68,8 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.golosText(
                             fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                            color: theme.colorScheme.surface,
+                            fontWeight: FontWeight.w500,
+                            color: theme.colorScheme.onSurface,
                           ),
                         ),
                       ),

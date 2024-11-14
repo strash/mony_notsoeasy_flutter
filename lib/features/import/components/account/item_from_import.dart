@@ -60,7 +60,7 @@ class _Unsetted extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(25.w, 12.h, 20.w, 12.h),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -81,7 +81,7 @@ class _Unsetted extends StatelessWidget {
 
           // -> icon edit
           SvgPicture.asset(
-            Assets.icons.pencilLine,
+            Assets.icons.plus,
             width: 24.r,
             height: 24.r,
             colorFilter: ColorFilter.mode(

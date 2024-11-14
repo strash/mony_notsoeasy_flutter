@@ -36,8 +36,9 @@ class FeedAccountComponent extends StatelessWidget {
     final theme = Theme.of(context);
     return GoogleFonts.golosText(
       fontSize: 40.sp,
-      color: theme.colorScheme.onSurface,
+      height: 1.1,
       fontWeight: FontWeight.w600,
+      color: theme.colorScheme.onSurface,
     );
   }
 
@@ -52,8 +53,9 @@ class FeedAccountComponent extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        // -> top row
+        // -> sums
         FittedBox(
           child: switch (page) {
             final FeedPageStateAllAccounts page => Column(
@@ -75,62 +77,32 @@ class FeedAccountComponent extends StatelessWidget {
         ),
         SizedBox(height: 10.h),
 
-        // -> sums
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // -> color
-            if (page is FeedPageStateSingleAccount)
-              Padding(
-                padding: EdgeInsets.only(top: 6.h, right: 6.w),
-                child: SizedBox.square(
-                  dimension: 10.r,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: _getColor(context),
-                      borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                      border: Border.all(
-                        color: theme.colorScheme.onSurface.withOpacity(0.2),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // -> title
-                Flexible(
-                  child: Text(
-                    _title,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.golosText(
-                      fontSize: 16.sp,
-                      height: 1.2,
-                      fontWeight: FontWeight.w600,
-                      color: theme.colorScheme.onSurface,
-                    ),
-                  ),
-                ),
-
-                // -> account type
-                switch (page) {
-                  FeedPageStateAllAccounts() => const SizedBox(),
-                  final FeedPageStateSingleAccount page => Text(
-                      page.account.type.description,
-                      style: GoogleFonts.golosText(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                },
-              ],
+        // -> title
+        Flexible(
+          child: Text(
+            _title,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.golosText(
+              fontSize: 18.sp,
+              height: 1.2,
+              fontWeight: FontWeight.w600,
+              color: _getColor(context),
             ),
-          ],
+          ),
         ),
+
+        // -> account type
+        switch (page) {
+          FeedPageStateAllAccounts() => const SizedBox(),
+          final FeedPageStateSingleAccount page => Text(
+              page.account.type.description,
+              style: GoogleFonts.golosText(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+        },
         SizedBox(height: 20.h),
       ],
     );

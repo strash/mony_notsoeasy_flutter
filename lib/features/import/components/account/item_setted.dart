@@ -1,4 +1,3 @@
-import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -18,35 +17,13 @@ class AccountSettedButtonComponent extends StatelessWidget {
     final ex = theme.extension<ColorExtension>();
     final currency = FiatCurrency.fromCode(account.currencyCode);
     final formatter = NumberFormat.compact();
+    final color = ex?.from(EColorName.from(account.colorName)).color ??
+        theme.colorScheme.onSurface;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(12.w, 12.h, 20.w, 12.h),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       child: Row(
         children: [
-          // -> color
-          SizedBox(
-            width: 8.w,
-            height: 42.h,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: ex?.from(EColorName.from(account.colorName)).color ??
-                    theme.colorScheme.onSurface,
-                shape: SmoothRectangleBorder(
-                  side: BorderSide(
-                    color: theme.colorScheme.onSurface.withOpacity(0.1),
-                  ),
-                  borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(
-                      cornerRadius: 4.r,
-                      cornerSmoothing: 1.0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 12.w),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +36,7 @@ class AccountSettedButtonComponent extends StatelessWidget {
                   style: GoogleFonts.golosText(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
-                    color: theme.colorScheme.onSurface,
+                    color: color,
                   ),
                 ),
 
@@ -69,7 +46,7 @@ class AccountSettedButtonComponent extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
-                    fontSize: 12.sp,
+                    fontSize: 13.sp,
                     fontWeight: FontWeight.w500,
                     color: theme.colorScheme.onSurfaceVariant,
                   ),

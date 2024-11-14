@@ -28,24 +28,27 @@ class ImportCategoryItemComponent extends StatelessWidget {
     final ex = theme.extension<ColorExtension>();
     final value = (transactionType: transactionType, category: category);
     final Color bg;
-    final Color text;
+    final Color border;
+    final Color text = theme.colorScheme.onSurface;
     final String? icon;
     final String title;
     if (category.linkedModel != null) {
-      bg = ex?.from(category.linkedModel!.colorName).color ??
+      final color = ex?.from(category.linkedModel!.colorName).color ??
           theme.colorScheme.surfaceContainer;
-      text = theme.colorScheme.surface;
+      bg = color.withOpacity(.25);
+      border = color;
       icon = category.linkedModel!.icon;
       title = category.linkedModel!.title;
     } else if (category.vo != null) {
-      bg = ex?.from(EColorName.from(category.vo!.colorName)).color ??
+      final color = ex?.from(EColorName.from(category.vo!.colorName)).color ??
           theme.colorScheme.surfaceContainer;
-      text = theme.colorScheme.surface;
+      bg = color.withOpacity(.25);
+      border = color;
       icon = category.vo!.icon;
       title = category.vo!.title;
     } else {
       bg = theme.colorScheme.surfaceContainer;
-      text = theme.colorScheme.onSurface;
+      border = const Color(0x00FFFFFF);
       icon = null;
       title = category.title;
     }
@@ -57,6 +60,7 @@ class ImportCategoryItemComponent extends StatelessWidget {
         decoration: ShapeDecoration(
           color: bg,
           shape: SmoothRectangleBorder(
+            side: BorderSide(color: border),
             borderRadius: SmoothBorderRadius.all(
               SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
             ),
@@ -93,7 +97,7 @@ class ImportCategoryItemComponent extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.golosText(
                       fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       color: text,
                     ),
                   ),
