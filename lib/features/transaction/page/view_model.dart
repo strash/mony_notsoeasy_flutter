@@ -20,6 +20,9 @@ final class TransactionViewModel
     extends ViewModelState<TransactionViewModelBuilder> {
   TransactionModel get transaction => widget.transaction;
 
+  // TODO: слушать app events на удаление транзакции, счета, категории и
+  // закрывать экран, если удалена транзакция или счет или категория
+
   @override
   Widget build(BuildContext context) {
     return ViewModel<TransactionViewModel>(

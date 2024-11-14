@@ -22,10 +22,14 @@ class FeedItemComponent extends StatelessWidget {
     final ex = theme.extension<ColorExtension>();
     final viewSize = MediaQuery.sizeOf(context);
     final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h);
+
+    final categoryColor = ex?.from(transaction.category.colorName).color ??
+        theme.colorScheme.surfaceContainer;
     final iconDimension = 46.r;
     final horizontalGap = 10.w;
     final contentWidth =
         viewSize.width - padding.horizontal - iconDimension - horizontalGap;
+
     final viewModel = context.viewModel<FeedViewModel>();
     final onTransactionPressed = viewModel<OnTransactionPressed>();
 
@@ -44,8 +48,18 @@ class FeedItemComponent extends StatelessWidget {
                 dimension: iconDimension,
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: ex?.from(transaction.category.colorName).color ??
-                        theme.colorScheme.surfaceContainer,
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.lerp(
+                          categoryColor,
+                          const Color(0xFFFFFFFF),
+                          .3,
+                        )!,
+                        categoryColor,
+                      ],
+                    ),
                     shape: SmoothRectangleBorder(
                       borderRadius: SmoothBorderRadius.all(
                         SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),

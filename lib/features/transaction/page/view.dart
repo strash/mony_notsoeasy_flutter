@@ -6,6 +6,7 @@ import "package:intl/intl.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
+import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/transaction/page/page.dart";
 
 class TransactionView extends StatelessWidget {
@@ -15,6 +16,12 @@ class TransactionView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
+    final viewPadding = MediaQuery.paddingOf(context);
+
+    final bottomOffset = viewPadding.bottom +
+        NavbarView.kBottomMargin * 2.0 +
+        NavbarView.kTabHeight +
+        50.h;
 
     final viewModel = context.viewModel<TransactionViewModel>();
     final transaction = viewModel.transaction;
@@ -26,7 +33,9 @@ class TransactionView extends StatelessWidget {
     );
     final formattedDate = dateFormatter.format(transaction.date);
     final categoryColor = ex?.from(transaction.category.colorName).color ??
-        theme.colorScheme.surfaceContainer;
+        theme.colorScheme.onSurface;
+    final accountColor = ex?.from(transaction.account.colorName).color ??
+        theme.colorScheme.onSurface;
 
     return Scaffold(
       body: CustomScrollView(
@@ -40,13 +49,25 @@ class TransactionView extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             sliver: SliverToBoxAdapter(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   // -> icon
                   SizedBox.square(
                     dimension: 100.r,
                     child: DecoratedBox(
                       decoration: ShapeDecoration(
-                        color: categoryColor,
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.lerp(
+                              categoryColor,
+                              const Color(0xFFFFFFFF),
+                              .3,
+                            )!,
+                            categoryColor,
+                          ],
+                        ),
                         shape: SmoothRectangleBorder(
                           borderRadius: SmoothBorderRadius.all(
                             SmoothRadius(
@@ -67,59 +88,139 @@ class TransactionView extends StatelessWidget {
                   SizedBox(height: 10.h),
 
                   // -> title
-                  Text(
-                    transaction.category.title,
-                    style: GoogleFonts.golosText(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                      color: categoryColor,
+                  Flexible(
+                    child: Text(
+                      transaction.category.title,
+                      style: GoogleFonts.golosText(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                        color: categoryColor,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 30.h)),
-
-          // -> amount
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            sliver: SliverToBoxAdapter(
-              child: Text(
-                transaction.amount.currency(
-                  name: transaction.account.currency.name,
-                  symbol: transaction.account.currency.symbol,
-                ),
-                textAlign: TextAlign.center,
-                style: GoogleFonts.golosText(
-                  fontSize: 40.sp,
-                  height: 1.1,
-                  fontWeight: FontWeight.w600,
-                  color: transaction.amount.isNegative
-                      ? theme.colorScheme.onSurface
-                      : theme.colorScheme.secondary,
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: 10.h)),
-
-          // -> date
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            sliver: SliverToBoxAdapter(
-              child: Text(
-                formattedDate,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.golosText(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ),
-          ),
           SliverToBoxAdapter(child: SizedBox(height: 40.h)),
+
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // -> amount
+                  FittedBox(
+                    child: Text(
+                      transaction.amount.currency(
+                        name: transaction.account.currency.name,
+                        symbol: transaction.account.currency.symbol,
+                      ),
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.golosText(
+                        fontSize: 40.sp,
+                        height: 1.1,
+                        fontWeight: FontWeight.w600,
+                        color: transaction.amount.isNegative
+                            ? theme.colorScheme.onSurface
+                            : theme.colorScheme.secondary,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+
+                  // -> date
+                  Text(
+                    formattedDate,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.golosText(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  SizedBox(height: 40.h),
+                ],
+              ),
+            ),
+          ),
+
+          // -> account
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // -> account
+                  Flexible(
+                    child: Text(
+                      transaction.account.title,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.golosText(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                        color: accountColor,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    transaction.account.type.description,
+                    style: GoogleFonts.golosText(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  SizedBox(height: 30.h),
+                ],
+              ),
+            ),
+          ),
+
+          // -> tags
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            sliver: SliverToBoxAdapter(
+              child: Wrap(
+                spacing: 6.r,
+                runSpacing: 6.r,
+                children: transaction.tags.map((e) {
+                  return DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: theme.colorScheme.surfaceContainer,
+                      shape: SmoothRectangleBorder(
+                        borderRadius: SmoothBorderRadius.all(
+                          SmoothRadius(
+                            cornerRadius: 12.r,
+                            cornerSmoothing: 1.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 15.w,
+                        vertical: 10.h,
+                      ),
+                      child: Text(
+                        e.title,
+                        style: GoogleFonts.golosText(
+                          fontSize: 15.sp,
+                          height: 1.0,
+                          fontWeight: FontWeight.w500,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(growable: false),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(child: SizedBox(height: 30.h)),
 
           // -> note
           if (transaction.note.isNotEmpty)
@@ -145,7 +246,7 @@ class TransactionView extends StatelessWidget {
                       transaction.note,
                       style: GoogleFonts.golosText(
                         fontSize: 18.sp,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w500,
                         color: theme.colorScheme.onSurface,
                       ),
                     ),
@@ -153,6 +254,9 @@ class TransactionView extends StatelessWidget {
                 ),
               ),
             ),
+
+          // -> bottom offset
+          SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
         ],
       ),
     );
