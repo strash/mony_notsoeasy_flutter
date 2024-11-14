@@ -34,7 +34,7 @@ class AppBarComponent extends StatelessWidget {
     if (!useSliver) {
       return _AppBar(
         leading: leading,
-        title: title ?? "",
+        title: title,
         trailing: trailing,
         viewPadding: viewPadding,
         showDragHandle: showDragHandle,
@@ -44,7 +44,7 @@ class AppBarComponent extends StatelessWidget {
     }
     return SliverPersistentHeader(
       delegate: _AppBarDelegate(
-        title: title ?? "",
+        title: title,
         leading: leading,
         trailing: trailing,
         viewPadding: viewPadding,
@@ -59,7 +59,7 @@ class AppBarComponent extends StatelessWidget {
 
 final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
   final Widget? leading;
-  final String title;
+  final String? title;
   final Widget? trailing;
   final EdgeInsets viewPadding;
   final bool showDragHandle;
@@ -108,7 +108,7 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
 
 class _AppBar extends StatelessWidget {
   final Widget? leading;
-  final String title;
+  final String? title;
   final Widget? trailing;
   final EdgeInsets viewPadding;
   final bool showDragHandle;
@@ -131,42 +131,10 @@ class _AppBar extends StatelessWidget {
   double get minExtent =>
       viewPadding.top + AppBarComponent.height + handleExtent;
 
-  TextStyle _titleStyle(BuildContext context) {
-    final theme = Theme.of(context);
-    return GoogleFonts.golosText(
-      fontSize: 20.sp,
-      letterSpacing: -0.1,
-      fontWeight: FontWeight.w500,
-      color: theme.colorScheme.onSurface,
-    );
-  }
-
-  Size _titleSize(BuildContext context, double width) {
-    final span = TextSpan(text: title, style: _titleStyle(context));
-    final painter = TextPainter(
-      text: span,
-      textAlign: TextAlign.center,
-      maxLines: 1,
-      textDirection: TextDirection.ltr,
-    );
-    painter.layout(minWidth: width);
-    final size = painter.size;
-    painter.dispose();
-    return size;
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final width = MediaQuery.sizeOf(context).width;
     final padding = 4.w;
-    final maxWidthForTitle = width - (AppBarComponent.height + padding) * 2.0;
-    final maxTitleSizeBetweenLeadingAndTrailing =
-        _titleSize(context, maxWidthForTitle);
-    final needSpace =
-        maxWidthForTitle < maxTitleSizeBetweenLeadingAndTrailing.width;
-    final hasLeadingWidth =
-        (leading == null && !automaticallyImplyLeading) && needSpace;
 
     final child = SizedBox.fromSize(
       size: Size.fromHeight(minExtent),
@@ -183,7 +151,6 @@ class _AppBar extends StatelessWidget {
               children: [
                 // -> leading
                 SizedBox(
-                  width: hasLeadingWidth ? 10.w : AppBarComponent.height,
                   height: AppBarComponent.height,
                   child: leading == null &&
                           showDragHandle == false &&
@@ -193,25 +160,29 @@ class _AppBar extends StatelessWidget {
                 ),
 
                 // -> title
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: padding),
-                    child: Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: _titleStyle(context),
+                if (title != null)
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: padding),
+                      child: Text(
+                        title!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.golosText(
+                          fontSize: 20.sp,
+                          letterSpacing: -0.1,
+                          fontWeight: FontWeight.w500,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                  )
+                else
+                  const Spacer(),
 
                 // -> trailing
                 SizedBox(
-                  width: trailing == null && needSpace
-                      ? 10.w
-                      : AppBarComponent.height,
-                  height: AppBarComponent.height,
                   child: trailing == null &&
                           showDragHandle &&
                           automaticallyImplyLeading

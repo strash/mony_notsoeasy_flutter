@@ -82,10 +82,12 @@ void main() async {
                     TransactionDatabaseRepository(database: appDatabase),
                 transactionTagRepo:
                     TransactionTagDatabaseRepository(database: appDatabase),
+                tagRepo: TagDatabaseRepository(database: appDatabase),
                 accountRepo: AccountDatabaseRepository(database: appDatabase),
                 categoryRepo: CategoryDatabaseRepository(database: appDatabase),
                 transactionFactory: TransactionDatabaseFactoryImpl(),
                 transactionTagFactory: TransactionTagDatabaseFactoryImpl(),
+                tagFactory: TagDatabaseFactoryImpl(),
                 accountFactory: AccountDatabaseFactoryImpl(),
                 categoryFactory: CategoryDatabaseFactoryImpl(),
               );

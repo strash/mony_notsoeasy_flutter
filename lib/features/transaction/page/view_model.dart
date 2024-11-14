@@ -1,7 +1,10 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/domain/models/transaction.dart";
+import "package:mony_app/features/transaction/page/page.dart";
 import "package:mony_app/features/transaction/page/view.dart";
+
+export "../use_case/use_case.dart";
 
 final class TransactionViewModelBuilder extends StatefulWidget {
   final TransactionModel transaction;
@@ -27,6 +30,10 @@ final class TransactionViewModel
   Widget build(BuildContext context) {
     return ViewModel<TransactionViewModel>(
       viewModel: this,
+      useCases: [
+        () => OnEditTransactionPressed(),
+        () => OnDeleteTransactionPressed(),
+      ],
       child: const TransactionView(),
     );
   }

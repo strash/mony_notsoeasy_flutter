@@ -21,7 +21,7 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel> {
         ..sort((a, b) => b.date.compareTo(a.date));
       pages.add(
         FeedPageStateAllAccounts(
-          page: 0,
+          page: pages.length,
           canLoadMore: true,
           feed: transactions,
           accounts: accounts,
@@ -36,7 +36,7 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel> {
             ..sort((a, b) => b.date.compareTo(a.date));
       pages.add(
         FeedPageStateSingleAccount(
-          page: 0,
+          page: pages.length,
           canLoadMore: true,
           feed: transactions,
           account: account,

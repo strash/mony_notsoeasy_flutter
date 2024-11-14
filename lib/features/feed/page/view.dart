@@ -10,7 +10,7 @@ import "package:mony_app/features/navbar/page/view.dart";
 class FeedView extends StatelessWidget {
   const FeedView({super.key});
 
-  ValueKey<String> _getPageKey(FeedPageState page) {
+  ValueKey<String> _pageKey(FeedPageState page) {
     return ValueKey<String>(
       switch (page) {
         FeedPageStateAllAccounts() => page.accounts.map((e) => e.id).join(),
@@ -19,7 +19,7 @@ class FeedView extends StatelessWidget {
     );
   }
 
-  ValueKey<String> _getFeedItemKey(FeedItem feedItem) {
+  ValueKey<String> _feedItemKey(FeedItem feedItem) {
     return ValueKey<String>(
       switch (feedItem) {
         FeedItemSection() => feedItem.date.toString(),
@@ -38,6 +38,7 @@ class FeedView extends StatelessWidget {
         50.h;
 
     final viewModel = context.viewModel<FeedViewModel>();
+    final pages = viewModel.pages;
     final onPageChanged = viewModel<OnPageChanged>();
     final scrollControllers = viewModel.scrollControllers;
 
@@ -57,17 +58,16 @@ class FeedView extends StatelessWidget {
             onPageChanged: (index) => onPageChanged(context, index),
             findChildIndexCallback: (key) {
               final id = (key as ValueKey<String>).value;
-              return viewModel.pages.indexWhere((page) {
-                return id == _getPageKey(page).value;
-              });
+              final idx = pages.indexWhere((e) => id == _pageKey(e).value);
+              return idx != -1 ? idx : null;
             },
-            itemCount: viewModel.pages.length,
+            itemCount: pages.length,
             itemBuilder: (context, pageIndex) {
-              final page = viewModel.pages.elementAt(pageIndex);
+              final page = pages.elementAt(pageIndex);
               final feed = page.feed.toFeed();
 
               return CustomScrollView(
-                key: _getPageKey(page),
+                key: _pageKey(page),
                 controller: scrollControllers.elementAt(pageIndex),
                 physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics(),
@@ -107,13 +107,14 @@ class FeedView extends StatelessWidget {
                         itemCount: feed.length,
                         findChildIndexCallback: (key) {
                           final id = (key as ValueKey<String>).value;
-                          return feed.indexWhere((feedItem) {
-                            return id == _getFeedItemKey(feedItem).value;
+                          final index = feed.indexWhere((e) {
+                            return id == _feedItemKey(e).value;
                           });
+                          return index != -1 ? index : null;
                         },
                         itemBuilder: (context, index) {
                           final item = feed.elementAt(index);
-                          final key = _getFeedItemKey(item);
+                          final key = _feedItemKey(item);
 
                           return switch (item) {
                             FeedItemSection() => FeedSectionComponent(

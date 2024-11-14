@@ -9,14 +9,6 @@ typedef TOnAppStateChangedValue = ({FeedViewModel viewModel, Event event});
 
 final class OnAppStateChanged
     extends UseCase<Future<void>, TOnAppStateChangedValue> {
-  List<TransactionModel> _addTransaction(
-    TransactionModel transaction,
-    List<TransactionModel> transactions,
-  ) {
-    return transactions.merge([transaction.copyWith()])
-      ..sort((a, b) => b.date.compareTo(a.date));
-  }
-
   @override
   Future<void> call(
     BuildContext context, [
@@ -35,24 +27,26 @@ final class OnAppStateChanged
       case final EventTransactionCreated event:
         final transaction = event.transaction;
         final balances = await accountSevrice.getBalance(
-          ids: [event.transaction.account.id],
+          ids: [transaction.account.id],
         );
 
-        value.viewModel.setProtectedState(() {
+        viewModel.setProtectedState(() {
           viewModel.pages = viewModel.pages.map((e) {
             switch (e) {
               case final FeedPageStateAllAccounts page:
                 return page.copyWith(
-                  feed: _addTransaction(transaction, page.feed),
                   balances: page.balances.merge(balances)
                     ..sort((a, b) => a.created.compareTo(b.created)),
+                  feed: page.feed.merge([transaction.copyWith()])
+                    ..sort((a, b) => b.date.compareTo(a.date)),
                   canLoadMore: true,
                 );
               case final FeedPageStateSingleAccount page:
                 if (page.account.id == transaction.account.id) {
                   return page.copyWith(
-                    feed: _addTransaction(transaction, page.feed),
                     balance: balances.firstOrNull ?? page.balance,
+                    feed: page.feed.merge([transaction.copyWith()])
+                      ..sort((a, b) => b.date.compareTo(a.date)),
                     canLoadMore: true,
                   );
                 }
@@ -60,8 +54,40 @@ final class OnAppStateChanged
             }
           }).toList(growable: false);
         });
-      // TODO: при изменении транзакции проверять к какому счету относится и
-      // переносить туда если что
+      case final EventTransactionUpdated event:
+        final transaction = event.transaction.copyWith();
+        final balances = await accountSevrice.getBalance(
+          ids: [transaction.account.id],
+        );
+
+        viewModel.setProtectedState(() {
+          viewModel.pages = viewModel.pages.map((e) {
+            switch (e) {
+              case final FeedPageStateAllAccounts page:
+                return page.copyWith(
+                  balances: page.balances.merge(balances)
+                    ..sort((a, b) => a.created.compareTo(b.created)),
+                  feed: List<TransactionModel>.from(
+                    page.feed.where((e) => e.id != transaction.id),
+                  )
+                    ..add(transaction)
+                    ..sort((a, b) => b.date.compareTo(a.date)),
+                );
+              case final FeedPageStateSingleAccount page:
+                final feed = List<TransactionModel>.from(
+                  page.feed.where((e) => e.id != transaction.id),
+                );
+                if (page.account.id == transaction.account.id) {
+                  feed.add(transaction);
+                  feed.sort((a, b) => b.date.compareTo(a.date));
+                }
+                return page.copyWith(
+                  feed: feed,
+                  balance: balances.firstOrNull ?? page.balance,
+                );
+            }
+          }).toList(growable: false);
+        });
     }
   }
 }

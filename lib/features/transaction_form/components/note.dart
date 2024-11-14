@@ -53,14 +53,14 @@ class TransactionFormNoteComponent extends StatelessWidget {
                       duration: Durations.short4,
                       curve: Curves.easeInOut,
                       style: GoogleFonts.golosText(
-                        fontSize: 15.sp,
+                        fontSize: 16.sp,
                         color: note.isNotEmpty
                             ? theme.colorScheme.onSurface
                             : theme.colorScheme.onSurfaceVariant,
                       ),
                       child: Text(
                         note.isNotEmpty ? note : "Добавь заметку...",
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     );

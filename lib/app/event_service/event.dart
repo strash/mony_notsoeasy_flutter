@@ -23,3 +23,12 @@ final class EventTransactionCreated extends Event {
     required this.transaction,
   });
 }
+
+final class EventTransactionUpdated extends Event {
+  final TransactionModel transaction;
+
+  EventTransactionUpdated({
+    required super.sender,
+    required this.transaction,
+  });
+}

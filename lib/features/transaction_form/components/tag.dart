@@ -17,7 +17,7 @@ class TransactionFormTagComponent extends StatelessWidget {
 
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: theme.colorScheme.surfaceContainer,
+        color: theme.colorScheme.tertiaryContainer,
         shape: SmoothRectangleBorder(
           borderRadius: SmoothBorderRadius.all(
             SmoothRadius(cornerRadius: 12.r, cornerSmoothing: 1.0),
@@ -26,10 +26,10 @@ class TransactionFormTagComponent extends StatelessWidget {
       ),
       child: DefaultTextStyle(
         style: GoogleFonts.golosText(
-          fontSize: 15.sp,
+          fontSize: 16.sp,
           height: 1.0,
           fontWeight: FontWeight.w500,
-          color: theme.colorScheme.onSurface,
+          color: theme.colorScheme.onTertiaryContainer,
         ),
         child: builder(context),
       ),

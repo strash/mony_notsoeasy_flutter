@@ -53,10 +53,10 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
-      final appService = context.viewModel<AppEventService>();
-      _appSub = appService.listen(
-        (e) => OnAppStateChanged().call(context, (event: e, viewModel: this)),
-      );
+      // -> app events
+      _appSub = context.viewModel<AppEventService>().listen((e) {
+        OnAppStateChanged().call(context, (event: e, viewModel: this));
+      });
 
       // -> navbar
       final navbar = context.viewModel<NavbarViewModel>();

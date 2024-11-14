@@ -5,12 +5,14 @@ import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/transaction/components/components.dart";
 import "package:mony_app/features/transaction/page/page.dart";
+import "package:mony_app/gen/assets.gen.dart";
 
 class TransactionView extends StatelessWidget {
   const TransactionView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final viewPadding = MediaQuery.paddingOf(context);
     final bottomOffset = viewPadding.bottom +
         NavbarView.kBottomMargin * 2.0 +
@@ -18,6 +20,8 @@ class TransactionView extends StatelessWidget {
         50.h;
 
     final viewModel = context.viewModel<TransactionViewModel>();
+    final onEditPressed = viewModel<OnEditTransactionPressed>();
+    final onDeletePressed = viewModel<OnDeleteTransactionPressed>();
     final transaction = viewModel.transaction;
 
     return Scaffold(
@@ -27,7 +31,28 @@ class TransactionView extends StatelessWidget {
         ),
         slivers: [
           // -> appbar
-          const AppBarComponent(showBackground: false),
+          AppBarComponent(
+            showBackground: false,
+            trailing: Row(
+              children: [
+                // -> button edit
+                TransactionAppBarIconComponent(
+                  icon: Assets.icons.pencilLine,
+                  color: theme.colorScheme.secondary,
+                  onTap: () => onEditPressed(context, transaction),
+                ),
+                SizedBox(width: 4.w),
+
+                // -> button delete
+                TransactionAppBarIconComponent(
+                  icon: Assets.icons.trashFill,
+                  color: theme.colorScheme.error,
+                  onTap: () => onDeletePressed(context, transaction),
+                ),
+                SizedBox(width: 8.w),
+              ],
+            ),
+          ),
           SliverToBoxAdapter(child: SizedBox(height: 10.h)),
 
           SliverPadding(

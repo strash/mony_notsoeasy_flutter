@@ -14,14 +14,17 @@ class CloseButtonComponent extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: navigator.maybePop<void>,
-      child: Center(
-        child: SvgPicture.asset(
-          Assets.icons.xmark,
-          width: 28.r,
-          height: 28.r,
-          colorFilter: ColorFilter.mode(
-            theme.colorScheme.secondary,
-            BlendMode.srcIn,
+      child: SizedBox.square(
+        dimension: 50.r,
+        child: Center(
+          child: SvgPicture.asset(
+            Assets.icons.xmark,
+            width: 28.r,
+            height: 28.r,
+            colorFilter: ColorFilter.mode(
+              theme.colorScheme.secondary,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ),

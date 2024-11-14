@@ -146,6 +146,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/square.and.arrow.down.svg
   String get squareAndArrowDown => 'assets/icons/square.and.arrow.down.svg';
 
+  /// File path: assets/icons/trash.fill.svg
+  String get trashFill => 'assets/icons/trash.fill.svg';
+
+  /// File path: assets/icons/trash.svg
+  String get trash => 'assets/icons/trash.svg';
+
   /// File path: assets/icons/wallet.pass.fill.svg
   String get walletPassFill => 'assets/icons/wallet.pass.fill.svg';
 
@@ -199,6 +205,8 @@ class $AssetsIconsGen {
         repeat,
         sparkles,
         squareAndArrowDown,
+        trashFill,
+        trash,
         walletPassFill,
         widgetSmallBadgePlus,
         widgetSmall,

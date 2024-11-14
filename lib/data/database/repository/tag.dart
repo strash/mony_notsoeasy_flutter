@@ -8,7 +8,7 @@ abstract base class TagDatabaseRepository {
 
   Future<List<TagDto>> getAllSortedBy({required String transactionTypeOrder});
 
-  Future<List<TagDto>> getAll();
+  Future<List<TagDto>> getAll({List<String>? ids});
 
   Future<List<TagDto>> getMany({
     required int limit,
@@ -33,6 +33,15 @@ final class _Impl
 
   const _Impl({required this.database});
 
+  String _getIn(List<String> items) {
+    return List.filled(items.length, "?").join(", ");
+  }
+
+  (String?, List<Object>?) _getWhere(List<String>? ids) {
+    if (ids == null) return (null, null);
+    return ("id IN (${_getIn(ids)})", ids);
+  }
+
   @override
   Future<List<TagDto>> getAllSortedBy({
     required String transactionTypeOrder,
@@ -48,9 +57,9 @@ FROM (
 		c.transaction_type,
 		MAX(tr.date) as date
 	FROM $table AS t
-	JOIN transaction_tags AS tt ON t.id = tt.tag_id
-	JOIN transactions AS tr ON tt.transaction_id = tr.id
-	JOIN categories AS c ON tr.category_id = c.id
+	LEFT JOIN transaction_tags AS tt ON t.id = tt.tag_id
+	LEFT JOIN transactions AS tr ON tt.transaction_id = tr.id
+	LEFT JOIN categories AS c ON tr.category_id = c.id
 	GROUP BY t.id
 ) ORDER BY
 	transaction_type $transactionTypeOrder,
@@ -65,10 +74,16 @@ FROM (
   }
 
   @override
-  Future<List<TagDto>> getAll() async {
+  Future<List<TagDto>> getAll({List<String>? ids}) async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.query(table, orderBy: "title ASC");
+      final where = _getWhere(ids);
+      final maps = await db.query(
+        table,
+        orderBy: "title ASC",
+        where: where.$1,
+        whereArgs: where.$2,
+      );
       return List.generate(
         maps.length,
         (index) => TagDto.fromJson(maps.elementAt(index)),

@@ -38,25 +38,32 @@ class FeedItemTagsComponent extends StatelessWidget {
               itemBuilder: (context, index) {
                 final tag = tags.elementAt(index);
 
-                return DecoratedBox(
-                  decoration: ShapeDecoration(
-                    color: theme.colorScheme.surfaceContainer,
-                    shape: SmoothRectangleBorder(
-                      borderRadius: SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 5.r, cornerSmoothing: 1.0),
+                return SizedBox(
+                  height: 20.h,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: theme.colorScheme.tertiaryContainer,
+                      shape: SmoothRectangleBorder(
+                        borderRadius: SmoothBorderRadius.all(
+                          SmoothRadius(cornerRadius: 6.r, cornerSmoothing: 1.0),
+                        ),
                       ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(5.w, .0, 5.w, 1.5.h),
-                    child: Text(
-                      "#${tag.title}",
-                      maxLines: 1,
-                      style: GoogleFonts.golosText(
-                        fontSize: 14.sp,
-                        height: .0,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 6.w),
+                      child: Center(
+                        child: Text(
+                          "#${tag.title}",
+                          maxLines: 1,
+                          style: GoogleFonts.golosText(
+                            fontSize: 14.sp,
+                            height: 1.0,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onTertiaryContainer,
+                          ),
+                        ),
                       ),
                     ),
                   ),

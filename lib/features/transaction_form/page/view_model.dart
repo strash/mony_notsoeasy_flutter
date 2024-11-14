@@ -15,7 +15,12 @@ export "../use_case/use_case.dart";
 export "./form_vo.dart";
 
 final class TransactionFormViewModelBuilder extends StatefulWidget {
-  const TransactionFormViewModelBuilder({super.key});
+  final TransactionModel? transaction;
+
+  const TransactionFormViewModelBuilder({
+    super.key,
+    this.transaction,
+  });
 
   @override
   ViewModelState<TransactionFormViewModelBuilder> createState() =>
@@ -24,23 +29,39 @@ final class TransactionFormViewModelBuilder extends StatefulWidget {
 
 final class TransactionFormViewModel
     extends ViewModelState<TransactionFormViewModelBuilder> {
-  final typeController = TabGroupController(ETransactionType.defaultValue);
+  TransactionModel? get transaction => widget.transaction;
 
-  final dateController = CalendarController(DateTime.now());
-  final timeController = TimeController(DateTime.now());
+  late final typeController = TabGroupController(
+    transaction?.category.transactionType ?? ETransactionType.defaultValue,
+  );
 
-  final amountNotifier = ValueNotifier<String>("0");
+  late final dateController =
+      CalendarController(transaction?.date ?? DateTime.now());
+  late final timeController =
+      TimeController(transaction?.date ?? DateTime.now());
 
-  final accountController = SelectController<AccountModel?>(null);
+  late final amountNotifier =
+      ValueNotifier<String>(transaction?.amount.abs().toString() ?? "0");
 
-  final expenseCategoryController = SelectController<CategoryModel?>(null);
-  final incomeCategoryController = SelectController<CategoryModel?>(null);
+  late final accountController =
+      SelectController<AccountModel?>(transaction?.account);
+
+  late final expenseCategoryController = SelectController<CategoryModel?>(
+    transaction?.category.transactionType == ETransactionType.expense
+        ? transaction?.category
+        : null,
+  );
+  late final incomeCategoryController = SelectController<CategoryModel?>(
+    transaction?.category.transactionType == ETransactionType.income
+        ? transaction?.category
+        : null,
+  );
 
   final tagScrollController = ScrollController();
   final tagInput = InputController();
   final bottomSheetTagScrollController = ScrollController();
 
-  final noteInput = InputController();
+  late final noteInput = InputController()..text = transaction?.note ?? "";
 
   List<AccountModel> accounts = [];
   Map<ETransactionType, List<CategoryModel>> categories = {
