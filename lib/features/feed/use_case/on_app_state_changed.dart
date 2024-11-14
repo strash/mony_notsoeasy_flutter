@@ -60,6 +60,8 @@ final class OnAppStateChanged
             }
           }).toList(growable: false);
         });
+      // TODO: при изменении транзакции проверять к какому счету относится и
+      // переносить туда если что
     }
   }
 }
