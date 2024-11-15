@@ -37,7 +37,7 @@ class TransactionView extends StatelessWidget {
               children: [
                 // -> button edit
                 TransactionAppBarIconComponent(
-                  icon: Assets.icons.pencilLine,
+                  icon: Assets.icons.pencilBold,
                   color: theme.colorScheme.primary,
                   onTap: () => onEditPressed(context, transaction),
                 ),

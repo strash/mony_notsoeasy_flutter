@@ -26,8 +26,6 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   late final StreamSubscription<FeedEvent> _feedSub;
   late final StreamSubscription<NavbarEvent> _navbarSub;
 
-  final _fetchData = OnDataFetched();
-
   final pageController = PageController();
   final List<ScrollController> scrollControllers = [];
   final List<double> scrollPositions = [];
@@ -39,43 +37,62 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     return pageController.page?.toInt() ?? 0;
   }
 
+  void addPageScroll(int index) {
+    final scrollController = ScrollController();
+    scrollController.addListener(_sclollListener(index));
+    scrollControllers.add(scrollController);
+    scrollPositions.add(.0);
+  }
+
+  void Function() _sclollListener(int pageIndex) {
+    return () {
+      if (!context.mounted) return;
+      OnScroll().call(context, (viewModel: this, pageIndex: pageIndex));
+    };
+  }
+
+  void _onAppEvent(Event e) {
+    if (!context.mounted) return;
+    OnAppStateChanged().call(context, (event: e, viewModel: this));
+  }
+
+  void _onNavBarEvent(NavbarEventScrollToTopRequested e) {
+    if (!context.mounted) return;
+    context
+        .viewModel<NavbarViewModel>()
+        .returnToTop(scrollControllers.elementAt(currentPageIndex));
+  }
+
+  void _onFeedEvent(FeedEventScrolledToBottom event) {
+    if (!context.mounted) return;
+    OnDataFetched()
+        .call(context, (viewModel: this, pageIndex: event.pageIndex));
+  }
+
   @override
   void initState() {
     super.initState();
 
-    final ctx = context;
-    // -> feed
-    _feedSub = subject.whereType<FeedEventScrolledToBottom>().throttle((e) {
-      return TimerStream<FeedEvent>(e, const Duration(milliseconds: 400));
-    }).listen((e) {
-      final value = (viewModel: this, pageIndex: e.pageIndex);
-      if (ctx.mounted) _fetchData(ctx, value);
-    });
-
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      // -> feed
+      _feedSub = subject.whereType<FeedEventScrolledToBottom>().throttle((e) {
+        return TimerStream<FeedEvent>(e, const Duration(milliseconds: 400));
+      }).listen(_onFeedEvent);
+
       // -> app events
-      _appSub = context.viewModel<AppEventService>().listen((e) {
-        OnAppStateChanged().call(context, (event: e, viewModel: this));
-      });
+      _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
       // -> navbar
-      final navbar = context.viewModel<NavbarViewModel>();
-      _navbarSub = navbar.subject
+      _navbarSub = context
+          .viewModel<NavbarViewModel>()
+          .subject
           .whereType<NavbarEventScrollToTopRequested>()
-          .listen((e) {
-        navbar.returnToTop(scrollControllers.elementAt(currentPageIndex));
-      });
+          .listen(_onNavBarEvent);
 
       // -> scroll controllers
       OnInitialDataFetched().call(context, this).then((_) {
-        for (final element in pages.indexed) {
-          final scrollController = ScrollController();
-          scrollController.addListener(() {
-            if (!ctx.mounted) return;
-            OnScroll().call(ctx, (viewModel: this, pageIndex: element.$1));
-          });
-          scrollControllers.add(scrollController);
-          scrollPositions.add(.0);
+        for (final (index, _) in pages.indexed) {
+          addPageScroll(index);
         }
       });
     });
@@ -86,8 +103,9 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     _appSub.cancel();
     _feedSub.cancel();
     _navbarSub.cancel();
-    for (final e in scrollControllers) {
-      e.dispose();
+    for (final (index, controller) in scrollControllers.indexed) {
+      controller.removeListener(_sclollListener(index));
+      controller.dispose();
     }
     pageController.dispose();
     subject.close();

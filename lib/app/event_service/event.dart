@@ -32,3 +32,12 @@ final class EventTransactionUpdated extends Event {
     required this.transaction,
   });
 }
+
+final class EventTransactionDeleted extends Event {
+  final TransactionModel transaction;
+
+  EventTransactionDeleted({
+    required super.sender,
+    required this.transaction,
+  });
+}

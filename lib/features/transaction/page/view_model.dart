@@ -37,7 +37,11 @@ final class TransactionViewModel
         break;
       case final EventTransactionUpdated event:
         if (event.transaction.id == transaction.id) {
-          setState(() => transaction = event.transaction.copyWith());
+          setProtectedState(() => transaction = event.transaction.copyWith());
+        }
+      case final EventTransactionDeleted event:
+        if (event.transaction.id == transaction.id) {
+          Navigator.of(context).pop();
         }
     }
   }

@@ -115,8 +115,17 @@ class $AssetsIconsGen {
   /// File path: assets/icons/number.svg
   String get number => 'assets/icons/number.svg';
 
+  /// File path: assets/icons/pencil.bold.svg
+  String get pencilBold => 'assets/icons/pencil.bold.svg';
+
   /// File path: assets/icons/pencil.line.svg
   String get pencilLine => 'assets/icons/pencil.line.svg';
+
+  /// File path: assets/icons/pencil.semibold.svg
+  String get pencilSemibold => 'assets/icons/pencil.semibold.svg';
+
+  /// File path: assets/icons/pencil.svg
+  String get pencil => 'assets/icons/pencil.svg';
 
   /// File path: assets/icons/person.crop.circle.fill.badge.plus.svg
   String get personCropCircleFillBadgePlus =>
@@ -195,7 +204,10 @@ class $AssetsIconsGen {
         minus,
         noteText,
         number,
+        pencilBold,
         pencilLine,
+        pencilSemibold,
+        pencil,
         personCropCircleFillBadgePlus,
         plusBold,
         plusSemibold,
