@@ -11,14 +11,14 @@ class FeedItemTimeComponent extends StatelessWidget {
     required this.date,
   });
 
-  double get margin => 6.w;
+  double get margin => 10.w;
 
   @override
   Widget build(BuildContext context) {
     final formatter = DateFormat("HH:mm");
 
     return Padding(
-      padding: EdgeInsets.only(right: margin),
+      padding: EdgeInsets.only(right: margin, bottom: 2.h),
       child: Text(
         formatter.format(date),
         maxLines: 1,

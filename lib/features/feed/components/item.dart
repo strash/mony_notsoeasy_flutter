@@ -25,7 +25,7 @@ class FeedItemComponent extends StatelessWidget {
 
     final categoryColor = ex?.from(transaction.category.colorName).color ??
         theme.colorScheme.surfaceContainer;
-    final iconDimension = 46.r;
+    final iconDimension = 50.r;
     final horizontalGap = 10.w;
     final contentWidth =
         viewSize.width - padding.horizontal - iconDimension - horizontalGap;
@@ -69,7 +69,7 @@ class FeedItemComponent extends StatelessWidget {
                   child: Center(
                     child: Text(
                       transaction.category.icon,
-                      style: theme.textTheme.headlineSmall,
+                      style: theme.textTheme.headlineMedium,
                     ),
                   ),
                 ),
@@ -117,7 +117,7 @@ class FeedItemComponent extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 2.h),
+                    SizedBox(height: 3.h),
 
                     // -> middle row
                     ConstrainedBox(
@@ -130,11 +130,8 @@ class FeedItemComponent extends StatelessWidget {
 
                           // -> tags
                           Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 2.h),
-                              child:
-                                  FeedItemTagsComponent(tags: transaction.tags),
-                            ),
+                            child:
+                                FeedItemTagsComponent(tags: transaction.tags),
                           ),
                         ],
                       ),

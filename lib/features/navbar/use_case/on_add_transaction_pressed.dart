@@ -15,6 +15,7 @@ final class OnAddTransactionPressed extends UseCase<Future<void>, dynamic> {
 
     final result = await BottomSheetComponent.show<TransactionFormVO?>(
       context,
+      largeHandle: false,
       builder: (context, bottom) {
         return const TransactionFormPage();
       },

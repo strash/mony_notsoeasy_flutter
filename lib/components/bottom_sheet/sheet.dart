@@ -13,17 +13,20 @@ typedef TBottomSheetBuilder = Widget Function(
 
 class BottomSheetComponent extends StatefulWidget {
   final bool showDragHandle;
+  final bool largeHandle;
   final TBottomSheetBuilder builder;
 
   const BottomSheetComponent({
     super.key,
     required this.showDragHandle,
+    required this.largeHandle,
     required this.builder,
   });
 
   static Future<T?> show<T>(
     BuildContext context, {
     bool showDragHandle = true,
+    bool largeHandle = true,
     required TBottomSheetBuilder builder,
   }) {
     final navigator = appNavigatorKey.currentState;
@@ -35,6 +38,7 @@ class BottomSheetComponent extends StatefulWidget {
         builder: (context) {
           return BottomSheetComponent(
             showDragHandle: showDragHandle,
+            largeHandle: largeHandle,
             builder: builder,
           );
         },
@@ -101,7 +105,9 @@ class _BottomSheetComponentState extends State<BottomSheetComponent>
               // -> handle
               if (widget.showDragHandle)
                 Padding(
-                  padding: EdgeInsets.only(bottom: 20.h),
+                  padding: EdgeInsets.only(
+                    bottom: widget.largeHandle ? 20.h : .0,
+                  ),
                   child: const BottomSheetHandleComponent(),
                 ),
 

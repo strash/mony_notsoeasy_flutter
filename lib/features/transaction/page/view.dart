@@ -38,7 +38,7 @@ class TransactionView extends StatelessWidget {
                 // -> button edit
                 TransactionAppBarIconComponent(
                   icon: Assets.icons.pencilLine,
-                  color: theme.colorScheme.secondary,
+                  color: theme.colorScheme.primary,
                   onTap: () => onEditPressed(context, transaction),
                 ),
                 SizedBox(width: 4.w),
@@ -46,7 +46,7 @@ class TransactionView extends StatelessWidget {
                 // -> button delete
                 TransactionAppBarIconComponent(
                   icon: Assets.icons.trashFill,
-                  color: theme.colorScheme.error,
+                  color: theme.colorScheme.primary,
                   onTap: () => onDeletePressed(context, transaction),
                 ),
                 SizedBox(width: 8.w),

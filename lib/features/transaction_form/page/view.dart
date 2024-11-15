@@ -15,31 +15,47 @@ class TransactionFormView extends StatelessWidget {
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
-    return Padding(
-      padding: EdgeInsets.fromLTRB(10.w, 0.0, 10.w, viewPadding.bottom + 10.h),
-      child: Column(
-        children: [
-          // -> the rest
-          Expanded(
-            child: Column(
-              children: [
-                // -> type
-                TabGroupComponent(
-                  values: ETransactionType.values,
-                  controller: viewModel.typeController,
+    return Column(
+      children: [
+        // -> the rest
+        Expanded(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.r),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(width: 50.w),
+
+                    // -> type
+                    TabGroupComponent(
+                      values: ETransactionType.values,
+                      controller: viewModel.typeController,
+                    ),
+
+                    // -> button close
+                    const CloseButtonComponent(),
+                  ],
                 ),
-                SizedBox(height: 30.h),
+              ),
+              SizedBox(height: 30.h),
 
-                // -> date time
-                const TransactionFormDatetimeComponent(),
-                const Spacer(),
+              // -> date time
+              const TransactionFormDatetimeComponent(),
+              const Spacer(),
 
-                // -> amount
-                const TransactionFormAmountComponent(),
-                const Spacer(),
+              // -> amount
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: const TransactionFormAmountComponent(),
+              ),
+              const Spacer(),
 
-                // -> account and category
-                Flex(
+              // -> account and category
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: Flex(
                   direction: Axis.horizontal,
                   children: [
                     // -> account
@@ -52,23 +68,35 @@ class TransactionFormView extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 15.h),
+              ),
+              SizedBox(height: 15.h),
 
-                // -> tags
-                const TransactionFormTagsComponent(),
-                SizedBox(height: 15.h),
+              // -> tags
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: const TransactionFormTagsComponent(),
+              ),
+              SizedBox(height: 15.h),
 
-                // -> note
-                const TransactionFormNoteComponent(),
-                SizedBox(height: 15.h),
-              ],
-            ),
+              // -> note
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: const TransactionFormNoteComponent(),
+              ),
+              SizedBox(height: 15.h),
+            ],
           ),
+        ),
 
-          // -> keyboard
-          const TransactionFormKeyboadrComponent(),
-        ],
-      ),
+        // -> keyboard
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: const TransactionFormKeyboadrComponent(),
+        ),
+
+        // -> bottom offset
+        SizedBox(height: viewPadding.bottom + 10.h),
+      ],
     );
   }
 }

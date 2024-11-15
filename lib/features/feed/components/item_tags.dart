@@ -39,10 +39,10 @@ class FeedItemTagsComponent extends StatelessWidget {
                 final tag = tags.elementAt(index);
 
                 return SizedBox(
-                  height: 20.h,
+                  height: 24.h,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
-                      color: theme.colorScheme.tertiaryContainer,
+                      color: theme.colorScheme.surfaceContainerHigh,
                       shape: SmoothRectangleBorder(
                         borderRadius: SmoothBorderRadius.all(
                           SmoothRadius(cornerRadius: 6.r, cornerSmoothing: 1.0),
@@ -50,13 +50,13 @@ class FeedItemTagsComponent extends StatelessWidget {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 6.w),
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: Center(
                         child: Text(
                           "#${tag.title}",
                           maxLines: 1,
                           style: GoogleFonts.golosText(
-                            fontSize: 14.sp,
+                            fontSize: 13.sp,
                             height: 1.0,
                             fontWeight: FontWeight.w500,
                             color: Theme.of(context)

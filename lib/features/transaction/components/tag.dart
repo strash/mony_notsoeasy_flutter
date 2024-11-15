@@ -18,7 +18,7 @@ class TransactionTagComponent extends StatelessWidget {
 
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: theme.colorScheme.tertiaryContainer,
+        color: theme.colorScheme.surfaceContainerHigh,
         shape: SmoothRectangleBorder(
           borderRadius: SmoothBorderRadius.all(
             SmoothRadius(cornerRadius: 12.r, cornerSmoothing: 1.0),
@@ -28,7 +28,7 @@ class TransactionTagComponent extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
         child: Text(
-          tag.title,
+          "#${tag.title}",
           style: GoogleFonts.golosText(
             fontSize: 16.sp,
             height: 1.0,

@@ -41,22 +41,18 @@ class _TabGroupEntryComponentState<T extends IDescriptable>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      _notifyRect();
+      if (widget.isActive) _notifyRect();
     });
   }
 
   Rect _getRect(RenderBox box) {
     final offset = box.localToGlobal(Offset.zero);
     final size = box.size;
-    return Rect.fromLTWH(
-      offset.dx,
-      offset.dy,
-      size.width,
-      size.height,
-    );
+    return Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height);
   }
 
   void _notifyRect() {
+    if (!context.mounted) return;
     final box = context.findRenderObject() as RenderBox?;
     final parentBox = widget.parent();
     if (box != null && box.hasSize && parentBox != null && parentBox.hasSize) {

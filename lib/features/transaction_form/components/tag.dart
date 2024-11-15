@@ -17,7 +17,7 @@ class TransactionFormTagComponent extends StatelessWidget {
 
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: theme.colorScheme.tertiaryContainer,
+        color: theme.colorScheme.surfaceContainerHigh,
         shape: SmoothRectangleBorder(
           borderRadius: SmoothBorderRadius.all(
             SmoothRadius(cornerRadius: 12.r, cornerSmoothing: 1.0),

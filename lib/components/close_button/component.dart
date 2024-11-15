@@ -22,7 +22,7 @@ class CloseButtonComponent extends StatelessWidget {
             width: 28.r,
             height: 28.r,
             colorFilter: ColorFilter.mode(
-              theme.colorScheme.secondary,
+              theme.colorScheme.primary,
               BlendMode.srcIn,
             ),
           ),
