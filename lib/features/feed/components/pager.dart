@@ -32,13 +32,15 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     _subject.add(false);
   }
 
+  void _onPageEvent(bool e) {
+    if (mounted) setState(() => _showPagination = e);
+  }
+
   @override
   void initState() {
     super.initState();
-
-    _pageSub = _subject.debounceTime(const Duration(seconds: 1)).listen((e) {
-      if (mounted) setState(() => _showPagination = e);
-    });
+    const duration = Duration(seconds: 1);
+    _pageSub = _subject.debounceTime(duration).listen(_onPageEvent);
   }
 
   @override

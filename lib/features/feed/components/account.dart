@@ -5,6 +5,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/account_balance.dart";
+import "package:mony_app/features/feed/components/components.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
@@ -33,16 +34,6 @@ class FeedAccountComponent extends StatelessWidget {
     };
   }
 
-  TextStyle _getStyle(BuildContext context) {
-    final theme = Theme.of(context);
-    return GoogleFonts.golosText(
-      fontSize: 40.sp,
-      height: 1.1,
-      fontWeight: FontWeight.w600,
-      color: theme.colorScheme.onSurface,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -52,31 +43,29 @@ class FeedAccountComponent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         // -> sums
-        FittedBox(
-          child: switch (page) {
-            final FeedPageStateAllAccounts page => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: page.balances.foldByCurrency().map(
-                  (e) {
-                    return Text(
-                      e.totalSum.currency(
-                        name: e.currency.name,
-                        symbol: e.currency.symbol,
-                      ),
-                      style: _getStyle(context),
-                    );
-                  },
-                ).toList(growable: false),
+        switch (page) {
+          final FeedPageStateAllAccounts page => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: page.balances.foldByCurrency().map(
+                (e) {
+                  return FeedAccountAmountComponent(
+                    amount: e.totalSum.currency(
+                      name: e.currency.name,
+                      symbol: e.currency.symbol,
+                    ),
+                    code: e.currency.code,
+                  );
+                },
+              ).toList(growable: false),
+            ),
+          final FeedPageStateSingleAccount page => FeedAccountAmountComponent(
+              amount: page.balance.totalSum.currency(
+                name: page.balance.currency.name,
+                symbol: page.balance.currency.symbol,
               ),
-            final FeedPageStateSingleAccount page => Text(
-                page.balance.totalSum.currency(
-                  name: page.balance.currency.name,
-                  symbol: page.balance.currency.symbol,
-                ),
-                style: _getStyle(context),
-              ),
-          },
-        ),
+              code: page.balance.currency.code,
+            ),
+        },
         SizedBox(height: 10.h),
 
         // -> title
@@ -86,7 +75,9 @@ class FeedAccountComponent extends StatelessWidget {
             Flexible(
               child: Text(
                 _title,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.start,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.golosText(
                   fontSize: 18.sp,
                   height: 1.2,

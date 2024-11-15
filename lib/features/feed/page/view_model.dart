@@ -37,11 +37,21 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     return pageController.page?.toInt() ?? 0;
   }
 
-  void addPageScroll(int index) {
+  void addPageScroll(int pageIndex) {
     final scrollController = ScrollController();
-    scrollController.addListener(_sclollListener(index));
+    scrollController.addListener(_sclollListener(pageIndex));
     scrollControllers.add(scrollController);
     scrollPositions.add(.0);
+  }
+
+  Future<void> openPage(int pageIndex) async {
+    _pagingToStart = true;
+    await pageController.animateToPage(
+      pageIndex,
+      duration: Durations.long2,
+      curve: Curves.easeInOut,
+    );
+    _pagingToStart = false;
   }
 
   void Function() _sclollListener(int pageIndex) {
@@ -56,11 +66,19 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     OnAppStateChanged().call(context, (event: e, viewModel: this));
   }
 
+  bool _pagingToStart = false;
+
   void _onNavBarEvent(NavbarEventScrollToTopRequested e) {
     if (!context.mounted) return;
-    context
-        .viewModel<NavbarViewModel>()
-        .returnToTop(scrollControllers.elementAt(currentPageIndex));
+    final controller = scrollControllers.elementAt(currentPageIndex);
+    // -> scroll to top
+    if (controller.isReady && controller.position.pixels > .0) {
+      context.viewModel<NavbarViewModel>().returnToTop(controller);
+      // -> open first page
+    } else {
+      if (currentPageIndex == 0 || _pagingToStart) return;
+      openPage(0);
+    }
   }
 
   void _onFeedEvent(FeedEventScrolledToBottom event) {
@@ -117,6 +135,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     return ViewModel<FeedViewModel>(
       viewModel: this,
       useCases: [
+        () => OnAddAccountPressed(),
         () => OnPageChanged(),
         () => OnTransactionPressed(),
       ],

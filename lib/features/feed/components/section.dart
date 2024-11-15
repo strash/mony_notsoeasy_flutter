@@ -41,6 +41,7 @@ class FeedSectionComponent extends StatelessWidget {
               color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
+          SizedBox(width: 10.w),
 
           // -> sum
           Flexible(

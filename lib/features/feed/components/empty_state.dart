@@ -25,7 +25,8 @@ class FeedEmptyStateComponent extends StatelessWidget {
         ),
         SizedBox(height: 10.h),
         Text(
-          "Тут ничего нет. Найс!",
+          "Тут ничего нет.\nЗаписывай траты!",
+          textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
