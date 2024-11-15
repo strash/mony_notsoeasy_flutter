@@ -53,7 +53,6 @@ class TransactionView extends StatelessWidget {
               ],
             ),
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 10.h)),
 
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),

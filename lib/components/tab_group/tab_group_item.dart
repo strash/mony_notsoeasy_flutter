@@ -1,6 +1,6 @@
 part of "./tab_group.dart";
 
-class TabGroupEntryComponent<T extends IDescriptable> extends StatelessWidget {
+class TabGroupEntryComponent<T extends IDescriptable> extends StatefulWidget {
   final T value;
   final bool isActive;
   final ValueNotifier<RelativeRect?> rectNotifier;
@@ -30,6 +30,21 @@ class TabGroupEntryComponent<T extends IDescriptable> extends StatelessWidget {
     required this.onTap,
   });
 
+  @override
+  State<TabGroupEntryComponent<T>> createState() =>
+      _TabGroupEntryComponentState<T>();
+}
+
+class _TabGroupEntryComponentState<T extends IDescriptable>
+    extends State<TabGroupEntryComponent<T>> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      _notifyRect();
+    });
+  }
+
   Rect _getRect(RenderBox box) {
     final offset = box.localToGlobal(Offset.zero);
     final size = box.size;
@@ -41,6 +56,16 @@ class TabGroupEntryComponent<T extends IDescriptable> extends StatelessWidget {
     );
   }
 
+  void _notifyRect() {
+    final box = context.findRenderObject() as RenderBox?;
+    final parentBox = widget.parent();
+    if (box != null && box.hasSize && parentBox != null && parentBox.hasSize) {
+      final rect = _getRect(box);
+      final parentRect = _getRect(parentBox);
+      widget.rectNotifier.value = RelativeRect.fromRect(rect, parentRect);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -48,32 +73,24 @@ class TabGroupEntryComponent<T extends IDescriptable> extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        final box = context.findRenderObject() as RenderBox?;
-        final parentBox = parent();
-        if (box != null &&
-            box.hasSize &&
-            parentBox != null &&
-            parentBox.hasSize) {
-          final rect = _getRect(box);
-          final parentRect = _getRect(parentBox);
-          rectNotifier.value = RelativeRect.fromRect(rect, parentRect);
-        }
-        onTap(value);
+        _notifyRect();
+        widget.onTap(widget.value);
       },
       child: Padding(
-        padding: padding,
+        padding: TabGroupEntryComponent.padding,
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short4,
           tween: ColorTween(
             begin: theme.colorScheme.onSurfaceVariant,
-            end: isActive
+            end: widget.isActive
                 ? theme.colorScheme.onSurface
                 : theme.colorScheme.onSurfaceVariant,
           ),
           builder: (context, color, child) {
             return Text(
-              value.description,
-              style: style(context).copyWith(color: color),
+              widget.value.description,
+              style:
+                  TabGroupEntryComponent.style(context).copyWith(color: color),
             );
           },
         ),

@@ -87,8 +87,8 @@ class _TabGroupComponentState<T extends IDescriptable>
           ),
 
           // -> active bg
-          ValueListenableBuilder<RelativeRect?>(
-            valueListenable: _rectNotifier,
+          ListenableBuilder(
+            listenable: Listenable.merge([_rectNotifier, widget.controller]),
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: theme.colorScheme.surface,
@@ -107,7 +107,8 @@ class _TabGroupComponentState<T extends IDescriptable>
                 ),
               ),
             ),
-            builder: (context, rect, child) {
+            builder: (context, child) {
+              final rect = _rectNotifier.value;
               if (rect == null) return const SizedBox();
 
               return AnimatedPositioned(
