@@ -95,7 +95,7 @@ class FeedItemComponent extends StatelessWidget {
                             style: GoogleFonts.golosText(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
-                              color: theme.colorScheme.onSurface,
+                              color: categoryColor,
                             ),
                           ),
                         ),
