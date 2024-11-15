@@ -26,7 +26,7 @@ class CategoryFormView extends StatelessWidget {
       children: [
         // -> appbar
         const AppBarComponent(
-          title: "Категория",
+          title: Text("Категория"),
           showDragHandle: true,
           useSliver: false,
         ),

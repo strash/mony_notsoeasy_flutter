@@ -26,7 +26,7 @@ class AccountFormView extends StatelessWidget {
       children: [
         // -> appbar
         const AppBarComponent(
-          title: "Счет",
+          title: Text("Счет"),
           showDragHandle: true,
           useSliver: false,
         ),

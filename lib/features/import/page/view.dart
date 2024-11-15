@@ -31,7 +31,7 @@ class ImportView extends StatelessWidget {
                     tween:
                         IntTween(begin: 0, end: viewModel.progressPercentage),
                     builder: (context, progress, child) {
-                      return AppBarComponent(title: "$progress%");
+                      return AppBarComponent(title: Text("$progress%"));
                     },
                   ),
 
