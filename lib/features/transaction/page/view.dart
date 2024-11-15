@@ -44,6 +44,7 @@ class TransactionView extends StatelessWidget {
                 SizedBox(width: 4.w),
 
                 // -> button delete
+                // TODO: показывать алерт перед удалением
                 TransactionAppBarIconComponent(
                   icon: Assets.icons.trashFill,
                   color: theme.colorScheme.primary,

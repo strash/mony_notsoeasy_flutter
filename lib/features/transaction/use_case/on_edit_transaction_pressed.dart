@@ -18,7 +18,7 @@ final class OnEditTransactionPressed
 
     final result = await BottomSheetComponent.show<TransactionFormVO?>(
       context,
-      largeHandle: false,
+      showDragHandle: false,
       builder: (context, bottom) {
         return TransactionFormPage(transaction: transaction);
       },

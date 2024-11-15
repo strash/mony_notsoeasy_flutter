@@ -21,28 +21,20 @@ class TransactionFormView extends StatelessWidget {
         Expanded(
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.r),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(width: 50.w),
-
-                    // -> type
-                    TabGroupComponent(
-                      values: ETransactionType.values,
-                      controller: viewModel.typeController,
-                    ),
-
-                    // -> button close
-                    const CloseButtonComponent(),
-                  ],
+              // -> appbar
+              AppBarComponent(
+                useSliver: false,
+                automaticallyImplyLeading: false,
+                showDragHandle: true,
+                // -> type
+                title: Center(
+                  child: TabGroupComponent(
+                    values: ETransactionType.values,
+                    controller: viewModel.typeController,
+                  ),
                 ),
+                trailing: const CloseButtonComponent(),
               ),
-              SizedBox(height: 30.h),
-
-              // -> date time
-              const TransactionFormDatetimeComponent(),
               const Spacer(),
 
               // -> amount
@@ -51,6 +43,10 @@ class TransactionFormView extends StatelessWidget {
                 child: const TransactionFormAmountComponent(),
               ),
               const Spacer(),
+
+              // -> date time
+              const TransactionFormDatetimeComponent(),
+              SizedBox(height: 20.h),
 
               // -> account and category
               Padding(
