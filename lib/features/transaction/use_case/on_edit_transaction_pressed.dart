@@ -15,7 +15,6 @@ final class OnEditTransactionPressed
     TransactionModel? transaction,
   ]) async {
     if (transaction == null) throw ArgumentError.notNull();
-    final navigator = Navigator.of(context);
 
     final result = await BottomSheetComponent.show<TransactionFormVO?>(
       context,
@@ -33,7 +32,6 @@ final class OnEditTransactionPressed
       vo: result,
     );
     if (updated == null) return;
-    navigator.pop();
 
     appService.notify(
       EventTransactionUpdated(
