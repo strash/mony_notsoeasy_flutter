@@ -19,19 +19,6 @@ final class OnAccountButtonPressed
       throw ArgumentError.value(accountModel);
     }
 
-    final Map<EAccountType, List<String>> titles = {};
-    if (accountModel.isFromData) {
-      for (final element in accountModel.accounts.value) {
-        if (element.account == null ||
-            element.originalTitle == value.originalTitle) continue;
-        if (!titles.containsKey(element.account!.type)) {
-          titles[element.account!.type] = [element.account!.title];
-        } else {
-          titles[element.account!.type]!.add(element.account!.title);
-        }
-      }
-    }
-
     final account = value.account ??
         AccountVO(
           title: value.originalTitle ?? "",
@@ -48,7 +35,7 @@ final class OnAccountButtonPressed
         return AccountFormPage(
           keyboardHeight: bottom,
           account: account,
-          additionalUsedTitles: titles,
+          additionalUsedTitles: accountModel.getTitles(value),
         );
       },
     );
