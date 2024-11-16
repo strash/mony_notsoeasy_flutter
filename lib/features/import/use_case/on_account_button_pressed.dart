@@ -44,16 +44,16 @@ final class OnAccountButtonPressed
 
     viewModel.setProtectedState(() {
       if (value.originalTitle == null) {
-        accountModel.accounts.value = [
+        accountModel.accounts = [
           ImportModelAccountVO(account: result, originalTitle: null),
         ];
       } else {
-        final index = accountModel.accounts.value
+        final index = accountModel.accounts
             .indexWhere((e) => e.originalTitle == value.originalTitle);
         if (index == -1) {
-          throw RangeError.index(index, accountModel.accounts.value);
+          throw RangeError.index(index, accountModel.accounts);
         }
-        accountModel.accounts.value = List.from(accountModel.accounts.value)
+        accountModel.accounts = List.from(accountModel.accounts)
           ..removeAt(index)
           ..insert(
             index,

@@ -1,14 +1,14 @@
 part of "./base_model.dart";
 
 final class ImportModelAccount extends ImportModel {
-  final accounts = ValueNotifier<List<ImportModelAccountVO>>([]);
+  List<ImportModelAccountVO> accounts = const [];
 
-  bool get isFromData => accounts.value.every((e) => e.originalTitle != null);
+  bool get isFromData => accounts.every((e) => e.originalTitle != null);
 
   Map<EAccountType, List<String>> getTitles(ImportModelAccountVO except) {
     final Map<EAccountType, List<String>> titles = {};
     if (isFromData) {
-      for (final element in accounts.value) {
+      for (final element in accounts) {
         if (element.account == null ||
             element.originalTitle == except.originalTitle) continue;
         if (!titles.containsKey(element.account!.type)) {
@@ -24,16 +24,18 @@ final class ImportModelAccount extends ImportModel {
   /// Either all of them have a title or theres only one and without a title.
   @override
   bool isReady() {
-    final value = accounts.value;
-    return value.isNotEmpty &&
-        (value.every((e) => e.account != null && e.originalTitle != null) ||
-            value.every((e) => e.account != null && e.originalTitle == null));
+    final allFromDataValid = accounts.every((e) {
+      return e.account != null && e.originalTitle != null;
+    });
+    final singleValid = accounts.every((e) {
+      return e.account != null && e.originalTitle == null;
+    });
+
+    return accounts.isNotEmpty && (allFromDataValid || singleValid);
   }
 
   @override
-  void dispose() {
-    accounts.dispose();
-  }
+  void dispose() {}
 }
 
 final class ImportModelAccountVO {

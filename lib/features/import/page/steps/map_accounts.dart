@@ -27,7 +27,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
         "Позже можно будет создать другие счета.";
     if (accountModel.isFromData) {
       description = "Я нашел ${viewModel.numberOfAccountsDescription}. "
-          "${accountModel.accounts.value.length == 1 ? "Его" : "Их"} "
+          "${accountModel.accounts.length == 1 ? "Его" : "Их"} "
           "нужно дополнить информацией. Это быстро.";
     }
 
@@ -70,9 +70,9 @@ class ImportMapAccountsComponent extends StatelessWidget {
           child: SeparatedComponent(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             separatorBuilder: (context) => SizedBox(height: 10.h),
-            itemCount: accountModel.accounts.value.length,
+            itemCount: accountModel.accounts.length,
             itemBuilder: (context, index) {
-              final accountEntry = accountModel.accounts.value.elementAt(index);
+              final accountEntry = accountModel.accounts.elementAt(index);
               final account = accountEntry.account;
 
               return GestureDetector(

@@ -120,7 +120,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   // for accounts mapping
 
   String get numberOfAccountsDescription {
-    final count = (currentStep as ImportModelAccount).accounts.value.length;
+    final count = (currentStep as ImportModelAccount).accounts.length;
     final formatter = NumberFormat.decimalPattern();
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {

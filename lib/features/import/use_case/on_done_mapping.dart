@@ -27,11 +27,15 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
       viewModel.steps.whereType<ImportModelAccount>().firstOrNull,
     );
     if (!accountModel.isFromData) {
+      if (accountModel.accounts.isEmpty ||
+          accountModel.accounts.first.account == null) {
+        throw ArgumentError.value(accountModel.accounts);
+      }
       accounts[singleAccountId] = await accountService.create(
-        vo: accountModel.accounts.value.first.account!,
+        vo: accountModel.accounts.first.account!,
       );
     } else {
-      for (final element in accountModel.accounts.value) {
+      for (final element in accountModel.accounts) {
         accounts[element.originalTitle!] = await accountService.create(
           vo: element.account!,
         );

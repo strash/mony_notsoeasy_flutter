@@ -58,7 +58,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     // single required account
     if (accountColumn == null || accountColumn.value == null) {
       viewModel.setProtectedState(() {
-        accountModel.accounts.value = [
+        accountModel.accounts = [
           ImportModelAccountVO(originalTitle: null, account: null),
         ];
       });
@@ -71,13 +71,14 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
         accounts.add(value);
       }
       viewModel.setProtectedState(() {
-        accountModel.accounts.value = accounts.map((e) {
+        accountModel.accounts = accounts.map((e) {
           return ImportModelAccountVO(originalTitle: e, account: null);
         }).toList(growable: false);
       });
     }
   }
 
+  // TODO: pick up from here
   void _onAccountsMapped(
     ImportViewModel viewModel,
     DomainCategoryService categoryService,
