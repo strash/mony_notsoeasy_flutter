@@ -19,10 +19,12 @@ class ImportMapColumnsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
+    final csvModel = viewModel.steps.whereType<ImportModelCsv>().firstOrNull;
+    if (csvModel == null) throw ArgumentError.value(csvModel);
     final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
     final onInfoPressed = viewModel<OnColumnInfoPressed>();
-    final numberOfEntries = viewModel.numberOfEntries;
-    final numberOfEntriesDescription = viewModel.numberOfEntriesDescription;
+    final numberOfEntries = csvModel.numberOfEntries;
+    final numberOfEntriesDescription = csvModel.numberOfEntriesDescription;
     final currentMappedColumn = viewModel.currentStep as ImportModelColumn;
     final count = numberOfEntries > 0 ? viewModel.currentEntryIndex + 1 : 0;
 

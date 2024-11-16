@@ -84,25 +84,6 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
     return csv?.entries.elementAtOrNull(currentEntryIndex);
   }
 
-  int get numberOfEntries {
-    final csv = this.csv;
-    if (csv == null) return 0;
-    return csv.entries.length;
-  }
-
-  String get numberOfEntriesDescription {
-    final count = numberOfEntries;
-    final formatter = NumberFormat.decimalPattern();
-    final formatted = formatter.format(count);
-    return switch (count.wordCaseHint) {
-      EWordCaseHint.nominative => "$formatted запись",
-      EWordCaseHint.genitive => "$formatted записи",
-      EWordCaseHint.accusative => "$formatted записей",
-    };
-  }
-
-  // for columns mapping
-
   ImportModelColumn? get currentColumn {
     final col = currentStep;
     if (col is! ImportModelColumn) return null;
@@ -115,19 +96,6 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
 
   List<ImportModelColumn> get columns {
     return steps.whereType<ImportModelColumn>().toList(growable: false);
-  }
-
-  // for accounts mapping
-
-  String get numberOfAccountsDescription {
-    final count = (currentStep as ImportModelAccount).accounts.length;
-    final formatter = NumberFormat.decimalPattern();
-    final formatted = formatter.format(count);
-    return switch (count.wordCaseHint) {
-      EWordCaseHint.nominative => "$formatted счет",
-      EWordCaseHint.genitive => "$formatted счета",
-      EWordCaseHint.accusative => "$formatted счетов",
-    };
   }
 
   // for transaction type mapping
@@ -248,6 +216,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
     void forEachAction(ImportModel e) => e.dispose();
     steps.forEach(forEachAction);
     steps.length = 0;
+    currentStep.dispose();
     subject.close();
     transactionTypeDecisionController
         .removeListener(_transactionTypeDecisionListener);
