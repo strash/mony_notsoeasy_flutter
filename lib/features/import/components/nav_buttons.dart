@@ -23,21 +23,7 @@ class NavigationButtonsComponent extends StatelessWidget {
         event is! ImportEventLoadingCsv &&
         event is! ImportEventErrorLoadingCsv &&
         event is! ImportEventValidatingMappedColumns;
-    final currentColumn = viewModel.currentColumn;
-    final currentMappedColumn = viewModel.mappedColumns.lastOrNull;
-    final forwardEnabled = (event is ImportEventMappingColumns &&
-            currentColumn != null &&
-            (currentColumn.isRequired &&
-                    currentMappedColumn != null &&
-                    currentMappedColumn.entryKey != null ||
-                !currentColumn.isRequired)) ||
-        event is ImportEventMappingColumnsValidated ||
-        (event is ImportEventMapAccounts &&
-            (viewModel.singleAccount != null ||
-                viewModel.accounts.isNotEmpty &&
-                    viewModel.accounts.entries
-                        .every((e) => e.value != null))) ||
-        event is ImportEventMapTransactionType &&
+    final forwardEnabled = event is ImportEventMapTransactionType &&
             viewModel.mappedTransactionTypeExpense != null &&
             viewModel.mappedTransactionTypeIncome != null ||
         event is ImportEventMapCategories &&
@@ -73,8 +59,9 @@ class NavigationButtonsComponent extends StatelessWidget {
         // -> button next
         Expanded(
           child: FilledButton(
-            onPressed:
-                forwardEnabled ? () => onForwardPressed(context, event) : null,
+            onPressed: viewModel.currentStep.isReady()
+                ? () => onForwardPressed(context, event)
+                : null,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

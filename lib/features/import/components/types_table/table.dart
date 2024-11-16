@@ -3,7 +3,6 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/features/import/page/enum.dart";
 import "package:mony_app/features/import/page/view_model.dart";
 
 class TypesTableComponent extends StatelessWidget {
@@ -24,7 +23,10 @@ class TypesTableComponent extends StatelessWidget {
     final viewModel = context.viewModel<ImportViewModel>();
     final List<MapEntry<EImportColumn, String>> entries = [];
     for (final element in entry.entries) {
-      final column = viewModel.getColumn(element.key);
+      final column = viewModel.columns
+          .where((e) => e.value == element.key)
+          .firstOrNull
+          ?.column;
       if (column == null ||
           !column.isRequired && column != EImportColumn.transactionType) {
         continue;

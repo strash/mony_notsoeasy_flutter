@@ -21,8 +21,10 @@ class ImportMapColumnsComponent extends StatelessWidget {
     final viewModel = context.viewModel<ImportViewModel>();
     final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
     final onInfoPressed = viewModel<OnColumnInfoPressed>();
-    final numberOfEntries = viewModel.numberOfEntriesDescription;
-    final currentMappedColumn = viewModel.currentColumn;
+    final numberOfEntries = viewModel.numberOfEntries;
+    final numberOfEntriesDescription = viewModel.numberOfEntriesDescription;
+    final currentMappedColumn = viewModel.currentStep as ImportModelColumn;
+    final count = numberOfEntries > 0 ? viewModel.currentEntryIndex + 1 : 0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +54,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
 
                   // -> title
                   Text(
-                    'Колонка "${currentMappedColumn?.title ?? ""}"',
+                    'Колонка "${currentMappedColumn.column.title}"',
                     style: GoogleFonts.golosText(
                       fontSize: 20.sp,
                       color: theme.colorScheme.onSurface,
@@ -61,7 +63,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                   ),
 
                   // -> asterisk
-                  if (currentMappedColumn?.isRequired ?? false)
+                  if (currentMappedColumn.column.isRequired)
                     Text(
                       " *",
                       style: GoogleFonts.golosText(
@@ -78,7 +80,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
               Text(
                 "Выбери подходящую колонку,\n"
                 "значение в которой подходит\n"
-                'к колонке "${currentMappedColumn?.title ?? ""}".',
+                'к колонке "${currentMappedColumn.column.title}".',
                 style: GoogleFonts.golosText(
                   fontSize: 15.sp,
                   height: 1.3.sp,
@@ -118,8 +120,8 @@ class ImportMapColumnsComponent extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "${viewModel.currentEntryIndex + 1} из "
-                        "$numberOfEntries",
+                        "$count из "
+                        "$numberOfEntriesDescription",
                         style: GoogleFonts.golosText(
                           fontSize: 12.sp,
                           color: theme.colorScheme.onSurfaceVariant,

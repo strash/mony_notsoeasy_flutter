@@ -1,4 +1,4 @@
-import "package:mony_app/features/import/page/enum.dart";
+import "package:mony_app/features/import/page/model/enum.dart";
 import "package:mony_app/features/import/validator/validator.dart";
 
 final class NoteValidator extends BaseValidator {

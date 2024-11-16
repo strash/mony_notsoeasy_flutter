@@ -13,6 +13,7 @@ import "package:rxdart/subjects.dart";
 
 export "../use_case/use_case.dart";
 export "../validator/validator.dart";
+export "./model/model.dart";
 
 typedef TMappedColumn = ({EImportColumn column, String? entryKey});
 
@@ -57,19 +58,25 @@ final class ImportViewModelBuilder extends StatefulWidget {
 final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   final subject = BehaviorSubject<ImportEvent>.seeded(ImportEventInitial());
 
-  // progress
-  int progress = 0;
+  // model
+  List<ImportModel> steps = const [];
+  late ImportModel currentStep = ImportModelCsv(csv: null);
 
   int get progressPercentage {
-    return (progress * 100 / max(1, _totalProgress + additionalSteps)).round();
+    return (steps.length * 100 / max(1, _totalProgress + additionalSteps))
+        .round();
   }
 
   final _totalProgress = 11;
   int additionalSteps = 0;
 
-  // parsed csv
+  // csv entry
 
-  ImportedCsvVO? csv;
+  ImportedCsvVO? get csv {
+    final m = steps.whereType<ImportModelCsv>().firstOrNull;
+    if (m == null || m.csv == null || m.csv!.entries.isEmpty) return null;
+    return m.csv;
+  }
 
   int currentEntryIndex = 0;
 
@@ -77,28 +84,14 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
     return csv?.entries.elementAtOrNull(currentEntryIndex);
   }
 
-  // for columns mapping
-
-  EImportColumn? currentColumn;
-
-  List<TMappedColumn> mappedColumns = [];
-
-  EImportColumn? getColumn(String entryKey) {
-    return mappedColumns
-        .where((e) => e.entryKey == entryKey)
-        .firstOrNull
-        ?.column;
-  }
-
-  bool isOccupied(String entryKey) {
-    final occupied = mappedColumns.take(max(0, mappedColumns.length - 1));
-    return occupied.any((e) => e.entryKey == entryKey);
+  int get numberOfEntries {
+    final csv = this.csv;
+    if (csv == null) return 0;
+    return csv.entries.length;
   }
 
   String get numberOfEntriesDescription {
-    final csv = this.csv;
-    if (csv == null || csv.entries.isEmpty) return "0 записей";
-    final count = csv.entries.length;
+    final count = numberOfEntries;
     final formatter = NumberFormat.decimalPattern();
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {
@@ -108,15 +101,26 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
     };
   }
 
-  List<ValidationResult> columnValidationResults = [];
+  // for columns mapping
+
+  ImportModelColumn? get currentColumn {
+    final col = currentStep;
+    if (col is! ImportModelColumn) return null;
+    return col;
+  }
+
+  ImportModelColumn? column(String entryKey) {
+    return columns.where((e) => e.value == entryKey).firstOrNull;
+  }
+
+  List<ImportModelColumn> get columns {
+    return steps.whereType<ImportModelColumn>().toList(growable: false);
+  }
 
   // for accounts mapping
 
-  AccountVO? singleAccount;
-  Map<String, AccountVO?> accounts = {};
-
   String get numberOfAccountsDescription {
-    final count = accounts.length;
+    final count = (currentStep as ImportModelAccount).accounts.value.length;
     final formatter = NumberFormat.decimalPattern();
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {
@@ -138,9 +142,9 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
     mapTransactionTypes();
   }
 
-  bool get hasMappedTransactionType {
-    return mappedColumns.any((e) {
-      return e.column == EImportColumn.transactionType && e.entryKey != null;
+  bool get hasMappedTransactionTypeColumn {
+    return columns.any((e) {
+      return e.column == EImportColumn.transactionType && e.value != null;
     });
   }
 
@@ -151,14 +155,14 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
     }
     // we know there is only two or less types
     final Set<String> types = {};
-    final typeColumn = mappedColumns
+    final typeColumn = columns
         .where((e) => e.column == EImportColumn.transactionType)
         .firstOrNull;
     if (typeColumn == null) {
       return (entriesByType: const [], types: types) as TTransactionsByType;
     }
     for (final element in entries) {
-      types.add(element[typeColumn.entryKey]!);
+      types.add(element[typeColumn.value]!);
       if (types.length == 2) break;
     }
     if (types.isEmpty) {
@@ -169,11 +173,11 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
       );
     }
     final one = entries
-        .where((e) => e[typeColumn.entryKey]! == types.elementAt(0))
+        .where((e) => e[typeColumn.value]! == types.elementAt(0))
         .toList(growable: false);
     final two = types.length > 1
         ? entries
-            .where((e) => e[typeColumn.entryKey]! == types.elementAt(1))
+            .where((e) => e[typeColumn.value]! == types.elementAt(1))
             .toList(growable: false)
         : const <Map<String, String>>[];
     return (entriesByType: one.length >= two.length ? one : two, types: types);
@@ -182,9 +186,15 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   void mapTransactionTypes() {
     final transactionsByType = this.transactionsByType;
     final showedType = transactionsByType.entriesByType.first.entries
-        .where((e) => getColumn(e.key) == EImportColumn.transactionType)
+        .where((e) {
+          return columns.any((c) => c.column == EImportColumn.transactionType);
+        })
         .first
         .value;
+    // final showedType = transactionsByType.entriesByType.first.entries
+    //     .where((e) => currentColumn(e.key) == EImportColumn.transactionType)
+    //     .first
+    //     .value;
     String otherType = "__other_transaction_type__";
     for (final type in transactionsByType.types) {
       if (type != showedType) {
@@ -235,6 +245,9 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
 
   @override
   void dispose() {
+    void forEachAction(ImportModel e) => e.dispose();
+    steps.forEach(forEachAction);
+    steps.length = 0;
     subject.close();
     transactionTypeDecisionController
         .removeListener(_transactionTypeDecisionListener);
@@ -254,8 +267,6 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
         () => OnColumnSelected(),
         () => OnColumnInfoPressed(),
         () => OnAccountButtonPressed(),
-        () => OnAccountLocalButtonPressedDecorator(),
-        () => OnAccountFromImportButtonPressedDecorator(),
         () => OnCategoryButtonPressed(),
         () => OnCategoryResetPressed(),
         () => OnDoneMapping(),

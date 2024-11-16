@@ -7,76 +7,82 @@ import "package:provider/provider.dart";
 
 final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
   Future<void> _onMappingColumns(ImportViewModel viewModel) async {
+    if (viewModel.currentStep is! ImportModelColumn) return;
+    final currentColumn = viewModel.currentStep as ImportModelColumn;
     final subject = viewModel.subject;
-    final nextCol = EImportColumn.from(viewModel.mappedColumns.length);
+    final nextCol = currentColumn.column.next;
     if (nextCol == null) {
+      final csv = viewModel.steps.whereType<ImportModelCsv>().firstOrNull;
+      if (csv == null) throw ArgumentError.notNull();
       subject.add(ImportEventValidatingMappedColumns());
-      viewModel.columnValidationResults.length = 0;
-      if (viewModel.csv == null) return;
-      for (final column in viewModel.mappedColumns) {
-        await Future.delayed(const Duration(milliseconds: 150));
-        final entryKey = column.entryKey;
-        if (entryKey == null) continue;
-        final validator = switch (column.column) {
-          EImportColumn.account => AccountValidator(),
-          EImportColumn.amount => AmountValidator(),
-          EImportColumn.transactionType => TransactionTypeValidator(),
-          EImportColumn.date => DateValidator(),
-          EImportColumn.category => CategoryValidator(),
-          EImportColumn.tag => TagValidator(),
-          EImportColumn.note => NoteValidator(),
-        };
-        final result = validator.validate(viewModel.csv!.entries, entryKey);
-        viewModel.setProtectedState(() {
-          viewModel.columnValidationResults.add(result);
-        });
-      }
-      if (viewModel.columnValidationResults.any((e) => e.error != null)) {
-        subject.add(ImportEventErrorMappingColumns());
-      } else {
+      final validation = ImportModelColumnValidation(
+        csv: csv,
+        columns: viewModel.columns,
+      );
+      viewModel.setProtectedState(() {
+        viewModel.steps = List<ImportModel>.from(viewModel.steps)
+          ..add(currentColumn);
+        viewModel.currentStep = validation;
+      });
+      await validation.validate();
+      if (validation.isReady()) {
         subject.add(ImportEventMappingColumnsValidated());
+      } else {
+        subject.add(ImportEventErrorMappingColumns());
       }
     } else {
       viewModel.setProtectedState(() {
-        viewModel.mappedColumns = List.from(
-          viewModel.mappedColumns..add((column: nextCol, entryKey: null)),
-        );
-        viewModel.currentColumn = nextCol;
+        viewModel.steps = List<ImportModel>.from(viewModel.steps)
+          ..add(currentColumn);
+        viewModel.currentStep = ImportModelColumn(column: nextCol, value: null);
       });
     }
   }
 
   void _onColumnsValidated(ImportViewModel viewModel) {
     final subject = viewModel.subject;
-    viewModel.setProtectedState(() {
-      viewModel.singleAccount = null;
-      viewModel.accounts = {};
-    });
+    final validation = viewModel.currentStep;
+    if (validation is! ImportModelColumnValidation) {
+      throw ArgumentError.value(validation);
+    }
     subject.add(ImportEventMapAccounts());
-    final accountColumn = viewModel.mappedColumns.where((e) {
+    final accountModel = ImportModelAccount();
+    viewModel.setProtectedState(() {
+      viewModel.steps = List<ImportModel>.from(viewModel.steps)
+        ..add(validation);
+      viewModel.currentStep = accountModel;
+    });
+    final accountColumn = validation.mappedColumns.where((e) {
       return e.column == EImportColumn.account;
     }).firstOrNull;
-    if (accountColumn == null ||
-        accountColumn.entryKey == null ||
-        viewModel.csv == null) return;
-    final Set<String> accounts = {};
-    for (final element in viewModel.csv!.entries) {
-      final value = element[accountColumn.entryKey!];
-      if (value == null) continue;
-      accounts.add(value);
-    }
-    viewModel.setProtectedState(() {
-      for (final account in accounts) {
-        viewModel.accounts[account] = null;
+    // single required account
+    if (accountColumn == null || accountColumn.value == null) {
+      viewModel.setProtectedState(() {
+        accountModel.accounts.value = [
+          ImportModelAccountVO(originalTitle: null, account: null),
+        ];
+      });
+      // accounts from the data
+    } else {
+      final Set<String> accounts = {};
+      for (final element in validation.csv.csv!.entries) {
+        final value = element[accountColumn.value!];
+        if (value == null) continue;
+        accounts.add(value);
       }
-    });
+      viewModel.setProtectedState(() {
+        accountModel.accounts.value = accounts.map((e) {
+          return ImportModelAccountVO(originalTitle: e, account: null);
+        }).toList(growable: false);
+      });
+    }
   }
 
   void _onAccountsMapped(
     ImportViewModel viewModel,
     DomainCategoryService categoryService,
   ) {
-    if (viewModel.hasMappedTransactionType) {
+    if (viewModel.hasMappedTransactionTypeColumn) {
       viewModel.subject.add(ImportEventMapTransactionType());
       viewModel.setProtectedState(() {
         viewModel.additionalSteps++;
@@ -95,19 +101,24 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     final implyTypeFromAmount = viewModel.mappedTransactionTypeExpense == null;
     final Set<String> importExp = {};
     final Set<String> importInc = {};
-    for (final e in viewModel.csv!.entries) {
+    final csv = viewModel.csv;
+    if (csv == null) throw ArgumentError.notNull();
+    for (final e in csv.entries) {
       String amount = "";
       String category = "";
       String? transactionType;
-      for (final entry in e.entries) {
-        final column = viewModel.getColumn(entry.key);
+      for (final element in e.entries) {
+        final column = viewModel.columns
+            .where((e) => e.value == element.key)
+            .firstOrNull
+            ?.column;
         switch (column) {
           case EImportColumn.category:
-            category = entry.value;
+            category = element.value;
           case EImportColumn.amount:
-            amount = entry.value;
+            amount = element.value;
           case EImportColumn.transactionType:
-            transactionType = entry.value;
+            transactionType = element.value;
           default:
             continue;
         }
@@ -150,16 +161,18 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
   Future<void> call(BuildContext context, [ImportEvent? event]) async {
     if (event == null) throw ArgumentError.notNull();
     final viewModel = context.viewModel<ImportViewModel>();
-    final categoryService = context.read<DomainCategoryService>();
     switch (event) {
       case ImportEventMappingColumns():
         await _onMappingColumns(viewModel);
       case ImportEventMappingColumnsValidated():
         _onColumnsValidated(viewModel);
       case ImportEventMapAccounts():
-        _onAccountsMapped(viewModel, categoryService);
+        _onAccountsMapped(viewModel, context.read<DomainCategoryService>());
       case ImportEventMapTransactionType():
-        _onTransactionTypesMapped(viewModel, categoryService);
+        _onTransactionTypesMapped(
+          viewModel,
+          context.read<DomainCategoryService>(),
+        );
       case ImportEventMapCategories():
         viewModel.subject.add(ImportEventToDb());
         viewModel<OnDoneMapping>().call(context);
@@ -171,8 +184,6 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
             ImportEventToDb():
         break;
     }
-    viewModel.setProtectedState(() {
-      viewModel.progress++;
-    });
+    print(viewModel.steps);
   }
 }

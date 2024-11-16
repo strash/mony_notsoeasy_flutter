@@ -16,6 +16,10 @@ enum EImportColumn implements IDescriptable {
     return values.elementAtOrNull(index);
   }
 
+  EImportColumn? get next {
+    return values.elementAtOrNull(index + 1);
+  }
+
   bool get isRequired {
     return this == EImportColumn.amount ||
         this == EImportColumn.date ||

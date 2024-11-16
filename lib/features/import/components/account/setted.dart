@@ -4,18 +4,16 @@ import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:sealed_currencies/sealed_currencies.dart";
 
-class AccountSettedButtonComponent extends StatelessWidget {
+class AccountSettedItemComponent extends StatelessWidget {
   final AccountVO account;
 
-  const AccountSettedButtonComponent({required this.account});
+  const AccountSettedItemComponent({required this.account});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-    final currency = FiatCurrency.fromCode(account.currencyCode);
     final formatter = NumberFormat.compact();
     final color = ex?.from(EColorName.from(account.colorName)).color ??
         theme.colorScheme.onSurface;
@@ -42,7 +40,7 @@ class AccountSettedButtonComponent extends StatelessWidget {
 
                 // -> account type
                 Text(
-                  account.type.description,
+                  "${account.currencyCode} • ${account.type.description}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
@@ -58,7 +56,7 @@ class AccountSettedButtonComponent extends StatelessWidget {
 
           // -> balance with currency
           Text(
-            currency.addUnit(formatter.format(account.balance)),
+            formatter.format(account.balance),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.golosText(

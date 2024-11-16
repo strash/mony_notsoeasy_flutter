@@ -13,13 +13,13 @@ export "../use_case/use_case.dart";
 final class AccountFormViewModelBuilder extends StatefulWidget {
   final double keyboardHeight;
   final AccountVO? account;
-  final Map<EAccountType, List<String>> titles;
+  final Map<EAccountType, List<String>> additionalUsedTitles;
 
   const AccountFormViewModelBuilder({
     super.key,
     required this.keyboardHeight,
     required this.account,
-    required this.titles,
+    required this.additionalUsedTitles,
   });
 
   @override
@@ -71,7 +71,7 @@ final class AccountFormViewModel
       _titles[list.first.type] =
           List<String>.from(list.map<String>((e) => e.title));
     }
-    for (final element in widget.titles.entries) {
+    for (final element in widget.additionalUsedTitles.entries) {
       _titles[element.key] = List<String>.from(_titles[element.key]!)
         ..addAll(element.value);
     }

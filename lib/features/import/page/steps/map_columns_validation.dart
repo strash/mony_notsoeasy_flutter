@@ -18,6 +18,8 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
+    final validation = viewModel.currentStep;
+    if (validation is! ImportModelColumnValidation) return const SizedBox();
     String description = "Один момент, проверяются данные.";
     if (event is ImportEventErrorMappingColumns) {
       description = "Найдены ошибки.";
@@ -61,57 +63,62 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
         // -> validation results
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: viewModel.columnValidationResults.map((e) {
-              return TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0.0, end: 1.0),
-                duration: Durations.short4,
-                builder: (context, opacity, child) {
-                  return Opacity(
-                    opacity: opacity,
-                    child: Row(
-                      children: [
-                        // -> icon
-                        SvgPicture.asset(
-                          e.ok != null
-                              ? Assets.icons.checkmarkCircleFill
-                              : Assets.icons.exclamationmarkCircleFill,
-                          width: 20.r,
-                          height: 20.r,
-                          colorFilter: ColorFilter.mode(
-                            e.ok != null
-                                ? theme.colorScheme.secondary
-                                : theme.colorScheme.error,
-                            BlendMode.srcIn,
-                          ),
-                        ),
-
-                        // -> result
-                        Flexible(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10.w,
-                              vertical: 2.h,
-                            ),
-                            child: Text(
-                              e.ok != null ? e.ok! : e.error!,
-                              style: GoogleFonts.golosText(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: e.ok != null
-                                    ? theme.colorScheme.onSurface
+          child: ListenableBuilder(
+            listenable: validation.results,
+            builder: (context, child) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: validation.results.value.map((e) {
+                  return TweenAnimationBuilder<double>(
+                    tween: Tween<double>(begin: 0.0, end: 1.0),
+                    duration: Durations.short4,
+                    builder: (context, opacity, child) {
+                      return Opacity(
+                        opacity: opacity,
+                        child: Row(
+                          children: [
+                            // -> icon
+                            SvgPicture.asset(
+                              e.ok != null
+                                  ? Assets.icons.checkmarkCircleFill
+                                  : Assets.icons.exclamationmarkCircleFill,
+                              width: 20.r,
+                              height: 20.r,
+                              colorFilter: ColorFilter.mode(
+                                e.ok != null
+                                    ? theme.colorScheme.secondary
                                     : theme.colorScheme.error,
+                                BlendMode.srcIn,
                               ),
                             ),
-                          ),
+
+                            // -> result
+                            Flexible(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w,
+                                  vertical: 5.h,
+                                ),
+                                child: Text(
+                                  e.ok != null ? e.ok! : e.error!,
+                                  style: GoogleFonts.golosText(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: e.ok != null
+                                        ? theme.colorScheme.onSurface
+                                        : theme.colorScheme.error,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   );
-                },
+                }).toList(growable: false),
               );
-            }).toList(growable: false),
+            },
           ),
         ),
         SizedBox(height: 40.h),

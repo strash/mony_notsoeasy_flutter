@@ -20,9 +20,9 @@ class EntryListRowComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final column = viewModel.getColumn(entry.key);
+    final column = viewModel.column(entry.key);
+    final activeColumn = viewModel.currentColumn;
     final onColumnSelected = viewModel<OnColumnSelected>();
-    final isOccupied = viewModel.isOccupied(entry.key);
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 34.h),
@@ -77,7 +77,11 @@ class EntryListRowComponent extends StatelessWidget {
             // -> selection
             AnimatedOpacity(
               duration: Durations.short2,
-              opacity: column != null ? 1.0 : 0.0,
+              opacity:
+                  (activeColumn != null && activeColumn.value == entry.key) ||
+                          (column?.value == entry.key)
+                      ? 1.0
+                      : 0.0,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 3.h),
                 child: Row(
@@ -89,7 +93,7 @@ class EntryListRowComponent extends StatelessWidget {
                       child: TweenAnimationBuilder<Color?>(
                         tween: ColorTween(
                           begin: theme.colorScheme.secondary,
-                          end: isOccupied
+                          end: column?.value == entry.key
                               ? theme.colorScheme.tertiary
                               : theme.colorScheme.secondary,
                         ),
@@ -99,7 +103,9 @@ class EntryListRowComponent extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              column?.title ?? "",
+                              column?.column.title ??
+                                  activeColumn?.column.title ??
+                                  "",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.golosText(

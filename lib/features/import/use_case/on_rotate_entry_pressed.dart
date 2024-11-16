@@ -7,12 +7,13 @@ final class OnRotateEntryPressed extends UseCase<void, dynamic> {
   @override
   void call(BuildContext context, [dynamic _]) {
     final viewModel = context.viewModel<ImportViewModel>();
+    final model = viewModel.steps.whereType<ImportModelCsv>().first;
     viewModel.setProtectedState(() {
-      if (viewModel.csv == null || viewModel.csv!.entries.isEmpty) {
+      if (model.csv == null || model.csv!.entries.isEmpty) {
         viewModel.currentEntryIndex = 0;
         return;
       }
-      if (viewModel.currentEntryIndex < viewModel.csv!.entries.length - 1) {
+      if (viewModel.currentEntryIndex < model.csv!.entries.length - 1) {
         viewModel.currentEntryIndex++;
       } else {
         viewModel.currentEntryIndex = 0;

@@ -8,23 +8,17 @@ final class OnColumnSelected extends UseCase<void, String> {
   void call(BuildContext context, [String? entryKey]) {
     if (entryKey == null) throw ArgumentError.notNull();
     final viewModel = context.viewModel<ImportViewModel>();
-    final currentMappedColumn = viewModel.mappedColumns.lastOrNull;
-    if (currentMappedColumn == null) return;
+    final column = viewModel.currentColumn;
+    if (column == null) throw ArgumentError.notNull();
 
-    final newValue = currentMappedColumn.entryKey == entryKey ? null : entryKey;
+    final newValue = column.value == entryKey ? null : entryKey;
+    if (newValue == null || viewModel.columns.any((e) => e.value == newValue)) {
+      return;
+    }
 
     viewModel.setProtectedState(() {
-      final mappedColumnIndex =
-          viewModel.mappedColumns.indexWhere((e) => e.entryKey == entryKey);
-      final isOccupied = mappedColumnIndex != -1 &&
-          viewModel.mappedColumns.elementAt(mappedColumnIndex).column !=
-              currentMappedColumn.column;
-      if (isOccupied) return;
-      viewModel.mappedColumns = List.from(
-        viewModel.mappedColumns
-          ..removeLast()
-          ..add((column: currentMappedColumn.column, entryKey: newValue)),
-      );
+      viewModel.currentStep = column.copyWith(value: newValue);
+      column.dispose();
     });
   }
 }

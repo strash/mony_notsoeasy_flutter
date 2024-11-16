@@ -18,24 +18,20 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
             ImportEventToDb():
         return;
       case ImportEventMappingColumns():
-        viewModel.setProtectedState(() {
-          if (viewModel.mappedColumns.isNotEmpty) {
-            viewModel.mappedColumns = List.from(
-              viewModel.mappedColumns..removeLast(),
-            );
-          }
-          viewModel.currentColumn = viewModel.mappedColumns.lastOrNull?.column;
-        });
-        if (viewModel.mappedColumns.isEmpty) {
+        _removeLastStep(viewModel);
+        if (viewModel.currentStep is ImportModelCsv) {
           subject.add(ImportEventInitial());
         }
       case ImportEventValidatingMappedColumns() ||
             ImportEventErrorMappingColumns() ||
             ImportEventMappingColumnsValidated():
+        _removeLastStep(viewModel);
         subject.add(ImportEventMappingColumns());
       case ImportEventMapAccounts():
+        _removeLastStep(viewModel);
         subject.add(ImportEventMappingColumnsValidated());
       case ImportEventMapTransactionType():
+        _removeLastStep(viewModel);
         subject.add(ImportEventMapAccounts());
         viewModel.setProtectedState(() {
           viewModel.additionalSteps--;
@@ -45,7 +41,7 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
               ETypeDecision.isExpense;
         });
       case ImportEventMapCategories():
-        if (viewModel.hasMappedTransactionType) {
+        if (viewModel.hasMappedTransactionTypeColumn) {
           subject.add(ImportEventMapTransactionType());
         } else {
           subject.add(ImportEventMapAccounts());
@@ -55,8 +51,15 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
           viewModel.mappedCategories[ETransactionType.income] = const [];
         });
     }
+    print(viewModel.steps);
+  }
+
+  void _removeLastStep(ImportViewModel viewModel) {
+    if (viewModel.steps.lastOrNull == null) return;
     viewModel.setProtectedState(() {
-      viewModel.progress--;
+      viewModel.currentStep.dispose();
+      viewModel.currentStep = viewModel.steps.last;
+      viewModel.steps = List<ImportModel>.from(viewModel.steps..removeLast());
     });
   }
 }

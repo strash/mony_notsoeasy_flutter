@@ -10,46 +10,46 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
   @override
   void call(BuildContext context, [dynamic _]) {
     final viewModel = context.viewModel<ImportViewModel>();
-    final currentColumn = viewModel.currentColumn;
-    if (currentColumn == null) throw ArgumentError.notNull();
+    final currentColumn = viewModel.currentStep;
+    if (currentColumn is! ImportModelColumn) {
+      throw ArgumentError.value(currentColumn);
+    }
 
     final viewSize = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
 
     BottomSheetComponent.show<void>(
       context,
+      showDragHandle: false,
       builder: (context, bottom) {
         return SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: bottom + 40.h),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: viewSize.height * 0.4),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(25.w, 0.0, 25.w, bottom + 40.h),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // -> title
-                  Text(
-                    currentColumn.title,
-                    style: GoogleFonts.golosText(
-                      fontSize: 20.sp,
-                      color: theme.colorScheme.onSurface,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(height: 15.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // -> title
+                AppBarComponent(
+                  useSliver: false,
+                  showDragHandle: true,
+                  title: Text(currentColumn.column.title),
+                ),
+                SizedBox(height: 15.h),
 
-                  // -> description
-                  Text(
-                    currentColumn.description,
+                // -> description
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.w),
+                  child: Text(
+                    currentColumn.column.description,
                     style: GoogleFonts.golosText(
-                      fontSize: 15.sp,
-                      height: 1.3.sp,
-                      color: theme.colorScheme.onSurfaceVariant,
+                      fontSize: 16.sp,
+                      color: theme.colorScheme.onSurface,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );

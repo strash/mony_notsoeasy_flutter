@@ -23,13 +23,18 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
 
     const String singleAccountId = "__single_account__";
     final Map<String, AccountModel> accounts = {};
-    if (viewModel.singleAccount != null) {
-      accounts[singleAccountId] =
-          await accountService.create(vo: viewModel.singleAccount!);
-    } else if (viewModel.accounts.isNotEmpty) {
-      for (final MapEntry(:key, :value) in viewModel.accounts.entries) {
-        if (value == null) throw Exception("Account can't be null");
-        accounts[key] = await accountService.create(vo: value);
+    final accountModel = ArgumentError.checkNotNull(
+      viewModel.steps.whereType<ImportModelAccount>().firstOrNull,
+    );
+    if (!accountModel.isFromData) {
+      accounts[singleAccountId] = await accountService.create(
+        vo: accountModel.accounts.value.first.account!,
+      );
+    } else {
+      for (final element in accountModel.accounts.value) {
+        accounts[element.originalTitle!] = await accountService.create(
+          vo: element.account!,
+        );
       }
     }
 
@@ -53,13 +58,13 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     // -> tags
 
     final Map<String, TagModel> tags = {};
-    if (viewModel.mappedColumns.any((e) => e.column == EImportColumn.tag)) {
+    if (viewModel.columns.any((e) => e.column == EImportColumn.tag)) {
       final Set<String> tagTitles = {};
-      final tagColumn = viewModel.mappedColumns
-          .singleWhere((e) => e.column == EImportColumn.tag);
+      final tagColumn =
+          viewModel.columns.singleWhere((e) => e.column == EImportColumn.tag);
       for (final element in viewModel.csv!.entries) {
-        if (element[tagColumn.entryKey] == null) continue;
-        tagTitles.add(element[tagColumn.entryKey]!);
+        if (element[tagColumn.value] == null) continue;
+        tagTitles.add(element[tagColumn.value]!);
       }
       for (final title in tagTitles) {
         final vo = TagVO(title: title);
@@ -70,23 +75,23 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     // -> transactions
 
     final List<TransactionModel> transactions = [];
-    final typeColumn = viewModel.mappedColumns
+    final typeColumn = viewModel.columns
         .where((e) => e.column == EImportColumn.transactionType)
         .firstOrNull;
     for (final element in viewModel.csv!.entries) {
       ETransactionType transactionType = ETransactionType.defaultValue;
       for (final MapEntry(:key, :value) in element.entries) {
         if (typeColumn != null &&
-            typeColumn.entryKey != null &&
-            key == typeColumn.entryKey) {
+            typeColumn.value != null &&
+            key == typeColumn.value) {
           if (value == viewModel.mappedTransactionTypeExpense) {
             transactionType = ETransactionType.expense;
           } else if (value == viewModel.mappedTransactionTypeIncome) {
             transactionType = ETransactionType.income;
           }
           break;
-        } else if ((typeColumn == null || typeColumn.entryKey == null) &&
-            viewModel.getColumn(key) == EImportColumn.amount) {
+        } else if ((typeColumn == null || typeColumn.value == null) &&
+            viewModel.columns.any((e) => e.column == EImportColumn.amount)) {
           final amount = double.parse(value);
           transactionType =
               amount < .0 ? ETransactionType.expense : ETransactionType.income;
@@ -94,11 +99,12 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
         }
       }
       final vo = _TransactionBuilder();
-      if (viewModel.singleAccount != null) {
-        vo.addAccountId(accounts[singleAccountId]!.id);
-      }
+      // if (viewModel.singleAccount != null) {
+      //   vo.addAccountId(accounts[singleAccountId]!.id);
+      // }
       for (final MapEntry(:key, :value) in element.entries) {
-        final column = viewModel.getColumn(key);
+        final column =
+            viewModel.columns.where((e) => e.value == key).firstOrNull?.column;
         switch (column) {
           case EImportColumn.amount:
             final amount = double.parse(value).abs();

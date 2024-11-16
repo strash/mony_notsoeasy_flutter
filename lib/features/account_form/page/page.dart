@@ -8,13 +8,13 @@ export "./view_model.dart";
 class AccountFormPage extends StatelessWidget {
   final double keyboardHeight;
   final AccountVO? account;
-  final Map<EAccountType, List<String>> titles;
+  final Map<EAccountType, List<String>> additionalUsedTitles;
 
   const AccountFormPage({
     super.key,
     required this.keyboardHeight,
     required this.account,
-    required this.titles,
+    required this.additionalUsedTitles,
   });
 
   @override
@@ -22,7 +22,7 @@ class AccountFormPage extends StatelessWidget {
     return AccountFormViewModelBuilder(
       keyboardHeight: keyboardHeight,
       account: account,
-      titles: titles,
+      additionalUsedTitles: additionalUsedTitles,
     );
   }
 }

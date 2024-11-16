@@ -1,3 +1,4 @@
+import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -18,15 +19,16 @@ class ImportMapAccountsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final singleAccount = viewModel.singleAccount;
-    final accounts = viewModel.accounts;
+    final onAccountPressed = viewModel<OnAccountButtonPressed>();
+    final accountModel = viewModel.currentStep;
+    if (accountModel is! ImportModelAccount) return const SizedBox();
     String description =
         "Нужно создать счет. К нему будут привязаны все транзакции. "
         "Позже можно будет создать другие счета.";
-    if (accounts.isNotEmpty) {
+    if (accountModel.isFromData) {
       description = "Я нашел ${viewModel.numberOfAccountsDescription}. "
-          "${accounts.length == 1 ? "Его" : "Их"} нужно дополнить информацией. "
-          "Это не займет много времени.";
+          "${accountModel.accounts.value.length == 1 ? "Его" : "Их"} "
+          "нужно дополнить информацией. Это быстро.";
     }
 
     return Column(
@@ -63,26 +65,39 @@ class ImportMapAccountsComponent extends StatelessWidget {
         SizedBox(height: 40.h),
 
         // -> accounts
-        if (accounts.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
-            child: SeparatedComponent(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              separatorBuilder: (context) => SizedBox(height: 10.h),
-              itemCount: accounts.length,
-              itemBuilder: (context, index) {
-                final accountEntry = accounts.entries.elementAt(index);
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          child: SeparatedComponent(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            separatorBuilder: (context) => SizedBox(height: 10.h),
+            itemCount: accountModel.accounts.value.length,
+            itemBuilder: (context, index) {
+              final accountEntry = accountModel.accounts.value.elementAt(index);
+              final account = accountEntry.account;
 
-                return AccountItemFromImportComponent(
-                  accountEntry: accountEntry,
-                );
-              },
-            ),
-          )
-
-        // -> single account
-        else
-          AccountItemLocalComponent(account: singleAccount),
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => onAccountPressed(context, accountEntry),
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: theme.colorScheme.surfaceContainer.withOpacity(0.5),
+                    shape: SmoothRectangleBorder(
+                      side: BorderSide(color: theme.colorScheme.outlineVariant),
+                      borderRadius: SmoothBorderRadius.all(
+                        SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
+                      ),
+                    ),
+                  ),
+                  child: account != null
+                      ? AccountSettedItemComponent(account: account)
+                      : AccountUnsettedItemComponent(
+                          title: accountEntry.originalTitle,
+                        ),
+                ),
+              );
+            },
+          ),
+        ),
       ],
     );
   }
