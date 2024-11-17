@@ -3,6 +3,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
+import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/components/components.dart";
 
@@ -18,7 +19,8 @@ class ImportMapTransactionTypePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final transactionsByType = viewModel.transactionsByType;
+    final typeModel = viewModel.currentStep;
+    if (typeModel is! ImportModelTransactionType) return const SizedBox();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -56,15 +58,15 @@ class ImportMapTransactionTypePage extends StatelessWidget {
         // -> table
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: TypesTableComponent(transactionsByType: transactionsByType),
+          child: TypesTableComponent(transactionsByType: typeModel.largest),
         ),
         SizedBox(height: 30.h),
 
         // -> select
         Center(
           child: TabGroupComponent(
-            values: ETypeDecision.values,
-            controller: viewModel.transactionTypeDecisionController,
+            values: ETransactionType.values,
+            controller: viewModel.transactionTypeController,
           ),
         ),
       ],

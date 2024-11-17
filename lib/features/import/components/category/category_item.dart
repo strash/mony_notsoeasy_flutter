@@ -10,7 +10,7 @@ import "package:mony_app/gen/assets.gen.dart";
 
 class ImportCategoryItemComponent extends StatelessWidget {
   final ETransactionType transactionType;
-  final TMappedCategory category;
+  final ImportModelCategoryVO category;
   final UseCase<Future<void>, TPressedCategoryValue> onTap;
   final UseCase<void, TPressedCategoryValue> onReset;
 
@@ -32,25 +32,27 @@ class ImportCategoryItemComponent extends StatelessWidget {
     final Color text = theme.colorScheme.onSurface;
     final String? icon;
     final String title;
-    if (category.linkedModel != null) {
-      final color = ex?.from(category.linkedModel!.colorName).color ??
-          theme.colorScheme.surfaceContainer;
-      bg = color.withOpacity(.25);
-      border = color;
-      icon = category.linkedModel!.icon;
-      title = category.linkedModel!.title;
-    } else if (category.vo != null) {
-      final color = ex?.from(EColorName.from(category.vo!.colorName)).color ??
-          theme.colorScheme.surfaceContainer;
-      bg = color.withOpacity(.25);
-      border = color;
-      icon = category.vo!.icon;
-      title = category.vo!.title;
-    } else {
-      bg = theme.colorScheme.surfaceContainer;
-      border = const Color(0x00FFFFFF);
-      icon = null;
-      title = category.title;
+    switch (category) {
+      case ImportModelCategoryVOModel(title: _, model: final model)
+          when model != null:
+        final color = ex?.from(model.colorName).color ??
+            theme.colorScheme.surfaceContainer;
+        bg = color.withOpacity(.25);
+        border = color;
+        icon = model.icon;
+        title = model.title;
+      case ImportModelCategoryVOVO(title: _, vo: final vo) when vo != null:
+        final color = ex?.from(EColorName.from(vo.colorName)).color ??
+            theme.colorScheme.surfaceContainer;
+        bg = color.withOpacity(.25);
+        border = color;
+        icon = vo.icon;
+        title = vo.title;
+      default:
+        bg = theme.colorScheme.surfaceContainer;
+        border = const Color(0x00FFFFFF);
+        icon = null;
+        title = category.title;
     }
 
     return GestureDetector(

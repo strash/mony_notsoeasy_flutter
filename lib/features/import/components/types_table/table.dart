@@ -2,67 +2,60 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
-import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/import/page/view_model.dart";
 
 class TypesTableComponent extends StatelessWidget {
-  final TTransactionsByType transactionsByType;
+  final ImportModelTransactionTypeVO transactionsByType;
 
   TypesTableComponent({
     super.key,
     required this.transactionsByType,
   }) : assert(
-          transactionsByType.entriesByType.isNotEmpty,
+          transactionsByType.entries.isNotEmpty,
           "Entries shouldn't be empty",
         );
 
-  List<MapEntry<EImportColumn, String>> _getFilteredEntries(
-    BuildContext context,
-    Map<String, String> entry,
+  List<MapEntry<ImportModelColumn, String>> _getFilteredEntries(
+    Map<ImportModelColumn, String> entry,
   ) {
-    final viewModel = context.viewModel<ImportViewModel>();
-    final List<MapEntry<EImportColumn, String>> entries = [];
-    for (final element in entry.entries) {
-      final column = viewModel.columns
-          .where((e) => e.value == element.key)
-          .firstOrNull
-          ?.column;
-      if (column == null ||
-          !column.isRequired && column != EImportColumn.transactionType) {
+    final List<MapEntry<ImportModelColumn, String>> entries = [];
+    for (final MapEntry(key: col, :value) in entry.entries) {
+      if (!col.column.isRequired &&
+          col.column != EImportColumn.transactionType) {
         continue;
       }
-      entries.add(MapEntry(column, element.value));
+      entries.add(MapEntry(col, value));
     }
     return entries;
   }
 
   Map<int, TableColumnWidth> _getColumnWidths(
-    List<MapEntry<EImportColumn, String>> entry,
+    List<MapEntry<ImportModelColumn, String>> entry,
   ) {
     final Map<int, TableColumnWidth> columnWidths = {};
-    for (final e in entry.indexed) {
+    for (final (index, MapEntry(:key)) in entry.indexed) {
       final double fraction;
-      if (e.$2.key == EImportColumn.date) {
+      if (key.column == EImportColumn.date) {
         fraction = 0.6;
-      } else if (e.$2.key == EImportColumn.amount) {
+      } else if (key.column == EImportColumn.amount) {
         fraction = 0.5;
-      } else if (e.$2.key == EImportColumn.transactionType) {
+      } else if (key.column == EImportColumn.transactionType) {
         fraction = 0.58;
       } else {
         fraction = 0.75;
       }
-      columnWidths[e.$1] = FlexColumnWidth(fraction);
+      columnWidths[index] = FlexColumnWidth(fraction);
     }
     return columnWidths;
   }
 
-  EdgeInsets _getPadding((int, MapEntry<EImportColumn, String>) e, int length) {
+  EdgeInsets _getPadding(int index, int length) {
     final hor = 7.w;
     final ver = 10.h;
     final EdgeInsets padding;
-    if (e.$1 == 0) {
+    if (index == 0) {
       padding = EdgeInsets.fromLTRB(0.w, ver, hor, ver);
-    } else if (e.$1 + 1 == length) {
+    } else if (index + 1 == length) {
       padding = EdgeInsets.fromLTRB(10.w, ver, hor, ver);
     } else {
       padding = EdgeInsets.symmetric(horizontal: hor, vertical: ver);
@@ -70,16 +63,16 @@ class TypesTableComponent extends StatelessWidget {
     return padding;
   }
 
-  String _getFormattedValue((int, MapEntry<EImportColumn, String>) entry) {
+  String _getFormattedValue(MapEntry<ImportModelColumn, String> entry) {
     final dateFormatter = DateFormat("dd-MM-yyyy");
     final amountFormatter = NumberFormat.compact();
     final String value;
-    if (entry.$2.key == EImportColumn.date) {
-      value = dateFormatter.format(DateTime.parse(entry.$2.value));
-    } else if (entry.$2.key == EImportColumn.amount) {
-      value = amountFormatter.format(double.parse(entry.$2.value));
+    if (entry.key.column == EImportColumn.date) {
+      value = dateFormatter.format(DateTime.parse(entry.value));
+    } else if (entry.key.column == EImportColumn.amount) {
+      value = amountFormatter.format(double.parse(entry.value));
     } else {
-      value = entry.$2.value;
+      value = entry.value;
     }
     return value;
   }
@@ -87,9 +80,10 @@ class TypesTableComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final filteredMappedEntries = transactionsByType.entriesByType
+    final filteredMappedEntries = transactionsByType.entries
         .take(5)
-        .map((e) => _getFilteredEntries(context, e));
+        .map(_getFilteredEntries)
+        .toList(growable: false);
 
     return Table(
       columnWidths: _getColumnWidths(filteredMappedEntries.first),
@@ -104,12 +98,12 @@ class TypesTableComponent extends StatelessWidget {
           children: filteredMappedEntries.first.indexed.map((e) {
             return TableCell(
               child: Padding(
-                padding: _getPadding(e, filteredMappedEntries.first.length),
+                padding: _getPadding(e.$1, filteredMappedEntries.first.length),
                 child: Text(
-                  e.$2.key.title,
+                  e.$2.key.column.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  textAlign: e.$2.key == EImportColumn.amount
+                  textAlign: e.$2.key.column == EImportColumn.amount
                       ? TextAlign.right
                       : TextAlign.left,
                   style: GoogleFonts.golosText(
@@ -134,12 +128,12 @@ class TypesTableComponent extends StatelessWidget {
             children: e.indexed.map((r) {
               return TableCell(
                 child: Padding(
-                  padding: _getPadding(r, e.length),
+                  padding: _getPadding(r.$1, e.length),
                   child: Text(
-                    _getFormattedValue(r),
+                    _getFormattedValue(r.$2),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    textAlign: r.$2.key == EImportColumn.amount
+                    textAlign: r.$2.key.column == EImportColumn.amount
                         ? TextAlign.right
                         : TextAlign.left,
                     style: GoogleFonts.golosText(

@@ -8,7 +8,7 @@ import "package:mony_app/features/import/page/view_model.dart";
 
 class ImportCategoryBlockComponent extends StatelessWidget {
   final ETransactionType transactionType;
-  final List<TMappedCategory> categories;
+  final List<ImportModelCategoryVO> categories;
   final UseCase<Future<void>, TPressedCategoryValue> onTap;
   final UseCase<void, TPressedCategoryValue> onReset;
 
@@ -26,7 +26,8 @@ class ImportCategoryBlockComponent extends StatelessWidget {
     final title =
         transactionType == ETransactionType.expense ? "расходов" : "доходов";
     final count = categories.fold<int>(0, (prev, e) {
-      final hasCategory = e.linkedModel != null || e.vo != null;
+      final hasCategory = e is ImportModelCategoryVOModel && e.model != null ||
+          e is ImportModelCategoryVOVO && e.vo != null;
       return prev + (hasCategory ? 1 : 0);
     });
 

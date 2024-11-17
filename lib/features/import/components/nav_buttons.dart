@@ -23,14 +23,6 @@ class NavigationButtonsComponent extends StatelessWidget {
         event is! ImportEventLoadingCsv &&
         event is! ImportEventErrorLoadingCsv &&
         event is! ImportEventValidatingMappedColumns;
-    final forwardEnabled = event is ImportEventMapTransactionType &&
-            viewModel.mappedTransactionTypeExpense != null &&
-            viewModel.mappedTransactionTypeIncome != null ||
-        event is ImportEventMapCategories &&
-            viewModel.mappedCategories.entries.every((e) {
-              return e.value
-                  .every((c) => c.vo != null || c.linkedModel != null);
-            });
 
     return Row(
       children: [

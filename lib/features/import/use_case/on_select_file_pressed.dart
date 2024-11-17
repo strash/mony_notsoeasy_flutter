@@ -21,7 +21,7 @@ final class OnSelectFilePressed extends UseCase<void, dynamic> {
           viewModel.steps = List<ImportModel>.from(viewModel.steps)..add(step);
           viewModel.currentStep = ImportModelColumn(
             column: EImportColumn.defaultValue,
-            value: null,
+            columnKey: null,
           );
         });
         subject.add(ImportEventMappingColumns());

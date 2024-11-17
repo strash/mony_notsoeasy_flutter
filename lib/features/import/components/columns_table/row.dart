@@ -20,7 +20,9 @@ class EntryListRowComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final column = viewModel.column(entry.key);
+    final column = viewModel.mappedColumns
+        .where((e) => e.columnKey == entry.key)
+        .firstOrNull;
     final activeColumn = viewModel.currentColumn;
     final onColumnSelected = viewModel<OnColumnSelected>();
 
@@ -77,11 +79,11 @@ class EntryListRowComponent extends StatelessWidget {
             // -> selection
             AnimatedOpacity(
               duration: Durations.short2,
-              opacity:
-                  (activeColumn != null && activeColumn.value == entry.key) ||
-                          (column?.value == entry.key)
-                      ? 1.0
-                      : 0.0,
+              opacity: (activeColumn != null &&
+                          activeColumn.columnKey == entry.key) ||
+                      (column?.columnKey == entry.key)
+                  ? 1.0
+                  : 0.0,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 3.h),
                 child: Row(
@@ -93,7 +95,7 @@ class EntryListRowComponent extends StatelessWidget {
                       child: TweenAnimationBuilder<Color?>(
                         tween: ColorTween(
                           begin: theme.colorScheme.secondary,
-                          end: column?.value == entry.key
+                          end: column?.columnKey == entry.key
                               ? theme.colorScheme.tertiary
                               : theme.colorScheme.secondary,
                         ),

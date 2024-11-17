@@ -1,10 +1,7 @@
 import "dart:math";
 
 import "package:flutter/material.dart";
-import "package:intl/intl.dart";
-import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/app/view_model/view_model.dart";
-import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/import/import.dart";
@@ -15,38 +12,10 @@ export "../use_case/use_case.dart";
 export "../validator/validator.dart";
 export "./model/model.dart";
 
-typedef TMappedColumn = ({EImportColumn column, String? entryKey});
-
-typedef TTransactionsByType = ({
-  List<Map<String, String>> entriesByType,
-  Set<String> types,
-});
-
-// either a model is linked to a category or a new vo is created
-typedef TMappedCategory = ({
-  String title,
-  CategoryModel? linkedModel,
-  CategoryVO? vo,
-});
-
 typedef TPressedCategoryValue = ({
   ETransactionType transactionType,
-  TMappedCategory category,
+  ImportModelCategoryVO category,
 });
-
-enum ETypeDecision implements IDescriptable {
-  isExpense,
-  isNotExpense,
-  ;
-
-  @override
-  String get description {
-    return switch (this) {
-      ETypeDecision.isExpense => "Это расходы",
-      ETypeDecision.isNotExpense => "Это доходы",
-    };
-  }
-}
 
 final class ImportViewModelBuilder extends StatefulWidget {
   const ImportViewModelBuilder({super.key});
@@ -58,7 +27,6 @@ final class ImportViewModelBuilder extends StatefulWidget {
 final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   final subject = BehaviorSubject<ImportEvent>.seeded(ImportEventInitial());
 
-  // model
   List<ImportModel> steps = const [];
   late ImportModel currentStep = ImportModelCsv(csv: null);
 
@@ -70,8 +38,6 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   final _totalProgress = 11;
   int additionalSteps = 0;
 
-  // csv entry
-
   ImportedCsvVO? get csv {
     final m = steps.whereType<ImportModelCsv>().firstOrNull;
     if (m == null || m.csv == null || m.csv!.entries.isEmpty) return null;
@@ -80,135 +46,36 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
 
   int currentEntryIndex = 0;
 
-  Map<String, String>? get currentEntry {
-    return csv?.entries.elementAtOrNull(currentEntryIndex);
-  }
-
   ImportModelColumn? get currentColumn {
     final col = currentStep;
     if (col is! ImportModelColumn) return null;
     return col;
   }
 
-  ImportModelColumn? column(String entryKey) {
-    return columns.where((e) => e.value == entryKey).firstOrNull;
-  }
-
-  List<ImportModelColumn> get columns {
+  List<ImportModelColumn> get mappedColumns {
     return steps.whereType<ImportModelColumn>().toList(growable: false);
   }
 
-  // for transaction type mapping
+  final transactionTypeController =
+      TabGroupController(ETransactionType.expense);
 
-  String? mappedTransactionTypeExpense;
-  String? mappedTransactionTypeIncome;
-
-  final transactionTypeDecisionController =
-      TabGroupController(ETypeDecision.isExpense);
-
-  void _transactionTypeDecisionListener() {
-    mapTransactionTypes();
+  void _transactionTypeListener() {
+    final typeModel = currentStep;
+    if (typeModel is! ImportModelTransactionType) {
+      throw ArgumentError.value(typeModel);
+    }
+    final value = transactionTypeController.value;
+    typeModel.remap(typeModel.largest.typeValue, value);
   }
 
-  bool get hasMappedTransactionTypeColumn {
-    return columns.any((e) {
-      return e.column == EImportColumn.transactionType && e.value != null;
-    });
-  }
-
-  TTransactionsByType get transactionsByType {
-    final entries = csv?.entries;
-    if (entries == null) {
-      return (entriesByType: const [], types: const {}) as TTransactionsByType;
-    }
-    // we know there is only two or less types
-    final Set<String> types = {};
-    final typeColumn = columns
-        .where((e) => e.column == EImportColumn.transactionType)
-        .firstOrNull;
-    if (typeColumn == null) {
-      return (entriesByType: const [], types: types) as TTransactionsByType;
-    }
-    for (final element in entries) {
-      types.add(element[typeColumn.value]!);
-      if (types.length == 2) break;
-    }
-    if (types.isEmpty) {
-      throw ArgumentError.value(
-        types,
-        "get transactionTypes",
-        "Transaction types shouldn't be empty. There must be at least on type",
-      );
-    }
-    final one = entries
-        .where((e) => e[typeColumn.value]! == types.elementAt(0))
-        .toList(growable: false);
-    final two = types.length > 1
-        ? entries
-            .where((e) => e[typeColumn.value]! == types.elementAt(1))
-            .toList(growable: false)
-        : const <Map<String, String>>[];
-    return (entriesByType: one.length >= two.length ? one : two, types: types);
-  }
-
-  void mapTransactionTypes() {
-    final transactionsByType = this.transactionsByType;
-    final showedType = transactionsByType.entriesByType.first.entries
-        .where((e) {
-          return columns.any((c) => c.column == EImportColumn.transactionType);
-        })
-        .first
-        .value;
-    // final showedType = transactionsByType.entriesByType.first.entries
-    //     .where((e) => currentColumn(e.key) == EImportColumn.transactionType)
-    //     .first
-    //     .value;
-    String otherType = "__other_transaction_type__";
-    for (final type in transactionsByType.types) {
-      if (type != showedType) {
-        otherType = type;
-        break;
-      }
-    }
-    setState(() {
-      switch (transactionTypeDecisionController.value) {
-        case ETypeDecision.isExpense:
-          mappedTransactionTypeExpense = showedType;
-          mappedTransactionTypeIncome = otherType;
-        case ETypeDecision.isNotExpense:
-          mappedTransactionTypeExpense = otherType;
-          mappedTransactionTypeIncome = showedType;
-      }
-    });
-  }
-
-  // for categories mapping
-
-  final Map<ETransactionType, List<CategoryModel>> categoryModels = {
+  Map<ETransactionType, List<CategoryModel>> categoryModels = {
     for (final value in ETransactionType.values) value: const [],
   };
-
-  final Map<ETransactionType, List<TMappedCategory>> mappedCategories = {
-    for (final value in ETransactionType.values) value: const [],
-  };
-
-  String get numberOfCategoriesDescription {
-    final count = mappedCategories.entries
-        .fold<int>(0, (prev, curr) => prev + curr.value.length);
-    final formatter = NumberFormat.decimalPattern();
-    final formatted = formatter.format(count);
-    return switch (count.wordCaseHint) {
-      EWordCaseHint.nominative => "$formatted категория",
-      EWordCaseHint.genitive => "$formatted категории",
-      EWordCaseHint.accusative => "$formatted категорий",
-    };
-  }
 
   @override
   void initState() {
     super.initState();
-    transactionTypeDecisionController
-        .addListener(_transactionTypeDecisionListener);
+    transactionTypeController.addListener(_transactionTypeListener);
   }
 
   @override
@@ -218,9 +85,8 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
     steps.length = 0;
     currentStep.dispose();
     subject.close();
-    transactionTypeDecisionController
-        .removeListener(_transactionTypeDecisionListener);
-    transactionTypeDecisionController.dispose();
+    transactionTypeController.removeListener(_transactionTypeListener);
+    transactionTypeController.dispose();
     super.dispose();
   }
 

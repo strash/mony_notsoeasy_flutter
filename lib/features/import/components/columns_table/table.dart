@@ -20,7 +20,8 @@ class EntryListComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final entry = viewModel.currentEntry;
+    final entry =
+        viewModel.csv?.entries.elementAtOrNull(viewModel.currentEntryIndex);
 
     if (entry == null) return const SizedBox();
 

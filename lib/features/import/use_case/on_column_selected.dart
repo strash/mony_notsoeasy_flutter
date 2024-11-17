@@ -11,8 +11,9 @@ final class OnColumnSelected extends UseCase<void, String> {
     final column = viewModel.currentColumn;
     if (column == null) throw ArgumentError.notNull();
 
-    final newValue = column.value == entryKey ? null : entryKey;
-    if (newValue == null || viewModel.columns.any((e) => e.value == newValue)) {
+    final newValue = column.columnKey == entryKey ? null : entryKey;
+    if (newValue == null ||
+        viewModel.mappedColumns.any((e) => e.columnKey == newValue)) {
       return;
     }
 

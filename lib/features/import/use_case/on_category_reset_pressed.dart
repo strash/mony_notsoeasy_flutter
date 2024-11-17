@@ -9,20 +9,21 @@ final class OnCategoryResetPressed
   void call(BuildContext context, [TPressedCategoryValue? value]) {
     if (value == null) throw ArgumentError.notNull();
     final viewModel = context.viewModel<ImportViewModel>();
-    final categories = viewModel.mappedCategories[value.transactionType];
-    if (categories == null) return;
-    final index = categories.indexOf(value.category);
-    if (index == -1) return;
-    viewModel.setProtectedState(() {
-      final TMappedCategory category = (
-        title: value.category.title,
-        linkedModel: null,
-        vo: null,
-      );
-      viewModel.mappedCategories[value.transactionType] =
-          List<TMappedCategory>.from(categories)
-            ..removeAt(index)
-            ..insert(index, category);
-    });
+    // FIXME
+    // final categories = viewModel.mappedCategories[value.transactionType];
+    // if (categories == null) return;
+    // final index = categories.indexOf(value.category);
+    // if (index == -1) return;
+    // viewModel.setProtectedState(() {
+    //   final TMappedCategory category = (
+    //     title: value.category.title,
+    //     linkedModel: null,
+    //     vo: null,
+    //   );
+    //   viewModel.mappedCategories[value.transactionType] =
+    //       List<TMappedCategory>.from(categories)
+    //         ..removeAt(index)
+    //         ..insert(index, category);
+    // });
   }
 }

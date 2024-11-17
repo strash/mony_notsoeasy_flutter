@@ -16,8 +16,8 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       if (csv == null) throw ArgumentError.notNull();
       subject.add(ImportEventValidatingMappedColumns());
       final validation = ImportModelColumnValidation(
-        csv: csv,
-        columns: viewModel.columns,
+        csvModel: csv,
+        columns: viewModel.mappedColumns,
       );
       viewModel.setProtectedState(() {
         viewModel.steps = List<ImportModel>.from(viewModel.steps)
@@ -34,7 +34,8 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       viewModel.setProtectedState(() {
         viewModel.steps = List<ImportModel>.from(viewModel.steps)
           ..add(currentColumn);
-        viewModel.currentStep = ImportModelColumn(column: nextCol, value: null);
+        viewModel.currentStep =
+            ImportModelColumn(column: nextCol, columnKey: null);
       });
     }
   }
@@ -56,7 +57,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       return e.column == EImportColumn.account;
     }).firstOrNull;
     // single required account
-    if (accountColumn == null || accountColumn.value == null) {
+    if (accountColumn == null || accountColumn.columnKey == null) {
       viewModel.setProtectedState(() {
         accountModel.accounts = [
           ImportModelAccountVO(originalTitle: null, account: null),
@@ -65,10 +66,10 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       // accounts from the data
     } else {
       final Set<String> accounts = {};
-      for (final element in validation.csv.csv!.entries) {
-        final value = element[accountColumn.value!];
-        if (value == null) continue;
-        accounts.add(value);
+      for (final element in validation.mappedEntries) {
+        for (final MapEntry(:key, :value) in element.entries) {
+          if (key.column == EImportColumn.account) accounts.add(value);
+        }
       }
       viewModel.setProtectedState(() {
         accountModel.accounts = accounts.map((e) {
@@ -78,17 +79,30 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     }
   }
 
-  // TODO: pick up from here
   void _onAccountsMapped(
     ImportViewModel viewModel,
     DomainCategoryService categoryService,
   ) {
-    if (viewModel.hasMappedTransactionTypeColumn) {
+    final accountModel = viewModel.currentStep;
+    if (accountModel is! ImportModelAccount) {
+      throw ArgumentError.value(accountModel);
+    }
+    final validation =
+        viewModel.steps.whereType<ImportModelColumnValidation>().firstOrNull;
+    if (validation == null) throw ArgumentError.notNull();
+    final hasMappedTransactionType = validation.mappedColumns
+        .any((e) => e.column == EImportColumn.transactionType);
+    final typeModel = ImportModelTransactionType(validation: validation);
+    // NOTE: setting type model anyway
+    viewModel.setProtectedState(() {
+      viewModel.steps = List<ImportModel>.from(viewModel.steps)
+        ..add(accountModel);
+      viewModel.currentStep = typeModel;
+    });
+    if (hasMappedTransactionType) {
+      typeModel.remap(typeModel.largest.typeValue, ETransactionType.expense);
       viewModel.subject.add(ImportEventMapTransactionType());
-      viewModel.setProtectedState(() {
-        viewModel.additionalSteps++;
-      });
-      viewModel.mapTransactionTypes();
+      viewModel.setProtectedState(() => viewModel.additionalSteps++);
     } else {
       _onTransactionTypesMapped(viewModel, categoryService);
     }
@@ -98,63 +112,25 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     ImportViewModel viewModel,
     DomainCategoryService categoryService,
   ) async {
-    // group imported categories
-    final implyTypeFromAmount = viewModel.mappedTransactionTypeExpense == null;
-    final Set<String> importExp = {};
-    final Set<String> importInc = {};
-    final csv = viewModel.csv;
-    if (csv == null) throw ArgumentError.notNull();
-    for (final e in csv.entries) {
-      String amount = "";
-      String category = "";
-      String? transactionType;
-      for (final element in e.entries) {
-        final column = viewModel.columns
-            .where((e) => e.value == element.key)
-            .firstOrNull
-            ?.column;
-        switch (column) {
-          case EImportColumn.category:
-            category = element.value;
-          case EImportColumn.amount:
-            amount = element.value;
-          case EImportColumn.transactionType:
-            transactionType = element.value;
-          default:
-            continue;
-        }
-      }
-      if (implyTypeFromAmount) {
-        if (double.parse(amount) < .0) {
-          importExp.add(category);
-        } else {
-          importInc.add(category);
-        }
-      } else {
-        if (transactionType == viewModel.mappedTransactionTypeExpense) {
-          importExp.add(category);
-        } else {
-          importInc.add(category);
-        }
-      }
+    final typeModel = viewModel.currentStep;
+    if (typeModel is! ImportModelTransactionType) {
+      throw ArgumentError.value(typeModel);
     }
-    viewModel.setProtectedState(() {
-      viewModel.mappedCategories[ETransactionType.expense] = importExp.map((e) {
-        return (title: e, linkedModel: null, vo: null);
-      }).toList();
-      viewModel.mappedCategories[ETransactionType.income] = importInc.map((e) {
-        return (title: e, linkedModel: null, vo: null);
-      }).toList();
-    });
+    final categoryModel = ImportModelCategory(typeModel: typeModel);
     // load built-in categories
-    final exp =
-        await categoryService.getAll(transactionType: ETransactionType.expense);
-    final inc =
-        await categoryService.getAll(transactionType: ETransactionType.income);
+    final categories = await Future.wait(
+      ETransactionType.values.map((e) {
+        return categoryService.getAll(transactionType: e);
+      }),
+    );
     viewModel.subject.add(ImportEventMapCategories());
     viewModel.setProtectedState(() {
-      viewModel.categoryModels[ETransactionType.expense] = exp;
-      viewModel.categoryModels[ETransactionType.income] = inc;
+      viewModel.steps = List<ImportModel>.from(viewModel.steps)..add(typeModel);
+      viewModel.currentStep = categoryModel;
+      viewModel.categoryModels = {
+        for (final (index, value) in ETransactionType.values.indexed)
+          value: categories.elementAt(index),
+      };
     });
   }
 
@@ -185,6 +161,5 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
             ImportEventToDb():
         break;
     }
-    print(viewModel.steps);
   }
 }

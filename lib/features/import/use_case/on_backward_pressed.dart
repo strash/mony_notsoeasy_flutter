@@ -18,43 +18,43 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
             ImportEventToDb():
         return;
       case ImportEventMappingColumns():
-        _removeLastStep(viewModel);
+        _stepBack(viewModel);
         if (viewModel.currentStep is ImportModelCsv) {
           subject.add(ImportEventInitial());
         }
       case ImportEventValidatingMappedColumns() ||
             ImportEventErrorMappingColumns() ||
             ImportEventMappingColumnsValidated():
-        _removeLastStep(viewModel);
+        _stepBack(viewModel);
         subject.add(ImportEventMappingColumns());
       case ImportEventMapAccounts():
-        _removeLastStep(viewModel);
+        _stepBack(viewModel);
         subject.add(ImportEventMappingColumnsValidated());
       case ImportEventMapTransactionType():
-        _removeLastStep(viewModel);
+        _stepBack(viewModel);
         subject.add(ImportEventMapAccounts());
         viewModel.setProtectedState(() {
           viewModel.additionalSteps--;
-          viewModel.mappedTransactionTypeExpense = null;
-          viewModel.mappedTransactionTypeIncome = null;
-          viewModel.transactionTypeDecisionController.value =
-              ETypeDecision.isExpense;
+          viewModel.transactionTypeController.value = ETransactionType.expense;
         });
       case ImportEventMapCategories():
-        if (viewModel.hasMappedTransactionTypeColumn) {
+        final validation = viewModel.steps
+            .whereType<ImportModelColumnValidation>()
+            .firstOrNull;
+        if (validation == null) throw ArgumentError.notNull();
+        if (validation.mappedColumns
+            .any((e) => e.column == EImportColumn.transactionType)) {
+          _stepBack(viewModel);
           subject.add(ImportEventMapTransactionType());
         } else {
+          _stepBack(viewModel);
+          _stepBack(viewModel);
           subject.add(ImportEventMapAccounts());
         }
-        viewModel.setProtectedState(() {
-          viewModel.mappedCategories[ETransactionType.expense] = const [];
-          viewModel.mappedCategories[ETransactionType.income] = const [];
-        });
     }
-    print(viewModel.steps);
   }
 
-  void _removeLastStep(ImportViewModel viewModel) {
+  void _stepBack(ImportViewModel viewModel) {
     if (viewModel.steps.lastOrNull == null) return;
     viewModel.setProtectedState(() {
       viewModel.currentStep.dispose();
