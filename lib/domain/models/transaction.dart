@@ -16,18 +16,24 @@ enum ETransactionType implements IDescriptable {
 
   const ETransactionType({required this.value});
 
-  static ETransactionType get defaultValue => ETransactionType.expense;
+  static ETransactionType get defaultValue => expense;
 
   static ETransactionType from(String type) {
-    return ETransactionType.values.where((e) => e.value == type).firstOrNull ??
-        defaultValue;
+    return values.where((e) => e.value == type).firstOrNull ?? defaultValue;
+  }
+
+  ETransactionType get toggle {
+    return switch (this) {
+      expense => income,
+      income => expense,
+    };
   }
 
   @override
   String get description {
     return switch (this) {
-      ETransactionType.expense => "Расход",
-      ETransactionType.income => "Доход",
+      expense => "Расход",
+      income => "Доход",
     };
   }
 }
@@ -63,7 +69,7 @@ extension TransactionModelListEx on List<TransactionModel> {
     // transform transactions to the list of transactions and sections
     final feed = foldValue<List<FeedItem>>(init, (prev, curr) {
       final transaction = FeedItemTransaction(transaction: curr);
-      if (prev.date.isSameDateAs(curr.date)) return [transaction];
+      if (prev?.date.isSameDateAs(curr.date) ?? false) return [transaction];
       final section = FeedItemSection(date: curr.date, total: {});
       return <FeedItem>[section, transaction];
     });
