@@ -3,9 +3,8 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
-import "package:mony_app/features/import/components/category/category_block.dart";
+import "package:mony_app/features/import/components/category/category_section.dart";
 
 class ImportMapCategoriesPage extends StatelessWidget {
   final ImportEvent? event;
@@ -23,9 +22,8 @@ class ImportMapCategoriesPage extends StatelessWidget {
     if (categoryModel is! ImportModelCategory) {
       throw ArgumentError.value(categoryModel);
     }
-    final categories = categoryModel.mappedCategories;
     final onCategoryPressed = viewModel<OnCategoryButtonPressed>();
-    final onCategoryReseted = viewModel<OnCategoryResetPressed>();
+    final onCategoryResetPressed = viewModel<OnCategoryResetPressed>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -63,19 +61,25 @@ class ImportMapCategoriesPage extends StatelessWidget {
         SizedBox(height: 40.h),
 
         // -> categories
-        SeparatedComponent(
-          itemCount: categories.entries.where((e) => e.value.isNotEmpty).length,
-          separatorBuilder: (context) => SizedBox(height: 30.h),
-          itemBuilder: (context, index) {
-            final MapEntry(key: type, value: list) = categories.entries
-                .where((e) => e.value.isNotEmpty)
-                .elementAt(index);
+        ValueListenableBuilder(
+          valueListenable: categoryModel.mappedCategories,
+          builder: (context, categories, child) {
+            final notEmptyCategories =
+                categories.entries.where((e) => e.value.isNotEmpty);
+            return SeparatedComponent(
+              itemCount: notEmptyCategories.length,
+              separatorBuilder: (context) => SizedBox(height: 30.h),
+              itemBuilder: (context, index) {
+                final MapEntry(key: type, value: list) =
+                    notEmptyCategories.elementAt(index);
 
-            return ImportCategoryBlockComponent(
-              transactionType: type.type,
-              categories: list,
-              onTap: onCategoryPressed,
-              onReset: onCategoryReseted,
+                return ImportCategorySectionComponent(
+                  transactionType: type.transactionType,
+                  categories: list,
+                  onTap: onCategoryPressed,
+                  onReset: onCategoryResetPressed,
+                );
+              },
             );
           },
         ),

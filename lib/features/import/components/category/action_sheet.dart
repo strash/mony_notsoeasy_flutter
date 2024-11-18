@@ -2,12 +2,28 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/app/app.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-enum EImportCategoryMenuAction { link, create }
+enum EImportCategoryMenuAction implements IDescriptable {
+  link,
+  create,
+  ;
+
+  @override
+  String get description => switch (this) {
+        EImportCategoryMenuAction.link => "Привязать",
+        EImportCategoryMenuAction.create => "Дополнить",
+      };
+}
 
 class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
   const ImportCategoryActionBottomSheetComponent({super.key});
+
+  void _pop(BuildContext context, EImportCategoryMenuAction action) {
+    return Navigator.of(context).pop<EImportCategoryMenuAction>(action);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,33 +96,19 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
           SizedBox(height: 40.w),
 
           // -> actions
-          Row(
-            children: [
-              // -> button link
-              Expanded(
+          SeparatedComponent(
+            direction: Axis.horizontal,
+            itemCount: EImportCategoryMenuAction.values.length,
+            separatorBuilder: (context) => SizedBox(width: 10.w),
+            itemBuilder: (context, index) {
+              final item = EImportCategoryMenuAction.values.elementAt(index);
+              return Expanded(
                 child: FilledButton(
-                  onPressed: () {
-                    Navigator.of(context).pop<EImportCategoryMenuAction>(
-                      EImportCategoryMenuAction.link,
-                    );
-                  },
-                  child: const Text("Привязать"),
+                  onPressed: () => _pop(context, item),
+                  child: Text(item.description),
                 ),
-              ),
-              SizedBox(width: 10.w),
-
-              // -> button create
-              Expanded(
-                child: FilledButton(
-                  onPressed: () {
-                    Navigator.of(context).pop<EImportCategoryMenuAction>(
-                      EImportCategoryMenuAction.create,
-                    );
-                  },
-                  child: const Text("Дополнить"),
-                ),
-              ),
-            ],
+              );
+            },
           ),
         ],
       ),

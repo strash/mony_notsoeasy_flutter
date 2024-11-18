@@ -4,26 +4,26 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/features/import/page/view_model.dart";
 
 final class OnCategoryResetPressed
-    extends UseCase<void, TPressedCategoryValue> {
+    extends UseCase<void, ImportModelCategoryVO> {
   @override
-  void call(BuildContext context, [TPressedCategoryValue? value]) {
+  void call(BuildContext context, [ImportModelCategoryVO? value]) {
     if (value == null) throw ArgumentError.notNull();
+
     final viewModel = context.viewModel<ImportViewModel>();
-    // FIXME
-    // final categories = viewModel.mappedCategories[value.transactionType];
-    // if (categories == null) return;
-    // final index = categories.indexOf(value.category);
-    // if (index == -1) return;
-    // viewModel.setProtectedState(() {
-    //   final TMappedCategory category = (
-    //     title: value.category.title,
-    //     linkedModel: null,
-    //     vo: null,
-    //   );
-    //   viewModel.mappedCategories[value.transactionType] =
-    //       List<TMappedCategory>.from(categories)
-    //         ..removeAt(index)
-    //         ..insert(index, category);
-    // });
+    final categoryModel = viewModel.currentStep;
+    if (categoryModel is! ImportModelCategory) {
+      throw ArgumentError.value(categoryModel);
+    }
+
+    categoryModel.remap(
+      switch (value) {
+        ImportModelCategoryVOEmpty() => value,
+        final ImportModelCategoryVOModel item => item.toEmpty(),
+        final ImportModelCategoryVOVO item => item.toEmpty(),
+      },
+    );
+
+    // NOTE: trigger the step navigation to check if model is ready
+    viewModel.setProtectedState(() {});
   }
 }

@@ -1,8 +1,8 @@
 export "./account/setted.dart";
 export "./account/unsetted.dart";
 export "./category/action_sheet.dart";
-export "./category/category_block.dart";
 export "./category/category_item.dart";
+export "./category/category_section.dart";
 export "./category/select_category_sheet.dart";
 export "./columns_table/header.dart";
 export "./columns_table/row.dart";

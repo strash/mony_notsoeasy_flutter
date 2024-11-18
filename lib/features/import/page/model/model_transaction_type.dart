@@ -40,7 +40,7 @@ final class ImportModelTransactionType extends ImportModel {
         (e) {
           return ImportModelTransactionTypeVO(
             typeValue: e.name,
-            type: e,
+            transactionType: e,
             entries: validation.mappedEntries.where((entry) {
               return (e == ETransactionType.expense &&
                       entry.entries.any(
@@ -79,7 +79,7 @@ final class ImportModelTransactionType extends ImportModel {
           return ImportModelTransactionTypeVO(
             entries: (e.$1 == 0 ? one : two).toList(growable: false),
             typeValue: types.elementAtOrNull(e.$1) ?? otherType,
-            type: e.$2,
+            transactionType: e.$2,
           );
         },
       ).toList(growable: false);
@@ -96,19 +96,19 @@ final class ImportModelTransactionType extends ImportModel {
 final class ImportModelTransactionTypeVO {
   final String typeValue;
   final List<Map<ImportModelColumn, String>> entries;
-  final ETransactionType type;
+  final ETransactionType transactionType;
 
   ImportModelTransactionTypeVO({
     required this.typeValue,
     required this.entries,
-    required this.type,
+    required this.transactionType,
   });
 
   ImportModelTransactionTypeVO copyWith({required ETransactionType type}) {
     return ImportModelTransactionTypeVO(
       typeValue: typeValue,
       entries: entries,
-      type: type,
+      transactionType: type,
     );
   }
 }

@@ -63,12 +63,12 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
         // -> validation results
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
-          child: ListenableBuilder(
-            listenable: validation.results,
-            builder: (context, child) {
+          child: ValueListenableBuilder(
+            valueListenable: validation.results,
+            builder: (context, results, child) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: validation.results.value.map((e) {
+                children: results.map((e) {
                   return TweenAnimationBuilder<double>(
                     tween: Tween<double>(begin: 0.0, end: 1.0),
                     duration: Durations.short4,

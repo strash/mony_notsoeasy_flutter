@@ -11,8 +11,8 @@ import "package:mony_app/gen/assets.gen.dart";
 class ImportCategoryItemComponent extends StatelessWidget {
   final ETransactionType transactionType;
   final ImportModelCategoryVO category;
-  final UseCase<Future<void>, TPressedCategoryValue> onTap;
-  final UseCase<void, TPressedCategoryValue> onReset;
+  final UseCase<Future<void>, ImportModelCategoryVO> onTap;
+  final UseCase<void, ImportModelCategoryVO> onReset;
 
   const ImportCategoryItemComponent({
     super.key,
@@ -26,22 +26,20 @@ class ImportCategoryItemComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-    final value = (transactionType: transactionType, category: category);
     final Color bg;
     final Color border;
     final Color text = theme.colorScheme.onSurface;
     final String? icon;
     final String title;
     switch (category) {
-      case ImportModelCategoryVOModel(title: _, model: final model)
-          when model != null:
+      case ImportModelCategoryVOModel(model: final model):
         final color = ex?.from(model.colorName).color ??
             theme.colorScheme.surfaceContainer;
         bg = color.withOpacity(.25);
         border = color;
         icon = model.icon;
         title = model.title;
-      case ImportModelCategoryVOVO(title: _, vo: final vo) when vo != null:
+      case ImportModelCategoryVOVO(vo: final vo):
         final color = ex?.from(EColorName.from(vo.colorName)).color ??
             theme.colorScheme.surfaceContainer;
         bg = color.withOpacity(.25);
@@ -50,14 +48,14 @@ class ImportCategoryItemComponent extends StatelessWidget {
         title = vo.title;
       default:
         bg = theme.colorScheme.surfaceContainer;
-        border = const Color(0x00FFFFFF);
+        border = theme.colorScheme.surfaceContainer;
         icon = null;
-        title = category.title;
+        title = category.originalTitle;
     }
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => onTap(context, value),
+      onTap: () => onTap(context, category),
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: bg,
@@ -109,7 +107,7 @@ class ImportCategoryItemComponent extends StatelessWidget {
               if (icon != null)
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: () => onReset(context, value),
+                  onTap: () => onReset(context, category),
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(5.w, 6.h, 10.w, 6.h),
                     child: SvgPicture.asset(
