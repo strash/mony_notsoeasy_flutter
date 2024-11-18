@@ -6,7 +6,7 @@ extension ListEx<T extends Object?> on List<T> {
     V result = initialValue;
     for (var index = 0; index < length; index++) {
       final current = elementAt(index);
-      final previous = index > 0 ? elementAt(index) : null;
+      final previous = index > 0 ? elementAt(index - 1) : null;
       switch ((result, combine(previous, current))) {
         case (final int res, final int comb):
           result = (res + comb) as V;
@@ -33,7 +33,7 @@ extension IndexedIterableEx<T extends Object?> on Iterable<(int, T)> {
     final it = iterator;
     while (it.moveNext()) {
       final (index, e) = it.current;
-      final previous = index > 0 ? elementAt(index) : null;
+      final previous = index > 0 ? elementAt(index - 1) : null;
       switch ((result, combine(previous, it.current))) {
         case (final int res, final int comb):
           result = (res + comb) as V;
