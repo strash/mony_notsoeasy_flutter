@@ -134,6 +134,20 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     });
   }
 
+  void _onCategoriesMapped(BuildContext context) {
+    final viewModel = context.viewModel<ImportViewModel>();
+    final categoryModel = viewModel.currentStep;
+    if (categoryModel is! ImportModelCategory) {
+      throw ArgumentError.value(categoryModel);
+    }
+    viewModel.subject.add(ImportEventToDb());
+    viewModel.setProtectedState(() {
+      viewModel.steps = List<ImportModel>.from(viewModel.steps)
+        ..add(categoryModel);
+    });
+    viewModel<OnDoneMapping>().call(context);
+  }
+
   @override
   Future<void> call(BuildContext context, [ImportEvent? event]) async {
     if (event == null) throw ArgumentError.notNull();
@@ -151,8 +165,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
           context.read<DomainCategoryService>(),
         );
       case ImportEventMapCategories():
-        viewModel.subject.add(ImportEventToDb());
-        viewModel<OnDoneMapping>().call(context);
+        _onCategoriesMapped(context);
       case ImportEventInitial() ||
             ImportEventLoadingCsv() ||
             ImportEventErrorLoadingCsv() ||

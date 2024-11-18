@@ -28,6 +28,7 @@ final class _Impl
   }) async {
     return resolve(() async {
       final db = await database.db;
+      // FIXME: don't join tables and remove title
       final maps = await db.rawQuery(
         """
 SELECT
@@ -57,7 +58,7 @@ WHERE et.transaction_id = ?;
       final db = await database.db;
       await db.insert(
         table,
-        dto.toJson()..remove("title"),
+        dto.toJson(),
         conflictAlgorithm: ConflictAlgorithm.rollback,
       );
     });

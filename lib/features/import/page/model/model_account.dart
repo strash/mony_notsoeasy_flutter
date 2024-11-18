@@ -3,7 +3,9 @@ part of "./base_model.dart";
 final class ImportModelAccount extends ImportModel {
   List<ImportModelAccountVO> accounts = const [];
 
-  bool get isFromData => accounts.every((e) => e.originalTitle != null);
+  bool get isFromData {
+    return accounts.every((e) => e.originalTitle != null);
+  }
 
   String get numberOfAccountsDescription {
     final count = accounts.length;
@@ -41,7 +43,6 @@ final class ImportModelAccount extends ImportModel {
     final singleValid = accounts.every((e) {
       return e.account != null && e.originalTitle == null;
     });
-
     return accounts.isNotEmpty && (allFromDataValid || singleValid);
   }
 

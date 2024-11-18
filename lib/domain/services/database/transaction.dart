@@ -146,15 +146,14 @@ final class DomainTransactionService extends BaseDatabaseService {
     await _transactionRepo.create(dto: dto);
     final List<TransactionTagDto> transactionTagDtos = [];
     Future.wait<void>(
-      vo.tags.map<Future<void>>((e) {
+      vo.tagIds.map<Future<void>>((e) {
         final tagDefaultColumns = newDefaultColumns;
         final tagDto = TransactionTagDto(
           id: tagDefaultColumns.id,
           created: tagDefaultColumns.now.toUtc().toIso8601String(),
           updated: tagDefaultColumns.now.toUtc().toIso8601String(),
           transactionId: dto.id,
-          tagId: e.tagId,
-          title: e.title,
+          tagId: e,
         );
         transactionTagDtos.add(tagDto);
         return _transactionTagRepo.create(dto: tagDto);
@@ -228,7 +227,6 @@ final class DomainTransactionService extends BaseDatabaseService {
           updated: tagDefaultColumns.now.toUtc().toIso8601String(),
           transactionId: transaction.id,
           tagId: e.id,
-          title: e.title,
         );
         transactionTagDtos.add(tagDto);
         return _transactionTagRepo.create(dto: tagDto);

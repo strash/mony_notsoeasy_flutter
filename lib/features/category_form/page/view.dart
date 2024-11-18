@@ -44,11 +44,17 @@ class CategoryFormView extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // -> color picker
+                    NamedColorPickerComponent(
+                      controller: viewModel.colorController,
+                    ),
+                    SizedBox(width: 10.w),
+
                     // -> emoji
                     EmojiPickerComponent(
                       controller: viewModel.emojiController,
                     ),
-                    const RSizedBox(width: 10.0),
+                    SizedBox(width: 10.w),
 
                     // -> title
                     Expanded(
@@ -74,12 +80,6 @@ class CategoryFormView extends StatelessWidget {
                           counterText: "",
                         ),
                       ),
-                    ),
-                    const RSizedBox(width: 10.0),
-
-                    // -> color picker
-                    NamedColorPickerComponent(
-                      controller: viewModel.colorController,
                     ),
                   ],
                 ),

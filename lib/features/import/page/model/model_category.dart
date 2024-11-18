@@ -46,7 +46,7 @@ final class ImportModelCategory extends ImportModel {
     };
   }
 
-  List<String> titles(ImportModelCategoryVOVO category) {
+  List<String> getTitles(ImportModelCategoryVOVO category) {
     for (final MapEntry(key: type, value: list)
         in mappedCategories.value.entries) {
       if (type.transactionType == category.transactionType) {

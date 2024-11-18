@@ -19,139 +19,120 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     final transactionService = context.read<DomainTransactionService>();
     final appService = context.viewModel<AppEventService>();
 
+    final csvModel = ArgumentError.checkNotNull(viewModel.csv);
+
     // -> accounts
 
-    const String singleAccountId = "__single_account__";
-    final Map<String, AccountModel> accounts = {};
+    const singlAccountKey = "__single_account__";
     final accountModel = ArgumentError.checkNotNull(
       viewModel.steps.whereType<ImportModelAccount>().firstOrNull,
     );
-    if (!accountModel.isFromData) {
-      if (accountModel.accounts.isEmpty ||
-          accountModel.accounts.first.account == null) {
-        throw ArgumentError.value(accountModel.accounts);
-      }
-      accounts[singleAccountId] = await accountService.create(
-        vo: accountModel.accounts.first.account!,
-      );
-    } else {
-      for (final element in accountModel.accounts) {
-        accounts[element.originalTitle!] = await accountService.create(
-          vo: element.account!,
-        );
-      }
-    }
+    final Map<String, AccountModel> accounts = Map.fromEntries(
+      await Future.wait<MapEntry<String, AccountModel>>(
+        accountModel.accounts.where((e) => e.account != null).map((e) async {
+          final account = await accountService.create(vo: e.account!);
+          return Future.value(
+            MapEntry(e.originalTitle ?? singlAccountKey, account),
+          );
+        }),
+      ),
+    );
 
     // -> categories
 
+    final categoryModel = ArgumentError.checkNotNull(
+      viewModel.steps.whereType<ImportModelCategory>().firstOrNull,
+    );
+    final mappedCategories = categoryModel.mappedCategories.value;
     final Map<ETransactionType, Map<String, CategoryModel>> categories = {
-      for (final type in ETransactionType.values) type: {},
+      for (final MapEntry(key: type, value: list) in mappedCategories.entries)
+        type.transactionType: Map.fromEntries(
+          await Future.wait<MapEntry<String, CategoryModel>>(
+            list.where((e) => e is! ImportModelCategoryVOEmpty).map((e) async {
+              if (e case ImportModelCategoryVOModel(:final model)) {
+                return Future.value(MapEntry(e.originalTitle, model));
+              }
+              final item = e as ImportModelCategoryVOVO;
+              final category = await categoryService.create(vo: item.vo);
+              return Future.value(MapEntry(e.originalTitle, category));
+            }),
+          ),
+        ),
     };
-    // FIXME
-    // for (final MapEntry(key: type, value: list)
-    //     in viewModel.mappedCategories.entries) {
-    //   for (final (:title, :linkedModel, :vo) in list) {
-    //     if (linkedModel != null) {
-    //       categories[type]![title] = linkedModel;
-    //       continue;
-    //     }
-    //     if (vo == null) throw Exception("Category can't be null");
-    //     categories[type]![title] = await categoryService.create(vo: vo);
-    //   }
-    // }
 
     // -> tags
 
     final Map<String, TagModel> tags = {};
     if (viewModel.mappedColumns.any((e) => e.column == EImportColumn.tag)) {
-      final Set<String> tagTitles = {};
-      final tagColumn = viewModel.mappedColumns
-          .singleWhere((e) => e.column == EImportColumn.tag);
-      for (final element in viewModel.csv!.entries) {
-        if (element[tagColumn.columnKey] == null) continue;
-        tagTitles.add(element[tagColumn.columnKey]!);
-      }
-      for (final title in tagTitles) {
-        final vo = TagVO(title: title);
-        tags[title] = await tagService.create(vo: vo);
-      }
+      final tagColumn = viewModel.mappedColumns.singleWhere((e) {
+        return e.column == EImportColumn.tag;
+      });
+      final tagTitles = Set<String>.from(
+        csvModel.entries.map((e) => e[tagColumn.columnKey]).nonNulls,
+      );
+      tags.addEntries(
+        await Future.wait(
+          tagTitles.map((title) async {
+            final model = await tagService.create(vo: TagVO(title: title));
+            return MapEntry(title, model);
+          }),
+        ),
+      );
     }
 
     // -> transactions
 
+    final typeModel = ArgumentError.checkNotNull(
+      viewModel.steps.whereType<ImportModelTransactionType>().firstOrNull,
+    );
     final List<TransactionModel> transactions = [];
-    final typeColumn = viewModel.mappedColumns
-        .where((e) => e.column == EImportColumn.transactionType)
-        .firstOrNull;
-    for (final element in viewModel.csv!.entries) {
-      ETransactionType transactionType = ETransactionType.defaultValue;
-      for (final MapEntry(:key, :value) in element.entries) {
-        if (typeColumn != null &&
-            typeColumn.columnKey != null &&
-            key == typeColumn.columnKey) {
-          // FIXME
-          // if (value == viewModel.expenseType) {
-          //   transactionType = ETransactionType.expense;
-          // } else if (value == viewModel.incomeType) {
-          //   transactionType = ETransactionType.income;
-          // }
-          break;
-        } else if ((typeColumn == null || typeColumn.columnKey == null) &&
-            viewModel.mappedColumns
-                .any((e) => e.column == EImportColumn.amount)) {
-          final amount = double.parse(value);
-          transactionType =
-              amount < .0 ? ETransactionType.expense : ETransactionType.income;
-          break;
-        }
-      }
-      final vo = _TransactionBuilder();
-      // if (viewModel.singleAccount != null) {
-      //   vo.addAccountId(accounts[singleAccountId]!.id);
-      // }
-      for (final MapEntry(:key, :value) in element.entries) {
-        final column = viewModel.mappedColumns
-            .where((e) => e.columnKey == key)
-            .firstOrNull
-            ?.column;
-        switch (column) {
-          case EImportColumn.amount:
-            final amount = double.parse(value).abs();
-            vo.addAmount(
-              transactionType == ETransactionType.expense
-                  ? .0 - amount
-                  : amount,
-            );
-          case EImportColumn.date:
-            vo.addDate(DateTime.parse(value).toLocal());
-          case EImportColumn.category:
-            vo.addCategoryId(categories[transactionType]![value]!.id);
-          case EImportColumn.transactionType || null:
-            continue;
-          case EImportColumn.account:
-            vo.addAccountId(accounts[value]!.id);
-          case EImportColumn.tag:
-            final tagModel = tags[value]!;
-            vo.addTags(
-              [TransactionTagVO(tagId: tagModel.id, title: tagModel.title)],
-            );
-          case EImportColumn.note:
-            vo.addNote(value);
-        }
-      }
-      final transaction = await transactionService.create(vo: vo.build());
-      if (transaction != null) transactions.add(transaction);
+    for (final element in typeModel.mappedEntriesByType) {
+      final ImportModelTransactionTypeVO(:entries, :transactionType) = element;
+      final models = await Future.wait(
+        entries.map((e) {
+          final builder = _TransactionBuilder();
+          for (final MapEntry(:key, :value) in e.entries) {
+            switch (key.column) {
+              case EImportColumn.amount:
+                final amount = double.parse(value).abs();
+                final isExpense = transactionType == ETransactionType.expense;
+                builder.addAmount(isExpense ? .0 - amount : amount);
+              case EImportColumn.date:
+                builder.addDate(DateTime.parse(value).toLocal());
+              case EImportColumn.category:
+                builder.addCategoryId(categories[transactionType]![value]!.id);
+              case EImportColumn.transactionType:
+                continue;
+              case EImportColumn.account:
+                builder.addAccountId(accounts[value]!.id);
+              case EImportColumn.tag:
+                final tagModel = tags[value]!;
+                // FIXME: assuming theres only one tag per record from CSV
+                builder.addTags([tagModel.id]);
+              case EImportColumn.note:
+                builder.addNote(value);
+            }
+          }
+          // NOTE: in case theres only one required account
+          if (builder.accountId == null) {
+            if (accounts.containsKey(singlAccountKey)) {
+              builder.addAccountId(accounts[singlAccountKey]!.id);
+            }
+          }
+          return transactionService.create(vo: builder.build());
+        }),
+      );
+      transactions.addAll(models.nonNulls);
     }
 
     // -> update account balance
 
-    for (final MapEntry(key: _, :value) in accounts.entries) {
-      final transactions = await transactionService.getAll(accountId: value.id);
+    for (final MapEntry(value: account) in accounts.entries) {
+      final sum = transactions
+          .where((e) => e.account.id == account.id)
+          .fold(.0, (prev, next) => prev + next.amount);
       await accountService.update(
-        model: value.copyWith(
-          balance: value.balance -
-              transactions.fold(0, (prev, next) => prev + next.amount),
-        ),
+        model: account.copyWith(balance: account.balance - sum),
       );
     }
 
@@ -178,7 +159,7 @@ final class _TransactionBuilder {
   String? note;
   String? accountId;
   String? categoryId;
-  List<TransactionTagVO> tags = const [];
+  List<String> tagIds = const [];
 
   _TransactionBuilder addAmount(double value) {
     amount = value;
@@ -205,8 +186,8 @@ final class _TransactionBuilder {
     return this;
   }
 
-  _TransactionBuilder addTags(List<TransactionTagVO> value) {
-    tags = value;
+  _TransactionBuilder addTags(List<String> value) {
+    tagIds = value;
     return this;
   }
 
@@ -227,7 +208,7 @@ final class _TransactionBuilder {
       note: note ?? "",
       accountId: accountId,
       categoryId: categoryId,
-      tags: tags,
+      tagIds: tagIds,
     );
   }
 }

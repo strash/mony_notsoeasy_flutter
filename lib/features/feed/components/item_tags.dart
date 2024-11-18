@@ -52,19 +52,22 @@ class FeedItemTagsComponent extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: Center(
-                        child: Text(
-                          "#${tag.title}",
-                          maxLines: 1,
-                          style: GoogleFonts.golosText(
-                            fontSize: 13.sp,
-                            height: 1.0,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onTertiaryContainer,
+                          // FIXME: here should be a `TagModel` not a
+                          // `TransactionTagModel`
+
+                          // child: Text(
+                          //   "#${tag.title}",
+                          //   maxLines: 1,
+                          //   style: GoogleFonts.golosText(
+                          //     fontSize: 13.sp,
+                          //     height: 1.0,
+                          //     fontWeight: FontWeight.w500,
+                          //     color: Theme.of(context)
+                          //         .colorScheme
+                          //         .onTertiaryContainer,
+                          //   ),
+                          // ),
                           ),
-                        ),
-                      ),
                     ),
                   ),
                 );

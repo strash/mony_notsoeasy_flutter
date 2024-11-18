@@ -36,14 +36,14 @@ final class TransactionFormVO {
     required this.tags,
   });
 
-  TransactionVO toTransactionVO() {
+  TransactionVO toTransactionVO([List<String> tagIds = const []]) {
     return TransactionVO(
       amout: amout,
       date: date,
       note: note,
       accountId: accountId,
       categoryId: categoryId,
-      tags: const [],
+      tagIds: tagIds,
     );
   }
 }

@@ -72,7 +72,7 @@ final class OnCategoryButtonPressed
         };
         final List<String> titles;
         if (value case final ImportModelCategoryVOVO vo) {
-          titles = categoryModel.titles(vo);
+          titles = categoryModel.getTitles(vo);
         } else {
           titles = const [];
         }

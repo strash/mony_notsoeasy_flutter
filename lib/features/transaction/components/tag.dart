@@ -27,15 +27,16 @@ class TransactionTagComponent extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-        child: Text(
-          "#${tag.title}",
-          style: GoogleFonts.golosText(
-            fontSize: 16.sp,
-            height: 1.0,
-            fontWeight: FontWeight.w500,
-            color: theme.colorScheme.onTertiaryContainer,
-          ),
-        ),
+        // FIXME: here should be a `TagModel` not a `TransactionTagModel`
+        // child: Text(
+        //   "#${tag.title}",
+        //   style: GoogleFonts.golosText(
+        //     fontSize: 16.sp,
+        //     height: 1.0,
+        //     fontWeight: FontWeight.w500,
+        //     color: theme.colorScheme.onTertiaryContainer,
+        //   ),
+        // ),
       ),
     );
   }

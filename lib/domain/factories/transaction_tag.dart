@@ -12,7 +12,6 @@ final class TransactionTagDatabaseFactoryImpl
       updated: DateTime.tryParse(dto.updated)?.toLocal() ?? DateTime.now(),
       transactionId: dto.transactionId,
       tagId: dto.tagId,
-      title: dto.title,
     );
   }
 
@@ -24,7 +23,6 @@ final class TransactionTagDatabaseFactoryImpl
       updated: model.updated.toUtc().toIso8601String(),
       transactionId: model.transactionId,
       tagId: model.tagId,
-      title: model.title,
     );
   }
 }

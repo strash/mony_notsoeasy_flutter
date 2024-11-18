@@ -82,8 +82,7 @@ final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
   void dispose() {
     void forEachAction(ImportModel e) => e.dispose();
     steps.forEach(forEachAction);
-    steps.length = 0;
-    currentStep.dispose();
+    if (steps.isNotEmpty && currentStep != steps.last) currentStep.dispose();
     subject.close();
     transactionTypeController.removeListener(_transactionTypeListener);
     transactionTypeController.dispose();

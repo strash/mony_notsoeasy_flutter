@@ -1,5 +1,4 @@
 import "package:freezed_annotation/freezed_annotation.dart";
-import "package:mony_app/domain/domain.dart";
 
 part "transaction.freezed.dart";
 
@@ -11,6 +10,6 @@ class TransactionVO with _$TransactionVO {
     required String note,
     required String accountId,
     required String categoryId,
-    required List<TransactionTagVO> tags,
+    required List<String> tagIds,
   }) = _TransactionVO;
 }

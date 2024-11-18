@@ -11,7 +11,6 @@ class TransactionTagDto with _$TransactionTagDto {
     required String updated,
     required String transactionId,
     required String tagId,
-    required String title,
   }) = _TransactionTagDto;
 
   factory TransactionTagDto.fromJson(Map<String, dynamic> json) =>

@@ -41,7 +41,7 @@ class ImportView extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(
                         top: 20.h,
-                        bottom: viewPadding.bottom + 20.h + 48.h + 20.h,
+                        bottom: viewPadding.bottom + 20.h + 48.h + 40.h,
                       ),
                       child: AnimatedSwitcher(
                         duration: Durations.medium3,

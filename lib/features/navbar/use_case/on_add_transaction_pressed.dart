@@ -31,12 +31,9 @@ final class OnAddTransactionPressed extends UseCase<Future<void>, dynamic> {
       }),
     );
 
+    final tagIds = tagModels.map((e) => e.id).toList(growable: false);
     final transactionModel = await transactionService.create(
-      vo: result.toTransactionVO().copyWith(
-            tags: tagModels
-                .map((e) => TransactionTagVO(title: e.title, tagId: e.id))
-                .toList(growable: false),
-          ),
+      vo: result.toTransactionVO(tagIds),
     );
 
     if (transactionModel != null) {
