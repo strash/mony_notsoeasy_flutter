@@ -4,19 +4,16 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
-import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/import/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class ImportCategoryItemComponent extends StatelessWidget {
-  final ETransactionType transactionType;
   final ImportModelCategoryVO category;
   final UseCase<Future<void>, ImportModelCategoryVO> onTap;
   final UseCase<void, ImportModelCategoryVO> onReset;
 
   const ImportCategoryItemComponent({
     super.key,
-    required this.transactionType,
     required this.category,
     required this.onTap,
     required this.onReset,

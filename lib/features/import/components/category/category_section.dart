@@ -25,10 +25,12 @@ class ImportCategorySectionComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final title =
-        transactionType == ETransactionType.expense ? "расходов" : "доходов";
+    final title = switch (transactionType) {
+      ETransactionType.expense => "расходов",
+      ETransactionType.income => "доходов",
+    };
     final count = categories.fold<int>(0, (prev, e) {
-      return prev + (e is! ImportModelCategoryVOEmpty ? 1 : 0);
+      return prev + (e is ImportModelCategoryVOEmpty ? 0 : 1);
     });
 
     return Padding(
@@ -72,7 +74,6 @@ class ImportCategorySectionComponent extends StatelessWidget {
             runSpacing: 8.r,
             children: categories.map((e) {
               return ImportCategoryItemComponent(
-                transactionType: transactionType,
                 category: e,
                 onTap: onTap,
                 onReset: onReset,
