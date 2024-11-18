@@ -64,18 +64,18 @@ class ImportMapCategoriesPage extends StatelessWidget {
         ValueListenableBuilder(
           valueListenable: categoryModel.mappedCategories,
           builder: (context, categories, child) {
-            final notEmptyCategories =
+            final filtered =
                 categories.entries.where((e) => e.value.isNotEmpty);
+
             return SeparatedComponent(
-              itemCount: notEmptyCategories.length,
-              separatorBuilder: (context) => SizedBox(height: 30.h),
+              itemCount: filtered.length,
+              separatorBuilder: (context) => SizedBox(height: 40.h),
               itemBuilder: (context, index) {
-                final MapEntry(key: type, value: list) =
-                    notEmptyCategories.elementAt(index);
+                final MapEntry(:key, :value) = filtered.elementAt(index);
 
                 return ImportCategorySectionComponent(
-                  transactionType: type.transactionType,
-                  categories: list,
+                  transactionType: key.transactionType,
+                  categories: value,
                   onTap: onCategoryPressed,
                   onReset: onCategoryResetPressed,
                 );
