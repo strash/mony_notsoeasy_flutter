@@ -7,19 +7,32 @@ class _ColorGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      padding: EdgeInsets.fromLTRB(15.r, 0.0, 15.r, bottom + 20.h),
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      crossAxisCount: 6,
-      children: EColorName.values.map((e) {
-        return ListenableBuilder(
-          listenable: _NamedColorPickerValueProvider.of(context),
-          builder: (context, child) {
-            return _ColorGridItem(colorName: e);
-          },
-        );
-      }).toList(growable: false),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // -> appbar
+        const AppBarComponent(
+          title: Text("Цвет"),
+          useSliver: false,
+          showDragHandle: true,
+        ),
+
+        // -> colors
+        GridView.count(
+          padding: EdgeInsets.fromLTRB(15.r, 20.h, 15.r, bottom + 20.h),
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          crossAxisCount: 6,
+          children: EColorName.values.map((e) {
+            return ListenableBuilder(
+              listenable: _NamedColorPickerValueProvider.of(context),
+              builder: (context, child) {
+                return _ColorGridItem(colorName: e);
+              },
+            );
+          }).toList(growable: false),
+        ),
+      ],
     );
   }
 }

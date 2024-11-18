@@ -11,6 +11,7 @@ class NamedColorPickerComponent extends StatelessWidget {
   void _onTap(BuildContext context) {
     BottomSheetComponent.show<EColorName?>(
       context,
+      showDragHandle: false,
       builder: (context, bottom) {
         return _NamedColorPickerValueProvider(
           controller: controller,
