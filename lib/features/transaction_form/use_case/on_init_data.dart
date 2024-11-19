@@ -17,19 +17,17 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
     final accountService = context.read<DomainAccountService>();
     final categoryService = context.read<DomainCategoryService>();
     final transactionService = context.read<DomainTransactionService>();
-    final tagService = context.read<DomainTagService>();
-
-    final transaction = viewModel.transaction;
 
     final isKeyboardHintAccepted =
         await prefService.isNewTransactionKeyboardHintAccepted();
 
+    final transaction = viewModel.transaction;
     final accounts = await accountService.getAll();
 
-    final expenseCategories =
-        await categoryService.getAll(transactionType: ETransactionType.expense);
-    final incomeCategories =
-        await categoryService.getAll(transactionType: ETransactionType.income);
+    final Map<ETransactionType, List<CategoryModel>> categories = {
+      for (final type in ETransactionType.values)
+        type: await categoryService.getAll(transactionType: type),
+    };
 
     if (transaction == null) {
       final lastTransactions = await transactionService.getMany(page: 0);
@@ -39,11 +37,8 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
             : accounts.firstOrNull?.copyWith();
       });
     } else {
-      final tags = await tagService.getAllForTransaction(
-        transactionId: transaction.id,
-      );
       viewModel.setProtectedState(() {
-        viewModel.attachedTags = tags.map((e) {
+        viewModel.attachedTags = transaction.tags.map((e) {
           return TransactionTagVOModel(e);
         }).toList(growable: false);
       });
@@ -58,10 +53,7 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
 
     viewModel.setProtectedState(() {
       viewModel.accounts = accounts;
-      viewModel.categories = {
-        ETransactionType.expense: expenseCategories,
-        ETransactionType.income: incomeCategories,
-      };
+      viewModel.categories = categories;
       viewModel.isKeyboardHintAccepted = isKeyboardHintAccepted;
     });
   }
