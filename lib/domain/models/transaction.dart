@@ -49,7 +49,7 @@ class TransactionModel with _$TransactionModel {
     required String note,
     required AccountModel account,
     required CategoryModel category,
-    required List<TransactionTagModel> tags,
+    required List<TagModel> tags,
   }) = _TransactionModel;
 }
 
@@ -69,7 +69,8 @@ extension TransactionModelListEx on List<TransactionModel> {
     // transform transactions to the list of transactions and sections
     final feed = foldValue<List<FeedItem>>(init, (prev, curr) {
       final transaction = FeedItemTransaction(transaction: curr);
-      if (prev?.date.isSameDateAs(curr.date) ?? false) return [transaction];
+      if (prev == null) return [];
+      if (prev.date.isSameDateAs(curr.date)) return [transaction];
       final section = FeedItemSection(date: curr.date, total: {});
       return <FeedItem>[section, transaction];
     });

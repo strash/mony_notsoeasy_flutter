@@ -18,8 +18,9 @@ final class DomainCategoryService extends BaseDatabaseService {
   Future<List<CategoryModel>> getAll({
     ETransactionType? transactionType,
   }) async {
-    final dtos =
-        await _categoryRepo.getAll(transactionType: transactionType?.value);
+    final dtos = await _categoryRepo.getAll(
+      transactionType: transactionType?.value,
+    );
     return dtos
         .map<CategoryModel>(_categoryFactory.toModel)
         .toList(growable: false);

@@ -1,15 +1,15 @@
-import "package:freezed_annotation/freezed_annotation.dart";
+final class TransactionVO {
+  final double amout;
+  final DateTime date;
+  final String note;
+  final String accountId;
+  final String categoryId;
 
-part "transaction.freezed.dart";
-
-@freezed
-class TransactionVO with _$TransactionVO {
-  const factory TransactionVO({
-    required double amout,
-    required DateTime date,
-    required String note,
-    required String accountId,
-    required String categoryId,
-    required List<String> tagIds,
-  }) = _TransactionVO;
+  const TransactionVO({
+    required this.amout,
+    required this.date,
+    required this.note,
+    required this.accountId,
+    required this.categoryId,
+  });
 }

@@ -1,15 +1,17 @@
-import "package:freezed_annotation/freezed_annotation.dart";
 import "package:mony_app/domain/models/models.dart";
 
-part "account.freezed.dart";
+final class AccountVO {
+  final String title;
+  final EAccountType type;
+  final String currencyCode;
+  final String colorName;
+  final double balance;
 
-@freezed
-class AccountVO with _$AccountVO {
-  const factory AccountVO({
-    required String title,
-    required EAccountType type,
-    required String currencyCode,
-    required String colorName,
-    required double balance,
-  }) = _AccountVO;
+  const AccountVO({
+    required this.title,
+    required this.type,
+    required this.currencyCode,
+    required this.colorName,
+    required this.balance,
+  });
 }

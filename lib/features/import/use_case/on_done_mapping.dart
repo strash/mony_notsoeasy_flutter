@@ -100,26 +100,39 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
               case EImportColumn.date:
                 builder.addDate(DateTime.parse(value).toLocal());
               case EImportColumn.category:
-                builder.addCategoryId(categories[transactionType]![value]!.id);
+                if (categories.containsKey(transactionType) &&
+                    categories[transactionType]!.containsKey(value)) {
+                  builder
+                      .addCategoryId(categories[transactionType]![value]!.id);
+                }
               case EImportColumn.transactionType:
                 continue;
               case EImportColumn.account:
-                builder.addAccountId(accounts[value]!.id);
+                if (accounts.containsKey(value)) {
+                  builder.addAccountId(accounts[value]!.id);
+                }
               case EImportColumn.tag:
-                final tagModel = tags[value]!;
-                // FIXME: assuming theres only one tag per record from CSV
-                builder.addTags([tagModel.id]);
+                if (tags.containsKey(value)) {
+                  // FIXME: assuming theres only one tag per record from CSV
+                  builder.addTags([tags[value]!]);
+                }
               case EImportColumn.note:
                 builder.addNote(value);
             }
           }
           // NOTE: in case theres only one required account
-          if (builder.accountId == null) {
+          if (builder._accountId == null) {
             if (accounts.containsKey(singlAccountKey)) {
               builder.addAccountId(accounts[singlAccountKey]!.id);
             }
           }
-          return transactionService.create(vo: builder.build());
+          final (:vo, tags: list) = builder.build();
+          return transactionService.create(
+            vo: vo,
+            tags: list
+                .map((e) => TransactionTagVOModel(e))
+                .toList(growable: false),
+          );
         }),
       );
       transactions.addAll(models.nonNulls);
@@ -154,61 +167,63 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
 }
 
 final class _TransactionBuilder {
-  double? amount;
-  DateTime? date;
-  String? note;
-  String? accountId;
-  String? categoryId;
-  List<String> tagIds = const [];
+  double? _amount;
+  DateTime? _date;
+  String? _note;
+  String? _accountId;
+  String? _categoryId;
+  List<TagModel> _tags = const [];
 
   _TransactionBuilder addAmount(double value) {
-    amount = value;
+    _amount = value;
     return this;
   }
 
   _TransactionBuilder addDate(DateTime value) {
-    date = value;
+    _date = value;
     return this;
   }
 
   _TransactionBuilder addNote(String value) {
-    note = value;
+    _note = value;
     return this;
   }
 
   _TransactionBuilder addAccountId(String value) {
-    accountId = value;
+    _accountId = value;
     return this;
   }
 
   _TransactionBuilder addCategoryId(String value) {
-    categoryId = value;
+    _categoryId = value;
     return this;
   }
 
-  _TransactionBuilder addTags(List<String> value) {
-    tagIds = value;
+  _TransactionBuilder addTags(List<TagModel> value) {
+    _tags = value;
     return this;
   }
 
-  TransactionVO build() {
-    final amount = this.amount;
-    final date = this.date;
-    final accountId = this.accountId;
-    final categoryId = this.categoryId;
+  ({TransactionVO vo, List<TagModel> tags}) build() {
+    final amount = _amount;
+    final date = _date;
+    final accountId = _accountId;
+    final categoryId = _categoryId;
     if (amount == null ||
         date == null ||
         accountId == null ||
         categoryId == null) {
       throw ArgumentError.notNull();
     }
-    return TransactionVO(
-      amout: amount,
-      date: date,
-      note: note ?? "",
-      accountId: accountId,
-      categoryId: categoryId,
-      tagIds: tagIds,
+    return (
+      vo: TransactionVO(
+        amout: amount,
+        date: date,
+        note: _note ?? "",
+        accountId: accountId,
+        categoryId: categoryId,
+      ),
+      tags: _tags,
     );
   }
 }

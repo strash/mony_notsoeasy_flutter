@@ -12,10 +12,10 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
   late BuildContext? _context;
   late List<TagModel> _tags;
 
-  List<TagModel> _filterTags(List<TransactionFormTag> byList) {
+  List<TagModel> _filterTags(List<TransactionTagVO> byList) {
     return _tags.where((e) {
       return !byList.any((ee) {
-        return ee is TransactionTagFormModel && ee.model.id == e.id;
+        return ee is TransactionTagVOModel && ee.model.id == e.id;
       });
     }).toList(growable: false);
   }
@@ -27,8 +27,8 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     final viewModel = formContext.viewModel<TransactionFormViewModel>();
     viewModel.setProtectedState(() {
       viewModel.attachedTags =
-          List<TransactionFormTag>.from(viewModel.attachedTags)
-            ..add(TransactionTagFormModel(tag));
+          List<TransactionTagVO>.from(viewModel.attachedTags)
+            ..add(TransactionTagVOModel(tag));
     });
     // NOTE: wait before controller is attached
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
@@ -85,8 +85,8 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
       if (element.title.toLowerCase() == input.toLowerCase()) {
         viewModel.setProtectedState(() {
           viewModel.attachedTags =
-              List<TransactionFormTag>.from(viewModel.attachedTags)
-                ..add(TransactionTagFormModel(element));
+              List<TransactionTagVO>.from(viewModel.attachedTags)
+                ..add(TransactionTagVOModel(element));
         });
         return;
       }
@@ -94,25 +94,25 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     // then check if theres already an attached tag with this title
     for (final (index, tag) in viewModel.attachedTags.indexed) {
       switch (tag) {
-        case final TransactionFormTagVO tag:
+        case final TransactionTagVOVO tag:
           // replace similar vo
           if (tag.vo.title.toLowerCase() == input.toLowerCase()) {
             viewModel.setProtectedState(() {
               viewModel.attachedTags =
-                  List<TransactionFormTag>.from(viewModel.attachedTags)
+                  List<TransactionTagVO>.from(viewModel.attachedTags)
                     ..removeAt(index);
             });
             break;
           }
-        case final TransactionTagFormModel tag:
+        case final TransactionTagVOModel tag:
           if (tag.model.title.toLowerCase() == input.toLowerCase()) return;
       }
     }
     // finally create a new one
     viewModel.setProtectedState(() {
       viewModel.attachedTags =
-          List<TransactionFormTag>.from(viewModel.attachedTags)
-            ..add(TransactionFormTagVO(TagVO(title: input)));
+          List<TransactionTagVO>.from(viewModel.attachedTags)
+            ..add(TransactionTagVOVO(TagVO(title: input)));
     });
     // NOTE: wait before controller is attached
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {

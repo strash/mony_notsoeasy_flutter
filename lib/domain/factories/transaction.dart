@@ -2,42 +2,53 @@ import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/factories/factories.dart";
 import "package:mony_app/domain/domain.dart";
 
-final class TransactionBuilder {
-  AccountModel? account;
-  CategoryModel? category;
-  List<TransactionTagModel>? tags;
-  TransactionDto? dto;
-  TransactionModel? model;
+final class TransactionDatabaseFactoryImpl
+    implements ITransactionDatabaseFactory<BaseTransactionBuilder> {
+  @override
+  TransactionModelBuilder toModel(TransactionDto dto) {
+    return TransactionModelBuilder()..addDto(dto: dto);
+  }
 
-  TransactionBuilder addDto({required TransactionDto dto}) {
-    this.dto = dto;
+  @override
+  TransactionDto toDto(BaseTransactionBuilder dtoBuilder) {
+    assert(dtoBuilder is TransactionDtoBuilder);
+    return (dtoBuilder as TransactionDtoBuilder).build();
+  }
+}
+
+sealed class BaseTransactionBuilder {}
+
+final class TransactionModelBuilder extends BaseTransactionBuilder {
+  AccountModel? _account;
+  CategoryModel? _category;
+  List<TagModel>? _tags;
+  TransactionDto? _dto;
+
+  TransactionModelBuilder addDto({required TransactionDto dto}) {
+    _dto = dto;
     return this;
   }
 
-  TransactionBuilder addParams({
-    required AccountModel account,
-    required CategoryModel category,
-    required List<TransactionTagModel> tags,
-  }) {
-    this.account = account;
-    this.category = category;
-    this.tags = tags;
+  TransactionModelBuilder addAccount({required AccountModel account}) {
+    _account = account;
     return this;
   }
 
-  TransactionBuilder addModel(TransactionModel model) {
-    this.model = model;
+  TransactionModelBuilder addCategory({required CategoryModel category}) {
+    _category = category;
     return this;
   }
 
-  TransactionModel buildModel() {
-    final dto = this.dto;
-    final account = this.account;
-    final category = this.category;
-    final tags = this.tags;
-    if (dto == null || account == null || category == null || tags == null) {
-      throw ArgumentError.notNull();
-    }
+  TransactionModelBuilder addTags({required List<TagModel> tags}) {
+    _tags = tags;
+    return this;
+  }
+
+  TransactionModel build() {
+    final dto = ArgumentError.checkNotNull(_dto);
+    final account = ArgumentError.checkNotNull(_account);
+    final category = ArgumentError.checkNotNull(_category);
+    final tags = ArgumentError.checkNotNull(_tags);
     return TransactionModel(
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
@@ -50,10 +61,18 @@ final class TransactionBuilder {
       tags: tags,
     );
   }
+}
 
-  TransactionDto buildDto() {
-    final model = this.model;
-    if (model == null) throw ArgumentError.notNull();
+final class TransactionDtoBuilder extends BaseTransactionBuilder {
+  TransactionModel? _model;
+
+  TransactionDtoBuilder addModel(TransactionModel model) {
+    _model = model;
+    return this;
+  }
+
+  TransactionDto build() {
+    final model = ArgumentError.checkNotNull(_model);
     return TransactionDto(
       id: model.id,
       created: model.created.toUtc().toIso8601String(),
@@ -64,18 +83,5 @@ final class TransactionBuilder {
       accountId: model.account.id,
       categoryId: model.category.id,
     );
-  }
-}
-
-final class TransactionDatabaseFactoryImpl
-    implements ITransactionDatabaseFactory<TransactionBuilder> {
-  @override
-  TransactionBuilder toModel(TransactionDto dto) {
-    return TransactionBuilder()..addDto(dto: dto);
-  }
-
-  @override
-  TransactionDto toDto(TransactionBuilder model) {
-    return model.buildDto();
   }
 }

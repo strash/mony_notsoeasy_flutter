@@ -21,6 +21,7 @@ final class OnAppStateChanged
     final accountSevrice = context.read<DomainAccountService>();
 
     switch (event) {
+      // TODO: при создании второго счета добавлять экран со всеми счетами
       case final EventAccountCreated event:
         final account = event.account;
         final balances = await accountSevrice.getBalance(ids: [account.id]);

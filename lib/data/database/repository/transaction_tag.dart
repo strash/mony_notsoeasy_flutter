@@ -8,6 +8,8 @@ abstract base class TransactionTagDatabaseRepository {
 
   Future<List<TransactionTagDto>> getAll({required String transactionId});
 
+  Future<TransactionTagDto?> getOne({required String id});
+
   Future<void> create({required TransactionTagDto dto});
 
   Future<void> delete({required String id});
@@ -28,27 +30,31 @@ final class _Impl
   }) async {
     return resolve(() async {
       final db = await database.db;
-      // FIXME: don't join tables and remove title
-      final maps = await db.rawQuery(
-        """
-SELECT
-	et.id,
-	et.created,
-	et.updated,
-	et.tag_id,
-	et.transaction_id,
-	t.title
-FROM $table AS et
-JOIN tags AS t ON et.tag_id = t.id
-WHERE et.transaction_id = ?;
-""",
-        [transactionId],
+      final maps = await db.query(
+        table,
+        where: "transaction_id = ?",
+        whereArgs: [transactionId],
+        orderBy: "created ASC",
       );
       return List.generate(
         maps.length,
         (index) => TransactionTagDto.fromJson(maps.elementAt(index)),
         growable: false,
       );
+    });
+  }
+
+  @override
+  Future<TransactionTagDto?> getOne({required String id}) async {
+    return resolve(() async {
+      final db = await database.db;
+      final map = await db.query(
+        table,
+        where: "id = ?",
+        whereArgs: [id],
+      );
+      if (map.isEmpty) return null;
+      return TransactionTagDto.fromJson(map.first);
     });
   }
 

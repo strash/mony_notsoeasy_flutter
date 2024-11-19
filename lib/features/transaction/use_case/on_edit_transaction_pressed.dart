@@ -30,7 +30,8 @@ final class OnEditTransactionPressed
 
     final updated = await transactionService.update(
       transaction: transaction,
-      vo: result,
+      vo: result.transactionVO,
+      tags: result.tags,
     );
     if (updated == null) return;
 

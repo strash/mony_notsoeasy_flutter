@@ -1,10 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
-import "package:mony_app/domain/models/transaction_tag.dart";
+import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/features/transaction/components/tag.dart";
 
 class TransactionTagsComponent extends StatelessWidget {
-  final List<TransactionTagModel> tags;
+  final List<TagModel> tags;
 
   const TransactionTagsComponent({
     super.key,

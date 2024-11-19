@@ -3,10 +3,10 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/domain/models/transaction_tag.dart";
+import "package:mony_app/domain/models/tag.dart";
 
 class FeedItemTagsComponent extends StatelessWidget {
-  final List<TransactionTagModel> tags;
+  final List<TagModel> tags;
 
   const FeedItemTagsComponent({
     super.key,
@@ -52,22 +52,19 @@ class FeedItemTagsComponent extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: Center(
-                          // FIXME: here should be a `TagModel` not a
-                          // `TransactionTagModel`
-
-                          // child: Text(
-                          //   "#${tag.title}",
-                          //   maxLines: 1,
-                          //   style: GoogleFonts.golosText(
-                          //     fontSize: 13.sp,
-                          //     height: 1.0,
-                          //     fontWeight: FontWeight.w500,
-                          //     color: Theme.of(context)
-                          //         .colorScheme
-                          //         .onTertiaryContainer,
-                          //   ),
-                          // ),
+                        child: Text(
+                          "#${tag.title}",
+                          maxLines: 1,
+                          style: GoogleFonts.golosText(
+                            fontSize: 13.sp,
+                            height: 1.0,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onTertiaryContainer,
                           ),
+                        ),
+                      ),
                     ),
                   ),
                 );

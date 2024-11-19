@@ -12,6 +12,7 @@ final class OnNotePressed extends UseCase<void, dynamic> {
 
     BottomSheetComponent.show<void>(
       context,
+      showDragHandle: false,
       builder: (context, bottom) {
         return TransactionFormBottomSheetNoteComponent(
           inputController: viewModel.noteInput,

@@ -2,10 +2,10 @@ import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/domain/models/transaction_tag.dart";
+import "package:mony_app/domain/models/tag.dart";
 
 class TransactionTagComponent extends StatelessWidget {
-  final TransactionTagModel tag;
+  final TagModel tag;
 
   const TransactionTagComponent({
     super.key,
@@ -27,16 +27,15 @@ class TransactionTagComponent extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-        // FIXME: here should be a `TagModel` not a `TransactionTagModel`
-        // child: Text(
-        //   "#${tag.title}",
-        //   style: GoogleFonts.golosText(
-        //     fontSize: 16.sp,
-        //     height: 1.0,
-        //     fontWeight: FontWeight.w500,
-        //     color: theme.colorScheme.onTertiaryContainer,
-        //   ),
-        // ),
+        child: Text(
+          "#${tag.title}",
+          style: GoogleFonts.golosText(
+            fontSize: 16.sp,
+            height: 1.0,
+            fontWeight: FontWeight.w500,
+            color: theme.colorScheme.onTertiaryContainer,
+          ),
+        ),
       ),
     );
   }

@@ -12,7 +12,16 @@ import "package:mony_app/features/transaction_form/page/view.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 export "../use_case/use_case.dart";
-export "./form_vo.dart";
+
+final class TransactionFormVO {
+  final TransactionVO transactionVO;
+  final List<TransactionTagVO> tags;
+
+  TransactionFormVO({
+    required this.transactionVO,
+    required this.tags,
+  });
+}
 
 final class TransactionFormViewModelBuilder extends StatefulWidget {
   final TransactionModel? transaction;
@@ -68,7 +77,7 @@ final class TransactionFormViewModel
     for (final key in ETransactionType.values) key: const [],
   };
   final displayedTags = ValueNotifier<List<TagModel>>([]);
-  List<TransactionFormTag> attachedTags = const [];
+  List<TransactionTagVO> attachedTags = const [];
 
   bool isKeyboardHintAccepted = false;
 

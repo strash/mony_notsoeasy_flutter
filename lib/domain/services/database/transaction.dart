@@ -1,6 +1,5 @@
 import "package:mony_app/data/database/database.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/transaction_form/page/form_vo.dart";
 
 final class DomainTransactionService extends BaseDatabaseService {
   final TransactionDatabaseRepository _transactionRepo;
@@ -9,7 +8,6 @@ final class DomainTransactionService extends BaseDatabaseService {
   final AccountDatabaseRepository _accountRepo;
   final CategoryDatabaseRepository _categoryRepo;
   final TransactionDatabaseFactoryImpl _transactionFactory;
-  final TransactionTagDatabaseFactoryImpl _transactionTagFactory;
   final TagDatabaseFactoryImpl _tagFactory;
   final AccountDatabaseFactoryImpl _accountFactory;
   final CategoryDatabaseFactoryImpl _categoryFactory;
@@ -21,7 +19,6 @@ final class DomainTransactionService extends BaseDatabaseService {
     required AccountDatabaseRepository accountRepo,
     required CategoryDatabaseRepository categoryRepo,
     required TransactionDatabaseFactoryImpl transactionFactory,
-    required TransactionTagDatabaseFactoryImpl transactionTagFactory,
     required TagDatabaseFactoryImpl tagFactory,
     required AccountDatabaseFactoryImpl accountFactory,
     required CategoryDatabaseFactoryImpl categoryFactory,
@@ -31,7 +28,6 @@ final class DomainTransactionService extends BaseDatabaseService {
         _accountRepo = accountRepo,
         _categoryRepo = categoryRepo,
         _transactionFactory = transactionFactory,
-        _transactionTagFactory = transactionTagFactory,
         _tagFactory = tagFactory,
         _accountFactory = accountFactory,
         _categoryFactory = categoryFactory;
@@ -53,31 +49,35 @@ final class DomainTransactionService extends BaseDatabaseService {
       accountIds.add(element.accountId);
       categoryIds.add(element.categoryId);
     }
-    final accountDtos =
-        await _accountRepo.getAll(ids: accountIds.toList(growable: false));
-    final categoryDtos =
-        await _categoryRepo.getAll(ids: categoryIds.toList(growable: false));
-    final tagDtos = await Future.wait<List<TransactionTagDto>>(
-      dtos.map<Future<List<TransactionTagDto>>>((e) {
-        return _transactionTagRepo.getAll(transactionId: e.id);
-      }),
+    final accountDtos = await _accountRepo.getAll(
+      ids: List<String>.from(accountIds),
+    );
+    final categoryDtos = await _categoryRepo.getAll(
+      ids: List<String>.from(categoryIds),
+    );
+    final tagDtos = await Future.wait(
+      dtos.map((e) => _tagRepo.getAllForTransaction(transactionId: e.id)),
     );
     final List<TransactionModel> models = [];
-    for (final element in dtos.indexed) {
-      final model = _transactionFactory.toModel(element.$2)
-        ..addParams(
+    for (final (index, dto) in dtos.indexed) {
+      final model = _transactionFactory.toModel(dto)
+        ..addAccount(
           account: _accountFactory.toModel(
-            accountDtos.singleWhere((e) => e.id == element.$2.accountId),
+            accountDtos.singleWhere((e) => e.id == dto.accountId),
           ),
+        )
+        ..addCategory(
           category: _categoryFactory.toModel(
-            categoryDtos.singleWhere((e) => e.id == element.$2.categoryId),
+            categoryDtos.singleWhere((e) => e.id == dto.categoryId),
           ),
+        )
+        ..addTags(
           tags: tagDtos
-              .elementAt(element.$1)
-              .map<TransactionTagModel>(_transactionTagFactory.toModel)
+              .elementAt(index)
+              .map<TagModel>(_tagFactory.toModel)
               .toList(growable: false),
         );
-      models.add(model.buildModel());
+      models.add(model.build());
     }
     return models;
   }
@@ -99,36 +99,43 @@ final class DomainTransactionService extends BaseDatabaseService {
       accountIds.add(element.accountId);
       categoryIds.add(element.categoryId);
     }
-    final accountDtos =
-        await _accountRepo.getAll(ids: accountIds.toList(growable: false));
-    final categoryDtos =
-        await _categoryRepo.getAll(ids: categoryIds.toList(growable: false));
-    final tagDtos = await Future.wait<List<TransactionTagDto>>(
-      dtos.map<Future<List<TransactionTagDto>>>((e) {
-        return _transactionTagRepo.getAll(transactionId: e.id);
-      }),
+    final accountDtos = await _accountRepo.getAll(
+      ids: List<String>.from(accountIds),
+    );
+    final categoryDtos = await _categoryRepo.getAll(
+      ids: List<String>.from(categoryIds),
+    );
+    final tagDtos = await Future.wait(
+      dtos.map((e) => _tagRepo.getAllForTransaction(transactionId: e.id)),
     );
     final List<TransactionModel> models = [];
-    for (final element in dtos.indexed) {
-      final model = _transactionFactory.toModel(element.$2)
-        ..addParams(
+    for (final (index, dto) in dtos.indexed) {
+      final model = _transactionFactory.toModel(dto)
+        ..addAccount(
           account: _accountFactory.toModel(
-            accountDtos.singleWhere((e) => e.id == element.$2.accountId),
+            accountDtos.singleWhere((e) => e.id == dto.accountId),
           ),
+        )
+        ..addCategory(
           category: _categoryFactory.toModel(
-            categoryDtos.singleWhere((e) => e.id == element.$2.categoryId),
+            categoryDtos.singleWhere((e) => e.id == dto.categoryId),
           ),
+        )
+        ..addTags(
           tags: tagDtos
-              .elementAt(element.$1)
-              .map<TransactionTagModel>(_transactionTagFactory.toModel)
+              .elementAt(index)
+              .map<TagModel>(_tagFactory.toModel)
               .toList(growable: false),
         );
-      models.add(model.buildModel());
+      models.add(model.build());
     }
     return models;
   }
 
-  Future<TransactionModel?> create({required TransactionVO vo}) async {
+  Future<TransactionModel?> create({
+    required TransactionVO vo,
+    required List<TransactionTagVO> tags,
+  }) async {
     final defaultColumns = newDefaultColumns;
     final dto = TransactionDto(
       id: defaultColumns.id,
@@ -143,36 +150,52 @@ final class DomainTransactionService extends BaseDatabaseService {
     final accountDto = await _accountRepo.getOne(id: dto.accountId);
     final categoryDto = await _categoryRepo.getOne(id: dto.categoryId);
     if (accountDto == null || categoryDto == null) return null;
+    // create transaction
     await _transactionRepo.create(dto: dto);
-    final List<TransactionTagDto> transactionTagDtos = [];
-    Future.wait<void>(
-      vo.tagIds.map<Future<void>>((e) {
-        final tagDefaultColumns = newDefaultColumns;
-        final tagDto = TransactionTagDto(
-          id: tagDefaultColumns.id,
-          created: tagDefaultColumns.now.toUtc().toIso8601String(),
-          updated: tagDefaultColumns.now.toUtc().toIso8601String(),
-          transactionId: dto.id,
-          tagId: e,
-        );
-        transactionTagDtos.add(tagDto);
-        return _transactionTagRepo.create(dto: tagDto);
+    // create/gather tags
+    final tagModels = await Future.wait<TagModel>(
+      tags.map((e) {
+        switch (e) {
+          case TransactionTagVOVO(:final vo):
+            final tagDefaultColumns = newDefaultColumns;
+            final tagDto = TagDto(
+              id: tagDefaultColumns.id,
+              created: tagDefaultColumns.now.toUtc().toIso8601String(),
+              updated: tagDefaultColumns.now.toUtc().toIso8601String(),
+              title: vo.title,
+            );
+            _tagRepo.create(dto: tagDto);
+            return Future.value(_tagFactory.toModel(tagDto));
+          case TransactionTagVOModel(:final model):
+            return Future.value(model);
+        }
       }),
     );
-    final model = _transactionFactory.toModel(dto)
-      ..addParams(
-        account: _accountFactory.toModel(accountDto),
-        category: _categoryFactory.toModel(categoryDto),
-        tags: transactionTagDtos
-            .map<TransactionTagModel>(_transactionTagFactory.toModel)
-            .toList(growable: false),
-      );
-    return model.buildModel();
+    // create transaction tags
+    Future.wait<void>(
+      tagModels.map((e) {
+        final transactionTagDefaultColumns = newDefaultColumns;
+        final transactionTagDto = TransactionTagDto(
+          id: transactionTagDefaultColumns.id,
+          created: transactionTagDefaultColumns.now.toUtc().toIso8601String(),
+          updated: transactionTagDefaultColumns.now.toUtc().toIso8601String(),
+          transactionId: dto.id,
+          tagId: e.id,
+        );
+        return _transactionTagRepo.create(dto: transactionTagDto);
+      }),
+    );
+    return (_transactionFactory.toModel(dto)
+          ..addAccount(account: _accountFactory.toModel(accountDto))
+          ..addCategory(category: _categoryFactory.toModel(categoryDto))
+          ..addTags(tags: tagModels))
+        .build();
   }
 
   Future<TransactionModel?> update({
     required TransactionModel transaction,
-    required TransactionFormVO vo,
+    required TransactionVO vo,
+    required List<TransactionTagVO> tags,
   }) async {
     final defaultColumns = newDefaultColumns;
     final dto = TransactionDto(
@@ -188,69 +211,55 @@ final class DomainTransactionService extends BaseDatabaseService {
     final accountDto = await _accountRepo.getOne(id: dto.accountId);
     final categoryDto = await _categoryRepo.getOne(id: dto.categoryId);
     if (accountDto == null || categoryDto == null) return null;
-
-    // delete all old transaction tags
+    // delete old transaction tags
+    final oldTransactionTagDtos =
+        await _transactionTagRepo.getAll(transactionId: transaction.id);
     await Future.wait(
-      transaction.tags.map((e) => unlinkTag(transactionTagId: e.id)),
+      oldTransactionTagDtos.map((e) => _transactionTagRepo.delete(id: e.id)),
     );
-
-    // create new tags if needed
-    final List<TagModel> tagModels = [];
-    Future.wait<void>(
-      vo.tags.map((e) {
+    // create/gather tags
+    final List<TagModel> tagModels = await Future.wait<TagModel>(
+      tags.map((e) {
         switch (e) {
-          case final TransactionFormTagVO tag:
-            final defaultColumns = newDefaultColumns;
-            final dto = TagDto(
-              id: defaultColumns.id,
-              created: defaultColumns.now.toUtc().toIso8601String(),
-              updated: defaultColumns.now.toUtc().toIso8601String(),
-              title: tag.vo.title,
+          case TransactionTagVOVO(:final vo):
+            final tagDefaultColumns = newDefaultColumns;
+            final tagDto = TagDto(
+              id: tagDefaultColumns.id,
+              created: tagDefaultColumns.now.toUtc().toIso8601String(),
+              updated: tagDefaultColumns.now.toUtc().toIso8601String(),
+              title: vo.title,
             );
-            tagModels.add(_tagFactory.toModel(dto));
-            return _tagRepo.create(dto: dto);
-          case final TransactionTagFormModel tag:
-            tagModels.add(tag.model);
-            return Future.value();
+            _tagRepo.create(dto: tagDto);
+            return Future.value(_tagFactory.toModel(tagDto));
+          case TransactionTagVOModel(:final model):
+            return Future.value(model);
         }
       }),
     );
-
-    // creating new links to the tags
-    final List<TransactionTagDto> transactionTagDtos = [];
+    // creating new transaction tags
     Future.wait<void>(
-      tagModels.map<Future<void>>((e) {
-        final tagDefaultColumns = newDefaultColumns;
-        final tagDto = TransactionTagDto(
-          id: tagDefaultColumns.id,
-          created: tagDefaultColumns.now.toUtc().toIso8601String(),
-          updated: tagDefaultColumns.now.toUtc().toIso8601String(),
+      tagModels.map((e) {
+        final transactionTagDefaultColumns = newDefaultColumns;
+        final transactionTagDto = TransactionTagDto(
+          id: transactionTagDefaultColumns.id,
+          created: transactionTagDefaultColumns.now.toUtc().toIso8601String(),
+          updated: transactionTagDefaultColumns.now.toUtc().toIso8601String(),
           transactionId: transaction.id,
           tagId: e.id,
         );
-        transactionTagDtos.add(tagDto);
-        return _transactionTagRepo.create(dto: tagDto);
+        return _transactionTagRepo.create(dto: transactionTagDto);
       }),
     );
-
-    // updating model
+    // update model
     await _transactionRepo.update(dto: dto);
-    final model = _transactionFactory.toModel(dto)
-      ..addParams(
-        account: _accountFactory.toModel(accountDto),
-        category: _categoryFactory.toModel(categoryDto),
-        tags: transactionTagDtos
-            .map<TransactionTagModel>(_transactionTagFactory.toModel)
-            .toList(growable: false),
-      );
-    return model.buildModel();
+    return (_transactionFactory.toModel(dto)
+          ..addAccount(account: _accountFactory.toModel(accountDto))
+          ..addCategory(category: _categoryFactory.toModel(categoryDto))
+          ..addTags(tags: tagModels))
+        .build();
   }
 
   Future<void> delete({required String id}) async {
     await _transactionRepo.delete(id: id);
-  }
-
-  Future<void> unlinkTag({required String transactionTagId}) async {
-    await _transactionTagRepo.delete(id: transactionTagId);
   }
 }

@@ -3,6 +3,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/domain/services/database/vo/transaction_tag.dart";
 import "package:mony_app/features/transaction_form/components/tag.dart";
 import "package:mony_app/features/transaction_form/components/tags_gradient.dart";
 import "package:mony_app/features/transaction_form/page/view_model.dart";
@@ -86,9 +87,9 @@ class TransactionFormTagsComponent extends StatelessWidget {
                             if (item == null) return const SizedBox();
 
                             final title = switch (item) {
-                              final TransactionFormTagVO odj => odj.vo.title,
-                              final TransactionTagFormModel obj =>
-                                obj.model.title,
+                              TransactionTagVOVO(:final vo) => vo.title,
+                              TransactionTagVOModel(:final model) =>
+                                model.title,
                             };
 
                             return TransactionFormTagComponent(

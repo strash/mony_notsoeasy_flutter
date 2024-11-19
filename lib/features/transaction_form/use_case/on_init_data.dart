@@ -40,19 +40,12 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
       });
     } else {
       final tags = await tagService.getAll(
-        ids: transaction.tags.map((e) => e.tagId).toList(growable: false),
+        ids: transaction.tags.map((e) => e.id).toList(growable: false),
       );
       viewModel.setProtectedState(() {
         viewModel.attachedTags = tags.map((e) {
-          return TransactionTagFormModel(e);
-        }).toList(growable: false)
-          ..sort((a, b) {
-            final indexA =
-                transaction.tags.indexWhere((e) => e.tagId == a.model.id);
-            final indexB =
-                transaction.tags.indexWhere((e) => e.tagId == b.model.id);
-            return indexA.compareTo(indexB);
-          });
+          return TransactionTagVOModel(e);
+        }).toList(growable: false);
       });
       // NOTE: wait before controller is attached
       WidgetsBinding.instance.addPostFrameCallback((timestamp) {

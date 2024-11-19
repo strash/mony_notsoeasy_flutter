@@ -86,7 +86,6 @@ void main() async {
                 accountRepo: AccountDatabaseRepository(database: appDatabase),
                 categoryRepo: CategoryDatabaseRepository(database: appDatabase),
                 transactionFactory: TransactionDatabaseFactoryImpl(),
-                transactionTagFactory: TransactionTagDatabaseFactoryImpl(),
                 tagFactory: TagDatabaseFactoryImpl(),
                 accountFactory: AccountDatabaseFactoryImpl(),
                 categoryFactory: CategoryDatabaseFactoryImpl(),

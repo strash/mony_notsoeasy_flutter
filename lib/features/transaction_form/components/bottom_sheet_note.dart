@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/appbar/component.dart";
 
 class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
   final InputController inputController;
@@ -17,13 +18,20 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // -> input
-          TextFormField(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // -> appbar
+        const AppBarComponent(
+          title: Text("Заметка"),
+          useSliver: false,
+          showDragHandle: true,
+        ),
+
+        // -> input
+        Padding(
+          padding: EdgeInsets.fromLTRB(15.w, 20.h, 15.w, 15.h + keyboardHeight),
+          child: TextFormField(
             key: inputController.key,
             focusNode: inputController.focus,
             controller: inputController.controller,
@@ -47,11 +55,8 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
             ),
             // onFieldSubmitted: (_) => onSubmitPressed(context),
           ),
-
-          // -> bottom offset
-          SizedBox(height: 15.h + keyboardHeight),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

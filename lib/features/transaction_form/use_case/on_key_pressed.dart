@@ -32,7 +32,7 @@ final class OnKeyPressed
         if (trimmedAmount.isEmpty) return;
 
         final parsedAmount = double.parse(trimmedAmount);
-        final transactionFormVO = TransactionFormVO(
+        final transactionVO = TransactionVO(
           amout: viewModel.typeController.value == ETransactionType.expense
               ? .0 - parsedAmount
               : parsedAmount,
@@ -52,6 +52,9 @@ final class OnKeyPressed
             ETransactionType.income =>
               viewModel.incomeCategoryController.value!.id,
           },
+        );
+        final transactionFormVO = TransactionFormVO(
+          transactionVO: transactionVO,
           tags: viewModel.attachedTags,
         );
 

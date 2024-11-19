@@ -18,7 +18,7 @@ final class DomainTagService extends BaseDatabaseService {
     required ETransactionType first,
   }) async {
     final order = first == ETransactionType.expense ? "ASC" : "DESC";
-    final dtos = await _tagRepo.getAllSortedBy(transactionTypeOrder: order);
+    final dtos = await _tagRepo.getAllSortedBy(order: order);
     return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
   }
 

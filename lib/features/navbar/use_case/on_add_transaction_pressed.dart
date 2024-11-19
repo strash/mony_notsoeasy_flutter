@@ -10,7 +10,6 @@ final class OnAddTransactionPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
     final transactionService = context.read<DomainTransactionService>();
-    final tagService = context.read<DomainTagService>();
     final appService = context.viewModel<AppEventService>();
 
     final result = await BottomSheetComponent.show<TransactionFormVO?>(
@@ -22,18 +21,9 @@ final class OnAddTransactionPressed extends UseCase<Future<void>, dynamic> {
     );
     if (result == null) return;
 
-    final List<TagModel> tagModels = await Future.wait(
-      result.tags.map((e) {
-        return switch (e) {
-          final TransactionFormTagVO tag => tagService.create(vo: tag.vo),
-          final TransactionTagFormModel tag => Future.value(tag.model),
-        };
-      }),
-    );
-
-    final tagIds = tagModels.map((e) => e.id).toList(growable: false);
     final transactionModel = await transactionService.create(
-      vo: result.toTransactionVO(tagIds),
+      vo: result.transactionVO,
+      tags: result.tags,
     );
 
     if (transactionModel != null) {
