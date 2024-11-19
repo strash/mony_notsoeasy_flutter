@@ -16,7 +16,7 @@ class FeedItemTagsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final gap = 4.w;
+    final gap = 5.w;
 
     return LayoutBuilder(
       builder: (context, constraints) {

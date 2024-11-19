@@ -21,7 +21,7 @@ class FeedItemComponent extends StatelessWidget {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
     final viewSize = MediaQuery.sizeOf(context);
-    final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h);
+    final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h);
 
     final categoryColor = ex?.from(transaction.category.colorName).color ??
         theme.colorScheme.surfaceContainer;
@@ -117,7 +117,7 @@ class FeedItemComponent extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 3.h),
+                    SizedBox(height: 5.h),
 
                     // -> middle row
                     ConstrainedBox(
@@ -147,7 +147,6 @@ class FeedItemComponent extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.golosText(
                             fontSize: 15.sp,
-                            height: 1.2,
                             fontWeight: FontWeight.w400,
                             color: theme.colorScheme.onSurfaceVariant,
                           ),

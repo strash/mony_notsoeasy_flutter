@@ -11,7 +11,7 @@ class FeedItemTimeComponent extends StatelessWidget {
     required this.date,
   });
 
-  double get margin => 10.w;
+  double get margin => 14.w;
 
   @override
   Widget build(BuildContext context) {

@@ -28,7 +28,7 @@ class FeedSectionComponent extends StatelessWidget {
     }).join(", ");
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(20.w, 35.h, 20.w, 10.h),
+      padding: EdgeInsets.fromLTRB(20.w, 40.h, 20.w, 10.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
