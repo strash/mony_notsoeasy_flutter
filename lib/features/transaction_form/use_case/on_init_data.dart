@@ -39,8 +39,8 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
             : accounts.firstOrNull?.copyWith();
       });
     } else {
-      final tags = await tagService.getAll(
-        ids: transaction.tags.map((e) => e.id).toList(growable: false),
+      final tags = await tagService.getAllForTransaction(
+        transactionId: transaction.id,
       );
       viewModel.setProtectedState(() {
         viewModel.attachedTags = tags.map((e) {

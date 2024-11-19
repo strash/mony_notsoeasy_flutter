@@ -27,6 +27,14 @@ final class DomainTagService extends BaseDatabaseService {
     return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
   }
 
+  Future<List<TagModel>> getAllForTransaction({
+    required String transactionId,
+  }) async {
+    final dtos =
+        await _tagRepo.getAllForTransaction(transactionId: transactionId);
+    return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
+  }
+
   Future<List<TagModel>> getMany({required int page}) async {
     final dtos = await _tagRepo.getMany(
       limit: perPage,
