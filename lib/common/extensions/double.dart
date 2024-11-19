@@ -3,6 +3,7 @@ import "dart:math";
 import "package:intl/intl.dart";
 
 extension DoubleEx on double {
+  /// Returns formatted number
   String currency({
     required String name,
     required String? symbol,
@@ -14,6 +15,20 @@ extension DoubleEx on double {
       decimalDigits: showDecimal ? 2 : 0,
     );
     return formatter.format(this);
+  }
+
+  /// Checks if value has a fraction
+  ///
+  /// Example:
+  /// ```dart
+  /// final value1 = 123.34
+  /// print(value1.hasFraction); // true
+  ///
+  /// final value2 = 123.0
+  /// print(value2.hasFraction); // false
+  /// ```
+  bool get hasFraction {
+    return roundToFraction(0) != this;
   }
 
   /// Returns rounded double number to a specified number of decimal places.

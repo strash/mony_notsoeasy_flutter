@@ -49,8 +49,7 @@ final class TransactionFormViewModel
   late final timeController =
       TimeController(transaction?.date ?? DateTime.now());
 
-  late final amountNotifier =
-      ValueNotifier<String>(transaction?.amount.abs().toString() ?? "0");
+  late final ValueNotifier<String> amountNotifier;
 
   late final accountController =
       SelectController<AccountModel?>(transaction?.account);
@@ -162,6 +161,11 @@ final class TransactionFormViewModel
   @override
   void initState() {
     super.initState();
+    final amount = transaction?.amount.abs() ?? .0;
+    final hasFraction = amount.hasFraction;
+    amountNotifier = ValueNotifier<String>(
+      (hasFraction ? amount.roundToFraction(2) : amount.toInt()).toString(),
+    );
     OnInitData().call(context, this);
   }
 
