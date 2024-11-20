@@ -54,20 +54,24 @@ INSERT INTO $_categories (
     final batch = db.batch();
     // expense categories
     final expenseCategories = <_CategoryValueObject>[
-      (icon: "🛒", color: EColorName.red.name, title: "Продукты"),
+      (icon: "🛒", color: EColorName.maximumBluePurple.name, title: "Продукты"),
       (icon: "🍔", color: EColorName.philippineYellow.name, title: "Еда"),
-      (icon: "😍", color: EColorName.corn.name, title: "Забота о себе"),
+      (
+        icon: "😍",
+        color: EColorName.americanOrange.name,
+        title: "Забота о себе"
+      ),
       (icon: "🐶", color: EColorName.cafeAuLait.name, title: "Питомцы"),
       (icon: "🏠", color: EColorName.bananaYellow.name, title: "Аренда"),
       (icon: "🚑", color: EColorName.inchworm.name, title: "Здоровье"),
-      (icon: "🚖", color: EColorName.americanOrange.name, title: "Транспорт"),
+      (icon: "🚖", color: EColorName.corn.name, title: "Транспорт"),
       (icon: "🔄", color: EColorName.babyBlue.name, title: "Подписки"),
       (
         icon: "🧦",
         color: EColorName.richBrilliantLavender.name,
         title: "Гардероб"
       ),
-      (icon: "🎁", color: EColorName.vividRaspberry.name, title: "Подарки"),
+      (icon: "🎁", color: EColorName.mauvelous.name, title: "Подарки"),
       (icon: "🪴", color: EColorName.vividMalachite.name, title: "Дом"),
       (icon: "💻", color: EColorName.cadet.name, title: "Девайсы"),
     ];
@@ -87,7 +91,7 @@ INSERT INTO $_categories (
     final incomeCategories = <_CategoryValueObject>[
       (icon: "🤑", color: EColorName.vividMalachite.name, title: "Зарплата"),
       (icon: "💼", color: EColorName.azure.name, title: "Фриланс"),
-      (icon: "🧧", color: EColorName.red.name, title: "Подарки"),
+      (icon: "🧧", color: EColorName.mauvelous.name, title: "Подарки"),
       (icon: "💹", color: EColorName.bananaYellow.name, title: "Инверстиции"),
       (icon: "🪙", color: EColorName.inchworm.name, title: "Чаевые"),
       (icon: "💸", color: EColorName.cafeAuLait.name, title: "Займ"),
