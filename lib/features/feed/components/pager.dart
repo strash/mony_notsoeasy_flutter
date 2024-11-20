@@ -6,9 +6,9 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
-import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/gen/assets.gen.dart";
 import "package:rxdart/rxdart.dart";
 import "package:smooth_page_indicator/smooth_page_indicator.dart";
@@ -68,11 +68,12 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(
-              sigmaX: NavbarView.kSigma,
-              sigmaY: NavbarView.kSigma,
+              sigmaX: kTranslucentPanelBlurSigma,
+              sigmaY: kTranslucentPanelBlurSigma,
             ),
             child: ColoredBox(
-              color: theme.colorScheme.surfaceContainer.withOpacity(.5),
+              color: theme.colorScheme.surfaceContainer
+                  .withOpacity(kTranslucentPanelOpacity),
               child: SizedBox(
                 width: 80.w,
                 height: 30.h,

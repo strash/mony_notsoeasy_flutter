@@ -4,6 +4,7 @@ import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/components/components.dart";
 import "package:mony_app/features/navbar/navbar.dart";
@@ -12,8 +13,12 @@ import "package:rxdart/rxdart.dart";
 class NavbarView extends StatelessWidget {
   static final double kTabHeight = 54.h;
   static final double kBottomMargin = 8.r;
-  static const double kSigma = 18.0;
   static final double kRadius = 20.r;
+  static double bottomOffset(BuildContext context) =>
+      MediaQuery.of(context).viewPadding.bottom +
+      kBottomMargin * 2.0 +
+      kTabHeight +
+      50.h;
 
   const NavbarView({super.key});
 
@@ -63,13 +68,13 @@ class NavbarView extends StatelessWidget {
                           ),
                           child: BackdropFilter(
                             filter: ImageFilter.blur(
-                              sigmaX: kSigma,
-                              sigmaY: kSigma,
+                              sigmaX: kTranslucentPanelBlurSigma,
+                              sigmaY: kTranslucentPanelBlurSigma,
                               tileMode: TileMode.repeated,
                             ),
                             child: ColoredBox(
                               color: theme.colorScheme.surfaceContainer
-                                  .withOpacity(.6),
+                                  .withOpacity(kTranslucentPanelOpacity),
                               child: Row(
                                 children: NavbarTabItem.values.map((e) {
                                   return Expanded(

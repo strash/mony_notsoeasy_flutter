@@ -3,6 +3,7 @@ import "dart:ui";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/constants.dart";
 import "package:mony_app/components/components.dart";
 
 class AppBarComponent extends StatelessWidget {
@@ -191,7 +192,7 @@ class _AppBarState extends State<_AppBar> {
       size: Size.fromHeight(minExtent),
       child: ColoredBox(
         color: theme.colorScheme.surface
-            .withOpacity(widget.showBackground ? .75 : .0),
+            .withOpacity(widget.showBackground ? kTranslucentPanelOpacity : .0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -252,7 +253,10 @@ class _AppBarState extends State<_AppBar> {
     return ClipRect(
       child: RepaintBoundary(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
+          filter: ImageFilter.blur(
+            sigmaX: kTranslucentPanelBlurSigma,
+            sigmaY: kTranslucentPanelBlurSigma,
+          ),
           child: child,
         ),
       ),

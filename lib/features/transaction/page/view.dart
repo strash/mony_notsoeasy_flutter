@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
+import "package:mony_app/components/appbar_button/component.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/transaction/components/components.dart";
 import "package:mony_app/features/transaction/page/page.dart";
@@ -13,11 +14,7 @@ class TransactionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewPadding = MediaQuery.paddingOf(context);
-    final bottomOffset = viewPadding.bottom +
-        NavbarView.kBottomMargin * 2.0 +
-        NavbarView.kTabHeight +
-        50.h;
+    final bottomOffset = NavbarView.bottomOffset(context);
 
     final viewModel = context.viewModel<TransactionViewModel>();
     final onEditPressed = viewModel<OnEditTransactionPressed>();
@@ -36,7 +33,7 @@ class TransactionView extends StatelessWidget {
             trailing: Row(
               children: [
                 // -> button edit
-                TransactionAppBarIconComponent(
+                AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
                   color: theme.colorScheme.primary,
                   onTap: () => onEditPressed(context, transaction),
@@ -44,8 +41,7 @@ class TransactionView extends StatelessWidget {
                 SizedBox(width: 4.w),
 
                 // -> button delete
-                // TODO: показывать алерт перед удалением
-                TransactionAppBarIconComponent(
+                AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
                   color: theme.colorScheme.primary,
                   onTap: () => onDeletePressed(context, transaction),
@@ -55,6 +51,7 @@ class TransactionView extends StatelessWidget {
             ),
           ),
 
+          // -> content
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             sliver: SliverToBoxAdapter(
@@ -62,6 +59,7 @@ class TransactionView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // TODO: открывать экран категории
                   // -> category
                   TransactionCategoryComponent(
                     category: transaction.category,
@@ -76,6 +74,7 @@ class TransactionView extends StatelessWidget {
                   TransactionDateComponent(date: transaction.date),
                   SizedBox(height: 40.h),
 
+                  // TODO: открывать экран аккаунта
                   // -> account
                   TransactionAccountComponent(account: transaction.account),
 

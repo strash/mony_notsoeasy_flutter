@@ -31,15 +31,12 @@ class FeedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.paddingOf(context);
-
-    final bottomOffset = viewPadding.bottom +
-        NavbarView.kBottomMargin * 2.0 +
-        NavbarView.kTabHeight +
-        50.h;
+    final bottomOffset = NavbarView.bottomOffset(context);
 
     final viewModel = context.viewModel<FeedViewModel>();
     final pages = viewModel.pages;
     final onAddAccountPressed = viewModel<OnAddAccountPressed>();
+    final onAccountPressed = viewModel<OnAccountPressed>();
     final onPageChanged = viewModel<OnPageChanged>();
     final scrollControllers = viewModel.scrollControllers;
 
@@ -82,7 +79,10 @@ class FeedView extends StatelessWidget {
                       top: viewPadding.top + 60.h,
                     ),
                     sliver: SliverToBoxAdapter(
-                      child: FeedAccountComponent(page: page),
+                      child: FeedAccountComponent(
+                        page: page,
+                        onTap: onAccountPressed,
+                      ),
                     ),
                   ),
 

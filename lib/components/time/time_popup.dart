@@ -4,7 +4,7 @@ import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/components/time/component.dart";
 import "package:mony_app/components/time/time_proxy.dart";
 
@@ -85,7 +85,6 @@ class _TimePopupComponentState extends State<TimePopupComponent>
         animation: _animation,
         builder: (context, child) {
           final value = _animation.value;
-          final sigma = value * 15.0;
 
           return Stack(
             fit: StackFit.expand,
@@ -130,12 +129,12 @@ class _TimePopupComponentState extends State<TimePopupComponent>
                         ),
                         child: BackdropFilter(
                           filter: ImageFilter.blur(
-                            sigmaX: sigma,
-                            sigmaY: sigma,
+                            sigmaX: kTranslucentPanelBlurSigma,
+                            sigmaY: kTranslucentPanelBlurSigma,
                           ),
                           child: ColoredBox(
                             color: theme.colorScheme.surfaceContainer
-                                .withOpacity(.85),
+                                .withOpacity(kTranslucentPanelOpacity),
                             child: Stack(
                               children: [
                                 // -> decal

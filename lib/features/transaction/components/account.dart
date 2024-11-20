@@ -18,7 +18,7 @@ class TransactionAccountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-    final accountColor =
+    final color =
         ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
 
     return Column(
@@ -37,7 +37,7 @@ class TransactionAccountComponent extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
-                  color: accountColor,
+                  color: color,
                 ),
               ),
             ),
@@ -49,10 +49,7 @@ class TransactionAccountComponent extends StatelessWidget {
                 Assets.icons.chevronForward,
                 width: 20.r,
                 height: 20.r,
-                colorFilter: ColorFilter.mode(
-                  accountColor,
-                  BlendMode.srcIn,
-                ),
+                colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
               ),
             ),
           ],

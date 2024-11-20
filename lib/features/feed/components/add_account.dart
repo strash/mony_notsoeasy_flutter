@@ -3,7 +3,7 @@ import "dart:ui";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
-import "package:mony_app/features/navbar/page/view.dart";
+import "package:mony_app/common/constants.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class FeedAddAccountComponent extends StatelessWidget {
@@ -33,8 +33,8 @@ class FeedAddAccountComponent extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(20.r)),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
-                    sigmaX: NavbarView.kSigma,
-                    sigmaY: NavbarView.kSigma,
+                    sigmaX: kTranslucentPanelBlurSigma,
+                    sigmaY: kTranslucentPanelBlurSigma,
                   ),
                   child: ColoredBox(
                     color: theme.colorScheme.surfaceContainer.withOpacity(.5),

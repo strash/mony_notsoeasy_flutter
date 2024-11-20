@@ -33,7 +33,7 @@ class BottomSheetComponent extends StatefulWidget {
     if (navigator == null) return Future.value();
     final theme = Theme.of(context);
 
-    return navigator.push(
+    return navigator.push<T?>(
       ModalBottomSheetRoute<T>(
         builder: (context) {
           return BottomSheetComponent(

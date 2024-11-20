@@ -16,7 +16,7 @@ class TransactionCategoryComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-    final categoryColor =
+    final color =
         ex?.from(category.colorName).color ?? theme.colorScheme.onSurface;
 
     return Column(
@@ -33,11 +33,11 @@ class TransactionCategoryComponent extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Color.lerp(
-                      categoryColor,
+                      color,
                       const Color(0xFFFFFFFF),
                       .3,
                     )!,
-                    categoryColor,
+                    color,
                   ],
                 ),
                 shape: SmoothRectangleBorder(
@@ -72,7 +72,7 @@ class TransactionCategoryComponent extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
-                  color: categoryColor,
+                  color: color,
                 ),
               ),
             ),
@@ -85,7 +85,7 @@ class TransactionCategoryComponent extends StatelessWidget {
                 width: 20.r,
                 height: 20.r,
                 colorFilter: ColorFilter.mode(
-                  categoryColor,
+                  color,
                   BlendMode.srcIn,
                 ),
               ),

@@ -34,6 +34,10 @@ class SettingsView extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             child: const Text("Импорт"),
           ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            child: const Text("Подтверждать удаление транзакций (да/нет)"),
+          ),
         ],
       ),
     );
