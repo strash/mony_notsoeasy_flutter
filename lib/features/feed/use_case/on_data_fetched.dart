@@ -11,29 +11,37 @@ final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue> {
   Future<void> call(BuildContext context, [TOnDataFetchedValue? value]) async {
     if (value == null) throw ArgumentError.notNull();
 
-    final transactionService = context.read<DomainTransactionService>();
-
     final viewModel = value.viewModel;
     final currentPage = viewModel.pages.elementAt(value.pageIndex);
     if (!currentPage.canLoadMore) return;
-    final pageIndex = currentPage.page + 1;
-    final data = await transactionService.getMany(page: pageIndex);
-    final transactions = currentPage.feed.merge(data)
-      ..sort((a, b) => b.date.compareTo(a.date));
 
-    switch (viewModel.pages.elementAt(value.pageIndex)) {
-      case final FeedPageStateAllAccounts page:
+    final page = currentPage.page + 1;
+    final transactionService = context.read<DomainTransactionService>();
+
+    switch (currentPage) {
+      // -> data for all accounts
+      case final FeedPageStateAllAccounts state:
+        final data = await transactionService.getMany(page: page);
+        final transactions = currentPage.feed.merge(data)
+          ..sort((a, b) => b.date.compareTo(a.date));
         viewModel.setProtectedState(() {
-          viewModel.pages[value.pageIndex] = page.copyWith(
-            page: pageIndex,
+          viewModel.pages[value.pageIndex] = state.copyWith(
+            page: page,
             feed: transactions,
             canLoadMore: data.isNotEmpty,
           );
         });
-      case final FeedPageStateSingleAccount page:
+      // -> data for an account
+      case final FeedPageStateSingleAccount state:
+        final data = await transactionService.getMany(
+          page: page,
+          accountId: state.account.id,
+        );
+        final transactions = currentPage.feed.merge(data)
+          ..sort((a, b) => b.date.compareTo(a.date));
         viewModel.setProtectedState(() {
-          viewModel.pages[value.pageIndex] = page.copyWith(
-            page: pageIndex,
+          viewModel.pages[value.pageIndex] = state.copyWith(
+            page: page,
             feed: transactions,
             canLoadMore: data.isNotEmpty,
           );

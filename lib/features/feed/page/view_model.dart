@@ -90,8 +90,8 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
   void _onFeedEvent(FeedEventScrolledToBottom event) {
     if (!context.mounted) return;
-    OnDataFetched()
-        .call(context, (viewModel: this, pageIndex: event.pageIndex));
+    final value = (viewModel: this, pageIndex: event.pageIndex);
+    OnDataFetched().call(context, value);
   }
 
   @override
