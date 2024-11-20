@@ -1,42 +1,12 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/components.dart";
-import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/transaction_form/page/page.dart";
-import "package:provider/provider.dart";
+import "package:mony_app/features/navbar/page/page.dart";
 
 final class OnAddTransactionPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
-    final transactionService = context.read<DomainTransactionService>();
-    final appService = context.viewModel<AppEventService>();
-
-    // TODO: отправлять сообщение, которое будет слушать feed и уже будет
-    // открывать шит
-    // TODO: при этом если в фокусе конктерный счет, то его подставлять в
-    // селект счета
-    final result = await BottomSheetComponent.show<TransactionFormVO?>(
-      context,
-      showDragHandle: false,
-      builder: (context, bottom) {
-        return const TransactionFormPage();
-      },
-    );
-    if (result == null) return;
-
-    final transactionModel = await transactionService.create(
-      vo: result.transactionVO,
-      tags: result.tags,
-    );
-
-    if (transactionModel != null) {
-      appService.notify(
-        EventTransactionCreated(
-          sender: TransactionFormViewModel,
-          transaction: transactionModel,
-        ),
-      );
-    }
+    final viewModel = context.viewModel<NavBarViewModel>();
+    viewModel.subject.add(NavBarEventAddTransactionPreseed());
   }
 }

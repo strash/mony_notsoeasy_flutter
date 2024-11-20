@@ -9,57 +9,57 @@ import "package:rxdart/subjects.dart";
 export "../use_case/use_case.dart";
 export "./event.dart";
 
-enum NavbarTabItem implements IDescriptable {
+enum NavBarTabItem implements IDescriptable {
   feed,
   stats,
   settings,
   ;
 
-  static int get length => NavbarTabItem.values.length;
+  static int get length => NavBarTabItem.values.length;
 
-  static NavbarTabItem get defaultValue => NavbarTabItem.feed;
+  static NavBarTabItem get defaultValue => NavBarTabItem.feed;
 
-  static NavbarTabItem from(int index) {
-    return NavbarTabItem.values.elementAt(index);
+  static NavBarTabItem from(int index) {
+    return NavBarTabItem.values.elementAt(index);
   }
 
   @override
   String get description {
     return switch (this) {
-      NavbarTabItem.feed => "Лента",
-      NavbarTabItem.stats => "Статистика",
-      NavbarTabItem.settings => "Настройки",
+      NavBarTabItem.feed => "Лента",
+      NavBarTabItem.stats => "Статистика",
+      NavBarTabItem.settings => "Настройки",
     };
   }
 }
 
-class NavbarViewModelBuilder extends StatefulWidget {
-  const NavbarViewModelBuilder({super.key});
+class NavBarViewModelBuilder extends StatefulWidget {
+  const NavBarViewModelBuilder({super.key});
 
   @override
-  ViewModelState<NavbarViewModelBuilder> createState() => NavbarViewModel();
+  ViewModelState<NavBarViewModelBuilder> createState() => NavBarViewModel();
 }
 
-final class NavbarViewModel extends ViewModelState<NavbarViewModelBuilder> {
-  final subject = BehaviorSubject<NavbarEvent>.seeded(
-    NavbarEventTabChanged(NavbarTabItem.defaultValue),
+final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
+  final subject = BehaviorSubject<NavBarEvent>.seeded(
+    NavBarEventTabChanged(NavBarTabItem.defaultValue),
   );
 
-  NavbarTabItem currentTab = NavbarTabItem.defaultValue;
+  NavBarTabItem currentTab = NavBarTabItem.defaultValue;
 
-  final _routes = NavbarTabItem.values.map((e) {
+  final _routes = NavBarTabItem.values.map((e) {
     return switch (e) {
-      NavbarTabItem.feed => const FeedPage(),
-      NavbarTabItem.stats => const StatsPage(),
-      NavbarTabItem.settings => const SettingsPage(),
+      NavBarTabItem.feed => const FeedPage(),
+      NavBarTabItem.stats => const StatsPage(),
+      NavBarTabItem.settings => const SettingsPage(),
     };
   }).toList(growable: false);
 
-  final _navigatorTabKeys = NavbarTabItem.values.map((e) {
+  final _navigatorTabKeys = NavBarTabItem.values.map((e) {
     return GlobalKey<NavigatorState>(debugLabel: "Tab $e");
   }).toList(growable: false);
 
-  GlobalKey<NavigatorState> getNavigatorTabKey(NavbarTabItem tab) {
+  GlobalKey<NavigatorState> getNavigatorTabKey(NavBarTabItem tab) {
     return _navigatorTabKeys.elementAt(tab.index);
   }
 
@@ -71,7 +71,7 @@ final class NavbarViewModel extends ViewModelState<NavbarViewModelBuilder> {
     scrollController.animateTo(.0, duration: duration, curve: curve);
   }
 
-  Route<dynamic> onGenerateRoute(NavbarTabItem tab, RouteSettings settings) {
+  Route<dynamic> onGenerateRoute(NavBarTabItem tab, RouteSettings settings) {
     return MaterialPageRoute(
       settings: settings,
       builder: (context) => _routes.elementAt(tab.index),
@@ -86,7 +86,7 @@ final class NavbarViewModel extends ViewModelState<NavbarViewModelBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModel<NavbarViewModel>(
+    return ViewModel<NavBarViewModel>(
       viewModel: this,
       useCases: [
         () => OnAddTransactionPressed(),
@@ -94,7 +94,7 @@ final class NavbarViewModel extends ViewModelState<NavbarViewModelBuilder> {
         () => OnPopTabsToRootRequested(),
         () => OnTopOfScreenPressed(),
       ],
-      child: const NavbarView(),
+      child: const NavBarView(),
     );
   }
 }

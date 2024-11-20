@@ -10,7 +10,7 @@ import "package:mony_app/features/navbar/components/components.dart";
 import "package:mony_app/features/navbar/navbar.dart";
 import "package:rxdart/rxdart.dart";
 
-class NavbarView extends StatelessWidget {
+class NavBarView extends StatelessWidget {
   static final double kTabHeight = 54.h;
   static final double kBottomMargin = 8.r;
   static final double kRadius = 20.r;
@@ -20,17 +20,17 @@ class NavbarView extends StatelessWidget {
       kTabHeight +
       50.h;
 
-  const NavbarView({super.key});
+  const NavBarView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewPadding = MediaQuery.viewPaddingOf(context);
-    final viewModel = context.viewModel<NavbarViewModel>();
+    final viewModel = context.viewModel<NavBarViewModel>();
     final margin = viewPadding.bottom + kBottomMargin;
 
-    return StreamBuilder<NavbarEvent>(
-      stream: viewModel.subject.whereType<NavbarEventTabChanged>(),
+    return StreamBuilder<NavBarEvent>(
+      stream: viewModel.subject.whereType<NavBarEventTabChanged>(),
       builder: (context, snapshot) {
         return Scaffold(
           body: Stack(
@@ -38,7 +38,7 @@ class NavbarView extends StatelessWidget {
               // -> pages
               IndexedStack(
                 index: viewModel.currentTab.index,
-                children: NavbarTabItem.values.map((e) {
+                children: NavBarTabItem.values.map((e) {
                   return NavigatorWrapper(
                     navigatorKey: viewModel.getNavigatorTabKey(e),
                     onGenerateRoute: (settings) {
@@ -76,7 +76,7 @@ class NavbarView extends StatelessWidget {
                               color: theme.colorScheme.surfaceContainer
                                   .withOpacity(kTranslucentPanelOpacity),
                               child: Row(
-                                children: NavbarTabItem.values.map((e) {
+                                children: NavBarTabItem.values.map((e) {
                                   return Expanded(
                                     child: NavBarTabComponent(index: e.index),
                                   );

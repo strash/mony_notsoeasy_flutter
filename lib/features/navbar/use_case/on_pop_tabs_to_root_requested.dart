@@ -3,11 +3,11 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/navbar/navbar.dart";
 
-final class OnPopTabsToRootRequested extends UseCase<void, NavbarTabItem> {
+final class OnPopTabsToRootRequested extends UseCase<void, NavBarTabItem> {
   @override
-  void call(BuildContext context, [NavbarTabItem? value]) {
+  void call(BuildContext context, [NavBarTabItem? value]) {
     if (value == null) throw ArgumentError.notNull();
-    final viewModel = context.viewModel<NavbarViewModel>();
+    final viewModel = context.viewModel<NavBarViewModel>();
     final key = viewModel.getNavigatorTabKey(value);
     final navigatorState = key.currentState;
     if (navigatorState == null) return;
@@ -17,7 +17,7 @@ final class OnPopTabsToRootRequested extends UseCase<void, NavbarTabItem> {
         navigatorState.popUntil((route) => route.isFirst);
       // если нечего закрывать, то скролим наверх
       case false:
-        viewModel.subject.add(NavbarEventScrollToTopRequested());
+        viewModel.subject.add(NavBarEventScrollToTopRequested());
     }
   }
 }

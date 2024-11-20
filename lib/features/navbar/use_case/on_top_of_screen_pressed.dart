@@ -14,7 +14,7 @@ final class OnTopOfScreenPressed
   void call(BuildContext context, [TOnTopOfScreenPressedValue? value]) {
     if (value == null) throw ArgumentError.notNull();
 
-    final viewModel = context.viewModel<NavbarViewModel>();
+    final viewModel = context.viewModel<NavBarViewModel>();
 
     if (value.details.localPosition.dy < 70) {
       viewModel.returnToTop(value.scrollController);

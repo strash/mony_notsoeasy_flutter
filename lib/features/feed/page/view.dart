@@ -31,7 +31,7 @@ class FeedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.paddingOf(context);
-    final bottomOffset = NavbarView.bottomOffset(context);
+    final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<FeedViewModel>();
     final pages = viewModel.pages;
@@ -92,8 +92,8 @@ class FeedView extends StatelessWidget {
                       hasScrollBody: false,
                       child: Padding(
                         padding: EdgeInsets.only(
-                          bottom: NavbarView.kTabHeight +
-                              NavbarView.kBottomMargin * 2.0 +
+                          bottom: NavBarView.kTabHeight +
+                              NavBarView.kBottomMargin * 2.0 +
                               20.h,
                         ),
                         child: const FeedEmptyStateComponent(),

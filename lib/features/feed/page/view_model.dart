@@ -24,7 +24,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
   late final StreamSubscription<Event> _appSub;
   late final StreamSubscription<FeedEvent> _feedSub;
-  late final StreamSubscription<NavbarEvent> _navbarSub;
+  late final StreamSubscription<NavBarEvent> _navbarSub;
 
   final pageController = PageController();
   final List<ScrollController> scrollControllers = [];
@@ -68,16 +68,23 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
   bool _pagingToStart = false;
 
-  void _onNavBarEvent(NavbarEventScrollToTopRequested e) {
+  void _onNavBarEvent(NavBarEvent e) {
     if (!context.mounted) return;
-    final controller = scrollControllers.elementAt(currentPageIndex);
-    // -> scroll to top
-    if (controller.isReady && controller.position.pixels > .0) {
-      context.viewModel<NavbarViewModel>().returnToTop(controller);
-      // -> open first page
-    } else {
-      if (currentPageIndex == 0 || _pagingToStart) return;
-      openPage(0);
+    switch (e) {
+      case NavBarEventTabChanged():
+        break;
+      case NavBarEventScrollToTopRequested():
+        final controller = scrollControllers.elementAt(currentPageIndex);
+        // -> scroll to top
+        if (controller.isReady && controller.position.pixels > .0) {
+          context.viewModel<NavBarViewModel>().returnToTop(controller);
+          // -> open first page
+        } else {
+          if (currentPageIndex == 0 || _pagingToStart) return;
+          openPage(0);
+        }
+      case NavBarEventAddTransactionPreseed():
+        OnNavbarAddTransactionPressed().call(context, this);
     }
   }
 
@@ -101,11 +108,8 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
       // -> navbar
-      _navbarSub = context
-          .viewModel<NavbarViewModel>()
-          .subject
-          .whereType<NavbarEventScrollToTopRequested>()
-          .listen(_onNavBarEvent);
+      _navbarSub =
+          context.viewModel<NavBarViewModel>().subject.listen(_onNavBarEvent);
 
       // -> scroll controllers
       OnInitialDataFetched().call(context, this).then((_) {

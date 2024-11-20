@@ -14,7 +14,7 @@ class TransactionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final bottomOffset = NavbarView.bottomOffset(context);
+    final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<TransactionViewModel>();
     final onEditPressed = viewModel<OnEditTransactionPressed>();

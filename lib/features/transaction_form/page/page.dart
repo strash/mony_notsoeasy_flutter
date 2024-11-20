@@ -6,11 +6,19 @@ export "./view_model.dart";
 
 class TransactionFormPage extends StatelessWidget {
   final TransactionModel? transaction;
+  final AccountModel? account;
 
-  const TransactionFormPage({super.key, this.transaction});
+  const TransactionFormPage({
+    super.key,
+    this.transaction,
+    this.account,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TransactionFormViewModelBuilder(transaction: transaction);
+    return TransactionFormViewModelBuilder(
+      transaction: transaction,
+      account: account,
+    );
   }
 }

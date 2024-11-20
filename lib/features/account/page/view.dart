@@ -16,7 +16,7 @@ class AccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-    final bottomOffset = NavbarView.bottomOffset(context);
+    final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<AccountViewModel>();
     final account = viewModel.account;

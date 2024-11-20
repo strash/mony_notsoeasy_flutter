@@ -5,12 +5,12 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-extension on NavbarTabItem {
+extension on NavBarTabItem {
   String get icon {
     return switch (this) {
-      NavbarTabItem.feed => Assets.icons.walletPassFill,
-      NavbarTabItem.stats => Assets.icons.chartBarFill,
-      NavbarTabItem.settings => Assets.icons.gearshapeFill,
+      NavBarTabItem.feed => Assets.icons.walletPassFill,
+      NavBarTabItem.stats => Assets.icons.chartBarFill,
+      NavBarTabItem.settings => Assets.icons.gearshapeFill,
     };
   }
 }
@@ -26,9 +26,9 @@ class NavBarTabComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<NavbarViewModel>();
+    final viewModel = context.viewModel<NavBarViewModel>();
     final onTabChanged = viewModel<OnTabChangeRequested>();
-    final tab = NavbarTabItem.from(index);
+    final tab = NavBarTabItem.from(index);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,

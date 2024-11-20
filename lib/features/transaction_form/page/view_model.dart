@@ -25,10 +25,12 @@ final class TransactionFormVO {
 
 final class TransactionFormViewModelBuilder extends StatefulWidget {
   final TransactionModel? transaction;
+  final AccountModel? account;
 
   const TransactionFormViewModelBuilder({
     super.key,
     this.transaction,
+    this.account,
   });
 
   @override
@@ -39,6 +41,7 @@ final class TransactionFormViewModelBuilder extends StatefulWidget {
 final class TransactionFormViewModel
     extends ViewModelState<TransactionFormViewModelBuilder> {
   TransactionModel? get transaction => widget.transaction;
+  AccountModel? get account => widget.account;
 
   late final typeController = TabGroupController(
     transaction?.category.transactionType ?? ETransactionType.defaultValue,

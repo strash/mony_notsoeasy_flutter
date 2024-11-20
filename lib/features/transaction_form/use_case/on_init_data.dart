@@ -30,12 +30,15 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
     };
 
     if (transaction == null) {
-      final lastTransactions = await transactionService.getMany(page: 0);
-      viewModel.setProtectedState(() {
-        viewModel.accountController.value = lastTransactions.firstOrNull != null
-            ? lastTransactions.firstOrNull?.account.copyWith()
+      if (viewModel.account == null) {
+        final lastTransactions = await transactionService.getMany(page: 0);
+        final hasAccount = lastTransactions.firstOrNull != null;
+        viewModel.accountController.value = hasAccount
+            ? lastTransactions.first.account.copyWith()
             : accounts.firstOrNull?.copyWith();
-      });
+      } else {
+        viewModel.accountController.value = viewModel.account!.copyWith();
+      }
     } else {
       viewModel.setProtectedState(() {
         viewModel.attachedTags = transaction.tags.map((e) {

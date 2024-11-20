@@ -41,7 +41,7 @@ final class NavigatorDelegate extends RouterDelegate<Object>
             );
             if (fSnapshot.hasData) {
               final hasAccounts = fSnapshot.data!;
-              child = hasAccounts ? const NavbarPage() : const StartPage();
+              child = hasAccounts ? const NavBarPage() : const StartPage();
             }
             return child;
           },

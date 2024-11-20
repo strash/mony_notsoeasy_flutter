@@ -1,11 +1,13 @@
 import "package:mony_app/features/navbar/page/view_model.dart";
 
-sealed class NavbarEvent {}
+sealed class NavBarEvent {}
 
-final class NavbarEventTabChanged extends NavbarEvent {
-  final NavbarTabItem tab;
+final class NavBarEventTabChanged extends NavBarEvent {
+  final NavBarTabItem tab;
 
-  NavbarEventTabChanged(this.tab);
+  NavBarEventTabChanged(this.tab);
 }
 
-final class NavbarEventScrollToTopRequested extends NavbarEvent {}
+final class NavBarEventScrollToTopRequested extends NavBarEvent {}
+
+final class NavBarEventAddTransactionPreseed extends NavBarEvent {}
