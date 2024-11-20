@@ -20,6 +20,7 @@ class FeedAccountAmountComponent extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // -> amount
         Flexible(
           child: FittedBox(
             child: Text(
@@ -34,6 +35,8 @@ class FeedAccountAmountComponent extends StatelessWidget {
             ),
           ),
         ),
+
+        // -> currency code
         Padding(
           padding: EdgeInsets.only(left: 3.w, top: 8.h),
           child: DecoratedBox(

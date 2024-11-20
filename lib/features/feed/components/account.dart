@@ -11,10 +11,12 @@ import "package:mony_app/gen/assets.gen.dart";
 
 class FeedAccountComponent extends StatelessWidget {
   final FeedPageState page;
+  final UseCase<void, FeedPageState> onTap;
 
   const FeedAccountComponent({
     super.key,
     required this.page,
+    required this.onTap,
   });
 
   String get _title {
@@ -38,85 +40,89 @@ class FeedAccountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // -> sums
-        switch (page) {
-          final FeedPageStateAllAccounts page => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: page.balances.foldByCurrency().map(
-                (e) {
-                  return FeedAccountAmountComponent(
-                    amount: e.totalSum.currency(
-                      name: e.currency.name,
-                      symbol: e.currency.symbol,
-                    ),
-                    code: e.currency.code,
-                  );
-                },
-              ).toList(growable: false),
-            ),
-          final FeedPageStateSingleAccount page => FeedAccountAmountComponent(
-              amount: page.balance.totalSum.currency(
-                name: page.balance.currency.name,
-                symbol: page.balance.currency.symbol,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => onTap(context, page),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // -> sums
+          switch (page) {
+            final FeedPageStateAllAccounts page => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: page.balances.foldByCurrency().map(
+                  (e) {
+                    return FeedAccountAmountComponent(
+                      amount: e.totalSum.currency(
+                        name: e.currency.name,
+                        symbol: e.currency.symbol,
+                      ),
+                      code: e.currency.code,
+                    );
+                  },
+                ).toList(growable: false),
               ),
-              code: page.balance.currency.code,
-            ),
-        },
-        SizedBox(height: 10.h),
+            final FeedPageStateSingleAccount page => FeedAccountAmountComponent(
+                amount: page.balance.totalSum.currency(
+                  name: page.balance.currency.name,
+                  symbol: page.balance.currency.symbol,
+                ),
+                code: page.balance.currency.code,
+              ),
+          },
+          SizedBox(height: 10.h),
 
-        // -> title
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              child: Text(
-                _title,
-                textAlign: TextAlign.start,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+          // -> title
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: Text(
+                  _title,
+                  textAlign: TextAlign.start,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.golosText(
+                    fontSize: 18.sp,
+                    height: 1.2,
+                    fontWeight: FontWeight.w600,
+                    color: _getColor(context),
+                  ),
+                ),
+              ),
+
+              // -> icon
+              Padding(
+                padding: EdgeInsets.only(left: 2.w, top: 1.h),
+                child: SvgPicture.asset(
+                  Assets.icons.chevronForward,
+                  width: 20.r,
+                  height: 20.r,
+                  colorFilter: ColorFilter.mode(
+                    _getColor(context),
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          // -> account type
+          switch (page) {
+            FeedPageStateAllAccounts() => const SizedBox(),
+            FeedPageStateSingleAccount(:final account) => Text(
+                account.type.description,
                 style: GoogleFonts.golosText(
-                  fontSize: 18.sp,
-                  height: 1.2,
-                  fontWeight: FontWeight.w600,
-                  color: _getColor(context),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
-            ),
-
-            // -> icon
-            Padding(
-              padding: EdgeInsets.only(left: 2.w, top: 1.h),
-              child: SvgPicture.asset(
-                Assets.icons.chevronForward,
-                width: 20.r,
-                height: 20.r,
-                colorFilter: ColorFilter.mode(
-                  _getColor(context),
-                  BlendMode.srcIn,
-                ),
-              ),
-            ),
-          ],
-        ),
-
-        // -> account type
-        switch (page) {
-          FeedPageStateAllAccounts() => const SizedBox(),
-          final FeedPageStateSingleAccount page => Text(
-              page.account.type.description,
-              style: GoogleFonts.golosText(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-        },
-        SizedBox(height: 20.h),
-      ],
+          },
+          SizedBox(height: 20.h),
+        ],
+      ),
     );
   }
 }

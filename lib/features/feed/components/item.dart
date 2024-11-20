@@ -21,7 +21,7 @@ class FeedItemComponent extends StatelessWidget {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
     final viewSize = MediaQuery.sizeOf(context);
-    final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h);
+    final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h);
 
     final categoryColor = ex?.from(transaction.category.colorName).color ??
         theme.colorScheme.surfaceContainer;
