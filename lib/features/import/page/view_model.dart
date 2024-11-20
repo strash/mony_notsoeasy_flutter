@@ -12,7 +12,7 @@ export "../use_case/use_case.dart";
 export "../validator/validator.dart";
 export "./model/model.dart";
 
-// TODO: искать похожие записи (по всем таблицам?) и как-то мержить
+// TODO: FEATURE - искать похожие записи (по всем таблицам?) и как-то мержить
 
 typedef TPressedCategoryValue = ({
   ETransactionType transactionType,

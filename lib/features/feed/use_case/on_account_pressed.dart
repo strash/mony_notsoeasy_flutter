@@ -14,9 +14,7 @@ final class OnAccountPressed extends UseCase<void, FeedPageState> {
         break;
       // open one account page
       case FeedPageStateSingleAccount(:final account):
-        context.go<void>(
-          AccountPage(account: account),
-        );
+        context.go<void>(AccountPage(account: account));
     }
   }
 }
