@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
-import "package:flutter_svg/svg.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class BackButtonComponent extends StatelessWidget {
@@ -8,29 +8,12 @@ class BackButtonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final navigator = Navigator.of(context);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return AppBarButtonComponent(
+      icon: Assets.icons.chevronBackward,
+      padding: EdgeInsets.only(right: 10.w),
       onTap: navigator.maybePop<void>,
-      child: SizedBox.square(
-        dimension: 50.r,
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.only(right: 10.w),
-            child: SvgPicture.asset(
-              Assets.icons.chevronBackward,
-              width: 28.r,
-              height: 28.r,
-              colorFilter: ColorFilter.mode(
-                theme.colorScheme.primary,
-                BlendMode.srcIn,
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

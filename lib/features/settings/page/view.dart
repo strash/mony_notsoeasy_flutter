@@ -22,6 +22,10 @@ class SettingsView extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            child: const Text("Смена темы"),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             child: const Text(
               "Тип транзакции по-умолчанию при создании транзакции",
             ),

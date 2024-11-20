@@ -13,7 +13,6 @@ class TransactionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<TransactionViewModel>();
@@ -35,7 +34,6 @@ class TransactionView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
-                  color: theme.colorScheme.primary,
                   onTap: () => onEditPressed(context, transaction),
                 ),
                 SizedBox(width: 4.w),
@@ -43,7 +41,6 @@ class TransactionView extends StatelessWidget {
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
-                  color: theme.colorScheme.primary,
                   onTap: () => onDeletePressed(context, transaction),
                 ),
                 SizedBox(width: 8.w),

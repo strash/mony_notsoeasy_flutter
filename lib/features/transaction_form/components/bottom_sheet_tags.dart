@@ -3,6 +3,7 @@ import "package:flutter/services.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/features/transaction_form/components/tag.dart";
 import "package:mony_app/features/transaction_form/components/tags_gradient.dart";
@@ -35,6 +36,13 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const AppBarComponent(
+            title: Text("Теги"),
+            useSliver: false,
+            showDragHandle: true,
+          ),
+          SizedBox(height: 20.h),
+
           // -> suggestions
           SizedBox(
             height: 34.h,

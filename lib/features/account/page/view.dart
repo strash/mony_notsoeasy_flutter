@@ -38,7 +38,6 @@ class AccountView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
-                  color: theme.colorScheme.primary,
                   // TODO
                   // onTap: () => onEditPressed(context, transaction),
                 ),
@@ -47,7 +46,6 @@ class AccountView extends StatelessWidget {
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
-                  color: theme.colorScheme.primary,
                   // TODO
                   // onTap: () => onDeletePressed(context, transaction),
                 ),

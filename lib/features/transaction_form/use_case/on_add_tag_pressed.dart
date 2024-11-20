@@ -144,6 +144,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
 
     await BottomSheetComponent.show<void>(
       context,
+      showDragHandle: false,
       builder: (context, bottom) {
         return TransactionFormBottomSheetTagsComponent(
           inputController: viewModel.tagInput,
