@@ -14,7 +14,7 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel> {
 
     final List<FeedPageState> pages = [];
     final accounts = await accountService.getAll();
-    final balances = await accountService.getBalance();
+    final balances = await accountService.getBalances();
 
     if (accounts.length > 1) {
       final transactions = await transactionService.getMany(page: 0)

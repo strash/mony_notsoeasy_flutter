@@ -14,6 +14,9 @@ final class AccountBalanceDatabaseFactoryImpl
       totalAmount: dto.totalAmount.toDouble(),
       totalSum: dto.totalSum.toDouble(),
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
+      firstTransactionDate: DateTime.tryParse(dto.firstTransactionDate ?? ""),
+      lastTransactionDate: DateTime.tryParse(dto.lastTransactionDate ?? ""),
+      transactionsCount: dto.transactionsCount,
     );
   }
 
@@ -26,6 +29,10 @@ final class AccountBalanceDatabaseFactoryImpl
       totalAmount: model.totalAmount,
       totalSum: model.totalSum,
       created: model.created.toUtc().toIso8601String(),
+      firstTransactionDate:
+          model.firstTransactionDate?.toUtc().toIso8601String(),
+      lastTransactionDate: model.lastTransactionDate?.toUtc().toIso8601String(),
+      transactionsCount: model.transactionsCount,
     );
   }
 }

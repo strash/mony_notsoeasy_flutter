@@ -6,7 +6,7 @@ abstract base class AccountDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
-  Future<List<AccountBalanceDto>> getBalance({List<String>? ids});
+  Future<List<AccountBalanceDto>> getBalances({List<String>? ids});
 
   Future<List<AccountDto>> getAll({String? type, List<String>? ids});
 
@@ -52,7 +52,7 @@ final class _Impl
   }
 
   @override
-  Future<List<AccountBalanceDto>> getBalance({List<String>? ids}) async {
+  Future<List<AccountBalanceDto>> getBalances({List<String>? ids}) async {
     return resolve(() async {
       final db = await database.db;
       final where = ids != null ? "WHERE a.id IN (${_getIn(ids)})" : "";
@@ -64,7 +64,10 @@ SELECT
 	a.balance,
 	COALESCE(SUM(t.amount), 0.0) AS total_amount,
 	(a.balance + COALESCE(SUM(t.amount), 0.0)) AS total_sum,
-	a.created
+	a.created,
+	MIN(t.date) AS first_transaction_date,
+	MAX(t.date) AS last_transaction_date,
+	COALESCE(COUNT(t.id), 0) AS transactions_count
 FROM accounts AS a
 LEFT JOIN transactions AS t ON a.id = t.account_id
 $where

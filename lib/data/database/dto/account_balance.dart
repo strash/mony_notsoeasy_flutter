@@ -12,6 +12,9 @@ class AccountBalanceDto with _$AccountBalanceDto {
     required num totalAmount,
     required num totalSum,
     required String created,
+    required String? firstTransactionDate,
+    required String? lastTransactionDate,
+    required int transactionsCount,
   }) = _AccountBalanceDto;
 
   factory AccountBalanceDto.fromJson(Map<String, dynamic> json) =>

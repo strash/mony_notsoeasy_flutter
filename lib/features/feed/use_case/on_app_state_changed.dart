@@ -24,21 +24,21 @@ final class OnAppStateChanged
       // TODO: при создании второго счета добавлять экран со всеми счетами
       case final EventAccountCreated event:
         final account = event.account;
-        final balances = await accountSevrice.getBalance(ids: [account.id]);
+        final balances = await accountSevrice.getBalances(ids: [account.id]);
         if (balances.isEmpty) return;
         _onAccountCreated(viewModel, balances, account);
       case final EventTransactionCreated event:
-        final balances = await accountSevrice.getBalance(
+        final balances = await accountSevrice.getBalances(
           ids: [event.transaction.account.id],
         );
         _onTransactionCreated(event.transaction, balances, viewModel);
       case final EventTransactionUpdated event:
-        final balances = await accountSevrice.getBalance(
+        final balances = await accountSevrice.getBalances(
           ids: [event.transaction.account.id],
         );
         _onTransactionUpdated(event.transaction, balances, viewModel);
       case final EventTransactionDeleted event:
-        final balances = await accountSevrice.getBalance(
+        final balances = await accountSevrice.getBalances(
           ids: [event.transaction.account.id],
         );
         _onTransactionDeleted(event.transaction, balances, viewModel);

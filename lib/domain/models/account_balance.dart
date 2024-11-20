@@ -12,6 +12,9 @@ class AccountBalanceModel with _$AccountBalanceModel {
     required double totalAmount,
     required double totalSum,
     required DateTime created,
+    required DateTime? firstTransactionDate,
+    required DateTime? lastTransactionDate,
+    required int transactionsCount,
   }) = _AccountBalanceModel;
 }
 
