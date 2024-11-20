@@ -12,6 +12,10 @@ final class OnAddTransactionPressed extends UseCase<Future<void>, dynamic> {
     final transactionService = context.read<DomainTransactionService>();
     final appService = context.viewModel<AppEventService>();
 
+    // TODO: отправлять сообщение, которое будет слушать feed и уже будет
+    // открывать шит
+    // TODO: при этом если в фокусе конктерный счет, то его подставлять в
+    // селект счета
     final result = await BottomSheetComponent.show<TransactionFormVO?>(
       context,
       showDragHandle: false,

@@ -56,13 +56,12 @@ final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
         );
         return lhsFormatter.format(lhs);
       case (final DateTime lhs, final DateTime rhs):
-        final lhsFormatter = DateFormat(
-          now.year != lhs.year && lhs.year != rhs.year
-              ? "EEE, dd MMMM yyyy"
-              : "EEE, dd MMMM",
-        );
+        String lhsPattern = "dd";
+        if (rhs.month != lhs.month) lhsPattern += " MMMM";
+        if (now.year != lhs.year && rhs.year != lhs.year) lhsPattern += " yyyy";
+        final lhsFormatter = DateFormat(lhsPattern);
         final rhsFormatter = DateFormat(
-          now.year != rhs.year ? "EEE, dd MMMM yyyy" : "EEE, dd MMMM",
+          now.year != rhs.year ? "dd MMMM yyyy" : "dd MMMM",
         );
         if (lhs.isSameDateAs(rhs)) return rhsFormatter.format(rhs);
         return "${lhsFormatter.format(lhs)}—${rhsFormatter.format(rhs)}";
