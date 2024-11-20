@@ -25,12 +25,12 @@ final class FeedItemTransaction extends FeedItem {
 // -> page item by account
 
 sealed class FeedPageState {
-  final int page;
+  final int scrollPage;
   final bool canLoadMore;
   final List<TransactionModel> feed;
 
   FeedPageState({
-    required this.page,
+    required this.scrollPage,
     required this.canLoadMore,
     required this.feed,
   });
@@ -41,7 +41,7 @@ final class FeedPageStateAllAccounts extends FeedPageState {
   final List<AccountBalanceModel> balances;
 
   FeedPageStateAllAccounts({
-    required super.page,
+    required super.scrollPage,
     required super.canLoadMore,
     required super.feed,
     required this.accounts,
@@ -49,7 +49,7 @@ final class FeedPageStateAllAccounts extends FeedPageState {
   });
 
   FeedPageStateAllAccounts copyWith({
-    int? page,
+    int? scrollPage,
     bool? canLoadMore,
     double? scrollPosition,
     List<TransactionModel>? feed,
@@ -57,7 +57,7 @@ final class FeedPageStateAllAccounts extends FeedPageState {
     List<AccountBalanceModel>? balances,
   }) {
     return FeedPageStateAllAccounts(
-      page: page ?? this.page,
+      scrollPage: scrollPage ?? this.scrollPage,
       canLoadMore: canLoadMore ?? this.canLoadMore,
       feed: feed ?? this.feed,
       accounts: accounts ?? this.accounts,
@@ -71,7 +71,7 @@ final class FeedPageStateSingleAccount extends FeedPageState {
   final AccountBalanceModel balance;
 
   FeedPageStateSingleAccount({
-    required super.page,
+    required super.scrollPage,
     required super.canLoadMore,
     required super.feed,
     required this.account,
@@ -79,7 +79,7 @@ final class FeedPageStateSingleAccount extends FeedPageState {
   });
 
   FeedPageStateSingleAccount copyWith({
-    int? page,
+    int? scrollPage,
     bool? canLoadMore,
     double? scrollPosition,
     List<TransactionModel>? feed,
@@ -87,7 +87,7 @@ final class FeedPageStateSingleAccount extends FeedPageState {
     AccountBalanceModel? balance,
   }) {
     return FeedPageStateSingleAccount(
-      page: page ?? this.page,
+      scrollPage: scrollPage ?? this.scrollPage,
       canLoadMore: canLoadMore ?? this.canLoadMore,
       feed: feed ?? this.feed,
       account: account ?? this.account,

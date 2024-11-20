@@ -62,7 +62,7 @@ final class OnAppStateChanged
       }).toList(growable: true)
         ..add(
           FeedPageStateSingleAccount(
-            page: viewModel.pages.length,
+            scrollPage: 0,
             canLoadMore: true,
             feed: const [],
             account: account,

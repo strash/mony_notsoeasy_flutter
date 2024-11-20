@@ -15,18 +15,18 @@ final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue> {
     final currentPage = viewModel.pages.elementAt(value.pageIndex);
     if (!currentPage.canLoadMore) return;
 
-    final page = currentPage.page + 1;
+    final scrollPage = currentPage.scrollPage + 1;
     final transactionService = context.read<DomainTransactionService>();
 
     switch (currentPage) {
       // -> data for all accounts
       case final FeedPageStateAllAccounts state:
-        final data = await transactionService.getMany(page: page);
+        final data = await transactionService.getMany(page: scrollPage);
         final transactions = currentPage.feed.merge(data)
           ..sort((a, b) => b.date.compareTo(a.date));
         viewModel.setProtectedState(() {
           viewModel.pages[value.pageIndex] = state.copyWith(
-            page: page,
+            scrollPage: scrollPage,
             feed: transactions,
             canLoadMore: data.isNotEmpty,
           );
@@ -34,14 +34,14 @@ final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue> {
       // -> data for an account
       case final FeedPageStateSingleAccount state:
         final data = await transactionService.getMany(
-          page: page,
+          page: scrollPage,
           accountId: state.account.id,
         );
         final transactions = currentPage.feed.merge(data)
           ..sort((a, b) => b.date.compareTo(a.date));
         viewModel.setProtectedState(() {
           viewModel.pages[value.pageIndex] = state.copyWith(
-            page: page,
+            scrollPage: scrollPage,
             feed: transactions,
             canLoadMore: data.isNotEmpty,
           );
