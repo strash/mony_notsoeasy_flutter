@@ -40,6 +40,7 @@ final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
           accTransactions,
         );
       case EventAccountDeleted(value: final account):
+        if (viewModel.pages.length == 1) return;
         final balances = await accountSevrice.getBalances();
         final transactions = await transactionService.getMany(page: 0);
         _onAccountDeleted(viewModel, transactions, balances, account);
