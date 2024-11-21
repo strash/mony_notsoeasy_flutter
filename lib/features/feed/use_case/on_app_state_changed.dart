@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/scroll_controller.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:provider/provider.dart";
@@ -23,17 +24,14 @@ final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
     switch (event) {
       case EventAccountCreated(value: final account):
         final balances = await accountSevrice.getBalances();
-        if (balances.isEmpty) return;
         final transactions = await transactionService.getMany(page: 0);
         _onAccountCreated(viewModel, balances, account, transactions);
       case EventAccountUpdated(value: final account):
         final balances = await accountSevrice.getBalances(ids: [account.id]);
         if (balances.isEmpty) return;
         final allTransactions = await transactionService.getMany(page: 0);
-        final accTransactions = await transactionService.getMany(
-          page: 0,
-          accountId: account.id,
-        );
+        final accTransactions =
+            await transactionService.getMany(page: 0, accountId: account.id);
         _onAccountUpdated(
           viewModel,
           balances.first,
@@ -41,8 +39,10 @@ final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
           allTransactions,
           accTransactions,
         );
-      // TODO: при удалении счета, если остался только один, то убирать "все
-      // счета"
+      case EventAccountDeleted(value: final account):
+        final balances = await accountSevrice.getBalances();
+        final transactions = await transactionService.getMany(page: 0);
+        _onAccountDeleted(viewModel, transactions, balances, account);
       case EventTransactionCreated(value: final transaction):
         final balances = await accountSevrice.getBalances(
           ids: [transaction.account.id],
@@ -68,32 +68,8 @@ final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
     List<TransactionModel> transactions,
   ) {
     viewModel.addPageScroll(viewModel.pages.length);
-    final List<FeedPageState> newPages = [
-      FeedPageStateSingleAccount(
-        scrollPage: 0,
-        canLoadMore: true,
-        feed: const [],
-        account: account.copyWith(),
-        balance: balances.where((e) => e.id == account.id).first,
-      ),
-    ];
-    if (viewModel.pages.length == 1) {
-      newPages.add(
-        FeedPageStateAllAccounts(
-          scrollPage: 1,
-          canLoadMore: true,
-          feed: transactions,
-          accounts: viewModel.pages
-              .whereType<FeedPageStateSingleAccount>()
-              .map((e) => e.account)
-              .toList(growable: false)
-            ..add(account.copyWith()),
-          balances: balances,
-        ),
-      );
-    }
     viewModel.setProtectedState(() {
-      viewModel.pages = List<FeedPageState>.from(
+      final pages = List<FeedPageState>.from(
         viewModel.pages.map((e) {
           switch (e) {
             case final FeedPageStateAllAccounts page:
@@ -102,7 +78,33 @@ final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
               return e;
           }
         }),
-      )..addAll(newPages);
+      )..add(
+          FeedPageStateSingleAccount(
+            scrollPage: 0,
+            canLoadMore: true,
+            feed: const [],
+            account: account.copyWith(),
+            balance: balances.where((e) => e.id == account.id).first,
+          ),
+        );
+      if (pages.whereType<FeedPageStateAllAccounts>().isEmpty) {
+        viewModel.addPageScroll(0);
+        pages.insert(
+          0,
+          FeedPageStateAllAccounts(
+            scrollPage: 1,
+            canLoadMore: true,
+            feed: transactions,
+            accounts: List<AccountModel>.from(
+              viewModel.pages
+                  .whereType<FeedPageStateSingleAccount>()
+                  .map((e) => e.account),
+            )..add(account.copyWith()),
+            balances: balances,
+          ),
+        );
+      }
+      viewModel.pages = pages;
     });
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       viewModel.openPage(viewModel.pages.length - 1);
@@ -146,6 +148,53 @@ final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
           }
         }),
       );
+    });
+  }
+
+  void _onAccountDeleted(
+    FeedViewModel viewModel,
+    List<TransactionModel> transactions,
+    List<AccountBalanceModel> balances,
+    AccountModel account,
+  ) {
+    final pageIndex = viewModel.pages.indexWhere((e) {
+      return e is FeedPageStateSingleAccount && e.account.id == account.id;
+    });
+    viewModel.setProtectedState(() {
+      viewModel.removePageScroll(pageIndex);
+      viewModel.pages = List<FeedPageState>.from(viewModel.pages)
+        ..removeAt(pageIndex);
+      if (viewModel.pages.length == 2) {
+        // remove all accounts page
+        viewModel.removePageScroll(0);
+        viewModel.pages = List<FeedPageState>.from(viewModel.pages)
+          ..removeAt(0);
+      } else {
+        viewModel.pages = List<FeedPageState>.from(
+          viewModel.pages.map((e) {
+            switch (e) {
+              case final FeedPageStateAllAccounts page:
+                return page.copyWith(
+                  scrollPage: 0,
+                  canLoadMore: true,
+                  feed: transactions,
+                  balances: balances,
+                  accounts: List<AccountModel>.from(
+                    page.accounts.where((e) => e.id != account.id),
+                  ),
+                );
+              case final FeedPageStateSingleAccount page:
+                return page;
+            }
+          }),
+        );
+      }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      final currentPage = viewModel.currentPageIndex;
+      final scroll = viewModel.scrollControllers.elementAt(currentPage);
+      if (!scroll.isReady) return;
+      scroll.jumpTo(viewModel.scrollPositions.elementAt(currentPage));
     });
   }
 

@@ -23,6 +23,7 @@ class AccountView extends StatelessWidget {
     final color =
         ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
     final onEditPressed = viewModel<OnEditAccountPressed>();
+    final onDeletePressed = viewModel<OnDeleteAccountPressed>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -45,8 +46,7 @@ class AccountView extends StatelessWidget {
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
-                  // TODO
-                  // onTap: () => onDeletePressed(context, transaction),
+                  onTap: () => onDeletePressed(context, account),
                 ),
                 const SizedBox(width: 8.0),
               ],

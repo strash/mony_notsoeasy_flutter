@@ -28,9 +28,15 @@ final class NavigatorDelegate extends RouterDelegate<Object>
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Event>(
-      // TODO: слушать еще удаление аккаунта
       stream: _eventService.stream.where((event) {
-        return event is EventAccountCreated;
+        return switch (event) {
+          EventAccountCreated() || EventAccountDeleted() => true,
+          EventAccountUpdated() ||
+          EventTransactionCreated() ||
+          EventTransactionUpdated() ||
+          EventTransactionDeleted() =>
+            false,
+        };
       }),
       builder: (context, snapshot) {
         return FutureBuilder<bool>(

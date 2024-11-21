@@ -108,6 +108,7 @@ class AlertComponet extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: GoogleFonts.golosText(
                             fontSize: 15.0,
+                            height: 1.4,
                             fontWeight: FontWeight.w400,
                             color: theme.colorScheme.onTertiaryContainer,
                           ),

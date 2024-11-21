@@ -23,16 +23,20 @@ final class OnTransactionAppStateChanged
             account: account.copyWith(),
           );
         });
+      case EventAccountDeleted(value: final account):
+        if (account.id == viewModel.transaction.account.id) {
+          navigator.pop<void>();
+        }
       case EventTransactionUpdated(:final value):
         if (value.id == viewModel.transaction.id) {
           viewModel.setProtectedState(() {
             viewModel.transaction = value.copyWith();
           });
         }
-      // TODO: слушать app events на удаление счета, категории и
-      // закрывать экран, если удален счет или категория
-      case final EventTransactionDeleted event:
-        if (event.value.id == viewModel.transaction.id) navigator.pop();
+      // TODO: слушать app events на удаление категории и
+      // закрывать экран, если удалена категория этой транзакции
+      case EventTransactionDeleted(value: final transaction):
+        if (transaction.id == viewModel.transaction.id) navigator.pop<void>();
     }
   }
 }

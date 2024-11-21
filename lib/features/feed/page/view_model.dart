@@ -38,10 +38,26 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   }
 
   void addPageScroll(int pageIndex) {
+    for (final (index, controller) in scrollControllers.indexed) {
+      controller.removeListener(_sclollListener(index));
+    }
     final scrollController = ScrollController();
-    scrollController.addListener(_sclollListener(pageIndex));
-    scrollControllers.add(scrollController);
-    scrollPositions.add(.0);
+    scrollControllers.insert(pageIndex, scrollController);
+    scrollPositions.insert(pageIndex, .0);
+    for (final (index, controller) in scrollControllers.indexed) {
+      controller.addListener(_sclollListener(index));
+    }
+  }
+
+  void removePageScroll(int pageIndex) {
+    for (final (index, controller) in scrollControllers.indexed) {
+      controller.removeListener(_sclollListener(index));
+    }
+    scrollControllers.removeAt(pageIndex).dispose();
+    scrollPositions.removeAt(pageIndex);
+    for (final (index, controller) in scrollControllers.indexed) {
+      controller.addListener(_sclollListener(index));
+    }
   }
 
   Future<void> openPage(int pageIndex) async {
@@ -56,7 +72,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
   void Function() _sclollListener(int pageIndex) {
     return () {
-      if (!context.mounted) return;
+      if (!context.mounted || pageIndex > pages.length - 1) return;
       OnScroll().call(context, (viewModel: this, pageIndex: pageIndex));
     };
   }

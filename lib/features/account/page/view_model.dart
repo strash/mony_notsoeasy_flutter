@@ -8,7 +8,6 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account/page/page.dart";
 import "package:mony_app/features/account/page/view.dart";
-import "package:mony_app/features/account/use_case/on_init_account.dart";
 
 export "../use_case/use_case.dart";
 
@@ -102,6 +101,7 @@ final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
       viewModel: this,
       useCases: [
         () => OnEditAccountPressed(),
+        () => OnDeleteAccountPressed(),
       ],
       child: Builder(
         builder: (context) {

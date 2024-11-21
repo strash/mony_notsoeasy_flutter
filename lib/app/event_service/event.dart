@@ -17,6 +17,11 @@ final class EventAccountUpdated extends Event {
   EventAccountUpdated({required super.sender, required this.value});
 }
 
+final class EventAccountDeleted extends Event {
+  final AccountModel value;
+  EventAccountDeleted({required super.sender, required this.value});
+}
+
 // -> transaction
 
 final class EventTransactionCreated extends Event {

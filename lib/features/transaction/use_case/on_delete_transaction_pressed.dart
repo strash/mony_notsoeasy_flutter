@@ -9,11 +9,8 @@ import "package:provider/provider.dart";
 final class OnDeleteTransactionPressed
     extends UseCase<Future<void>, TransactionModel> {
   @override
-  Future<void> call(
-    BuildContext context, [
-    TransactionModel? transaction,
-  ]) async {
-    if (transaction == null) throw ArgumentError.notNull();
+  Future<void> call(BuildContext context, [TransactionModel? value]) async {
+    if (value == null) throw ArgumentError.notNull();
 
     final result = await AlertComponet.show(
       context,
@@ -32,12 +29,12 @@ final class OnDeleteTransactionPressed
         final transactionService = context.read<DomainTransactionService>();
         final appService = context.viewModel<AppEventService>();
 
-        await transactionService.delete(id: transaction.id);
+        await transactionService.delete(id: value.id);
 
         appService.notify(
           EventTransactionDeleted(
             sender: TransactionViewModel,
-            value: transaction,
+            value: value,
           ),
         );
     }
