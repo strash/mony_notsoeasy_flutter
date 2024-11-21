@@ -138,7 +138,7 @@ class AccountView extends StatelessWidget {
                             color: theme.colorScheme.onSurface,
                           ),
                         ),
-                        const SizedBox(height: 3.0),
+                        const SizedBox(height: 5.0),
 
                         // -> transactions date range
                         Text(

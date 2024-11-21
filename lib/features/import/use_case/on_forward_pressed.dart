@@ -15,13 +15,15 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       final csv = viewModel.steps.whereType<ImportModelCsv>().firstOrNull;
       if (csv == null) throw ArgumentError.notNull();
       subject.add(ImportEventValidatingMappedColumns());
+      viewModel.setProtectedState(() {
+        viewModel.steps = List<ImportModel>.from(viewModel.steps)
+          ..add(currentColumn);
+      });
       final validation = ImportModelColumnValidation(
         csvModel: csv,
         columns: viewModel.mappedColumns,
       );
       viewModel.setProtectedState(() {
-        viewModel.steps = List<ImportModel>.from(viewModel.steps)
-          ..add(currentColumn);
         viewModel.currentStep = validation;
       });
       await validation.validate();
@@ -154,7 +156,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     final viewModel = context.viewModel<ImportViewModel>();
     switch (event) {
       case ImportEventMappingColumns():
-        await _onMappingColumns(viewModel);
+        _onMappingColumns(viewModel);
       case ImportEventMappingColumnsValidated():
         _onColumnsValidated(viewModel);
       case ImportEventMapAccounts():
