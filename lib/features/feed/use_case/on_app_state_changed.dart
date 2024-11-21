@@ -6,47 +6,58 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:provider/provider.dart";
 
-typedef TOnAppStateChangedValue = ({FeedViewModel viewModel, Event event});
+typedef _TValue = ({FeedViewModel viewModel, Event event});
 
-final class OnAppStateChanged
-    extends UseCase<Future<void>, TOnAppStateChangedValue> {
+final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
   @override
   Future<void> call(
     BuildContext context, [
-    TOnAppStateChangedValue? value,
+    _TValue? value,
   ]) async {
     if (value == null) throw ArgumentError.notNull();
 
     final (:viewModel, :event) = value;
     final accountSevrice = context.read<DomainAccountService>();
+    final transactionService = context.read<DomainTransactionService>();
 
     switch (event) {
-      // TODO: при создании второго счета добавлять экран со всеми счетами
-      case final EventAccountCreated event:
-        final account = event.value;
+      case EventAccountCreated(value: final account):
+        final balances = await accountSevrice.getBalances();
+        if (balances.isEmpty) return;
+        final transactions = await transactionService.getMany(page: 0);
+        _onAccountCreated(viewModel, balances, account, transactions);
+      case EventAccountUpdated(value: final account):
         final balances = await accountSevrice.getBalances(ids: [account.id]);
         if (balances.isEmpty) return;
-        _onAccountCreated(viewModel, balances, account);
-      case final EventAccountUpdated event:
-        // TODO
-        print(event);
+        final allTransactions = await transactionService.getMany(page: 0);
+        final accTransactions = await transactionService.getMany(
+          page: 0,
+          accountId: account.id,
+        );
+        _onAccountUpdated(
+          viewModel,
+          balances.first,
+          account,
+          allTransactions,
+          accTransactions,
+        );
       // TODO: при удалении счета, если остался только один, то убирать "все
       // счета"
-      case final EventTransactionCreated event:
+      case EventTransactionCreated(value: final transaction):
         final balances = await accountSevrice.getBalances(
-          ids: [event.value.account.id],
+          ids: [transaction.account.id],
         );
-        _onTransactionCreated(event.value, balances, viewModel);
-      case final EventTransactionUpdated event:
+        _onTransactionCreated(transaction, balances, viewModel);
+      case EventTransactionUpdated(value: final transaction):
         final balances = await accountSevrice.getBalances(
-          ids: [event.value.account.id],
+          ids: [transaction.account.id],
         );
-        _onTransactionUpdated(event.value, balances, viewModel);
-      case final EventTransactionDeleted event:
+        _onTransactionUpdated(transaction, balances, viewModel);
+      case EventTransactionDeleted(value: final transaction):
         final balances = await accountSevrice.getBalances(
-          ids: [event.value.account.id],
+          ids: [transaction.account.id],
         );
-        _onTransactionDeleted(event.value, balances, viewModel);
+        _onTransactionDeleted(transaction, balances, viewModel);
     }
   }
 
@@ -54,29 +65,87 @@ final class OnAppStateChanged
     FeedViewModel viewModel,
     List<AccountBalanceModel> balances,
     AccountModel account,
+    List<TransactionModel> transactions,
   ) {
     viewModel.addPageScroll(viewModel.pages.length);
+    final List<FeedPageState> newPages = [
+      FeedPageStateSingleAccount(
+        scrollPage: 0,
+        canLoadMore: true,
+        feed: const [],
+        account: account.copyWith(),
+        balance: balances.where((e) => e.id == account.id).first,
+      ),
+    ];
+    if (viewModel.pages.length == 1) {
+      newPages.add(
+        FeedPageStateAllAccounts(
+          scrollPage: 1,
+          canLoadMore: true,
+          feed: transactions,
+          accounts: viewModel.pages
+              .whereType<FeedPageStateSingleAccount>()
+              .map((e) => e.account)
+              .toList(growable: false)
+            ..add(account.copyWith()),
+          balances: balances,
+        ),
+      );
+    }
     viewModel.setProtectedState(() {
-      viewModel.pages = viewModel.pages.map((e) {
-        switch (e) {
-          case final FeedPageStateAllAccounts page:
-            return page.copyWith(balances: _mergeBalances(page, balances));
-          case FeedPageStateSingleAccount():
-            return e;
-        }
-      }).toList(growable: true)
-        ..add(
-          FeedPageStateSingleAccount(
-            scrollPage: 0,
-            canLoadMore: true,
-            feed: const [],
-            account: account,
-            balance: balances.first,
-          ),
-        );
+      viewModel.pages = List<FeedPageState>.from(
+        viewModel.pages.map((e) {
+          switch (e) {
+            case final FeedPageStateAllAccounts page:
+              return page.copyWith(balances: _mergeBalances(page, balances));
+            case FeedPageStateSingleAccount():
+              return e;
+          }
+        }),
+      )..addAll(newPages);
     });
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       viewModel.openPage(viewModel.pages.length - 1);
+    });
+  }
+
+  void _onAccountUpdated(
+    FeedViewModel viewModel,
+    AccountBalanceModel? balance,
+    AccountModel account,
+    List<TransactionModel> allTransactions,
+    List<TransactionModel> accountTransactions,
+  ) {
+    viewModel.setProtectedState(() {
+      viewModel.pages = List<FeedPageState>.from(
+        viewModel.pages.map((e) {
+          switch (e) {
+            case final FeedPageStateAllAccounts page:
+              return page.copyWith(
+                scrollPage: 1,
+                canLoadMore: true,
+                feed: allTransactions,
+                balances: balance != null
+                    ? _mergeBalances(page, [balance])
+                    : page.balances,
+                accounts: List<AccountModel>.from(
+                  page.accounts.where((e) => e.id != account.id),
+                )..add(account.copyWith()),
+              );
+            case final FeedPageStateSingleAccount page:
+              if (page.account.id == account.id) {
+                return page.copyWith(
+                  scrollPage: 1,
+                  canLoadMore: true,
+                  feed: accountTransactions,
+                  balance: balance,
+                  account: account.copyWith(),
+                );
+              }
+              return page;
+          }
+        }),
+      );
     });
   }
 
@@ -86,25 +155,27 @@ final class OnAppStateChanged
     FeedViewModel viewModel,
   ) {
     viewModel.setProtectedState(() {
-      viewModel.pages = viewModel.pages.map((e) {
-        switch (e) {
-          case final FeedPageStateAllAccounts page:
-            return page.copyWith(
-              balances: _mergeBalances(page, balances),
-              feed: _mergeFeed(page, transaction),
-              canLoadMore: true,
-            );
-          case final FeedPageStateSingleAccount page:
-            if (page.account.id == transaction.account.id) {
+      viewModel.pages = List<FeedPageState>.from(
+        viewModel.pages.map((e) {
+          switch (e) {
+            case final FeedPageStateAllAccounts page:
               return page.copyWith(
-                balance: balances.firstOrNull ?? page.balance,
-                feed: _mergeFeed(page, transaction),
+                balances: _mergeBalances(page, balances),
+                feed: _mergeFeed(page, transaction.copyWith()),
                 canLoadMore: true,
               );
-            }
-            return page;
-        }
-      }).toList(growable: false);
+            case final FeedPageStateSingleAccount page:
+              if (page.account.id == transaction.account.id) {
+                return page.copyWith(
+                  balance: balances.firstOrNull,
+                  feed: _mergeFeed(page, transaction.copyWith()),
+                  canLoadMore: true,
+                );
+              }
+              return page;
+          }
+        }),
+      );
     });
   }
 
@@ -119,12 +190,16 @@ final class OnAppStateChanged
           case final FeedPageStateAllAccounts page:
             return page.copyWith(
               balances: _mergeBalances(page, balances),
-              feed: _removeTransaction(page, transaction.id)
-                ..add(transaction)
+              feed: List<TransactionModel>.from(
+                page.feed.where((e) => e.id != transaction.id),
+              )
+                ..add(transaction.copyWith())
                 ..sort((a, b) => b.date.compareTo(a.date)),
             );
           case final FeedPageStateSingleAccount page:
-            final feed = _removeTransaction(page, transaction.id);
+            final feed = List<TransactionModel>.from(
+              page.feed.where((e) => e.id != transaction.id),
+            );
             if (page.account.id == transaction.account.id) {
               feed.add(transaction);
               feed.sort((a, b) => b.date.compareTo(a.date));
@@ -150,10 +225,14 @@ final class OnAppStateChanged
           case final FeedPageStateAllAccounts page:
             return page.copyWith(
               balances: _mergeBalances(page, balances),
-              feed: _removeTransaction(page, transaction.id),
+              feed: List<TransactionModel>.from(
+                page.feed.where((e) => e.id != transaction.id),
+              ),
             );
           case final FeedPageStateSingleAccount page:
-            final feed = _removeTransaction(page, transaction.id);
+            final feed = List<TransactionModel>.from(
+              page.feed.where((e) => e.id != transaction.id),
+            );
             if (page.account.id == transaction.account.id) {
               return page.copyWith(
                 balance: balances.firstOrNull ?? page.balance,
@@ -180,9 +259,5 @@ final class OnAppStateChanged
   ) {
     return page.feed.merge([transaction.copyWith()])
       ..sort((a, b) => b.date.compareTo(a.date));
-  }
-
-  List<TransactionModel> _removeTransaction(FeedPageState page, String id) {
-    return List<TransactionModel>.from(page.feed.where((e) => e.id != id));
   }
 }

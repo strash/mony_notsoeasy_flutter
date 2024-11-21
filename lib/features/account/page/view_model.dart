@@ -1,5 +1,8 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
+import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
@@ -22,9 +25,16 @@ final class AccountViewModelBuilder extends StatefulWidget {
 }
 
 final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
-  AccountModel get account => widget.account;
+  late final StreamSubscription<Event> _appSub;
+
+  late AccountModel account = widget.account;
 
   AccountBalanceModel? balance;
+
+  void _onAppEvent(Event event) {
+    if (!mounted) return;
+    OnAccountAppStateChanged().call(context, (event: event, viewModel: this));
+  }
 
   String get transactionsCountDescription {
     final balance = this.balance;
@@ -69,6 +79,21 @@ final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
       default:
         return "";
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      // -> app events
+      _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
+    });
+  }
+
+  @override
+  void dispose() {
+    _appSub.cancel();
+    super.dispose();
   }
 
   @override

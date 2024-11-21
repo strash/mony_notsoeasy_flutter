@@ -25,35 +25,21 @@ final class TransactionViewModelBuilder extends StatefulWidget {
 
 final class TransactionViewModel
     extends ViewModelState<TransactionViewModelBuilder> {
-  late TransactionModel transaction = widget.transaction;
-
   late final StreamSubscription<Event> _appSub;
 
-  // TODO: слушать app events на удаление транзакции, счета, категории и
-  // закрывать экран, если удалена транзакция или счет или категория
-  void _eventListener(Event event) {
-    switch (event) {
-      case EventAccountCreated() || EventTransactionCreated():
-        break;
-      case final EventAccountUpdated event:
-        // TODO
-        print(event);
-      case final EventTransactionUpdated event:
-        if (event.value.id == transaction.id) {
-          setProtectedState(() => transaction = event.value.copyWith());
-        }
-      case final EventTransactionDeleted event:
-        if (event.value.id == transaction.id) {
-          Navigator.of(context).pop();
-        }
-    }
+  late TransactionModel transaction = widget.transaction;
+
+  void _onAppEvent(Event event) {
+    if (!mounted) return;
+    final value = (event: event, viewModel: this);
+    OnTransactionAppStateChanged().call(context, value);
   }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      _appSub = context.viewModel<AppEventService>().listen(_eventListener);
+      _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
     });
   }
 
