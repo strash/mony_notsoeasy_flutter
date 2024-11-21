@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/use_case/use_case.dart";
@@ -92,7 +91,7 @@ class _TransactionFormSymbolButtonComponentState
                       final TransactionFormButtonTypeSymbol button => Text(
                           button.value,
                           style: GoogleFonts.golosText(
-                            fontSize: 34.sp,
+                            fontSize: 34.0,
                             fontWeight: FontWeight.w500,
                             color: theme.colorScheme.onSurface,
                             decoration: TextDecoration.none,
@@ -101,8 +100,8 @@ class _TransactionFormSymbolButtonComponentState
                       final TransactionFormButtonTypeAction button =>
                         SvgPicture.asset(
                           button.icon,
-                          width: 36.r,
-                          height: 36.r,
+                          width: 36.0,
+                          height: 36.0,
                           colorFilter: ColorFilter.mode(
                             theme.colorScheme.surface,
                             BlendMode.srcIn,
@@ -113,9 +112,9 @@ class _TransactionFormSymbolButtonComponentState
                 ),
                 builder: (context, color, child) {
                   return ClipSmoothRect(
-                    radius: SmoothBorderRadius.all(
+                    radius: const SmoothBorderRadius.all(
                       SmoothRadius(
-                        cornerRadius: 20.r,
+                        cornerRadius: 20.0,
                         cornerSmoothing: 1.0,
                       ),
                     ),

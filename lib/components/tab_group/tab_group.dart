@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -28,12 +27,12 @@ class _TabGroupComponentState<T extends IDescriptable>
     extends State<TabGroupComponent<T>> {
   final _rectNotifier = ValueNotifier<RelativeRect?>(null);
 
-  final _padding = EdgeInsets.all(3.r);
+  final _padding = const EdgeInsets.all(3.0);
 
   RenderBox? _getBox() => context.findRenderObject() as RenderBox?;
 
   Size _getSize(T value) {
-    final padding = TabGroupEntryComponent.padding;
+    const padding = TabGroupEntryComponent.padding;
     final style = TabGroupEntryComponent.style(context);
     final span = TextSpan(text: value.description, style: style);
     final painter = TextPainter(text: span, textDirection: TextDirection.ltr);
@@ -68,8 +67,8 @@ class _TabGroupComponentState<T extends IDescriptable>
     final theme = Theme.of(context);
 
     return ClipSmoothRect(
-      radius: SmoothBorderRadius.all(
-        SmoothRadius(cornerRadius: 14.r, cornerSmoothing: 1.0),
+      radius: const SmoothBorderRadius.all(
+        SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 1.0),
       ),
       child: Stack(
         children: [
@@ -100,9 +99,9 @@ class _TabGroupComponentState<T extends IDescriptable>
                     offset: const Offset(.0, 2.0),
                   ),
                 ],
-                shape: SmoothRectangleBorder(
+                shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 11.r, cornerSmoothing: 1.0),
+                    SmoothRadius(cornerRadius: 11.0, cornerSmoothing: 1.0),
                   ),
                 ),
               ),

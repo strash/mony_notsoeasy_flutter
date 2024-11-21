@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -20,18 +19,18 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: () => onDatePressed(context),
       child: SizedBox(
-        height: 34.h,
+        height: 34.0,
         child: DecoratedBox(
           decoration: ShapeDecoration(
             shape: SmoothRectangleBorder(
               side: BorderSide(color: theme.colorScheme.outlineVariant),
-              borderRadius: SmoothBorderRadius.all(
-                SmoothRadius(cornerRadius: 14.r, cornerSmoothing: 1.0),
+              borderRadius: const SmoothBorderRadius.all(
+                SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 1.0),
               ),
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.only(left: 15.w, right: 10.w),
+            padding: const EdgeInsets.only(left: 15.0, right: 10.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -43,11 +42,11 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
                   ]),
                   builder: (context, child) {
                     return Padding(
-                      padding: EdgeInsets.only(bottom: 1.h),
+                      padding: const EdgeInsets.only(bottom: 1.0),
                       child: Text(
                         viewModel.dateTimeDescription,
                         style: GoogleFonts.golosText(
-                          fontSize: 14.sp,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.w500,
                           color: theme.colorScheme.onSurface,
                         ),
@@ -55,13 +54,13 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(width: 6.w),
+                const SizedBox(width: 6.0),
 
                 // -> icon
                 SvgPicture.asset(
                   Assets.icons.calendar,
-                  width: 20.r,
-                  height: 20.r,
+                  width: 20.0,
+                  height: 20.0,
                   colorFilter: ColorFilter.mode(
                     theme.colorScheme.secondary,
                     BlendMode.srcIn,

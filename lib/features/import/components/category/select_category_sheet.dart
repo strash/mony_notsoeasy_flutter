@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/domain.dart";
@@ -20,10 +19,10 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
     final bottom = MediaQuery.viewPaddingOf(context).bottom;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.fromLTRB(15.w, .0, 15.w, 40.h + bottom),
+      padding: EdgeInsets.fromLTRB(15.0, .0, 15.0, 40.0 + bottom),
       child: Wrap(
-        spacing: 8.r,
-        runSpacing: 8.r,
+        spacing: 8.0,
+        runSpacing: 8.0,
         children: categories.map((e) {
           final color =
               ex?.from(e.colorName).color ?? theme.colorScheme.surfaceContainer;
@@ -36,24 +35,24 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
                 color: color.withOpacity(.25),
                 shape: SmoothRectangleBorder(
                   side: BorderSide(color: color),
-                  borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
+                  borderRadius: const SmoothBorderRadius.all(
+                    SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 1.0),
                   ),
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.only(left: 10.w, right: 15.w),
+                padding: const EdgeInsets.only(left: 10.0, right: 15.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     // -> icon
                     Padding(
-                      padding: EdgeInsets.only(right: 3.w, bottom: 1.h),
+                      padding: const EdgeInsets.only(right: 3.0, bottom: 1.0),
                       child: Text(
                         e.icon,
                         style: theme.textTheme.bodyLarge?.copyWith(
                           height: .0,
-                          fontSize: 18.sp,
+                          fontSize: 18.0,
                         ),
                       ),
                     ),
@@ -61,13 +60,13 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
                     // -> title
                     Flexible(
                       child: Padding(
-                        padding: EdgeInsets.only(top: 5.h, bottom: 7.h),
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 7.0),
                         child: Text(
                           e.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.golosText(
-                            fontSize: 16.sp,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.w500,
                             color: theme.colorScheme.onSurface,
                           ),

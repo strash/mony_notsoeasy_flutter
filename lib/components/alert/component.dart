@@ -1,7 +1,6 @@
 import "dart:ui";
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
@@ -67,10 +66,10 @@ class AlertComponet extends StatelessWidget {
 
     return Center(
       child: SizedBox(
-        width: viewSize.width - 50.w,
+        width: viewSize.width - 50.0,
         child: ClipSmoothRect(
-          radius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 25.r, cornerSmoothing: 1.0),
+          radius: const SmoothBorderRadius.all(
+            SmoothRadius(cornerRadius: 25.0, cornerSmoothing: 1.0),
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(
@@ -81,18 +80,18 @@ class AlertComponet extends StatelessWidget {
               color: theme.colorScheme.tertiaryContainer
                   .withOpacity(kTranslucentPanelOpacity),
               child: Padding(
-                padding: EdgeInsets.all(10.r),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     // -> title
                     if (title != null)
                       Padding(
-                        padding: EdgeInsets.all(10.w),
+                        padding: const EdgeInsets.all(10.0),
                         child: DefaultTextStyle(
                           textAlign: TextAlign.center,
                           style: GoogleFonts.golosText(
-                            fontSize: 18.sp,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.w500,
                             color: theme.colorScheme.onTertiaryContainer,
                           ),
@@ -103,11 +102,12 @@ class AlertComponet extends StatelessWidget {
                     // -> description
                     if (description != null)
                       Padding(
-                        padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.h, 30.h),
+                        padding:
+                            const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 30.0),
                         child: DefaultTextStyle(
                           textAlign: TextAlign.center,
                           style: GoogleFonts.golosText(
-                            fontSize: 15.sp,
+                            fontSize: 15.0,
                             fontWeight: FontWeight.w400,
                             color: theme.colorScheme.onTertiaryContainer,
                           ),
@@ -119,7 +119,8 @@ class AlertComponet extends StatelessWidget {
                     SeparatedComponent(
                       direction: Axis.horizontal,
                       itemCount: EAlertResult.values.length,
-                      separatorBuilder: (context) => SizedBox(width: 10.w),
+                      separatorBuilder: (context) =>
+                          const SizedBox(width: 10.0),
                       itemBuilder: (context, index) {
                         final item = EAlertResult.values.elementAt(index);
 

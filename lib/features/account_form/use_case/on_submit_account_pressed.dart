@@ -3,22 +3,40 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
+import "package:provider/provider.dart";
 
-final class OnSumbitAccountPressed extends UseCase<void, dynamic> {
+final class OnSumbitAccountPressed extends UseCase<Future<void>, dynamic> {
   @override
-  void call(BuildContext context, [dynamic _]) {
+  Future<void> call(BuildContext context, [dynamic _]) async {
     final viewModel = context.viewModel<AccountFormViewModel>();
-    final balance =
+    final navigator = Navigator.of(context);
+
+    final cleanBalance =
         viewModel.balanceController.text.trim().replaceAll(",", ".");
+    final colorName =
+        viewModel.colorController.value?.name ?? EColorName.random().name;
+    final type = viewModel.typeController.value ?? EAccountType.defaultValue;
+    final currencyCode =
+        viewModel.currencyController.value?.code ?? kDefaultCurrencyCode;
+
+    double balance = double.tryParse(cleanBalance) ?? 0.0;
+
+    if (viewModel.widget.account case AccountVariantModel(:final model)) {
+      final service = context.read<DomainAccountService>();
+      final accBalance = await service.getBalances(ids: [model.id]);
+      if (accBalance.isNotEmpty) {
+        balance = (balance - accBalance.first.totalAmount).roundToFraction(2);
+      }
+    }
+
     final vo = AccountVO(
       title: viewModel.titleController.text.trim(),
-      colorName:
-          viewModel.colorController.value?.name ?? EColorName.random().name,
-      type: viewModel.typeController.value ?? EAccountType.defaultValue,
-      currencyCode:
-          viewModel.currencyController.value?.code ?? kDefaultCurrencyCode,
-      balance: double.tryParse(balance) ?? 0.0,
+      colorName: colorName,
+      type: type,
+      currencyCode: currencyCode,
+      balance: balance,
     );
-    Navigator.of(context).pop<AccountVO>(vo);
+
+    navigator.pop<AccountVO>(vo);
   }
 }

@@ -2,7 +2,6 @@ import "dart:math";
 
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/components/components.dart";
 
 part "./color_picker_controller.dart";
@@ -51,7 +50,7 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
       behavior: HitTestBehavior.opaque,
       onTap: () => _onTap(context),
       child: SizedBox.square(
-        dimension: 48.r,
+        dimension: 48.0,
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short2,
           tween: ColorTween(
@@ -65,16 +64,16 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
                 color: theme.colorScheme.surfaceContainer,
                 shape: SmoothRectangleBorder(
                   side: BorderSide(color: color!),
-                  borderRadius: SmoothBorderRadius.all(
+                  borderRadius: const SmoothBorderRadius.all(
                     SmoothRadius(
-                      cornerRadius: 15.r,
+                      cornerRadius: 15.0,
                       cornerSmoothing: 1.0,
                     ),
                   ),
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.all(6.r),
+                padding: const EdgeInsets.all(6.0),
                 child: ListenableBuilder(
                   listenable: widget.controller,
                   builder: (context, child) {
@@ -87,9 +86,9 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
                           side: BorderSide(
                             color: theme.colorScheme.onSurface.withOpacity(0.1),
                           ),
-                          borderRadius: SmoothBorderRadius.all(
+                          borderRadius: const SmoothBorderRadius.all(
                             SmoothRadius(
-                              cornerRadius: 10.r,
+                              cornerRadius: 10.0,
                               cornerSmoothing: 1.0,
                             ),
                           ),

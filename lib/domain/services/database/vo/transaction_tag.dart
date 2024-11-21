@@ -1,16 +1,16 @@
 import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/domain/services/database/vo/tag.dart";
 
-sealed class TransactionTagVO {}
+sealed class TransactionTagVariant {}
 
-final class TransactionTagVOVO extends TransactionTagVO {
+final class TransactionTagVariantVO extends TransactionTagVariant {
   final TagVO vo;
 
-  TransactionTagVOVO(this.vo);
+  TransactionTagVariantVO(this.vo);
 }
 
-final class TransactionTagVOModel extends TransactionTagVO {
+final class TransactionTagVariantModel extends TransactionTagVariant {
   final TagModel model;
 
-  TransactionTagVOModel(this.model);
+  TransactionTagVariantModel(this.model);
 }

@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/appbar/component.dart";
@@ -24,13 +23,14 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
         // -> appbar
         const AppBarComponent(
           title: Text("Заметка"),
-          useSliver: false,
+          showBackground: false,
           showDragHandle: true,
+          useSliver: false,
         ),
 
         // -> input
         Padding(
-          padding: EdgeInsets.fromLTRB(15.w, 20.h, 15.w, 15.h + keyboardHeight),
+          padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 15.0 + keyboardHeight),
           child: TextFormField(
             key: inputController.key,
             focusNode: inputController.focus,
@@ -45,7 +45,7 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
             maxLines: 10,
             style: GoogleFonts.golosText(
               color: theme.colorScheme.onSurface,
-              fontSize: 16.sp,
+              fontSize: 16.0,
               fontWeight: FontWeight.w400,
             ),
             scrollPadding: EdgeInsets.zero,

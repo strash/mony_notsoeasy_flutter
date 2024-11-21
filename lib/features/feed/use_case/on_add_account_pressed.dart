@@ -29,7 +29,7 @@ final class OnAddAccountPressed extends UseCase<Future<void>, dynamic> {
 
     final account = await accountService.create(vo: result);
     appService.notify(
-      EventAccountCreated(sender: FeedViewModel, account: account),
+      EventAccountCreated(sender: FeedViewModel, value: account),
     );
   }
 }

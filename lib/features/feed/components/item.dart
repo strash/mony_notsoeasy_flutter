@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -21,12 +20,12 @@ class FeedItemComponent extends StatelessWidget {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
     final viewSize = MediaQuery.sizeOf(context);
-    final padding = EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h);
+    const padding = EdgeInsets.symmetric(horizontal: 20.0, vertical: 14.0);
 
     final categoryColor = ex?.from(transaction.category.colorName).color ??
         theme.colorScheme.surfaceContainer;
-    final iconDimension = 50.r;
-    final horizontalGap = 10.w;
+    const iconDimension = 50.0;
+    const horizontalGap = 10.0;
     final contentWidth =
         viewSize.width - padding.horizontal - iconDimension - horizontalGap;
 
@@ -60,9 +59,9 @@ class FeedItemComponent extends StatelessWidget {
                         categoryColor,
                       ],
                     ),
-                    shape: SmoothRectangleBorder(
+                    shape: const SmoothRectangleBorder(
                       borderRadius: SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
+                        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
                       ),
                     ),
                   ),
@@ -74,7 +73,7 @@ class FeedItemComponent extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: horizontalGap),
+              const SizedBox(width: horizontalGap),
 
               ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: contentWidth),
@@ -93,13 +92,13 @@ class FeedItemComponent extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.golosText(
-                              fontSize: 16.sp,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.w500,
                               color: categoryColor,
                             ),
                           ),
                         ),
-                        SizedBox(width: 10.w),
+                        const SizedBox(width: 10.0),
 
                         // -> amount
                         Text(
@@ -108,7 +107,7 @@ class FeedItemComponent extends StatelessWidget {
                             symbol: transaction.account.currency.symbol,
                           ),
                           style: GoogleFonts.golosText(
-                            fontSize: 16.sp,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.w500,
                             color: transaction.amount.isNegative
                                 ? theme.colorScheme.onSurface
@@ -117,7 +116,7 @@ class FeedItemComponent extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5.h),
+                    const SizedBox(height: 5.0),
 
                     // -> middle row
                     ConstrainedBox(
@@ -140,13 +139,13 @@ class FeedItemComponent extends StatelessWidget {
                     // -> note
                     if (transaction.note.isNotEmpty)
                       Padding(
-                        padding: EdgeInsets.only(top: 5.h),
+                        padding: const EdgeInsets.only(top: 5.0),
                         child: Text(
                           transaction.note,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.golosText(
-                            fontSize: 15.sp,
+                            fontSize: 15.0,
                             fontWeight: FontWeight.w400,
                             color: theme.colorScheme.onSurfaceVariant,
                           ),

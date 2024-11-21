@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/features.dart";
@@ -37,8 +36,8 @@ class NavigationButtonsComponent extends StatelessWidget {
           child: IgnorePointer(
             child: SvgPicture.asset(
               Assets.icons.chevronBackward,
-              width: 22.r,
-              height: 22.r,
+              width: 22.0,
+              height: 22.0,
               colorFilter: ColorFilter.mode(
                 theme.colorScheme.onTertiary,
                 BlendMode.srcIn,
@@ -46,7 +45,7 @@ class NavigationButtonsComponent extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 10.w),
+        const SizedBox(width: 10.0),
 
         // -> button next
         Expanded(
@@ -58,11 +57,11 @@ class NavigationButtonsComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Дальше"),
-                SizedBox(width: 8.w),
+                const SizedBox(width: 8.0),
                 SvgPicture.asset(
                   Assets.icons.chevronForward,
-                  width: 22.r,
-                  height: 22.r,
+                  width: 22.0,
+                  height: 22.0,
                   colorFilter: ColorFilter.mode(
                     theme.colorScheme.onTertiary,
                     BlendMode.srcIn,

@@ -2,42 +2,34 @@ part of "./event_service.dart";
 
 sealed class Event {
   final Type sender;
-
   const Event({required this.sender});
 }
 
-final class EventAccountCreated extends Event {
-  final AccountModel account;
+// -> account
 
-  const EventAccountCreated({
-    required super.sender,
-    required this.account,
-  });
+final class EventAccountCreated extends Event {
+  final AccountModel value;
+  const EventAccountCreated({required super.sender, required this.value});
 }
 
-final class EventTransactionCreated extends Event {
-  final TransactionModel transaction;
+final class EventAccountUpdated extends Event {
+  final AccountModel value;
+  EventAccountUpdated({required super.sender, required this.value});
+}
 
-  const EventTransactionCreated({
-    required super.sender,
-    required this.transaction,
-  });
+// -> transaction
+
+final class EventTransactionCreated extends Event {
+  final TransactionModel value;
+  const EventTransactionCreated({required super.sender, required this.value});
 }
 
 final class EventTransactionUpdated extends Event {
-  final TransactionModel transaction;
-
-  EventTransactionUpdated({
-    required super.sender,
-    required this.transaction,
-  });
+  final TransactionModel value;
+  EventTransactionUpdated({required super.sender, required this.value});
 }
 
 final class EventTransactionDeleted extends Event {
-  final TransactionModel transaction;
-
-  EventTransactionDeleted({
-    required super.sender,
-    required this.transaction,
-  });
+  final TransactionModel value;
+  EventTransactionDeleted({required super.sender, required this.value});
 }

@@ -12,13 +12,13 @@ class _ColorGrid extends StatefulWidget {
 class _ColorGridState extends State<_ColorGrid> {
   Rect? _rect;
   late final _padding = EdgeInsets.fromLTRB(
-    10.r,
+    10.0,
     0.0,
-    10.r,
-    widget.bottom + 40.h,
+    10.0,
+    widget.bottom + 40.0,
   );
-  final double _cursorThickness = 5.r;
-  final _cursorInnerRadius = 9.r;
+  final double _cursorThickness = 5.0;
+  final _cursorInnerRadius = 9.0;
 
   RenderBox? _getRenderBox() {
     return context.findRenderObject() as RenderBox?;

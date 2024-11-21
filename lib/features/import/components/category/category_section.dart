@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/use_case/use_case.dart";
@@ -34,7 +33,7 @@ class ImportCategorySectionComponent extends StatelessWidget {
     });
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -43,11 +42,11 @@ class ImportCategorySectionComponent extends StatelessWidget {
               // -> icon
               if (count == categories.length)
                 Padding(
-                  padding: EdgeInsets.only(right: 5.w),
+                  padding: const EdgeInsets.only(right: 5.0),
                   child: SvgPicture.asset(
                     Assets.icons.checkmarkCircleFill,
-                    width: 20.r,
-                    height: 20.r,
+                    width: 20.0,
+                    height: 20.0,
                     colorFilter: ColorFilter.mode(
                       theme.colorScheme.secondary,
                       BlendMode.srcIn,
@@ -59,19 +58,19 @@ class ImportCategorySectionComponent extends StatelessWidget {
               Text(
                 "Категории $title $count/${categories.length}",
                 style: GoogleFonts.golosText(
-                  fontSize: 16.sp,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.w600,
                   color: theme.colorScheme.tertiary,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 10.h),
+          const SizedBox(height: 10.0),
 
           // -> categories
           Wrap(
-            spacing: 8.r,
-            runSpacing: 8.r,
+            spacing: 8.0,
+            runSpacing: 8.0,
             children: categories.map((e) {
               return ImportCategoryItemComponent(
                 category: e,

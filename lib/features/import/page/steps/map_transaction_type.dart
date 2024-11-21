@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
@@ -26,7 +25,7 @@ class ImportMapTransactionTypePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,33 +33,33 @@ class ImportMapTransactionTypePage extends StatelessWidget {
               Text(
                 "Типы транзакций",
                 style: GoogleFonts.golosText(
-                  fontSize: 20.sp,
+                  fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
 
               // -> description
               Text(
                 "Являются ли транзакции в этой таблице расходами?",
                 style: GoogleFonts.golosText(
-                  fontSize: 15.sp,
-                  height: 1.3.sp,
+                  fontSize: 15.0,
+                  height: 1.3,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 40.h),
+        const SizedBox(height: 40.0),
 
         // -> table
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: TypesTableComponent(transactionsByType: typeModel.largest),
         ),
-        SizedBox(height: 30.h),
+        const SizedBox(height: 30.0),
 
         // -> select
         Center(

@@ -131,7 +131,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
           return transactionService.create(
             vo: vo,
             tags: list
-                .map((e) => TransactionTagVOModel(e))
+                .map((e) => TransactionTagVariantModel(e))
                 .toList(growable: false),
           );
         }),
@@ -162,7 +162,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
     final account = accounts.entries.map((e) => e.value).first;
     navigator.popUntil((route) => route.isFirst);
     appService.notify(
-      EventAccountCreated(sender: ImportViewModel, account: account),
+      EventAccountCreated(sender: ImportViewModel, value: account),
     );
   }
 }

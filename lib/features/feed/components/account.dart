@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
@@ -71,7 +70,8 @@ class FeedAccountComponent extends StatelessWidget {
                 code: page.balance.currency.code,
               ),
           },
-          SizedBox(height: 10.h),
+          // ignore: prefer_const_constructors
+          SizedBox(height: 10.0),
 
           // -> title
           Row(
@@ -84,7 +84,7 @@ class FeedAccountComponent extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
-                    fontSize: 18.sp,
+                    fontSize: 18.0,
                     height: 1.2,
                     fontWeight: FontWeight.w600,
                     color: _getColor(context),
@@ -94,11 +94,11 @@ class FeedAccountComponent extends StatelessWidget {
 
               // -> icon
               Padding(
-                padding: EdgeInsets.only(left: 2.w, top: 1.h),
+                padding: const EdgeInsets.only(left: 2.0, top: 1.0),
                 child: SvgPicture.asset(
                   Assets.icons.chevronForward,
-                  width: 20.r,
-                  height: 20.r,
+                  width: 20.0,
+                  height: 20.0,
                   colorFilter: ColorFilter.mode(
                     _getColor(context),
                     BlendMode.srcIn,
@@ -114,13 +114,13 @@ class FeedAccountComponent extends StatelessWidget {
             FeedPageStateSingleAccount(:final account) => Text(
                 account.type.description,
                 style: GoogleFonts.golosText(
-                  fontSize: 14.sp,
+                  fontSize: 14.0,
                   fontWeight: FontWeight.w400,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
           },
-          SizedBox(height: 20.h),
+          const SizedBox(height: 20.0),
         ],
       ),
     );

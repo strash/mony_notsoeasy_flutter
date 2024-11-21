@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -23,6 +22,7 @@ class AccountView extends StatelessWidget {
     final balance = viewModel.balance;
     final color =
         ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
+    final onEditPressed = viewModel<OnEditAccountPressed>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -38,10 +38,9 @@ class AccountView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
-                  // TODO
-                  // onTap: () => onEditPressed(context, transaction),
+                  onTap: () => onEditPressed(context, account),
                 ),
-                SizedBox(width: 4.w),
+                const SizedBox(width: 4.0),
 
                 // -> button delete
                 AppBarButtonComponent(
@@ -49,42 +48,42 @@ class AccountView extends StatelessWidget {
                   // TODO
                   // onTap: () => onDeletePressed(context, transaction),
                 ),
-                SizedBox(width: 8.w),
+                const SizedBox(width: 8.0),
               ],
             ),
           ),
 
           // -> content
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             sliver: SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20.h),
+                  const SizedBox(height: 20.0),
 
                   // -> title
                   Text(
                     account.title,
                     textAlign: TextAlign.start,
                     style: GoogleFonts.golosText(
-                      fontSize: 18.sp,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.w600,
                       color: color,
                     ),
                   ),
-                  SizedBox(height: 2.h),
+                  const SizedBox(height: 2.0),
 
                   // -> type
                   Text(
                     account.type.description,
                     style: GoogleFonts.golosText(
-                      fontSize: 15.sp,
+                      fontSize: 15.0,
                       fontWeight: FontWeight.w400,
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
-                  SizedBox(height: 30.h),
+                  const SizedBox(height: 30.0),
 
                   // -> amount
                   if (balance != null)
@@ -95,12 +94,12 @@ class AccountView extends StatelessWidget {
                         Text(
                           "Баланс",
                           style: GoogleFonts.golosText(
-                            fontSize: 16.sp,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.w500,
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        const SizedBox(height: 10.0),
 
                         // -> total sum
                         Text(
@@ -109,23 +108,23 @@ class AccountView extends StatelessWidget {
                             symbol: balance.currency.symbol,
                           ),
                           style: GoogleFonts.golosText(
-                            fontSize: 18.sp,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.w600,
                             color: theme.colorScheme.onSurface,
                           ),
                         ),
-                        SizedBox(height: 30.h),
+                        const SizedBox(height: 30.0),
 
                         // -> total amount title
                         Text(
                           "Сумма транзакций",
                           style: GoogleFonts.golosText(
-                            fontSize: 16.sp,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.w500,
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        const SizedBox(height: 10.0),
 
                         // -> total amount
                         Text(
@@ -134,45 +133,45 @@ class AccountView extends StatelessWidget {
                             symbol: balance.currency.symbol,
                           ),
                           style: GoogleFonts.golosText(
-                            fontSize: 18.sp,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.w600,
                             color: theme.colorScheme.onSurface,
                           ),
                         ),
-                        SizedBox(height: 3.h),
+                        const SizedBox(height: 3.0),
 
                         // -> transactions date range
                         Text(
                           viewModel.transactionsCountDescription,
                           style: GoogleFonts.golosText(
-                            fontSize: 15.sp,
+                            fontSize: 15.0,
                             fontWeight: FontWeight.w400,
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
                         ),
-                        SizedBox(height: 3.h),
+                        const SizedBox(height: 3.0),
 
                         // -> transactions date range
                         Text(
                           viewModel.transactionsDateRangeDescription,
                           style: GoogleFonts.golosText(
-                            fontSize: 15.sp,
+                            fontSize: 15.0,
                             fontWeight: FontWeight.w400,
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
                         ),
-                        SizedBox(height: 30.h),
+                        const SizedBox(height: 30.0),
 
                         // -> currency title
                         Text(
                           "Валюта",
                           style: GoogleFonts.golosText(
-                            fontSize: 16.sp,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.w500,
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        const SizedBox(height: 10.0),
 
                         // -> currency
                         Text(
@@ -180,7 +179,7 @@ class AccountView extends StatelessWidget {
                           " • "
                           "${balance.currency.name}",
                           style: GoogleFonts.golosText(
-                            fontSize: 18.sp,
+                            fontSize: 18.0,
                             fontWeight: FontWeight.w500,
                             color: theme.colorScheme.onSurface,
                           ),

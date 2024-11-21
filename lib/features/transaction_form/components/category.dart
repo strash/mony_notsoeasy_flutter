@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
@@ -20,13 +19,13 @@ class TransactionFormCategoryComponent extends StatelessWidget {
       children: [
         // -> icon
         SizedBox.square(
-          dimension: 36.r,
+          dimension: 36.0,
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: color,
-              shape: SmoothRectangleBorder(
+              shape: const SmoothRectangleBorder(
                 borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
+                  SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 1.0),
                 ),
               ),
             ),
@@ -38,7 +37,7 @@ class TransactionFormCategoryComponent extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 7.w),
+        const SizedBox(width: 7.0),
 
         // -> title
         Flexible(
@@ -71,7 +70,7 @@ class TransactionFormCategoryComponent extends StatelessWidget {
             return SelectComponent<CategoryModel>(
               controller: controller,
               placeholder: const Text("Категория"),
-              activeEntryPadding: EdgeInsets.symmetric(horizontal: 7.w),
+              activeEntryPadding: const EdgeInsets.symmetric(horizontal: 7.0),
               activeEntry: controller.value != null
                   ? Builder(
                       builder: (context) {

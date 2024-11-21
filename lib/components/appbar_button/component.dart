@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 
 class AppBarButtonComponent extends StatelessWidget {
@@ -24,7 +23,7 @@ class AppBarButtonComponent extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: SizedBox.square(
-        dimension: 50.r,
+        dimension: 50.0,
         child: Center(
           child: Padding(
             padding: padding ?? EdgeInsets.zero,
@@ -34,8 +33,8 @@ class AppBarButtonComponent extends StatelessWidget {
               curve: Curves.easeInOut,
               child: SvgPicture.asset(
                 icon,
-                width: 28.r,
-                height: 28.r,
+                width: 28.0,
+                height: 28.0,
                 colorFilter: ColorFilter.mode(
                   color ?? theme.colorScheme.primary,
                   BlendMode.srcIn,

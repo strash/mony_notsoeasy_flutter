@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
@@ -12,7 +11,7 @@ class BackButtonComponent extends StatelessWidget {
 
     return AppBarButtonComponent(
       icon: Assets.icons.chevronBackward,
-      padding: EdgeInsets.only(right: 10.w),
+      padding: const EdgeInsets.only(right: 10.0),
       onTap: navigator.maybePop<void>,
     );
   }

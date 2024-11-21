@@ -2,7 +2,6 @@ import "dart:ui";
 
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -11,14 +10,14 @@ import "package:mony_app/features/navbar/navbar.dart";
 import "package:rxdart/rxdart.dart";
 
 class NavBarView extends StatelessWidget {
-  static final double kTabHeight = 54.h;
-  static final double kBottomMargin = 8.r;
-  static final double kRadius = 20.r;
+  static const double kTabHeight = 54.0;
+  static const double kBottomMargin = 8.0;
+  static const double kRadius = 20.0;
   static double bottomOffset(BuildContext context) =>
       MediaQuery.of(context).viewPadding.bottom +
       kBottomMargin * 2.0 +
       kTabHeight +
-      50.h;
+      50.0;
 
   const NavBarView({super.key});
 
@@ -60,7 +59,7 @@ class NavBarView extends StatelessWidget {
                       // -> tabs
                       Expanded(
                         child: ClipSmoothRect(
-                          radius: SmoothBorderRadius.all(
+                          radius: const SmoothBorderRadius.all(
                             SmoothRadius(
                               cornerRadius: kRadius,
                               cornerSmoothing: 1.0,
@@ -87,7 +86,7 @@ class NavBarView extends StatelessWidget {
                         ),
                       ),
 
-                      SizedBox(width: 10.w),
+                      const SizedBox(width: 10.0),
 
                       // -> button plus
                       const NavBarButtonPlusComponent(),

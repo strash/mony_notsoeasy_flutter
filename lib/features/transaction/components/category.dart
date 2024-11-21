@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
@@ -25,7 +24,7 @@ class TransactionCategoryComponent extends StatelessWidget {
         // -> icon
         Center(
           child: SizedBox.square(
-            dimension: 100.r,
+            dimension: 100.0,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 gradient: LinearGradient(
@@ -40,10 +39,10 @@ class TransactionCategoryComponent extends StatelessWidget {
                     color,
                   ],
                 ),
-                shape: SmoothRectangleBorder(
+                shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
                     SmoothRadius(
-                      cornerRadius: 30.r,
+                      cornerRadius: 30.0,
                       cornerSmoothing: 1.0,
                     ),
                   ),
@@ -58,7 +57,7 @@ class TransactionCategoryComponent extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 10.h),
+        const SizedBox(height: 10.0),
 
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -70,7 +69,7 @@ class TransactionCategoryComponent extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.golosText(
-                  fontSize: 18.sp,
+                  fontSize: 18.0,
                   fontWeight: FontWeight.w600,
                   color: color,
                 ),
@@ -79,11 +78,11 @@ class TransactionCategoryComponent extends StatelessWidget {
 
             // -> icon
             Padding(
-              padding: EdgeInsets.only(left: 2.w, top: 1.h),
+              padding: const EdgeInsets.only(left: 2.0, top: 1.0),
               child: SvgPicture.asset(
                 Assets.icons.chevronForward,
-                width: 20.r,
-                height: 20.r,
+                width: 20.0,
+                height: 20.0,
                 colorFilter: ColorFilter.mode(
                   color,
                   BlendMode.srcIn,

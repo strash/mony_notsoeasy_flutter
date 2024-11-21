@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/features/import/import.dart";
@@ -18,7 +17,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,12 +28,12 @@ class ImportLoadCsvComponent extends StatelessWidget {
               Text(
                 "Загрузка CSV",
                 style: GoogleFonts.golosText(
-                  fontSize: 20.sp,
+                  fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
 
               // -> description
               Text(
@@ -44,14 +43,14 @@ class ImportLoadCsvComponent extends StatelessWidget {
                 'колонки "сумма" нет символов валюты. И перед копейками не '
                 "запятая, а точка. А дальше разберемся!",
                 style: GoogleFonts.golosText(
-                  fontSize: 15.sp,
-                  height: 1.3.sp,
+                  fontSize: 15.0,
+                  height: 1.3,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 40.h),
+          const SizedBox(height: 40.0),
 
           // -> loader
           if (event is ImportEventLoadingCsv)
@@ -66,21 +65,21 @@ class ImportLoadCsvComponent extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   Assets.icons.exclamationmarkCircleFill,
-                  width: 22.r,
-                  height: 22.r,
+                  width: 22.0,
+                  height: 22.0,
                   colorFilter: ColorFilter.mode(
                     theme.colorScheme.error,
                     BlendMode.srcIn,
                   ),
                 ),
-                SizedBox(width: 8.w),
+                const SizedBox(width: 8.0),
                 Flexible(
                   child: Text(
                     "Не получилось прочитать файл. Либо он испорчен, либо "
                     "пуст. Попробуй загрузить другой файл.",
                     style: GoogleFonts.golosText(
-                      fontSize: 15.sp,
-                      height: 1.3.sp,
+                      fontSize: 15.0,
+                      height: 1.3,
                       color: theme.colorScheme.error,
                     ),
                   ),

@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/bottom_sheet/sheet.dart";

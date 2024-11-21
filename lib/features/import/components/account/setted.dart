@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/app/app.dart";
@@ -19,7 +18,7 @@ class AccountSettedItemComponent extends StatelessWidget {
         theme.colorScheme.onSurface;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Row(
         children: [
           Expanded(
@@ -32,7 +31,7 @@ class AccountSettedItemComponent extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
-                    fontSize: 16.sp,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                     color: color,
                   ),
@@ -44,7 +43,7 @@ class AccountSettedItemComponent extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
-                    fontSize: 13.sp,
+                    fontSize: 13.0,
                     fontWeight: FontWeight.w500,
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -52,7 +51,7 @@ class AccountSettedItemComponent extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 20.w),
+          const SizedBox(width: 20.0),
 
           // -> balance with currency
           Text(
@@ -60,7 +59,7 @@ class AccountSettedItemComponent extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.golosText(
-              fontSize: 16.sp,
+              fontSize: 16.0,
               height: 1.0,
               fontWeight: FontWeight.w500,
               color: account.balance >= 0.0

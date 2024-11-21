@@ -23,13 +23,13 @@ class SelectEntryComponent<T> extends StatelessWidget {
       child: Opacity(
         opacity: enabled ? 1.0 : 0.4,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12.0),
           child: ListenableBuilder(
             listenable: provider,
             child: Flexible(
               child: DefaultTextStyle(
                 style: GoogleFonts.golosText(
-                  fontSize: 16.sp,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.w400,
                   color: theme.colorScheme.onSurface,
                 ),
@@ -43,17 +43,17 @@ class SelectEntryComponent<T> extends StatelessWidget {
                   if (provider.value == value)
                     SvgPicture.asset(
                       Assets.icons.checkmark,
-                      width: 20.r,
-                      height: 20.r,
+                      width: 20.0,
+                      height: 20.0,
                       colorFilter: ColorFilter.mode(
                         theme.colorScheme.secondary,
                         BlendMode.srcIn,
                       ),
                     )
                   else
-                    SizedBox.square(dimension: 20.r),
+                    const SizedBox.square(dimension: 20.0),
 
-                  SizedBox(width: 15.w),
+                  const SizedBox(width: 15.0),
 
                   // -> child
                   listenableChild!,

@@ -1,35 +1,34 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 
 class BottomSheetHandleComponent extends StatelessWidget {
-  static final double height = 20.h;
+  static const double height = 20.0;
 
   const BottomSheetHandleComponent();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final verticalPadding = 8.h;
+    const verticalPadding = 8.0;
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 24.w,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 24.0,
         vertical: verticalPadding,
       ),
       child: SizedBox.fromSize(
-        size: Size.fromHeight(height - verticalPadding * 2.0),
+        size: const Size.fromHeight(height - verticalPadding * 2.0),
         child: Align(
           alignment: Alignment.topCenter,
           child: SizedBox(
-            width: 46.w,
-            height: 4.h,
+            width: 46.0,
+            height: 4.0,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: theme.colorScheme.onSurfaceVariant.withOpacity(0.5),
-                shape: SmoothRectangleBorder(
+                shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 2.r, cornerSmoothing: 1.0),
+                    SmoothRadius(cornerRadius: 2.0, cornerSmoothing: 1.0),
                   ),
                 ),
               ),

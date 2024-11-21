@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -16,19 +15,20 @@ class FeedEmptyStateComponent extends StatelessWidget {
       children: [
         SvgPicture.asset(
           Assets.icons.sparkles,
-          width: 150.r,
-          height: 150.r,
+          width: 150.0,
+          height: 150.0,
           colorFilter: ColorFilter.mode(
             theme.colorScheme.surfaceContainer,
             BlendMode.srcIn,
           ),
         ),
-        SizedBox(height: 10.h),
+        // ignore: prefer_const_constructors
+        SizedBox(height: 10.0),
         Text(
           "Тут ничего нет.\nЗаписывай траты!",
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
-            fontSize: 16.sp,
+            fontSize: 16.0,
             fontWeight: FontWeight.w500,
             color: theme.colorScheme.onSurfaceVariant.withOpacity(.4),
           ),

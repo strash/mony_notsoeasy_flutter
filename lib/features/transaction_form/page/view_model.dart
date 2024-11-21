@@ -15,7 +15,7 @@ export "../use_case/use_case.dart";
 
 final class TransactionFormVO {
   final TransactionVO transactionVO;
-  final List<TransactionTagVO> tags;
+  final List<TransactionTagVariant> tags;
 
   TransactionFormVO({
     required this.transactionVO,
@@ -79,7 +79,7 @@ final class TransactionFormViewModel
     for (final key in ETransactionType.values) key: const [],
   };
   final displayedTags = ValueNotifier<List<TagModel>>([]);
-  List<TransactionTagVO> attachedTags = const [];
+  List<TransactionTagVariant> attachedTags = const [];
 
   bool isKeyboardHintAccepted = false;
 

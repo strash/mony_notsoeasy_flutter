@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
@@ -35,7 +34,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -43,33 +42,33 @@ class ImportMapAccountsComponent extends StatelessWidget {
               Text(
                 "Счета",
                 style: GoogleFonts.golosText(
-                  fontSize: 20.sp,
+                  fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
 
               // -> description
               Text(
                 description,
                 style: GoogleFonts.golosText(
-                  fontSize: 15.sp,
-                  height: 1.3.sp,
+                  fontSize: 15.0,
+                  height: 1.3,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 40.h),
+        const SizedBox(height: 40.0),
 
         // -> accounts
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: SeparatedComponent(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            separatorBuilder: (context) => SizedBox(height: 10.h),
+            separatorBuilder: (context) => const SizedBox(height: 10.0),
             itemCount: accountModel.accounts.length,
             itemBuilder: (context, index) {
               final accountEntry = accountModel.accounts.elementAt(index);
@@ -83,8 +82,8 @@ class ImportMapAccountsComponent extends StatelessWidget {
                     color: theme.colorScheme.surfaceContainer.withOpacity(0.5),
                     shape: SmoothRectangleBorder(
                       side: BorderSide(color: theme.colorScheme.outlineVariant),
-                      borderRadius: SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
+                      borderRadius: const SmoothBorderRadius.all(
+                        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
                       ),
                     ),
                   ),

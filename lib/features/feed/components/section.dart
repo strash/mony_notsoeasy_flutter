@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -28,7 +27,7 @@ class FeedSectionComponent extends StatelessWidget {
     }).join(", ");
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(20.w, 44.h, 20.w, 14.h),
+      padding: const EdgeInsets.fromLTRB(20.0, 44.0, 20.0, 14.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -36,12 +35,12 @@ class FeedSectionComponent extends StatelessWidget {
           Text(
             formattedDate,
             style: GoogleFonts.golosText(
-              fontSize: 16.sp,
+              fontSize: 16.0,
               fontWeight: FontWeight.w500,
               color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
-          SizedBox(width: 10.w),
+          const SizedBox(width: 10.0),
 
           // -> sum
           Flexible(
@@ -50,7 +49,7 @@ class FeedSectionComponent extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.golosText(
-                fontSize: 16.sp,
+                fontSize: 16.0,
                 fontWeight: FontWeight.w500,
                 color: theme.colorScheme.onSurfaceVariant,
               ),

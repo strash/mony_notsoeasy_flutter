@@ -3,7 +3,6 @@ import "dart:ui";
 
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/constants.dart";
@@ -57,14 +56,14 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     viewModel.pageController.addListener(_pageListener);
 
     return Positioned(
-      top: MediaQuery.viewPaddingOf(context).top + 10.h,
+      top: MediaQuery.viewPaddingOf(context).top + 10.0,
       left: 0,
       right: 0,
       child: Align(
         alignment: Alignment.topCenter,
         child: ClipSmoothRect(
-          radius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
+          radius: const SmoothBorderRadius.all(
+            SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(
@@ -75,8 +74,8 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
               color: theme.colorScheme.surfaceContainer
                   .withOpacity(kTranslucentPanelOpacity),
               child: SizedBox(
-                width: 80.w,
-                height: 30.h,
+                width: 80.0,
+                height: 30.0,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -91,12 +90,12 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                             controller: viewModel.pageController,
                             count: viewModel.pages.length,
                             effect: ScrollingDotsEffect(
-                              dotWidth: 7.r,
-                              dotHeight: 7.r,
+                              dotWidth: 7.0,
+                              dotHeight: 7.0,
                               dotColor: theme.colorScheme.tertiaryContainer,
                               activeDotColor: theme.colorScheme.primary,
                               activeDotScale: 1.0,
-                              spacing: 5.w,
+                              spacing: 5.0,
                               strokeWidth: .0,
                             ),
                           ),
@@ -114,18 +113,18 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                         children: [
                           SvgPicture.asset(
                             Assets.icons.magnifyingglass,
-                            width: 14.r,
-                            height: 14.r,
+                            width: 14.0,
+                            height: 14.0,
                             colorFilter: ColorFilter.mode(
                               theme.colorScheme.onSurfaceVariant,
                               BlendMode.srcIn,
                             ),
                           ),
-                          SizedBox(width: 4.w),
+                          const SizedBox(width: 4.0),
                           Text(
                             "поиск",
                             style: GoogleFonts.golosText(
-                              fontSize: 13.sp,
+                              fontSize: 13.0,
                               color: theme.colorScheme.onSurfaceVariant,
                             ),
                           ),

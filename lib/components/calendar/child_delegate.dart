@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/calendar/component.dart";
@@ -42,16 +41,16 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
           behavior: HitTestBehavior.opaque,
           onTap: () => controller.value = date,
           child: Padding(
-            padding: EdgeInsets.all(2.r),
+            padding: const EdgeInsets.all(2.0),
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: switch (isActive) {
                   true => theme.colorScheme.secondary,
                   false => isNow ? theme.colorScheme.tertiaryContainer : null,
                 },
-                shape: SmoothRectangleBorder(
+                shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 18.r, cornerSmoothing: 1.0),
+                    SmoothRadius(cornerRadius: 18.0, cornerSmoothing: 1.0),
                   ),
                 ),
               ),
@@ -60,7 +59,7 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
                   date.day.toString(),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.golosText(
-                    fontSize: 20.sp,
+                    fontSize: 20.0,
                     height: 1.0,
                     fontWeight: FontWeight.w500,
                     color: isActive

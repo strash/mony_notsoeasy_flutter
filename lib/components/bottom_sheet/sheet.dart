@@ -2,7 +2,6 @@ import "dart:math";
 
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/components/bottom_sheet/handle.dart";
 
@@ -85,7 +84,7 @@ class _BottomSheetComponentState extends State<BottomSheetComponent>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final radius = SmoothRadius(cornerRadius: 26.r, cornerSmoothing: 1.0);
+    const radius = SmoothRadius(cornerRadius: 26.0, cornerSmoothing: 1.0);
 
     return ValueListenableBuilder<double>(
       valueListenable: keyboardNotifier,
@@ -94,7 +93,7 @@ class _BottomSheetComponentState extends State<BottomSheetComponent>
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
             color: theme.colorScheme.surface,
-            shape: SmoothRectangleBorder(
+            shape: const SmoothRectangleBorder(
               borderRadius: SmoothBorderRadius.all(radius),
             ),
           ),
@@ -106,7 +105,7 @@ class _BottomSheetComponentState extends State<BottomSheetComponent>
               if (widget.showDragHandle)
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: widget.largeHandle ? 20.h : .0,
+                    bottom: widget.largeHandle ? 20.0 : .0,
                   ),
                   child: const BottomSheetHandleComponent(),
                 ),

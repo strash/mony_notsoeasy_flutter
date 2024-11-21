@@ -134,7 +134,7 @@ final class DomainTransactionService extends BaseDatabaseService {
 
   Future<TransactionModel?> create({
     required TransactionVO vo,
-    required List<TransactionTagVO> tags,
+    required List<TransactionTagVariant> tags,
   }) async {
     final defaultColumns = newDefaultColumns;
     final dto = TransactionDto(
@@ -156,7 +156,7 @@ final class DomainTransactionService extends BaseDatabaseService {
     final tagModels = await Future.wait<TagModel>(
       tags.map((e) {
         switch (e) {
-          case TransactionTagVOVO(:final vo):
+          case TransactionTagVariantVO(:final vo):
             final tagDefaultColumns = newDefaultColumns;
             final tagDto = TagDto(
               id: tagDefaultColumns.id,
@@ -166,7 +166,7 @@ final class DomainTransactionService extends BaseDatabaseService {
             );
             _tagRepo.create(dto: tagDto);
             return Future.value(_tagFactory.toModel(tagDto));
-          case TransactionTagVOModel(:final model):
+          case TransactionTagVariantModel(:final model):
             return Future.value(model);
         }
       }),
@@ -195,7 +195,7 @@ final class DomainTransactionService extends BaseDatabaseService {
   Future<TransactionModel?> update({
     required TransactionModel transaction,
     required TransactionVO vo,
-    required List<TransactionTagVO> tags,
+    required List<TransactionTagVariant> tags,
   }) async {
     final defaultColumns = newDefaultColumns;
     final dto = TransactionDto(
@@ -221,7 +221,7 @@ final class DomainTransactionService extends BaseDatabaseService {
     final List<TagModel> tagModels = await Future.wait<TagModel>(
       tags.map((e) {
         switch (e) {
-          case TransactionTagVOVO(:final vo):
+          case TransactionTagVariantVO(:final vo):
             final tagDefaultColumns = newDefaultColumns;
             final tagDto = TagDto(
               id: tagDefaultColumns.id,
@@ -231,7 +231,7 @@ final class DomainTransactionService extends BaseDatabaseService {
             );
             _tagRepo.create(dto: tagDto);
             return Future.value(_tagFactory.toModel(tagDto));
-          case TransactionTagVOModel(:final model):
+          case TransactionTagVariantModel(:final model):
             return Future.value(model);
         }
       }),

@@ -38,7 +38,7 @@ final class OnEditTransactionPressed
     appService.notify(
       EventTransactionUpdated(
         sender: TransactionViewModel,
-        transaction: updated,
+        value: updated,
       ),
     );
   }

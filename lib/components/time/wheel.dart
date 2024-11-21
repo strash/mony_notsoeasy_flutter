@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 
 class TimeWheelComponent extends StatefulWidget {
@@ -26,7 +25,7 @@ class TimeWheelComponent extends StatefulWidget {
 
 class _TimeWheelComponentState extends State<TimeWheelComponent> {
   final _controller = FixedExtentScrollController();
-  final _wheelItemExtent = 32.h;
+  final _wheelItemExtent = 32.0;
 
   @override
   void initState() {
@@ -77,7 +76,7 @@ class _TimeWheelComponentState extends State<TimeWheelComponent> {
                 "$index".padLeft(2, "0"),
                 style: GoogleFonts.golosText(
                   textStyle: theme.textTheme.bodyMedium,
-                  fontSize: 20.sp,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.w500,
                   decoration: TextDecoration.none,
                   color: theme.colorScheme.onSurface,

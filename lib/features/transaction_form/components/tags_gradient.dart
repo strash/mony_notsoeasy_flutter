@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 
 class TransactionFormTagsGradientComponent extends StatelessWidget {
   final bool isVisible;
@@ -26,7 +25,7 @@ class TransactionFormTagsGradientComponent extends StatelessWidget {
         opacity: isVisible ? 1.0 : .0,
         duration: Durations.short4,
         child: SizedBox.fromSize(
-          size: Size.fromWidth(24.w),
+          size: const Size.fromWidth(24.0),
           child: DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(

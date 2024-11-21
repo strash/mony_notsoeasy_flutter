@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
@@ -15,7 +14,7 @@ class TransactionFormTagsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final height = 34.h;
+    const height = 34.0;
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
     final controller = viewModel.tagScrollController;
@@ -34,12 +33,12 @@ class TransactionFormTagsComponent extends StatelessWidget {
             GestureDetector(
               onTap: () => onAddTagPressed(context),
               child: SizedBox(
-                width: 46.w,
+                width: 46.0,
                 child: Center(
                   child: SvgPicture.asset(
                     Assets.icons.number,
-                    width: 24.r,
-                    height: 24.r,
+                    width: 24.0,
+                    height: 24.0,
                     colorFilter: ColorFilter.mode(
                       theme.colorScheme.secondary,
                       BlendMode.srcIn,
@@ -62,7 +61,7 @@ class TransactionFormTagsComponent extends StatelessWidget {
                       child: Text(
                         "Добавь теги...",
                         style: GoogleFonts.golosText(
-                          fontSize: 15.sp,
+                          fontSize: 15.0,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
@@ -78,7 +77,7 @@ class TransactionFormTagsComponent extends StatelessWidget {
                             parent: AlwaysScrollableScrollPhysics(),
                           ),
                           separatorBuilder: (context, index) {
-                            return SizedBox(width: 5.w);
+                            return const SizedBox(width: 5.0);
                           },
                           itemCount: viewModel.attachedTags.length,
                           itemBuilder: (context, index) {
@@ -87,21 +86,23 @@ class TransactionFormTagsComponent extends StatelessWidget {
                             if (item == null) return const SizedBox();
 
                             final title = switch (item) {
-                              TransactionTagVOVO(:final vo) => vo.title,
-                              TransactionTagVOModel(:final model) =>
+                              TransactionTagVariantVO(:final vo) => vo.title,
+                              TransactionTagVariantModel(:final model) =>
                                 model.title,
                             };
 
                             return TransactionFormTagComponent(
                               builder: (context) {
                                 return Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 12.w, right: 8.w),
+                                  padding: const EdgeInsets.only(
+                                    left: 12.0,
+                                    right: 8.0,
+                                  ),
                                   child: Row(
                                     children: [
                                       // -> title
                                       Text(title),
-                                      SizedBox(width: 3.w),
+                                      const SizedBox(width: 3.0),
 
                                       // -> button remove
                                       GestureDetector(
@@ -110,8 +111,8 @@ class TransactionFormTagsComponent extends StatelessWidget {
                                             onRemoveTagPressed(context, item),
                                         child: SvgPicture.asset(
                                           Assets.icons.xmarkSemibold,
-                                          width: 16.r,
-                                          height: 16.r,
+                                          width: 16.0,
+                                          height: 16.0,
                                           colorFilter: ColorFilter.mode(
                                             theme.colorScheme.onSurfaceVariant,
                                             BlendMode.srcIn,

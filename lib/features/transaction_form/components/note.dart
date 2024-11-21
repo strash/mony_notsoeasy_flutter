@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
@@ -12,7 +11,7 @@ class TransactionFormNoteComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final height = 36.h;
+    const height = 36.0;
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
     final onNotePressed = viewModel<OnNotePressed>();
@@ -27,12 +26,12 @@ class TransactionFormNoteComponent extends StatelessWidget {
           children: [
             // -> button add note
             SizedBox(
-              width: 46.w,
+              width: 46.0,
               child: Center(
                 child: SvgPicture.asset(
                   Assets.icons.noteText,
-                  width: 24.r,
-                  height: 24.r,
+                  width: 24.0,
+                  height: 24.0,
                   colorFilter: ColorFilter.mode(
                     theme.colorScheme.secondary,
                     BlendMode.srcIn,
@@ -53,7 +52,7 @@ class TransactionFormNoteComponent extends StatelessWidget {
                       duration: Durations.short4,
                       curve: Curves.easeInOut,
                       style: GoogleFonts.golosText(
-                        fontSize: 16.sp,
+                        fontSize: 16.0,
                         color: note.isNotEmpty
                             ? theme.colorScheme.onSurface
                             : theme.colorScheme.onSurfaceVariant,

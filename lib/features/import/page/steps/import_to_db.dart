@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/features/import/page/page.dart";
 
@@ -19,7 +18,7 @@ class ImportImportToDbPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -27,12 +26,12 @@ class ImportImportToDbPage extends StatelessWidget {
               Text(
                 "Наконец-то!",
                 style: GoogleFonts.golosText(
-                  fontSize: 20.sp,
+                  fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
 
               // -> description
               Text(
@@ -40,8 +39,8 @@ class ImportImportToDbPage extends StatelessWidget {
                 "я импортирую все данные и перекину тебя на главный экран. "
                 "Не закрывай экран пока происходит перенос данных!",
                 style: GoogleFonts.golosText(
-                  fontSize: 15.sp,
-                  height: 1.3.sp,
+                  fontSize: 15.0,
+                  height: 1.3,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),

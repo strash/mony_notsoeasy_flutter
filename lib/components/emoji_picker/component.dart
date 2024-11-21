@@ -1,7 +1,6 @@
 import "package:emoji_picker_flutter/emoji_picker_flutter.dart";
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/utils/utils.dart";
 import "package:mony_app/components/components.dart";
 
@@ -37,7 +36,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
               columns: 9,
               backgroundColor: Theme.of(context).colorScheme.surface,
               buttonMode: ButtonMode.CUPERTINO,
-              gridPadding: EdgeInsets.fromLTRB(5.w, 5.h, 5.w, bottom),
+              gridPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, bottom),
             ),
             skinToneConfig: const SkinToneConfig(enabled: false),
             categoryViewConfig: CategoryViewConfig(
@@ -73,7 +72,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
       behavior: HitTestBehavior.opaque,
       onTap: () => _onTap(context),
       child: SizedBox.square(
-        dimension: 48.r,
+        dimension: 48.0,
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short2,
           tween: ColorTween(
@@ -87,16 +86,16 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
                 color: theme.colorScheme.surfaceContainer,
                 shape: SmoothRectangleBorder(
                   side: BorderSide(color: color!),
-                  borderRadius: SmoothBorderRadius.all(
+                  borderRadius: const SmoothBorderRadius.all(
                     SmoothRadius(
-                      cornerRadius: 15.r,
+                      cornerRadius: 15.0,
                       cornerSmoothing: 1.0,
                     ),
                   ),
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.all(6.r),
+                padding: const EdgeInsets.all(6.0),
                 child: ListenableBuilder(
                   listenable: widget.controller.controller,
                   builder: (context, child) {
@@ -105,7 +104,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
                       child: Text(
                         widget.controller.text,
                         style: theme.textTheme.bodyLarge?.copyWith(
-                          fontSize: 30.sp,
+                          fontSize: 30.0,
                           height: .0,
                         ),
                       ),

@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/features/import/components/components.dart";
 
@@ -19,14 +18,14 @@ class EntryListHeaderComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   "Колонки",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
-                    fontSize: 14.sp,
-                    height: 1.3.sp,
+                    fontSize: 14.0,
+                    height: 1.3,
                     fontWeight: FontWeight.w600,
                     color: theme.colorScheme.tertiary,
                   ),
@@ -35,7 +34,7 @@ class EntryListHeaderComponent extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(width: EntryListComponent.columnGap),
+        const SizedBox(width: EntryListComponent.columnGap),
 
         // -> values
         Flexible(
@@ -43,14 +42,14 @@ class EntryListHeaderComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   "Значения",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
-                    fontSize: 14.sp,
-                    height: 1.3.sp,
+                    fontSize: 14.0,
+                    height: 1.3,
                     fontWeight: FontWeight.w600,
                     color: theme.colorScheme.tertiary,
                   ),

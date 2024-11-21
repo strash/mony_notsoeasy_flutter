@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -60,7 +59,7 @@ class _TransactionFormBottomSheetCalendarComponentState
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.sizeOf(context);
-    final padding = EdgeInsets.symmetric(horizontal: 10.w);
+    const padding = EdgeInsets.symmetric(horizontal: 10.0);
     final itemWidth = (size.width - padding.horizontal) / DateTime.daysPerWeek;
     final isSameMonth =
         _visibleMonth.isSameDateAs(DateTime.now().firstDayOfMonth());
@@ -70,7 +69,7 @@ class _TransactionFormBottomSheetCalendarComponentState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(15.w, .0, 15.w, 20.h),
+          padding: const EdgeInsets.fromLTRB(15.0, .0, 15.0, 20.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -84,12 +83,12 @@ class _TransactionFormBottomSheetCalendarComponentState
                     switchOutCurve: Curves.easeInOut,
                     child: SizedBox(
                       key: Key(_monthDescription),
-                      width: 180.w,
+                      width: 180.0,
                       child: Text(
                         _monthDescription,
                         textAlign: TextAlign.start,
                         style: GoogleFonts.golosText(
-                          fontSize: 20.sp,
+                          fontSize: 20.0,
                           letterSpacing: -0.1,
                           fontWeight: FontWeight.w500,
                           color: theme.colorScheme.onSurface,
@@ -108,7 +107,7 @@ class _TransactionFormBottomSheetCalendarComponentState
                       duration: Durations.short4,
                       curve: Curves.easeInOut,
                       style: GoogleFonts.golosText(
-                        fontSize: 15.sp,
+                        fontSize: 15.0,
                         fontWeight: FontWeight.w500,
                         color: isSameMonth
                             ? theme.colorScheme.onSurfaceVariant
@@ -136,7 +135,7 @@ class _TransactionFormBottomSheetCalendarComponentState
         ),
 
         // -> offset
-        SizedBox(height: widget.bottom + 20.h),
+        SizedBox(height: widget.bottom + 20.0),
       ],
     );
   }

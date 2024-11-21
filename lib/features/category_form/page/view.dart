@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -27,15 +26,16 @@ class CategoryFormView extends StatelessWidget {
         // -> appbar
         const AppBarComponent(
           title: Text("Категория"),
+          showBackground: false,
           showDragHandle: true,
           useSliver: false,
         ),
 
         // -> form
         Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 15.w,
-            vertical: 20.h,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 20.0,
           ),
           child: Form(
             child: Column(
@@ -48,13 +48,13 @@ class CategoryFormView extends StatelessWidget {
                     NamedColorPickerComponent(
                       controller: viewModel.colorController,
                     ),
-                    SizedBox(width: 10.w),
+                    const SizedBox(width: 10.0),
 
                     // -> emoji
                     EmojiPickerComponent(
                       controller: viewModel.emojiController,
                     ),
-                    SizedBox(width: 10.w),
+                    const SizedBox(width: 10.0),
 
                     // -> title
                     Expanded(
@@ -72,7 +72,7 @@ class CategoryFormView extends StatelessWidget {
                         autovalidateMode: AutovalidateMode.always,
                         style: GoogleFonts.golosText(
                           color: theme.colorScheme.onSurface,
-                          fontSize: 16.sp,
+                          fontSize: 16.0,
                           fontWeight: FontWeight.w400,
                         ),
                         decoration: const InputDecoration(
@@ -83,7 +83,7 @@ class CategoryFormView extends StatelessWidget {
                     ),
                   ],
                 ),
-                const RSizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
 
                 // -> submit
                 FilledButton(
@@ -97,7 +97,7 @@ class CategoryFormView extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 40.h + keyboardHeight),
+        SizedBox(height: 40.0 + keyboardHeight),
       ],
     );
   }

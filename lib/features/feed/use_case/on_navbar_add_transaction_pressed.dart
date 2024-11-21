@@ -40,7 +40,7 @@ final class OnNavbarAddTransactionPressed
       appService.notify(
         EventTransactionCreated(
           sender: TransactionFormViewModel,
-          transaction: transactionModel,
+          value: transactionModel,
         ),
       );
     }

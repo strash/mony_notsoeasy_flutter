@@ -2,7 +2,6 @@ import "dart:ui";
 
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/time/component.dart";
@@ -29,7 +28,7 @@ class _TimePopupComponentState extends State<TimePopupComponent>
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
-  final _wheelSize = 200.r;
+  final _wheelSize = 200.0;
 
   void _animatiosStatusListener(AnimationStatus status) {
     if (status == AnimationStatus.dismissed) widget.onTapOutside();
@@ -40,7 +39,7 @@ class _TimePopupComponentState extends State<TimePopupComponent>
   }
 
   Rect get _wheelRect {
-    final offset = 6.r;
+    const offset = 6.0;
     final size = MediaQuery.sizeOf(context);
     final init = widget.initialRect;
     final isOnRight = init.left + _wheelSize > size.width;
@@ -121,9 +120,9 @@ class _TimePopupComponentState extends State<TimePopupComponent>
                     opacity: value,
                     child: RepaintBoundary(
                       child: ClipSmoothRect(
-                        radius: SmoothBorderRadius.all(
+                        radius: const SmoothBorderRadius.all(
                           SmoothRadius(
-                            cornerRadius: 20.r,
+                            cornerRadius: 20.0,
                             cornerSmoothing: 1.0,
                           ),
                         ),
@@ -140,21 +139,21 @@ class _TimePopupComponentState extends State<TimePopupComponent>
                                 // -> decal
                                 Align(
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0,
                                     ),
                                     child: SizedBox.fromSize(
-                                      size: Size.fromHeight(40.h),
+                                      size: const Size.fromHeight(40.0),
                                       child: DecoratedBox(
                                         decoration: ShapeDecoration(
                                           color: theme
                                               .colorScheme.tertiaryContainer
                                               .withOpacity(.5),
-                                          shape: SmoothRectangleBorder(
+                                          shape: const SmoothRectangleBorder(
                                             borderRadius:
                                                 SmoothBorderRadius.all(
                                               SmoothRadius(
-                                                cornerRadius: 10.r,
+                                                cornerRadius: 10.0,
                                                 cornerSmoothing: 1.0,
                                               ),
                                             ),
@@ -168,12 +167,12 @@ class _TimePopupComponentState extends State<TimePopupComponent>
                                 // -> colon
                                 Align(
                                   child: Padding(
-                                    padding: EdgeInsets.only(bottom: 6.h),
+                                    padding: const EdgeInsets.only(bottom: 6.0),
                                     child: Text(
                                       ":",
                                       style: GoogleFonts.golosText(
                                         textStyle: theme.textTheme.bodyMedium,
-                                        fontSize: 20.sp,
+                                        fontSize: 20.0,
                                         fontWeight: FontWeight.w500,
                                         decoration: TextDecoration.none,
                                         color:
@@ -185,7 +184,9 @@ class _TimePopupComponentState extends State<TimePopupComponent>
 
                                 // -> wheels
                                 Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 20.r),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 20.0,
+                                  ),
                                   child: Row(
                                     children: [
                                       // -> hours
@@ -194,7 +195,7 @@ class _TimePopupComponentState extends State<TimePopupComponent>
                                           widget.controller.value.hour,
                                           itemCount: 24,
                                           isLeft: true,
-                                          offset: 36.w,
+                                          offset: 36.0,
                                           offAxisFraction: -.4,
                                           onValueChanged:
                                               widget.controller.setHours,
@@ -207,7 +208,7 @@ class _TimePopupComponentState extends State<TimePopupComponent>
                                           widget.controller.value.minute,
                                           itemCount: 60,
                                           isLeft: false,
-                                          offset: 36.w,
+                                          offset: 36.0,
                                           offAxisFraction: .4,
                                           onValueChanged:
                                               widget.controller.setMinutes,

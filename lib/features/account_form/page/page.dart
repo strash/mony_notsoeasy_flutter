@@ -7,7 +7,7 @@ export "./view_model.dart";
 
 class AccountFormPage extends StatelessWidget {
   final double keyboardHeight;
-  final AccountVO? account;
+  final AccountVariant? account;
   final Map<EAccountType, List<String>> additionalUsedTitles;
 
   const AccountFormPage({

@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/page/view.dart";
@@ -24,7 +23,7 @@ class NavBarButtonPlusComponent extends StatelessWidget {
         child: DecoratedBox(
           decoration: ShapeDecoration(
             color: theme.colorScheme.primary,
-            shape: SmoothRectangleBorder(
+            shape: const SmoothRectangleBorder(
               borderRadius: SmoothBorderRadius.all(
                 SmoothRadius(
                   cornerRadius: NavBarView.kRadius,
@@ -36,8 +35,8 @@ class NavBarButtonPlusComponent extends StatelessWidget {
           child: Center(
             child: SvgPicture.asset(
               Assets.icons.plusBold,
-              width: 32.r,
-              height: 32.r,
+              width: 32.0,
+              height: 32.0,
               colorFilter: ColorFilter.mode(
                 theme.colorScheme.surface,
                 BlendMode.srcIn,

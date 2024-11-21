@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
@@ -31,9 +30,9 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(
-        left: 15.w,
-        right: 15.w,
-        bottom: MediaQuery.viewPaddingOf(context).bottom + 40.h,
+        left: 15.0,
+        right: 15.0,
+        bottom: MediaQuery.viewPaddingOf(context).bottom + 40.0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,8 +44,8 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   Assets.icons.link,
-                  width: 100.r,
-                  height: 100.r,
+                  width: 100.0,
+                  height: 100.0,
                   colorFilter: ColorFilter.mode(
                     theme.colorScheme.tertiaryContainer,
                     BlendMode.srcIn,
@@ -54,8 +53,8 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
                 ),
                 SvgPicture.asset(
                   Assets.icons.linkBadgePlus,
-                  width: 100.r,
-                  height: 100.r,
+                  width: 100.0,
+                  height: 100.0,
                   colorFilter: ColorFilter.mode(
                     theme.colorScheme.secondary,
                     BlendMode.srcIn,
@@ -70,12 +69,12 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
           Text(
             "Привязка категорий",
             style: GoogleFonts.golosText(
-              fontSize: 20.sp,
+              fontSize: 20.0,
               color: theme.colorScheme.onSurface,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 15.h),
+          const SizedBox(height: 15.0),
 
           // -> description
           Text(
@@ -88,18 +87,18 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
             "оставить оригинальную категорию, но тогда ее нужно будет "
             "дополнить некоторыми данными.",
             style: GoogleFonts.golosText(
-              fontSize: 15.sp,
-              height: 1.3.sp,
+              fontSize: 15.0,
+              height: 1.3,
               color: theme.colorScheme.onSurface,
             ),
           ),
-          SizedBox(height: 40.w),
+          const SizedBox(height: 40.0),
 
           // -> actions
           SeparatedComponent(
             direction: Axis.horizontal,
             itemCount: EImportCategoryMenuAction.values.length,
-            separatorBuilder: (context) => SizedBox(width: 10.w),
+            separatorBuilder: (context) => const SizedBox(width: 10.0),
             itemBuilder: (context, index) {
               final item = EImportCategoryMenuAction.values.elementAt(index);
               return Expanded(

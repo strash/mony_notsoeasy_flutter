@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -14,7 +13,7 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final gap = 6.r;
+    const gap = 6.0;
     final viewModel = context.viewModel<TransactionFormViewModel>();
     final onHintAcceptPressed = viewModel<OnKeyboardHintAccepted>();
     final onKeyPressed = viewModel<OnKeyPressed>();
@@ -37,14 +36,14 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
             builder: (context, child) {
               return SeparatedComponent(
                 itemCount: viewModel.buttons.length,
-                separatorBuilder: (context) => SizedBox(height: gap),
+                separatorBuilder: (context) => const SizedBox(height: gap),
                 itemBuilder: (context, index) {
                   final row = viewModel.buttons.elementAt(index);
 
                   return SeparatedComponent(
                     direction: Axis.horizontal,
                     itemCount: row.length,
-                    separatorBuilder: (context) => SizedBox(width: gap),
+                    separatorBuilder: (context) => const SizedBox(width: gap),
                     itemBuilder: (context, index) {
                       final button = row.elementAt(index);
 
@@ -80,14 +79,14 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
                     // -> icon
                     SvgPicture.asset(
                       Assets.icons.handPointUpLeft,
-                      width: 60.r,
-                      height: 60.r,
+                      width: 60.0,
+                      height: 60.0,
                       colorFilter: ColorFilter.mode(
                         theme.colorScheme.tertiary,
                         BlendMode.srcIn,
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    const SizedBox(height: 10.0),
 
                     // -> info
                     Text(
@@ -96,18 +95,18 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
                       "по клавиатуре.",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.golosText(
-                        fontSize: 16.sp,
+                        fontSize: 16.0,
                         color: theme.colorScheme.onSurface,
                       ),
                     ),
-                    SizedBox(height: 15.h),
+                    const SizedBox(height: 15.0),
 
                     // -> button ok
                     FilledButton(
                       onPressed: () => onHintAcceptPressed(context),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30.w),
-                        child: const Text("OK"),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Text("OK"),
                       ),
                     ),
                   ],

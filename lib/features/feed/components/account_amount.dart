@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 
 class FeedAccountAmountComponent extends StatelessWidget {
@@ -27,7 +26,7 @@ class FeedAccountAmountComponent extends StatelessWidget {
               amount,
               textAlign: TextAlign.start,
               style: GoogleFonts.golosText(
-                fontSize: 40.sp,
+                fontSize: 40.0,
                 height: 1.1,
                 fontWeight: FontWeight.w600,
                 color: theme.colorScheme.onSurface,
@@ -38,25 +37,25 @@ class FeedAccountAmountComponent extends StatelessWidget {
 
         // -> currency code
         Padding(
-          padding: EdgeInsets.only(left: 3.w, top: 8.h),
+          padding: const EdgeInsets.only(left: 3.0, top: 8.0),
           child: DecoratedBox(
             decoration: ShapeDecoration(
               color: theme.colorScheme.tertiaryContainer,
-              shape: SmoothRectangleBorder(
+              shape: const SmoothRectangleBorder(
                 borderRadius: SmoothBorderRadius.all(
                   SmoothRadius(
-                    cornerRadius: 5.r,
+                    cornerRadius: 5.0,
                     cornerSmoothing: 1.0,
                   ),
                 ),
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(4.w, 2.h, 4.w, 3.h),
+              padding: const EdgeInsets.fromLTRB(4.0, 2.0, 4.0, 3.0),
               child: Text(
                 code,
                 style: GoogleFonts.golosText(
-                  fontSize: 10.sp,
+                  fontSize: 10.0,
                   height: 1.0,
                   fontWeight: FontWeight.w600,
                   color: theme.colorScheme.onTertiaryContainer,

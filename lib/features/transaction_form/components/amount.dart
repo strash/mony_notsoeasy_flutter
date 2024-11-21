@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -16,7 +15,7 @@ class TransactionFormAmountComponent extends StatelessWidget {
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: SizedBox.fromSize(
         size: const Size.fromHeight(65),
         child: FittedBox(
@@ -25,7 +24,7 @@ class TransactionFormAmountComponent extends StatelessWidget {
             children: [
               // -> sign
               Padding(
-                padding: EdgeInsets.only(top: 5.h),
+                padding: const EdgeInsets.only(top: 5.0),
                 child: ListenableBuilder(
                   listenable: viewModel.typeController,
                   builder: (context, child) {
@@ -39,8 +38,8 @@ class TransactionFormAmountComponent extends StatelessWidget {
                           ETransactionType.expense => Assets.icons.minus,
                           ETransactionType.income => Assets.icons.plus,
                         },
-                        width: 36.r,
-                        height: 36.r,
+                        width: 36.0,
+                        height: 36.0,
                         colorFilter: ColorFilter.mode(
                           switch (viewModel.typeController.value) {
                             ETransactionType.expense => theme.colorScheme.error,
@@ -62,7 +61,7 @@ class TransactionFormAmountComponent extends StatelessWidget {
                   return Text(
                     viewModel.amountDescription,
                     style: GoogleFonts.golosText(
-                      fontSize: 50.sp,
+                      fontSize: 50.0,
                       color: theme.colorScheme.onSurface,
                       height: 1.0,
                       fontWeight: FontWeight.w500,

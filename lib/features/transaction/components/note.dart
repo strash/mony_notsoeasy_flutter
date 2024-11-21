@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 
 class TransactionNoteComponent extends StatelessWidget {
@@ -21,18 +20,19 @@ class TransactionNoteComponent extends StatelessWidget {
         Text(
           "Заметка",
           style: GoogleFonts.golosText(
-            fontSize: 16.sp,
+            fontSize: 16.0,
             fontWeight: FontWeight.w500,
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
-        SizedBox(height: 10.h),
+        // ignore: prefer_const_constructors
+        SizedBox(height: 10.0),
 
         // -> the note
         Text(
           note,
           style: GoogleFonts.golosText(
-            fontSize: 18.sp,
+            fontSize: 18.0,
             fontWeight: FontWeight.w500,
             color: theme.colorScheme.onSurface,
           ),

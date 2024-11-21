@@ -37,7 +37,7 @@ final class OnDeleteTransactionPressed
         appService.notify(
           EventTransactionDeleted(
             sender: TransactionViewModel,
-            transaction: transaction,
+            value: transaction,
           ),
         );
     }

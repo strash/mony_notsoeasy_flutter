@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -32,7 +31,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -44,21 +43,21 @@ class ImportMapColumnsComponent extends StatelessWidget {
                     onTap: () => onInfoPressed(context),
                     child: SvgPicture.asset(
                       Assets.icons.infoCircle,
-                      width: 25.r,
-                      height: 25.r,
+                      width: 25.0,
+                      height: 25.0,
                       colorFilter: ColorFilter.mode(
                         theme.colorScheme.secondary,
                         BlendMode.srcIn,
                       ),
                     ),
                   ),
-                  SizedBox(width: 10.w),
+                  const SizedBox(width: 10.0),
 
                   // -> title
                   Text(
                     'Колонка "${currentMappedColumn.column.title}"',
                     style: GoogleFonts.golosText(
-                      fontSize: 20.sp,
+                      fontSize: 20.0,
                       color: theme.colorScheme.onSurface,
                       fontWeight: FontWeight.w500,
                     ),
@@ -69,14 +68,14 @@ class ImportMapColumnsComponent extends StatelessWidget {
                     Text(
                       " *",
                       style: GoogleFonts.golosText(
-                        fontSize: 20.sp,
+                        fontSize: 20.0,
                         color: theme.colorScheme.error,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                 ],
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
 
               // -> description
               Text(
@@ -84,31 +83,31 @@ class ImportMapColumnsComponent extends StatelessWidget {
                 "значение в которой подходит\n"
                 'к колонке "${currentMappedColumn.column.title}".',
                 style: GoogleFonts.golosText(
-                  fontSize: 15.sp,
-                  height: 1.3.sp,
+                  fontSize: 15.0,
+                  height: 1.3,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 40.h),
+        const SizedBox(height: 40.0),
 
         // -> csv table
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: EntryListComponent(event: event),
         ),
-        SizedBox(height: 5.h),
+        const SizedBox(height: 5.0),
 
         // button rotate entries
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => onRotateEntryPressed(context),
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.h),
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -117,7 +116,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                       Text(
                         "Следующая запись",
                         style: GoogleFonts.golosText(
-                          fontSize: 14.sp,
+                          fontSize: 14.0,
                           color: theme.colorScheme.secondary,
                         ),
                       ),
@@ -125,7 +124,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                         "$count из "
                         "$numberOfEntriesDescription",
                         style: GoogleFonts.golosText(
-                          fontSize: 12.sp,
+                          fontSize: 12.0,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),

@@ -42,7 +42,7 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
     } else {
       viewModel.setProtectedState(() {
         viewModel.attachedTags = transaction.tags.map((e) {
-          return TransactionTagVOModel(e);
+          return TransactionTagVariantModel(e);
         }).toList(growable: false);
       });
       // NOTE: wait before controller is attached

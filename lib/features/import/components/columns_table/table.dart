@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/import/components/components.dart";
 import "package:mony_app/features/import/import.dart";
@@ -13,8 +12,8 @@ class EntryListComponent extends StatelessWidget {
     this.event,
   });
 
-  static final double columnWidth = 100.w;
-  static final double columnGap = 15.w;
+  static const double columnWidth = 100.0;
+  static const double columnGap = 15.0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +27,21 @@ class EntryListComponent extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: theme.colorScheme.surfaceContainer,
-        shape: SmoothRectangleBorder(
+        shape: const SmoothRectangleBorder(
           borderRadius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 20.r, cornerSmoothing: 1.0),
+            SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 1.0),
           ),
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.only(top: 6.h, bottom: 10.h),
+        padding: const EdgeInsets.only(top: 6.0, bottom: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // -> header
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.w),
-              child: const EntryListHeaderComponent(),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: EntryListHeaderComponent(),
             ),
 
             // -> body

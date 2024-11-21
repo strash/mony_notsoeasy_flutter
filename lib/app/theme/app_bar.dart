@@ -9,8 +9,8 @@ final _lightAppBarTheme = AppBarTheme(
   shadowColor: const Color(0x00000000),
   centerTitle: true,
   titleTextStyle: GoogleFonts.golosText(
-    fontSize: 20.sp,
-    height: 1.h,
+    fontSize: 20.0,
+    height: 1.0,
     letterSpacing: -0.1,
     fontWeight: FontWeight.w500,
     color: _lightColorScheme.onSurface,
@@ -26,8 +26,8 @@ final _darkAppBarTheme = AppBarTheme(
   shadowColor: const Color(0x00000000),
   centerTitle: true,
   titleTextStyle: GoogleFonts.golosText(
-    fontSize: 20.sp,
-    height: 1.h,
+    fontSize: 20.0,
+    height: 1.0,
     letterSpacing: -0.1,
     fontWeight: FontWeight.w500,
     color: _darkColorScheme.onSurface,

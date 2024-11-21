@@ -35,12 +35,15 @@ final class TransactionViewModel
     switch (event) {
       case EventAccountCreated() || EventTransactionCreated():
         break;
+      case final EventAccountUpdated event:
+        // TODO
+        print(event);
       case final EventTransactionUpdated event:
-        if (event.transaction.id == transaction.id) {
-          setProtectedState(() => transaction = event.transaction.copyWith());
+        if (event.value.id == transaction.id) {
+          setProtectedState(() => transaction = event.value.copyWith());
         }
       case final EventTransactionDeleted event:
-        if (event.transaction.id == transaction.id) {
+        if (event.value.id == transaction.id) {
           Navigator.of(context).pop();
         }
     }

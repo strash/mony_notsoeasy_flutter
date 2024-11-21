@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/select/component.dart";
@@ -86,7 +85,7 @@ class TransactionFormAccountComponent extends StatelessWidget {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: style.copyWith(
-                                  fontSize: 14.sp,
+                                  fontSize: 14.0,
                                   color: theme.colorScheme.onSurfaceVariant,
                                 ),
                               ),

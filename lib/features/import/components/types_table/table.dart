@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/features/import/page/view_model.dart";
@@ -50,15 +49,15 @@ class TypesTableComponent extends StatelessWidget {
   }
 
   EdgeInsets _getPadding(int index, int length) {
-    final hor = 7.w;
-    final ver = 10.h;
+    const hor = 7.0;
+    const ver = 10.0;
     final EdgeInsets padding;
     if (index == 0) {
-      padding = EdgeInsets.fromLTRB(0.w, ver, hor, ver);
+      padding = const EdgeInsets.fromLTRB(0.0, ver, hor, ver);
     } else if (index + 1 == length) {
-      padding = EdgeInsets.fromLTRB(10.w, ver, hor, ver);
+      padding = const EdgeInsets.fromLTRB(10.0, ver, hor, ver);
     } else {
-      padding = EdgeInsets.symmetric(horizontal: hor, vertical: ver);
+      padding = const EdgeInsets.symmetric(horizontal: hor, vertical: ver);
     }
     return padding;
   }
@@ -107,7 +106,7 @@ class TypesTableComponent extends StatelessWidget {
                       ? TextAlign.right
                       : TextAlign.left,
                   style: GoogleFonts.golosText(
-                    fontSize: 14.sp,
+                    fontSize: 14.0,
                     fontWeight: FontWeight.w600,
                     color: theme.colorScheme.tertiary,
                   ),
@@ -137,7 +136,7 @@ class TypesTableComponent extends StatelessWidget {
                         ? TextAlign.right
                         : TextAlign.left,
                     style: GoogleFonts.golosText(
-                      fontSize: 14.sp,
+                      fontSize: 14.0,
                       fontWeight: FontWeight.w400,
                       color: theme.colorScheme.onSurface,
                     ),

@@ -14,12 +14,13 @@ class _ColorGrid extends StatelessWidget {
         const AppBarComponent(
           title: Text("Цвет"),
           useSliver: false,
+          showBackground: false,
           showDragHandle: true,
         ),
 
         // -> colors
         GridView.count(
-          padding: EdgeInsets.fromLTRB(15.r, 20.h, 15.r, bottom + 20.h),
+          padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, bottom + 20.0),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           crossAxisCount: 6,

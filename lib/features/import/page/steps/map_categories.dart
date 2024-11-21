@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
@@ -29,7 +28,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -37,12 +36,12 @@ class ImportMapCategoriesPage extends StatelessWidget {
               Text(
                 "Категории",
                 style: GoogleFonts.golosText(
-                  fontSize: 20.sp,
+                  fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
 
               // -> description
               Text(
@@ -50,15 +49,15 @@ class ImportMapCategoriesPage extends StatelessWidget {
                 "Их нужно привязать к предустановленным категориям, "
                 "либо дополнить информацией.",
                 style: GoogleFonts.golosText(
-                  fontSize: 15.sp,
-                  height: 1.3.sp,
+                  fontSize: 15.0,
+                  height: 1.3,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 40.h),
+        const SizedBox(height: 40.0),
 
         // -> categories
         ValueListenableBuilder(
@@ -69,7 +68,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
 
             return SeparatedComponent(
               itemCount: filtered.length,
-              separatorBuilder: (context) => SizedBox(height: 40.h),
+              separatorBuilder: (context) => const SizedBox(height: 40.0),
               itemBuilder: (context, index) {
                 final MapEntry(:key, :value) = filtered.elementAt(index);
 

@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
@@ -74,9 +73,9 @@ class FeedView extends StatelessWidget {
                   // -> account
                   SliverPadding(
                     padding: EdgeInsets.only(
-                      left: 20.w,
-                      right: 20.w,
-                      top: viewPadding.top + 60.h,
+                      left: 20.0,
+                      right: 20.0,
+                      top: viewPadding.top + 60.0,
                     ),
                     sliver: SliverToBoxAdapter(
                       child: FeedAccountComponent(
@@ -88,15 +87,15 @@ class FeedView extends StatelessWidget {
 
                   // -> empty state
                   if (page.feed.isEmpty)
-                    SliverFillRemaining(
+                    const SliverFillRemaining(
                       hasScrollBody: false,
                       child: Padding(
                         padding: EdgeInsets.only(
                           bottom: NavBarView.kTabHeight +
                               NavBarView.kBottomMargin * 2.0 +
-                              20.h,
+                              20.0,
                         ),
-                        child: const FeedEmptyStateComponent(),
+                        child: FeedEmptyStateComponent(),
                       ),
                     )
 

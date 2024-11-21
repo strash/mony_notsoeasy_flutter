@@ -1,6 +1,6 @@
 part of "./theme.dart";
 
-final _padding = EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h);
+const _padding = EdgeInsets.symmetric(horizontal: 15.0, vertical: 12.0);
 
 final class SmoothInputBorder extends InputBorder {
   final Color color;
@@ -10,8 +10,8 @@ final class SmoothInputBorder extends InputBorder {
   SmoothInputBorder(this.color)
       : _shape = SmoothRectangleBorder(
           side: BorderSide(color: color),
-          borderRadius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 15.r, cornerSmoothing: 1.0),
+          borderRadius: const SmoothBorderRadius.all(
+            SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
           ),
         );
 
@@ -69,7 +69,7 @@ WidgetStateTextStyle _labelStyle(ColorScheme scheme) {
     }
     return GoogleFonts.golosText(
       color: color,
-      fontSize: 16.sp,
+      fontSize: 16.0,
       fontWeight: FontWeight.w400,
     );
   });
@@ -85,7 +85,7 @@ WidgetStateTextStyle _hintInputStyle(ColorScheme scheme) {
     }
     return GoogleFonts.golosText(
       color: color,
-      fontSize: 16.sp,
+      fontSize: 16.0,
       fontWeight: FontWeight.w400,
     );
   });
@@ -103,7 +103,7 @@ WidgetStateTextStyle _underInputStyle(ColorScheme scheme) {
     }
     return GoogleFonts.golosText(
       color: color,
-      fontSize: 13.sp,
+      fontSize: 13.0,
       fontWeight: FontWeight.w400,
     );
   });

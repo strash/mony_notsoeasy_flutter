@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/select/component.dart";
@@ -45,7 +44,7 @@ class CurrencySelectComponent extends StatelessWidget {
                   children: [
                     // -> code
                     SizedBox(
-                      width: 48.w,
+                      width: 48.0,
                       child: Text(
                         item.code,
                         style: GoogleFonts.golosText(

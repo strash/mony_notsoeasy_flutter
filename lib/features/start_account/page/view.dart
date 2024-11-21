@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -28,8 +27,8 @@ class StartAccountView extends StatelessWidget {
                 children: [
                   SvgPicture.asset(
                     Assets.icons.widgetSmall,
-                    width: 150.r,
-                    height: 150.r,
+                    width: 150.0,
+                    height: 150.0,
                     colorFilter: ColorFilter.mode(
                       theme.colorScheme.tertiaryContainer,
                       BlendMode.srcIn,
@@ -37,8 +36,8 @@ class StartAccountView extends StatelessWidget {
                   ),
                   SvgPicture.asset(
                     Assets.icons.widgetSmallBadgePlus,
-                    width: 150.r,
-                    height: 150.r,
+                    width: 150.0,
+                    height: 150.0,
                     colorFilter: ColorFilter.mode(
                       theme.colorScheme.secondary,
                       BlendMode.srcIn,
@@ -51,7 +50,7 @@ class StartAccountView extends StatelessWidget {
 
             // -> text
             Padding(
-              padding: EdgeInsets.fromLTRB(25.w, .0, 25.w, 40.h),
+              padding: const EdgeInsets.fromLTRB(25.0, .0, 25.0, 40.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -59,12 +58,12 @@ class StartAccountView extends StatelessWidget {
                   Text(
                     "Счет",
                     style: GoogleFonts.golosText(
-                      fontSize: 20.sp,
+                      fontSize: 20.0,
                       color: theme.colorScheme.onSurface,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 15.h),
+                  const SizedBox(height: 15.0),
 
                   // -> description
                   Text(
@@ -74,8 +73,8 @@ class StartAccountView extends StatelessWidget {
                     "новый счет, либо импортировать свои данные в виде "
                     "CSV файла.",
                     style: GoogleFonts.golosText(
-                      fontSize: 15.sp,
-                      height: 1.3.sp,
+                      fontSize: 15.0,
+                      height: 1.3,
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
@@ -85,7 +84,7 @@ class StartAccountView extends StatelessWidget {
 
             // -> buttons
             Padding(
-              padding: EdgeInsets.fromLTRB(15.w, .0, 15.w, 40.h),
+              padding: const EdgeInsets.fromLTRB(15.0, .0, 15.0, 40.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -97,11 +96,11 @@ class StartAccountView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("Создать счет"),
-                        SizedBox(width: 8.w),
+                        const SizedBox(width: 8.0),
                         SvgPicture.asset(
                           Assets.icons.plus,
-                          width: 22.r,
-                          height: 22.r,
+                          width: 22.0,
+                          height: 22.0,
                           colorFilter: ColorFilter.mode(
                             theme.colorScheme.onPrimary,
                             BlendMode.srcIn,
@@ -110,7 +109,7 @@ class StartAccountView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const RSizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
 
                   // -> button import data
                   FilledButton(
@@ -124,16 +123,16 @@ class StartAccountView extends StatelessWidget {
                         Text(
                           "Импорт из CSV",
                           style: GoogleFonts.golosText(
-                            fontSize: 16.sp,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.w600,
                             color: theme.colorScheme.onTertiary,
                           ),
                         ),
-                        SizedBox(width: 8.w),
+                        const SizedBox(width: 8.0),
                         SvgPicture.asset(
                           Assets.icons.squareAndArrowDown,
-                          width: 22.r,
-                          height: 22.r,
+                          width: 22.0,
+                          height: 22.0,
                           colorFilter: ColorFilter.mode(
                             theme.colorScheme.onTertiary,
                             BlendMode.srcIn,

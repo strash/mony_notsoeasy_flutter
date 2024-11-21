@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
@@ -31,7 +30,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,30 +38,30 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
               Text(
                 "Валидация",
                 style: GoogleFonts.golosText(
-                  fontSize: 20.sp,
+                  fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
 
               // -> description
               Text(
                 description,
                 style: GoogleFonts.golosText(
-                  fontSize: 15.sp,
-                  height: 1.3.sp,
+                  fontSize: 15.0,
+                  height: 1.3,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 40.h),
+        const SizedBox(height: 40.0),
 
         // -> validation results
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: ValueListenableBuilder(
             valueListenable: validation.results,
             builder: (context, results, child) {
@@ -82,8 +81,8 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                               e.ok != null
                                   ? Assets.icons.checkmarkCircleFill
                                   : Assets.icons.exclamationmarkCircleFill,
-                              width: 20.r,
-                              height: 20.r,
+                              width: 20.0,
+                              height: 20.0,
                               colorFilter: ColorFilter.mode(
                                 e.ok != null
                                     ? theme.colorScheme.secondary
@@ -95,14 +94,14 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                             // -> result
                             Flexible(
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 10.w,
-                                  vertical: 5.h,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10.0,
+                                  vertical: 5.0,
                                 ),
                                 child: Text(
                                   e.ok != null ? e.ok! : e.error!,
                                   style: GoogleFonts.golosText(
-                                    fontSize: 16.sp,
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.w600,
                                     color: e.ok != null
                                         ? theme.colorScheme.onSurface
@@ -121,7 +120,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 40.h),
+        const SizedBox(height: 40.0),
 
         // -> loader
         if (event is ImportEventValidatingMappedColumns)

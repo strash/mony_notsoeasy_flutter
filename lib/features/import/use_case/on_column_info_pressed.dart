@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/common.dart";
@@ -23,7 +22,7 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
       showDragHandle: false,
       builder: (context, bottom) {
         return SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: bottom + 40.h),
+          padding: EdgeInsets.only(bottom: bottom + 40.0),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: viewSize.height * 0.4),
             child: Column(
@@ -32,19 +31,20 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
               children: [
                 // -> title
                 AppBarComponent(
-                  useSliver: false,
-                  showDragHandle: true,
                   title: Text(currentColumn.column.title),
+                  useSliver: false,
+                  showBackground: false,
+                  showDragHandle: true,
                 ),
-                SizedBox(height: 15.h),
+                const SizedBox(height: 15.0),
 
                 // -> description
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.w),
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Text(
                     currentColumn.column.description,
                     style: GoogleFonts.golosText(
-                      fontSize: 16.sp,
+                      fontSize: 16.0,
                       color: theme.colorScheme.onSurface,
                     ),
                   ),

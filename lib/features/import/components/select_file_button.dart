@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/features.dart";
@@ -24,11 +23,11 @@ class SelectFileButtonComponent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text("Выбрать файл"),
-          SizedBox(width: 8.w),
+          const SizedBox(width: 8.0),
           SvgPicture.asset(
             Assets.icons.documentBadgeArrowDownFill,
-            width: 22.r,
-            height: 22.r,
+            width: 22.0,
+            height: 22.0,
             colorFilter: ColorFilter.mode(
               theme.colorScheme.onTertiary,
               BlendMode.srcIn,

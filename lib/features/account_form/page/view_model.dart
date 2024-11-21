@@ -12,7 +12,7 @@ export "../use_case/use_case.dart";
 
 final class AccountFormViewModelBuilder extends StatefulWidget {
   final double keyboardHeight;
-  final AccountVO? account;
+  final AccountVariant? account;
   final Map<EAccountType, List<String>> additionalUsedTitles;
 
   const AccountFormViewModelBuilder({
@@ -66,11 +66,26 @@ final class AccountFormViewModel
     final data = await Future.wait(
       EAccountType.values.map((e) => service.getAll(type: e)),
     );
+    // set balance to total sum
+    if (widget.account case AccountVariantModel(:final model)) {
+      final balance = await service.getBalances(ids: [model.id]);
+      if (balance.isNotEmpty) {
+        balanceController.text =
+            balance.first.totalSum.roundToFraction(2).toString();
+      }
+    }
     for (final list in data) {
       if (list.isEmpty) continue;
-      _titles[list.first.type] =
-          List<String>.from(list.map<String>((e) => e.title));
+      // exclude model from list
+      if (widget.account case AccountVariantModel(:final model)) {
+        _titles[list.first.type] = List<String>.from(
+          list.where((e) => e.id != model.id).map((e) => e.title),
+        );
+      } else {
+        _titles[list.first.type] = List<String>.from(list.map((e) => e.title));
+      }
     }
+    // append additional user titles
     for (final element in widget.additionalUsedTitles.entries) {
       _titles[element.key] = List<String>.from(_titles[element.key]!)
         ..addAll(element.value);
@@ -91,11 +106,20 @@ final class AccountFormViewModel
     super.initState();
     final account = widget.account;
     if (account != null) {
-      titleController.text = account.title;
-      colorController.value = EColorName.from(account.colorName);
-      typeController.value = account.type;
-      currencyController.value = FiatCurrency.fromCode(account.currencyCode);
-      balanceController.text = account.balance.toString();
+      switch (account) {
+        case AccountVariantVO(vo: final vo):
+          titleController.text = vo.title;
+          colorController.value = EColorName.from(vo.colorName);
+          typeController.value = vo.type;
+          currencyController.value = FiatCurrency.fromCode(vo.currencyCode);
+          balanceController.text = vo.balance.roundToFraction(2).toString();
+        case AccountVariantModel(model: final model):
+          titleController.text = model.title;
+          colorController.value = model.colorName;
+          typeController.value = model.type;
+          currencyController.value = FiatCurrency.fromCode(model.currency.code);
+          balanceController.text = model.balance.roundToFraction(2).toString();
+      }
     }
     titleController.addListener(_listener);
     colorController.addListener(_listener);

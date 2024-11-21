@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/import/components/components.dart";
@@ -27,7 +26,7 @@ class EntryListRowComponent extends StatelessWidget {
     final onColumnSelected = viewModel<OnColumnSelected>();
 
     return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: 34.h),
+      constraints: const BoxConstraints(maxHeight: 34.0),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
@@ -39,7 +38,7 @@ class EntryListRowComponent extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Row(
                 children: [
                   // -> column
@@ -50,14 +49,14 @@ class EntryListRowComponent extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.golosText(
-                        fontSize: 16.sp,
-                        height: 1.3.sp,
+                        fontSize: 16.0,
+                        height: 1.3,
                         fontWeight: FontWeight.w600,
                         color: theme.colorScheme.onSurface,
                       ),
                     ),
                   ),
-                  SizedBox(width: EntryListComponent.columnGap),
+                  const SizedBox(width: EntryListComponent.columnGap),
 
                   // -> value
                   Flexible(
@@ -66,8 +65,8 @@ class EntryListRowComponent extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.golosText(
-                        fontSize: 16.sp,
-                        height: 1.3.sp,
+                        fontSize: 16.0,
+                        height: 1.3,
                         color: theme.colorScheme.onSurface,
                       ),
                     ),
@@ -85,12 +84,13 @@ class EntryListRowComponent extends StatelessWidget {
                   ? 1.0
                   : 0.0,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 3.h),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 7.0, vertical: 3.0),
                 child: Row(
                   children: [
                     SizedBox.fromSize(
-                      size: Size.fromWidth(
-                        EntryListComponent.columnWidth + 16.w,
+                      size: const Size.fromWidth(
+                        EntryListComponent.columnWidth + 16.0,
                       ),
                       child: TweenAnimationBuilder<Color?>(
                         tween: ColorTween(
@@ -101,7 +101,7 @@ class EntryListRowComponent extends StatelessWidget {
                         ),
                         duration: Durations.short2,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -111,8 +111,8 @@ class EntryListRowComponent extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.golosText(
-                                fontSize: 15.sp,
-                                height: 1.3.sp,
+                                fontSize: 15.0,
+                                height: 1.3,
                                 fontWeight: FontWeight.w600,
                                 color: theme.colorScheme.onSecondary,
                               ),
@@ -123,10 +123,10 @@ class EntryListRowComponent extends StatelessWidget {
                           return DecoratedBox(
                             decoration: ShapeDecoration(
                               color: color,
-                              shape: SmoothRectangleBorder(
+                              shape: const SmoothRectangleBorder(
                                 borderRadius: SmoothBorderRadius.all(
                                   SmoothRadius(
-                                    cornerRadius: 10.r,
+                                    cornerRadius: 10.0,
                                     cornerSmoothing: 1.0,
                                   ),
                                 ),

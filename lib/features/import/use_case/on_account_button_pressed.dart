@@ -34,7 +34,7 @@ final class OnAccountButtonPressed
       builder: (context, bottom) {
         return AccountFormPage(
           keyboardHeight: bottom,
-          account: account,
+          account: AccountVariantVO(vo: account),
           additionalUsedTitles: accountModel.getTitles(value),
         );
       },

@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start/start.dart";
@@ -27,7 +26,7 @@ class StartView extends StatelessWidget {
                     Text(
                       "Добро пожаловать в",
                       style: GoogleFonts.golosText(
-                        fontSize: 15.sp,
+                        fontSize: 15.0,
                         fontWeight: FontWeight.w400,
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
@@ -35,7 +34,7 @@ class StartView extends StatelessWidget {
                     Text(
                       "Mony App",
                       style: GoogleFonts.golosText(
-                        fontSize: 40.sp,
+                        fontSize: 40.0,
                         fontWeight: FontWeight.w600,
                         color: theme.colorScheme.onSurface,
                       ),
@@ -53,7 +52,8 @@ class StartView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(15.w, .0, 15.w, 40.h),
+                        padding:
+                            const EdgeInsets.fromLTRB(15.0, .0, 15.0, 40.0),
                         child: FilledButton(
                           onPressed: () => onButtonStartPressed(context),
                           child: const Text("Ок, дальше!"),

@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/calendar/component.dart";
@@ -161,7 +160,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
   Widget build(BuildContext context) {
     final loc = MaterialLocalizations.of(context);
     final theme = Theme.of(context);
-    final weekHeight = 26.h;
+    const weekHeight = 26.0;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -187,7 +186,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                       return Text(
                         e,
                         style: GoogleFonts.golosText(
-                          fontSize: 13.sp,
+                          fontSize: 13.0,
                           fontWeight: FontWeight.w600,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),

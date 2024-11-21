@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
@@ -58,15 +57,15 @@ class ImportCategoryItemComponent extends StatelessWidget {
           color: bg,
           shape: SmoothRectangleBorder(
             side: BorderSide(color: border),
-            borderRadius: SmoothBorderRadius.all(
-              SmoothRadius(cornerRadius: 10.r, cornerSmoothing: 1.0),
+            borderRadius: const SmoothBorderRadius.all(
+              SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 1.0),
             ),
           ),
         ),
         child: Padding(
           padding: EdgeInsets.only(
-            left: icon != null ? 10.w : 15.w,
-            right: icon != null ? .0 : 15.w,
+            left: icon != null ? 10.0 : 15.0,
+            right: icon != null ? .0 : 15.0,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -74,12 +73,12 @@ class ImportCategoryItemComponent extends StatelessWidget {
               // -> icon
               if (icon != null)
                 Padding(
-                  padding: EdgeInsets.only(right: 3.w, bottom: 1.h),
+                  padding: const EdgeInsets.only(right: 3.0, bottom: 1.0),
                   child: Text(
                     icon,
                     style: theme.textTheme.bodyLarge?.copyWith(
                       height: .0,
-                      fontSize: 18.sp,
+                      fontSize: 18.0,
                     ),
                   ),
                 ),
@@ -87,13 +86,13 @@ class ImportCategoryItemComponent extends StatelessWidget {
               // -> title
               Flexible(
                 child: Padding(
-                  padding: EdgeInsets.only(top: 5.h, bottom: 7.h),
+                  padding: const EdgeInsets.only(top: 5.0, bottom: 7.0),
                   child: Text(
                     title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.golosText(
-                      fontSize: 16.sp,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                       color: text,
                     ),
@@ -106,11 +105,11 @@ class ImportCategoryItemComponent extends StatelessWidget {
                   behavior: HitTestBehavior.opaque,
                   onTap: () => onReset(context, category),
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(5.w, 6.h, 10.w, 6.h),
+                    padding: const EdgeInsets.fromLTRB(5.0, 6.0, 10.0, 6.0),
                     child: SvgPicture.asset(
                       Assets.icons.xmark,
-                      width: 20.r,
-                      height: 20.r,
+                      width: 20.0,
+                      height: 20.0,
                       colorFilter: ColorFilter.mode(text, BlendMode.srcIn),
                     ),
                   ),

@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
@@ -23,75 +22,74 @@ class TransactionFormView extends StatelessWidget {
             children: [
               // -> appbar
               AppBarComponent(
-                useSliver: false,
-                automaticallyImplyLeading: false,
-                showDragHandle: true,
-                // -> type
                 title: Center(
                   child: TabGroupComponent(
                     values: ETransactionType.values,
                     controller: viewModel.typeController,
                   ),
                 ),
-                trailing: const CloseButtonComponent(),
+                useSliver: false,
+                showBackground: false,
+                showDragHandle: true,
+                // -> type
               ),
               const Spacer(),
 
               // -> amount
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: const TransactionFormAmountComponent(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: TransactionFormAmountComponent(),
               ),
               const Spacer(),
 
               // -> date time
               const TransactionFormDatetimeComponent(),
-              SizedBox(height: 20.h),
+              const SizedBox(height: 20.0),
 
               // -> account and category
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Flex(
                   direction: Axis.horizontal,
                   children: [
                     // -> account
-                    const Flexible(child: TransactionFormAccountComponent()),
-                    SizedBox(width: 10.w),
+                    Flexible(child: TransactionFormAccountComponent()),
+                    SizedBox(width: 10.0),
 
                     // -> category
-                    const Flexible(
+                    Flexible(
                       child: TransactionFormCategoryComponent(),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
 
               // -> tags
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: const TransactionFormTagsComponent(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: TransactionFormTagsComponent(),
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
 
               // -> note
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: const TransactionFormNoteComponent(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: TransactionFormNoteComponent(),
               ),
-              SizedBox(height: 15.h),
+              const SizedBox(height: 15.0),
             ],
           ),
         ),
 
         // -> keyboard
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w),
-          child: const TransactionFormKeyboadrComponent(),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: TransactionFormKeyboadrComponent(),
         ),
 
         // -> bottom offset
-        SizedBox(height: viewPadding.bottom + 10.h),
+        SizedBox(height: viewPadding.bottom + 10.0),
       ],
     );
   }

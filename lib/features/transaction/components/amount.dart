@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
@@ -22,7 +21,7 @@ class TransactionAmountComponent extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
-            fontSize: 40.sp,
+            fontSize: 40.0,
             height: 1.1,
             fontWeight: FontWeight.w600,
             color: transaction.amount.isNegative

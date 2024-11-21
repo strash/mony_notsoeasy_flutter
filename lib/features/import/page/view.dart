@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/features/features.dart";
@@ -40,8 +39,8 @@ class ImportView extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: EdgeInsets.only(
-                        top: 20.h,
-                        bottom: viewPadding.bottom + 20.h + 48.h + 40.h,
+                        top: 20.0,
+                        bottom: viewPadding.bottom + 20.0 + 48.0 + 40.0,
                       ),
                       child: AnimatedSwitcher(
                         duration: Durations.medium3,
@@ -81,9 +80,9 @@ class ImportView extends StatelessWidget {
               Positioned(
                 left: 0.0,
                 right: 0.0,
-                bottom: viewPadding.bottom + 40.h,
+                bottom: viewPadding.bottom + 40.0,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: AnimatedSwitcher(
                     duration: Durations.medium3,
                     child: switch (event) {

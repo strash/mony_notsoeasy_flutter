@@ -1,7 +1,6 @@
 import "dart:ui";
 
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -20,17 +19,17 @@ class FeedAddAccountComponent extends StatelessWidget {
 
     return Positioned(
       top: MediaQuery.viewPaddingOf(context).top,
-      right: 10.w,
+      right: 10.0,
       child: SizedBox.square(
-        dimension: 50.r,
+        dimension: 50.0,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: onTap,
           child: Center(
             child: SizedBox.square(
-              dimension: 30.h,
+              dimension: 30.0,
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
                     sigmaX: kTranslucentPanelBlurSigma,
@@ -41,8 +40,8 @@ class FeedAddAccountComponent extends StatelessWidget {
                     child: Center(
                       child: SvgPicture.asset(
                         Assets.icons.plusSemibold,
-                        width: 20.r,
-                        height: 20.r,
+                        width: 20.0,
+                        height: 20.0,
                         colorFilter: ColorFilter.mode(
                           theme.colorScheme.onSurface,
                           BlendMode.srcIn,

@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -15,7 +14,7 @@ class AccountUnsettedItemComponent extends StatelessWidget {
     final title = this.title;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -26,19 +25,19 @@ class AccountUnsettedItemComponent extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.golosText(
-                fontSize: 16.sp,
+                fontSize: 16.0,
                 fontWeight: FontWeight.w600,
                 color: theme.colorScheme.onSurface,
               ),
             ),
           ),
-          SizedBox(width: 10.w),
+          const SizedBox(width: 10.0),
 
           // -> icon edit
           SvgPicture.asset(
             Assets.icons.plus,
-            width: 24.r,
-            height: 24.r,
+            width: 24.0,
+            height: 24.0,
             colorFilter: ColorFilter.mode(
               theme.colorScheme.secondary,
               BlendMode.srcIn,

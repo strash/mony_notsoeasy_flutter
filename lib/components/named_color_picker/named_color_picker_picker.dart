@@ -30,7 +30,7 @@ class NamedColorPickerComponent extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: () => _onTap(context),
       child: SizedBox.square(
-        dimension: 48.r,
+        dimension: 48.0,
         child: ListenableBuilder(
           listenable: controller,
           builder: (context, child) {
@@ -52,9 +52,9 @@ class NamedColorPickerComponent extends StatelessWidget {
                       side: BorderSide(
                         color: theme.colorScheme.onSurface.withOpacity(0.1),
                       ),
-                      borderRadius: SmoothBorderRadius.all(
+                      borderRadius: const SmoothBorderRadius.all(
                         SmoothRadius(
-                          cornerRadius: 15.r,
+                          cornerRadius: 15.0,
                           cornerSmoothing: 1.0,
                         ),
                       ),

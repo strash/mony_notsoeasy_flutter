@@ -21,7 +21,7 @@ class _ColorGridItem extends StatelessWidget {
     final isActive = controller.value == colorName;
 
     return Padding(
-      padding: EdgeInsets.all(3.r),
+      padding: const EdgeInsets.all(3.0),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => _onTap(context),
@@ -36,17 +36,18 @@ class _ColorGridItem extends StatelessWidget {
           builder: (context, color, child) {
             return DecoratedBox(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(100.r)),
+                borderRadius: const BorderRadius.all(Radius.circular(100.0)),
                 border: Border.all(
                   width: isActive ? 2.0 : .0,
                   color: color ?? theme.colorScheme.tertiary,
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.all(4.r),
+                padding: const EdgeInsets.all(4.0),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(100.r)),
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(100.0)),
                     color: ex?.from(colorName).color ??
                         theme.colorScheme.surfaceContainer,
                   ),

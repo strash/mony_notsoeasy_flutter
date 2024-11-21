@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/appbar_button/component.dart";
@@ -36,21 +35,21 @@ class TransactionView extends StatelessWidget {
                   icon: Assets.icons.pencilBold,
                   onTap: () => onEditPressed(context, transaction),
                 ),
-                SizedBox(width: 4.w),
+                const SizedBox(width: 4.0),
 
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
                   onTap: () => onDeletePressed(context, transaction),
                 ),
-                SizedBox(width: 8.w),
+                const SizedBox(width: 8.0),
               ],
             ),
           ),
 
           // -> content
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             sliver: SliverToBoxAdapter(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -61,15 +60,15 @@ class TransactionView extends StatelessWidget {
                   TransactionCategoryComponent(
                     category: transaction.category,
                   ),
-                  SizedBox(height: 40.h),
+                  const SizedBox(height: 40.0),
 
                   // -> amount
                   TransactionAmountComponent(transaction: transaction),
-                  SizedBox(height: 10.h),
+                  const SizedBox(height: 10.0),
 
                   // -> date
                   TransactionDateComponent(date: transaction.date),
-                  SizedBox(height: 40.h),
+                  const SizedBox(height: 40.0),
 
                   // TODO: открывать экран аккаунта
                   // -> account
@@ -78,7 +77,7 @@ class TransactionView extends StatelessWidget {
                   // TODO: открывать экран тега при клике на тег
                   // -> tags
                   TransactionTagsComponent(tags: transaction.tags),
-                  SizedBox(height: 30.h),
+                  const SizedBox(height: 30.0),
 
                   // -> note
                   if (transaction.note.isNotEmpty)

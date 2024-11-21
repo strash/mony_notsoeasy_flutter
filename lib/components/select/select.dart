@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/components.dart";
@@ -46,7 +45,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
           controller: widget.controller,
           child: ListView.builder(
             shrinkWrap: true,
-            padding: EdgeInsets.only(bottom: 40.h + bottom),
+            padding: EdgeInsets.only(bottom: 40.0 + bottom),
             itemCount: entries.length,
             itemBuilder: (context, index) {
               return entries.elementAt(index);
@@ -72,7 +71,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
       behavior: HitTestBehavior.opaque,
       onTap: () => _onTap(context),
       child: SizedBox.fromSize(
-        size: Size.fromHeight(48.r),
+        size: const Size.fromHeight(48.0),
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short2,
           tween: ColorTween(
@@ -85,9 +84,9 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                 color: theme.colorScheme.surfaceContainer,
                 shape: SmoothRectangleBorder(
                   side: BorderSide(color: color!),
-                  borderRadius: SmoothBorderRadius.all(
+                  borderRadius: const SmoothBorderRadius.all(
                     SmoothRadius(
-                      cornerRadius: 15.r,
+                      cornerRadius: 15.0,
                       cornerSmoothing: 1.0,
                     ),
                   ),
@@ -97,7 +96,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                 padding: (widget.activeEntryPadding != null &&
                         widget.activeEntry != null)
                     ? widget.activeEntryPadding!
-                    : EdgeInsets.only(left: 15.w, right: 7.w),
+                    : const EdgeInsets.only(left: 15.0, right: 7.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -109,14 +108,14 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.golosText(
-                                fontSize: 16.sp,
+                                fontSize: 16.0,
                                 color: theme.colorScheme.onSurfaceVariant
                                     .withOpacity(.6),
                               ),
                             )
                           : DefaultTextStyle(
                               style: GoogleFonts.golosText(
-                                fontSize: 16.sp,
+                                fontSize: 16.0,
                                 color: theme.colorScheme.onSurface,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -127,8 +126,8 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                     // -> icon
                     SvgPicture.asset(
                       Assets.icons.chevronUpChevronDown,
-                      width: 24.r,
-                      height: 24.r,
+                      width: 24.0,
+                      height: 24.0,
                       colorFilter: ColorFilter.mode(accent, BlendMode.srcIn),
                     ),
                   ],

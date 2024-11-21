@@ -1,7 +1,6 @@
 import "dart:ui";
 
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/components/components.dart";
@@ -15,7 +14,7 @@ class AppBarComponent extends StatelessWidget {
   final bool showBackground;
   final bool automaticallyImplyLeading;
 
-  static final double height = 50.h;
+  static const double height = 50.0;
 
   const AppBarComponent({
     super.key,
@@ -161,7 +160,7 @@ class _AppBarState extends State<_AppBar> {
   TextStyle get _titleStyle {
     final theme = Theme.of(context);
     return GoogleFonts.golosText(
-      fontSize: 20.sp,
+      fontSize: 20.0,
       fontWeight: FontWeight.w500,
       color: theme.colorScheme.onSurface,
     );
@@ -186,7 +185,7 @@ class _AppBarState extends State<_AppBar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final padding = 4.w;
+    const padding = 4.0;
 
     final child = SizedBox.fromSize(
       size: Size.fromHeight(minExtent),
@@ -210,7 +209,7 @@ class _AppBarState extends State<_AppBar> {
                               widget.automaticallyImplyLeading
                           ? const BackButtonComponent()
                           : widget.leading) ??
-                      SizedBox(width: 10.w),
+                      const SizedBox(width: 10.0),
                 ),
                 SizedBox(width: _leadingMinWidth),
 
@@ -218,7 +217,7 @@ class _AppBarState extends State<_AppBar> {
                 if (widget.title != null)
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: padding),
+                      padding: const EdgeInsets.symmetric(horizontal: padding),
                       child: DefaultTextStyle(
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -240,7 +239,7 @@ class _AppBarState extends State<_AppBar> {
                               widget.automaticallyImplyLeading
                           ? const CloseButtonComponent()
                           : widget.trailing) ??
-                      SizedBox(width: 10.w),
+                      const SizedBox(width: 10.0),
                 ),
               ],
             ),

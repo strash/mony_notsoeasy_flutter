@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/appbar/component.dart";
@@ -32,21 +31,22 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
     final viewSize = MediaQuery.sizeOf(context);
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.w),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           const AppBarComponent(
             title: Text("Теги"),
-            useSliver: false,
+            showBackground: false,
             showDragHandle: true,
+            useSliver: false,
           ),
-          SizedBox(height: 20.h),
+          const SizedBox(height: 20.0),
 
           // -> suggestions
           SizedBox(
-            height: 34.h,
-            width: viewSize.width - 30.w,
+            height: 34.0,
+            width: viewSize.width - 30.0,
             child: ValueListenableBuilder(
               valueListenable: tags,
               builder: (context, value, child) {
@@ -62,7 +62,7 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
                               child: Text(
                                 'Чтобы создать тег, нажми "Готово"',
                                 style: GoogleFonts.golosText(
-                                  fontSize: 15.sp,
+                                  fontSize: 15.0,
                                   color: theme.colorScheme.onSurfaceVariant,
                                 ),
                               ),
@@ -78,7 +78,7 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
                         parent: AlwaysScrollableScrollPhysics(),
                       ),
                       separatorBuilder: (context, index) {
-                        return SizedBox(width: 5.w);
+                        return const SizedBox(width: 5.0);
                       },
                       itemCount: value.length,
                       itemBuilder: (context, index) {
@@ -90,7 +90,9 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
                           child: TransactionFormTagComponent(
                             builder: (context) {
                               return Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0,
+                                ),
                                 child: Center(child: Text(item.title)),
                               );
                             },
@@ -145,7 +147,7 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(height: 15.h),
+          const SizedBox(height: 15.0),
 
           // -> input
           TextFormField(
@@ -163,7 +165,7 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style: GoogleFonts.golosText(
               color: theme.colorScheme.onSurface,
-              fontSize: 16.sp,
+              fontSize: 16.0,
               fontWeight: FontWeight.w400,
             ),
             scrollPadding: EdgeInsets.zero,
@@ -175,7 +177,7 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
           ),
 
           // -> bottom offset
-          SizedBox(height: 15.h + keyboardHeight),
+          SizedBox(height: 15.0 + keyboardHeight),
         ],
       ),
     );

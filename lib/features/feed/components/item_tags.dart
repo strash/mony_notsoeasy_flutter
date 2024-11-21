@@ -1,6 +1,5 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/tag.dart";
@@ -16,7 +15,7 @@ class FeedItemTagsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final gap = 5.w;
+    const gap = 5.0;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -34,29 +33,29 @@ class FeedItemTagsComponent extends StatelessWidget {
             child: SeparatedComponent(
               direction: Axis.horizontal,
               itemCount: tags.length,
-              separatorBuilder: (context) => SizedBox(width: gap),
+              separatorBuilder: (context) => const SizedBox(width: gap),
               itemBuilder: (context, index) {
                 final tag = tags.elementAt(index);
 
                 return SizedBox(
-                  height: 24.h,
+                  height: 24.0,
                   child: DecoratedBox(
                     decoration: ShapeDecoration(
                       color: theme.colorScheme.surfaceContainerHigh,
-                      shape: SmoothRectangleBorder(
+                      shape: const SmoothRectangleBorder(
                         borderRadius: SmoothBorderRadius.all(
-                          SmoothRadius(cornerRadius: 6.r, cornerSmoothing: 1.0),
+                          SmoothRadius(cornerRadius: 6.0, cornerSmoothing: 1.0),
                         ),
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       child: Center(
                         child: Text(
                           "#${tag.title}",
                           maxLines: 1,
                           style: GoogleFonts.golosText(
-                            fontSize: 13.sp,
+                            fontSize: 13.0,
                             height: 1.0,
                             fontWeight: FontWeight.w500,
                             color: Theme.of(context)
