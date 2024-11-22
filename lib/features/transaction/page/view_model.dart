@@ -54,6 +54,7 @@ final class TransactionViewModel
       useCases: [
         () => OnEditTransactionPressed(),
         () => OnDeleteTransactionPressed(),
+        () => OnAccountPressed(),
       ],
       child: const TransactionView(),
     );

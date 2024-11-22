@@ -18,6 +18,7 @@ class TransactionView extends StatelessWidget {
     final viewModel = context.viewModel<TransactionViewModel>();
     final onEditPressed = viewModel<OnEditTransactionPressed>();
     final onDeletePressed = viewModel<OnDeleteTransactionPressed>();
+    final onAccountPressed = viewModel<OnAccountPressed>();
     final transaction = viewModel.transaction;
 
     return Scaffold(
@@ -71,9 +72,11 @@ class TransactionView extends StatelessWidget {
                   TransactionDateComponent(date: transaction.date),
                   const SizedBox(height: 40.0),
 
-                  // TODO: открывать экран аккаунта
                   // -> account
-                  TransactionAccountComponent(account: transaction.account),
+                  TransactionAccountComponent(
+                    account: transaction.account,
+                    onTap: onAccountPressed,
+                  ),
 
                   // TODO: открывать экран тега при клике на тег
                   // -> tags
