@@ -41,6 +41,10 @@ class SettingsView extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Text("Подтверждать удаление транзакций (да/нет)"),
           ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            child: Text("Отображать теги в ленте"),
+          ),
         ],
       ),
     );

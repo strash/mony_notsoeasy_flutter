@@ -17,6 +17,7 @@ class TransactionCategoryComponent extends StatelessWidget {
     final ex = theme.extension<ColorExtension>();
     final color =
         ex?.from(category.colorName).color ?? theme.colorScheme.onSurface;
+    final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -30,21 +31,11 @@ class TransactionCategoryComponent extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Color.lerp(
-                      color,
-                      const Color(0xFFFFFFFF),
-                      .3,
-                    )!,
-                    color,
-                  ],
+                  colors: [color2, color],
                 ),
                 shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(
-                      cornerRadius: 30.0,
-                      cornerSmoothing: 1.0,
-                    ),
+                    SmoothRadius(cornerRadius: 30.0, cornerSmoothing: 1.0),
                   ),
                 ),
               ),
@@ -83,10 +74,7 @@ class TransactionCategoryComponent extends StatelessWidget {
                 Assets.icons.chevronForward,
                 width: 20.0,
                 height: 20.0,
-                colorFilter: ColorFilter.mode(
-                  color,
-                  BlendMode.srcIn,
-                ),
+                colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
               ),
             ),
           ],

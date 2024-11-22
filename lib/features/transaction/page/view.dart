@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/account/component.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/appbar_button/component.dart";
 import "package:mony_app/features/navbar/page/view.dart";
@@ -73,10 +74,12 @@ class TransactionView extends StatelessWidget {
                   const SizedBox(height: 40.0),
 
                   // -> account
-                  TransactionAccountComponent(
-                    account: transaction.account,
-                    onTap: onAccountPressed,
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => onAccountPressed(context, transaction.account),
+                    child: AccountComponent(account: transaction.account),
                   ),
+                  const SizedBox(height: 30.0),
 
                   // TODO: открывать экран тега при клике на тег
                   // -> tags

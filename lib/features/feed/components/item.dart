@@ -21,10 +21,11 @@ class FeedItemComponent extends StatelessWidget {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
     final viewSize = MediaQuery.sizeOf(context);
-    const padding = EdgeInsets.symmetric(horizontal: 20.0, vertical: 14.0);
 
     final categoryColor = ex?.from(transaction.category.colorName).color ??
         theme.colorScheme.surfaceContainer;
+    final color2 = Color.lerp(categoryColor, const Color(0xFFFFFFFF), .3)!;
+    const padding = EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0);
     const iconDimension = 50.0;
     const horizontalGap = 10.0;
     final contentWidth =
@@ -51,14 +52,7 @@ class FeedItemComponent extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
-                        Color.lerp(
-                          categoryColor,
-                          const Color(0xFFFFFFFF),
-                          .3,
-                        )!,
-                        categoryColor,
-                      ],
+                      colors: [color2, categoryColor],
                     ),
                     shape: const SmoothRectangleBorder(
                       borderRadius: SmoothBorderRadius.all(
@@ -93,8 +87,8 @@ class FeedItemComponent extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.golosText(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
                               color: categoryColor,
                             ),
                           ),
@@ -108,8 +102,8 @@ class FeedItemComponent extends StatelessWidget {
                             symbol: transaction.account.currency.symbol,
                           ),
                           style: GoogleFonts.golosText(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600,
                             color: transaction.amount.isNegative
                                 ? theme.colorScheme.onSurface
                                 : theme.colorScheme.secondary,
@@ -117,40 +111,34 @@ class FeedItemComponent extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 5.0),
 
-                    // -> middle row
-                    ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: contentWidth),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // -> time
-                          FeedItemTimeComponent(date: transaction.date),
+                    Row(
+                      children: [
+                        // -> time
+                        FeedItemTimeComponent(date: transaction.date),
+                        const SizedBox(width: 15.0),
 
-                          // -> tags
-                          Expanded(
-                            child:
-                                FeedItemTagsComponent(tags: transaction.tags),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // -> note
-                    if (transaction.note.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: Text(
-                          transaction.note,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.golosText(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w400,
-                            color: theme.colorScheme.onSurfaceVariant,
+                        // -> note
+                        Flexible(
+                          child: Text(
+                            transaction.note,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.golosText(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w400,
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
                           ),
                         ),
+                      ],
+                    ),
+
+                    // -> tags
+                    if (transaction.tags.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: FeedItemTagsComponent(tags: transaction.tags),
                       ),
                   ],
                 ),
