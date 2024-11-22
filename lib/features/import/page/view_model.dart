@@ -12,7 +12,11 @@ import "package:rxdart/subjects.dart";
 export "../validator/validator.dart";
 export "./model/model.dart";
 
-// TODO: FEATURE - искать похожие записи (по всем таблицам?) и как-то мержить
+// TODO: Импорт со счетами:
+// - теги и категории уже мержатся
+// - мержить транзакции
+// - мержить счета?
+// - ?
 
 typedef TPressedCategoryValue = ({
   ETransactionType transactionType,

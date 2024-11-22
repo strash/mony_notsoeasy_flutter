@@ -73,7 +73,8 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
       tags.addEntries(
         await Future.wait(
           tagTitles.map((title) async {
-            final model = await tagService.create(vo: TagVO(title: title));
+            TagModel? model = await tagService.getOne(title: title);
+            model ??= await tagService.create(vo: TagVO(title: title));
             return MapEntry(title, model);
           }),
         ),

@@ -17,7 +17,7 @@ abstract base class TagDatabaseRepository {
     required int offset,
   });
 
-  Future<TagDto?> getOne({required String id});
+  Future<TagDto?> getOne({String? id, String? title});
 
   Future<void> create({required TagDto dto});
 
@@ -137,13 +137,23 @@ ORDER BY tt.created ASC;
   }
 
   @override
-  Future<TagDto?> getOne({required String id}) async {
+  Future<TagDto?> getOne({String? id, String? title}) async {
+    if (id == null && title == null) return null;
     return resolve(() async {
       final db = await database.db;
+      final where = switch ((id, title)) {
+        (final String id, final String title) => (
+            "id = ? AND title = ?",
+            [id, title]
+          ),
+        (final String id, null) => ("id = ?", [id]),
+        (null, final String title) => ("title = ?", [title]),
+        (null, null) => throw UnimplementedError(),
+      };
       final map = await db.query(
         table,
-        where: "id = ?",
-        whereArgs: [id],
+        where: where.$1,
+        whereArgs: where.$2,
       );
       if (map.isEmpty) return null;
       return TagDto.fromJson(map.first);
