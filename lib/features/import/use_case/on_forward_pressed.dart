@@ -3,6 +3,7 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/import/import.dart";
+import "package:mony_app/features/import/use_case/use_case.dart";
 import "package:provider/provider.dart";
 
 final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {

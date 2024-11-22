@@ -4,6 +4,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/components/category/category_section.dart";
+import "package:mony_app/features/import/use_case/use_case.dart";
 
 class ImportMapCategoriesPage extends StatelessWidget {
   final ImportEvent? event;

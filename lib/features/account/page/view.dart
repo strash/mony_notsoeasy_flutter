@@ -4,6 +4,7 @@ import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/appbar_button/component.dart";
+import "package:mony_app/features/account/use_case/use_case.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/gen/assets.gen.dart";

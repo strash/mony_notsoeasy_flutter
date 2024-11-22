@@ -6,6 +6,7 @@ import "package:mony_app/domain/services/database/vo/transaction_tag.dart";
 import "package:mony_app/features/transaction_form/components/tag.dart";
 import "package:mony_app/features/transaction_form/components/tags_gradient.dart";
 import "package:mony_app/features/transaction_form/page/view_model.dart";
+import "package:mony_app/features/transaction_form/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class TransactionFormTagsComponent extends StatelessWidget {

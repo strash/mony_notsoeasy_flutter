@@ -7,8 +7,6 @@ import "package:mony_app/features/category_form/page/view.dart";
 import "package:mony_app/features/category_form/use_case/use_case.dart";
 import "package:provider/provider.dart";
 
-export "../use_case/use_case.dart";
-
 final class CategoryFormViewModelBuilder extends StatefulWidget {
   final double keyboardHeight;
   final ETransactionType transactionType;

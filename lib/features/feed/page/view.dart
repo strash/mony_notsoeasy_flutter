@@ -4,6 +4,7 @@ import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/feed/components/components.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
+import "package:mony_app/features/feed/use_case/use_case.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 
 class FeedView extends StatelessWidget {

@@ -3,6 +3,7 @@ import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/features.dart";
+import "package:mony_app/features/transaction_form/use_case/on_note_pressed.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class TransactionFormNoteComponent extends StatelessWidget {

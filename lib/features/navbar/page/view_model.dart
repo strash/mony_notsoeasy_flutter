@@ -4,9 +4,9 @@ import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/navbar/page/view.dart";
+import "package:mony_app/features/navbar/use_case/use_case.dart";
 import "package:rxdart/subjects.dart";
 
-export "../use_case/use_case.dart";
 export "./event.dart";
 
 enum NavBarTabItem implements IDescriptable {

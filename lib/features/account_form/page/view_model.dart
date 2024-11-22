@@ -8,8 +8,6 @@ import "package:mony_app/features/account_form/use_case/use_case.dart";
 import "package:provider/provider.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
-export "../use_case/use_case.dart";
-
 final class AccountFormViewModelBuilder extends StatefulWidget {
   final double keyboardHeight;
   final AccountVariant? account;

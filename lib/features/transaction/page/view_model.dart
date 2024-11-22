@@ -5,10 +5,8 @@ import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
-import "package:mony_app/features/transaction/page/page.dart";
 import "package:mony_app/features/transaction/page/view.dart";
-
-export "../use_case/use_case.dart";
+import "package:mony_app/features/transaction/use_case/use_case.dart";
 
 final class TransactionViewModelBuilder extends StatefulWidget {
   final TransactionModel transaction;

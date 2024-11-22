@@ -5,10 +5,10 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/feed/page/page.dart";
 import "package:mony_app/features/feed/page/view.dart";
+import "package:mony_app/features/feed/use_case/use_case.dart";
 import "package:mony_app/features/navbar/page/page.dart";
 import "package:rxdart/rxdart.dart";
 
-export "../use_case/use_case.dart";
 export "./event.dart";
 export "./state.dart";
 

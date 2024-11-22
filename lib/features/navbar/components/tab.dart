@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/page/view_model.dart";
+import "package:mony_app/features/navbar/use_case/on_tab_change_requested.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 extension on NavBarTabItem {

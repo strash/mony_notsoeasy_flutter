@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start/start.dart";
+import "package:mony_app/features/start/use_case/on_button_start_pressed.dart";
 
 class StartView extends StatelessWidget {
   const StartView({super.key});

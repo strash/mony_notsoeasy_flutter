@@ -6,10 +6,8 @@ import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/account/page/page.dart";
 import "package:mony_app/features/account/page/view.dart";
-
-export "../use_case/use_case.dart";
+import "package:mony_app/features/account/use_case/use_case.dart";
 
 final class AccountViewModelBuilder extends StatefulWidget {
   final AccountModel account;

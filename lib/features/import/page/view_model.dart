@@ -6,9 +6,9 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/import/import.dart";
 import "package:mony_app/features/import/page/view.dart";
+import "package:mony_app/features/import/use_case/use_case.dart";
 import "package:rxdart/subjects.dart";
 
-export "../use_case/use_case.dart";
 export "../validator/validator.dart";
 export "./model/model.dart";
 

@@ -3,6 +3,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/select/component.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
+import "package:mony_app/features/account_form/use_case/use_case.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 class CurrencySelectComponent extends StatelessWidget {

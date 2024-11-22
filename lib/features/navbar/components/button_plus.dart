@@ -4,6 +4,7 @@ import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/navbar/page/view_model.dart";
+import "package:mony_app/features/navbar/use_case/on_add_transaction_pressed.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class NavBarButtonPlusComponent extends StatelessWidget {

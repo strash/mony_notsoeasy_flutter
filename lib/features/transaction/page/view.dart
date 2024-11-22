@@ -5,6 +5,7 @@ import "package:mony_app/components/appbar_button/component.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/transaction/components/components.dart";
 import "package:mony_app/features/transaction/page/page.dart";
+import "package:mony_app/features/transaction/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class TransactionView extends StatelessWidget {
