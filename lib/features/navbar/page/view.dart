@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/navbar/components/components.dart";
 import "package:mony_app/features/navbar/navbar.dart";
 import "package:rxdart/rxdart.dart";
@@ -54,7 +55,9 @@ class NavBarView extends StatelessWidget {
                 bottom: margin,
                 child: SizedBox(
                   height: kTabHeight,
-                  child: Row(
+                  child: SeparatedComponent.list(
+                    direction: Axis.horizontal,
+                    separatorBuilder: (context) => const SizedBox(width: 10.0),
                     children: [
                       // -> tabs
                       Expanded(
@@ -85,8 +88,6 @@ class NavBarView extends StatelessWidget {
                           ),
                         ),
                       ),
-
-                      const SizedBox(width: 10.0),
 
                       // -> button plus
                       const NavBarButtonPlusComponent(),

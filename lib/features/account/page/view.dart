@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/appbar_button/component.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/features/account/components/components.dart";
 import "package:mony_app/features/account/use_case/use_case.dart";
 import "package:mony_app/features/features.dart";
@@ -62,16 +63,16 @@ class AccountView extends StatelessWidget {
 
                   // -> amount
                   if (balance != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    SeparatedComponent.list(
+                      separatorBuilder: (context) {
+                        return const SizedBox(height: 30.0);
+                      },
                       children: [
                         // -> total sum title
                         AccountTotalSumComponent(balance: balance),
-                        const SizedBox(height: 30.0),
 
                         // -> total amount title
                         AccountTotalAmountComponent(balance: balance),
-                        const SizedBox(height: 30.0),
 
                         // -> currency title
                         AccountCurrencyComponent(balance: balance),

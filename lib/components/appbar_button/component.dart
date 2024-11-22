@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
+import "package:mony_app/components/appbar/component.dart";
 
 class AppBarButtonComponent extends StatelessWidget {
   final String icon;
@@ -23,7 +24,7 @@ class AppBarButtonComponent extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: SizedBox.square(
-        dimension: 50.0,
+        dimension: AppBarComponent.height,
         child: Center(
           child: Padding(
             padding: padding ?? EdgeInsets.zero,

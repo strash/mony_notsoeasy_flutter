@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/domain/domain.dart";
 
 class AccountCurrencyComponent extends StatelessWidget {
@@ -14,8 +15,8 @@ class AccountCurrencyComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return SeparatedComponent.list(
+      separatorBuilder: (context) => const SizedBox(height: 10.0),
       children: [
         // -> title
         Text(
@@ -26,7 +27,6 @@ class AccountCurrencyComponent extends StatelessWidget {
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
-        const SizedBox(height: 10.0),
 
         // -> currency
         Text(

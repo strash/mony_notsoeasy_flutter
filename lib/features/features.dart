@@ -1,5 +1,6 @@
 export "./account/account.dart";
 export "./account_form/account_form.dart";
+export "./category/category.dart";
 export "./category_form/category_form.dart";
 export "./feed/feed.dart";
 export "./import/import.dart";

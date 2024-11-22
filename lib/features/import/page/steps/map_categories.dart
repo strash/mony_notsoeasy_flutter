@@ -67,7 +67,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
             final filtered =
                 categories.entries.where((e) => e.value.isNotEmpty);
 
-            return SeparatedComponent(
+            return SeparatedComponent.builder(
               itemCount: filtered.length,
               separatorBuilder: (context) => const SizedBox(height: 40.0),
               itemBuilder: (context, index) {

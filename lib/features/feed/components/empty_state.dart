@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class FeedEmptyStateComponent extends StatelessWidget {
@@ -10,9 +11,12 @@ class FeedEmptyStateComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Column(
+    return SeparatedComponent.list(
+      separatorBuilder: (context) => const SizedBox(height: 10.0),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // -> icon
         SvgPicture.asset(
           Assets.icons.sparkles,
           width: 150.0,
@@ -22,8 +26,8 @@ class FeedEmptyStateComponent extends StatelessWidget {
             BlendMode.srcIn,
           ),
         ),
-        // ignore: prefer_const_constructors
-        SizedBox(height: 10.0),
+
+        // -> description
         Text(
           "Тут ничего нет.\nЗаписывай траты!",
           textAlign: TextAlign.center,

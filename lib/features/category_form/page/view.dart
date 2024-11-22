@@ -34,28 +34,24 @@ class CategoryFormView extends StatelessWidget {
 
         // -> form
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15.0,
-            vertical: 20.0,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
           child: Form(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                SeparatedComponent.list(
+                  direction: Axis.horizontal,
+                  separatorBuilder: (context) => const SizedBox(width: 10.0),
                   children: [
                     // -> color picker
                     NamedColorPickerComponent(
                       controller: viewModel.colorController,
                     ),
-                    const SizedBox(width: 10.0),
 
                     // -> emoji
                     EmojiPickerComponent(
                       controller: viewModel.emojiController,
                     ),
-                    const SizedBox(width: 10.0),
 
                     // -> title
                     Expanded(

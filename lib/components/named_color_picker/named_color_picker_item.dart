@@ -17,6 +17,11 @@ class _ColorGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
+    final namedColor =
+        ex?.from(colorName).color ?? theme.colorScheme.surfaceContainer;
+    const borderRadius = BorderRadius.all(Radius.circular(100.0));
+    const transparent = Color(0x00FFFFFF);
+
     final controller = _controller(context);
     final isActive = controller.value == colorName;
 
@@ -27,16 +32,15 @@ class _ColorGridItem extends StatelessWidget {
         onTap: () => _onTap(context),
         child: TweenAnimationBuilder<Color?>(
           tween: ColorTween(
-            begin: const Color(0x00FFFFFF),
-            end:
-                isActive ? theme.colorScheme.tertiary : const Color(0x00FFFFFF),
+            begin: transparent,
+            end: isActive ? theme.colorScheme.tertiary : transparent,
           ),
           duration: Durations.medium2,
           curve: Curves.easeInOut,
           builder: (context, color, child) {
             return DecoratedBox(
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(100.0)),
+                borderRadius: borderRadius,
                 border: Border.all(
                   width: isActive ? 2.0 : .0,
                   color: color ?? theme.colorScheme.tertiary,
@@ -46,10 +50,8 @@ class _ColorGridItem extends StatelessWidget {
                 padding: const EdgeInsets.all(4.0),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(100.0)),
-                    color: ex?.from(colorName).color ??
-                        theme.colorScheme.surfaceContainer,
+                    borderRadius: borderRadius,
+                    color: namedColor,
                   ),
                 ),
               ),

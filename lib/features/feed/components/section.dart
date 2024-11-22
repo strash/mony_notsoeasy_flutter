@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/features/feed/page/state.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
 
@@ -22,14 +23,13 @@ class FeedSectionComponent extends StatelessWidget {
     );
     final formattedDate = dateFormatter.format(section.date);
 
-    final sum = section.total.entries.map((e) {
-      return e.value.currency(name: e.key.name, symbol: e.key.symbol);
-    }).join(", ");
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 10.0),
-      child: Row(
+      child: SeparatedComponent.list(
+        direction: Axis.horizontal,
+        separatorBuilder: (context) => const SizedBox(width: 10.0),
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           // -> date
           Text(
@@ -40,18 +40,23 @@ class FeedSectionComponent extends StatelessWidget {
               color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
-          const SizedBox(width: 10.0),
 
           // -> sum
           Flexible(
-            child: Text(
-              sum,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.golosText(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500,
-                color: theme.colorScheme.onSurfaceVariant,
+            child: SeparatedComponent.list(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              separatorBuilder: (context) => const SizedBox(height: 2.0),
+              children: section.total.entries.map(
+                (e) => Text(
+                  e.value.currency(name: e.key.name, symbol: e.key.symbol),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.golosText(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
               ),
             ),
           ),

@@ -33,22 +33,20 @@ class AccountFormView extends StatelessWidget {
         ),
 
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15.0,
-            vertical: 20.0,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
           child: Form(
-            child: Column(
+            child: SeparatedComponent.list(
               crossAxisAlignment: CrossAxisAlignment.stretch,
+              separatorBuilder: (context) => const SizedBox(height: 10.0),
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                SeparatedComponent.list(
+                  direction: Axis.horizontal,
+                  separatorBuilder: (context) => const SizedBox(width: 10.0),
                   children: [
                     // -> color picker
                     NamedColorPickerComponent(
                       controller: viewModel.colorController,
                     ),
-                    const SizedBox(width: 10.0),
 
                     // -> title
                     Expanded(
@@ -77,19 +75,18 @@ class AccountFormView extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10.0),
 
-                const Row(
-                  children: [
+                SeparatedComponent.list(
+                  direction: Axis.horizontal,
+                  separatorBuilder: (context) => const SizedBox(width: 10.0),
+                  children: const [
                     // -> type
                     Flexible(flex: 2, child: TypeSelectComponent()),
-                    SizedBox(width: 10.0),
 
                     // -> currency select
                     Flexible(child: CurrencySelectComponent()),
                   ],
                 ),
-                const SizedBox(height: 10.0),
 
                 // -> balance
                 TextFormField(
@@ -118,14 +115,16 @@ class AccountFormView extends StatelessWidget {
                   ),
                   onFieldSubmitted: viewModel.balanceController.validator,
                 ),
-                const SizedBox(height: 20.0),
 
                 // -> submit
-                FilledButton(
-                  onPressed: viewModel.isSubmitEnabled
-                      ? () => onSubmitAccountPressed(context)
-                      : null,
-                  child: const Text("Сохранить"),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: FilledButton(
+                    onPressed: viewModel.isSubmitEnabled
+                        ? () => onSubmitAccountPressed(context)
+                        : null,
+                    child: const Text("Сохранить"),
+                  ),
                 ),
               ],
             ),

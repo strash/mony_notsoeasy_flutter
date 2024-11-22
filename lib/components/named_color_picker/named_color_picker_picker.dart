@@ -35,12 +35,15 @@ class NamedColorPickerComponent extends StatelessWidget {
           listenable: controller,
           builder: (context, child) {
             final colorName = controller.value;
+            final endColor =
+                ex?.from(colorName ?? EColorName.defaultValue).color ??
+                    theme.colorScheme.surfaceContainer;
+
             // -> color
             return TweenAnimationBuilder<Color?>(
               tween: ColorTween(
                 begin: theme.colorScheme.surfaceContainer,
-                end: ex?.from(colorName ?? EColorName.defaultValue).color ??
-                    theme.colorScheme.surfaceContainer,
+                end: endColor,
               ),
               duration: Durations.medium2,
               curve: Curves.easeInOut,
@@ -53,10 +56,7 @@ class NamedColorPickerComponent extends StatelessWidget {
                         color: theme.colorScheme.onSurface.withOpacity(0.1),
                       ),
                       borderRadius: const SmoothBorderRadius.all(
-                        SmoothRadius(
-                          cornerRadius: 15.0,
-                          cornerSmoothing: 1.0,
-                        ),
+                        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
                       ),
                     ),
                   ),

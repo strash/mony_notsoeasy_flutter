@@ -39,8 +39,9 @@ class CurrencySelectComponent extends StatelessWidget {
               final item = list.elementAt(index);
               final desc = currencyDescription(context, item);
 
-              return SelectEntryComponent(
+              return SelectEntryComponent<FiatCurrency>(
                 value: item,
+                equal: (lhs, rhs) => lhs != null && lhs.name == rhs.name,
                 child: Row(
                   children: [
                     // -> code

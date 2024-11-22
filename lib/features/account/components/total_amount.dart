@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account/page/view_model.dart";
 
@@ -17,8 +18,8 @@ class AccountTotalAmountComponent extends StatelessWidget {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<AccountViewModel>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return SeparatedComponent.list(
+      separatorBuilder: (context) => const SizedBox(height: 10.0),
       children: [
         // -> title
         Text(
@@ -29,7 +30,6 @@ class AccountTotalAmountComponent extends StatelessWidget {
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
-        const SizedBox(height: 10.0),
 
         // -> amount
         Text(
@@ -43,27 +43,30 @@ class AccountTotalAmountComponent extends StatelessWidget {
             color: theme.colorScheme.onSurface,
           ),
         ),
-        const SizedBox(height: 12.0),
 
-        // -> transactions date range
-        Text(
-          viewModel.transactionsCountDescription,
-          style: GoogleFonts.golosText(
-            fontSize: 15.0,
-            fontWeight: FontWeight.w400,
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-        const SizedBox(height: 3.0),
+        SeparatedComponent.list(
+          separatorBuilder: (context) => const SizedBox(height: 3.0),
+          children: [
+            // -> transactions date range
+            Text(
+              viewModel.transactionsCountDescription,
+              style: GoogleFonts.golosText(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w400,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
 
-        // -> transactions date range
-        Text(
-          viewModel.transactionsDateRangeDescription,
-          style: GoogleFonts.golosText(
-            fontSize: 15.0,
-            fontWeight: FontWeight.w400,
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
+            // -> transactions date range
+            Text(
+              viewModel.transactionsDateRangeDescription,
+              style: GoogleFonts.golosText(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w400,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
         ),
       ],
     );

@@ -86,6 +86,7 @@ class TransactionFormCategoryComponent extends StatelessWidget {
                     .map((e) {
                   return SelectEntryComponent<CategoryModel>(
                     value: e,
+                    equal: (lhs, rhs) => lhs != null && lhs.id == rhs.id,
                     child: Builder(
                       builder: (context) {
                         return _getCategory(context, e);

@@ -35,13 +35,13 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
               viewModel.incomeCategoryController,
             ]),
             builder: (context, child) {
-              return SeparatedComponent(
+              return SeparatedComponent.builder(
                 itemCount: viewModel.buttons.length,
                 separatorBuilder: (context) => const SizedBox(height: gap),
                 itemBuilder: (context, index) {
                   final row = viewModel.buttons.elementAt(index);
 
-                  return SeparatedComponent(
+                  return SeparatedComponent.builder(
                     direction: Axis.horizontal,
                     itemCount: row.length,
                     separatorBuilder: (context) => const SizedBox(width: gap),

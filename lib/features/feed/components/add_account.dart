@@ -3,6 +3,7 @@ import "dart:ui";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/constants.dart";
+import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class FeedAddAccountComponent extends StatelessWidget {
@@ -19,9 +20,9 @@ class FeedAddAccountComponent extends StatelessWidget {
 
     return Positioned(
       top: MediaQuery.viewPaddingOf(context).top,
-      right: 10.0,
+      right: 8.0,
       child: SizedBox.square(
-        dimension: 50.0,
+        dimension: AppBarComponent.height,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: onTap,

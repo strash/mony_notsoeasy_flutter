@@ -88,15 +88,13 @@ class FeedView extends StatelessWidget {
 
                   // -> empty state
                   if (page.feed.isEmpty)
-                    const SliverFillRemaining(
+                    SliverFillRemaining(
                       hasScrollBody: false,
                       child: Padding(
                         padding: EdgeInsets.only(
-                          bottom: NavBarView.kTabHeight +
-                              NavBarView.kBottomMargin * 2.0 +
-                              20.0,
+                          bottom: NavBarView.bottomOffset(context),
                         ),
-                        child: FeedEmptyStateComponent(),
+                        child: const FeedEmptyStateComponent(),
                       ),
                     )
 

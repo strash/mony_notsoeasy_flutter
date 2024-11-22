@@ -57,9 +57,7 @@ class TransactionFormView extends StatelessWidget {
                     SizedBox(width: 10.0),
 
                     // -> category
-                    Flexible(
-                      child: TransactionFormCategoryComponent(),
-                    ),
+                    Flexible(child: TransactionFormCategoryComponent()),
                   ],
                 ),
               ),

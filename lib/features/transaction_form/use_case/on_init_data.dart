@@ -40,6 +40,8 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
         viewModel.accountController.value = viewModel.account!.copyWith();
       }
     } else {
+      viewModel.accountController.value =
+          viewModel.account?.copyWith() ?? viewModel.transaction?.account;
       viewModel.setProtectedState(() {
         viewModel.attachedTags = transaction.tags.map((e) {
           return TransactionTagVariantModel(e);

@@ -27,9 +27,10 @@ class TypeSelectComponent extends StatelessWidget {
                 )
               : null,
           entryBuilder: (context) {
-            return List.of(EAccountType.values).map((e) {
+            return EAccountType.values.map((e) {
               return SelectEntryComponent<EAccountType>(
                 value: e,
+                equal: (lhs, rhs) => lhs != null && lhs == rhs,
                 child: Text(e.description),
               );
             }).toList(growable: false);

@@ -32,9 +32,10 @@ class TransactionFormAccountComponent extends StatelessWidget {
         return SelectComponent<AccountModel>(
           controller: viewModel.accountController,
           placeholder: const Text("Счет"),
-          activeEntry: account != null
+          activeEntry: account == null
               // -> title and currency symbol/code
-              ? Builder(
+              ? null
+              : Builder(
                   builder: (context) {
                     return Row(
                       children: [
@@ -51,12 +52,12 @@ class TransactionFormAccountComponent extends StatelessWidget {
                       ],
                     );
                   },
-                )
-              : null,
+                ),
           entryBuilder: (context) {
             return viewModel.accounts.map((e) {
               return SelectEntryComponent<AccountModel>(
                 value: e,
+                equal: (lhs, rhs) => lhs != null && lhs.id == rhs.id,
                 child: Builder(
                   builder: (context) {
                     final style = DefaultTextStyle.of(context).style;

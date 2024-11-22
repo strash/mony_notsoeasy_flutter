@@ -11,12 +11,8 @@ class _ColorGrid extends StatefulWidget {
 
 class _ColorGridState extends State<_ColorGrid> {
   Rect? _rect;
-  late final _padding = EdgeInsets.fromLTRB(
-    10.0,
-    0.0,
-    10.0,
-    widget.bottom + 40.0,
-  );
+  late final _padding =
+      EdgeInsets.fromLTRB(10.0, 0.0, 10.0, widget.bottom + 40.0);
   final double _cursorThickness = 5.0;
   final _cursorInnerRadius = 9.0;
 
@@ -39,10 +35,7 @@ class _ColorGridState extends State<_ColorGrid> {
     final viewSize = MediaQuery.sizeOf(context);
     final itemWidth = (viewSize.width - _padding.horizontal) / 12;
     final borderRadius = SmoothBorderRadius.all(
-      SmoothRadius(
-        cornerRadius: _cursorInnerRadius,
-        cornerSmoothing: 1.0,
-      ),
+      SmoothRadius(cornerRadius: _cursorInnerRadius, cornerSmoothing: 1.0),
     );
     final cursorBorderRadius = SmoothBorderRadius.all(
       SmoothRadius(

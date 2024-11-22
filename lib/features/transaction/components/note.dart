@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/components/separated/component.dart";
 
 class TransactionNoteComponent extends StatelessWidget {
   final String note;
@@ -13,8 +14,8 @@ class TransactionNoteComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return SeparatedComponent.list(
+      separatorBuilder: (context) => const SizedBox(height: 10.0),
       children: [
         // -> title
         Text(
@@ -25,8 +26,6 @@ class TransactionNoteComponent extends StatelessWidget {
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
-        // ignore: prefer_const_constructors
-        SizedBox(height: 10.0),
 
         // -> the note
         Text(

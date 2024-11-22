@@ -3,6 +3,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/account/component.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/appbar_button/component.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/transaction/components/components.dart";
 import "package:mony_app/features/transaction/page/page.dart";
@@ -52,19 +53,12 @@ class TransactionView extends StatelessWidget {
 
           // -> content
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, bottomOffset),
             sliver: SliverToBoxAdapter(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // TODO: открывать экран категории
-                  // -> category
-                  TransactionCategoryComponent(
-                    category: transaction.category,
-                  ),
-                  const SizedBox(height: 40.0),
-
                   // -> amount
                   TransactionAmountComponent(transaction: transaction),
                   const SizedBox(height: 10.0),
@@ -73,25 +67,32 @@ class TransactionView extends StatelessWidget {
                   TransactionDateComponent(date: transaction.date),
                   const SizedBox(height: 40.0),
 
-                  // -> account
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => onAccountPressed(context, transaction.account),
-                    child: AccountComponent(account: transaction.account),
+                  SeparatedComponent.list(
+                    separatorBuilder: (context) => const SizedBox(height: 30.0),
+                    children: [
+                      // -> account
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () =>
+                            onAccountPressed(context, transaction.account),
+                        child: AccountComponent(account: transaction.account),
+                      ),
+
+                      // TODO: открывать экран категории
+                      // -> category
+                      TransactionCategoryComponent(
+                        category: transaction.category,
+                      ),
+
+                      // TODO: открывать экран тега при клике на тег
+                      // -> tags
+                      TransactionTagsComponent(tags: transaction.tags),
+
+                      // -> note
+                      if (transaction.note.isNotEmpty)
+                        TransactionNoteComponent(note: transaction.note),
+                    ],
                   ),
-                  const SizedBox(height: 30.0),
-
-                  // TODO: открывать экран тега при клике на тег
-                  // -> tags
-                  TransactionTagsComponent(tags: transaction.tags),
-                  const SizedBox(height: 30.0),
-
-                  // -> note
-                  if (transaction.note.isNotEmpty)
-                    TransactionNoteComponent(note: transaction.note),
-
-                  // -> bottom offset
-                  SizedBox(height: bottomOffset),
                 ],
               ),
             ),

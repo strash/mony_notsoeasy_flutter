@@ -85,10 +85,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                 shape: SmoothRectangleBorder(
                   side: BorderSide(color: color!),
                   borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(
-                      cornerRadius: 15.0,
-                      cornerSmoothing: 1.0,
-                    ),
+                    SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
                   ),
                 ),
               ),

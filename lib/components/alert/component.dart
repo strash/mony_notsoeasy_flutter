@@ -117,7 +117,7 @@ class AlertComponet extends StatelessWidget {
                       ),
 
                     // -> controls
-                    SeparatedComponent(
+                    SeparatedComponent.builder(
                       direction: Axis.horizontal,
                       itemCount: EAlertResult.values.length,
                       separatorBuilder: (context) =>

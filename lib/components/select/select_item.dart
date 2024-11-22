@@ -3,12 +3,14 @@ part of "./select.dart";
 class SelectEntryComponent<T> extends StatelessWidget {
   final T value;
   final bool enabled;
+  final bool Function(T? lhs, T rhs) equal;
   final Widget child;
 
   const SelectEntryComponent({
     super.key,
     required this.value,
     this.enabled = true,
+    required this.equal,
     required this.child,
   });
 
@@ -40,7 +42,7 @@ class SelectEntryComponent<T> extends StatelessWidget {
               return Row(
                 children: [
                   // -> check icon
-                  if (provider.value == value)
+                  if (equal(provider.value, value))
                     SvgPicture.asset(
                       Assets.icons.checkmark,
                       width: 20.0,

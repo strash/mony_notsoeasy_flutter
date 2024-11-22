@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
@@ -23,8 +24,11 @@ class AccountComponent extends StatelessWidget {
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
     const iconDimension = 50.0;
 
-    return Row(
+    return SeparatedComponent.list(
+      direction: Axis.horizontal,
+      separatorBuilder: (context) => const SizedBox(width: 10.0),
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         // -> icon
         SizedBox.square(
@@ -50,7 +54,6 @@ class AccountComponent extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10.0),
 
         Flexible(
           child: Column(

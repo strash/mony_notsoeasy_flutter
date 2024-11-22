@@ -30,7 +30,7 @@ class FeedItemTagsComponent extends StatelessWidget {
                 primary: false,
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                child: SeparatedComponent(
+                child: SeparatedComponent.builder(
                   direction: Axis.horizontal,
                   itemCount: tags.length,
                   separatorBuilder: (context) => const SizedBox(width: gap),

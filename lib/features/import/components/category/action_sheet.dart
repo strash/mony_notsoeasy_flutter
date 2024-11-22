@@ -95,7 +95,7 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
           const SizedBox(height: 40.0),
 
           // -> actions
-          SeparatedComponent(
+          SeparatedComponent.builder(
             direction: Axis.horizontal,
             itemCount: EImportCategoryMenuAction.values.length,
             separatorBuilder: (context) => const SizedBox(width: 10.0),

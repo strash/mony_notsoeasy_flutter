@@ -85,8 +85,9 @@ class _TabGroupEntryComponentState<T extends IDescriptable>
           builder: (context, color, child) {
             return Text(
               widget.value.description,
-              style:
-                  TabGroupEntryComponent.style(context).copyWith(color: color),
+              style: TabGroupEntryComponent.style(context).copyWith(
+                color: color,
+              ),
             );
           },
         ),
