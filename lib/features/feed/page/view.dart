@@ -39,6 +39,7 @@ class FeedView extends StatelessWidget {
     final onAccountPressed = viewModel<OnAccountPressed>();
     final onPageChanged = viewModel<OnPageChanged>();
     final scrollControllers = viewModel.scrollControllers;
+    final pageController = viewModel.pageController;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -47,7 +48,7 @@ class FeedView extends StatelessWidget {
         children: [
           PageView.builder(
             restorationId: "feed_pages",
-            controller: viewModel.pageController,
+            controller: pageController,
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(
                 parent: PageScrollPhysics(),
@@ -64,71 +65,86 @@ class FeedView extends StatelessWidget {
               final page = pages.elementAt(pageIndex);
               final feed = page.feed.toFeed();
 
-              return CustomScrollView(
+              return AnimatedBuilder(
                 key: _pageKey(page),
-                controller: scrollControllers.elementAt(pageIndex),
-                physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
-                ),
-                slivers: [
-                  // -> account
-                  SliverPadding(
-                    padding: EdgeInsets.only(
-                      left: 20.0,
-                      right: 20.0,
-                      top: viewPadding.top + 60.0,
-                    ),
-                    sliver: SliverToBoxAdapter(
-                      child: FeedAccountComponent(
-                        page: page,
-                        onTap: onAccountPressed,
-                      ),
-                    ),
-                  ),
+                animation: pageController,
+                builder: (context, child) {
+                  double value = 1.0;
+                  if (pageController.position.haveDimensions &&
+                      pageController.page != null) {
+                    value = pageController.page! - pageIndex;
+                    value = (1.0 - value.abs()).clamp(0.0, 1.0);
+                  }
 
-                  // -> empty state
-                  if (page.feed.isEmpty)
-                    SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          bottom: NavBarView.bottomOffset(context),
+                  return Opacity(
+                    opacity: value,
+                    child: CustomScrollView(
+                      controller: scrollControllers.elementAt(pageIndex),
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      slivers: [
+                        // -> account
+                        SliverPadding(
+                          padding: EdgeInsets.only(
+                            left: 20.0,
+                            right: 20.0,
+                            top: viewPadding.top + 60.0,
+                          ),
+                          sliver: SliverToBoxAdapter(
+                            child: FeedAccountComponent(
+                              page: page,
+                              onTap: onAccountPressed,
+                            ),
+                          ),
                         ),
-                        child: const FeedEmptyStateComponent(),
-                      ),
-                    )
 
-                  // -> feed
-                  else
-                    SliverPadding(
-                      padding: EdgeInsets.only(bottom: bottomOffset),
-                      sliver: SliverList.builder(
-                        itemCount: feed.length,
-                        findChildIndexCallback: (key) {
-                          final id = (key as ValueKey<String>).value;
-                          final index = feed.indexWhere((e) {
-                            return id == _feedItemKey(e).value;
-                          });
-                          return index != -1 ? index : null;
-                        },
-                        itemBuilder: (context, index) {
-                          final item = feed.elementAt(index);
-                          final key = _feedItemKey(item);
-
-                          return switch (item) {
-                            FeedItemSection() => FeedSectionComponent(
-                                key: key,
-                                section: item,
+                        // -> empty state
+                        if (page.feed.isEmpty)
+                          SliverFillRemaining(
+                            hasScrollBody: false,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                bottom: NavBarView.bottomOffset(context),
                               ),
-                            FeedItemTransaction() => FeedItemComponent(
-                                key: key,
-                                transaction: item.transaction,
-                              )
-                          };
-                        },
-                      ),
+                              child: const FeedEmptyStateComponent(),
+                            ),
+                          )
+
+                        // -> feed
+                        else
+                          SliverPadding(
+                            padding: EdgeInsets.only(bottom: bottomOffset),
+                            sliver: SliverList.builder(
+                              itemCount: feed.length,
+                              findChildIndexCallback: (key) {
+                                final id = (key as ValueKey<String>).value;
+                                final index = feed.indexWhere((e) {
+                                  return id == _feedItemKey(e).value;
+                                });
+                                return index != -1 ? index : null;
+                              },
+                              itemBuilder: (context, index) {
+                                final item = feed.elementAt(index);
+                                final key = _feedItemKey(item);
+
+                                return switch (item) {
+                                  FeedItemSection() => FeedSectionComponent(
+                                      key: key,
+                                      section: item,
+                                    ),
+                                  FeedItemTransaction() => FeedItemComponent(
+                                      key: key,
+                                      transaction: item.transaction,
+                                    )
+                                };
+                              },
+                            ),
+                          ),
+                      ],
                     ),
-                ],
+                  );
+                },
               );
             },
           ),

@@ -1,8 +1,5 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/account/component.dart";
-import "package:mony_app/components/appbar/component.dart";
-import "package:mony_app/components/appbar_button/component.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/transaction/components/components.dart";
