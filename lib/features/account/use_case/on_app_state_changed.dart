@@ -20,6 +20,7 @@ final class OnAccountAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventAccountCreated():
         break;
       case EventAccountUpdated(value: final account):
+        if (viewModel.account.id != account.id) return;
         final balances = await accountService.getBalances(ids: [account.id]);
         if (balances.isEmpty) return;
         viewModel.setProtectedState(() {
@@ -27,7 +28,8 @@ final class OnAccountAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.balance = balances.first;
         });
       case EventAccountDeleted(value: final account):
-        if (viewModel.account.id == account.id) navigator.pop<void>();
+        if (viewModel.account.id != account.id) return;
+        navigator.pop<void>();
       case EventTransactionCreated() ||
             EventTransactionUpdated() ||
             EventTransactionDeleted():
@@ -35,9 +37,7 @@ final class OnAccountAppStateChanged extends UseCase<Future<void>, _TValue> {
           ids: [viewModel.account.id],
         );
         if (balances.isEmpty) return;
-        viewModel.setProtectedState(() {
-          viewModel.balance = balances.first;
-        });
+        viewModel.setProtectedState(() => viewModel.balance = balances.first);
     }
   }
 }
