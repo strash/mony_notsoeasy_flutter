@@ -33,6 +33,16 @@ enum EAccountType implements IDescriptable {
       EAccountType.investment => "Инвестиционный счет",
     };
   }
+
+  String get icon {
+    return switch (this) {
+      EAccountType.debit => "💳",
+      EAccountType.credit => "💰",
+      EAccountType.cash => "💵",
+      EAccountType.savings => "🪙",
+      EAccountType.investment => "🏦",
+    };
+  }
 }
 
 // TODO: перевод с одного счета на другой, что по-сути меняет изначальные суммы
