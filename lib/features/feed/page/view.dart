@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
@@ -30,6 +31,8 @@ class FeedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
     final viewPadding = MediaQuery.paddingOf(context);
     final bottomOffset = NavBarView.bottomOffset(context);
 
@@ -107,7 +110,17 @@ class FeedView extends StatelessWidget {
                               padding: EdgeInsets.only(
                                 bottom: NavBarView.bottomOffset(context),
                               ),
-                              child: const FeedEmptyStateComponent(),
+                              child: switch (page) {
+                                FeedPageStateAllAccounts() =>
+                                  FeedEmptyStateComponent(
+                                    color: theme.colorScheme.onSurface,
+                                  ),
+                                FeedPageStateSingleAccount(:final account) =>
+                                  FeedEmptyStateComponent(
+                                    color: ex?.from(account.colorName).color ??
+                                        theme.colorScheme.onSurface,
+                                  ),
+                              },
                             ),
                           )
 

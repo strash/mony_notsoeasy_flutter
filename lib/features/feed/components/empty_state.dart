@@ -5,7 +5,12 @@ import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class FeedEmptyStateComponent extends StatelessWidget {
-  const FeedEmptyStateComponent({super.key});
+  final Color color;
+
+  const FeedEmptyStateComponent({
+    super.key,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class FeedEmptyStateComponent extends StatelessWidget {
 
     return SeparatedComponent.list(
       separatorBuilder: (context) => const SizedBox(height: 10.0),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // -> icon
@@ -22,19 +27,19 @@ class FeedEmptyStateComponent extends StatelessWidget {
           width: 150.0,
           height: 150.0,
           colorFilter: ColorFilter.mode(
-            theme.colorScheme.surfaceContainer,
+            color.withOpacity(.3),
             BlendMode.srcIn,
           ),
         ),
 
         // -> description
         Text(
-          "Тут ничего нет.\nЗаписывай траты!",
+          "Тут ничего нет.\nНачни записывать траты!",
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
             fontSize: 16.0,
             fontWeight: FontWeight.w500,
-            color: theme.colorScheme.onSurfaceVariant.withOpacity(.4),
+            color: theme.colorScheme.tertiaryContainer,
           ),
         ),
       ],
