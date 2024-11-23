@@ -1,42 +1,10 @@
 import "package:freezed_annotation/freezed_annotation.dart";
-import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/state.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 part "transaction.freezed.dart";
-
-enum ETransactionType implements IDescriptable {
-  expense(value: "expense"),
-  income(value: "income"),
-  ;
-
-  final String value;
-
-  const ETransactionType({required this.value});
-
-  static ETransactionType get defaultValue => expense;
-
-  static ETransactionType from(String type) {
-    return values.where((e) => e.value == type).firstOrNull ?? defaultValue;
-  }
-
-  ETransactionType get toggle {
-    return switch (this) {
-      expense => income,
-      income => expense,
-    };
-  }
-
-  @override
-  String get description {
-    return switch (this) {
-      expense => "Расход",
-      income => "Доход",
-    };
-  }
-}
 
 @freezed
 class TransactionModel with _$TransactionModel {

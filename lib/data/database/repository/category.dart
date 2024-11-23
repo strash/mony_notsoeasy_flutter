@@ -5,6 +5,8 @@ abstract base class CategoryDatabaseRepository {
   const factory CategoryDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
+  Future<CategoryBalanceDto> getBalance({required String id});
+
   Future<List<CategoryDto>> getAll({
     String? transactionType,
     List<String>? ids,
@@ -49,6 +51,30 @@ final class _Impl
       default:
         return (null, null);
     }
+  }
+
+  @override
+  Future<CategoryBalanceDto> getBalance({required String id}) async {
+    return resolve(() async {
+      final db = await database.db;
+      final map = await db.rawQuery(
+        // FIXME: поидеи сумму надо группировать по валюте счета
+        """
+SELECT
+	c.id,
+	COALESCE(SUM(t.amount), 0) AS total_sum,
+	c.created,
+	MIN(t.date) AS first_transaction_date,
+	MAX(t.date) AS last_transaction_date,
+	COUNT(t.id) AS transactions_count
+FROM transactions AS t
+LEFT JOIN $table AS c ON t.category_id = c.id
+WHERE t.category_id = ?;
+""",
+        [id],
+      );
+      return CategoryBalanceDto.fromJson(map.first);
+    });
   }
 
   @override

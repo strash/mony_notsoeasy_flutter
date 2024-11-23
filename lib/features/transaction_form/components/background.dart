@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/domain/models/transaction.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/features/transaction_form/page/view_model.dart";
 
 final class _GradientTween extends Tween<LinearGradient> {

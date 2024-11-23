@@ -1,7 +1,6 @@
 import "dart:async";
 
 import "package:flutter/material.dart";
-import "package:intl/intl.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -31,51 +30,6 @@ final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
   void _onAppEvent(Event event) {
     if (!mounted) return;
     OnAccountAppStateChanged().call(context, (event: event, viewModel: this));
-  }
-
-  String get transactionsCountDescription {
-    final balance = this.balance;
-    if (balance == null) return "";
-
-    final formatter = NumberFormat.decimalPattern();
-    final formattedCount = formatter.format(balance.transactionsCount);
-
-    return switch (balance.transactionsCount.wordCaseHint) {
-      EWordCaseHint.nominative => "$formattedCount транзакция за все время",
-      EWordCaseHint.genitive => "$formattedCount транзакции за все время",
-      EWordCaseHint.accusative => "$formattedCount транзакций за все время",
-    };
-  }
-
-  String get transactionsDateRangeDescription {
-    final balance = this.balance;
-    if (balance == null) return "";
-
-    final now = DateTime.now();
-    switch ((balance.firstTransactionDate, balance.lastTransactionDate)) {
-      case (null, final DateTime rhs):
-        final rhsFormatter = DateFormat(
-          now.year != rhs.year ? "EEE, dd MMMM yyyy" : "EEE, dd MMMM",
-        );
-        return rhsFormatter.format(rhs);
-      case (final DateTime lhs, null):
-        final lhsFormatter = DateFormat(
-          now.year != lhs.year ? "EEE, dd MMMM yyyy" : "EEE, dd MMMM",
-        );
-        return lhsFormatter.format(lhs);
-      case (final DateTime lhs, final DateTime rhs):
-        String lhsPattern = "dd";
-        if (rhs.month != lhs.month) lhsPattern += " MMMM";
-        if (now.year != lhs.year && rhs.year != lhs.year) lhsPattern += " yyyy";
-        final lhsFormatter = DateFormat(lhsPattern);
-        final rhsFormatter = DateFormat(
-          now.year != rhs.year ? "dd MMMM yyyy" : "dd MMMM",
-        );
-        if (lhs.isSameDateAs(rhs)) return rhsFormatter.format(rhs);
-        return "${lhsFormatter.format(lhs)}—${rhsFormatter.format(rhs)}";
-      default:
-        return "";
-    }
   }
 
   @override

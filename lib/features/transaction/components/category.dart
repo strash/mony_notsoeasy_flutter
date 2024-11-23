@@ -90,7 +90,7 @@ class TransactionCategoryComponent extends StatelessWidget {
 
               // -> type
               Text(
-                "Категория",
+                category.transactionType.fullDescription,
                 style: GoogleFonts.golosText(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w400,

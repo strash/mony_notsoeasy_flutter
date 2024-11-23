@@ -1,26 +1,22 @@
 import "package:freezed_annotation/freezed_annotation.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:sealed_currencies/sealed_currencies.dart";
 
-part "account_balance.freezed.dart";
+part "category_balance.freezed.dart";
 
 @freezed
-class AccountBalanceModel with _$AccountBalanceModel {
-  const factory AccountBalanceModel({
+class CategoryBalanceModel with _$CategoryBalanceModel {
+  const factory CategoryBalanceModel({
     required String id,
-    required FiatCurrency currency,
-    required double balance,
-    required double totalAmount,
-    required double totalSum,
     required DateTime created,
+    required int transactionsCount,
+    required double totalSum,
     required DateTime? firstTransactionDate,
     required DateTime? lastTransactionDate,
-    required int transactionsCount,
-  }) = _AccountBalanceModel;
+  }) = _CategoryBalanceModel;
 }
 
-extension AccountBalanceModelEx on AccountBalanceModel {
+extension CategoryBalanceModelEx on CategoryBalanceModel {
   String get transactionsCountDescription {
     final formatter = NumberFormat.decimalPattern();
     final formattedCount = formatter.format(transactionsCount);
@@ -58,29 +54,5 @@ extension AccountBalanceModelEx on AccountBalanceModel {
       default:
         return "";
     }
-  }
-}
-
-extension AccountBalanceModelListEx on List<AccountBalanceModel> {
-  List<AccountBalanceModel> merge(List<AccountBalanceModel> other) {
-    return List<AccountBalanceModel>.from(
-      where((e) => !other.any((i) => e.id == i.id)),
-    )
-      ..addAll(other)
-      ..sort((a, b) => a.created.compareTo(b.created));
-  }
-
-  List<AccountBalanceModel> foldByCurrency() {
-    final Map<String, AccountBalanceModel> map = {};
-    for (final element in this) {
-      final name = element.currency.name;
-      map[name] = map[name]?.copyWith(
-            balance: (map[name]?.balance ?? .0) + element.balance,
-            totalAmount: (map[name]?.totalAmount ?? .0) + element.totalAmount,
-            totalSum: (map[name]?.totalSum ?? .0) + element.totalSum,
-          ) ??
-          element;
-    }
-    return map.entries.map((e) => e.value).toList(growable: false);
   }
 }

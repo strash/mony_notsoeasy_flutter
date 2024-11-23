@@ -3,7 +3,7 @@ import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/models/category.dart";
-import "package:mony_app/domain/models/transaction.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/domain/services/database/vo/account.dart";
 import "package:mony_app/domain/services/database/vo/category.dart";
 import "package:mony_app/domain/services/database/vo/imported_csv.dart";

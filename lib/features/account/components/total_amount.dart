@@ -49,7 +49,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
           children: [
             // -> transactions date range
             Text(
-              viewModel.transactionsCountDescription,
+              viewModel.balance?.transactionsCountDescription ?? "",
               style: GoogleFonts.golosText(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,
@@ -59,7 +59,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
 
             // -> transactions date range
             Text(
-              viewModel.transactionsDateRangeDescription,
+              viewModel.balance?.transactionsDateRangeDescription ?? "",
               style: GoogleFonts.golosText(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,

@@ -1,5 +1,5 @@
 import "package:mony_app/data/database/migration_service.dart";
-import "package:mony_app/domain/models/transaction.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:sqflite/sqflite.dart";
 
 final class M1730475693RemoveTypeColumnFromTransactions extends BaseMigration {

@@ -68,7 +68,7 @@ SELECT
 	MIN(t.date) AS first_transaction_date,
 	MAX(t.date) AS last_transaction_date,
 	COALESCE(COUNT(t.id), 0) AS transactions_count
-FROM accounts AS a
+FROM $table AS a
 LEFT JOIN transactions AS t ON a.id = t.account_id
 $where
 GROUP BY a.id

@@ -1,6 +1,6 @@
 import "package:freezed_annotation/freezed_annotation.dart";
 import "package:mony_app/app/app.dart";
-import "package:mony_app/domain/models/transaction.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
 
 part "category.freezed.dart";
 

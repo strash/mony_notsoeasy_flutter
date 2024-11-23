@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/use_case/use_case.dart";
-import "package:mony_app/domain/models/transaction.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/features/import/components/components.dart";
 import "package:mony_app/features/import/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";

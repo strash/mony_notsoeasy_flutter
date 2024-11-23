@@ -1,4 +1,4 @@
-import "package:mony_app/domain/models/transaction.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
 
 final class CategoryVO {
   final String title;

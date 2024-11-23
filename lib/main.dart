@@ -60,6 +60,7 @@ void main() async {
               return DomainCategoryService(
                 categoryRepo: CategoryDatabaseRepository(database: appDatabase),
                 categoryFactory: CategoryDatabaseFactoryImpl(),
+                categoryBalanceFactory: CategoryBalanceDatabaseFactoryImpl(),
               );
             },
           ),
