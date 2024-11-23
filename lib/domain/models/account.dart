@@ -60,3 +60,13 @@ class AccountModel with _$AccountModel {
     required double balance,
   }) = _AccountModel;
 }
+
+extension AccountModelEx on List<AccountModel> {
+  List<AccountModel> merge(List<AccountModel> other) {
+    return List<AccountModel>.from(
+      where((e) => !other.any((i) => e.id == i.id)),
+    )
+      ..addAll(other)
+      ..sort((a, b) => a.created.compareTo(b.created));
+  }
+}

@@ -57,7 +57,9 @@ extension TransactionModelListEx on List<TransactionModel> {
   List<TransactionModel> merge(List<TransactionModel> other) {
     return List<TransactionModel>.from(
       where((e) => !other.any((i) => e.id == i.id)),
-    )..addAll(other);
+    )
+      ..addAll(other)
+      ..sort((a, b) => b.date.compareTo(a.date));
   }
 
   List<FeedItem> toFeed() {

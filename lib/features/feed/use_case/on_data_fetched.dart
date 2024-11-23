@@ -20,29 +20,25 @@ final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue> {
 
     switch (currentPage) {
       // -> data for all accounts
-      case final FeedPageStateAllAccounts state:
+      case final FeedPageStateAllAccounts page:
         final data = await transactionService.getMany(page: scrollPage);
-        final transactions = currentPage.feed.merge(data)
-          ..sort((a, b) => b.date.compareTo(a.date));
         viewModel.setProtectedState(() {
-          viewModel.pages[value.pageIndex] = state.copyWith(
+          viewModel.pages[value.pageIndex] = page.copyWith(
             scrollPage: scrollPage,
-            feed: transactions,
+            feed: page.feed.merge(data),
             canLoadMore: data.isNotEmpty,
           );
         });
       // -> data for an account
-      case final FeedPageStateSingleAccount state:
+      case final FeedPageStateSingleAccount page:
         final data = await transactionService.getMany(
           page: scrollPage,
-          accountId: state.account.id,
+          accountId: page.account.id,
         );
-        final transactions = currentPage.feed.merge(data)
-          ..sort((a, b) => b.date.compareTo(a.date));
         viewModel.setProtectedState(() {
-          viewModel.pages[value.pageIndex] = state.copyWith(
+          viewModel.pages[value.pageIndex] = page.copyWith(
             scrollPage: scrollPage,
-            feed: transactions,
+            feed: page.feed.merge(data),
             canLoadMore: data.isNotEmpty,
           );
         });

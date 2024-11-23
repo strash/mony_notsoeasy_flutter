@@ -22,7 +22,9 @@ extension AccountBalanceModelListEx on List<AccountBalanceModel> {
   List<AccountBalanceModel> merge(List<AccountBalanceModel> other) {
     return List<AccountBalanceModel>.from(
       where((e) => !other.any((i) => e.id == i.id)),
-    )..addAll(other);
+    )
+      ..addAll(other)
+      ..sort((a, b) => a.created.compareTo(b.created));
   }
 
   List<AccountBalanceModel> foldByCurrency() {

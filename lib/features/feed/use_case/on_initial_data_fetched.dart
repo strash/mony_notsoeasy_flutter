@@ -12,6 +12,8 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel> {
     final accountService = context.read<DomainAccountService>();
     final transactionService = context.read<DomainTransactionService>();
 
+    // FIXME: почему-то сразу после импорта добавился FeedPageStateAllAccounts
+    // хотя счет был всего один
     final List<FeedPageState> pages = [];
     final accounts = await accountService.getAll();
     final balances = await accountService.getBalances();
