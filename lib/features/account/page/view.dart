@@ -76,13 +76,13 @@ class AccountView extends StatelessWidget {
                         AccountCurrencyComponent(balance: balance),
                       ],
                     ),
-
-                  // -> bottom offset
-                  SizedBox(height: bottomOffset),
                 ],
               ),
             ),
           ),
+
+          // -> bottom offset
+          SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
         ],
       ),
     );

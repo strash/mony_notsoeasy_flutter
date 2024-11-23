@@ -1,10 +1,8 @@
 import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/domain/models/category.dart";
-import "package:mony_app/gen/assets.gen.dart";
 
 class CategoryIconComponent extends StatelessWidget {
   final CategoryModel category;
@@ -50,34 +48,27 @@ class CategoryIconComponent extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
 
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // -> title
-            Flexible(
-              child: Text(
-                category.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.golosText(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
-                  color: color,
-                ),
-              ),
-            ),
+        // -> title
+        Text(
+          category.title,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.golosText(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w600,
+            color: color,
+          ),
+        ),
+        const SizedBox(height: 2.0),
 
-            // -> icon
-            Padding(
-              padding: const EdgeInsets.only(left: 2.0, top: 1.0),
-              child: SvgPicture.asset(
-                Assets.icons.chevronForward,
-                width: 20.0,
-                height: 20.0,
-                colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-              ),
-            ),
-          ],
+        // -> subtitle
+        Text(
+          category.transactionType.fullDescription,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.golosText(
+            fontSize: 15.0,
+            fontWeight: FontWeight.w400,
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
         ),
       ],
     );

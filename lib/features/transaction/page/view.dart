@@ -15,10 +15,12 @@ class TransactionView extends StatelessWidget {
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<TransactionViewModel>();
+    final transaction = viewModel.transaction;
+
     final onEditPressed = viewModel<OnEditTransactionPressed>();
     final onDeletePressed = viewModel<OnDeleteTransactionPressed>();
     final onAccountPressed = viewModel<OnAccountPressed>();
-    final transaction = viewModel.transaction;
+    final onCategoryPressed = viewModel<OnCategoryPressed>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -75,10 +77,14 @@ class TransactionView extends StatelessWidget {
                         child: AccountComponent(account: transaction.account),
                       ),
 
-                      // TODO: открывать экран категории
                       // -> category
-                      TransactionCategoryComponent(
-                        category: transaction.category,
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () =>
+                            onCategoryPressed(context, transaction.category),
+                        child: TransactionCategoryComponent(
+                          category: transaction.category,
+                        ),
                       ),
 
                       // TODO: открывать экран тега при клике на тег

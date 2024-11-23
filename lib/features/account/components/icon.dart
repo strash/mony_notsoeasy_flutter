@@ -66,6 +66,7 @@ class AccountIconComponent extends StatelessWidget {
         // -> type
         Text(
           account.type.description,
+          textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
             fontSize: 15.0,
             fontWeight: FontWeight.w400,
