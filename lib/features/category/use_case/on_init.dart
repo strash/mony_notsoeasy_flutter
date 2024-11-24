@@ -15,6 +15,9 @@ final class OnInit extends UseCase<Future<void>, CategoryViewModel> {
     final categoryService = context.read<DomainCategoryService>();
 
     final balance = await categoryService.getBalance(id: viewModel.category.id);
+    print(balance);
+
+    // TODO: выкачивать транзакции по категории
 
     viewModel.setProtectedState(() {
       viewModel.balance = balance;

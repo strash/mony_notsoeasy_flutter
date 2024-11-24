@@ -1,6 +1,7 @@
 import "package:freezed_annotation/freezed_annotation.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:sealed_currencies/sealed_currencies.dart";
 
 part "category_balance.freezed.dart";
 
@@ -10,7 +11,7 @@ class CategoryBalanceModel with _$CategoryBalanceModel {
     required String id,
     required DateTime created,
     required int transactionsCount,
-    required double totalSum,
+    required Map<FiatCurrency, double> totalSums,
     required DateTime? firstTransactionDate,
     required DateTime? lastTransactionDate,
   }) = _CategoryBalanceModel;

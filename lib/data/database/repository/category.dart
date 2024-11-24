@@ -5,7 +5,7 @@ abstract base class CategoryDatabaseRepository {
   const factory CategoryDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
-  Future<CategoryBalanceDto> getBalance({required String id});
+  Future<CategoryBalanceDto?> getBalance({required String id});
 
   Future<List<CategoryDto>> getAll({
     String? transactionType,
@@ -54,25 +54,37 @@ final class _Impl
   }
 
   @override
-  Future<CategoryBalanceDto> getBalance({required String id}) async {
+  Future<CategoryBalanceDto?> getBalance({required String id}) async {
     return resolve(() async {
       final db = await database.db;
       final map = await db.rawQuery(
-        // FIXME: поидеи сумму надо группировать по валюте счета
         """
 SELECT
 	c.id,
-	COALESCE(SUM(t.amount), 0) AS total_sum,
 	c.created,
+	(
+		SELECT JSON_GROUP_OBJECT(currency_code, total_sum)
+		FROM
+		(
+			SELECT
+				COALESCE(SUM(t.amount), 0) AS total_sum,
+				a.currency_code
+			FROM transactions AS t
+			LEFT JOIN accounts AS a ON t.account_id = a.id
+			WHERE t.category_id = ?1
+			GROUP BY a.currency_code
+		)
+	) AS total_sums,
 	MIN(t.date) AS first_transaction_date,
 	MAX(t.date) AS last_transaction_date,
 	COUNT(t.id) AS transactions_count
 FROM transactions AS t
-LEFT JOIN $table AS c ON t.category_id = c.id
-WHERE t.category_id = ?;
+JOIN categories AS c ON t.category_id = c.id
+WHERE c.id = ?1;
 """,
         [id],
       );
+      if (map.isEmpty) return null;
       return CategoryBalanceDto.fromJson(map.first);
     });
   }
