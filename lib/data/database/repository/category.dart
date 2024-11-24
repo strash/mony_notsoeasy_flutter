@@ -63,18 +63,18 @@ SELECT
 	c.id,
 	c.created,
 	(
-		SELECT JSON_GROUP_OBJECT(currency_code, total_sum)
+		SELECT JSON_GROUP_OBJECT(currency_code, total_amount)
 		FROM
 		(
 			SELECT
-				COALESCE(SUM(t.amount), 0) AS total_sum,
+				COALESCE(SUM(t.amount), 0) AS total_amount,
 				a.currency_code
 			FROM transactions AS t
 			LEFT JOIN accounts AS a ON t.account_id = a.id
 			WHERE t.category_id = ?1
 			GROUP BY a.currency_code
 		)
-	) AS total_sums,
+	) AS total_amount,
 	MIN(t.date) AS first_transaction_date,
 	MAX(t.date) AS last_transaction_date,
 	COUNT(t.id) AS transactions_count

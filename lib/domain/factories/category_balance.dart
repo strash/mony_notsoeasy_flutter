@@ -9,11 +9,11 @@ final class CategoryBalanceDatabaseFactoryImpl
     implements ICategoryBalanceDatabaseFactory<CategoryBalanceModel> {
   @override
   CategoryBalanceModel toModel(CategoryBalanceDto dto) {
-    final map = jsonDecode(dto.totalSums) as Map<String, dynamic>;
+    final map = jsonDecode(dto.totalAmount) as Map<String, dynamic>;
     return CategoryBalanceModel(
       id: dto.id,
       created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
-      totalSums: Map.fromEntries(
+      totalAmount: Map.fromEntries(
         map.entries.map((e) {
           return MapEntry(
             FiatCurrency.fromCode(e.key),
@@ -33,7 +33,7 @@ final class CategoryBalanceDatabaseFactoryImpl
       id: model.id,
       created: model.created.toUtc().toIso8601String(),
       transactionsCount: model.transactionsCount,
-      totalSums: model.totalSums.entries
+      totalAmount: model.totalAmount.entries
           .map((e) => MapEntry(e.key.code, e.value))
           .toString(),
       firstTransactionDate:

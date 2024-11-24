@@ -8,7 +8,7 @@ class CategoryBalanceDto with _$CategoryBalanceDto {
   const factory CategoryBalanceDto({
     required String id,
     required String created,
-    required String totalSums,
+    required String totalAmount,
     required String? firstTransactionDate,
     required String? lastTransactionDate,
     required int transactionsCount,

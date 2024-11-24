@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/account/page/view_model.dart";
 
 class AccountTotalAmountComponent extends StatelessWidget {
   final AccountBalanceModel balance;
@@ -16,7 +15,6 @@ class AccountTotalAmountComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<AccountViewModel>();
 
     return SeparatedComponent.list(
       separatorBuilder: (context) => const SizedBox(height: 10.0),
@@ -47,9 +45,9 @@ class AccountTotalAmountComponent extends StatelessWidget {
         SeparatedComponent.list(
           separatorBuilder: (context) => const SizedBox(height: 3.0),
           children: [
-            // -> transactions date range
+            // -> transactions count
             Text(
-              viewModel.balance?.transactionsCountDescription ?? "",
+              balance.transactionsCount.transactionsCountDescription,
               style: GoogleFonts.golosText(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,
@@ -59,7 +57,10 @@ class AccountTotalAmountComponent extends StatelessWidget {
 
             // -> transactions date range
             Text(
-              viewModel.balance?.transactionsDateRangeDescription ?? "",
+              (
+                lhs: balance.firstTransactionDate,
+                rhs: balance.lastTransactionDate
+              ).transactionsDateRangeDescription,
               style: GoogleFonts.golosText(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,
