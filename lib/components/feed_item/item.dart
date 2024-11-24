@@ -3,17 +3,17 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/feed_item/component.dart";
 import "package:mony_app/domain/models/transaction.dart";
-import "package:mony_app/features/feed/components/components.dart";
-import "package:mony_app/features/feed/page/page.dart";
-import "package:mony_app/features/feed/use_case/use_case.dart";
 
 class FeedItemComponent extends StatelessWidget {
   final TransactionModel transaction;
+  final UseCase<void, TransactionModel> onTap;
 
   const FeedItemComponent({
     super.key,
     required this.transaction,
+    required this.onTap,
   });
 
   @override
@@ -31,12 +31,9 @@ class FeedItemComponent extends StatelessWidget {
     final contentWidth =
         viewSize.width - padding.horizontal - iconDimension - horizontalGap;
 
-    final viewModel = context.viewModel<FeedViewModel>();
-    final onTransactionPressed = viewModel<OnTransactionPressed>();
-
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => onTransactionPressed(context, transaction),
+      onTap: () => onTap(context, transaction),
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: viewSize.width),
         child: Padding(
