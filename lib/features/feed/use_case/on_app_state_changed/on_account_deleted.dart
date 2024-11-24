@@ -66,12 +66,6 @@ final class _OnAccountDeleted {
       pages.removeAt(0);
     }
 
-    // reset scroll positions
-    for (final (index, _) in viewModel.scrollPositions.indexed) {
-      viewModel.scrollPositions.removeAt(index);
-      viewModel.scrollPositions.insert(index, .0);
-    }
-
     viewModel.setProtectedState(() {
       viewModel.pages = pages;
     });
@@ -79,6 +73,7 @@ final class _OnAccountDeleted {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       for (final controller in viewModel.scrollControllers) {
         if (!controller.isReady) continue;
+        controller.distance = .0;
         controller.jumpTo(0);
       }
     });

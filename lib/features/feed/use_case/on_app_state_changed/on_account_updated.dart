@@ -69,9 +69,9 @@ final class _OnAccountUpdated {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      for (final (index, controller) in viewModel.scrollControllers.indexed) {
+      for (final controller in viewModel.scrollControllers) {
         if (!controller.isReady) continue;
-        controller.jumpTo(viewModel.scrollPositions.elementAt(index));
+        controller.jumpTo(controller.distance);
       }
     });
   }

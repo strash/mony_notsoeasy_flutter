@@ -4,15 +4,13 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
 import "package:provider/provider.dart";
 
-typedef TOnDataFetchedValue = ({FeedViewModel viewModel, int pageIndex});
-
-final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue> {
+final class OnDataFetched extends UseCase<Future<void>, FeedViewModel> {
   @override
-  Future<void> call(BuildContext context, [TOnDataFetchedValue? value]) async {
-    if (value == null) throw ArgumentError.notNull();
+  Future<void> call(BuildContext context, [FeedViewModel? viewModel]) async {
+    if (viewModel == null) throw ArgumentError.notNull();
 
-    final viewModel = value.viewModel;
-    final currentPage = viewModel.pages.elementAt(value.pageIndex);
+    final pageIndex = viewModel.currentPageIndex;
+    final currentPage = viewModel.pages.elementAt(pageIndex);
     if (!currentPage.canLoadMore) return;
 
     final scrollPage = currentPage.scrollPage + 1;
@@ -23,7 +21,7 @@ final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue> {
       case final FeedPageStateAllAccounts page:
         final data = await transactionService.getMany(page: scrollPage);
         viewModel.setProtectedState(() {
-          viewModel.pages[value.pageIndex] = page.copyWith(
+          viewModel.pages[pageIndex] = page.copyWith(
             scrollPage: scrollPage,
             feed: page.feed.merge(data),
             canLoadMore: data.isNotEmpty,
@@ -36,7 +34,7 @@ final class OnDataFetched extends UseCase<Future<void>, TOnDataFetchedValue> {
           accountId: page.account.id,
         );
         viewModel.setProtectedState(() {
-          viewModel.pages[value.pageIndex] = page.copyWith(
+          viewModel.pages[pageIndex] = page.copyWith(
             scrollPage: scrollPage,
             feed: page.feed.merge(data),
             canLoadMore: data.isNotEmpty,

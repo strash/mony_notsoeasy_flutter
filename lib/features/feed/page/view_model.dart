@@ -7,9 +7,7 @@ import "package:mony_app/features/feed/page/page.dart";
 import "package:mony_app/features/feed/page/view.dart";
 import "package:mony_app/features/feed/use_case/use_case.dart";
 import "package:mony_app/features/navbar/page/page.dart";
-import "package:rxdart/rxdart.dart";
 
-export "./event.dart";
 export "./state.dart";
 
 class FeedViewModelBuilder extends StatefulWidget {
@@ -20,15 +18,11 @@ class FeedViewModelBuilder extends StatefulWidget {
 }
 
 final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
-  final subject = BehaviorSubject<FeedEvent>();
-
   late final StreamSubscription<Event> _appSub;
-  late final StreamSubscription<FeedEvent> _feedSub;
   late final StreamSubscription<NavBarEvent> _navbarSub;
 
   final pageController = PageController();
-  final List<ScrollController> scrollControllers = [];
-  final List<double> scrollPositions = [];
+  final List<FeedScrollController> scrollControllers = [];
 
   List<FeedPageState> pages = [];
 
@@ -37,27 +31,18 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     return pageController.page?.toInt() ?? 0;
   }
 
+  void _onFeedEvent(FeedScrollControllerEvent event) {
+    if (!mounted) return;
+    OnDataFetched().call(context, this);
+  }
+
   void addPageScroll(int pageIndex) {
-    for (final (index, controller) in scrollControllers.indexed) {
-      controller.removeListener(_sclollListener(index));
-    }
-    final scrollController = ScrollController();
+    final scrollController = FeedScrollController(onData: _onFeedEvent);
     scrollControllers.insert(pageIndex, scrollController);
-    scrollPositions.insert(pageIndex, .0);
-    for (final (index, controller) in scrollControllers.indexed) {
-      controller.addListener(_sclollListener(index));
-    }
   }
 
   void removePageScroll(int pageIndex) {
-    for (final (index, controller) in scrollControllers.indexed) {
-      controller.removeListener(_sclollListener(index));
-    }
     scrollControllers.removeAt(pageIndex).dispose();
-    scrollPositions.removeAt(pageIndex);
-    for (final (index, controller) in scrollControllers.indexed) {
-      controller.addListener(_sclollListener(index));
-    }
   }
 
   Future<void> openPage(int pageIndex) async {
@@ -68,13 +53,6 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
       curve: Curves.easeInOut,
     );
     _pagingToStart = false;
-  }
-
-  void Function() _sclollListener(int pageIndex) {
-    return () {
-      if (!context.mounted || pageIndex > pages.length - 1) return;
-      OnScroll().call(context, (viewModel: this, pageIndex: pageIndex));
-    };
   }
 
   void _onAppEvent(Event event) {
@@ -94,7 +72,9 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
         final controller = scrollControllers.elementAt(currentPageIndex);
         // -> scroll to top
         if (controller.isReady && controller.position.pixels > .0) {
-          context.viewModel<NavBarViewModel>().returnToTop(controller);
+          context
+              .viewModel<NavBarViewModel>()
+              .returnToTop(controller.controller);
           // -> open first page
         } else {
           if (currentPageIndex == 0 || _pagingToStart) return;
@@ -105,22 +85,11 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     }
   }
 
-  void _onFeedEvent(FeedEventScrolledToBottom event) {
-    if (!context.mounted) return;
-    final value = (viewModel: this, pageIndex: event.pageIndex);
-    OnDataFetched().call(context, value);
-  }
-
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
-      // -> feed
-      _feedSub = subject.whereType<FeedEventScrolledToBottom>().throttle((e) {
-        return TimerStream<FeedEvent>(e, const Duration(milliseconds: 400));
-      }).listen(_onFeedEvent);
-
       // -> app events
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
@@ -140,14 +109,11 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   @override
   void dispose() {
     _appSub.cancel();
-    _feedSub.cancel();
     _navbarSub.cancel();
-    for (final (index, controller) in scrollControllers.indexed) {
-      controller.removeListener(_sclollListener(index));
+    for (final controller in scrollControllers) {
       controller.dispose();
     }
     pageController.dispose();
-    subject.close();
     super.dispose();
   }
 

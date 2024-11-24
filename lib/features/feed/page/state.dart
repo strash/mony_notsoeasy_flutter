@@ -1,3 +1,4 @@
+import "package:flutter/widgets.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
@@ -101,5 +102,13 @@ extension FeedItemListEx on List<FeedItem> {
     return whereType<FeedItemTransaction>()
         .map<TransactionModel>((e) => e.transaction)
         .toList(growable: false);
+  }
+
+  ValueKey<String> key(FeedItem feedItem, String prefix) {
+    final id = switch (feedItem) {
+      FeedItemSection() => feedItem.date.toString(),
+      FeedItemTransaction() => feedItem.transaction.id,
+    };
+    return ValueKey<String>("${prefix}_$id");
   }
 }

@@ -10,8 +10,8 @@ final class OnPageChanged extends UseCase<void, int> {
 
     final viewModel = context.viewModel<FeedViewModel>();
 
-    final scroll = viewModel.scrollControllers.elementAt(pageIndex);
-    if (!scroll.isReady) return;
-    scroll.jumpTo(viewModel.scrollPositions.elementAt(pageIndex));
+    final controller = viewModel.scrollControllers.elementAt(pageIndex);
+    if (!controller.isReady) return;
+    controller.jumpTo(controller.distance);
   }
 }

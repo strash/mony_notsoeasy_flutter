@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/feed/components/components.dart";
@@ -20,15 +21,6 @@ class FeedView extends StatelessWidget {
     );
   }
 
-  ValueKey<String> _feedItemKey(FeedItem feedItem) {
-    return ValueKey<String>(
-      switch (feedItem) {
-        FeedItemSection() => feedItem.date.toString(),
-        FeedItemTransaction() => feedItem.transaction.id,
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -38,6 +30,7 @@ class FeedView extends StatelessWidget {
 
     final viewModel = context.viewModel<FeedViewModel>();
     final pages = viewModel.pages;
+    final onTransactionPressed = viewModel<OnTransactionPressed>();
     final onAddAccountPressed = viewModel<OnAddAccountPressed>();
     final onAccountPressed = viewModel<OnAccountPressed>();
     final onPageChanged = viewModel<OnPageChanged>();
@@ -67,6 +60,7 @@ class FeedView extends StatelessWidget {
             itemBuilder: (context, pageIndex) {
               final page = pages.elementAt(pageIndex);
               final feed = page.feed.toFeed();
+              final keyPrefix = "feed_page_$pageIndex";
 
               return AnimatedBuilder(
                 key: _pageKey(page),
@@ -78,11 +72,13 @@ class FeedView extends StatelessWidget {
                     value = pageController.page! - pageIndex;
                     value = (1.0 - value.abs()).clamp(0.0, 1.0);
                   }
+                  final controller =
+                      scrollControllers.elementAt(pageIndex).controller;
 
                   return Opacity(
                     opacity: value,
                     child: CustomScrollView(
-                      controller: scrollControllers.elementAt(pageIndex),
+                      controller: controller,
                       physics: const BouncingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics(),
                       ),
@@ -133,13 +129,13 @@ class FeedView extends StatelessWidget {
                               findChildIndexCallback: (key) {
                                 final id = (key as ValueKey<String>).value;
                                 final index = feed.indexWhere((e) {
-                                  return id == _feedItemKey(e).value;
+                                  return id == feed.key(e, keyPrefix).value;
                                 });
                                 return index != -1 ? index : null;
                               },
                               itemBuilder: (context, index) {
                                 final item = feed.elementAt(index);
-                                final key = _feedItemKey(item);
+                                final key = feed.key(item, keyPrefix);
 
                                 return switch (item) {
                                   FeedItemSection() => FeedSectionComponent(
@@ -149,6 +145,7 @@ class FeedView extends StatelessWidget {
                                   FeedItemTransaction() => FeedItemComponent(
                                       key: key,
                                       transaction: item.transaction,
+                                      onTap: onTransactionPressed,
                                     )
                                 };
                               },
