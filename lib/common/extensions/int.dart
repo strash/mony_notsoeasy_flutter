@@ -1,3 +1,5 @@
+import "package:intl/intl.dart";
+
 /// Word case hint. Makes sense only for Russian language.
 ///
 /// - `nominative`: 1 год, месяц, день, программа и тд,
@@ -10,6 +12,17 @@ enum EWordCaseHint {
 }
 
 extension IntEx on int {
+  String get transactionsCountDescription {
+    final formatter = NumberFormat.decimalPattern();
+    final formattedCount = formatter.format(this);
+
+    return switch (wordCaseHint) {
+      EWordCaseHint.nominative => "$formattedCount транзакция за все время",
+      EWordCaseHint.genitive => "$formattedCount транзакции за все время",
+      EWordCaseHint.accusative => "$formattedCount транзакций за все время",
+    };
+  }
+
   /// Returns wrapped value between `min` inclusive and `max` exclusive.
   ///
   /// Example:
