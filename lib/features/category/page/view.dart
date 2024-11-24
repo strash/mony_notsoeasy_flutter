@@ -1,9 +1,11 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/appbar/component.dart";
-import "package:mony_app/components/appbar_button/component.dart";
-import "package:mony_app/features/category/components/icon.dart";
+import "package:mony_app/components/components.dart";
+import "package:mony_app/domain/domain.dart";
+import "package:mony_app/features/category/components/components.dart";
 import "package:mony_app/features/category/page/page.dart";
+import "package:mony_app/features/category/use_case/use_case.dart";
+import "package:mony_app/features/feed/page/state.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
@@ -15,10 +17,18 @@ class CategoryView extends StatelessWidget {
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<CategoryViewModel>();
+    final keyPrefix = "category_${viewModel.prefix}";
     final balance = viewModel.balance;
+    final feed = viewModel.feed.toFeed();
+
+    final onTransactionPressed = viewModel<OnTransactionPressed>();
 
     return Scaffold(
       body: CustomScrollView(
+        controller: viewModel.controller,
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         slivers: [
           // -> appbar
           AppBarComponent(
@@ -28,6 +38,7 @@ class CategoryView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
+                  // TODO:
                   // onTap: () => onEditPressed(context, account),
                 ),
                 const SizedBox(width: 4.0),
@@ -35,6 +46,7 @@ class CategoryView extends StatelessWidget {
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
+                  // TODO:
                   // onTap: () => onDeletePressed(context, account),
                 ),
                 const SizedBox(width: 8.0),
@@ -47,11 +59,48 @@ class CategoryView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             sliver: SliverToBoxAdapter(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // -> icon
                   CategoryIconComponent(category: viewModel.category),
+                  const SizedBox(height: 40.0),
+
+                  if (balance != null)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30.0),
+                      child: CategoryTotalAmountComponent(balance: balance),
+                    ),
                 ],
               ),
             ),
+          ),
+
+          // -> feed
+          SliverList.builder(
+            itemCount: feed.length,
+            findChildIndexCallback: (key) {
+              final id = (key as ValueKey<String>).value;
+              final index = feed.indexWhere((e) {
+                return id == feed.key(e, keyPrefix).value;
+              });
+              return index != -1 ? index : null;
+            },
+            itemBuilder: (context, index) {
+              final item = feed.elementAt(index);
+              final key = feed.key(item, keyPrefix);
+
+              return switch (item) {
+                FeedItemSection() => FeedSectionComponent(
+                    key: key,
+                    section: item,
+                  ),
+                FeedItemTransaction() => FeedItemComponent(
+                    key: key,
+                    transaction: item.transaction,
+                    onTap: onTransactionPressed,
+                  )
+              };
+            },
           ),
 
           // -> bottom offset

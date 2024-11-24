@@ -1,5 +1,7 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/common/extensions/string.dart";
+import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_controller.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/page/view.dart";
 import "package:mony_app/features/category/use_case/use_case.dart";
@@ -17,22 +19,47 @@ final class CategoryViewModelBuilder extends StatefulWidget {
 }
 
 final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
+  final prefix = StringEx.random(10);
+
+  late final FeedScrollController _scrollController;
+
+  ScrollController get controller => _scrollController.controller;
+
   late CategoryModel category = widget.category;
 
   CategoryBalanceModel? balance;
 
+  List<TransactionModel> feed = [];
+  int scrollPage = 0;
+  bool canLoadMore = true;
+
+  void _onFeedEvent(FeedScrollControllerEvent event) {
+    if (!mounted) return;
+    OnDataFetched().call(context, this);
+  }
+
   @override
   void initState() {
     super.initState();
+    _scrollController = FeedScrollController(onData: _onFeedEvent);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       await OnInit().call(context, this);
     });
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ViewModel<CategoryViewModel>(
       viewModel: this,
+      useCases: [
+        () => OnTransactionPressed(),
+      ],
       child: const CategoryView(),
     );
   }
