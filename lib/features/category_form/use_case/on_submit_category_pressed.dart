@@ -14,12 +14,21 @@ final class OnSubmitCategoryPressed extends UseCase<Future<void>, dynamic> {
     final categories = await categoryService.getAll(
       transactionType: transactionType,
     );
+    final category = viewModel.widget.category;
+    final int sort;
+    if (category case CategoryVariantModel(:final model)) {
+      sort = model.sort;
+    } else if (category case CategoryVariantVO(:final vo)) {
+      sort = vo.sort;
+    } else {
+      sort = categories.length;
+    }
     final vo = CategoryVO(
       title: viewModel.titleController.text.trim(),
       colorName:
           viewModel.colorController.value?.name ?? EColorName.random().name,
       icon: viewModel.emojiController.text,
-      sort: categories.length,
+      sort: sort,
       transactionType: transactionType,
     );
     if (context.mounted) Navigator.of(context).pop<CategoryVO>(vo);

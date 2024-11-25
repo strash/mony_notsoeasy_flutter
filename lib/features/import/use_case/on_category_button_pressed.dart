@@ -81,10 +81,10 @@ final class OnCategoryButtonPressed
           showDragHandle: false,
           builder: (context, bottom) {
             return CategoryFormPage(
-              category: categoryVO,
+              category: CategoryVariantVO(vo: categoryVO),
               transactionType: value.transactionType,
               keyboardHeight: bottom,
-              titles: titles,
+              additionalUsedTitles: titles,
             );
           },
         );

@@ -10,15 +10,15 @@ import "package:provider/provider.dart";
 final class CategoryFormViewModelBuilder extends StatefulWidget {
   final double keyboardHeight;
   final ETransactionType transactionType;
-  final CategoryVO? category;
-  final List<String> titles;
+  final CategoryVariant? category;
+  final List<String> additionalUsedTitles;
 
   const CategoryFormViewModelBuilder({
     super.key,
     required this.keyboardHeight,
     required this.transactionType,
     required this.category,
-    required this.titles,
+    required this.additionalUsedTitles,
   });
 
   @override
@@ -50,9 +50,12 @@ final class CategoryFormViewModel
   Future<void> _fetchData() async {
     final service = context.read<DomainCategoryService>();
     final data = await service.getAll(transactionType: widget.transactionType);
-    _titles.addAll(
-      data.map((e) => e.title).toList(growable: true)..addAll(widget.titles),
-    );
+    if (widget.category case CategoryVariantModel(:final model)) {
+      _titles.addAll(data.where((e) => e.id != model.id).map((e) => e.title));
+    } else {
+      _titles.addAll(data.map((e) => e.title));
+    }
+    _titles.addAll(widget.additionalUsedTitles);
     titleController.addValidator(CategoryTitleValidator(titles: _titles));
   }
 
@@ -61,9 +64,16 @@ final class CategoryFormViewModel
     super.initState();
     final category = widget.category;
     if (category != null) {
-      titleController.text = category.title;
-      colorController.value = EColorName.from(category.colorName);
-      emojiController.text = category.icon.isNotEmpty ? category.icon : "😀";
+      switch (category) {
+        case CategoryVariantVO(:final vo):
+          titleController.text = vo.title;
+          colorController.value = EColorName.from(vo.colorName);
+          emojiController.text = vo.icon.isNotEmpty ? vo.icon : "😀";
+        case CategoryVariantModel(:final model):
+          titleController.text = model.title;
+          colorController.value = model.colorName;
+          emojiController.text = model.icon.isNotEmpty ? model.icon : "😀";
+      }
     } else {
       emojiController.text = "😀";
     }

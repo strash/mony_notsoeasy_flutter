@@ -7,15 +7,15 @@ export "./view_model.dart";
 class CategoryFormPage extends StatelessWidget {
   final double keyboardHeight;
   final ETransactionType transactionType;
-  final CategoryVO? category;
-  final List<String> titles;
+  final CategoryVariant? category;
+  final List<String> additionalUsedTitles;
 
   const CategoryFormPage({
     super.key,
     required this.keyboardHeight,
     required this.transactionType,
     required this.category,
-    required this.titles,
+    required this.additionalUsedTitles,
   });
 
   @override
@@ -24,7 +24,7 @@ class CategoryFormPage extends StatelessWidget {
       keyboardHeight: keyboardHeight,
       transactionType: transactionType,
       category: category,
-      titles: titles,
+      additionalUsedTitles: additionalUsedTitles,
     );
   }
 }

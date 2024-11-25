@@ -1,4 +1,4 @@
-import "package:mony_app/domain/models/transaction_type_enum.dart";
+import "package:mony_app/domain/domain.dart";
 
 final class CategoryVO {
   final String title;
@@ -14,4 +14,18 @@ final class CategoryVO {
     required this.colorName,
     required this.transactionType,
   });
+}
+
+sealed class CategoryVariant {}
+
+final class CategoryVariantVO extends CategoryVariant {
+  final CategoryVO vo;
+
+  CategoryVariantVO({required this.vo});
+}
+
+final class CategoryVariantModel extends CategoryVariant {
+  final CategoryModel model;
+
+  CategoryVariantModel({required this.model});
 }
