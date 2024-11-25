@@ -11,6 +11,7 @@ export "./emoji_picker/component.dart";
 export "./feed_item/component.dart";
 export "./feed_section/component.dart";
 export "./named_color_picker/component.dart";
+export "./popup/component.dart";
 export "./select/component.dart";
 export "./separated/component.dart";
 export "./tab_group/component.dart";

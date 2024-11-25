@@ -25,7 +25,7 @@ class SelectEntryComponent<T> extends StatelessWidget {
       child: Opacity(
         opacity: enabled ? 1.0 : 0.4,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
           child: ListenableBuilder(
             listenable: provider,
             child: Flexible(
