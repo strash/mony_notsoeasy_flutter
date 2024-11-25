@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/popup/button.dart";
-import "package:mony_app/components/popup/popup.dart";
+import "package:mony_app/components/popup/popup_container.dart";
 import "package:mony_app/components/time/component.dart";
 import "package:mony_app/components/time/time_proxy.dart";
 
@@ -62,7 +62,7 @@ class TimeComponent extends StatelessWidget {
             alignment: Alignment.topRight,
             child: Opacity(
               opacity: anim,
-              child: PopupComponent(
+              child: PopupContainerComoponent(
                 builder: (context) {
                   return Stack(
                     children: [

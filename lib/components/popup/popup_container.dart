@@ -4,10 +4,10 @@ import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:mony_app/common/constants.dart";
 
-class PopupComponent extends StatelessWidget {
+class PopupContainerComoponent extends StatelessWidget {
   final WidgetBuilder builder;
 
-  const PopupComponent({
+  const PopupContainerComoponent({
     super.key,
     required this.builder,
   });

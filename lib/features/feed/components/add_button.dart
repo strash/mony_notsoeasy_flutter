@@ -5,7 +5,7 @@ import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/popup/button.dart";
-import "package:mony_app/components/popup/popup.dart";
+import "package:mony_app/components/popup/popup_container.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class FeedAddButtonComponent extends StatelessWidget {
@@ -29,7 +29,7 @@ class FeedAddButtonComponent extends StatelessWidget {
             rect: rect,
             child: Opacity(
               opacity: anim,
-              child: PopupComponent(
+              child: PopupContainerComoponent(
                 builder: (context) {
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
