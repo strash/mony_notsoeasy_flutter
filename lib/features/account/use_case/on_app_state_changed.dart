@@ -17,8 +17,9 @@ final class OnAccountAppStateChanged extends UseCase<Future<void>, _TValue> {
     final navigator = Navigator.of(context);
 
     switch (event) {
-      case EventAccountCreated():
+      case EventAccountCreated() || EventCategoryUpdated():
         break;
+
       case EventAccountUpdated(value: final account):
         if (viewModel.account.id != account.id) return;
         final balances = await accountService.getBalances(ids: [account.id]);
@@ -27,9 +28,11 @@ final class OnAccountAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.account = account.copyWith();
           viewModel.balance = balances.first;
         });
+
       case EventAccountDeleted(value: final account):
         if (viewModel.account.id != account.id) return;
         navigator.pop<void>();
+
       case EventTransactionCreated() ||
             EventTransactionUpdated() ||
             EventTransactionDeleted():

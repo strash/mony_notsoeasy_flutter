@@ -30,14 +30,19 @@ final class OnTransactionAppStateChanged
         if (account.id != viewModel.transaction.account.id) return;
         navigator.pop<void>();
 
+      case EventCategoryUpdated(value: final category):
+        if (category.id != viewModel.transaction.category.id) return;
+        viewModel.setProtectedState(() {
+          viewModel.transaction = viewModel.transaction.copyWith(
+            category: category.copyWith(),
+          );
+        });
+
       case EventTransactionUpdated(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;
         viewModel.setProtectedState(() {
           viewModel.transaction = transaction.copyWith();
         });
-
-      // TODO: слушать app events на удаление категории и
-      // закрывать экран, если удалена категория этой транзакции
 
       case EventTransactionDeleted(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;

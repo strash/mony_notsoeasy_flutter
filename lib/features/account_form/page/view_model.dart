@@ -105,13 +105,13 @@ final class AccountFormViewModel
     final account = widget.account;
     if (account != null) {
       switch (account) {
-        case AccountVariantVO(vo: final vo):
+        case AccountVariantVO(:final vo):
           titleController.text = vo.title;
           colorController.value = EColorName.from(vo.colorName);
           typeController.value = vo.type;
           currencyController.value = FiatCurrency.fromCode(vo.currencyCode);
           balanceController.text = vo.balance.roundToFraction(2).toString();
-        case AccountVariantModel(model: final model):
+        case AccountVariantModel(:final model):
           titleController.text = model.title;
           colorController.value = model.colorName;
           typeController.value = model.type;

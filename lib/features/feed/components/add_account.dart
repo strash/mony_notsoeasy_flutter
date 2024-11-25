@@ -6,6 +6,7 @@ import "package:mony_app/common/constants.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
+// TODO: открывать контекстное меню с выбором создания счета или категории
 class FeedAddAccountComponent extends StatelessWidget {
   final VoidCallback onTap;
 

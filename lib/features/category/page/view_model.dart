@@ -1,6 +1,8 @@
+import "dart:async";
+
 import "package:flutter/widgets.dart";
-import "package:mony_app/app/view_model/view_model.dart";
-import "package:mony_app/common/extensions/string.dart";
+import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_controller.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/page/view.dart";
@@ -19,16 +21,16 @@ final class CategoryViewModelBuilder extends StatefulWidget {
 }
 
 final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
+  late final StreamSubscription<Event> _appSub;
+
   final prefix = StringEx.random(10);
 
   late final FeedScrollController _scrollController;
-
   ScrollController get controller => _scrollController.controller;
 
   late CategoryModel category = widget.category;
 
   CategoryBalanceModel? balance;
-
   List<TransactionModel> feed = [];
   int scrollPage = 0;
   bool canLoadMore = true;
@@ -38,17 +40,25 @@ final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
     OnDataFetched().call(context, this);
   }
 
+  void _onAppEvent(Event event) {
+    if (!mounted) return;
+    final value = (event: event, viewModel: this);
+    OnCategoryAppStateChanged().call(context, value);
+  }
+
   @override
   void initState() {
     super.initState();
     _scrollController = FeedScrollController(onData: _onFeedEvent);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
       await OnInit().call(context, this);
     });
   }
 
   @override
   void dispose() {
+    _appSub.cancel();
     _scrollController.dispose();
     super.dispose();
   }
@@ -59,6 +69,7 @@ final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
       viewModel: this,
       useCases: [
         () => OnTransactionPressed(),
+        () => OnEditCategoryPressed(),
       ],
       child: const CategoryView(),
     );

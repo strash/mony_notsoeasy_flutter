@@ -1,3 +1,5 @@
+import "dart:math";
+
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
@@ -9,6 +11,7 @@ import "package:provider/provider.dart";
 part "./on_app_state_changed/on_account_created.dart";
 part "./on_app_state_changed/on_account_deleted.dart";
 part "./on_app_state_changed/on_account_updated.dart";
+part "./on_app_state_changed/on_category_updated.dart";
 part "./on_app_state_changed/on_transaction_created.dart";
 part "./on_app_state_changed/on_transaction_deleted.dart";
 part "./on_app_state_changed/on_transaction_updated.dart";
@@ -36,6 +39,9 @@ final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventAccountDeleted():
         const _OnAccountDeleted().call(context, viewModel, event);
+
+      case EventCategoryUpdated():
+        const _OnCategoryUpdated().call(context, viewModel, event);
 
       case EventTransactionCreated():
         const _OnTransactionCreated().call(context, viewModel, event);

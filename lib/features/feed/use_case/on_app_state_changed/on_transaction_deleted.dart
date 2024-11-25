@@ -21,6 +21,8 @@ final class _OnTransactionDeleted {
         case final FeedPageStateAllAccounts page:
           return page.copyWith(
             balances: page.balances.merge(balances),
+            scrollPage: max(0, page.scrollPage - 1),
+            canLoadMore: true,
             feed: List<TransactionModel>.from(
               page.feed.where((e) => e.id != transaction.id),
             ),
@@ -29,6 +31,8 @@ final class _OnTransactionDeleted {
           if (page.account.id == transaction.account.id) {
             return page.copyWith(
               balance: balances.firstOrNull,
+              scrollPage: max(0, page.scrollPage - 1),
+              canLoadMore: true,
               feed: List<TransactionModel>.from(
                 page.feed.where((e) => e.id != transaction.id),
               ),

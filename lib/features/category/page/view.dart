@@ -18,10 +18,12 @@ class CategoryView extends StatelessWidget {
 
     final viewModel = context.viewModel<CategoryViewModel>();
     final keyPrefix = "category_${viewModel.prefix}";
+    final category = viewModel.category;
     final balance = viewModel.balance;
     final feed = viewModel.feed.toFeed();
 
     final onTransactionPressed = viewModel<OnTransactionPressed>();
+    final onEditPressed = viewModel<OnEditCategoryPressed>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -38,8 +40,7 @@ class CategoryView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
-                  // TODO:
-                  // onTap: () => onEditPressed(context, account),
+                  onTap: () => onEditPressed(context, category),
                 ),
                 const SizedBox(width: 4.0),
 
