@@ -20,10 +20,10 @@ final class OnDeleteTransactionPressed
       ),
     );
 
-    if (!context.mounted) return;
+    if (!context.mounted || result == null) return;
 
     switch (result) {
-      case null || EAlertResult.cancel:
+      case EAlertResult.cancel:
         return;
       case EAlertResult.ok:
         final transactionService = context.read<DomainTransactionService>();

@@ -38,6 +38,10 @@ final class OnTransactionAppStateChanged
           );
         });
 
+      case EventCategoryDeleted(value: final category):
+        if (category.id != viewModel.transaction.category.id) return;
+        navigator.pop<void>();
+
       case EventTransactionUpdated(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;
         viewModel.setProtectedState(() {

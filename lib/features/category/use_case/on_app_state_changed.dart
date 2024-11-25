@@ -66,6 +66,11 @@ final class OnCategoryAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
         });
 
+      case EventCategoryDeleted(value: final category):
+        final id = viewModel.category.id;
+        if (category.id != id) return;
+        navigator.pop<void>();
+
       case EventTransactionCreated(value: final transaction):
         final id = viewModel.category.id;
         if (transaction.category.id != id) return;

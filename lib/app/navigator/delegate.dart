@@ -33,6 +33,7 @@ final class NavigatorDelegate extends RouterDelegate<Object>
           EventAccountCreated() || EventAccountDeleted() => true,
           EventAccountUpdated() ||
           EventCategoryUpdated() ||
+          EventCategoryDeleted() ||
           EventTransactionCreated() ||
           EventTransactionUpdated() ||
           EventTransactionDeleted() =>

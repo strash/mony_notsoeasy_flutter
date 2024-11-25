@@ -70,6 +70,7 @@ final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
       useCases: [
         () => OnTransactionPressed(),
         () => OnEditCategoryPressed(),
+        () => OnDeleteCategoryPressed(),
       ],
       child: const CategoryView(),
     );

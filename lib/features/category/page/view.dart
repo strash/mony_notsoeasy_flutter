@@ -24,6 +24,7 @@ class CategoryView extends StatelessWidget {
 
     final onTransactionPressed = viewModel<OnTransactionPressed>();
     final onEditPressed = viewModel<OnEditCategoryPressed>();
+    final onDeletePressed = viewModel<OnDeleteCategoryPressed>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -47,8 +48,7 @@ class CategoryView extends StatelessWidget {
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
-                  // TODO:
-                  // onTap: () => onDeletePressed(context, account),
+                  onTap: () => onDeletePressed(context, category),
                 ),
                 const SizedBox(width: 8.0),
               ],

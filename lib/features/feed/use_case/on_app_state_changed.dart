@@ -12,6 +12,7 @@ part "./on_app_state_changed/on_account_created.dart";
 part "./on_app_state_changed/on_account_deleted.dart";
 part "./on_app_state_changed/on_account_updated.dart";
 part "./on_app_state_changed/on_category_updated.dart";
+part "./on_app_state_changed/on_category_deleted.dart";
 part "./on_app_state_changed/on_transaction_created.dart";
 part "./on_app_state_changed/on_transaction_deleted.dart";
 part "./on_app_state_changed/on_transaction_updated.dart";
@@ -42,6 +43,9 @@ final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventCategoryUpdated():
         const _OnCategoryUpdated().call(context, viewModel, event);
+
+      case EventCategoryDeleted():
+        const _OnCategoryDeleted().call(context, viewModel, event);
 
       case EventTransactionCreated():
         const _OnTransactionCreated().call(context, viewModel, event);
