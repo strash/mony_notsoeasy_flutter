@@ -1,91 +1,151 @@
+import "package:figma_squircle/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/popup/button.dart";
+import "package:mony_app/components/popup/popup.dart";
 import "package:mony_app/components/time/component.dart";
 import "package:mony_app/components/time/time_proxy.dart";
 
-class TimeComponent extends StatefulWidget {
+class TimeComponent extends StatelessWidget {
   final TimeController controller;
+
+  double get _wheelSize => 200.0;
 
   const TimeComponent({
     super.key,
     required this.controller,
   });
 
-  @override
-  State<TimeComponent> createState() => _TimeComponentState();
-}
-
-class _TimeComponentState extends State<TimeComponent> {
-  OverlayEntry? _entry;
-
-  void _onTap() {
-    _removeEntry();
-    assert(_entry == null);
-
-    final button = context.findRenderObject() as RenderBox?;
-    final overlay =
-        Navigator.of(context).overlay?.context.findRenderObject() as RenderBox?;
-    if (button == null ||
-        !button.hasSize ||
-        overlay == null ||
-        !overlay.hasSize) {
-      return;
+  Rect _popupRect(BuildContext context, Rect initialRect) {
+    const offset = 6.0;
+    final size = MediaQuery.sizeOf(context);
+    final init = initialRect;
+    final isOnRight = init.left + _wheelSize > size.width;
+    final isOnTop = init.top + init.height + offset + _wheelSize > size.height;
+    Rect rect = Rect.fromLTWH(init.left, init.top, _wheelSize, _wheelSize);
+    if (isOnRight) {
+      rect = rect.shift(-Offset(_wheelSize - init.width, .0));
     }
-
-    const offset = Offset.zero;
-    final position = RelativeRect.fromRect(
-      Rect.fromPoints(
-        button.localToGlobal(offset, ancestor: overlay),
-        button.localToGlobal(
-          button.size.bottomRight(Offset.zero) + offset,
-          ancestor: overlay,
-        ),
-      ),
-      Offset.zero & overlay.size,
-    );
-
-    if (!mounted) return;
-    setState(() {
-      _entry = OverlayEntry(
-        builder: (context) {
-          return TimePopupComponent(
-            controller: widget.controller,
-            onTapOutside: _removeEntry,
-            initialRect: position.toRect(overlay.paintBounds),
-          );
-        },
-      );
-    });
-    if (_entry != null) {
-      Overlay.of(context).insert(_entry!);
+    if (!isOnTop) {
+      rect = rect.shift(Offset(.0, init.height + offset));
+    } else {
+      rect = rect.shift(-Offset(.0, _wheelSize + offset));
     }
-  }
-
-  void _removeEntry() {
-    if (!mounted) return;
-    setState(() {
-      _entry?.remove();
-      _entry?.dispose();
-      _entry = null;
-    });
-  }
-
-  @override
-  void dispose() {
-    // NOTE: don't put this in setState
-    _entry?.remove();
-    _entry?.dispose();
-    _entry = null;
-    super.dispose();
+    return rect;
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _entry == null ? _onTap : null,
-      child: Opacity(
-        opacity: _entry == null ? 1.0 : .0,
-        child: TimeProxyComponent(time: widget.controller.formattedValue),
-      ),
+    return PopupButtonComponent(
+      builder: (context, isOpened) {
+        return Opacity(
+          opacity: isOpened ? .0 : 1.0,
+          child: TimeProxyComponent(time: controller.formattedValue),
+        );
+      },
+      proxyBuilder: (context) {
+        return ListenableBuilder(
+          listenable: controller,
+          builder: (context, child) {
+            return TimeProxyComponent(time: controller.formattedValue);
+          },
+        );
+      },
+      popupBuilder: (context, anim, rect, _) {
+        final theme = Theme.of(context);
+
+        return Positioned.fromRect(
+          rect: _popupRect(context, rect),
+          child: Transform.scale(
+            scale: anim.remap(.0, 1.0, .5, 1.0),
+            alignment: Alignment.topRight,
+            child: Opacity(
+              opacity: anim,
+              child: PopupComponent(
+                builder: (context) {
+                  return Stack(
+                    children: [
+                      // -> decal
+                      Align(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: SizedBox.fromSize(
+                            size: const Size.fromHeight(40.0),
+                            child: DecoratedBox(
+                              decoration: ShapeDecoration(
+                                color: theme.colorScheme.tertiaryContainer
+                                    .withOpacity(.5),
+                                shape: const SmoothRectangleBorder(
+                                  borderRadius: SmoothBorderRadius.all(
+                                    SmoothRadius(
+                                      cornerRadius: 10.0,
+                                      cornerSmoothing: 1.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // -> colon
+                      Align(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 6.0),
+                          child: Text(
+                            ":",
+                            style: GoogleFonts.golosText(
+                              textStyle: theme.textTheme.bodyMedium,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.none,
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // -> wheels
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: Row(
+                          children: [
+                            // -> hours
+                            Expanded(
+                              child: TimeWheelComponent(
+                                controller.value.hour,
+                                itemCount: 24,
+                                isLeft: true,
+                                offset: 36.0,
+                                offAxisFraction: -.4,
+                                onValueChanged: controller.setHours,
+                              ),
+                            ),
+
+                            // -> minutes
+                            Expanded(
+                              child: TimeWheelComponent(
+                                controller.value.minute,
+                                itemCount: 60,
+                                isLeft: false,
+                                offset: 36.0,
+                                offAxisFraction: .4,
+                                onValueChanged: controller.setMinutes,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
