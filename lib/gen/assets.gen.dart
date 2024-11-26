@@ -42,6 +42,12 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/arrow.down.square.svg
+  String get arrowDownSquare => 'assets/icons/arrow.down.square.svg';
+
+  /// File path: assets/icons/arrow.up.square.svg
+  String get arrowUpSquare => 'assets/icons/arrow.up.square.svg';
+
   /// File path: assets/icons/calendar.svg
   String get calendar => 'assets/icons/calendar.svg';
 
@@ -131,6 +137,9 @@ class $AssetsIconsGen {
   String get personCropCircleFillBadgePlus =>
       'assets/icons/person.crop.circle.fill.badge.plus.svg';
 
+  /// File path: assets/icons/plus.app.svg
+  String get plusApp => 'assets/icons/plus.app.svg';
+
   /// File path: assets/icons/plus.bold.svg
   String get plusBold => 'assets/icons/plus.bold.svg';
 
@@ -164,6 +173,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/wallet.pass.fill.svg
   String get walletPassFill => 'assets/icons/wallet.pass.fill.svg';
 
+  /// File path: assets/icons/widget.badge.plus.svg
+  String get widgetBadgePlus => 'assets/icons/widget.badge.plus.svg';
+
   /// File path: assets/icons/widget.small.badge.plus.svg
   String get widgetSmallBadgePlus => 'assets/icons/widget.small.badge.plus.svg';
 
@@ -181,6 +193,8 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<String> get values => [
+        arrowDownSquare,
+        arrowUpSquare,
         calendar,
         chartBarFill,
         checkmarkBold,
@@ -209,6 +223,7 @@ class $AssetsIconsGen {
         pencilSemibold,
         pencil,
         personCropCircleFillBadgePlus,
+        plusApp,
         plusBold,
         plusSemibold,
         plus,
@@ -220,6 +235,7 @@ class $AssetsIconsGen {
         trashFill,
         trash,
         walletPassFill,
+        widgetBadgePlus,
         widgetSmallBadgePlus,
         widgetSmall,
         xmarkBold,
