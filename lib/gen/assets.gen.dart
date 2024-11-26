@@ -83,6 +83,33 @@ class $AssetsIconsGen {
   String get documentBadgeArrowUpFill =>
       'assets/icons/document.badge.arrow.up.fill.svg';
 
+  /// File path: assets/icons/emoji.activity.svg
+  String get emojiActivity => 'assets/icons/emoji.activity.svg';
+
+  /// File path: assets/icons/emoji.animal.svg
+  String get emojiAnimal => 'assets/icons/emoji.animal.svg';
+
+  /// File path: assets/icons/emoji.flag.svg
+  String get emojiFlag => 'assets/icons/emoji.flag.svg';
+
+  /// File path: assets/icons/emoji.food.svg
+  String get emojiFood => 'assets/icons/emoji.food.svg';
+
+  /// File path: assets/icons/emoji.object.svg
+  String get emojiObject => 'assets/icons/emoji.object.svg';
+
+  /// File path: assets/icons/emoji.resent.svg
+  String get emojiResent => 'assets/icons/emoji.resent.svg';
+
+  /// File path: assets/icons/emoji.smiley.svg
+  String get emojiSmiley => 'assets/icons/emoji.smiley.svg';
+
+  /// File path: assets/icons/emoji.symbol.svg
+  String get emojiSymbol => 'assets/icons/emoji.symbol.svg';
+
+  /// File path: assets/icons/emoji.travel.svg
+  String get emojiTravel => 'assets/icons/emoji.travel.svg';
+
   /// File path: assets/icons/exclamationmark.circle.fill.svg
   String get exclamationmarkCircleFill =>
       'assets/icons/exclamationmark.circle.fill.svg';
@@ -206,6 +233,15 @@ class $AssetsIconsGen {
         chevronUpChevronDown,
         documentBadgeArrowDownFill,
         documentBadgeArrowUpFill,
+        emojiActivity,
+        emojiAnimal,
+        emojiFlag,
+        emojiFood,
+        emojiObject,
+        emojiResent,
+        emojiSmiley,
+        emojiSymbol,
+        emojiTravel,
         exclamationmarkCircleFill,
         exclamationmarkCircle,
         gearshapeFill,
