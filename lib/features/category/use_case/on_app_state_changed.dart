@@ -53,6 +53,9 @@ final class OnCategoryAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.controller.jumpTo(.0);
         });
 
+      case EventCategoryCreated():
+        break;
+
       case EventCategoryUpdated(value: final category):
         viewModel.setProtectedState(() {
           viewModel.category = category.copyWith();

@@ -41,6 +41,9 @@ final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventAccountDeleted():
         const _OnAccountDeleted().call(context, viewModel, event);
 
+      case EventCategoryCreated():
+        break;
+
       case EventCategoryUpdated():
         const _OnCategoryUpdated().call(context, viewModel, event);
 

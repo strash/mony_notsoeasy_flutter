@@ -24,6 +24,11 @@ final class EventAccountDeleted extends Event {
 
 // -> category
 
+final class EventCategoryCreated extends Event {
+  final CategoryModel value;
+  EventCategoryCreated({required super.sender, required this.value});
+}
+
 final class EventCategoryUpdated extends Event {
   final CategoryModel value;
   const EventCategoryUpdated({required super.sender, required this.value});

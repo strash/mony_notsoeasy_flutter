@@ -17,7 +17,9 @@ final class OnAccountAppStateChanged extends UseCase<Future<void>, _TValue> {
     final navigator = Navigator.of(context);
 
     switch (event) {
-      case EventAccountCreated() || EventCategoryUpdated():
+      case EventAccountCreated() ||
+            EventCategoryCreated() ||
+            EventCategoryUpdated():
         break;
 
       case EventAccountUpdated(value: final account):

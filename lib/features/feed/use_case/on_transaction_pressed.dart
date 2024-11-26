@@ -9,6 +9,6 @@ final class OnTransactionPressed extends UseCase<void, TransactionModel> {
   void call(BuildContext context, [TransactionModel? transaction]) {
     if (transaction == null) throw ArgumentError.notNull();
 
-    context.go(TransactionPage(transaction: transaction));
+    context.go<void>(TransactionPage(transaction: transaction));
   }
 }

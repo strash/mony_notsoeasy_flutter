@@ -15,7 +15,9 @@ final class OnTransactionAppStateChanged
     final navigator = Navigator.of(context);
 
     switch (event) {
-      case EventAccountCreated() || EventTransactionCreated():
+      case EventAccountCreated() ||
+            EventCategoryCreated() ||
+            EventTransactionCreated():
         break;
 
       case EventAccountUpdated(value: final account):

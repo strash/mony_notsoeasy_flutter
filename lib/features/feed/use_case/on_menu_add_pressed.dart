@@ -23,6 +23,9 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
   }
 
   Future<void> _addAccount(BuildContext context) async {
+    final accountService = context.read<DomainAccountService>();
+    final appService = context.viewModel<AppEventService>();
+
     final result = await BottomSheetComponent.show<AccountVO?>(
       context,
       showDragHandle: false,
@@ -35,10 +38,7 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
       },
     );
 
-    if (!context.mounted || result == null) return;
-
-    final accountService = context.read<DomainAccountService>();
-    final appService = context.viewModel<AppEventService>();
+    if (result == null) return;
 
     final account = await accountService.create(vo: result);
     appService.notify(
@@ -47,7 +47,10 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
   }
 
   Future<void> _addCategory(BuildContext context, ETransactionType type) async {
-    final result = await BottomSheetComponent.show<AccountVO?>(
+    final categoryService = context.read<DomainCategoryService>();
+    final appService = context.viewModel<AppEventService>();
+
+    final result = await BottomSheetComponent.show<CategoryVO?>(
       context,
       showDragHandle: false,
       builder: (context, bottom) {
@@ -60,8 +63,12 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
       },
     );
 
-    if (!context.mounted || result == null) return;
+    if (result == null) return;
 
-    // TODO: доделать создание категории
+    final category = await categoryService.create(vo: result);
+
+    appService.notify(
+      EventCategoryCreated(sender: FeedViewModel, value: category),
+    );
   }
 }
