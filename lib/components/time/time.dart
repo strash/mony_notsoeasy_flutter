@@ -10,7 +10,7 @@ import "package:mony_app/components/time/time_proxy.dart";
 class TimeComponent extends StatelessWidget {
   final TimeController controller;
 
-  double get _wheelSize => 200.0;
+  double get _size => 200.0;
   double get _offset => 8.0;
 
   const TimeComponent({
@@ -18,19 +18,19 @@ class TimeComponent extends StatelessWidget {
     required this.controller,
   });
 
-  Rect _popupRect(BuildContext context, Rect initialRect) {
-    final size = MediaQuery.sizeOf(context);
-    final init = initialRect;
-    final isOnRight = init.left + _wheelSize > size.width;
-    final isOnTop = init.top + init.height + _offset + _wheelSize > size.height;
-    Rect rect = Rect.fromLTWH(init.left, init.top, _wheelSize, _wheelSize);
+  Rect _popupRect(BuildContext context, Rect proxyRect) {
+    final viewSize = MediaQuery.sizeOf(context);
+    final init = proxyRect;
+    final isOnRight = init.left + _size > viewSize.width;
+    final isOnTop = init.top + init.height + _offset + _size > viewSize.height;
+    Rect rect = Rect.fromLTWH(init.left, init.top, _size, _size);
     if (isOnRight) {
-      rect = rect.shift(-Offset(_wheelSize - init.width, .0));
+      rect = rect.shift(-Offset(_size - init.width, .0));
     }
     if (!isOnTop) {
       rect = rect.shift(Offset(.0, init.height + _offset));
     } else {
-      rect = rect.shift(-Offset(.0, _wheelSize + _offset));
+      rect = rect.shift(-Offset(.0, _size + _offset));
     }
     return rect;
   }
@@ -38,8 +38,8 @@ class TimeComponent extends StatelessWidget {
   Alignment _alignment(BuildContext context, Rect initialRect) {
     final size = MediaQuery.sizeOf(context);
     final init = initialRect;
-    final isOnRight = init.left + _wheelSize > size.width;
-    final isOnTop = init.top + init.height + _offset + _wheelSize > size.height;
+    final isOnRight = init.left + _size > size.width;
+    final isOnTop = init.top + init.height + _offset + _size > size.height;
     if (isOnRight && isOnTop) {
       return Alignment.bottomRight;
     } else if (!isOnRight && isOnTop) {
@@ -54,6 +54,8 @@ class TimeComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupButtonComponent(
+      showBackground: false,
+      blurBackground: false,
       builder: (context, isOpened, activate) {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -85,7 +87,7 @@ class TimeComponent extends StatelessWidget {
         return Positioned.fromRect(
           rect: _popupRect(context, proxyRect),
           child: Transform.scale(
-            scale: anim.remap(.0, 1.0, .5, 1.0),
+            scale: anim.remap(.0, 1.0, .4, 1.0),
             alignment: _alignment(context, proxyRect),
             child: Opacity(
               opacity: anim,

@@ -1,7 +1,16 @@
+import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:mony_app/components/components.dart";
 
-typedef TPopupBuilder = Widget Function(
+typedef TPopupButtonBuilder = Widget Function(
+  BuildContext context,
+  bool isOpened,
+  VoidCallback activate,
+);
+
+typedef TPopupBuilder = TPopupButtonProxyBuilder;
+
+typedef TPopupButtonProxyBuilder = Widget Function(
   BuildContext context,
   double animation,
   Rect proxyRect,
@@ -9,19 +18,19 @@ typedef TPopupBuilder = Widget Function(
 );
 
 class PopupButtonComponent extends StatefulWidget {
-  final Widget Function(
-    BuildContext context,
-    bool isOpened,
-    VoidCallback activate,
-  ) builder;
-  final TPopupBuilder proxyBuilder;
+  final TPopupButtonBuilder builder;
+  final TPopupButtonProxyBuilder proxyBuilder;
   final TPopupBuilder popupBuilder;
+  final bool showBackground;
+  final bool blurBackground;
 
   const PopupButtonComponent({
     super.key,
     required this.builder,
     required this.proxyBuilder,
     required this.popupBuilder,
+    this.showBackground = true,
+    this.blurBackground = true,
   });
 
   @override
@@ -66,12 +75,14 @@ class _PopupButtonComponentState extends State<PopupButtonComponent> {
             initialRect: position.toRect(overlay.paintBounds),
             proxyBuilder: widget.proxyBuilder,
             popupBuilder: widget.popupBuilder,
+            showBackground: widget.showBackground,
+            blurBackground: widget.blurBackground,
           );
         },
       );
     });
     if (_entry != null) {
-      Overlay.of(context).insert(_entry!);
+      Overlay.of(context, rootOverlay: true).insert(_entry!);
     }
   }
 
