@@ -11,6 +11,7 @@ class TimeComponent extends StatelessWidget {
   final TimeController controller;
 
   double get _wheelSize => 200.0;
+  double get _offset => 8.0;
 
   const TimeComponent({
     super.key,
@@ -18,21 +19,36 @@ class TimeComponent extends StatelessWidget {
   });
 
   Rect _popupRect(BuildContext context, Rect initialRect) {
-    const offset = 6.0;
     final size = MediaQuery.sizeOf(context);
     final init = initialRect;
     final isOnRight = init.left + _wheelSize > size.width;
-    final isOnTop = init.top + init.height + offset + _wheelSize > size.height;
+    final isOnTop = init.top + init.height + _offset + _wheelSize > size.height;
     Rect rect = Rect.fromLTWH(init.left, init.top, _wheelSize, _wheelSize);
     if (isOnRight) {
       rect = rect.shift(-Offset(_wheelSize - init.width, .0));
     }
     if (!isOnTop) {
-      rect = rect.shift(Offset(.0, init.height + offset));
+      rect = rect.shift(Offset(.0, init.height + _offset));
     } else {
-      rect = rect.shift(-Offset(.0, _wheelSize + offset));
+      rect = rect.shift(-Offset(.0, _wheelSize + _offset));
     }
     return rect;
+  }
+
+  Alignment _alignment(BuildContext context, Rect initialRect) {
+    final size = MediaQuery.sizeOf(context);
+    final init = initialRect;
+    final isOnRight = init.left + _wheelSize > size.width;
+    final isOnTop = init.top + init.height + _offset + _wheelSize > size.height;
+    if (isOnRight && isOnTop) {
+      return Alignment.bottomRight;
+    } else if (!isOnRight && isOnTop) {
+      return Alignment.bottomLeft;
+    } else if (isOnRight && !isOnTop) {
+      return Alignment.topRight;
+    } else {
+      return Alignment.topLeft;
+    }
   }
 
   @override
@@ -59,7 +75,7 @@ class TimeComponent extends StatelessWidget {
           rect: _popupRect(context, rect),
           child: Transform.scale(
             scale: anim.remap(.0, 1.0, .5, 1.0),
-            alignment: Alignment.topRight,
+            alignment: _alignment(context, rect),
             child: Opacity(
               opacity: anim,
               child: PopupContainerComoponent(
