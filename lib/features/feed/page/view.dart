@@ -31,7 +31,7 @@ class FeedView extends StatelessWidget {
     final viewModel = context.viewModel<FeedViewModel>();
     final pages = viewModel.pages;
     final onTransactionPressed = viewModel<OnTransactionPressed>();
-    final onAddAccountPressed = viewModel<OnAddAccountPressed>();
+    final onMenuAddPressed = viewModel<OnMenuAddPressed>();
     final onAccountPressed = viewModel<OnAccountPressed>();
     final onPageChanged = viewModel<OnPageChanged>();
     final scrollControllers = viewModel.scrollControllers;
@@ -163,7 +163,7 @@ class FeedView extends StatelessWidget {
           const FeedPagerComponent(),
 
           // -> button add account
-          const FeedAddButtonComponent(),
+          FeedAddButtonComponent(onTap: onMenuAddPressed),
         ],
       ),
     );

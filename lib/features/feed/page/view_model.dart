@@ -10,6 +10,8 @@ import "package:mony_app/features/navbar/page/page.dart";
 
 export "./state.dart";
 
+enum EFeedMenuItem { addAccount, addExpenseCategory, addIncomeCategory }
+
 class FeedViewModelBuilder extends StatefulWidget {
   const FeedViewModelBuilder({super.key});
 
@@ -122,8 +124,8 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     return ViewModel<FeedViewModel>(
       viewModel: this,
       useCases: [
+        () => OnMenuAddPressed(),
         () => OnAccountPressed(),
-        () => OnAddAccountPressed(),
         () => OnPageChanged(),
         () => OnTransactionPressed(),
       ],
