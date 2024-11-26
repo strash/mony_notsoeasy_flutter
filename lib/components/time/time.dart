@@ -54,28 +54,39 @@ class TimeComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupButtonComponent(
-      builder: (context, isOpened) {
-        return Opacity(
-          opacity: isOpened ? .0 : 1.0,
-          child: TimeProxyComponent(time: controller.formattedValue),
+      builder: (context, isOpened, activate) {
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: isOpened ? null : activate,
+          child: Opacity(
+            opacity: isOpened ? .0 : 1.0,
+            child: TimeProxyComponent(time: controller.formattedValue),
+          ),
         );
       },
-      proxyBuilder: (context) {
-        return ListenableBuilder(
-          listenable: controller,
-          builder: (context, child) {
-            return TimeProxyComponent(time: controller.formattedValue);
-          },
+      proxyBuilder: (context, _, proxyRect, dismiss) {
+        return Positioned.fromRect(
+          rect: proxyRect,
+          child: ListenableBuilder(
+            listenable: controller,
+            builder: (context, child) {
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: dismiss,
+                child: TimeProxyComponent(time: controller.formattedValue),
+              );
+            },
+          ),
         );
       },
-      popupBuilder: (context, anim, rect, _) {
+      popupBuilder: (context, anim, proxyRect, _) {
         final theme = Theme.of(context);
 
         return Positioned.fromRect(
-          rect: _popupRect(context, rect),
+          rect: _popupRect(context, proxyRect),
           child: Transform.scale(
             scale: anim.remap(.0, 1.0, .5, 1.0),
-            alignment: _alignment(context, rect),
+            alignment: _alignment(context, proxyRect),
             child: Opacity(
               opacity: anim,
               child: PopupContainerComoponent(

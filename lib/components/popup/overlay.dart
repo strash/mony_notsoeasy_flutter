@@ -1,15 +1,11 @@
 import "package:flutter/material.dart";
+import "package:mony_app/components/popup/button.dart";
 
 class PopupOverlayComponent extends StatefulWidget {
   final VoidCallback onTapOutside;
   final Rect initialRect;
-  final WidgetBuilder proxyBuilder;
-  final Widget Function(
-    BuildContext context,
-    double animation,
-    Rect proxyRect,
-    VoidCallback dismiss,
-  ) popupBuilder;
+  final TPopupBuilder proxyBuilder;
+  final TPopupBuilder popupBuilder;
 
   const PopupOverlayComponent({
     super.key,
@@ -74,12 +70,11 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
             ),
 
             // -> proxy
-            Positioned.fromRect(
-              rect: widget.initialRect,
-              child: GestureDetector(
-                onTap: _onTapOutside,
-                child: widget.proxyBuilder(context),
-              ),
+            widget.proxyBuilder(
+              context,
+              value,
+              widget.initialRect,
+              _onTapOutside,
             ),
 
             // -> popup

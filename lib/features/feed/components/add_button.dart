@@ -3,6 +3,7 @@ import "dart:ui";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/constants.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/popup/button.dart";
 import "package:mony_app/components/popup/popup_container.dart";
@@ -17,33 +18,40 @@ class FeedAddButtonComponent extends StatelessWidget {
       top: MediaQuery.viewPaddingOf(context).top,
       right: 8.0,
       child: PopupButtonComponent(
-        builder: (context, isOpened) {
-          return Opacity(
-            opacity: isOpened ? .0 : 1.0,
-            child: const _Proxy(),
+        builder: (context, isOpened, activate) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: isOpened ? null : activate,
+            child: Opacity(
+              opacity: isOpened ? .0 : 1.0,
+              child: const _Proxy(),
+            ),
           );
         },
-        proxyBuilder: (context) => const _Proxy(),
+        proxyBuilder: (context, anim, rect, dismiss) => const _Proxy(),
         popupBuilder: (context, anim, rect, dismiss) {
           return Positioned.fromRect(
             rect: rect,
-            child: Opacity(
-              opacity: anim,
-              child: PopupContainerComoponent(
-                builder: (context) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: dismiss,
-                          child: const Text("One"),
-                        ),
-                        const Text("Two"),
-                      ],
-                    ),
-                  );
-                },
+            child: Transform.scale(
+              scale: anim.remap(.0, 1.0, .5, 1.0),
+              child: Opacity(
+                opacity: anim,
+                child: PopupContainerComoponent(
+                  builder: (context) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: dismiss,
+                            child: const Text("One"),
+                          ),
+                          const Text("Two"),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           );

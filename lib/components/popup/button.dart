@@ -1,15 +1,21 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/components/components.dart";
 
+typedef TPopupBuilder = Widget Function(
+  BuildContext context,
+  double animation,
+  Rect proxyRect,
+  VoidCallback dismiss,
+);
+
 class PopupButtonComponent extends StatefulWidget {
-  final Widget Function(BuildContext context, bool isOpened) builder;
-  final WidgetBuilder proxyBuilder;
   final Widget Function(
     BuildContext context,
-    double animation,
-    Rect proxyRect,
-    VoidCallback dismiss,
-  ) popupBuilder;
+    bool isOpened,
+    VoidCallback activate,
+  ) builder;
+  final TPopupBuilder proxyBuilder;
+  final TPopupBuilder popupBuilder;
 
   const PopupButtonComponent({
     super.key,
@@ -89,9 +95,6 @@ class _PopupButtonComponentState extends State<PopupButtonComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _entry == null ? _onTap : null,
-      child: widget.builder(context, _entry != null),
-    );
+    return widget.builder(context, _entry != null, _onTap);
   }
 }
