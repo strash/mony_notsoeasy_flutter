@@ -25,8 +25,8 @@ class CategoryFormView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         // -> appbar
-        const AppBarComponent(
-          title: Text("Категория"),
+        AppBarComponent(
+          title: Text(viewModel.transactionType.fullDescription),
           showBackground: false,
           showDragHandle: true,
           useSliver: false,
@@ -41,7 +41,9 @@ class CategoryFormView extends StatelessWidget {
               children: [
                 SeparatedComponent.list(
                   direction: Axis.horizontal,
-                  separatorBuilder: (context) => const SizedBox(width: 10.0),
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(width: 10.0);
+                  },
                   children: [
                     // -> color picker
                     NamedColorPickerComponent(

@@ -33,7 +33,9 @@ class FeedItemTagsComponent extends StatelessWidget {
                 child: SeparatedComponent.builder(
                   direction: Axis.horizontal,
                   itemCount: tags.length,
-                  separatorBuilder: (context) => const SizedBox(width: gap),
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(width: gap);
+                  },
                   itemBuilder: (context, index) {
                     final tag = tags.elementAt(index);
 

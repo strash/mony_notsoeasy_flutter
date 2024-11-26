@@ -67,7 +67,9 @@ class TransactionView extends StatelessWidget {
                   const SizedBox(height: 40.0),
 
                   SeparatedComponent.list(
-                    separatorBuilder: (context) => const SizedBox(height: 30.0),
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 30.0);
+                    },
                     children: [
                       // -> account
                       GestureDetector(

@@ -9,7 +9,7 @@ class SeparatedComponent extends StatelessWidget {
   final MainAxisSize mainAxisSize;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
-  final WidgetBuilder separatorBuilder;
+  final IndexedWidgetBuilder separatorBuilder;
   final int? itemCount;
   final IndexedWidgetBuilder? itemBuilder;
   final Iterable<Widget>? children;
@@ -50,19 +50,20 @@ class SeparatedComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> list;
     int count = 0;
+    int separatorCount = 0;
 
     switch (_type) {
       case _Type.builder:
         final lenght = max(0, itemCount! * 2 - 1);
         list = List.generate(lenght, (index) {
-          if (index.isOdd) return separatorBuilder(context);
+          if (index.isOdd) return separatorBuilder(context, separatorCount++);
           return itemBuilder!(context, count++);
         }).toList(growable: false);
 
       case _Type.list:
         final lenght = max(0, children!.length * 2 - 1);
         list = List.generate(lenght, (index) {
-          if (index.isOdd) return separatorBuilder(context);
+          if (index.isOdd) return separatorBuilder(context, separatorCount++);
           return children!.elementAt(count++);
         }).toList(growable: false);
     }

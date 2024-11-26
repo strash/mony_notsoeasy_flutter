@@ -17,7 +17,7 @@ class AccountTotalSumComponent extends StatelessWidget {
     final theme = Theme.of(context);
 
     return SeparatedComponent.list(
-      separatorBuilder: (context) => const SizedBox(height: 10.0),
+      separatorBuilder: (context, index) => const SizedBox(height: 10.0),
       children: [
         // -> title
         Text(

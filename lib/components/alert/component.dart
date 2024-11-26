@@ -120,8 +120,9 @@ class AlertComponet extends StatelessWidget {
                     SeparatedComponent.builder(
                       direction: Axis.horizontal,
                       itemCount: EAlertResult.values.length,
-                      separatorBuilder: (context) =>
-                          const SizedBox(width: 10.0),
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(width: 10.0);
+                      },
                       itemBuilder: (context, index) {
                         final item = EAlertResult.values.elementAt(index);
 

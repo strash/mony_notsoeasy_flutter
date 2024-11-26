@@ -69,7 +69,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: SeparatedComponent.builder(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            separatorBuilder: (context) => const SizedBox(height: 10.0),
+            separatorBuilder: (context, index) => const SizedBox(height: 10.0),
             itemCount: accountModel.accounts.length,
             itemBuilder: (context, index) {
               final accountEntry = accountModel.accounts.elementAt(index);

@@ -26,7 +26,7 @@ class AccountComponent extends StatelessWidget {
 
     return SeparatedComponent.list(
       direction: Axis.horizontal,
-      separatorBuilder: (context) => const SizedBox(width: 10.0),
+      separatorBuilder: (context, index) => const SizedBox(width: 10.0),
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

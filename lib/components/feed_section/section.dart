@@ -27,7 +27,7 @@ class FeedSectionComponent extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 10.0),
       child: SeparatedComponent.list(
         direction: Axis.horizontal,
-        separatorBuilder: (context) => const SizedBox(width: 10.0),
+        separatorBuilder: (context, index) => const SizedBox(width: 10.0),
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -45,7 +45,7 @@ class FeedSectionComponent extends StatelessWidget {
           Flexible(
             child: SeparatedComponent.list(
               crossAxisAlignment: CrossAxisAlignment.end,
-              separatorBuilder: (context) => const SizedBox(height: 2.0),
+              separatorBuilder: (context, index) => const SizedBox(height: 2.0),
               children: section.total.entries.map(
                 (e) => Text(
                   e.value.currency(name: e.key.name, symbol: e.key.symbol),

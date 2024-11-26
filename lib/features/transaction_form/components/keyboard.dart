@@ -37,14 +37,18 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
             builder: (context, child) {
               return SeparatedComponent.builder(
                 itemCount: viewModel.buttons.length,
-                separatorBuilder: (context) => const SizedBox(height: gap),
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: gap);
+                },
                 itemBuilder: (context, index) {
                   final row = viewModel.buttons.elementAt(index);
 
                   return SeparatedComponent.builder(
                     direction: Axis.horizontal,
                     itemCount: row.length,
-                    separatorBuilder: (context) => const SizedBox(width: gap),
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(width: gap);
+                    },
                     itemBuilder: (context, index) {
                       final button = row.elementAt(index);
 

@@ -57,7 +57,9 @@ class NavBarView extends StatelessWidget {
                   height: kTabHeight,
                   child: SeparatedComponent.list(
                     direction: Axis.horizontal,
-                    separatorBuilder: (context) => const SizedBox(width: 10.0),
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(width: 10.0);
+                    },
                     children: [
                       // -> tabs
                       Expanded(

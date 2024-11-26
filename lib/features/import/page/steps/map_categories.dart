@@ -69,7 +69,9 @@ class ImportMapCategoriesPage extends StatelessWidget {
 
             return SeparatedComponent.builder(
               itemCount: filtered.length,
-              separatorBuilder: (context) => const SizedBox(height: 40.0),
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 40.0);
+              },
               itemBuilder: (context, index) {
                 final MapEntry(:key, :value) = filtered.elementAt(index);
 

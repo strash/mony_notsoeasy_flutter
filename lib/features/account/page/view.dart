@@ -62,7 +62,7 @@ class AccountView extends StatelessWidget {
                   // -> amount
                   if (balance != null)
                     SeparatedComponent.list(
-                      separatorBuilder: (context) {
+                      separatorBuilder: (context, index) {
                         return const SizedBox(height: 30.0);
                       },
                       children: [

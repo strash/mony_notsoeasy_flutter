@@ -37,11 +37,15 @@ class AccountFormView extends StatelessWidget {
           child: Form(
             child: SeparatedComponent.list(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              separatorBuilder: (context) => const SizedBox(height: 10.0),
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 10.0);
+              },
               children: [
                 SeparatedComponent.list(
                   direction: Axis.horizontal,
-                  separatorBuilder: (context) => const SizedBox(width: 10.0),
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(width: 10.0);
+                  },
                   children: [
                     // -> color picker
                     NamedColorPickerComponent(
@@ -78,7 +82,9 @@ class AccountFormView extends StatelessWidget {
 
                 SeparatedComponent.list(
                   direction: Axis.horizontal,
-                  separatorBuilder: (context) => const SizedBox(width: 10.0),
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(width: 10.0);
+                  },
                   children: const [
                     // -> type
                     Flexible(flex: 2, child: TypeSelectComponent()),
