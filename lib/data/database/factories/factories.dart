@@ -4,5 +4,6 @@ export "./category.dart";
 export "./category_balance.dart";
 export "./factory_interface.dart";
 export "./tag.dart";
+export "./tag_balance.dart";
 export "./transaction.dart";
 export "./transaction_tag.dart";
