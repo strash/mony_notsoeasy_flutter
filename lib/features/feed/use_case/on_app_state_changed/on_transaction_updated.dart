@@ -12,9 +12,7 @@ final class _OnTransactionUpdated {
 
     final transaction = event.value;
 
-    final balances = await accountSevrice.getBalances(
-      ids: [transaction.account.id],
-    );
+    final balances = await accountSevrice.getBalances();
 
     final pages = viewModel.pages.map((e) {
       switch (e) {
@@ -26,7 +24,10 @@ final class _OnTransactionUpdated {
         case final FeedPageStateSingleAccount page:
           if (page.account.id == transaction.account.id) {
             return page.copyWith(
-              balance: balances.firstOrNull ?? page.balance,
+              balance: balances.where((e) {
+                    return e.id == page.account.id;
+                  }).firstOrNull ??
+                  page.balance,
               feed: page.feed.merge([transaction.copyWith()]),
             );
           }
