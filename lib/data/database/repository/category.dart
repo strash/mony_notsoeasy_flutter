@@ -57,7 +57,7 @@ final class _Impl
   Future<CategoryBalanceDto?> getBalance({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      final map = await db.rawQuery(
+      final maps = await db.rawQuery(
         """
 SELECT
 	c.id,
@@ -67,25 +67,25 @@ SELECT
 		FROM
 		(
 			SELECT
-				COALESCE(SUM(t.amount), 0) AS total_amount,
+				COALESCE(SUM(tr.amount), 0) AS total_amount,
 				a.currency_code
-			FROM transactions AS t
-			LEFT JOIN accounts AS a ON t.account_id = a.id
-			WHERE t.category_id = ?1
+			FROM transactions AS tr
+			LEFT JOIN accounts AS a ON tr.account_id = a.id
+			WHERE tr.category_id = ?1
 			GROUP BY a.currency_code
 		)
 	) AS total_amount,
-	MIN(t.date) AS first_transaction_date,
-	MAX(t.date) AS last_transaction_date,
-	COUNT(t.id) AS transactions_count
-FROM transactions AS t
-JOIN categories AS c ON t.category_id = c.id
+	MIN(tr.date) AS first_transaction_date,
+	MAX(tr.date) AS last_transaction_date,
+	COUNT(tr.id) AS transactions_count
+FROM transactions AS tr
+RIGHT JOIN categories AS c ON tr.category_id = c.id
 WHERE c.id = ?1;
 """,
         [id],
       );
-      if (map.isEmpty) return null;
-      return CategoryBalanceDto.fromJson(map.first);
+      if (maps.isEmpty) return null;
+      return CategoryBalanceDto.fromJson(maps.first);
     });
   }
 

@@ -6,6 +6,8 @@ abstract base class TagDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
+  Future<TagBalanceDto?> getBalance({required String id});
+
   Future<List<TagDto>> getAllSortedBy({required String order});
 
   Future<List<TagDto>> getAllForTransaction({required String transactionId});
@@ -45,25 +47,57 @@ final class _Impl
   }
 
   @override
+  Future<TagBalanceDto?> getBalance({required String id}) async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.rawQuery(
+        """
+SELECT
+	t.id,
+	t.created,
+	(
+		SELECT JSON_GROUP_OBJECT(currency_code, total_amount)
+		FROM
+		(
+			SELECT
+				COALESCE(SUM(tr.amount), 0) AS total_amount,
+				a.currency_code
+			FROM transactions AS tr
+			LEFT JOIN accounts AS a ON tr.account_id = a.id
+			LEFT JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
+			WHERE tt.tag_id = ?1
+			GROUP BY a.currency_code
+		)
+	) AS total_amount,
+	MIN(tr.date) AS first_transaction_date,
+	MAX(tr.date) AS last_transaction_date,
+	COUNT(tr.id) AS transactions_count
+FROM transactions AS tr
+JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
+RIGHT JOIN tags AS t ON tt.tag_id = t.id
+WHERE t.id = ?1;
+""",
+        [id],
+      );
+      if (maps.isEmpty) return null;
+      return TagBalanceDto.fromJson(maps.first);
+    });
+  }
+
+  @override
   Future<List<TagDto>> getAllSortedBy({required String order}) async {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.rawQuery("""
-SELECT
-	id, created, updated, title
-FROM (
-	SELECT
-		t.*,
-		c.transaction_type,
-		MAX(tr.date) as date
-	FROM $table AS t
-	LEFT JOIN transaction_tags AS tt ON t.id = tt.tag_id
-	LEFT JOIN transactions AS tr ON tt.transaction_id = tr.id
-	LEFT JOIN categories AS c ON tr.category_id = c.id
-	GROUP BY t.id
-) ORDER BY
-	transaction_type $order,
-	date DESC;
+SELECT t.* FROM $table AS t
+LEFT JOIN transaction_tags AS tt ON t.id = tt.tag_id
+LEFT JOIN transactions AS tr ON tt.transaction_id = tr.id
+LEFT JOIN categories AS c ON tr.category_id = c.id
+GROUP BY t.id
+ORDER BY
+	c.transaction_type $order NULLS LAST,
+	tr.date DESC,
+	t.updated DESC;
 """);
       return List.generate(
         maps.length,
