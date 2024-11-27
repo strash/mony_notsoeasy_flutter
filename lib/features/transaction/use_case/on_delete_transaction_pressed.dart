@@ -3,7 +3,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/features.dart";
 import "package:provider/provider.dart";
 
 final class OnDeleteTransactionPressed
@@ -31,12 +30,7 @@ final class OnDeleteTransactionPressed
 
         await transactionService.delete(id: value.id);
 
-        appService.notify(
-          EventTransactionDeleted(
-            sender: TransactionViewModel,
-            value: value,
-          ),
-        );
+        appService.notify(EventTransactionDeleted(value));
     }
   }
 }

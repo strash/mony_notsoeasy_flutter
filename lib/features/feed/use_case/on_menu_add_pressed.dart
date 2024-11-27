@@ -41,9 +41,7 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
     if (result == null) return;
 
     final account = await accountService.create(vo: result);
-    appService.notify(
-      EventAccountCreated(sender: FeedViewModel, value: account),
-    );
+    appService.notify(EventAccountCreated(account));
   }
 
   Future<void> _addCategory(BuildContext context, ETransactionType type) async {
@@ -67,8 +65,6 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
 
     final category = await categoryService.create(vo: result);
 
-    appService.notify(
-      EventCategoryCreated(sender: FeedViewModel, value: category),
-    );
+    appService.notify(EventCategoryCreated(category));
   }
 }

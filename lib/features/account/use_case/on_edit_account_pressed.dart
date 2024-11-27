@@ -3,7 +3,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/account/page/page.dart";
 import "package:mony_app/features/account_form/page/page.dart";
 import "package:provider/provider.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
@@ -40,11 +39,6 @@ final class OnEditAccountPressed extends UseCase<Future<void>, AccountModel> {
       ),
     );
 
-    appService.notify(
-      EventAccountUpdated(
-        sender: AccountViewModel,
-        value: account,
-      ),
-    );
+    appService.notify(EventAccountUpdated(account));
   }
 }

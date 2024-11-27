@@ -37,12 +37,7 @@ final class OnNavbarAddTransactionPressed
     );
 
     if (transactionModel != null) {
-      appService.notify(
-        EventTransactionCreated(
-          sender: TransactionFormViewModel,
-          value: transactionModel,
-        ),
-      );
+      appService.notify(EventTransactionCreated(transactionModel));
     }
   }
 }

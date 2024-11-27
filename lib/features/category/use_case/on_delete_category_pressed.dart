@@ -3,7 +3,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/category/page/page.dart";
 import "package:provider/provider.dart";
 
 final class OnDeleteCategoryPressed
@@ -32,12 +31,7 @@ final class OnDeleteCategoryPressed
 
         await categoryService.delete(id: value.id);
 
-        appService.notify(
-          EventCategoryDeleted(
-            sender: CategoryViewModel,
-            value: value,
-          ),
-        );
+        appService.notify(EventCategoryDeleted(value));
     }
   }
 }

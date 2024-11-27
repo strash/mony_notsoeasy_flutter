@@ -5,7 +5,6 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/alert/component.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/services/database/account.dart";
-import "package:mony_app/features/account/page/view_model.dart";
 import "package:provider/provider.dart";
 
 final class OnDeleteAccountPressed extends UseCase<Future<void>, AccountModel> {
@@ -33,12 +32,7 @@ final class OnDeleteAccountPressed extends UseCase<Future<void>, AccountModel> {
 
         await accountService.delete(id: value.id);
 
-        appService.notify(
-          EventAccountDeleted(
-            sender: AccountViewModel,
-            value: value,
-          ),
-        );
+        appService.notify(EventAccountDeleted(value));
     }
   }
 }

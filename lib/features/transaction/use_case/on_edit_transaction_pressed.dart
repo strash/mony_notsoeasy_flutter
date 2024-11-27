@@ -3,7 +3,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/bottom_sheet/sheet.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/transaction/page/page.dart";
 import "package:mony_app/features/transaction_form/page/page.dart";
 import "package:provider/provider.dart";
 
@@ -28,18 +27,13 @@ final class OnEditTransactionPressed
     final transactionService = context.read<DomainTransactionService>();
     final appService = context.viewModel<AppEventService>();
 
-    final updated = await transactionService.update(
+    final model = await transactionService.update(
       transaction: transaction,
       vo: result.transactionVO,
       tags: result.tags,
     );
-    if (updated == null) return;
+    if (model == null) return;
 
-    appService.notify(
-      EventTransactionUpdated(
-        sender: TransactionViewModel,
-        value: updated,
-      ),
-    );
+    appService.notify(EventTransactionUpdated(model));
   }
 }
