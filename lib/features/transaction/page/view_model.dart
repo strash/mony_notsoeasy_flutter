@@ -56,6 +56,7 @@ final class TransactionViewModel
         () => OnDeleteTransactionPressed(),
         () => OnAccountPressed(),
         () => OnCategoryPressed(),
+        () => OnTagPressed(),
       ],
       child: const TransactionView(),
     );

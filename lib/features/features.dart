@@ -9,5 +9,6 @@ export "./settings/settings.dart";
 export "./start/start.dart";
 export "./start_account/start_account.dart";
 export "./stats/stats.dart";
+export "./tag/tag.dart";
 export "./transaction/transaction.dart";
 export "./transaction_form/transaction_form.dart";

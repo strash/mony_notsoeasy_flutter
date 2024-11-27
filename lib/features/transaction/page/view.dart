@@ -21,6 +21,7 @@ class TransactionView extends StatelessWidget {
     final onDeletePressed = viewModel<OnDeleteTransactionPressed>();
     final onAccountPressed = viewModel<OnAccountPressed>();
     final onCategoryPressed = viewModel<OnCategoryPressed>();
+    final onTagPressed = viewModel<OnTagPressed>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -89,9 +90,11 @@ class TransactionView extends StatelessWidget {
                         ),
                       ),
 
-                      // TODO: открывать экран тега при клике на тег
                       // -> tags
-                      TransactionTagsComponent(tags: transaction.tags),
+                      TransactionTagsComponent(
+                        tags: transaction.tags,
+                        onTap: onTagPressed,
+                      ),
 
                       // -> note
                       if (transaction.note.isNotEmpty)

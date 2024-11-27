@@ -1,13 +1,16 @@
 import "package:flutter/material.dart";
+import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/features/transaction/components/tag.dart";
 
 class TransactionTagsComponent extends StatelessWidget {
   final List<TagModel> tags;
+  final UseCase<void, TagModel> onTap;
 
   const TransactionTagsComponent({
     super.key,
     required this.tags,
+    required this.onTap,
   });
 
   @override
@@ -16,7 +19,11 @@ class TransactionTagsComponent extends StatelessWidget {
       spacing: 6.0,
       runSpacing: 6.0,
       children: tags.map((e) {
-        return TransactionTagComponent(tag: e);
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => onTap(context, e),
+          child: TransactionTagComponent(tag: e),
+        );
       }).toList(growable: false),
     );
   }
