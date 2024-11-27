@@ -12,6 +12,42 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
   late BuildContext? _context;
   late List<TagModel> _tags;
 
+  @override
+  Future<void> call(BuildContext context, [dynamic _]) async {
+    _context = context;
+
+    final viewModel = context.viewModel<TransactionFormViewModel>();
+    final controller = viewModel.bottomSheetTagScrollController;
+    final tagService = context.read<DomainTagService>();
+    viewModel.tagInput.addListener(_onInputChanged);
+
+    _tags = await tagService.getAllSortedBy(
+      first: viewModel.typeController.value,
+    );
+    viewModel.displayedTags.value = _filterTags(viewModel.attachedTags);
+    if (!context.mounted) return;
+
+    await BottomSheetComponent.show<void>(
+      context,
+      showDragHandle: false,
+      builder: (context, bottom) {
+        return TransactionFormBottomSheetTagsComponent(
+          inputController: viewModel.tagInput,
+          tags: viewModel.displayedTags,
+          scrollController: controller,
+          keyboardHeight: bottom,
+          onTagPressed: _onTagPressed,
+          onSubmitPressed: _onSubmitPressed,
+        );
+      },
+    );
+    if (!context.mounted) return;
+
+    viewModel.tagInput.text = "";
+    viewModel.tagInput.removeListener(_onInputChanged);
+    if (controller.isReady) controller.jumpTo(.0);
+  }
+
   List<TagModel> _filterTags(List<TransactionTagVariant> byList) {
     return _tags.where((e) {
       return !byList.any((ee) {
@@ -125,41 +161,5 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
         curve: Curves.easeInOut,
       );
     });
-  }
-
-  @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
-    _context = context;
-
-    final viewModel = context.viewModel<TransactionFormViewModel>();
-    final controller = viewModel.bottomSheetTagScrollController;
-    final tagService = context.read<DomainTagService>();
-    viewModel.tagInput.addListener(_onInputChanged);
-
-    _tags = await tagService.getAllSortedBy(
-      first: viewModel.typeController.value,
-    );
-    viewModel.displayedTags.value = _filterTags(viewModel.attachedTags);
-    if (!context.mounted) return;
-
-    await BottomSheetComponent.show<void>(
-      context,
-      showDragHandle: false,
-      builder: (context, bottom) {
-        return TransactionFormBottomSheetTagsComponent(
-          inputController: viewModel.tagInput,
-          tags: viewModel.displayedTags,
-          scrollController: controller,
-          keyboardHeight: bottom,
-          onTagPressed: _onTagPressed,
-          onSubmitPressed: _onSubmitPressed,
-        );
-      },
-    );
-    if (!context.mounted) return;
-
-    viewModel.tagInput.text = "";
-    viewModel.tagInput.removeListener(_onInputChanged);
-    if (controller.isReady) controller.jumpTo(.0);
   }
 }
