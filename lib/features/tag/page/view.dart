@@ -50,8 +50,11 @@ class TagView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             sliver: SliverToBoxAdapter(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
+                  // -> tag
                   TagTagComponent(tag: tag),
+                  const SizedBox(height: 40.0),
                 ],
               ),
             ),
