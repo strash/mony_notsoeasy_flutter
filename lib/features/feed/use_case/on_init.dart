@@ -4,7 +4,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
 import "package:provider/provider.dart";
 
-final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel> {
+final class OnInit extends UseCase<Future<void>, FeedViewModel> {
   @override
   Future<void> call(BuildContext context, [FeedViewModel? viewModel]) async {
     if (viewModel == null) throw ArgumentError.notNull();
@@ -12,15 +12,14 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel> {
     final accountService = context.read<DomainAccountService>();
     final transactionService = context.read<DomainTransactionService>();
 
-    // FIXME: почему-то сразу после импорта добавился FeedPageStateAllAccounts
+    // TODO: почему-то сразу после импорта добавился FeedPageStateAllAccounts
     // хотя счет был всего один
     final List<FeedPageState> pages = [];
     final accounts = await accountService.getAll();
     final balances = await accountService.getBalances();
 
     if (accounts.length > 1) {
-      final transactions = await transactionService.getMany(page: 0)
-        ..sort((a, b) => b.date.compareTo(a.date));
+      final transactions = await transactionService.getMany(page: 0);
       pages.add(
         FeedPageStateAllAccounts(
           scrollPage: 0,
@@ -33,9 +32,10 @@ final class OnInitialDataFetched extends UseCase<Future<void>, FeedViewModel> {
     }
 
     for (final account in accounts) {
-      final transactions =
-          await transactionService.getMany(page: 0, accountId: account.id)
-            ..sort((a, b) => b.date.compareTo(a.date));
+      final transactions = await transactionService.getMany(
+        page: 0,
+        accountIds: [account.id],
+      );
       pages.add(
         FeedPageStateSingleAccount(
           scrollPage: 0,

@@ -7,7 +7,7 @@ import "package:mony_app/features/account_form/page/page.dart";
 import "package:provider/provider.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
-final class OnEditAccountPressed extends UseCase<Future<void>, AccountModel> {
+final class OnEditPressed extends UseCase<Future<void>, AccountModel> {
   @override
   Future<void> call(BuildContext context, [AccountModel? value]) async {
     if (value == null) throw ArgumentError.notNull();

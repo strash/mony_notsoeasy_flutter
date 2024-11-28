@@ -2,8 +2,7 @@ import "dart:async";
 
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
-import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_controller.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/page/view.dart";
 import "package:mony_app/features/category/use_case/use_case.dart";
@@ -69,8 +68,8 @@ final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
       viewModel: this,
       useCases: [
         () => OnTransactionPressed(),
-        () => OnEditCategoryPressed(),
-        () => OnDeleteCategoryPressed(),
+        () => OnEditPressed(),
+        () => OnDeletePressed(),
       ],
       child: const CategoryView(),
     );

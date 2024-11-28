@@ -100,7 +100,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
           context.viewModel<NavBarViewModel>().subject.listen(_onNavBarEvent);
 
       // -> scroll controllers
-      OnInitialDataFetched().call(context, this).then((_) {
+      OnInit().call(context, this).then((_) {
         for (final (index, _) in pages.indexed) {
           addPageScroll(index);
         }

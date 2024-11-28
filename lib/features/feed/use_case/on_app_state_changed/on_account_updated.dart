@@ -40,7 +40,7 @@ final class _OnAccountUpdated {
                 List.generate(page.scrollPage + 1, (index) {
                   return transactionService.getMany(
                     page: index,
-                    accountId: account.id,
+                    accountIds: [account.id],
                   );
                 }),
               );

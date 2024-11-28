@@ -18,7 +18,7 @@ final class OnInit extends UseCase<Future<void>, CategoryViewModel> {
     final balance = await categoryService.getBalance(id: viewModel.category.id);
     final feed = await transactionService.getMany(
       page: viewModel.scrollPage,
-      categoryId: viewModel.category.id,
+      categoryIds: [viewModel.category.id],
     );
 
     viewModel.setProtectedState(() {

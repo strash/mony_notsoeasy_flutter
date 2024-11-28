@@ -26,8 +26,8 @@ class CategoryView extends StatelessWidget {
     final feed = viewModel.feed.toFeed();
 
     final onTransactionPressed = viewModel<OnTransactionPressed>();
-    final onEditPressed = viewModel<OnEditCategoryPressed>();
-    final onDeletePressed = viewModel<OnDeleteCategoryPressed>();
+    final onEditPressed = viewModel<OnEditPressed>();
+    final onDeletePressed = viewModel<OnDeletePressed>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -69,6 +69,7 @@ class CategoryView extends StatelessWidget {
                   CategoryIconComponent(category: viewModel.category),
                   const SizedBox(height: 40.0),
 
+                  // -> balance
                   if (balance != null && balance.totalAmount.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 30.0),

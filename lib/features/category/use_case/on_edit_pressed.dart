@@ -6,7 +6,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category_form/page/page.dart";
 import "package:provider/provider.dart";
 
-final class OnEditCategoryPressed extends UseCase<Future<void>, CategoryModel> {
+final class OnEditPressed extends UseCase<Future<void>, CategoryModel> {
   @override
   Future<void> call(BuildContext context, [CategoryModel? value]) async {
     if (value == null) throw ArgumentError.notNull();

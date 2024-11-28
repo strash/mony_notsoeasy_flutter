@@ -5,8 +5,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:provider/provider.dart";
 
-final class OnDeleteCategoryPressed
-    extends UseCase<Future<void>, CategoryModel> {
+final class OnDeletePressed extends UseCase<Future<void>, CategoryModel> {
   @override
   Future<void> call(BuildContext context, [CategoryModel? value]) async {
     if (value == null) throw ArgumentError.notNull();

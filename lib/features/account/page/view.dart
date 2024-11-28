@@ -17,8 +17,8 @@ class AccountView extends StatelessWidget {
     final viewModel = context.viewModel<AccountViewModel>();
     final account = viewModel.account;
     final balance = viewModel.balance;
-    final onEditPressed = viewModel<OnEditAccountPressed>();
-    final onDeletePressed = viewModel<OnDeleteAccountPressed>();
+    final onEditPressed = viewModel<OnEditPressed>();
+    final onDeletePressed = viewModel<OnDeletePressed>();
 
     return Scaffold(
       body: CustomScrollView(

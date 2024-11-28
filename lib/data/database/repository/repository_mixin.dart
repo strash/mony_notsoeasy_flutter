@@ -10,4 +10,8 @@ mixin DatabaseRepositoryMixin {
       rethrow;
     }
   }
+
+  String getInArguments(List<String> items) {
+    return List.filled(items.length, "?").join(", ");
+  }
 }

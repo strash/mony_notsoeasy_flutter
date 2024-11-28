@@ -47,7 +47,7 @@ final class _OnAccountDeleted {
             } else {
               final feed = await transactionService.getMany(
                 page: 0,
-                accountId: page.account.id,
+                accountIds: [page.account.id],
               );
 
               return Future.value(

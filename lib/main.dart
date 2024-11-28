@@ -71,6 +71,7 @@ void main() async {
               return DomainTagService(
                 tagRepo: TagDatabaseRepository(database: appDatabase),
                 tagFactory: TagDatabaseFactoryImpl(),
+                tagBalanceFactory: TagBalanceDatabaseFactoryImpl(),
               );
             },
           ),

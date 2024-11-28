@@ -114,7 +114,7 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
                 }
               case EImportColumn.tag:
                 if (tags.containsKey(value)) {
-                  // FIXME: предполагается, что из CSV будет только один таг. но
+                  // TODO: предполагается, что из CSV будет только один таг. но
                   // если будут другие способы импорта, то нужно поправить
                   builder.addTags([tags[value]!]);
                 }

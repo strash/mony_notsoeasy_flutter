@@ -16,6 +16,7 @@ class TagView extends StatelessWidget {
 
     final viewModel = context.viewModel<TagViewModel>();
     final tag = viewModel.tag;
+    final balance = viewModel.balance;
 
     return Scaffold(
       body: CustomScrollView(
@@ -31,6 +32,7 @@ class TagView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
+                  // TODO
                   // onTap: () => onEditPressed(context, transaction),
                 ),
                 const SizedBox(width: 4.0),
@@ -38,6 +40,7 @@ class TagView extends StatelessWidget {
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
+                  // TODO
                   // onTap: () => onDeletePressed(context, transaction),
                 ),
                 const SizedBox(width: 8.0),
@@ -50,11 +53,18 @@ class TagView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             sliver: SliverToBoxAdapter(
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // -> tag
                   TagTagComponent(tag: tag),
                   const SizedBox(height: 40.0),
+
+                  // -> balance
+                  if (balance != null && balance.totalAmount.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30.0),
+                      child: TagTotalAmountComponent(balance: balance),
+                    ),
                 ],
               ),
             ),

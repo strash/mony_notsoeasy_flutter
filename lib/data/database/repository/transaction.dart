@@ -7,15 +7,17 @@ abstract base class TransactionDatabaseRepository {
   }) = _Impl;
 
   Future<List<TransactionDto>> getAll({
-    String? accountId,
-    String? categoryId,
+    List<String>? accountIds,
+    List<String>? categoryIds,
+    List<String>? tagIds,
   });
 
   Future<List<TransactionDto>> getMany({
     required int limit,
     required int offset,
-    String? accountId,
-    String? categoryId,
+    List<String>? accountIds,
+    List<String>? categoryIds,
+    List<String>? tagIds,
   });
 
   Future<TransactionDto?> getOne({required String id});
@@ -36,32 +38,48 @@ final class _Impl
 
   const _Impl({required this.database});
 
-  (String?, List<Object>?) _getWhere(String? accountId, String? categoryId) {
-    switch ((accountId, categoryId)) {
-      case (final String a, final String b):
-        return ("account_id = ? AND category_id = ?", [a, b]);
-      case (final String a, null):
-        return ("account_id = ?", [a]);
-      case (null, final String b):
-        return ("category_id = ?", [b]);
-      default:
-        return (null, null);
+  (String, List<Object>?) _getWhere(
+    List<String>? accountIds,
+    List<String>? categoryIds,
+    List<String>? tagIds,
+  ) {
+    final List<String> where = [];
+    final List<String> args = [];
+    if (accountIds != null && accountIds.isNotEmpty) {
+      where.add("tr.account_id in (${getInArguments(accountIds)})");
+      args.addAll(accountIds);
     }
+    if (categoryIds != null && categoryIds.isNotEmpty) {
+      where.add("tr.category_id in (${getInArguments(categoryIds)})");
+      args.addAll(categoryIds);
+    }
+    if (tagIds != null && tagIds.isNotEmpty) {
+      where.add("tt.tag_id in (${getInArguments(tagIds)})");
+      args.addAll(tagIds);
+    }
+    if (where.isEmpty) return ("", null);
+    return ("WHERE ${where.join(" AND ")}", args);
   }
 
   @override
   Future<List<TransactionDto>> getAll({
-    String? accountId,
-    String? categoryId,
+    List<String>? accountIds,
+    List<String>? categoryIds,
+    List<String>? tagIds,
   }) async {
     return resolve(() async {
       final db = await database.db;
-      final where = _getWhere(accountId, categoryId);
-      final maps = await db.query(
-        table,
-        orderBy: "date DESC",
-        where: where.$1,
-        whereArgs: where.$2,
+      final where = _getWhere(accountIds, categoryIds, tagIds);
+      final maps = await db.rawQuery(
+        """
+SELECT tr.*
+FROM transactions AS tr
+LEFT JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
+${where.$1}
+GROUP BY tr.id
+ORDER BY tr.date DESC;
+""",
+        where.$2,
       );
       return List.generate(
         maps.length,
@@ -75,19 +93,25 @@ final class _Impl
   Future<List<TransactionDto>> getMany({
     required int limit,
     required int offset,
-    String? accountId,
-    String? categoryId,
+    List<String>? accountIds,
+    List<String>? categoryIds,
+    List<String>? tagIds,
   }) async {
     return resolve(() async {
       final db = await database.db;
-      final where = _getWhere(accountId, categoryId);
-      final maps = await db.query(
-        table,
-        limit: limit,
-        offset: offset,
-        orderBy: "date DESC",
-        where: where.$1,
-        whereArgs: where.$2,
+      final where = _getWhere(accountIds, categoryIds, tagIds);
+      final maps = await db.rawQuery(
+        """
+SELECT tr.*
+FROM transactions AS tr
+LEFT JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
+${where.$1}
+GROUP BY tr.id
+ORDER BY tr.date DESC
+LIMIT $limit
+OFFSET $offset;
+""",
+        where.$2,
       );
       return List.generate(
         maps.length,

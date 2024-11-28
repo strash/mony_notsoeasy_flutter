@@ -44,7 +44,10 @@ final class OnCategoryAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventAccountDeleted():
         final id = viewModel.category.id;
         final balance = await categoryService.getBalance(id: id);
-        final feed = await transactionService.getMany(page: 0, categoryId: id);
+        final feed = await transactionService.getMany(
+          page: 0,
+          categoryIds: [id],
+        );
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
           viewModel.feed = feed;
@@ -88,7 +91,7 @@ final class OnCategoryAppStateChanged extends UseCase<Future<void>, _TValue> {
         final balance = await categoryService.getBalance(id: id);
         final feed = await Future.wait(
           List.generate(viewModel.scrollPage + 1, (index) {
-            return transactionService.getMany(page: index, categoryId: id);
+            return transactionService.getMany(page: index, categoryIds: [id]);
           }),
         );
         viewModel.setProtectedState(() {

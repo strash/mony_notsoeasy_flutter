@@ -15,46 +15,48 @@ class TagTagComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Column(
-      children: [
-        const SizedBox(height: 20.0),
+    return Center(
+      child: Column(
+        children: [
+          const SizedBox(height: 20.0),
 
-        DecoratedBox(
-          decoration: ShapeDecoration(
-            color: theme.colorScheme.surfaceContainerHigh,
-            shape: const SmoothRectangleBorder(
-              borderRadius: SmoothBorderRadius.all(
-                SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 1.0),
+          // -> tag
+          DecoratedBox(
+            decoration: ShapeDecoration(
+              color: theme.colorScheme.surfaceContainerHigh,
+              shape: const SmoothRectangleBorder(
+                borderRadius: SmoothBorderRadius.all(
+                  SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 1.0),
+                ),
+              ),
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+              child: Text(
+                "#${tag.title}",
+                style: GoogleFonts.golosText(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                  color: theme.colorScheme.onTertiaryContainer,
+                ),
               ),
             ),
           ),
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-            child: Text(
-              "#${tag.title}",
-              style: GoogleFonts.golosText(
-                fontSize: 18.0,
-                height: 1.0,
-                fontWeight: FontWeight.w500,
-                color: theme.colorScheme.onTertiaryContainer,
-              ),
+          const SizedBox(height: 10.0),
+
+          // -> subtitle
+          Text(
+            "Тег",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.golosText(
+              fontSize: 15.0,
+              fontWeight: FontWeight.w400,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
-        ),
-        const SizedBox(height: 10.0),
-
-        // -> subtitle
-        Text(
-          "Тег",
-          textAlign: TextAlign.center,
-          style: GoogleFonts.golosText(
-            fontSize: 15.0,
-            fontWeight: FontWeight.w400,
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

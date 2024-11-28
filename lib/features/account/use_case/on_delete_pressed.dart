@@ -7,7 +7,7 @@ import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/services/database/account.dart";
 import "package:provider/provider.dart";
 
-final class OnDeleteAccountPressed extends UseCase<Future<void>, AccountModel> {
+final class OnDeletePressed extends UseCase<Future<void>, AccountModel> {
   @override
   Future<void> call(BuildContext context, [AccountModel? value]) async {
     if (value == null) throw ArgumentError.notNull();

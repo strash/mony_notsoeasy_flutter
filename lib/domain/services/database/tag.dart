@@ -4,6 +4,7 @@ import "package:mony_app/domain/domain.dart";
 final class DomainTagService extends BaseDatabaseService {
   final TagDatabaseRepository _tagRepo;
   final TagDatabaseFactoryImpl _tagFactory;
+  final TagBalanceDatabaseFactoryImpl _tagBalanceFactory;
 
   @override
   int get perPage => 20;
@@ -11,8 +12,16 @@ final class DomainTagService extends BaseDatabaseService {
   DomainTagService({
     required TagDatabaseRepository tagRepo,
     required TagDatabaseFactoryImpl tagFactory,
+    required TagBalanceDatabaseFactoryImpl tagBalanceFactory,
   })  : _tagRepo = tagRepo,
-        _tagFactory = tagFactory;
+        _tagFactory = tagFactory,
+        _tagBalanceFactory = tagBalanceFactory;
+
+  Future<TagBalanceModel?> getBalance({required String id}) async {
+    final dto = await _tagRepo.getBalance(id: id);
+    if (dto == null) return null;
+    return _tagBalanceFactory.toModel(dto);
+  }
 
   Future<List<TagModel>> getAllSortedBy({
     required ETransactionType first,

@@ -34,18 +34,14 @@ final class _Impl
 
   const _Impl({required this.database});
 
-  String _getIn(List<String> items) {
-    return List.filled(items.length, "?").join(", ");
-  }
-
   (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
     switch ((type, ids)) {
       case (final String a, final List<String> b):
-        return ("type = ? AND id IN (${_getIn(b)})", [a, ...b]);
+        return ("type = ? AND id IN (${getInArguments(b)})", [a, ...b]);
       case (final String a, null):
         return ("type = ?", [a]);
       case (null, final List<String> b):
-        return ("id IN (${_getIn(b)})", b);
+        return ("id IN (${getInArguments(b)})", b);
       default:
         return (null, null);
     }
@@ -55,7 +51,7 @@ final class _Impl
   Future<List<AccountBalanceDto>> getBalances({List<String>? ids}) async {
     return resolve(() async {
       final db = await database.db;
-      final where = ids != null ? "WHERE a.id IN (${_getIn(ids)})" : "";
+      final where = ids != null ? "WHERE a.id IN (${getInArguments(ids)})" : "";
       final maps = await db.rawQuery(
         """
 SELECT

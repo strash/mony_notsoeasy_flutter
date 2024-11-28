@@ -37,13 +37,9 @@ final class _Impl
 
   const _Impl({required this.database});
 
-  String _getIn(List<String> items) {
-    return List.filled(items.length, "?").join(", ");
-  }
-
   (String?, List<Object>?) _getWhere(List<String>? ids) {
     if (ids == null) return (null, null);
-    return ("id IN (${_getIn(ids)})", ids);
+    return ("id IN (${getInArguments(ids)})", ids);
   }
 
   @override

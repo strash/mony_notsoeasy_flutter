@@ -36,24 +36,26 @@ final class DomainTransactionService extends BaseDatabaseService {
   int get perPage => 40;
 
   Future<List<TransactionModel>> getAll({
-    String? accountId,
-    String? categoryId,
+    List<String>? accountIds,
+    List<String>? categoryIds,
+    List<String>? tagIds,
   }) async {
     final dtos = await _transactionRepo.getAll(
-      accountId: accountId,
-      categoryId: categoryId,
+      accountIds: accountIds,
+      categoryIds: categoryIds,
+      tagIds: tagIds,
     );
-    final Set<String> accountIds = {};
-    final Set<String> categoryIds = {};
+    final Set<String> unqAccountIds = {};
+    final Set<String> unqCategoryIds = {};
     for (final element in dtos) {
-      accountIds.add(element.accountId);
-      categoryIds.add(element.categoryId);
+      unqAccountIds.add(element.accountId);
+      unqCategoryIds.add(element.categoryId);
     }
     final accountDtos = await _accountRepo.getAll(
-      ids: List<String>.from(accountIds),
+      ids: List<String>.from(unqAccountIds),
     );
     final categoryDtos = await _categoryRepo.getAll(
-      ids: List<String>.from(categoryIds),
+      ids: List<String>.from(unqCategoryIds),
     );
     final tagDtos = await Future.wait(
       dtos.map((e) => _tagRepo.getAllForTransaction(transactionId: e.id)),
@@ -84,26 +86,28 @@ final class DomainTransactionService extends BaseDatabaseService {
 
   Future<List<TransactionModel>> getMany({
     required int page,
-    String? accountId,
-    String? categoryId,
+    List<String>? accountIds,
+    List<String>? categoryIds,
+    List<String>? tagIds,
   }) async {
     final dtos = await _transactionRepo.getMany(
       limit: perPage,
       offset: offset(page),
-      accountId: accountId,
-      categoryId: categoryId,
+      accountIds: accountIds,
+      categoryIds: categoryIds,
+      tagIds: tagIds,
     );
-    final Set<String> accountIds = {};
-    final Set<String> categoryIds = {};
+    final Set<String> unqAccountIds = {};
+    final Set<String> unqCategoryIds = {};
     for (final element in dtos) {
-      accountIds.add(element.accountId);
-      categoryIds.add(element.categoryId);
+      unqAccountIds.add(element.accountId);
+      unqCategoryIds.add(element.categoryId);
     }
     final accountDtos = await _accountRepo.getAll(
-      ids: List<String>.from(accountIds),
+      ids: List<String>.from(unqAccountIds),
     );
     final categoryDtos = await _categoryRepo.getAll(
-      ids: List<String>.from(categoryIds),
+      ids: List<String>.from(unqCategoryIds),
     );
     final tagDtos = await Future.wait(
       dtos.map((e) => _tagRepo.getAllForTransaction(transactionId: e.id)),

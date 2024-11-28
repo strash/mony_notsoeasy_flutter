@@ -30,7 +30,6 @@ class TransactionTagComponent extends StatelessWidget {
           "#${tag.title}",
           style: GoogleFonts.golosText(
             fontSize: 16.0,
-            height: 1.0,
             fontWeight: FontWeight.w500,
             color: theme.colorScheme.onTertiaryContainer,
           ),

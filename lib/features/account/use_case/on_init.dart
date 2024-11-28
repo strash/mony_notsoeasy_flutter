@@ -5,7 +5,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
 import "package:provider/provider.dart";
 
-final class OnInitAccount extends UseCase<Future<void>, AccountModel> {
+final class OnInit extends UseCase<Future<void>, AccountModel> {
   @override
   Future<void> call(BuildContext context, [AccountModel? account]) async {
     if (account == null) throw ArgumentError.notNull();

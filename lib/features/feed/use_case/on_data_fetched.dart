@@ -31,7 +31,7 @@ final class OnDataFetched extends UseCase<Future<void>, FeedViewModel> {
       case final FeedPageStateSingleAccount page:
         final data = await transactionService.getMany(
           page: scrollPage,
-          accountId: page.account.id,
+          accountIds: [page.account.id],
         );
         viewModel.setProtectedState(() {
           viewModel.pages[pageIndex] = page.copyWith(

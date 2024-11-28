@@ -52,12 +52,12 @@ final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
     return ViewModel<AccountViewModel>(
       viewModel: this,
       useCases: [
-        () => OnEditAccountPressed(),
-        () => OnDeleteAccountPressed(),
+        () => OnEditPressed(),
+        () => OnDeletePressed(),
       ],
       child: Builder(
         builder: (context) {
-          OnInitAccount().call(context, account);
+          OnInit().call(context, account);
           return const AccountView();
         },
       ),
