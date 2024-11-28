@@ -29,6 +29,7 @@ class TagView extends StatelessWidget {
 
     return Scaffold(
       body: CustomScrollView(
+        controller: viewModel.controller,
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),
