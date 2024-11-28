@@ -20,12 +20,10 @@ sealed class CategoryVariant {}
 
 final class CategoryVariantVO extends CategoryVariant {
   final CategoryVO vo;
-
   CategoryVariantVO({required this.vo});
 }
 
 final class CategoryVariantModel extends CategoryVariant {
   final CategoryModel model;
-
   CategoryVariantModel({required this.model});
 }

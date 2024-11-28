@@ -20,12 +20,10 @@ sealed class AccountVariant {}
 
 final class AccountVariantVO extends AccountVariant {
   final AccountVO vo;
-
   AccountVariantVO({required this.vo});
 }
 
 final class AccountVariantModel extends AccountVariant {
   final AccountModel model;
-
   AccountVariantModel({required this.model});
 }
