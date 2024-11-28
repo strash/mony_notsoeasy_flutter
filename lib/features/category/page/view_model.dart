@@ -37,12 +37,12 @@ final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
   bool canLoadMore = true;
 
   void _onFeedEvent(FeedScrollControllerEvent event) {
-    if (!mounted) return;
+    if (!mounted || isEmpty) return;
     OnDataFetched().call(context, this);
   }
 
   void _onAppEvent(Event event) {
-    if (!mounted) return;
+    if (!mounted || isEmpty) return;
     OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 

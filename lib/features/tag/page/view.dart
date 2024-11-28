@@ -1,12 +1,8 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/appbar/component.dart";
-import "package:mony_app/components/appbar_button/component.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/components/feed_empty_state/component.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/state.dart";
-import "package:mony_app/features/feed/use_case/on_app_state_changed.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/tag/components/components.dart";
 import "package:mony_app/features/tag/page/view_model.dart";

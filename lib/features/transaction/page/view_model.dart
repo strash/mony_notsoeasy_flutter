@@ -30,7 +30,7 @@ final class TransactionViewModel
   late TransactionModel transaction = widget.transaction;
 
   void _onAppEvent(Event event) {
-    if (!mounted) return;
+    if (!mounted || isEmpty) return;
     OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 

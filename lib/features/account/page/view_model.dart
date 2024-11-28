@@ -30,7 +30,7 @@ final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
   AccountBalanceModel? balance;
 
   void _onAppEvent(Event event) {
-    if (!mounted) return;
+    if (!mounted || isEmpty) return;
     OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 
@@ -38,7 +38,6 @@ final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      // -> app events
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
     });
   }
