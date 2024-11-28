@@ -72,11 +72,7 @@ ORDER BY a.created ASC;
 """,
         ids,
       );
-      return List.generate(
-        maps.length,
-        (index) => AccountBalanceDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(AccountBalanceDto.fromJson).toList(growable: false);
     });
   }
 
@@ -91,11 +87,7 @@ ORDER BY a.created ASC;
         where: where.$1,
         whereArgs: where.$2,
       );
-      return List.generate(
-        maps.length,
-        (index) => AccountDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(AccountDto.fromJson).toList(growable: false);
     });
   }
 
@@ -115,11 +107,7 @@ ORDER BY a.created ASC;
         where: type != null ? "type = ?" : null,
         whereArgs: type != null ? [type] : null,
       );
-      return List.generate(
-        maps.length,
-        (index) => AccountDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(AccountDto.fromJson).toList(growable: false);
     });
   }
 

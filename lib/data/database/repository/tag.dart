@@ -95,11 +95,7 @@ ORDER BY
 	tr.date DESC,
 	t.updated DESC;
 """);
-      return List.generate(
-        maps.length,
-        (index) => TagDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(TagDto.fromJson).toList(growable: false);
     });
   }
 
@@ -118,11 +114,7 @@ ORDER BY tt.created ASC;
 """,
         [transactionId],
       );
-      return List.generate(
-        maps.length,
-        (index) => TagDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(TagDto.fromJson).toList(growable: false);
     });
   }
 
@@ -137,11 +129,7 @@ ORDER BY tt.created ASC;
         where: where.$1,
         whereArgs: where.$2,
       );
-      return List.generate(
-        maps.length,
-        (index) => TagDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(TagDto.fromJson).toList(growable: false);
     });
   }
 
@@ -158,17 +146,13 @@ ORDER BY tt.created ASC;
         offset: offset,
         orderBy: "title ASC",
       );
-      return List.generate(
-        maps.length,
-        (index) => TagDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(TagDto.fromJson).toList(growable: false);
     });
   }
 
   @override
   Future<TagDto?> getOne({String? id, String? title}) async {
-    if (id == null && title == null) return null;
+    assert(id != null || title != null);
     return resolve(() async {
       final db = await database.db;
       final where = switch ((id, title)) {

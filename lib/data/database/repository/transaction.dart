@@ -81,11 +81,7 @@ ORDER BY tr.date DESC;
 """,
         where.$2,
       );
-      return List.generate(
-        maps.length,
-        (index) => TransactionDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(TransactionDto.fromJson).toList(growable: false);
     });
   }
 
@@ -113,11 +109,7 @@ OFFSET $offset;
 """,
         where.$2,
       );
-      return List.generate(
-        maps.length,
-        (index) => TransactionDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(TransactionDto.fromJson).toList(growable: false);
     });
   }
 

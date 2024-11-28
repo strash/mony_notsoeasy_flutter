@@ -102,11 +102,7 @@ WHERE c.id = ?1;
         whereArgs: where.$2,
         orderBy: "sort ASC",
       );
-      return List.generate(
-        maps.length,
-        (index) => CategoryDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(CategoryDto.fromJson).toList(growable: false);
     });
   }
 
@@ -126,11 +122,7 @@ WHERE c.id = ?1;
         whereArgs: transactionType != null ? [transactionType] : null,
         orderBy: "sort ASC",
       );
-      return List.generate(
-        maps.length,
-        (index) => CategoryDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(CategoryDto.fromJson).toList(growable: false);
     });
   }
 

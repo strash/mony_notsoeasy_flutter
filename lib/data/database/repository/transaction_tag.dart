@@ -36,11 +36,7 @@ final class _Impl
         whereArgs: [transactionId],
         orderBy: "created ASC",
       );
-      return List.generate(
-        maps.length,
-        (index) => TransactionTagDto.fromJson(maps.elementAt(index)),
-        growable: false,
-      );
+      return maps.map(TransactionTagDto.fromJson).toList(growable: false);
     });
   }
 
