@@ -9,6 +9,7 @@ export "./close_button/component.dart";
 export "./color_picker/component.dart";
 export "./context_menu/component.dart";
 export "./emoji_picker/component.dart";
+export "./feed_empty_state/component.dart";
 export "./feed_item/component.dart";
 export "./feed_section/component.dart";
 export "./named_color_picker/component.dart";

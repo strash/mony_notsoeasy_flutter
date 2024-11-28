@@ -95,7 +95,7 @@ class FeedAddButtonComponent extends StatelessWidget {
 extension on EFeedMenuItem {
   String get description {
     return switch (this) {
-      EFeedMenuItem.addAccount => "Создать счет",
+      EFeedMenuItem.addAccount => "Счет",
       EFeedMenuItem.addExpenseCategory => "Категория расходов",
       EFeedMenuItem.addIncomeCategory => "Категория доходов",
     };

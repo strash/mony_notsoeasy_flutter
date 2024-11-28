@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
@@ -14,6 +15,8 @@ class CategoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<CategoryViewModel>();
@@ -66,7 +69,7 @@ class CategoryView extends StatelessWidget {
                   CategoryIconComponent(category: viewModel.category),
                   const SizedBox(height: 40.0),
 
-                  if (balance != null)
+                  if (balance != null && balance.totalAmount.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 30.0),
                       child: CategoryTotalAmountComponent(balance: balance),
@@ -76,33 +79,48 @@ class CategoryView extends StatelessWidget {
             ),
           ),
 
-          // -> feed
-          SliverList.builder(
-            itemCount: feed.length,
-            findChildIndexCallback: (key) {
-              final id = (key as ValueKey<String>).value;
-              final index = feed.indexWhere((e) {
-                return id == feed.key(e, keyPrefix).value;
-              });
-              return index != -1 ? index : null;
-            },
-            itemBuilder: (context, index) {
-              final item = feed.elementAt(index);
-              final key = feed.key(item, keyPrefix);
+          if (feed.isEmpty)
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: NavBarView.bottomOffset(context),
+                ),
+                child: FeedEmptyStateComponent(
+                  color: ex?.from(category.colorName).color ??
+                      theme.colorScheme.onSurface,
+                ),
+              ),
+            )
 
-              return switch (item) {
-                FeedItemSection() => FeedSectionComponent(
-                    key: key,
-                    section: item,
-                  ),
-                FeedItemTransaction() => FeedItemComponent(
-                    key: key,
-                    transaction: item.transaction,
-                    onTap: onTransactionPressed,
-                  )
-              };
-            },
-          ),
+          // -> feed
+          else
+            SliverList.builder(
+              itemCount: feed.length,
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey<String>).value;
+                final index = feed.indexWhere((e) {
+                  return id == feed.key(e, keyPrefix).value;
+                });
+                return index != -1 ? index : null;
+              },
+              itemBuilder: (context, index) {
+                final item = feed.elementAt(index);
+                final key = feed.key(item, keyPrefix);
+
+                return switch (item) {
+                  FeedItemSection() => FeedSectionComponent(
+                      key: key,
+                      section: item,
+                    ),
+                  FeedItemTransaction() => FeedItemComponent(
+                      key: key,
+                      transaction: item.transaction,
+                      onTap: onTransactionPressed,
+                    )
+                };
+              },
+            ),
 
           // -> bottom offset
           SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
