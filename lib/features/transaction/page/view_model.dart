@@ -29,8 +29,7 @@ final class TransactionViewModel
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
-    final value = (event: event, viewModel: this);
-    OnTransactionAppStateChanged().call(context, value);
+    OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 
   @override

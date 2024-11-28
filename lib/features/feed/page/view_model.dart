@@ -59,8 +59,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
-    final value = (event: event, viewModel: this);
-    OnFeedAppStateChanged().call(context, value);
+    OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 
   bool _pagingToStart = false;

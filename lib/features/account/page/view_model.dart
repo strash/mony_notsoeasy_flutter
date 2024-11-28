@@ -29,7 +29,7 @@ final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
-    OnAccountAppStateChanged().call(context, (event: event, viewModel: this));
+    OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 
   @override

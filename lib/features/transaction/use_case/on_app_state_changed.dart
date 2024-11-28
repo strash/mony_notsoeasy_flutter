@@ -5,8 +5,7 @@ import "package:mony_app/features/transaction/page/view_model.dart";
 
 typedef _TValue = ({TransactionViewModel viewModel, Event event});
 
-final class OnTransactionAppStateChanged
-    extends UseCase<Future<void>, _TValue> {
+final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
   @override
   Future<void> call(BuildContext context, [_TValue? value]) async {
     if (value == null) throw ArgumentError.notNull();

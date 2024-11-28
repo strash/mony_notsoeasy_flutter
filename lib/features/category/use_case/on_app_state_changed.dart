@@ -8,7 +8,7 @@ import "package:provider/provider.dart";
 
 typedef _TValue = ({CategoryViewModel viewModel, Event event});
 
-final class OnCategoryAppStateChanged extends UseCase<Future<void>, _TValue> {
+final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
   @override
   Future<void> call(BuildContext context, [_TValue? value]) async {
     if (value == null) throw ArgumentError.notNull();

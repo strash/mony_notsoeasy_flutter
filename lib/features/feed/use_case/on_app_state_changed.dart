@@ -24,7 +24,7 @@ typedef _TValue = ({FeedViewModel viewModel, Event event});
 // находились), добавить экран с новым счетом в конец и потом уже анимировать на
 // него. Чтобы не было видно подмены счетов на первом экране
 
-final class OnFeedAppStateChanged extends UseCase<Future<void>, _TValue> {
+final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
   @override
   Future<void> call(BuildContext context, [_TValue? value]) async {
     if (value == null) throw ArgumentError.notNull();

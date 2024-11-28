@@ -41,8 +41,7 @@ final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
-    final value = (event: event, viewModel: this);
-    OnCategoryAppStateChanged().call(context, value);
+    OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 
   @override
