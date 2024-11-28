@@ -29,6 +29,8 @@ class CategoryView extends StatelessWidget {
     final onEditPressed = viewModel<OnEditPressed>();
     final onDeletePressed = viewModel<OnDeletePressed>();
 
+    if (viewModel.isEmpty) return const EmptyStateComponent();
+
     return Scaffold(
       body: CustomScrollView(
         controller: viewModel.controller,
@@ -80,13 +82,12 @@ class CategoryView extends StatelessWidget {
             ),
           ),
 
+          // -> empty state
           if (feed.isEmpty)
             SliverFillRemaining(
               hasScrollBody: false,
               child: Padding(
-                padding: EdgeInsets.only(
-                  bottom: NavBarView.bottomOffset(context),
-                ),
+                padding: EdgeInsets.only(bottom: bottomOffset),
                 child: FeedEmptyStateComponent(
                   color: ex?.from(category.colorName).color ??
                       theme.colorScheme.onSurface,

@@ -14,7 +14,6 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
     final (:viewModel, :event) = value;
     final accountService = context.read<DomainAccountService>();
-    final navigator = Navigator.of(context);
 
     switch (event) {
       case EventAccountCreated() ||
@@ -33,7 +32,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventAccountDeleted(value: final account):
         if (viewModel.account.id != account.id) return;
-        navigator.pop<void>();
+        viewModel.setProtectedState(() {
+          viewModel.isEmpty = true;
+        });
 
       case EventCategoryDeleted():
         final id = viewModel.account.id;
@@ -45,9 +46,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventTransactionCreated() ||
             EventTransactionUpdated() ||
             EventTransactionDeleted():
-        final balances = await accountService.getBalances(
-          ids: [viewModel.account.id],
-        );
+        final id = viewModel.account.id;
+        final balances = await accountService.getBalances(ids: [id]);
         if (balances.isEmpty) return;
         viewModel.setProtectedState(() => viewModel.balance = balances.first);
     }

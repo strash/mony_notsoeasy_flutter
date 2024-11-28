@@ -11,7 +11,6 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     if (value == null) throw ArgumentError.notNull();
 
     final (:viewModel, :event) = value;
-    final navigator = Navigator.of(context);
 
     switch (event) {
       case EventAccountCreated() ||
@@ -29,7 +28,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventAccountDeleted(value: final account):
         if (account.id != viewModel.transaction.account.id) return;
-        navigator.pop<void>();
+        viewModel.setProtectedState(() {
+          viewModel.isEmpty = true;
+        });
 
       case EventCategoryUpdated(value: final category):
         if (category.id != viewModel.transaction.category.id) return;
@@ -41,7 +42,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventCategoryDeleted(value: final category):
         if (category.id != viewModel.transaction.category.id) return;
-        navigator.pop<void>();
+        viewModel.setProtectedState(() {
+          viewModel.isEmpty = true;
+        });
 
       case EventTransactionUpdated(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;
@@ -51,7 +54,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventTransactionDeleted(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;
-        navigator.pop<void>();
+        viewModel.setProtectedState(() {
+          viewModel.isEmpty = true;
+        });
     }
   }
 }

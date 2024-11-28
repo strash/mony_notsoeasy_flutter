@@ -23,6 +23,8 @@ class TransactionView extends StatelessWidget {
     final onCategoryPressed = viewModel<OnCategoryPressed>();
     final onTagPressed = viewModel<OnTagPressed>();
 
+    if (viewModel.isEmpty) return const EmptyStateComponent();
+
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(

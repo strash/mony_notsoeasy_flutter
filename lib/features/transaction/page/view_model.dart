@@ -25,6 +25,8 @@ final class TransactionViewModel
     extends ViewModelState<TransactionViewModelBuilder> {
   late final StreamSubscription<Event> _appSub;
 
+  bool isEmpty = false;
+
   late TransactionModel transaction = widget.transaction;
 
   void _onAppEvent(Event event) {

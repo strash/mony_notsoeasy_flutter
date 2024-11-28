@@ -24,6 +24,8 @@ final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
 
   final prefix = StringEx.random(10);
 
+  bool isEmpty = false;
+
   late final FeedScrollController _scrollController;
   ScrollController get controller => _scrollController.controller;
 
