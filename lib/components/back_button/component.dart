@@ -7,12 +7,10 @@ class BackButtonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final navigator = Navigator.of(context);
-
     return AppBarButtonComponent(
       icon: Assets.icons.chevronBackward,
       padding: const EdgeInsets.only(right: 10.0),
-      onTap: navigator.maybePop<void>,
+      onTap: Navigator.of(context).maybePop<void>,
     );
   }
 }

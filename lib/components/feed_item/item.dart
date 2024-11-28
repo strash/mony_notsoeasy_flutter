@@ -42,25 +42,31 @@ class FeedItemComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // -> icon
-              SizedBox.square(
-                dimension: iconDimension,
-                child: DecoratedBox(
-                  decoration: ShapeDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [color2, categoryColor],
-                    ),
-                    shape: const SmoothRectangleBorder(
-                      borderRadius: SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
+              Padding(
+                padding: const EdgeInsets.only(top: 1.0),
+                child: SizedBox.square(
+                  dimension: iconDimension,
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [color2, categoryColor],
+                      ),
+                      shape: const SmoothRectangleBorder(
+                        borderRadius: SmoothBorderRadius.all(
+                          SmoothRadius(
+                            cornerRadius: 15.0,
+                            cornerSmoothing: 1.0,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      transaction.category.icon,
-                      style: theme.textTheme.headlineMedium,
+                    child: Center(
+                      child: Text(
+                        transaction.category.icon,
+                        style: theme.textTheme.headlineMedium,
+                      ),
                     ),
                   ),
                 ),
@@ -108,7 +114,9 @@ class FeedItemComponent extends StatelessWidget {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 2.0),
 
+                    // -> middle row
                     Row(
                       children: [
                         // -> time
@@ -134,7 +142,7 @@ class FeedItemComponent extends StatelessWidget {
                     // -> tags
                     if (transaction.tags.isNotEmpty)
                       Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
+                        padding: const EdgeInsets.only(top: 7.0),
                         child: FeedItemTagsComponent(tags: transaction.tags),
                       ),
                   ],

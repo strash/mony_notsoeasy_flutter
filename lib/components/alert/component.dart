@@ -49,7 +49,7 @@ class AlertComponet extends StatelessWidget {
             description: description,
           );
         },
-        barrierColor: theme.colorScheme.scrim.withOpacity(0.3),
+        barrierColor: theme.colorScheme.scrim.withOpacity(0.4),
         barrierDismissible: false,
         themes: InheritedTheme.capture(
           from: context,
@@ -77,7 +77,7 @@ class AlertComponet extends StatelessWidget {
               sigmaY: kTranslucentPanelBlurSigma,
             ),
             child: ColoredBox(
-              color: theme.colorScheme.tertiaryContainer
+              color: theme.colorScheme.surfaceContainer
                   .withOpacity(kTranslucentPanelOpacity),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),

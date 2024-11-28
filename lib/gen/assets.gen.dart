@@ -136,6 +136,9 @@ class $AssetsIconsGen {
   String get listBulletBelowRectangle =>
       'assets/icons/list.bullet.below.rectangle.svg';
 
+  /// File path: assets/icons/location.slash.fill.svg
+  String get locationSlashFill => 'assets/icons/location.slash.fill.svg';
+
   /// File path: assets/icons/magnifyingglass.svg
   String get magnifyingglass => 'assets/icons/magnifyingglass.svg';
 
@@ -250,6 +253,7 @@ class $AssetsIconsGen {
         linkBadgePlus,
         link,
         listBulletBelowRectangle,
+        locationSlashFill,
         magnifyingglass,
         minus,
         noteText,

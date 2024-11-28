@@ -15,7 +15,7 @@ class FeedItemTagsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const height = 20.0;
+    const height = 24.0;
     const gap = 5.0;
 
     return LayoutBuilder(
@@ -53,7 +53,7 @@ class FeedItemTagsComponent extends StatelessWidget {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 6.0),
                         child: Center(
                           child: Text(
                             "#${tag.title}",
