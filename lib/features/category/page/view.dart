@@ -30,6 +30,7 @@ class CategoryView extends StatelessWidget {
     final onDeletePressed = viewModel<OnDeletePressed>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         controller: viewModel.controller,
         physics: const BouncingScrollPhysics(

@@ -33,6 +33,7 @@ class NavBarView extends StatelessWidget {
       stream: viewModel.subject.whereType<NavBarEventTabChanged>(),
       builder: (context, snapshot) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Stack(
             children: [
               // -> pages

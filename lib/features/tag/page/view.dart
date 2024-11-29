@@ -23,9 +23,11 @@ class TagView extends StatelessWidget {
     final balance = viewModel.balance;
     final feed = viewModel.feed.toFeed();
 
+    final onEditPressed = viewModel<OnEditPressed>();
     final onTransactionPressed = viewModel<OnTransactionPressed>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         controller: viewModel.controller,
         physics: const BouncingScrollPhysics(
@@ -40,8 +42,7 @@ class TagView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
-                  // TODO
-                  // onTap: () => onEditPressed(context, transaction),
+                  onTap: () => onEditPressed(context, tag),
                 ),
                 const SizedBox(width: 4.0),
 

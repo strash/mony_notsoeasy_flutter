@@ -4,6 +4,7 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/services/database/database.dart";
 import "package:mony_app/features/tag/page/view_model.dart";
@@ -100,6 +101,20 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
           viewModel.canLoadMore = true;
           viewModel.scrollPage = max(0, viewModel.scrollPage - 1);
+        });
+
+      case EventTagUpdated(value: final tag):
+        viewModel.setProtectedState(() {
+          if (viewModel.tag.id == tag.id) viewModel.tag = tag.copyWith();
+          viewModel.feed = List<TransactionModel>.from(
+            viewModel.feed.map((e) {
+              return e.copyWith(
+                tags: List<TagModel>.from(
+                  e.tags.map((t) => t.id == tag.id ? tag.copyWith() : t),
+                ),
+              );
+            }),
+          );
         });
     }
   }

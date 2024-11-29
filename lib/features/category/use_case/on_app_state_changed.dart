@@ -54,7 +54,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventCategoryUpdated(value: final category):
         viewModel.setProtectedState(() {
-          viewModel.category = category.copyWith();
+          if (viewModel.category.id == category.id) {
+            viewModel.category = category.copyWith();
+          }
           viewModel.feed = List<TransactionModel>.from(
             viewModel.feed.map((e) {
               if (e.category.id == category.id) {
@@ -106,6 +108,19 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
           viewModel.canLoadMore = true;
           viewModel.scrollPage = max(0, viewModel.scrollPage - 1);
+        });
+
+      case EventTagUpdated(value: final tag):
+        viewModel.setProtectedState(() {
+          viewModel.feed = List<TransactionModel>.from(
+            viewModel.feed.map((e) {
+              return e.copyWith(
+                tags: List<TagModel>.from(
+                  e.tags.map((t) => t.id == tag.id ? tag.copyWith() : t),
+                ),
+              );
+            }),
+          );
         });
     }
   }

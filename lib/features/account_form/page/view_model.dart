@@ -45,7 +45,7 @@ final class AccountFormViewModel
   };
 
   void _listener() {
-    setState(() {
+    setProtectedState(() {
       final balanseTrim = balanceController.text.trim();
       final balanceIsEmptyOrValid = balanseTrim.isEmpty ||
           balanseTrim.isNotEmpty && balanceController.isValid;
@@ -154,7 +154,7 @@ final class AccountFormViewModel
     return ViewModel<AccountFormViewModel>(
       viewModel: this,
       useCases: [
-        () => OnSumbitAccountPressed(),
+        () => OnSumbitPressed(),
         () => OnCurrencyDescriptionRequested(),
       ],
       child: AccountFormView(keyboardHeight: widget.keyboardHeight),

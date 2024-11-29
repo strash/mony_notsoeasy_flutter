@@ -19,7 +19,7 @@ class CategoryFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<CategoryFormViewModel>();
-    final onSubmitCategoryPressed = viewModel<OnSubmitCategoryPressed>();
+    final onSubmitPressed = viewModel<OnSubmitPressed>();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -87,7 +87,7 @@ class CategoryFormView extends StatelessWidget {
                 // -> submit
                 FilledButton(
                   onPressed: viewModel.isSubmitEnabled
-                      ? () => onSubmitCategoryPressed(context)
+                      ? () => onSubmitPressed(context)
                       : null,
                   child: const Text("Сохранить"),
                 ),

@@ -21,6 +21,7 @@ class AccountView extends StatelessWidget {
     final onDeletePressed = viewModel<OnDeletePressed>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),

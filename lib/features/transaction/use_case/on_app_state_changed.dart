@@ -2,6 +2,7 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/features/transaction/page/view_model.dart";
 
 typedef _TValue = ({TransactionViewModel viewModel, Event event});
@@ -52,6 +53,17 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventTransactionDeleted(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;
         context.close();
+
+      case EventTagUpdated(value: final tag):
+        viewModel.setProtectedState(() {
+          viewModel.transaction = viewModel.transaction.copyWith(
+            tags: List<TagModel>.from(
+              viewModel.transaction.tags.map((e) {
+                return e.id == tag.id ? tag.copyWith() : e;
+              }),
+            ),
+          );
+        });
     }
   }
 }

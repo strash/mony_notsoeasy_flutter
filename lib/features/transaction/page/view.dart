@@ -24,6 +24,7 @@ class TransactionView extends StatelessWidget {
     final onTagPressed = viewModel<OnTagPressed>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),

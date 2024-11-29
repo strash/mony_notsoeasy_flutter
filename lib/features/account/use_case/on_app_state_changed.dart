@@ -19,7 +19,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     switch (event) {
       case EventAccountCreated() ||
             EventCategoryCreated() ||
-            EventCategoryUpdated():
+            EventCategoryUpdated() ||
+            EventTagUpdated():
         break;
 
       case EventAccountUpdated(value: final account):
@@ -27,7 +28,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final balances = await accountService.getBalances(ids: [account.id]);
         if (balances.isEmpty) return;
         viewModel.setProtectedState(() {
-          viewModel.account = account.copyWith();
+          if (viewModel.account.id == account.id) {
+            viewModel.account = account.copyWith();
+          }
           viewModel.balance = balances.first;
         });
 

@@ -5,7 +5,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
 import "package:provider/provider.dart";
 
-final class OnSumbitAccountPressed extends UseCase<Future<void>, dynamic> {
+final class OnSumbitPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
     final viewModel = context.viewModel<AccountFormViewModel>();

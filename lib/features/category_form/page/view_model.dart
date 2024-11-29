@@ -39,7 +39,7 @@ final class CategoryFormViewModel
   final List<String> _titles = [];
 
   void _listener() {
-    setState(() {
+    setProtectedState(() {
       isSubmitEnabled = titleController.isValid &&
           titleController.text.trim().isNotEmpty &&
           colorController.value != null &&
@@ -104,7 +104,7 @@ final class CategoryFormViewModel
     return ViewModel<CategoryFormViewModel>(
       viewModel: this,
       useCases: [
-        () => OnSubmitCategoryPressed(),
+        () => OnSubmitPressed(),
       ],
       child: CategoryFormView(keyboardHeight: widget.keyboardHeight),
     );

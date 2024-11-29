@@ -14,6 +14,7 @@ class StartView extends StatelessWidget {
     final onButtonStartPressed = viewModel<OnButtonStartPressed>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
