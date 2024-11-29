@@ -45,6 +45,11 @@ final class EventTagUpdated extends Event {
   const EventTagUpdated(this.value);
 }
 
+final class EventTagDeleted extends Event {
+  final TagModel value;
+  const EventTagDeleted(this.value);
+}
+
 // -> transaction
 
 final class EventTransactionCreated extends Event {

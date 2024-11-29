@@ -15,7 +15,7 @@ final class OnDeletePressed extends UseCase<Future<void>, CategoryModel> {
       title: const Text("Удаление категории"),
       description: const Text(
         "Вместе с категорией будут удалены все транзакции, связанные с этой "
-        "категорией. Точно удалить? Восстановить потом не получится.",
+        "категорией.",
       ),
     );
 

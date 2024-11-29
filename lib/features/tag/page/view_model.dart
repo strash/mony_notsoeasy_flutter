@@ -68,6 +68,7 @@ final class TagViewModel extends ViewModelState<TagViewModelBuilder> {
       viewModel: this,
       useCases: [
         () => OnEditPressed(),
+        () => OnDeletePressed(),
         () => OnTransactionPressed(),
       ],
       child: const TagView(),

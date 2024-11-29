@@ -38,7 +38,8 @@ final class NavigatorDelegate extends RouterDelegate<Object>
           EventTransactionCreated() ||
           EventTransactionUpdated() ||
           EventTransactionDeleted() ||
-          EventTagUpdated() =>
+          EventTagUpdated() ||
+          EventTagDeleted() =>
             false,
         };
       }),

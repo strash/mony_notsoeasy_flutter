@@ -24,6 +24,7 @@ class TagView extends StatelessWidget {
     final feed = viewModel.feed.toFeed();
 
     final onEditPressed = viewModel<OnEditPressed>();
+    final onDeletePressed = viewModel<OnDeletePressed>();
     final onTransactionPressed = viewModel<OnTransactionPressed>();
 
     return Scaffold(
@@ -49,8 +50,7 @@ class TagView extends StatelessWidget {
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
-                  // TODO
-                  // onTap: () => onDeletePressed(context, transaction),
+                  onTap: () => onDeletePressed(context, tag),
                 ),
                 const SizedBox(width: 8.0),
               ],

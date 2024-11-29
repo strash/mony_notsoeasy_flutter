@@ -15,7 +15,8 @@ final class OnDeleteTransactionPressed
       context,
       title: const Text("Удаление транзакции"),
       description: const Text(
-        "Точно удалить?\nВосстановить потом не получится.",
+        // TODO: не забыть сделать эту фичу
+        "Эту проверку можно отключить в настройках.",
       ),
     );
 

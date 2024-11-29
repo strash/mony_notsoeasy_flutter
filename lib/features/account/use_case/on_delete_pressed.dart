@@ -17,7 +17,7 @@ final class OnDeletePressed extends UseCase<Future<void>, AccountModel> {
       title: const Text("Удаление счета"),
       description: const Text(
         "Вместе со счетом будут удалены все транзакции, связанные с этим "
-        "счетом. Точно удалить? Восстановить потом не получится.",
+        "счетом.",
       ),
     );
 

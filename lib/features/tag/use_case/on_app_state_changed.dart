@@ -116,6 +116,23 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             }),
           );
         });
+
+      case EventTagDeleted(value: final tag):
+        if (viewModel.tag.id == tag.id) {
+          context.close();
+        } else {
+          viewModel.setProtectedState(() {
+            viewModel.feed = List<TransactionModel>.from(
+              viewModel.feed.map((e) {
+                return e.copyWith(
+                  tags: List<TagModel>.from(
+                    e.tags.where((t) => t.id != tag.id),
+                  ),
+                );
+              }),
+            );
+          });
+        }
     }
   }
 }

@@ -17,6 +17,7 @@ part "./on_app_state_changed/on_transaction_created.dart";
 part "./on_app_state_changed/on_transaction_deleted.dart";
 part "./on_app_state_changed/on_transaction_updated.dart";
 part "./on_app_state_changed/on_tag_updated.dart";
+part "./on_app_state_changed/on_tag_deleted.dart";
 
 typedef _TValue = ({FeedViewModel viewModel, Event event});
 
@@ -62,6 +63,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventTagUpdated():
         const _OnTagUpdated().call(context, viewModel, event);
+
+      case EventTagDeleted():
+        const _OnTagDeleted().call(context, viewModel, event);
     }
   }
 }
