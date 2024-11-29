@@ -10,7 +10,7 @@ import "package:mony_app/features/navbar/page/page.dart";
 
 export "./state.dart";
 
-enum EFeedMenuItem { addAccount, addExpenseCategory, addIncomeCategory }
+enum EFeedMenuItem { addAccount, addExpenseCategory, addIncomeCategory, addTag }
 
 class FeedViewModelBuilder extends StatefulWidget {
   const FeedViewModelBuilder({super.key});
@@ -33,11 +33,6 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     return pageController.page?.toInt() ?? 0;
   }
 
-  void _onFeedEvent(FeedScrollControllerEvent event) {
-    if (!mounted) return;
-    OnDataFetched().call(context, this);
-  }
-
   void addPageScroll(int pageIndex) {
     final scrollController = FeedScrollController(onData: _onFeedEvent);
     scrollControllers.insert(pageIndex, scrollController);
@@ -55,6 +50,11 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
       curve: Curves.easeInOut,
     );
     _pagingToStart = false;
+  }
+
+  void _onFeedEvent(FeedScrollControllerEvent event) {
+    if (!mounted) return;
+    OnDataFetched().call(context, this);
   }
 
   void _onAppEvent(Event event) {

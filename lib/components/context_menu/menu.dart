@@ -27,7 +27,8 @@ class _ContextMenuComponentState extends State<ContextMenuComponent> {
   final _sizeNotifier = ValueNotifier<Size>(Size.zero);
 
   Rect _proxyRect = Rect.zero;
-  late Rect _menuRect = Rect.fromLTWH(.0, .0, _width, 200);
+  // NOTE: initial height must be very big
+  late Rect _menuRect = Rect.fromLTWH(.0, .0, _width, 1000000);
   Alignment _alignment = Alignment.topRight;
 
   double get _width => MediaQuery.sizeOf(context).width * 0.72;
@@ -145,6 +146,7 @@ class _Size extends StatelessWidget {
       final a = context.findRenderObject() as RenderBox?;
       if (a != null) sizeNotifier.value = a.size;
     });
+
     return SizedBox(width: width, child: child);
   }
 }

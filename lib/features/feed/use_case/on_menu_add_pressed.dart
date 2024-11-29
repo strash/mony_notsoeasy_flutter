@@ -19,6 +19,9 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
         _addCategory(context, ETransactionType.expense);
       case EFeedMenuItem.addIncomeCategory:
         _addCategory(context, ETransactionType.income);
+      case EFeedMenuItem.addTag:
+        // TODO:
+        break;
     }
   }
 

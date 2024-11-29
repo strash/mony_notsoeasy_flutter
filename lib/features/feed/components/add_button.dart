@@ -61,11 +61,18 @@ class FeedAddButtonComponent extends StatelessWidget {
         },
         itemsBuilder: (context, dismiss) {
           final theme = Theme.of(context);
+
           return SeparatedComponent.builder(
             itemCount: EFeedMenuItem.values.length,
             mainAxisSize: MainAxisSize.min,
             separatorBuilder: (context, index) {
-              return const ContextMenuSeparatorComponent(isBig: false);
+              final isBig = switch (EFeedMenuItem.values.elementAt(index)) {
+                EFeedMenuItem.addAccount => true,
+                EFeedMenuItem.addExpenseCategory => false,
+                EFeedMenuItem.addIncomeCategory => true,
+                EFeedMenuItem.addTag => false,
+              };
+              return ContextMenuSeparatorComponent(isBig: isBig);
             },
             itemBuilder: (context, index) {
               final item = EFeedMenuItem.values.elementAt(index);
@@ -98,6 +105,7 @@ extension on EFeedMenuItem {
       EFeedMenuItem.addAccount => "Счет",
       EFeedMenuItem.addExpenseCategory => "Категория расходов",
       EFeedMenuItem.addIncomeCategory => "Категория доходов",
+      EFeedMenuItem.addTag => "Тег",
     };
   }
 
@@ -106,6 +114,7 @@ extension on EFeedMenuItem {
       EFeedMenuItem.addAccount => Assets.icons.widgetBadgePlus,
       EFeedMenuItem.addExpenseCategory => Assets.icons.arrowUpSquare,
       EFeedMenuItem.addIncomeCategory => Assets.icons.arrowDownSquare,
+      EFeedMenuItem.addTag => Assets.icons.number,
     };
   }
 }
