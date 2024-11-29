@@ -28,9 +28,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventAccountDeleted(value: final account):
         if (account.id != viewModel.transaction.account.id) return;
-        viewModel.setProtectedState(() {
-          viewModel.isEmpty = true;
-        });
+        _closeSelf(context);
 
       case EventCategoryUpdated(value: final category):
         if (category.id != viewModel.transaction.category.id) return;
@@ -42,9 +40,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventCategoryDeleted(value: final category):
         if (category.id != viewModel.transaction.category.id) return;
-        viewModel.setProtectedState(() {
-          viewModel.isEmpty = true;
-        });
+        _closeSelf(context);
 
       case EventTransactionUpdated(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;
@@ -54,9 +50,19 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventTransactionDeleted(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;
-        viewModel.setProtectedState(() {
-          viewModel.isEmpty = true;
-        });
+        _closeSelf(context);
+    }
+  }
+
+  void _closeSelf(BuildContext context) {
+    final route = ModalRoute.of(context);
+    final navigator = Navigator.of(context);
+    if (route != null) {
+      if (route.isCurrent) {
+        navigator.pop();
+      } else {
+        navigator.removeRoute(route);
+      }
     }
   }
 }

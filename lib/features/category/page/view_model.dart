@@ -24,8 +24,6 @@ final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
 
   final prefix = StringEx.random(10);
 
-  bool isEmpty = false;
-
   late final FeedScrollController _scrollController;
   ScrollController get controller => _scrollController.controller;
 
@@ -37,12 +35,12 @@ final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
   bool canLoadMore = true;
 
   void _onFeedEvent(FeedScrollControllerEvent event) {
-    if (!mounted || isEmpty) return;
+    if (!mounted) return;
     OnDataFetched().call(context, this);
   }
 
   void _onAppEvent(Event event) {
-    if (!mounted || isEmpty) return;
+    if (!mounted) return;
     OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 

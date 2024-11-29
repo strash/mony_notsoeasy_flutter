@@ -67,9 +67,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventCategoryDeleted(value: final category):
         final id = viewModel.category.id;
         if (category.id != id) return;
-        viewModel.setProtectedState(() {
-          viewModel.isEmpty = true;
-        });
+        _closeSelf(context);
 
       case EventTransactionCreated(value: final transaction):
         final id = viewModel.category.id;
@@ -108,6 +106,18 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.canLoadMore = true;
           viewModel.scrollPage = max(0, viewModel.scrollPage - 1);
         });
+    }
+  }
+
+  void _closeSelf(BuildContext context) {
+    final route = ModalRoute.of(context);
+    final navigator = Navigator.of(context);
+    if (route != null) {
+      if (route.isCurrent) {
+        navigator.pop();
+      } else {
+        navigator.removeRoute(route);
+      }
     }
   }
 }

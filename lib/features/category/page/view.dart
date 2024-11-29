@@ -29,8 +29,6 @@ class CategoryView extends StatelessWidget {
     final onEditPressed = viewModel<OnEditPressed>();
     final onDeletePressed = viewModel<OnDeletePressed>();
 
-    if (viewModel.isEmpty) return const EmptyStateComponent();
-
     return Scaffold(
       body: CustomScrollView(
         controller: viewModel.controller,

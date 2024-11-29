@@ -103,4 +103,16 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         });
     }
   }
+
+  void _closeSelf(BuildContext context) {
+    final route = ModalRoute.of(context);
+    final navigator = Navigator.of(context);
+    if (route != null) {
+      if (route.isCurrent) {
+        navigator.pop();
+      } else {
+        navigator.removeRoute(route);
+      }
+    }
+  }
 }

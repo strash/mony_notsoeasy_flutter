@@ -25,8 +25,6 @@ class TagView extends StatelessWidget {
 
     final onTransactionPressed = viewModel<OnTransactionPressed>();
 
-    if (viewModel.isEmpty) return const EmptyStateComponent();
-
     return Scaffold(
       body: CustomScrollView(
         controller: viewModel.controller,
