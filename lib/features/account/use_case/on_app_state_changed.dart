@@ -1,6 +1,7 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account/page/view_model.dart";
 import "package:provider/provider.dart";
@@ -32,7 +33,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventAccountDeleted(value: final account):
         if (viewModel.account.id != account.id) return;
-        _closeSelf(context);
+        context.close();
 
       case EventCategoryDeleted():
         final id = viewModel.account.id;
@@ -48,18 +49,6 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final balances = await accountService.getBalances(ids: [id]);
         if (balances.isEmpty) return;
         viewModel.setProtectedState(() => viewModel.balance = balances.first);
-    }
-  }
-
-  void _closeSelf(BuildContext context) {
-    final route = ModalRoute.of(context);
-    final navigator = Navigator.of(context);
-    if (route != null) {
-      if (route.isCurrent) {
-        navigator.pop();
-      } else {
-        navigator.removeRoute(route);
-      }
     }
   }
 }

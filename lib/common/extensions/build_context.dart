@@ -3,6 +3,22 @@ import "package:mony_app/app.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 
 extension BuildContextEx on BuildContext {
+  T viewModel<T extends ViewModelState<StatefulWidget>>() {
+    return ViewModel.of<T>(this);
+  }
+
+  void close() {
+    final route = ModalRoute.of<void>(this);
+    final navigator = Navigator.of(this);
+    if (route != null) {
+      if (route.isCurrent) {
+        navigator.pop<void>();
+      } else {
+        navigator.removeRoute(route);
+      }
+    }
+  }
+
   Future<T?> go<T>(
     Widget page, {
     bool rootNavigator = false,
@@ -26,9 +42,5 @@ extension BuildContextEx on BuildContext {
       );
     }
     return navigator.push<T>(route);
-  }
-
-  T viewModel<T extends ViewModelState<StatefulWidget>>() {
-    return ViewModel.of<T>(this);
   }
 }

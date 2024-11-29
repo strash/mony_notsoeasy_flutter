@@ -1,6 +1,7 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/transaction/page/view_model.dart";
 
 typedef _TValue = ({TransactionViewModel viewModel, Event event});
@@ -28,7 +29,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventAccountDeleted(value: final account):
         if (account.id != viewModel.transaction.account.id) return;
-        _closeSelf(context);
+        context.close();
 
       case EventCategoryUpdated(value: final category):
         if (category.id != viewModel.transaction.category.id) return;
@@ -40,7 +41,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventCategoryDeleted(value: final category):
         if (category.id != viewModel.transaction.category.id) return;
-        _closeSelf(context);
+        context.close();
 
       case EventTransactionUpdated(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;
@@ -50,19 +51,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventTransactionDeleted(value: final transaction):
         if (transaction.id != viewModel.transaction.id) return;
-        _closeSelf(context);
-    }
-  }
-
-  void _closeSelf(BuildContext context) {
-    final route = ModalRoute.of(context);
-    final navigator = Navigator.of(context);
-    if (route != null) {
-      if (route.isCurrent) {
-        navigator.pop();
-      } else {
-        navigator.removeRoute(route);
-      }
+        context.close();
     }
   }
 }

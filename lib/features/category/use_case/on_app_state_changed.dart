@@ -2,6 +2,7 @@ import "dart:math";
 
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/page/view_model.dart";
 import "package:provider/provider.dart";
@@ -67,7 +68,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventCategoryDeleted(value: final category):
         final id = viewModel.category.id;
         if (category.id != id) return;
-        _closeSelf(context);
+        context.close();
 
       case EventTransactionCreated(value: final transaction):
         final id = viewModel.category.id;
@@ -106,18 +107,6 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.canLoadMore = true;
           viewModel.scrollPage = max(0, viewModel.scrollPage - 1);
         });
-    }
-  }
-
-  void _closeSelf(BuildContext context) {
-    final route = ModalRoute.of(context);
-    final navigator = Navigator.of(context);
-    if (route != null) {
-      if (route.isCurrent) {
-        navigator.pop();
-      } else {
-        navigator.removeRoute(route);
-      }
     }
   }
 }
