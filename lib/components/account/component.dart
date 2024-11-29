@@ -42,7 +42,7 @@ class AccountComponent extends StatelessWidget {
               ),
               shape: const SmoothRectangleBorder(
                 borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
+                  SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 1.0),
                 ),
               ),
             ),

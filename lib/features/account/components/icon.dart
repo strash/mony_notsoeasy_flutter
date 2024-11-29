@@ -36,7 +36,7 @@ class AccountIconComponent extends StatelessWidget {
                 ),
                 shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 30.0, cornerSmoothing: 1.0),
+                    SmoothRadius(cornerRadius: 40.0, cornerSmoothing: 1.0),
                   ),
                 ),
               ),
