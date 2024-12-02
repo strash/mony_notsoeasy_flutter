@@ -12,7 +12,7 @@ export "./state.dart";
 
 enum EFeedMenuItem { addAccount, addExpenseCategory, addIncomeCategory, addTag }
 
-class FeedViewModelBuilder extends StatefulWidget {
+final class FeedViewModelBuilder extends StatefulWidget {
   const FeedViewModelBuilder({super.key});
 
   @override
@@ -22,6 +22,9 @@ class FeedViewModelBuilder extends StatefulWidget {
 final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
   late final StreamSubscription<Event> _appSub;
   late final StreamSubscription<NavBarEvent> _navbarSub;
+  final _scrollBehavior = StreamController<double>.broadcast();
+
+  Stream<double> get scrollDistanceStream => _scrollBehavior.stream;
 
   final pageController = PageController();
   final List<FeedScrollController> scrollControllers = [];
@@ -35,6 +38,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
   void addPageScroll(int pageIndex) {
     final scrollController = FeedScrollController(onData: _onFeedEvent);
+    scrollController.controller.addListener(_onScroll);
     scrollControllers.insert(pageIndex, scrollController);
   }
 
@@ -50,6 +54,13 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
       curve: Curves.easeInOut,
     );
     _pagingToStart = false;
+  }
+
+  void _onScroll() {
+    final controller = scrollControllers.elementAtOrNull(currentPageIndex);
+    if (controller != null && controller.isReady) {
+      _scrollBehavior.add(controller.distance);
+    }
   }
 
   void _onFeedEvent(FeedScrollControllerEvent event) {
@@ -109,6 +120,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
 
   @override
   void dispose() {
+    _scrollBehavior.close();
     _appSub.cancel();
     _navbarSub.cancel();
     for (final controller in scrollControllers) {

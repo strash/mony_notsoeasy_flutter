@@ -23,8 +23,12 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
   final _subject = BehaviorSubject<bool>.seeded(false);
 
   late final StreamSubscription<bool> _pageSub;
+  late final StreamSubscription<double> _scrollSub;
+
+  final _sizeNotifier = ValueNotifier<Rect>(Rect.zero);
 
   bool _showPagination = true;
+  double _offset = .0;
 
   void _pageListener() {
     if (!mounted) return;
@@ -36,6 +40,15 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     if (mounted) setState(() => _showPagination = e);
   }
 
+  void _onScroll(double distance) {
+    if (distance <= .0) {
+      setState(() => _offset = .0 - distance * .18);
+      if (_offset >= 10.0) {
+        print(_sizeNotifier.value);
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -44,13 +57,16 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       final viewModel = context.viewModel<FeedViewModel>();
       viewModel.pageController.addListener(_pageListener);
+      _scrollSub = viewModel.scrollDistanceStream.listen(_onScroll);
     });
   }
 
   @override
   void dispose() {
     _pageSub.cancel();
+    _scrollSub.cancel();
     _subject.close();
+    _sizeNotifier.dispose();
     super.dispose();
   }
 
@@ -60,7 +76,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     final viewModel = context.viewModel<FeedViewModel>();
 
     return Positioned(
-      top: MediaQuery.viewPaddingOf(context).top + 10.0,
+      top: MediaQuery.viewPaddingOf(context).top + 10.0 + _offset,
       left: 0,
       right: 0,
       child: Align(
@@ -74,73 +90,76 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
               sigmaX: kTranslucentPanelBlurSigma,
               sigmaY: kTranslucentPanelBlurSigma,
             ),
-            child: ColoredBox(
-              color: theme.colorScheme.surfaceContainer
-                  .withOpacity(kTranslucentPanelOpacity),
+            child: _Notifier(
+              notifier: _sizeNotifier,
               child: SizedBox(
-                width: 80.0,
-                height: 30.0,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    // -> pagination
-                    if (viewModel.pages.isNotEmpty)
-                      AnimatedOpacity(
-                        opacity: _showPagination ? 1.0 : .0,
-                        duration: Durations.medium4,
-                        curve: Curves.easeInOut,
-                        child: Center(
-                          child: SmoothPageIndicator(
-                            controller: viewModel.pageController,
-                            count: viewModel.pages.length,
-                            effect: ScrollingDotsEffect(
-                              dotWidth: 7.0,
-                              dotHeight: 7.0,
-                              dotColor: theme.colorScheme.tertiaryContainer,
-                              activeDotColor: theme.colorScheme.primary,
-                              activeDotScale: 1.0,
-                              spacing: 5.0,
-                              strokeWidth: .0,
+                width: 80.0 + _offset,
+                height: 30.0 + _offset,
+                child: ColoredBox(
+                  color: theme.colorScheme.surfaceContainer
+                      .withOpacity(kTranslucentPanelOpacity),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      // -> pagination
+                      if (viewModel.pages.isNotEmpty)
+                        AnimatedOpacity(
+                          opacity: _showPagination ? 1.0 : .0,
+                          duration: Durations.medium4,
+                          curve: Curves.easeInOut,
+                          child: Center(
+                            child: SmoothPageIndicator(
+                              controller: viewModel.pageController,
+                              count: viewModel.pages.length,
+                              effect: ScrollingDotsEffect(
+                                dotWidth: 7.0,
+                                dotHeight: 7.0,
+                                dotColor: theme.colorScheme.tertiaryContainer,
+                                activeDotColor: theme.colorScheme.primary,
+                                activeDotScale: 1.0,
+                                spacing: 5.0,
+                                strokeWidth: .0,
+                              ),
                             ),
                           ),
                         ),
-                      ),
 
-                    // -> search
-                    AnimatedOpacity(
-                      opacity: _showPagination ? .0 : 1.0,
-                      duration: Durations.medium2,
-                      curve: Curves.easeInOut,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // -> icon
-                          SvgPicture.asset(
-                            Assets.icons.magnifyingglass,
-                            width: 14.0,
-                            height: 14.0,
-                            colorFilter: ColorFilter.mode(
-                              theme.colorScheme.onSurface,
-                              BlendMode.srcIn,
+                      // -> search
+                      AnimatedOpacity(
+                        opacity: _showPagination ? .0 : 1.0,
+                        duration: Durations.medium2,
+                        curve: Curves.easeInOut,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // -> icon
+                            SvgPicture.asset(
+                              Assets.icons.magnifyingglass,
+                              width: 14.0,
+                              height: 14.0,
+                              colorFilter: ColorFilter.mode(
+                                theme.colorScheme.tertiary,
+                                BlendMode.srcIn,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 4.0),
+                            const SizedBox(width: 4.0),
 
-                          // -> text
-                          Text(
-                            "поиск",
-                            style: GoogleFonts.golosText(
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.w500,
-                              color: theme.colorScheme.onSurface,
+                            // -> text
+                            Text(
+                              "поиск",
+                              style: GoogleFonts.golosText(
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.w500,
+                                color: theme.colorScheme.tertiary,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 2.0),
-                        ],
+                            const SizedBox(width: 2.0),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -148,5 +167,37 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
         ),
       ),
     );
+  }
+}
+
+class _Notifier extends StatelessWidget {
+  final ValueNotifier<Rect> notifier;
+  final Widget child;
+
+  const _Notifier({
+    required this.notifier,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final box = context.findRenderObject() as RenderBox?;
+    final overlay =
+        Navigator.of(context).overlay?.context.findRenderObject() as RenderBox?;
+    if (box != null && overlay != null) {
+      final position = RelativeRect.fromRect(
+        Rect.fromPoints(
+          box.localToGlobal(Offset.zero, ancestor: overlay),
+          box.localToGlobal(
+            box.size.bottomRight(Offset.zero),
+            ancestor: overlay,
+          ),
+        ),
+        Offset.zero & overlay.size,
+      );
+      notifier.value = position.toRect(overlay.paintBounds);
+    }
+
+    return child;
   }
 }
