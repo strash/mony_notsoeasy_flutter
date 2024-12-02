@@ -15,7 +15,7 @@ class ContextMenuSeparatorComponent extends StatelessWidget {
     return ColoredBox(
       color: theme.colorScheme.outline.withOpacity(isBig ? .1 : .2),
       child: SizedBox.fromSize(
-        size: Size.fromHeight(isBig ? 8.0 : 1.0),
+        size: Size.fromHeight(isBig ? 5.0 : 1.0),
       ),
     );
   }

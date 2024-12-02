@@ -40,6 +40,11 @@ final class EventCategoryDeleted extends Event {
 
 // -> tag
 
+final class EventTagCreated extends Event {
+	final TagModel value;
+	const EventTagCreated(this.value);
+}
+
 final class EventTagUpdated extends Event {
   final TagModel value;
   const EventTagUpdated(this.value);

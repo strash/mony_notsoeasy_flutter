@@ -6,6 +6,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account_form/page/page.dart";
 import "package:mony_app/features/category_form/page/page.dart";
 import "package:mony_app/features/feed/page/page.dart";
+import "package:mony_app/features/tag_form/page/page.dart";
 import "package:provider/provider.dart";
 
 final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
@@ -20,8 +21,7 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
       case EFeedMenuItem.addIncomeCategory:
         _addCategory(context, ETransactionType.income);
       case EFeedMenuItem.addTag:
-        // TODO:
-        break;
+        _addTag(context);
     }
   }
 
@@ -69,5 +69,27 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
     final category = await categoryService.create(vo: result);
 
     appService.notify(EventCategoryCreated(category));
+  }
+
+  Future<void> _addTag(BuildContext context) async {
+    final tagService = context.read<DomainTagService>();
+    final appService = context.viewModel<AppEventService>();
+
+    final result = await BottomSheetComponent.show<TagVO>(
+      context,
+      showDragHandle: false,
+      builder: (context, bottom) {
+        return TagFormPage(
+          keyboardHeight: bottom,
+          additionalUsedTitles: const [],
+        );
+      },
+    );
+
+    if (result == null) return;
+
+    final tag = await tagService.create(vo: result);
+
+    appService.notify(EventTagCreated(tag));
   }
 }
