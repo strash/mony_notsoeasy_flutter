@@ -27,7 +27,6 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     viewModel.displayedTags.value = _filterTags(viewModel.attachedTags);
     if (!context.mounted) return;
 
-    // TODO: переделать поиск по тегам с фузивузи на фултекст серч прямо из бд
     await BottomSheetComponent.show<void>(
       context,
       showDragHandle: false,

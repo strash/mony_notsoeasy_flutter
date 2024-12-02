@@ -27,6 +27,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
   bool _showPagination = true;
 
   void _pageListener() {
+    if (!mounted) return;
     setState(() => _showPagination = true);
     _subject.add(false);
   }
@@ -38,8 +39,12 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
   @override
   void initState() {
     super.initState();
-    const duration = Duration(seconds: 1);
+    const duration = Duration(seconds: 2);
     _pageSub = _subject.debounceTime(duration).listen(_onPageEvent);
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      final viewModel = context.viewModel<FeedViewModel>();
+      viewModel.pageController.addListener(_pageListener);
+    });
   }
 
   @override
@@ -53,7 +58,6 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<FeedViewModel>();
-    viewModel.pageController.addListener(_pageListener);
 
     return Positioned(
       top: MediaQuery.viewPaddingOf(context).top + 10.0,
@@ -83,7 +87,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                     if (viewModel.pages.isNotEmpty)
                       AnimatedOpacity(
                         opacity: _showPagination ? 1.0 : .0,
-                        duration: Durations.medium2,
+                        duration: Durations.medium4,
                         curve: Curves.easeInOut,
                         child: Center(
                           child: SmoothPageIndicator(
@@ -102,7 +106,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                         ),
                       ),
 
-                    // -> icon search
+                    // -> search
                     AnimatedOpacity(
                       opacity: _showPagination ? .0 : 1.0,
                       duration: Durations.medium2,
@@ -111,23 +115,28 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          // -> icon
                           SvgPicture.asset(
                             Assets.icons.magnifyingglass,
                             width: 14.0,
                             height: 14.0,
                             colorFilter: ColorFilter.mode(
-                              theme.colorScheme.onSurfaceVariant,
+                              theme.colorScheme.onSurface,
                               BlendMode.srcIn,
                             ),
                           ),
                           const SizedBox(width: 4.0),
+
+                          // -> text
                           Text(
                             "поиск",
                             style: GoogleFonts.golosText(
                               fontSize: 13.0,
-                              color: theme.colorScheme.onSurfaceVariant,
+                              fontWeight: FontWeight.w500,
+                              color: theme.colorScheme.onSurface,
                             ),
                           ),
+                          const SizedBox(width: 2.0),
                         ],
                       ),
                     ),
