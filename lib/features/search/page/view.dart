@@ -22,6 +22,8 @@ class SearchView extends StatelessWidget {
     final viewSize = MediaQuery.sizeOf(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
+    final controller = viewModel.input;
+
     final anim = viewModel.animation;
     final distance =
         anim.status == AnimationStatus.forward ? viewModel.distance : .0;
@@ -33,10 +35,7 @@ class SearchView extends StatelessWidget {
         .lerp(FeedPagerComponent.width + distance, viewSize.width - 30.0);
     final height =
         curvAnim.value.lerp(FeedPagerComponent.height + distance, 48.0);
-    final bottom = 15.0 +
-        (anim.status == AnimationStatus.forward
-            ? viewModel.keyboardHeight
-            : viewModel.maxKeyboardHeight);
+    final bottom = 15.0 + viewModel.keyboardHeight;
 
     final smoothInputBorder = SmoothInputBorder(const Color(0x00FFFFFF));
     const fillColor = Color(0x00FFFFFF);
@@ -143,52 +142,55 @@ class SearchView extends StatelessWidget {
                     ),
 
                     // -> textinput
-                    TextFormField(
-                      // key: viewModel.titleController.key,
-                      // focusNode: viewModel.titleController.focus,
-                      // controller: viewModel.titleController.controller,
-                      // validator: viewModel.titleController.validator,
-                      // onTapOutside: viewModel.titleController.onTapOutside,
-                      autofocus: true,
-                      keyboardType: TextInputType.text,
-                      textCapitalization: TextCapitalization.sentences,
-                      textInputAction: TextInputAction.done,
-                      maxLength: kMaxTitleLength,
-                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                      // autovalidateMode: AutovalidateMode.always,
-                      style: GoogleFonts.golosText(
-                        color: theme.colorScheme.onSurface,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      decoration: InputDecoration(
-                        prefixIcon: SizedBox(
-                          width: 20.0,
-                          height: 20.0,
-                          child: Center(
-                            child: SvgPicture.asset(
-                              Assets.icons.magnifyingglass,
-                              width: 20.0,
-                              height: 20.0,
-                              colorFilter: ColorFilter.mode(
-                                theme.colorScheme.tertiary,
-                                BlendMode.srcIn,
+                    Opacity(
+                      opacity: curvAnim.value,
+                      child: TextFormField(
+                        key: controller.key,
+                        focusNode: controller.focus,
+                        controller: controller.controller,
+                        validator: controller.validator,
+                        onTapOutside: controller.onTapOutside,
+                        autofocus: true,
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.sentences,
+                        textInputAction: TextInputAction.done,
+                        maxLength: kMaxTitleLength,
+                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        // autovalidateMode: AutovalidateMode.always,
+                        style: GoogleFonts.golosText(
+                          color: theme.colorScheme.onSurface,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        decoration: InputDecoration(
+                          prefixIcon: SizedBox(
+                            width: 20.0,
+                            height: 20.0,
+                            child: Center(
+                              child: SvgPicture.asset(
+                                Assets.icons.magnifyingglass,
+                                width: 20.0,
+                                height: 20.0,
+                                colorFilter: ColorFilter.mode(
+                                  theme.colorScheme.tertiary,
+                                  BlendMode.srcIn,
+                                ),
                               ),
                             ),
                           ),
+                          hintText: "поиск",
+                          counterText: "",
+                          filled: false,
+                          fillColor: fillColor,
+                          focusColor: fillColor,
+                          hoverColor: fillColor,
+                          border: smoothInputBorder,
+                          disabledBorder: smoothInputBorder,
+                          enabledBorder: smoothInputBorder,
+                          errorBorder: smoothInputBorder,
+                          focusedBorder: smoothInputBorder,
+                          focusedErrorBorder: smoothInputBorder,
                         ),
-                        hintText: "поиск",
-                        counterText: "",
-                        filled: false,
-                        fillColor: fillColor,
-                        focusColor: fillColor,
-                        hoverColor: fillColor,
-                        border: smoothInputBorder,
-                        disabledBorder: smoothInputBorder,
-                        enabledBorder: smoothInputBorder,
-                        errorBorder: smoothInputBorder,
-                        focusedBorder: smoothInputBorder,
-                        focusedErrorBorder: smoothInputBorder,
                       ),
                     ),
                   ],

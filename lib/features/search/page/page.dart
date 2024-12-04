@@ -9,11 +9,13 @@ part "./route.dart";
 class SearchPage extends StatelessWidget {
   final double distance;
   final Animation<double> animation;
+  final AnimationStatusListener statusListener;
 
   const SearchPage({
     super.key,
     required this.distance,
     required this.animation,
+    required this.statusListener,
   });
 
   // TODO: возвращать вариант с разными моделями, чтобы в зависимости от модели
@@ -22,6 +24,7 @@ class SearchPage extends StatelessWidget {
   static Future<void> show(
     BuildContext context, {
     required double distance,
+    required AnimationStatusListener statusListener,
   }) async {
     final navigator = appNavigatorKey.currentState;
     if (navigator == null) return Future.value();
@@ -31,6 +34,7 @@ class SearchPage extends StatelessWidget {
           return SearchPage(
             distance: distance,
             animation: animation,
+            statusListener: statusListener,
           );
         },
         capturedThemes: InheritedTheme.capture(
@@ -46,6 +50,7 @@ class SearchPage extends StatelessWidget {
     return SearchViewModelBuilder(
       distance: distance,
       animation: animation,
+      statusListener: statusListener,
     );
   }
 }
