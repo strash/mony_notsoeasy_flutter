@@ -25,6 +25,13 @@ class FeedPagerComponent extends StatefulWidget {
     SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
   );
 
+  static Color color(BuildContext context) {
+    return Theme.of(context)
+        .colorScheme
+        .surfaceContainer
+        .withOpacity(kTranslucentPanelOpacity);
+  }
+
   const FeedPagerComponent({super.key});
 
   @override
@@ -57,6 +64,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     if (distance <= .0) {
       setState(() => _offset = .0 - distance * .18);
       if (_offset >= 15.0) {
+        // TODO: прятать себя и показывать, когда закроется экран поиска
         _openSearch.call(context, _offset);
       }
     }
@@ -102,8 +110,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
               width: FeedPagerComponent.width + _offset,
               height: FeedPagerComponent.height + _offset,
               child: ColoredBox(
-                color: theme.colorScheme.surfaceContainer
-                    .withOpacity(kTranslucentPanelOpacity),
+                color: FeedPagerComponent.color(context),
                 child: Stack(
                   fit: StackFit.expand,
                   children: [

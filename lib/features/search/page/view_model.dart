@@ -16,16 +16,38 @@ final class SearchViewModelBuilder extends StatefulWidget {
   ViewModelState<SearchViewModelBuilder> createState() => SearchViewModel();
 }
 
-final class SearchViewModel extends ViewModelState<SearchViewModelBuilder> {
+final class SearchViewModel extends ViewModelState<SearchViewModelBuilder>
+    with WidgetsBindingObserver {
   double get distance => widget.distance;
   Animation<double> get animation => widget.animation;
   late final curvedAnimation = CurvedAnimation(
     parent: animation,
-    curve: Curves.easeOutQuad,
+    curve: Curves.decelerate,
   );
+
+  double keyboardHeight = .0;
+  double maxKeyboardHeight = .0;
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    setProtectedState(() {
+      keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+      if (maxKeyboardHeight < keyboardHeight) {
+        maxKeyboardHeight = keyboardHeight;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     curvedAnimation.dispose();
     super.dispose();
   }
