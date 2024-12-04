@@ -8,11 +8,23 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
+import "package:mony_app/features/feed/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 import "package:rxdart/rxdart.dart";
 import "package:smooth_page_indicator/smooth_page_indicator.dart";
 
 class FeedPagerComponent extends StatefulWidget {
+  static double top(BuildContext context) {
+    return MediaQuery.viewPaddingOf(context).top + 10.0;
+  }
+
+  static const double width = 80.0;
+  static const double height = 30.0;
+
+  static const SmoothBorderRadius borderRadius = SmoothBorderRadius.all(
+    SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
+  );
+
   const FeedPagerComponent({super.key});
 
   @override
@@ -25,9 +37,11 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
   late final StreamSubscription<bool> _pageSub;
   late final StreamSubscription<double> _scrollSub;
 
+  late final _viewModel = context.viewModel<FeedViewModel>();
+  late final _openSearch = _viewModel<OnSearchPressed>();
+
   bool _showPagination = true;
   double _offset = .0;
-  bool _isSearchOpened = false;
 
   void _pageListener() {
     if (!mounted) return;
@@ -39,13 +53,11 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     if (mounted) setState(() => _showPagination = e);
   }
 
-  Future<void> _onScroll(double distance) async {
+  void _onScroll(double distance) {
     if (distance <= .0) {
       setState(() => _offset = .0 - distance * .18);
-      if (_offset >= 15.0 && !_isSearchOpened) {
-        _isSearchOpened = true;
-        // await something
-        _isSearchOpened = false;
+      if (_offset >= 15.0) {
+        _openSearch.call(context, _offset);
       }
     }
   }
@@ -56,9 +68,8 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     _pageSub =
         _subject.debounceTime(const Duration(seconds: 2)).listen(_onPageEvent);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      final viewModel = context.viewModel<FeedViewModel>();
-      viewModel.pageController.addListener(_pageListener);
-      _scrollSub = viewModel.scrollDistanceStream.listen(_onScroll);
+      _viewModel.pageController.addListener(_pageListener);
+      _scrollSub = _viewModel.scrollDistanceStream.listen(_onScroll);
     });
   }
 
@@ -73,26 +84,23 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<FeedViewModel>();
 
     return Positioned(
-      top: MediaQuery.viewPaddingOf(context).top + 10.0 + _offset,
+      top: FeedPagerComponent.top(context) + _offset,
       left: 0,
       right: 0,
       child: Align(
         alignment: Alignment.topCenter,
         child: ClipSmoothRect(
-          radius: const SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
-          ),
+          radius: FeedPagerComponent.borderRadius,
           child: BackdropFilter(
             filter: ImageFilter.blur(
               sigmaX: kTranslucentPanelBlurSigma,
               sigmaY: kTranslucentPanelBlurSigma,
             ),
             child: SizedBox(
-              width: 80.0 + _offset,
-              height: 30.0 + _offset,
+              width: FeedPagerComponent.width + _offset,
+              height: FeedPagerComponent.height + _offset,
               child: ColoredBox(
                 color: theme.colorScheme.surfaceContainer
                     .withOpacity(kTranslucentPanelOpacity),
@@ -100,15 +108,15 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                   fit: StackFit.expand,
                   children: [
                     // -> pagination
-                    if (viewModel.pages.isNotEmpty)
+                    if (_viewModel.pages.isNotEmpty)
                       AnimatedOpacity(
                         opacity: _showPagination ? 1.0 : .0,
                         duration: Durations.medium4,
                         curve: Curves.easeInOut,
                         child: Center(
                           child: SmoothPageIndicator(
-                            controller: viewModel.pageController,
-                            count: viewModel.pages.length,
+                            controller: _viewModel.pageController,
+                            count: _viewModel.pages.length,
                             effect: ScrollingDotsEffect(
                               dotWidth: 7.0,
                               dotHeight: 7.0,

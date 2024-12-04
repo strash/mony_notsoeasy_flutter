@@ -135,6 +135,7 @@ final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
     return ViewModel<FeedViewModel>(
       viewModel: this,
       useCases: [
+        () => OnSearchPressed(),
         () => OnMenuAddPressed(),
         () => OnAccountPressed(),
         () => OnPageChanged(),
