@@ -113,81 +113,84 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: _onPress,
-          child: ClipSmoothRect(
-            radius: FeedPagerComponent.borderRadius,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: kTranslucentPanelBlurSigma,
-                sigmaY: kTranslucentPanelBlurSigma,
-              ),
-              child: SizedBox(
-                width: FeedPagerComponent.width + _offset,
-                height: FeedPagerComponent.height + _offset,
-                child: Opacity(
-                  opacity: _opacity,
-                  child: ColoredBox(
-                    color: FeedPagerComponent.color(context),
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        // -> pagination
-                        if (_viewModel.pages.isNotEmpty)
-                          AnimatedOpacity(
-                            opacity: _showPagination ? 1.0 : .0,
-                            duration: Durations.medium4,
-                            curve: Curves.easeInOut,
-                            child: Center(
-                              child: SmoothPageIndicator(
-                                controller: _viewModel.pageController,
-                                count: _viewModel.pages.length,
-                                effect: ScrollingDotsEffect(
-                                  dotWidth: 7.0,
-                                  dotHeight: 7.0,
-                                  dotColor: theme.colorScheme.tertiaryContainer,
-                                  activeDotColor: theme.colorScheme.primary,
-                                  activeDotScale: 1.0,
-                                  spacing: 5.0,
-                                  strokeWidth: .0,
+          child: IgnorePointer(
+            child: ClipSmoothRect(
+              radius: FeedPagerComponent.borderRadius,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: kTranslucentPanelBlurSigma,
+                  sigmaY: kTranslucentPanelBlurSigma,
+                ),
+                child: SizedBox(
+                  width: FeedPagerComponent.width + _offset,
+                  height: FeedPagerComponent.height + _offset,
+                  child: Opacity(
+                    opacity: _opacity,
+                    child: ColoredBox(
+                      color: FeedPagerComponent.color(context),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          // -> pagination
+                          if (_viewModel.pages.isNotEmpty)
+                            AnimatedOpacity(
+                              opacity: _showPagination ? 1.0 : .0,
+                              duration: Durations.medium4,
+                              curve: Curves.easeInOut,
+                              child: Center(
+                                child: SmoothPageIndicator(
+                                  controller: _viewModel.pageController,
+                                  count: _viewModel.pages.length,
+                                  effect: ScrollingDotsEffect(
+                                    dotWidth: 7.0,
+                                    dotHeight: 7.0,
+                                    dotColor:
+                                        theme.colorScheme.tertiaryContainer,
+                                    activeDotColor: theme.colorScheme.primary,
+                                    activeDotScale: 1.0,
+                                    spacing: 5.0,
+                                    strokeWidth: .0,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
 
-                        // -> search
-                        AnimatedOpacity(
-                          opacity: _showPagination ? .0 : 1.0,
-                          duration: Durations.medium2,
-                          curve: Curves.easeInOut,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // -> icon
-                              SvgPicture.asset(
-                                Assets.icons.magnifyingglass,
-                                width: 14.0,
-                                height: 14.0,
-                                colorFilter: ColorFilter.mode(
-                                  theme.colorScheme.tertiary,
-                                  BlendMode.srcIn,
+                          // -> search
+                          AnimatedOpacity(
+                            opacity: _showPagination ? .0 : 1.0,
+                            duration: Durations.medium2,
+                            curve: Curves.easeInOut,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // -> icon
+                                SvgPicture.asset(
+                                  Assets.icons.magnifyingglass,
+                                  width: 14.0,
+                                  height: 14.0,
+                                  colorFilter: ColorFilter.mode(
+                                    theme.colorScheme.tertiary,
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 4.0),
+                                const SizedBox(width: 4.0),
 
-                              // -> text
-                              Text(
-                                "поиск",
-                                style: GoogleFonts.golosText(
-                                  fontSize: 13.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: theme.colorScheme.tertiary,
+                                // -> text
+                                Text(
+                                  "поиск",
+                                  style: GoogleFonts.golosText(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: theme.colorScheme.tertiary,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 2.0),
-                            ],
+                                const SizedBox(width: 2.0),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
