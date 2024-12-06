@@ -7,19 +7,19 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/page/view.dart";
 import "package:mony_app/features/category/use_case/use_case.dart";
 
-final class CategoryViewModelBuilder extends StatefulWidget {
+final class CategoryPage extends StatefulWidget {
   final CategoryModel category;
 
-  const CategoryViewModelBuilder({
+  const CategoryPage({
     super.key,
     required this.category,
   });
 
   @override
-  ViewModelState<CategoryViewModelBuilder> createState() => CategoryViewModel();
+  ViewModelState<CategoryPage> createState() => CategoryViewModel();
 }
 
-final class CategoryViewModel extends ViewModelState<CategoryViewModelBuilder> {
+final class CategoryViewModel extends ViewModelState<CategoryPage> {
   late final StreamSubscription<Event> _appSub;
 
   final prefix = StringEx.random(10);

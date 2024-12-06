@@ -8,21 +8,19 @@ import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/transaction/page/view.dart";
 import "package:mony_app/features/transaction/use_case/use_case.dart";
 
-final class TransactionViewModelBuilder extends StatefulWidget {
+final class TransactionPage extends StatefulWidget {
   final TransactionModel transaction;
 
-  const TransactionViewModelBuilder({
+  const TransactionPage({
     super.key,
     required this.transaction,
   });
 
   @override
-  ViewModelState<TransactionViewModelBuilder> createState() =>
-      TransactionViewModel();
+  ViewModelState<TransactionPage> createState() => TransactionViewModel();
 }
 
-final class TransactionViewModel
-    extends ViewModelState<TransactionViewModelBuilder> {
+final class TransactionViewModel extends ViewModelState<TransactionPage> {
   late final StreamSubscription<Event> _appSub;
 
   late TransactionModel transaction = widget.transaction;

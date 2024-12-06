@@ -3,14 +3,14 @@ import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/features/start/page/view.dart";
 import "package:mony_app/features/start/use_case/use_case.dart";
 
-final class StartViewModelBuilder extends StatefulWidget {
-  const StartViewModelBuilder({super.key});
+final class StartPage extends StatefulWidget {
+  const StartPage({super.key});
 
   @override
-  ViewModelState<StartViewModelBuilder> createState() => StartViewModel();
+  ViewModelState<StartPage> createState() => StartViewModel();
 }
 
-final class StartViewModel extends ViewModelState<StartViewModelBuilder> {
+final class StartViewModel extends ViewModelState<StartPage> {
   @override
   Widget build(BuildContext context) {
     return ViewModel<StartViewModel>(

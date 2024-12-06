@@ -4,7 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
-import "package:mony_app/features/tag_form/page/page.dart";
+import "package:mony_app/features/tag_form/tag_form.dart";
 import "package:mony_app/features/tag_form/use_case/use_case.dart";
 
 class TagFormView extends StatelessWidget {

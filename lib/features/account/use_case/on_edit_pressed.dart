@@ -3,7 +3,7 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/account_form/page/page.dart";
+import "package:mony_app/features/account_form/account_form.dart";
 import "package:provider/provider.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 

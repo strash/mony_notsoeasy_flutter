@@ -2,14 +2,14 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/features/settings/page/view.dart";
 
-class SettingsViewModelBuilder extends StatefulWidget {
-  const SettingsViewModelBuilder({super.key});
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
 
   @override
-  ViewModelState<SettingsViewModelBuilder> createState() => SettingsViewModel();
+  ViewModelState<SettingsPage> createState() => SettingsViewModel();
 }
 
-final class SettingsViewModel extends ViewModelState<SettingsViewModelBuilder> {
+final class SettingsViewModel extends ViewModelState<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return ViewModel<SettingsViewModel>(

@@ -1,33 +1,63 @@
 import "dart:math";
 
 import "package:flutter/widgets.dart";
+import "package:mony_app/app.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
 import "package:mony_app/features/search/page/view.dart";
 
-final class SearchViewModelBuilder extends StatefulWidget {
+part "./route.dart";
+
+final class SearchPage extends StatefulWidget {
   final double distance;
   final Animation<double> animation;
   final AnimationStatusListener statusListener;
 
-  const SearchViewModelBuilder({
+  const SearchPage({
     super.key,
     required this.distance,
     required this.animation,
     required this.statusListener,
   });
 
+  // TODO: возвращать вариант с разными моделями, чтобы в зависимости от модели
+  // при закрытии этого экрана открывать экран модели (транзакция, тэг,
+  // категория, счет) - Future<SearchVariant?>
+  static Future<void> show(
+    BuildContext context, {
+    required double distance,
+    required AnimationStatusListener statusListener,
+  }) async {
+    final navigator = appNavigatorKey.currentState;
+    if (navigator == null) return Future.value();
+    return navigator.push<void>(
+      _Route(
+        builder: (context, animation) {
+          return SearchPage(
+            distance: distance,
+            animation: animation,
+            statusListener: statusListener,
+          );
+        },
+        capturedThemes: InheritedTheme.capture(
+          from: context,
+          to: navigator.context,
+        ),
+      ),
+    );
+  }
+
   @override
-  ViewModelState<SearchViewModelBuilder> createState() => SearchViewModel();
+  ViewModelState<SearchPage> createState() => SearchViewModel();
 }
 
-final class SearchViewModel extends ViewModelState<SearchViewModelBuilder>
+final class SearchViewModel extends ViewModelState<SearchPage>
     with WidgetsBindingObserver {
   double get distance => widget.distance;
   Animation<double> get animation => widget.animation;
   late final curvedAnimation = CurvedAnimation(
     parent: animation,
-    curve: Curves.fastOutSlowIn,
+    curve: Curves.decelerate,
   );
 
   double keyboardHeight = .0;

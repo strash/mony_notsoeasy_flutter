@@ -3,7 +3,7 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/bottom_sheet/sheet.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/transaction_form/page/page.dart";
+import "package:mony_app/features/transaction_form/transaction_form.dart";
 import "package:provider/provider.dart";
 
 final class OnEditTransactionPressed

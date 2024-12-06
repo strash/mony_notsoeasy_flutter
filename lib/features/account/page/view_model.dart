@@ -8,19 +8,19 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account/page/view.dart";
 import "package:mony_app/features/account/use_case/use_case.dart";
 
-final class AccountViewModelBuilder extends StatefulWidget {
+final class AccountPage extends StatefulWidget {
   final AccountModel account;
 
-  const AccountViewModelBuilder({
+  const AccountPage({
     super.key,
     required this.account,
   });
 
   @override
-  ViewModelState<AccountViewModelBuilder> createState() => AccountViewModel();
+  ViewModelState<AccountPage> createState() => AccountViewModel();
 }
 
-final class AccountViewModel extends ViewModelState<AccountViewModelBuilder> {
+final class AccountViewModel extends ViewModelState<AccountPage> {
   late final StreamSubscription<Event> _appSub;
 
   late AccountModel account = widget.account;

@@ -33,14 +33,14 @@ enum NavBarTabItem implements IDescriptable {
   }
 }
 
-class NavBarViewModelBuilder extends StatefulWidget {
-  const NavBarViewModelBuilder({super.key});
+class NavBarPage extends StatefulWidget {
+  const NavBarPage({super.key});
 
   @override
-  ViewModelState<NavBarViewModelBuilder> createState() => NavBarViewModel();
+  ViewModelState<NavBarPage> createState() => NavBarViewModel();
 }
 
-final class NavBarViewModel extends ViewModelState<NavBarViewModelBuilder> {
+final class NavBarViewModel extends ViewModelState<NavBarPage> {
   final subject = BehaviorSubject<NavBarEvent>.seeded(
     NavBarEventTabChanged(NavBarTabItem.defaultValue),
   );

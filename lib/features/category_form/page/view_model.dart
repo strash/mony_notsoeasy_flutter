@@ -7,13 +7,13 @@ import "package:mony_app/features/category_form/page/view.dart";
 import "package:mony_app/features/category_form/use_case/use_case.dart";
 import "package:provider/provider.dart";
 
-final class CategoryFormViewModelBuilder extends StatefulWidget {
+final class CategoryFormPage extends StatefulWidget {
   final double keyboardHeight;
   final ETransactionType transactionType;
   final CategoryVariant? category;
   final List<String> additionalUsedTitles;
 
-  const CategoryFormViewModelBuilder({
+  const CategoryFormPage({
     super.key,
     required this.keyboardHeight,
     required this.transactionType,
@@ -22,12 +22,10 @@ final class CategoryFormViewModelBuilder extends StatefulWidget {
   });
 
   @override
-  ViewModelState<CategoryFormViewModelBuilder> createState() =>
-      CategoryFormViewModel();
+  ViewModelState<CategoryFormPage> createState() => CategoryFormViewModel();
 }
 
-final class CategoryFormViewModel
-    extends ViewModelState<CategoryFormViewModelBuilder> {
+final class CategoryFormViewModel extends ViewModelState<CategoryFormPage> {
   final titleController = InputController();
   final colorController = NamedColorPickerController(EColorName.random());
   final emojiController = InputController();

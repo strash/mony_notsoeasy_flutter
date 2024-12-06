@@ -2,7 +2,7 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
-import "package:mony_app/features/import/page/page.dart";
+import "package:mony_app/features/import/import.dart";
 
 final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
   @override

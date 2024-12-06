@@ -8,12 +8,12 @@ import "package:mony_app/features/account_form/use_case/use_case.dart";
 import "package:provider/provider.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
-final class AccountFormViewModelBuilder extends StatefulWidget {
+final class AccountFormPage extends StatefulWidget {
   final double keyboardHeight;
   final AccountVariant? account;
   final Map<EAccountType, List<String>> additionalUsedTitles;
 
-  const AccountFormViewModelBuilder({
+  const AccountFormPage({
     super.key,
     required this.keyboardHeight,
     required this.account,
@@ -21,12 +21,10 @@ final class AccountFormViewModelBuilder extends StatefulWidget {
   });
 
   @override
-  ViewModelState<AccountFormViewModelBuilder> createState() =>
-      AccountFormViewModel();
+  ViewModelState<AccountFormPage> createState() => AccountFormViewModel();
 }
 
-final class AccountFormViewModel
-    extends ViewModelState<AccountFormViewModelBuilder> {
+final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
   final titleController = InputController();
   final colorController = NamedColorPickerController(EColorName.random());
   final typeController =

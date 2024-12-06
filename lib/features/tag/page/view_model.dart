@@ -8,19 +8,19 @@ import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/features/tag/page/view.dart";
 import "package:mony_app/features/tag/use_case/use_case.dart";
 
-final class TagViewModelBuilder extends StatefulWidget {
+final class TagPage extends StatefulWidget {
   final TagModel tag;
 
-  const TagViewModelBuilder({
+  const TagPage({
     super.key,
     required this.tag,
   });
 
   @override
-  ViewModelState<TagViewModelBuilder> createState() => TagViewModel();
+  ViewModelState<TagPage> createState() => TagViewModel();
 }
 
-final class TagViewModel extends ViewModelState<TagViewModelBuilder> {
+final class TagViewModel extends ViewModelState<TagPage> {
   late final StreamSubscription<Event> _appSub;
 
   final prefix = StringEx.random(10);

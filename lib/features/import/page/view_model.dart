@@ -23,14 +23,14 @@ typedef TPressedCategoryValue = ({
   ImportModelCategoryVO category,
 });
 
-final class ImportViewModelBuilder extends StatefulWidget {
-  const ImportViewModelBuilder({super.key});
+final class ImportPage extends StatefulWidget {
+  const ImportPage({super.key});
 
   @override
-  ViewModelState<ImportViewModelBuilder> createState() => ImportViewModel();
+  ViewModelState<ImportPage> createState() => ImportViewModel();
 }
 
-final class ImportViewModel extends ViewModelState<ImportViewModelBuilder> {
+final class ImportViewModel extends ViewModelState<ImportPage> {
   final subject = BehaviorSubject<ImportEvent>.seeded(ImportEventInitial());
 
   List<ImportModel> steps = const [];

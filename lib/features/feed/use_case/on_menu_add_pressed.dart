@@ -3,10 +3,10 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/account_form/page/page.dart";
-import "package:mony_app/features/category_form/page/page.dart";
-import "package:mony_app/features/feed/page/page.dart";
-import "package:mony_app/features/tag_form/page/page.dart";
+import "package:mony_app/features/account_form/account_form.dart";
+import "package:mony_app/features/category_form/category_form.dart";
+import "package:mony_app/features/feed/feed.dart";
+import "package:mony_app/features/tag_form/tag_form.dart";
 import "package:provider/provider.dart";
 
 final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
@@ -79,10 +79,7 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
       context,
       showDragHandle: false,
       builder: (context, bottom) {
-        return TagFormPage(
-          keyboardHeight: bottom,
-          additionalUsedTitles: const [],
-        );
+        return TagFormPage(keyboardHeight: bottom);
       },
     );
 

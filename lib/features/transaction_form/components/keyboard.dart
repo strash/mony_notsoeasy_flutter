@@ -4,7 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/transaction_form/components/keyboard_button.dart";
-import "package:mony_app/features/transaction_form/page/page.dart";
+import "package:mony_app/features/transaction_form/transaction_form.dart";
 import "package:mony_app/features/transaction_form/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 

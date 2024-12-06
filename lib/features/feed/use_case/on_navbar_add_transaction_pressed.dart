@@ -5,8 +5,8 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/bottom_sheet/sheet.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/services/database/transaction.dart";
-import "package:mony_app/features/feed/page/page.dart";
-import "package:mony_app/features/transaction_form/page/page.dart";
+import "package:mony_app/features/feed/feed.dart";
+import "package:mony_app/features/transaction_form/transaction_form.dart";
 import "package:provider/provider.dart";
 
 final class OnNavbarAddTransactionPressed

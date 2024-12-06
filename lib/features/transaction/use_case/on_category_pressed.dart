@@ -2,7 +2,7 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/category.dart";
-import "package:mony_app/features/category/page/page.dart";
+import "package:mony_app/features/category/category.dart";
 
 final class OnCategoryPressed extends UseCase<void, CategoryModel> {
   @override

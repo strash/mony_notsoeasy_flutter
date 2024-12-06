@@ -67,10 +67,10 @@ class SearchView extends StatelessWidget {
 
           Opacity(
             opacity: anim.value,
-            child: CustomScrollView(
+            child: const CustomScrollView(
               slivers: [
                 // -> appbar
-                const AppBarComponent(
+                AppBarComponent(
                   showBackground: false,
                   automaticallyImplyLeading: false,
                   trailing: CloseButtonComponent(),

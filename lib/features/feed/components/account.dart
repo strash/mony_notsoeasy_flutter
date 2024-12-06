@@ -5,7 +5,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/account/component.dart";
 import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/features/feed/components/components.dart";
-import "package:mony_app/features/feed/page/page.dart";
+import "package:mony_app/features/feed/feed.dart";
 
 class FeedAccountComponent extends StatelessWidget {
   final FeedPageState page;

@@ -90,6 +90,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     if (input.isEmpty) {
       viewModel.displayedTags.value = filteredTags;
     } else {
+      // TODO: использовать fts вместо fuzzy
       viewModel.displayedTags.value = fuzzy
           .extractAllSorted<TagModel>(
             query: input,

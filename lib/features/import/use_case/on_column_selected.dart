@@ -1,7 +1,7 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/features/import/page/page.dart";
+import "package:mony_app/features/import/import.dart";
 
 final class OnColumnSelected extends UseCase<void, String> {
   @override

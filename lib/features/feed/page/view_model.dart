@@ -3,23 +3,23 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/features/feed/page/page.dart";
+import "package:mony_app/features/feed/feed.dart";
 import "package:mony_app/features/feed/page/view.dart";
 import "package:mony_app/features/feed/use_case/use_case.dart";
-import "package:mony_app/features/navbar/page/page.dart";
+import "package:mony_app/features/navbar/navbar.dart";
 
 export "./state.dart";
 
 enum EFeedMenuItem { addAccount, addExpenseCategory, addIncomeCategory, addTag }
 
-final class FeedViewModelBuilder extends StatefulWidget {
-  const FeedViewModelBuilder({super.key});
+final class FeedPage extends StatefulWidget {
+  const FeedPage({super.key});
 
   @override
-  ViewModelState<FeedViewModelBuilder> createState() => FeedViewModel();
+  ViewModelState<FeedPage> createState() => FeedViewModel();
 }
 
-final class FeedViewModel extends ViewModelState<FeedViewModelBuilder> {
+final class FeedViewModel extends ViewModelState<FeedPage> {
   late final StreamSubscription<Event> _appSub;
   late final StreamSubscription<NavBarEvent> _navbarSub;
   final _scrollBehavior = StreamController<double>.broadcast();

@@ -3,7 +3,7 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/category_form/page/page.dart";
+import "package:mony_app/features/category_form/category_form.dart";
 import "package:provider/provider.dart";
 
 final class OnEditPressed extends UseCase<Future<void>, CategoryModel> {

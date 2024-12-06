@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/import/page/page.dart";
+import "package:mony_app/features/import/import.dart";
 import "package:provider/provider.dart";
 
 final class OnDoneMapping extends UseCase<Future<void>, dynamic> {

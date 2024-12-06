@@ -21,23 +21,23 @@ final class TransactionFormVO {
   });
 }
 
-final class TransactionFormViewModelBuilder extends StatefulWidget {
+final class TransactionFormPage extends StatefulWidget {
   final TransactionModel? transaction;
   final AccountModel? account;
 
-  const TransactionFormViewModelBuilder({
+  const TransactionFormPage({
     super.key,
     this.transaction,
     this.account,
   });
 
   @override
-  ViewModelState<TransactionFormViewModelBuilder> createState() =>
+  ViewModelState<TransactionFormPage> createState() =>
       TransactionFormViewModel();
 }
 
 final class TransactionFormViewModel
-    extends ViewModelState<TransactionFormViewModelBuilder> {
+    extends ViewModelState<TransactionFormPage> {
   TransactionModel? get transaction => widget.transaction;
   AccountModel? get account => widget.account;
 

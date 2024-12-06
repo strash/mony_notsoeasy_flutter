@@ -7,23 +7,23 @@ import "package:mony_app/features/tag_form/page/view.dart";
 import "package:mony_app/features/tag_form/use_case/use_case.dart";
 import "package:provider/provider.dart";
 
-final class TagFormViewModelBuilder extends StatefulWidget {
+final class TagFormPage extends StatefulWidget {
   final double keyboardHeight;
   final TagVariant? tag;
   final List<String> additionalUsedTitles;
 
-  const TagFormViewModelBuilder({
+  const TagFormPage({
     super.key,
     required this.keyboardHeight,
     this.tag,
-    required this.additionalUsedTitles,
+    this.additionalUsedTitles = const [],
   });
 
   @override
-  ViewModelState<TagFormViewModelBuilder> createState() => TagFormViewModel();
+  ViewModelState<TagFormPage> createState() => TagFormViewModel();
 }
 
-final class TagFormViewModel extends ViewModelState<TagFormViewModelBuilder> {
+final class TagFormViewModel extends ViewModelState<TagFormPage> {
   final titleController = InputController();
 
   bool isSubmitEnabled = false;

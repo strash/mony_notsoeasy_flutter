@@ -21,7 +21,6 @@ final class OnEditPressed extends UseCase<Future<void>, TagModel> {
         return TagFormPage(
           keyboardHeight: bottom,
           tag: TagVariantModel(value),
-          additionalUsedTitles: const [],
         );
       },
     );

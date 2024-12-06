@@ -1,4 +1,4 @@
-import "package:mony_app/features/import/page/page.dart";
+import "package:mony_app/features/import/import.dart";
 
 final class AccountValidator extends BaseValidator {
   @override

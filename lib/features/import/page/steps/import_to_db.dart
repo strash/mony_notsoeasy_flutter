@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/features/import/page/page.dart";
+import "package:mony_app/features/import/import.dart";
 
 class ImportImportToDbPage extends StatelessWidget {
   final ImportEvent event;

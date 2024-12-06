@@ -1,6 +1,6 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
-import "package:mony_app/features/search/page/page.dart";
+import "package:mony_app/features/search/page/view_model.dart";
 
 typedef _Type = ({
   double distance,
