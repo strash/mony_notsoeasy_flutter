@@ -23,9 +23,9 @@ final class OnSumbitPressed extends UseCase<Future<void>, dynamic> {
 
     if (viewModel.widget.account case AccountVariantModel(:final model)) {
       final service = context.read<DomainAccountService>();
-      final accBalance = await service.getBalances(ids: [model.id]);
-      if (accBalance.isNotEmpty) {
-        balance = (balance - accBalance.first.totalAmount).roundToFraction(2);
+      final accBalance = await service.getBalance(id: model.id);
+      if (accBalance != null) {
+        balance = (balance - accBalance.totalAmount).roundToFraction(2);
       }
     }
 

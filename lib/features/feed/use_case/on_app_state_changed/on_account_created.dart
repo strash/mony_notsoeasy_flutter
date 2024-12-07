@@ -26,17 +26,19 @@ final class _OnAccountCreated {
     );
 
     {
-      final balances = await accountSevrice.getBalances(ids: [account.id]);
-      viewModel.addPageScroll(viewModel.pages.length);
-      pages.add(
-        FeedPageStateSingleAccount(
-          scrollPage: 0,
-          canLoadMore: true,
-          feed: const [],
-          account: account.copyWith(),
-          balance: balances.first,
-        ),
-      );
+      final balance = await accountSevrice.getBalance(id: account.id);
+      if (balance != null) {
+        viewModel.addPageScroll(viewModel.pages.length);
+        pages.add(
+          FeedPageStateSingleAccount(
+            scrollPage: 0,
+            canLoadMore: true,
+            feed: const [],
+            account: account.copyWith(),
+            balance: balance,
+          ),
+        );
+      }
     }
 
     if (pages.whereType<FeedPageStateAllAccounts>().isEmpty) {

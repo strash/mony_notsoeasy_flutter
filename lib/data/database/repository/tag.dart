@@ -34,6 +34,7 @@ final class _Impl
   final AppDatabase database;
 
   String get table => "tags";
+  String get balancesView => "tag_balances_view";
 
   const _Impl({required this.database});
 
@@ -46,34 +47,10 @@ final class _Impl
   Future<TagBalanceDto?> getBalance({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.rawQuery(
-        """
-SELECT
-	t.id,
-	t.created,
-	(
-		SELECT JSON_GROUP_OBJECT(currency_code, total_amount)
-		FROM
-		(
-			SELECT
-				COALESCE(SUM(tr.amount), 0) AS total_amount,
-				a.currency_code
-			FROM transactions AS tr
-			LEFT JOIN accounts AS a ON tr.account_id = a.id
-			LEFT JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
-			WHERE tt.tag_id = ?1
-			GROUP BY a.currency_code
-		)
-	) AS total_amount,
-	MIN(tr.date) AS first_transaction_date,
-	MAX(tr.date) AS last_transaction_date,
-	COUNT(tr.id) AS transactions_count
-FROM transactions AS tr
-JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
-RIGHT JOIN tags AS t ON tt.tag_id = t.id
-WHERE t.id = ?1;
-""",
-        [id],
+      final maps = await db.query(
+        balancesView,
+        where: "id = ?",
+        whereArgs: [id],
       );
       if (maps.isEmpty) return null;
       return TagBalanceDto.fromJson(maps.first);

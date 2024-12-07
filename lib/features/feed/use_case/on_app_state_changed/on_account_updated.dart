@@ -44,9 +44,7 @@ final class _OnAccountUpdated {
                   );
                 }),
               );
-              final balances = await accountSevrice.getBalances(
-                ids: [account.id],
-              );
+              final balance = await accountSevrice.getBalance(id: account.id);
 
               return Future.value(
                 page.copyWith(
@@ -54,7 +52,7 @@ final class _OnAccountUpdated {
                   feed: feed.fold<List<TransactionModel>>([], (prev, curr) {
                     return [...prev, ...curr];
                   }),
-                  balance: balances.firstOrNull,
+                  balance: balance,
                   account: account.copyWith(),
                 ),
               );

@@ -12,22 +12,22 @@ final class _OnTransactionCreated {
 
     final transaction = event.value;
 
-    final balances = await accountSevrice.getBalances(
-      ids: [transaction.account.id],
+    final balance = await accountSevrice.getBalance(
+      id: transaction.account.id,
     );
 
     final pages = viewModel.pages.map((e) {
       switch (e) {
         case final FeedPageStateAllAccounts page:
           return page.copyWith(
-            balances: page.balances.merge(balances),
+            balances: balance != null ? page.balances.merge([balance]) : null,
             feed: page.feed.merge([transaction.copyWith()]),
             canLoadMore: true,
           );
         case final FeedPageStateSingleAccount page:
           if (page.account.id == transaction.account.id) {
             return page.copyWith(
-              balance: balances.firstOrNull,
+              balance: balance,
               feed: page.feed.merge([transaction.copyWith()]),
               canLoadMore: true,
             );

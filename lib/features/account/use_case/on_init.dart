@@ -13,11 +13,8 @@ final class OnInit extends UseCase<Future<void>, AccountModel> {
     final viewModel = context.viewModel<AccountViewModel>();
     final accountService = context.read<DomainAccountService>();
 
-    final balances = await accountService.getBalances(ids: [account.id]);
-    if (balances.isEmpty) return;
-
-    viewModel.setProtectedState(() {
-      viewModel.balance = balances.first;
-    });
+    final balances = await accountService.getBalance(id: account.id);
+    if (balances == null) return;
+    viewModel.setProtectedState(() => viewModel.balance = balances);
   }
 }

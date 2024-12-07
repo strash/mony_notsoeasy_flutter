@@ -6,7 +6,9 @@ abstract base class AccountDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
-  Future<List<AccountBalanceDto>> getBalances({List<String>? ids});
+  Future<List<AccountBalanceDto>> getBalances();
+
+  Future<AccountBalanceDto?> getBalance({required String id});
 
   Future<List<AccountDto>> getAll({String? type, List<String>? ids});
 
@@ -31,6 +33,7 @@ final class _Impl
   final AppDatabase database;
 
   String get table => "accounts";
+  String get balancesView => "account_balances_view";
 
   const _Impl({required this.database});
 
@@ -48,31 +51,25 @@ final class _Impl
   }
 
   @override
-  Future<List<AccountBalanceDto>> getBalances({List<String>? ids}) async {
+  Future<List<AccountBalanceDto>> getBalances() async {
     return resolve(() async {
       final db = await database.db;
-      final where = ids != null ? "WHERE a.id IN (${getInArguments(ids)})" : "";
-      final maps = await db.rawQuery(
-        """
-SELECT
-	a.id,
-	a.currency_code,
-	a.balance,
-	COALESCE(SUM(t.amount), 0.0) AS total_amount,
-	(a.balance + COALESCE(SUM(t.amount), 0.0)) AS total_sum,
-	a.created,
-	MIN(t.date) AS first_transaction_date,
-	MAX(t.date) AS last_transaction_date,
-	COALESCE(COUNT(t.id), 0) AS transactions_count
-FROM $table AS a
-LEFT JOIN transactions AS t ON a.id = t.account_id
-$where
-GROUP BY a.id
-ORDER BY a.created ASC;
-""",
-        ids,
-      );
+      final maps = await db.query(balancesView);
       return maps.map(AccountBalanceDto.fromJson).toList(growable: false);
+    });
+  }
+
+  @override
+  Future<AccountBalanceDto?> getBalance({required String id}) async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.query(
+        balancesView,
+        where: "id = ?",
+        whereArgs: [id],
+      );
+      if (maps.isEmpty) return null;
+      return AccountBalanceDto.fromJson(maps.first);
     });
   }
 

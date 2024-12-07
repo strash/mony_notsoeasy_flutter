@@ -12,15 +12,15 @@ final class _OnTransactionDeleted {
 
     final transaction = event.value;
 
-    final balances = await accountSevrice.getBalances(
-      ids: [transaction.account.id],
+    final balance = await accountSevrice.getBalance(
+      id: transaction.account.id,
     );
 
     final pages = viewModel.pages.map((e) {
       switch (e) {
         case final FeedPageStateAllAccounts page:
           return page.copyWith(
-            balances: page.balances.merge(balances),
+            balances: balance != null ? page.balances.merge([balance]) : null,
             scrollPage: max(0, page.scrollPage - 1),
             canLoadMore: true,
             feed: List<TransactionModel>.from(
@@ -30,7 +30,7 @@ final class _OnTransactionDeleted {
         case final FeedPageStateSingleAccount page:
           if (page.account.id == transaction.account.id) {
             return page.copyWith(
-              balance: balances.firstOrNull,
+              balance: balance,
               scrollPage: max(0, page.scrollPage - 1),
               canLoadMore: true,
               feed: List<TransactionModel>.from(

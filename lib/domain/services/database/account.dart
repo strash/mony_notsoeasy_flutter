@@ -19,11 +19,17 @@ final class DomainAccountService extends BaseDatabaseService {
         _accountFactory = accountFactory,
         _accountBalanceFactory = accountBalanceFactory;
 
-  Future<List<AccountBalanceModel>> getBalances({List<String>? ids}) async {
-    final dtos = await _accountRepo.getBalances(ids: ids);
+  Future<List<AccountBalanceModel>> getBalances() async {
+    final dtos = await _accountRepo.getBalances();
     return dtos
         .map<AccountBalanceModel>(_accountBalanceFactory.toModel)
         .toList(growable: false);
+  }
+
+  Future<AccountBalanceModel?> getBalance({required String id}) async {
+    final dto = await _accountRepo.getBalance(id: id);
+    if (dto == null) return null;
+    return _accountBalanceFactory.toModel(dto);
   }
 
   Future<List<AccountModel>> getAll({EAccountType? type}) async {

@@ -27,13 +27,11 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventAccountUpdated(value: final account):
         if (viewModel.account.id != account.id) return;
-        final balances = await accountService.getBalances(ids: [account.id]);
-        if (balances.isEmpty) return;
+        final balance = await accountService.getBalance(id: account.id);
+        if (balance == null) return;
         viewModel.setProtectedState(() {
-          if (viewModel.account.id == account.id) {
-            viewModel.account = account.copyWith();
-          }
-          viewModel.balance = balances.first;
+          viewModel.account = account.copyWith();
+          viewModel.balance = balance;
         });
 
       case EventAccountDeleted(value: final account):
@@ -42,18 +40,16 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventCategoryDeleted():
         final id = viewModel.account.id;
-        final balances = await accountService.getBalances(ids: [id]);
-        viewModel.setProtectedState(() {
-          viewModel.balance = balances.first;
-        });
+        final balance = await accountService.getBalance(id: id);
+        viewModel.setProtectedState(() => viewModel.balance = balance);
 
       case EventTransactionCreated() ||
             EventTransactionUpdated() ||
             EventTransactionDeleted():
         final id = viewModel.account.id;
-        final balances = await accountService.getBalances(ids: [id]);
-        if (balances.isEmpty) return;
-        viewModel.setProtectedState(() => viewModel.balance = balances.first);
+        final balance = await accountService.getBalance(id: id);
+        if (balance == null) return;
+        viewModel.setProtectedState(() => viewModel.balance = balance);
     }
   }
 }

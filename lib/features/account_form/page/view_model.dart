@@ -64,10 +64,9 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
     );
     // set balance to total sum
     if (widget.account case AccountVariantModel(:final model)) {
-      final balance = await service.getBalances(ids: [model.id]);
-      if (balance.isNotEmpty) {
-        balanceController.text =
-            balance.first.totalSum.roundToFraction(2).toString();
+      final balance = await service.getBalance(id: model.id);
+      if (balance != null) {
+        balanceController.text = balance.totalSum.roundToFraction(2).toString();
       }
     }
     for (final list in data) {
