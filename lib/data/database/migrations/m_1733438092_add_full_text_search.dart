@@ -1,13 +1,13 @@
 import "package:mony_app/data/database/migration_service.dart";
 import "package:sqflite/sqflite.dart";
 
-// TODO: синхронизировать таблицы с виртуальными в репозиториях
 final class M1733438092AddFullTextSearch extends BaseMigration {
   final _accountsTable = "accounts";
   final _categoriesTable = "categories";
   final _tagsTable = "tags";
   final _transactionsTable = "transactions";
   final _transactionTagsTable = "transaction_tags";
+  final _transactionsToFtsView = "_transactions_to_fts_view";
 
   late final _tables = [
     _accountsTable,
@@ -20,30 +20,9 @@ final class M1733438092AddFullTextSearch extends BaseMigration {
   Future<void> up(Database db) async {
     final batch = db.batch();
 
-    for (final table in _tables) {
-      batch.execute("""
-CREATE VIRTUAL TABLE ${table}_fts
-USING FTS5(id UNINDEXED, value, TOKENIZE = 'trigram');
-""");
-    }
-
+    // transactions to fts view
     batch.execute("""
-INSERT INTO ${_accountsTable}_fts(id, value)
-SELECT id, (title || ' ' || type || ' ' || currency_code) AS value
-FROM $_accountsTable;
-""");
-    batch.execute("""
-INSERT INTO ${_categoriesTable}_fts(id, value)
-SELECT id, (icon || ' ' || title || ' ' || transaction_type) AS value
-FROM $_categoriesTable;
-""");
-    batch.execute("""
-INSERT INTO ${_tagsTable}_fts(id, value)
-SELECT id, title AS value
-FROM $_tagsTable;
-""");
-    batch.execute("""
-INSERT INTO ${_transactionsTable}_fts(id, value)
+CREATE VIEW IF NOT EXISTS $_transactionsToFtsView(id, value) AS
 SELECT
 	tr.id,
 	(tr.amount || ' ' || tr.note || ' ' || coalesce(t.value, '') || ' ' || a.value || ' ' || c.value) AS value
@@ -64,6 +43,36 @@ FROM $_categoriesTable
 ) AS c ON tr.category_id = c.id;
 """);
 
+    // create fts tables
+    for (final table in _tables) {
+      batch.execute("""
+CREATE VIRTUAL TABLE IF NOT EXISTS ${table}_fts
+USING FTS5(id UNINDEXED, value, TOKENIZE = 'trigram');
+""");
+    }
+
+    // populate with data
+    batch.execute("""
+INSERT INTO ${_accountsTable}_fts(id, value)
+SELECT id, (title || ' ' || type || ' ' || currency_code) AS value
+FROM $_accountsTable;
+""");
+    batch.execute("""
+INSERT INTO ${_categoriesTable}_fts(id, value)
+SELECT id, (icon || ' ' || title || ' ' || transaction_type) AS value
+FROM $_categoriesTable;
+""");
+    batch.execute("""
+INSERT INTO ${_tagsTable}_fts(id, value)
+SELECT id, title AS value
+FROM $_tagsTable;
+""");
+    batch.execute("""
+INSERT INTO ${_transactionsTable}_fts(id, value)
+SELECT id, value
+FROM $_transactionsToFtsView;
+""");
+
     await batch.commit();
   }
 
@@ -72,8 +81,10 @@ FROM $_categoriesTable
     final batch = db.batch();
 
     for (final table in _tables) {
-      batch.execute("DROP TABLE ${table}_fts;");
+      batch.execute("DROP TABLE IF EXISTS ${table}_fts;");
     }
+
+    batch.execute("DROP VIEW IF EXISTS $_transactionsToFtsView;");
 
     await batch.commit();
   }
