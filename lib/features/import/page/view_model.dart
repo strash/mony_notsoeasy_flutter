@@ -20,7 +20,7 @@ export "./model/model.dart";
 
 typedef TPressedCategoryValue = ({
   ETransactionType transactionType,
-  ImportModelCategoryVO category,
+  ImportModelCategoryVariant category,
 });
 
 final class ImportPage extends StatefulWidget {

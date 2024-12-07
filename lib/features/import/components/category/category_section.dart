@@ -9,9 +9,9 @@ import "package:mony_app/gen/assets.gen.dart";
 
 class ImportCategorySectionComponent extends StatelessWidget {
   final ETransactionType transactionType;
-  final List<ImportModelCategoryVO> categories;
-  final UseCase<Future<void>, ImportModelCategoryVO> onTap;
-  final UseCase<void, ImportModelCategoryVO> onReset;
+  final List<ImportModelCategoryVariant> categories;
+  final UseCase<Future<void>, ImportModelCategoryVariant> onTap;
+  final UseCase<void, ImportModelCategoryVariant> onReset;
 
   const ImportCategorySectionComponent({
     super.key,
@@ -29,7 +29,7 @@ class ImportCategorySectionComponent extends StatelessWidget {
       ETransactionType.income => "доходов",
     };
     final count = categories.fold<int>(0, (prev, e) {
-      return prev + (e is ImportModelCategoryVOEmpty ? 0 : 1);
+      return prev + (e is ImportModelCategoryVariantEmpty ? 0 : 1);
     });
 
     return Padding(

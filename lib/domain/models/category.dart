@@ -12,7 +12,6 @@ class CategoryModel with _$CategoryModel {
     required DateTime updated,
     required String title,
     required String icon,
-    required int sort,
     required EColorName colorName,
     required ETransactionType transactionType,
   }) = _CategoryModel;

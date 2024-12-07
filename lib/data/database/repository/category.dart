@@ -79,7 +79,7 @@ final class _Impl
         table,
         where: where.$1,
         whereArgs: where.$2,
-        orderBy: "sort ASC",
+        orderBy: "title ASC",
       );
       return maps.map(CategoryDto.fromJson).toList(growable: false);
     });
@@ -99,7 +99,7 @@ final class _Impl
         offset: offset,
         where: transactionType != null ? "transaction_type = ?" : null,
         whereArgs: transactionType != null ? [transactionType] : null,
-        orderBy: "sort ASC",
+        orderBy: "title ASC",
       );
       return maps.map(CategoryDto.fromJson).toList(growable: false);
     });

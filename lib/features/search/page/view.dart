@@ -108,7 +108,7 @@ class SearchView extends StatelessWidget {
                         shadows: [
                           BoxShadow(
                             color: theme.colorScheme.shadow.withOpacity(
-                              curvAnim.value.remap(.0, 1.0, .0, .08),
+                              curvAnim.value.remap(.0, 1.0, .0, .07),
                             ),
                             blurRadius: 18.0,
                             blurStyle: BlurStyle.outer,

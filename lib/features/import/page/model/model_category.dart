@@ -1,6 +1,6 @@
 part of "./base_model.dart";
 
-typedef _TListVO = List<ImportModelCategoryVO>;
+typedef _TListVO = List<ImportModelCategoryVariant>;
 typedef _TMappedCategories = Map<ImportModelTransactionTypeVO, _TListVO>;
 
 final class ImportModelCategory extends ImportModel {
@@ -11,7 +11,7 @@ final class ImportModelCategory extends ImportModel {
     mappedCategories.value = _mapCategories();
   }
 
-  Map<ImportModelTransactionTypeVO, List<ImportModelCategoryVO>>
+  Map<ImportModelTransactionTypeVO, List<ImportModelCategoryVariant>>
       _mapCategories() {
     return {
       for (final entry in typeModel.mappedEntriesByType)
@@ -26,7 +26,7 @@ final class ImportModelCategory extends ImportModel {
               .toList(growable: false)
               .foldValue([], (prev, curr) => [...prev ?? [], ...curr]),
         ).map((e) {
-          return ImportModelCategoryVOEmpty(
+          return ImportModelCategoryVariantEmpty(
             originalTitle: e,
             transactionType: entry.transactionType,
           );
@@ -46,12 +46,12 @@ final class ImportModelCategory extends ImportModel {
     };
   }
 
-  List<String> getTitles(ImportModelCategoryVOVO category) {
+  List<String> getTitles(ImportModelCategoryVariantVO category) {
     for (final MapEntry(key: type, value: list)
         in mappedCategories.value.entries) {
       if (type.transactionType == category.transactionType) {
         return list
-            .whereType<ImportModelCategoryVOVO>()
+            .whereType<ImportModelCategoryVariantVO>()
             .where((e) => e.vo != category.vo)
             .map((e) => e.vo.title)
             .toList(growable: false);
@@ -60,7 +60,7 @@ final class ImportModelCategory extends ImportModel {
     return const [];
   }
 
-  void remap(ImportModelCategoryVO category) {
+  void remap(ImportModelCategoryVariant category) {
     for (final MapEntry(key: type, value: list)
         in mappedCategories.value.entries) {
       if (type.transactionType != category.transactionType) continue;
@@ -72,7 +72,7 @@ final class ImportModelCategory extends ImportModel {
       final mapped = Map<ImportModelTransactionTypeVO, _TListVO>.from(
         mappedCategories.value,
       );
-      mapped[type] = List<ImportModelCategoryVO>.from(list)
+      mapped[type] = List<ImportModelCategoryVariant>.from(list)
         ..removeAt(index)
         ..insert(index, category);
       mappedCategories.value = mapped;
@@ -83,7 +83,7 @@ final class ImportModelCategory extends ImportModel {
   @override
   bool isReady() {
     return mappedCategories.value.entries.every(
-      (e) => e.value.every((c) => c is! ImportModelCategoryVOEmpty),
+      (e) => e.value.every((c) => c is! ImportModelCategoryVariantEmpty),
     );
   }
 
@@ -93,39 +93,39 @@ final class ImportModelCategory extends ImportModel {
   }
 }
 
-sealed class ImportModelCategoryVO {
+sealed class ImportModelCategoryVariant {
   final String originalTitle;
   final ETransactionType transactionType;
 
-  ImportModelCategoryVO({
+  ImportModelCategoryVariant({
     required this.originalTitle,
     required this.transactionType,
   });
 
-  ImportModelCategoryVOEmpty toEmpty() {
-    return ImportModelCategoryVOEmpty(
+  ImportModelCategoryVariantEmpty toEmpty() {
+    return ImportModelCategoryVariantEmpty(
       originalTitle: originalTitle,
       transactionType: transactionType,
     );
   }
 }
 
-final class ImportModelCategoryVOEmpty extends ImportModelCategoryVO {
-  ImportModelCategoryVOEmpty({
+final class ImportModelCategoryVariantEmpty extends ImportModelCategoryVariant {
+  ImportModelCategoryVariantEmpty({
     required super.originalTitle,
     required super.transactionType,
   });
 
-  ImportModelCategoryVOVO toVO({required CategoryVO vo}) {
-    return ImportModelCategoryVOVO(
+  ImportModelCategoryVariantVO toVO({required CategoryVO vo}) {
+    return ImportModelCategoryVariantVO(
       originalTitle: originalTitle,
       transactionType: transactionType,
       vo: vo,
     );
   }
 
-  ImportModelCategoryVOModel toModel({required CategoryModel model}) {
-    return ImportModelCategoryVOModel(
+  ImportModelCategoryVariantModel toModel({required CategoryModel model}) {
+    return ImportModelCategoryVariantModel(
       originalTitle: originalTitle,
       transactionType: transactionType,
       model: model,
@@ -133,17 +133,17 @@ final class ImportModelCategoryVOEmpty extends ImportModelCategoryVO {
   }
 }
 
-final class ImportModelCategoryVOModel extends ImportModelCategoryVO {
+final class ImportModelCategoryVariantModel extends ImportModelCategoryVariant {
   final CategoryModel model;
 
-  ImportModelCategoryVOModel({
+  ImportModelCategoryVariantModel({
     required super.originalTitle,
     required super.transactionType,
     required this.model,
   });
 
-  ImportModelCategoryVOModel copyWith({required CategoryModel model}) {
-    return ImportModelCategoryVOModel(
+  ImportModelCategoryVariantModel copyWith({required CategoryModel model}) {
+    return ImportModelCategoryVariantModel(
       originalTitle: originalTitle,
       transactionType: transactionType,
       model: model,
@@ -151,17 +151,17 @@ final class ImportModelCategoryVOModel extends ImportModelCategoryVO {
   }
 }
 
-final class ImportModelCategoryVOVO extends ImportModelCategoryVO {
+final class ImportModelCategoryVariantVO extends ImportModelCategoryVariant {
   final CategoryVO vo;
 
-  ImportModelCategoryVOVO({
+  ImportModelCategoryVariantVO({
     required super.originalTitle,
     required super.transactionType,
     required this.vo,
   });
 
-  ImportModelCategoryVOVO copyWith({required CategoryVO vo}) {
-    return ImportModelCategoryVOVO(
+  ImportModelCategoryVariantVO copyWith({required CategoryVO vo}) {
+    return ImportModelCategoryVariantVO(
       originalTitle: originalTitle,
       transactionType: transactionType,
       vo: vo,

@@ -56,7 +56,7 @@ final class DomainCategoryService extends BaseDatabaseService {
   }
 
   Future<CategoryModel> create({required CategoryVO vo}) async {
-    final CategoryVO(:title, :icon, :sort, :colorName, :transactionType) = vo;
+    final CategoryVO(:title, :icon, :colorName, :transactionType) = vo;
     final defaultColumns = newDefaultColumns;
     final model = CategoryModel(
       id: defaultColumns.id,
@@ -64,7 +64,6 @@ final class DomainCategoryService extends BaseDatabaseService {
       updated: defaultColumns.now,
       title: title,
       icon: icon,
-      sort: sort,
       colorName: EColorName.from(colorName),
       transactionType: transactionType,
     );

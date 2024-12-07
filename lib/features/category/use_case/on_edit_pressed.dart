@@ -33,7 +33,6 @@ final class OnEditPressed extends UseCase<Future<void>, CategoryModel> {
       model: value.copyWith(
         title: result.title,
         icon: result.icon,
-        sort: result.sort,
         colorName: EColorName.from(result.colorName),
         transactionType: result.transactionType,
       ),

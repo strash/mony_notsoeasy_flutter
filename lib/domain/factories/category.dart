@@ -13,7 +13,6 @@ final class CategoryDatabaseFactoryImpl
       updated: DateTime.tryParse(dto.updated)?.toLocal() ?? DateTime.now(),
       title: dto.title,
       icon: dto.icon,
-      sort: dto.sort,
       colorName: EColorName.from(dto.colorName),
       transactionType: ETransactionType.from(dto.transactionType),
     );
@@ -27,7 +26,6 @@ final class CategoryDatabaseFactoryImpl
       updated: model.updated.toUtc().toIso8601String(),
       title: model.title,
       icon: model.icon,
-      sort: model.sort,
       colorName: model.colorName.name,
       transactionType: model.transactionType.value,
     );

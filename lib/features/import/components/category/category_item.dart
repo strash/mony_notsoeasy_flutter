@@ -7,9 +7,9 @@ import "package:mony_app/features/import/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class ImportCategoryItemComponent extends StatelessWidget {
-  final ImportModelCategoryVO category;
-  final UseCase<Future<void>, ImportModelCategoryVO> onTap;
-  final UseCase<void, ImportModelCategoryVO> onReset;
+  final ImportModelCategoryVariant category;
+  final UseCase<Future<void>, ImportModelCategoryVariant> onTap;
+  final UseCase<void, ImportModelCategoryVariant> onReset;
 
   const ImportCategoryItemComponent({
     super.key,
@@ -28,14 +28,14 @@ class ImportCategoryItemComponent extends StatelessWidget {
     final String? icon;
     final String title;
     switch (category) {
-      case ImportModelCategoryVOModel(model: final model):
+      case ImportModelCategoryVariantModel(model: final model):
         final color = ex?.from(model.colorName).color ??
             theme.colorScheme.surfaceContainer;
         bg = color.withOpacity(.25);
         border = color;
         icon = model.icon;
         title = model.title;
-      case ImportModelCategoryVOVO(vo: final vo):
+      case ImportModelCategoryVariantVO(vo: final vo):
         final color = ex?.from(EColorName.from(vo.colorName)).color ??
             theme.colorScheme.surfaceContainer;
         bg = color.withOpacity(.25);

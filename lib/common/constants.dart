@@ -1,5 +1,5 @@
 const double kTranslucentPanelOpacity = .5;
-const double kTranslucentPanelBlurSigma = 30.0;
+const double kTranslucentPanelBlurSigma = 25.0;
 
 const kAmountPattern = r"^[-+]?(?:0|^[-+]?[1-9]\d*?)(?:[.,]\d{0,2})?$";
 

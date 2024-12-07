@@ -4,9 +4,9 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/features/import/page/view_model.dart";
 
 final class OnCategoryResetPressed
-    extends UseCase<void, ImportModelCategoryVO> {
+    extends UseCase<void, ImportModelCategoryVariant> {
   @override
-  void call(BuildContext context, [ImportModelCategoryVO? value]) {
+  void call(BuildContext context, [ImportModelCategoryVariant? value]) {
     if (value == null) throw ArgumentError.notNull();
 
     final viewModel = context.viewModel<ImportViewModel>();
@@ -17,9 +17,9 @@ final class OnCategoryResetPressed
 
     categoryModel.remap(
       switch (value) {
-        ImportModelCategoryVOEmpty() => value,
-        final ImportModelCategoryVOModel item => item.toEmpty(),
-        final ImportModelCategoryVOVO item => item.toEmpty(),
+        ImportModelCategoryVariantEmpty() => value,
+        final ImportModelCategoryVariantModel item => item.toEmpty(),
+        final ImportModelCategoryVariantVO item => item.toEmpty(),
       },
     );
 

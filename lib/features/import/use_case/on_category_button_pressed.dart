@@ -7,17 +7,17 @@ import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/components/components.dart";
 
 final class OnCategoryButtonPressed
-    extends UseCase<Future<void>, ImportModelCategoryVO> {
+    extends UseCase<Future<void>, ImportModelCategoryVariant> {
   @override
   Future<void> call(
     BuildContext context, [
-    ImportModelCategoryVO? value,
+    ImportModelCategoryVariant? value,
   ]) async {
     if (value == null) throw ArgumentError.notNull();
 
     final sheetResult = switch (value) {
       // show action menu
-      ImportModelCategoryVOEmpty() =>
+      ImportModelCategoryVariantEmpty() =>
         await BottomSheetComponent.show<EImportCategoryMenuAction?>(
           context,
           builder: (context, bottom) {
@@ -25,9 +25,9 @@ final class OnCategoryButtonPressed
           },
         ),
       // link model
-      ImportModelCategoryVOModel() => EImportCategoryMenuAction.link,
+      ImportModelCategoryVariantModel() => EImportCategoryMenuAction.link,
       // create vo
-      ImportModelCategoryVOVO() => EImportCategoryMenuAction.create,
+      ImportModelCategoryVariantVO() => EImportCategoryMenuAction.create,
     };
     if (!context.mounted || sheetResult == null) return;
 
@@ -50,28 +50,27 @@ final class OnCategoryButtonPressed
         );
         if (result == null) return;
         switch (value) {
-          case final ImportModelCategoryVOEmpty item:
+          case final ImportModelCategoryVariantEmpty item:
             categoryModel.remap(item.toModel(model: result));
-          case final ImportModelCategoryVOModel item:
+          case final ImportModelCategoryVariantModel item:
             categoryModel.remap(item.copyWith(model: result));
-          case ImportModelCategoryVOVO():
+          case ImportModelCategoryVariantVO():
             break;
         }
 
       // show new category form
       case EImportCategoryMenuAction.create:
         final categoryVO = switch (value) {
-          ImportModelCategoryVOVO(:final vo) => vo,
+          ImportModelCategoryVariantVO(:final vo) => vo,
           _ => CategoryVO(
               title: value.originalTitle,
               icon: "",
-              sort: models.length,
               colorName: EColorName.random().name,
               transactionType: value.transactionType,
             ),
         };
         final List<String> titles;
-        if (value case final ImportModelCategoryVOVO vo) {
+        if (value case final ImportModelCategoryVariantVO vo) {
           titles = categoryModel.getTitles(vo);
         } else {
           titles = const [];
@@ -90,11 +89,11 @@ final class OnCategoryButtonPressed
         );
         if (result == null) return;
         switch (value) {
-          case final ImportModelCategoryVOEmpty item:
+          case final ImportModelCategoryVariantEmpty item:
             categoryModel.remap(item.toVO(vo: result));
-          case ImportModelCategoryVOModel():
+          case ImportModelCategoryVariantModel():
             break;
-          case final ImportModelCategoryVOVO item:
+          case final ImportModelCategoryVariantVO item:
             categoryModel.remap(item.copyWith(vo: result));
         }
     }

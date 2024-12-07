@@ -77,7 +77,12 @@ class ImportMapCategoriesPage extends StatelessWidget {
 
                 return ImportCategorySectionComponent(
                   transactionType: key.transactionType,
-                  categories: value,
+                  categories: value
+                    ..sort((a, b) {
+                      return a.originalTitle
+                          .toLowerCase()
+                          .compareTo(b.originalTitle.toLowerCase());
+                    }),
                   onTap: onCategoryPressed,
                   onReset: onCategoryResetPressed,
                 );

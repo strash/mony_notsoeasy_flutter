@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/feed.dart";
 import "package:provider/provider.dart";

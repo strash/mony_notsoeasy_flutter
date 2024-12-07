@@ -13,7 +13,6 @@ final class M1728413017SeedDefaultCategories extends BaseMigration {
   final _categoriesUpdated = "updated";
   final _categoriesTitle = "title";
   final _categoriesIcon = "icon";
-  final _categoriesSort = "sort";
   final _categoriesColorName = "color_name";
   final _categoriesTransactionType = "transaction_type";
 
@@ -21,7 +20,6 @@ final class M1728413017SeedDefaultCategories extends BaseMigration {
     required String title,
     required String icon,
     required String colorName,
-    required int sort,
     required String transactionType,
   }) {
     final id = StringEx.random(20);
@@ -33,7 +31,6 @@ INSERT INTO $_categories (
 	$_categoriesUpdated,
 	$_categoriesTitle,
 	$_categoriesIcon,
-	$_categoriesSort,
 	$_categoriesColorName,
 	$_categoriesTransactionType
 ) VALUES(
@@ -42,7 +39,6 @@ INSERT INTO $_categories (
 	'$date',
 	'$title',
 	'$icon',
-	$sort,
 	'$colorName',
 	'$transactionType'
 	);
@@ -75,13 +71,12 @@ INSERT INTO $_categories (
       (icon: "🪴", color: EColorName.vividMalachite.name, title: "Дом"),
       (icon: "💻", color: EColorName.cadet.name, title: "Девайсы"),
     ];
-    for (final (index, category) in expenseCategories.indexed) {
+    for (final category in expenseCategories) {
       batch.execute(
         _getInsertQuery(
           icon: category.icon,
           title: category.title,
           colorName: category.color,
-          sort: index,
           transactionType: ETransactionType.expense.value,
         ),
       );
@@ -97,13 +92,12 @@ INSERT INTO $_categories (
       (icon: "💸", color: EColorName.cafeAuLait.name, title: "Займ"),
       (icon: "🧾", color: EColorName.majorelleBlue.name, title: "Продажи"),
     ];
-    for (final (index, category) in incomeCategories.indexed) {
+    for (final category in incomeCategories) {
       batch.execute(
         _getInsertQuery(
           icon: category.icon,
           title: category.title,
           colorName: category.color,
-          sort: index,
           transactionType: ETransactionType.income.value,
         ),
       );

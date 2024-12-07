@@ -7,6 +7,34 @@ import "package:mony_app/features/import/use_case/use_case.dart";
 import "package:provider/provider.dart";
 
 final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
+  @override
+  Future<void> call(BuildContext context, [ImportEvent? event]) async {
+    if (event == null) throw ArgumentError.notNull();
+    final viewModel = context.viewModel<ImportViewModel>();
+    switch (event) {
+      case ImportEventMappingColumns():
+        _onMappingColumns(viewModel);
+      case ImportEventMappingColumnsValidated():
+        _onColumnsValidated(viewModel);
+      case ImportEventMapAccounts():
+        _onAccountsMapped(viewModel, context.read<DomainCategoryService>());
+      case ImportEventMapTransactionType():
+        _onTransactionTypesMapped(
+          viewModel,
+          context.read<DomainCategoryService>(),
+        );
+      case ImportEventMapCategories():
+        _onCategoriesMapped(context);
+      case ImportEventInitial() ||
+            ImportEventLoadingCsv() ||
+            ImportEventErrorLoadingCsv() ||
+            ImportEventValidatingMappedColumns() ||
+            ImportEventErrorMappingColumns() ||
+            ImportEventToDb():
+        break;
+    }
+  }
+
   Future<void> _onMappingColumns(ImportViewModel viewModel) async {
     if (viewModel.currentStep is! ImportModelColumn) return;
     final currentColumn = viewModel.currentStep as ImportModelColumn;
@@ -149,33 +177,5 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
         ..add(categoryModel);
     });
     viewModel<OnDoneMapping>().call(context);
-  }
-
-  @override
-  Future<void> call(BuildContext context, [ImportEvent? event]) async {
-    if (event == null) throw ArgumentError.notNull();
-    final viewModel = context.viewModel<ImportViewModel>();
-    switch (event) {
-      case ImportEventMappingColumns():
-        _onMappingColumns(viewModel);
-      case ImportEventMappingColumnsValidated():
-        _onColumnsValidated(viewModel);
-      case ImportEventMapAccounts():
-        _onAccountsMapped(viewModel, context.read<DomainCategoryService>());
-      case ImportEventMapTransactionType():
-        _onTransactionTypesMapped(
-          viewModel,
-          context.read<DomainCategoryService>(),
-        );
-      case ImportEventMapCategories():
-        _onCategoriesMapped(context);
-      case ImportEventInitial() ||
-            ImportEventLoadingCsv() ||
-            ImportEventErrorLoadingCsv() ||
-            ImportEventValidatingMappedColumns() ||
-            ImportEventErrorMappingColumns() ||
-            ImportEventToDb():
-        break;
-    }
   }
 }
