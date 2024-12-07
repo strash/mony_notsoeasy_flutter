@@ -22,16 +22,17 @@ final class _OnTransactionUpdated {
             feed: page.feed.merge([transaction.copyWith()]),
           );
         case final FeedPageStateSingleAccount page:
-          if (page.account.id == transaction.account.id) {
-            return page.copyWith(
-              balance: balances.where((e) {
-                    return e.id == page.account.id;
-                  }).firstOrNull ??
-                  page.balance,
-              feed: page.feed.merge([transaction.copyWith()]),
-            );
-          }
-          return page;
+          return page.copyWith(
+            balance: balances.where((e) {
+                  return e.id == page.account.id;
+                }).firstOrNull ??
+                page.balance,
+            feed: page.account.id == transaction.account.id
+                ? page.feed.merge([transaction.copyWith()])
+                : List<TransactionModel>.from(
+                    page.feed.where((e) => e.id != transaction.id),
+                  ),
+          );
       }
     });
 
