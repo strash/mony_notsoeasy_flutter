@@ -11,6 +11,7 @@ final class MigrationService {
     M1728991478AddColorAndBalanceColumnsToAccounts(),
     M1730475693RemoveTypeColumnFromTransactions(),
     M1733438092AddFullTextSearch(),
+    M1733543350AddFtsTriggers(),
   ];
 
   Iterable<BaseMigration> getFor(int from, int to) {
@@ -24,8 +25,10 @@ final class MigrationService {
     final migrations = list.skip(begin).take(range);
     final m = (isUp ? migrations : migrations.toList(growable: false).reversed);
     if (kDebugMode) {
-      final fold = m.fold("\n", (prev, e) => "$prev\t -> ${e.runtimeType}\n");
-      print("💿 MIGRATIONS: ${isUp ? "🆙" : "🔽"} from $from to $to: $fold");
+      final fold = m.fold("\n", (prev, e) {
+        return "$prev\t ${isUp ? "✅" : "❌"} ${e.runtimeType}\n";
+      });
+      print("💿 MIGRATIONS: ${isUp ? "🔼" : "🔽"} from $from to $to: $fold");
     }
     return m;
   }
