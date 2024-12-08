@@ -12,38 +12,44 @@ final class _OnTransactionDeleted {
 
     final transaction = event.value;
 
-    final balance = await accountSevrice.getBalance(
-      id: transaction.account.id,
-    );
+    final pages = await Future.wait(
+      viewModel.pages.map((e) async {
+        switch (e) {
+          // all accounts page
+          case final FeedPageStateAllAccounts page:
+            final balances = await accountSevrice.getBalances();
 
-    final pages = viewModel.pages.map((e) {
-      switch (e) {
-        case final FeedPageStateAllAccounts page:
-          return page.copyWith(
-            balances: balance != null ? page.balances.merge([balance]) : null,
-            scrollPage: max(0, page.scrollPage - 1),
-            canLoadMore: true,
-            feed: List<TransactionModel>.from(
-              page.feed.where((e) => e.id != transaction.id),
-            ),
-          );
-        case final FeedPageStateSingleAccount page:
-          if (page.account.id == transaction.account.id) {
-            return page.copyWith(
-              balance: balance,
-              scrollPage: max(0, page.scrollPage - 1),
-              canLoadMore: true,
-              feed: List<TransactionModel>.from(
-                page.feed.where((e) => e.id != transaction.id),
+            return Future.value(
+              page.copyWith(
+                balances: balances,
+                canLoadMore: true,
+                feed: List<TransactionModel>.from(
+                  page.feed.where((e) => e.id != transaction.id),
+                ),
               ),
             );
-          }
-          return page;
-      }
-    });
 
-    viewModel.setProtectedState(() {
-      viewModel.pages = List<FeedPageState>.from(pages);
-    });
+          // single account page
+          case final FeedPageStateSingleAccount page:
+            final id = page.account.id;
+
+            if (id != transaction.account.id) return Future.value(page);
+
+            final balance = await accountSevrice.getBalance(id: id);
+
+            return Future.value(
+              page.copyWith(
+                balance: balance,
+                canLoadMore: true,
+                feed: List<TransactionModel>.from(
+                  page.feed.where((e) => e.id != transaction.id),
+                ),
+              ),
+            );
+        }
+      }),
+    );
+
+    viewModel.setProtectedState(() => viewModel.pages = pages);
   }
 }

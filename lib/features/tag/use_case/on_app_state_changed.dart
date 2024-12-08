@@ -1,5 +1,3 @@
-import "dart:math";
-
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
@@ -84,9 +82,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         );
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
-          viewModel.feed = feed.fold<List<TransactionModel>>([], (prev, curr) {
-            return [...prev, ...curr];
-          });
+          viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
           viewModel.canLoadMore = true;
         });
 
@@ -100,7 +96,6 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             viewModel.feed.where((e) => e.id != transaction.id),
           );
           viewModel.canLoadMore = true;
-          viewModel.scrollPage = max(0, viewModel.scrollPage - 1);
         });
 
       case EventTagUpdated(value: final tag):
@@ -120,19 +115,17 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventTagDeleted(value: final tag):
         if (viewModel.tag.id == tag.id) {
           context.close();
-        } else {
-          viewModel.setProtectedState(() {
-            viewModel.feed = List<TransactionModel>.from(
-              viewModel.feed.map((e) {
-                return e.copyWith(
-                  tags: List<TagModel>.from(
-                    e.tags.where((t) => t.id != tag.id),
-                  ),
-                );
-              }),
-            );
-          });
+          return;
         }
+        viewModel.setProtectedState(() {
+          viewModel.feed = List<TransactionModel>.from(
+            viewModel.feed.map((e) {
+              return e.copyWith(
+                tags: List<TagModel>.from(e.tags.where((t) => t.id != tag.id)),
+              );
+            }),
+          );
+        });
     }
   }
 }

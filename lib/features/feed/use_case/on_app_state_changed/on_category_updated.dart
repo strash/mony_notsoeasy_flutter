@@ -12,22 +12,19 @@ final class _OnCategoryUpdated {
 
     final pages = viewModel.pages.map((e) {
       switch (e) {
+        // all accounts page
         case final FeedPageStateAllAccounts page:
           return page.copyWith(
             feed: List<TransactionModel>.from(
-              page.feed.map((transaction) {
-                if (transaction.category.id != category.id) return transaction;
-                return transaction.copyWith(category: category.copyWith());
-              }),
+              page.feed.map(_updateCategories(category)),
             ),
           );
+
+        // single account page
         case final FeedPageStateSingleAccount page:
           return page.copyWith(
             feed: List<TransactionModel>.from(
-              page.feed.map((transaction) {
-                if (transaction.category.id != category.id) return transaction;
-                return transaction.copyWith(category: category.copyWith());
-              }),
+              page.feed.map(_updateCategories(category)),
             ),
           );
       }
@@ -36,5 +33,14 @@ final class _OnCategoryUpdated {
     viewModel.setProtectedState(() {
       viewModel.pages = List<FeedPageState>.from(pages);
     });
+  }
+
+  TransactionModel Function(TransactionModel) _updateCategories(
+    CategoryModel category,
+  ) {
+    return (TransactionModel e) {
+      if (e.category.id != category.id) return e;
+      return e.copyWith(category: category.copyWith());
+    };
   }
 }

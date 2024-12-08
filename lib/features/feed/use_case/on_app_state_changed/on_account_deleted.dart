@@ -8,7 +8,7 @@ final class _OnAccountDeleted {
     FeedViewModel viewModel,
     EventAccountDeleted event,
   ) async {
-    // NOTE: navigator will open start screen in this case
+    // NOTE: navigator will open start screen, so we are chilling
     if (viewModel.pages.length == 1) return;
 
     final accountSevrice = context.read<DomainAccountService>();
@@ -26,6 +26,7 @@ final class _OnAccountDeleted {
     final pages = await Future.wait(
       viewModel.pages.map((e) async {
         switch (e) {
+          // all accounts page
           case final FeedPageStateAllAccounts page:
             final balances = await accountSevrice.getBalances();
             final feed = await transactionService.getMany(page: 0);
@@ -41,6 +42,8 @@ final class _OnAccountDeleted {
                 ),
               ),
             );
+
+          // single account page
           case final FeedPageStateSingleAccount page:
             if (page.account.id == account.id) {
               return Future.value(e);
@@ -66,9 +69,7 @@ final class _OnAccountDeleted {
       pages.removeAt(0);
     }
 
-    viewModel.setProtectedState(() {
-      viewModel.pages = pages;
-    });
+    viewModel.setProtectedState(() => viewModel.pages = pages);
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       for (final controller in viewModel.scrollControllers) {

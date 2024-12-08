@@ -11,13 +11,14 @@ final class _OnCategoryDeleted {
     final accountSevrice = context.read<DomainAccountService>();
     final transactionService = context.read<DomainTransactionService>();
 
-    final balances = await accountSevrice.getBalances();
-
     final pages = await Future.wait(
       viewModel.pages.map((e) async {
         switch (e) {
+          // all accounts page
           case final FeedPageStateAllAccounts page:
+            final balances = await accountSevrice.getBalances();
             final feed = await transactionService.getMany(page: 0);
+
             return Future.value(
               page.copyWith(
                 scrollPage: 0,
@@ -26,26 +27,30 @@ final class _OnCategoryDeleted {
                 balances: balances,
               ),
             );
+
+          // single account page
           case final FeedPageStateSingleAccount page:
+            final balance = await accountSevrice.getBalance(
+              id: page.account.id,
+            );
             final feed = await transactionService.getMany(
               page: 0,
               accountIds: [page.account.id],
             );
+
             return Future.value(
               page.copyWith(
                 scrollPage: 0,
                 canLoadMore: true,
                 feed: feed,
-                balance: balances.singleWhere((e) => e.id == page.account.id),
+                balance: balance,
               ),
             );
         }
       }),
     );
 
-    viewModel.setProtectedState(() {
-      viewModel.pages = pages;
-    });
+    viewModel.setProtectedState(() => viewModel.pages = pages);
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       for (final controller in viewModel.scrollControllers) {

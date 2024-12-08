@@ -12,10 +12,6 @@ final class OnInit extends UseCase<Future<void>, FeedViewModel> {
     final accountService = context.read<DomainAccountService>();
     final transactionService = context.read<DomainTransactionService>();
 
-    // TODO: почему-то сразу после импорта добавился FeedPageStateAllAccounts
-    // хотя счет был всего один. плюс page счета пустой, хотя транзакции были
-    // добавлены. при этом транзакции отобразились на page всех счетов, которого
-    // быть не должно
     final List<FeedPageState> pages = [];
     final accounts = await accountService.getAll();
     final balances = await accountService.getBalances();

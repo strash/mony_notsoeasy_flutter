@@ -1,10 +1,7 @@
-import "dart:math";
-
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
-import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/feed.dart";
 import "package:provider/provider.dart";
@@ -12,20 +9,15 @@ import "package:provider/provider.dart";
 part "./on_app_state_changed/on_account_created.dart";
 part "./on_app_state_changed/on_account_deleted.dart";
 part "./on_app_state_changed/on_account_updated.dart";
-part "./on_app_state_changed/on_category_updated.dart";
 part "./on_app_state_changed/on_category_deleted.dart";
+part "./on_app_state_changed/on_category_updated.dart";
+part "./on_app_state_changed/on_tag_deleted.dart";
+part "./on_app_state_changed/on_tag_updated.dart";
 part "./on_app_state_changed/on_transaction_created.dart";
 part "./on_app_state_changed/on_transaction_deleted.dart";
 part "./on_app_state_changed/on_transaction_updated.dart";
-part "./on_app_state_changed/on_tag_updated.dart";
-part "./on_app_state_changed/on_tag_deleted.dart";
 
 typedef _TValue = ({FeedViewModel viewModel, Event event});
-
-// TODO: 2. При добавлении второго счета сначала добавить экран со всеми счетами
-// в начало списка, прыгнуть на второй экран (экран со счетом, на котором
-// находились), добавить экран с новым счетом в конец и потом уже анимировать на
-// него. Чтобы не было видно подмены счетов на первом экране
 
 final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
   @override

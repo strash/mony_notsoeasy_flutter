@@ -1,5 +1,3 @@
-import "dart:math";
-
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -68,46 +66,23 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         });
 
       case EventCategoryDeleted(value: final category):
-        final id = viewModel.category.id;
-        if (category.id != id) return;
+        if (viewModel.category.id != category.id) return;
         context.close();
 
-      case EventTransactionCreated(value: final transaction):
-        final id = viewModel.category.id;
-        if (transaction.category.id != id) return;
-        final balance = await categoryService.getBalance(id: id);
-        viewModel.setProtectedState(() {
-          viewModel.balance = balance;
-          viewModel.feed = viewModel.feed.merge([transaction.copyWith()]);
-        });
-
-      case EventTransactionUpdated():
+      case EventTransactionCreated() ||
+            EventTransactionUpdated() ||
+            EventTransactionDeleted():
         final id = viewModel.category.id;
         final balance = await categoryService.getBalance(id: id);
-        final feed = await Future.wait(
+        final feed = await Future.wait<List<TransactionModel>>(
           List.generate(viewModel.scrollPage + 1, (index) {
             return transactionService.getMany(page: index, categoryIds: [id]);
           }),
         );
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
-          viewModel.feed = feed.fold<List<TransactionModel>>([], (prev, curr) {
-            return [...prev, ...curr];
-          });
+          viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
           viewModel.canLoadMore = true;
-        });
-
-      case EventTransactionDeleted(value: final transaction):
-        final id = viewModel.category.id;
-        if (transaction.category.id != id) return;
-        final balance = await categoryService.getBalance(id: id);
-        viewModel.setProtectedState(() {
-          viewModel.balance = balance;
-          viewModel.feed = List<TransactionModel>.from(
-            viewModel.feed.where((e) => e.id != transaction.id),
-          );
-          viewModel.canLoadMore = true;
-          viewModel.scrollPage = max(0, viewModel.scrollPage - 1);
         });
 
       case EventTagUpdated(value: final tag):
