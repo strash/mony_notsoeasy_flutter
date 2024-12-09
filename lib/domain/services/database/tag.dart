@@ -23,24 +23,14 @@ final class DomainTagService extends BaseDatabaseService {
     return _tagBalanceFactory.toModel(dto);
   }
 
-  Future<List<TagModel>> getAllSortedBy({
-    required ETransactionType first,
-  }) async {
+  Future<List<TagModel>> search({required ETransactionType first}) async {
     final order = first == ETransactionType.expense ? "ASC" : "DESC";
-    final dtos = await _tagRepo.getAllSortedBy(order: order);
+    final dtos = await _tagRepo.search(order: order);
     return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
   }
 
   Future<List<TagModel>> getAll({List<String>? ids}) async {
     final dtos = await _tagRepo.getAll(ids: ids);
-    return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
-  }
-
-  Future<List<TagModel>> getAllForTransaction({
-    required String transactionId,
-  }) async {
-    final dtos =
-        await _tagRepo.getAllForTransaction(transactionId: transactionId);
     return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
   }
 

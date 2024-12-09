@@ -8,11 +8,12 @@ abstract base class TagDatabaseRepository {
 
   Future<TagBalanceDto?> getBalance({required String id});
 
-  Future<List<TagDto>> getAllSortedBy({required String order});
+  Future<List<TagDto>> search({required String order});
 
-  Future<List<TagDto>> getAllForTransaction({required String transactionId});
-
-  Future<List<TagDto>> getAll({List<String>? ids});
+  Future<List<TagDto>> getAll({
+    List<String>? ids,
+    String? transactionId,
+  });
 
   Future<List<TagDto>> getMany({
     required int limit,
@@ -38,9 +39,22 @@ final class _Impl
 
   const _Impl({required this.database});
 
-  (String?, List<Object>?) _getWhere(List<String>? ids) {
-    if (ids == null) return (null, null);
-    return ("id IN (${getInArguments(ids)})", ids);
+  (String?, List<Object>?)? _getWhere({
+    List<String>? ids,
+    String? transactionId,
+  }) {
+    final List<String> query = [];
+    final List<Object> args = [];
+    if (ids != null) {
+      query.add("t.id IN (${getInArguments(ids)})");
+      args.addAll(ids);
+    }
+    if (transactionId != null) {
+      query.add("tt.transaction_id = ?");
+      args.add(transactionId);
+    }
+    if (query.isEmpty) return null;
+    return (query.join(" AND "), args);
   }
 
   @override
@@ -58,7 +72,7 @@ final class _Impl
   }
 
   @override
-  Future<List<TagDto>> getAllSortedBy({required String order}) async {
+  Future<List<TagDto>> search({required String order}) async {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.rawQuery("""
@@ -77,35 +91,31 @@ ORDER BY
   }
 
   @override
-  Future<List<TagDto>> getAllForTransaction({
-    required String transactionId,
+  Future<List<TagDto>> getAll({
+    List<String>? ids,
+    String? transactionId,
   }) async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.rawQuery(
-        """
+      final where = _getWhere(ids: ids, transactionId: transactionId);
+      final List<Map<String, Object?>> maps;
+      if (transactionId != null) {
+        maps = await db.rawQuery(
+          """
 SELECT t.* FROM transaction_tags AS tt
-RIGHT JOIN tags AS t ON tt.tag_id = t.id
-WHERE transaction_id = ?
+RIGHT JOIN $table AS t ON tt.tag_id = t.id
+WHERE ${where?.$1}
 ORDER BY tt.created ASC;
 """,
-        [transactionId],
-      );
-      return maps.map(TagDto.fromJson).toList(growable: false);
-    });
-  }
-
-  @override
-  Future<List<TagDto>> getAll({List<String>? ids}) async {
-    return resolve(() async {
-      final db = await database.db;
-      final where = _getWhere(ids);
-      final maps = await db.query(
-        table,
-        orderBy: "title ASC",
-        where: where.$1,
-        whereArgs: where.$2,
-      );
+          where?.$2,
+        );
+      } else {
+        final q = where != null ? "WHERE ${where.$1}" : "";
+        maps = await db.rawQuery(
+          "SELECT t.* FROM $table AS t $q ORDER BY t.title ASC;",
+          where?.$2,
+        );
+      }
       return maps.map(TagDto.fromJson).toList(growable: false);
     });
   }

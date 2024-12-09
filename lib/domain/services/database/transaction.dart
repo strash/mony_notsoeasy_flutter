@@ -58,7 +58,7 @@ final class DomainTransactionService extends BaseDatabaseService {
       ids: List<String>.from(unqCategoryIds),
     );
     final tagDtos = await Future.wait(
-      dtos.map((e) => _tagRepo.getAllForTransaction(transactionId: e.id)),
+      dtos.map((e) => _tagRepo.getAll(transactionId: e.id)),
     );
     final List<TransactionModel> models = [];
     for (final (index, dto) in dtos.indexed) {
@@ -110,7 +110,7 @@ final class DomainTransactionService extends BaseDatabaseService {
       ids: List<String>.from(unqCategoryIds),
     );
     final tagDtos = await Future.wait(
-      dtos.map((e) => _tagRepo.getAllForTransaction(transactionId: e.id)),
+      dtos.map((e) => _tagRepo.getAll(transactionId: e.id)),
     );
     final List<TransactionModel> models = [];
     for (final (index, dto) in dtos.indexed) {

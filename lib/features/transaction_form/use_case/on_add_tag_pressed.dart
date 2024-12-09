@@ -21,7 +21,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     final tagService = context.read<DomainTagService>();
     viewModel.tagInput.addListener(_onInputChanged);
 
-    _tags = await tagService.getAllSortedBy(
+    _tags = await tagService.search(
       first: viewModel.typeController.value,
     );
     viewModel.displayedTags.value = _filterTags(viewModel.attachedTags);
