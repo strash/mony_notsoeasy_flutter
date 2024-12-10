@@ -28,6 +28,7 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
 
   final pageController = PageController();
   final List<FeedScrollController> scrollControllers = [];
+  final List<StreamSubscription<FeedScrollControllerEvent>> _scrollSubs = [];
 
   List<FeedPageState> pages = [];
 
@@ -37,13 +38,16 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
   }
 
   void addPageScroll(int pageIndex) {
-    final scrollController = FeedScrollController(onData: _onFeedEvent);
+    final scrollController = FeedScrollController();
+    final sub = scrollController.addListener(_onFeedEvent);
+    _scrollSubs.insert(pageIndex, sub);
     scrollController.controller.addListener(_onScroll);
     scrollControllers.insert(pageIndex, scrollController);
   }
 
   void removePageScroll(int pageIndex) {
     scrollControllers.removeAt(pageIndex).dispose();
+    _scrollSubs.removeAt(pageIndex).cancel();
   }
 
   Future<void> openPage(int pageIndex) async {
@@ -123,6 +127,9 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
     _scrollBehavior.close();
     _appSub.cancel();
     _navbarSub.cancel();
+    for (final sub in _scrollSubs) {
+      sub.cancel();
+    }
     for (final controller in scrollControllers) {
       controller.dispose();
     }

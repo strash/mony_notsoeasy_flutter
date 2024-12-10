@@ -22,10 +22,11 @@ final class TagPage extends StatefulWidget {
 
 final class TagViewModel extends ViewModelState<TagPage> {
   late final StreamSubscription<Event> _appSub;
+  late final StreamSubscription<FeedScrollControllerEvent> _scrollSub;
 
   final prefix = StringEx.random(10);
 
-  late final FeedScrollController _scrollController;
+  late final FeedScrollController _scrollController = FeedScrollController();
   ScrollController get controller => _scrollController.controller;
 
   late TagModel tag = widget.tag;
@@ -48,7 +49,7 @@ final class TagViewModel extends ViewModelState<TagPage> {
   @override
   void initState() {
     super.initState();
-    _scrollController = FeedScrollController(onData: _onFeedEvent);
+    _scrollSub = _scrollController.addListener(_onFeedEvent);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
       await OnInit().call(context, this);
@@ -58,6 +59,7 @@ final class TagViewModel extends ViewModelState<TagPage> {
   @override
   void dispose() {
     _appSub.cancel();
+    _scrollSub.cancel();
     _scrollController.dispose();
     super.dispose();
   }
