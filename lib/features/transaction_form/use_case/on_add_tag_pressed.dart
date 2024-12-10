@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:fuzzywuzzy/fuzzywuzzy.dart" as fuzzy;
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
@@ -10,7 +9,8 @@ import "package:provider/provider.dart";
 
 final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
   late BuildContext? _context;
-  late List<TagModel> _tags;
+  int _page = 0;
+  bool _canLoadMore = true;
 
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
@@ -18,13 +18,11 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
     final controller = viewModel.bottomSheetTagScrollController;
-    final tagService = context.read<DomainTagService>();
     viewModel.tagInput.addListener(_onInputChanged);
+    final sub = controller.addListener(_onTagScrolled);
 
-    _tags = await tagService.search(
-      first: viewModel.typeController.value,
-    );
-    viewModel.displayedTags.value = _filterTags(viewModel.attachedTags);
+    viewModel.displayedTags.value = await _fetchData();
+    _canLoadMore = viewModel.displayedTags.value.isNotEmpty;
     if (!context.mounted) return;
 
     await BottomSheetComponent.show<void>(
@@ -34,7 +32,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
         return TransactionFormBottomSheetTagsComponent(
           inputController: viewModel.tagInput,
           tags: viewModel.displayedTags,
-          scrollController: controller,
+          scrollController: controller.controller,
           keyboardHeight: bottom,
           onTagPressed: _onTagPressed,
           onSubmitPressed: _onSubmitPressed,
@@ -45,21 +43,41 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
 
     viewModel.tagInput.text = "";
     viewModel.tagInput.removeListener(_onInputChanged);
+    sub.cancel();
     if (controller.isReady) controller.jumpTo(.0);
   }
 
-  List<TagModel> _filterTags(List<TransactionTagVariant> byList) {
-    return _tags.where((e) {
-      return !byList.any((ee) {
-        return ee is TransactionTagVariantModel && ee.model.id == e.id;
-      });
-    }).toList(growable: false);
+  Future<List<TagModel>> _fetchData() async {
+    final context = _context;
+    if (context == null || !context.mounted) return Future.value([]);
+    final viewModel = context.viewModel<TransactionFormViewModel>();
+    final tagService = context.read<DomainTagService>();
+    return tagService.search(
+      query: viewModel.tagInput.text.trim(),
+      page: _page++,
+      excludeIds: viewModel.attachedTags
+          .whereType<TransactionTagVariantModel>()
+          .map((e) => e.model.id)
+          .toList(growable: false),
+    );
+  }
+
+  Future<void> _onTagScrolled(FeedScrollControllerEvent event) async {
+    final context = _context;
+    if (!_canLoadMore || context == null || !context.mounted) return;
+    final tags = await _fetchData();
+    if (!context.mounted) return;
+    final viewModel = context.viewModel<TransactionFormViewModel>();
+    viewModel.displayedTags.value =
+        List<TagModel>.from(viewModel.displayedTags.value)..addAll(tags);
+    _canLoadMore = tags.isNotEmpty;
   }
 
   void _onTagPressed(BuildContext context, TagModel tag) {
     Navigator.of(context).pop();
     final formContext = _context;
     if (formContext == null || !formContext.mounted) return;
+
     final viewModel = formContext.viewModel<TransactionFormViewModel>();
     viewModel.setProtectedState(() {
       viewModel.attachedTags =
@@ -79,28 +97,17 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     });
   }
 
-  void _onInputChanged() {
+  Future<void> _onInputChanged() async {
     final context = _context;
     if (context == null || !context.mounted) return;
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
     final controller = viewModel.bottomSheetTagScrollController;
-    final filteredTags = _filterTags(viewModel.attachedTags);
-    final input = viewModel.tagInput.text.trim();
-    if (input.isEmpty) {
-      viewModel.displayedTags.value = filteredTags;
-    } else {
-      // TODO: использовать fts вместо fuzzy
-      viewModel.displayedTags.value = fuzzy
-          .extractAllSorted<TagModel>(
-            query: input,
-            choices: filteredTags,
-            getter: (e) => e.title,
-            cutoff: 60,
-          )
-          .map((e) => e.choice)
-          .toList(growable: false);
-    }
+
+    _page = 0;
+    viewModel.displayedTags.value = await _fetchData();
+    _canLoadMore = viewModel.displayedTags.value.isNotEmpty;
+
     // NOTE: to trigger gradient
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       if (!controller.isReady || !context.mounted) return;

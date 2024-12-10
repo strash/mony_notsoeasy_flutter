@@ -23,9 +23,17 @@ final class DomainTagService extends BaseDatabaseService {
     return _tagBalanceFactory.toModel(dto);
   }
 
-  Future<List<TagModel>> search({required ETransactionType first}) async {
-    final order = first == ETransactionType.expense ? "ASC" : "DESC";
-    final dtos = await _tagRepo.search(order: order);
+  Future<List<TagModel>> search({
+    String? query,
+    required int page,
+    List<String> excludeIds = const [],
+  }) async {
+    final dtos = await _tagRepo.search(
+      query: query,
+      limit: perPage,
+      offset: offset(page),
+      excludeIds: excludeIds,
+    );
     return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
   }
 

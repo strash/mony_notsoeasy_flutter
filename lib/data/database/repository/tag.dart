@@ -1,3 +1,4 @@
+import "package:flutter/widgets.dart";
 import "package:mony_app/data/database/database.dart";
 import "package:sqflite/sqflite.dart";
 
@@ -8,7 +9,12 @@ abstract base class TagDatabaseRepository {
 
   Future<TagBalanceDto?> getBalance({required String id});
 
-  Future<List<TagDto>> search({required String order});
+  Future<List<TagDto>> search({
+    String? query,
+    required int limit,
+    required int offset,
+    List<String> excludeIds = const [],
+  });
 
   Future<List<TagDto>> getAll({
     List<String>? ids,
@@ -72,20 +78,44 @@ final class _Impl
   }
 
   @override
-  Future<List<TagDto>> search({required String order}) async {
+  Future<List<TagDto>> search({
+    String? query,
+    required int limit,
+    required int offset,
+    List<String> excludeIds = const [],
+  }) async {
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.rawQuery("""
-SELECT t.* FROM $table AS t
-LEFT JOIN transaction_tags AS tt ON t.id = tt.tag_id
-LEFT JOIN transactions AS tr ON tt.transaction_id = tr.id
-LEFT JOIN categories AS c ON tr.category_id = c.id
-GROUP BY t.id
+      final List<String> q = [];
+      final List<Object?> args = [];
+      if (query != null && query.isNotEmpty) {
+        q.add("t_v.value LIKE ?");
+        args.add("%${query.characters.join("%")}%");
+      }
+      if (excludeIds.isNotEmpty) {
+        q.add("t_v.id NOT IN (${getInArguments(excludeIds)})");
+        args.addAll(excludeIds);
+      }
+      final maps = await db.rawQuery(
+        """
+SELECT id, created, updated, title
+FROM (
+	SELECT t.*, MAX(tr.date) AS date
+	FROM ${table}_fzf_view AS t_v
+	LEFT JOIN transaction_tags AS tt ON t_v.id = tt.tag_id
+	LEFT JOIN transactions AS tr ON tt.transaction_id = tr.id
+	LEFT JOIN $table AS t ON t_v.id = t.id
+	${q.isNotEmpty ? "WHERE ${q.join(" AND ")}" : ""}
+	GROUP BY t_v.value
+)
 ORDER BY
-	c.transaction_type $order NULLS LAST,
-	tr.date DESC,
-	t.updated DESC;
-""");
+	date DESC,
+	updated DESC,
+	title ASC
+LIMIT $limit OFFSET $offset;
+""",
+        args,
+      );
       return maps.map(TagDto.fromJson).toList(growable: false);
     });
   }

@@ -68,7 +68,7 @@ final class TransactionFormViewModel
 
   final tagScrollController = ScrollController();
   final tagInput = InputController();
-  final bottomSheetTagScrollController = ScrollController();
+  final bottomSheetTagScrollController = FeedScrollController();
 
   late final noteInput = InputController()..text = transaction?.note ?? "";
 
