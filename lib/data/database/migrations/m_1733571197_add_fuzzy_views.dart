@@ -19,37 +19,28 @@ final class M1733571197AddFuzzyViews extends BaseMigration {
 
     // accounts
     batch.execute("""
-CREATE VIEW IF NOT EXISTS $_accountsFzfView(id, value, sort) AS
-SELECT
-	id,
-	(title || ' ' || currency_code) AS value,
-	title AS sort
+CREATE VIEW IF NOT EXISTS $_accountsFzfView(id, value) AS
+SELECT id, (title || ' ' || currency_code) AS value
 FROM $_accountsTable;
 """);
 
     // categories
     batch.execute("""
-CREATE VIEW IF NOT EXISTS $_categoriesFzfView(id, value, sort) AS
-SELECT
-	id,
-	(icon || ' ' || title) AS value,
-	title AS sort
+CREATE VIEW IF NOT EXISTS $_categoriesFzfView(id, value) AS
+SELECT id, (icon || ' ' || title) AS value
 FROM $_categoriesTable;
 """);
 
     // tags
     batch.execute("""
-CREATE VIEW IF NOT EXISTS $_tagsFzfView(id, value, sort) AS
-SELECT
-	id,
-	title AS value,
-	title AS sort
+CREATE VIEW IF NOT EXISTS $_tagsFzfView(id, value) AS
+SELECT id, title AS value
 FROM $_tagsTable;
 """);
 
     // transactions
     batch.execute("""
-CREATE VIEW IF NOT EXISTS $_transactionsFzfView(id, value, sort) AS
+CREATE VIEW IF NOT EXISTS $_transactionsFzfView(id, value) AS
 SELECT
 	tr.id,
 	(
@@ -72,8 +63,7 @@ SELECT
 			FROM $_accountsFzfView
 			WHERE id = tr.account_id
 		)
-	) AS value,
-	tr.date AS sort
+	) AS value
 FROM $_transactionsTable AS tr;
 """);
 
