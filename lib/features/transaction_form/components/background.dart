@@ -44,8 +44,8 @@ class TransactionFormBackgroundComponent extends StatelessWidget {
           end: Alignment.bottomCenter,
           stops: stops,
           colors: [
-            color.withOpacity(brightness == Brightness.light ? .2 : .45),
-            color.withOpacity(.0),
+            color.withValues(alpha: brightness == Brightness.light ? .2 : .45),
+            color.withValues(alpha: .0),
           ],
         );
 

@@ -79,7 +79,7 @@ class NavBarView extends StatelessWidget {
                             ),
                             child: ColoredBox(
                               color: theme.colorScheme.surfaceContainer
-                                  .withOpacity(kTranslucentPanelOpacity),
+                                  .withValues(alpha: kTranslucentPanelOpacity),
                               child: Row(
                                 children: NavBarTabItem.values.map((e) {
                                   return Expanded(

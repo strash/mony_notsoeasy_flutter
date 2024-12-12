@@ -80,7 +80,8 @@ class ImportMapAccountsComponent extends StatelessWidget {
                 onTap: () => onAccountPressed(context, accountEntry),
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: theme.colorScheme.surfaceContainer.withOpacity(0.5),
+                    color: theme.colorScheme.surfaceContainer
+                        .withValues(alpha: 0.5),
                     shape: SmoothRectangleBorder(
                       side: BorderSide(color: theme.colorScheme.outlineVariant),
                       borderRadius: const SmoothBorderRadius.all(

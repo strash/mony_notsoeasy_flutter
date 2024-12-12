@@ -76,7 +76,7 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
         if (!viewModel.isKeyboardHintAccepted)
           Positioned.fill(
             child: ColoredBox(
-              color: theme.colorScheme.surface.withOpacity(.9),
+              color: theme.colorScheme.surface.withValues(alpha: .9),
               child: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

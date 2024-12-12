@@ -23,7 +23,9 @@ final class ImportModelAccount extends ImportModel {
     if (isFromData) {
       for (final element in accounts) {
         if (element.account == null ||
-            element.originalTitle == except.originalTitle) continue;
+            element.originalTitle == except.originalTitle) {
+          continue;
+        }
         if (!titles.containsKey(element.account!.type)) {
           titles[element.account!.type] = [element.account!.title];
         } else {

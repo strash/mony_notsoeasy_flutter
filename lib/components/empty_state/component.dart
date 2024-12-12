@@ -35,7 +35,7 @@ class EmptyStateComponent extends StatelessWidget {
                   width: 150.0,
                   height: 150.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.tertiaryContainer.withOpacity(.6),
+                    theme.colorScheme.tertiaryContainer.withValues(alpha: .6),
                     BlendMode.srcIn,
                   ),
                 ),

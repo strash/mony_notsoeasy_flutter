@@ -93,7 +93,7 @@ class _TabGroupComponentState<T extends IDescriptable>
                 color: theme.colorScheme.surface,
                 shadows: [
                   BoxShadow(
-                    color: theme.colorScheme.shadow.withOpacity(.15),
+                    color: theme.colorScheme.shadow.withValues(alpha: .15),
                     blurRadius: 6.0,
                     spreadRadius: -1.0,
                     offset: const Offset(.0, 2.0),

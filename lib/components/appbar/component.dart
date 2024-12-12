@@ -190,8 +190,9 @@ class _AppBarState extends State<_AppBar> {
     final child = SizedBox.fromSize(
       size: Size.fromHeight(minExtent),
       child: ColoredBox(
-        color: theme.colorScheme.surface
-            .withOpacity(widget.showBackground ? kTranslucentPanelOpacity : .0),
+        color: theme.colorScheme.surface.withValues(
+          alpha: widget.showBackground ? kTranslucentPanelOpacity : .0,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [

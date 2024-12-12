@@ -104,7 +104,7 @@ class TimeComponent extends StatelessWidget {
                             child: DecoratedBox(
                               decoration: ShapeDecoration(
                                 color: theme.colorScheme.tertiaryContainer
-                                    .withOpacity(.5),
+                                    .withValues(alpha: .5),
                                 shape: const SmoothRectangleBorder(
                                   borderRadius: SmoothBorderRadius.all(
                                     SmoothRadius(

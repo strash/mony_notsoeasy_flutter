@@ -75,8 +75,8 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short2,
           tween: ColorTween(
-            begin: accent.withOpacity(0.0),
-            end: accent.withOpacity(_isActive ? 1.0 : 0.0),
+            begin: accent.withValues(alpha: 0.0),
+            end: accent.withValues(alpha: _isActive ? 1.0 : 0.0),
           ),
           builder: (context, color, child) {
             return DecoratedBox(
@@ -107,7 +107,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                               style: GoogleFonts.golosText(
                                 fontSize: 16.0,
                                 color: theme.colorScheme.onSurfaceVariant
-                                    .withOpacity(.6),
+                                    .withValues(alpha: .6),
                               ),
                             )
                           : DefaultTextStyle(

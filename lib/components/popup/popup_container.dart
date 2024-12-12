@@ -31,7 +31,7 @@ class PopupContainerComoponent extends StatelessWidget {
           ),
           child: ColoredBox(
             color: theme.colorScheme.surfaceContainer
-                .withOpacity(kTranslucentPanelOpacity),
+                .withValues(alpha: kTranslucentPanelOpacity),
             child: builder(context),
           ),
         ),

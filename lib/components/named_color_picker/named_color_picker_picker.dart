@@ -53,7 +53,8 @@ class NamedColorPickerComponent extends StatelessWidget {
                     color: color,
                     shape: SmoothRectangleBorder(
                       side: BorderSide(
-                        color: theme.colorScheme.onSurface.withOpacity(0.1),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.1),
                       ),
                       borderRadius: const SmoothBorderRadius.all(
                         SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),

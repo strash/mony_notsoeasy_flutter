@@ -80,7 +80,8 @@ class _TransactionFormSymbolButtonComponentState
                   begin: widget.button.color,
                   end: _isEnabled
                       ? widget.button.color
-                      : theme.colorScheme.surfaceContainer.withOpacity(.8),
+                      : theme.colorScheme.surfaceContainer
+                          .withValues(alpha: .8),
                 ),
                 child: Center(
                   child: AnimatedOpacity(
@@ -121,8 +122,8 @@ class _TransactionFormSymbolButtonComponentState
                     child: ColoredBox(
                       color: color ?? theme.colorScheme.surfaceContainer,
                       child: ColoredBox(
-                        color: theme.colorScheme.primaryContainer.withOpacity(
-                          _animation.value.remap(.0, 1.0, .0, .2),
+                        color: theme.colorScheme.primaryContainer.withValues(
+                          alpha: _animation.value.remap(.0, 1.0, .0, .2),
                         ),
                         child: child,
                       ),

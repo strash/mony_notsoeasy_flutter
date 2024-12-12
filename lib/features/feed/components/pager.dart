@@ -29,7 +29,7 @@ class FeedPagerComponent extends StatefulWidget {
     return Theme.of(context)
         .colorScheme
         .surfaceContainer
-        .withOpacity(kTranslucentPanelOpacity);
+        .withValues(alpha: kTranslucentPanelOpacity);
   }
 
   const FeedPagerComponent({super.key});

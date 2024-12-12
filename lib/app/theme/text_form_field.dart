@@ -77,11 +77,11 @@ WidgetStateTextStyle _labelStyle(ColorScheme scheme) {
 
 WidgetStateTextStyle _hintInputStyle(ColorScheme scheme) {
   return WidgetStateTextStyle.resolveWith((Set<WidgetState> state) {
-    Color color = scheme.onSurfaceVariant.withOpacity(0.4);
+    Color color = scheme.onSurfaceVariant.withValues(alpha: 0.4);
     if (state.contains(WidgetState.disabled)) {
-      color = scheme.tertiaryContainer.withOpacity(0.8);
+      color = scheme.tertiaryContainer.withValues(alpha: 0.8);
     } else if (state.contains(WidgetState.focused)) {
-      color = scheme.onSurfaceVariant.withOpacity(0.6);
+      color = scheme.onSurfaceVariant.withValues(alpha: 0.6);
     }
     return GoogleFonts.golosText(
       color: color,

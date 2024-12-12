@@ -27,7 +27,7 @@ class FeedEmptyStateComponent extends StatelessWidget {
           width: 150.0,
           height: 150.0,
           colorFilter: ColorFilter.mode(
-            color.withOpacity(.3),
+            color.withValues(alpha: .3),
             BlendMode.srcIn,
           ),
         ),

@@ -40,7 +40,8 @@ class FeedAddButtonComponent extends StatelessWidget {
                       sigmaY: kTranslucentPanelBlurSigma,
                     ),
                     child: ColoredBox(
-                      color: theme.colorScheme.surfaceContainer.withOpacity(.5),
+                      color: theme.colorScheme.surfaceContainer
+                          .withValues(alpha: .5),
                       child: Center(
                         child: SvgPicture.asset(
                           Assets.icons.plusSemibold,

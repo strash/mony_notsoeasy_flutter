@@ -46,7 +46,7 @@ class _ColorGridState extends State<_ColorGrid> {
     final itemSize = Size(itemWidth * 12, itemWidth * 10);
     final shadow = MediaQuery.platformBrightnessOf(context) == Brightness.light
         ? theme.colorScheme.shadow
-        : theme.colorScheme.shadow.withOpacity(0.3);
+        : theme.colorScheme.shadow.withValues(alpha: 0.3);
 
     return Padding(
       padding: _padding,
@@ -86,7 +86,7 @@ class _ColorGridState extends State<_ColorGrid> {
                   shape: SmoothRectangleBorder(
                     borderRadius: borderRadius,
                     side: BorderSide(
-                      color: theme.colorScheme.onSurface.withOpacity(0.1),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.1),
                       strokeAlign: CircularProgressIndicator.strokeAlignOutside,
                     ),
                   ),

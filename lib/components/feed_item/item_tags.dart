@@ -80,7 +80,7 @@ class FeedItemTagsComponent extends StatelessWidget {
                   gradient: LinearGradient(
                     stops: [(1.0 - (20.0 / constraints.maxWidth)), 1.0],
                     colors: [
-                      theme.colorScheme.surface.withOpacity(.0),
+                      theme.colorScheme.surface.withValues(alpha: .0),
                       theme.colorScheme.surface,
                     ],
                   ),

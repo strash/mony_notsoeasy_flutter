@@ -32,7 +32,7 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
             onTap: () => Navigator.of(context).pop<CategoryModel>(e),
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: color.withOpacity(.25),
+                color: color.withValues(alpha: .25),
                 shape: SmoothRectangleBorder(
                   side: BorderSide(color: color),
                   borderRadius: const SmoothBorderRadius.all(

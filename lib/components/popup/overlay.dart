@@ -70,6 +70,8 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
         final value = _animation.value;
         final sigma =
             value.remap(.0, 1.0, .0, widget.blurBackground ? 8.0 : .0);
+        final bgAlpha =
+            value.remap(.0, 1.0, .0, widget.showBackground ? .5 : .0);
 
         return Stack(
           fit: StackFit.expand,
@@ -81,9 +83,7 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
                 child: ColoredBox(
-                  color: theme.colorScheme.scrim.withOpacity(
-                    value.remap(.0, 1.0, .0, widget.showBackground ? .5 : .0),
-                  ),
+                  color: theme.colorScheme.scrim.withValues(alpha: bgAlpha),
                 ),
               ),
             ),

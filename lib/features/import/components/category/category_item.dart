@@ -31,14 +31,14 @@ class ImportCategoryItemComponent extends StatelessWidget {
       case ImportModelCategoryVariantModel(model: final model):
         final color = ex?.from(model.colorName).color ??
             theme.colorScheme.surfaceContainer;
-        bg = color.withOpacity(.25);
+        bg = color.withValues(alpha: .25);
         border = color;
         icon = model.icon;
         title = model.title;
       case ImportModelCategoryVariantVO(vo: final vo):
         final color = ex?.from(EColorName.from(vo.colorName)).color ??
             theme.colorScheme.surfaceContainer;
-        bg = color.withOpacity(.25);
+        bg = color.withValues(alpha: .25);
         border = color;
         icon = vo.icon;
         title = vo.title;

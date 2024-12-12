@@ -43,7 +43,7 @@ class SearchView extends StatelessWidget {
     final color = Color.lerp(
       FeedPagerComponent.color(context),
       theme.colorScheme.surfaceContainerHighest
-          .withOpacity(kTranslucentPanelOpacity),
+          .withValues(alpha: kTranslucentPanelOpacity),
       curvAnim.value,
     );
 
@@ -58,8 +58,9 @@ class SearchView extends StatelessWidget {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
               child: ColoredBox(
-                color: theme.colorScheme.surface.withOpacity(
-                  anim.value.remap(.0, 1.0, .0, kTranslucentPanelOpacity),
+                color: theme.colorScheme.surface.withValues(
+                  alpha:
+                      anim.value.remap(.0, 1.0, .0, kTranslucentPanelOpacity),
                 ),
               ),
             ),
@@ -107,8 +108,8 @@ class SearchView extends StatelessWidget {
                       decoration: ShapeDecoration(
                         shadows: [
                           BoxShadow(
-                            color: theme.colorScheme.shadow.withOpacity(
-                              curvAnim.value.remap(.0, 1.0, .0, .07),
+                            color: theme.colorScheme.shadow.withValues(
+                              alpha: curvAnim.value.remap(.0, 1.0, .0, .07),
                             ),
                             blurRadius: 18.0,
                             blurStyle: BlurStyle.outer,

@@ -113,8 +113,8 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short2,
           tween: ColorTween(
-            begin: secondary.withOpacity(0.0),
-            end: secondary.withOpacity(_isActive ? 1.0 : 0.0),
+            begin: secondary.withValues(alpha: 0.0),
+            end: secondary.withValues(alpha: _isActive ? 1.0 : 0.0),
           ),
           builder: (context, color, child) {
             // -> background

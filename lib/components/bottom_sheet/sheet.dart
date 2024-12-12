@@ -43,7 +43,7 @@ class BottomSheetComponent extends StatefulWidget {
         },
         useSafeArea: true,
         isScrollControlled: true,
-        modalBarrierColor: theme.colorScheme.scrim.withOpacity(0.3),
+        modalBarrierColor: theme.colorScheme.scrim.withValues(alpha: 0.3),
         backgroundColor: Colors.transparent,
         showDragHandle: false,
         capturedThemes: InheritedTheme.capture(
