@@ -1,15 +1,15 @@
 import "dart:ui";
 
-import "package:figma_squircle/figma_squircle.dart";
+import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/components/appbar/component.dart";
-import "package:mony_app/components/close_button/component.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/features/feed/components/pager.dart";
+import "package:mony_app/features/search/components/components.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
@@ -59,8 +59,7 @@ class SearchView extends StatelessWidget {
               filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
               child: ColoredBox(
                 color: theme.colorScheme.surface.withValues(
-                  alpha:
-                      anim.value.remap(.0, 1.0, .0, kTranslucentPanelOpacity),
+                  alpha: anim.value.remap(.0, 1.0, .0, .7),
                 ),
               ),
             ),
@@ -68,14 +67,10 @@ class SearchView extends StatelessWidget {
 
           Opacity(
             opacity: anim.value,
-            child: const CustomScrollView(
+            child: CustomScrollView(
               slivers: [
                 // -> appbar
-                AppBarComponent(
-                  showBackground: false,
-                  automaticallyImplyLeading: false,
-                  trailing: CloseButtonComponent(),
-                ),
+                const SearchHeaderComponent(),
 
                 // -> content
                 SliverToBoxAdapter(
