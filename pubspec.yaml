@@ -4,12 +4,12 @@ publish_to: 'none'
 version: 0.0.0
 
 environment:
-  sdk: ^3.5.3
+  sdk: ^3.6.0
 
 dependencies:
   csv: ^6.0.0
   emoji_picker_flutter: ^3.1.0
-  figma_squircle: ^0.5.3
+  figma_squircle_updated: ^1.0.1
   file_picker: ^8.1.2
   flutter:
     sdk: flutter

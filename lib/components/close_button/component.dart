@@ -11,8 +11,7 @@ class CloseButtonComponent extends StatelessWidget {
 
     return AppBarButtonComponent(
       icon: Assets.icons.xmark,
-      // ignore: prefer_const_constructors
-      padding: EdgeInsets.only(right: 10.0),
+      padding: const EdgeInsets.only(right: 10.0),
       onTap: navigator.maybePop<void>,
     );
   }

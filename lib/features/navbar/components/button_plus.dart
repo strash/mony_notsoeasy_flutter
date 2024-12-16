@@ -1,4 +1,4 @@
-import "package:figma_squircle/figma_squircle.dart";
+import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
