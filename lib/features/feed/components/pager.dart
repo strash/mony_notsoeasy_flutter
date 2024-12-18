@@ -14,24 +14,6 @@ import "package:rxdart/rxdart.dart";
 import "package:smooth_page_indicator/smooth_page_indicator.dart";
 
 class FeedPagerComponent extends StatefulWidget {
-  static double top(BuildContext context) {
-    return MediaQuery.viewPaddingOf(context).top + 10.0;
-  }
-
-  static const double width = 80.0;
-  static const double height = 30.0;
-
-  static const SmoothBorderRadius borderRadius = SmoothBorderRadius.all(
-    SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
-  );
-
-  static Color color(BuildContext context) {
-    return Theme.of(context)
-        .colorScheme
-        .surfaceContainer
-        .withValues(alpha: kTranslucentPanelOpacity);
-  }
-
   const FeedPagerComponent({super.key});
 
   @override
@@ -42,14 +24,11 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
   final _subject = BehaviorSubject<bool>.seeded(false);
 
   late final StreamSubscription<bool> _pageSub;
-  late final StreamSubscription<double> _scrollSub;
 
   late final _viewModel = context.viewModel<FeedViewModel>();
   late final _openSearch = _viewModel<OnSearchPressed>();
 
   bool _showPagination = true;
-  double _offset = .0;
-  double _opacity = 1.0;
 
   void _pageListener() {
     if (!mounted) return;
@@ -61,26 +40,6 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     if (mounted) setState(() => _showPagination = e);
   }
 
-  void _searchAnimationStatuListener(AnimationStatus status) {
-    if (status == AnimationStatus.dismissed) setState(() => _opacity = 1.0);
-  }
-
-  void _onScroll(double distance) {
-    if (distance <= .0) {
-      setState(() => _offset = .0 - distance * .18);
-      if (_offset >= 15.0) _onPress();
-    }
-  }
-
-  void _onPress() {
-    final value = (
-      distance: _offset,
-      statusListener: _searchAnimationStatuListener,
-    );
-    _openSearch.call(context, value);
-    setState(() => _opacity = .0);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -88,14 +47,12 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
         _subject.debounceTime(const Duration(seconds: 2)).listen(_onPageEvent);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _viewModel.pageController.addListener(_pageListener);
-      _scrollSub = _viewModel.scrollDistanceStream.listen(_onScroll);
     });
   }
 
   @override
   void dispose() {
     _pageSub.cancel();
-    _scrollSub.cancel();
     _subject.close();
     super.dispose();
   }
@@ -105,92 +62,91 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
     final theme = Theme.of(context);
 
     return Positioned(
-      top: FeedPagerComponent.top(context) + _offset,
+      top: MediaQuery.viewPaddingOf(context).top + 10.0,
       left: 0,
       right: 0,
       child: Align(
         alignment: Alignment.topCenter,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: _onPress,
+          onTap: () => _openSearch.call(context),
           child: IgnorePointer(
             child: ClipSmoothRect(
-              radius: FeedPagerComponent.borderRadius,
+              radius: const SmoothBorderRadius.all(
+                SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
+              ),
               child: BackdropFilter(
                 filter: ImageFilter.blur(
                   sigmaX: kTranslucentPanelBlurSigma,
                   sigmaY: kTranslucentPanelBlurSigma,
                 ),
                 child: SizedBox(
-                  width: FeedPagerComponent.width + _offset,
-                  height: FeedPagerComponent.height + _offset,
-                  child: Opacity(
-                    opacity: _opacity,
-                    child: ColoredBox(
-                      color: FeedPagerComponent.color(context),
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          // -> pagination
-                          if (_viewModel.pages.isNotEmpty)
-                            AnimatedOpacity(
-                              opacity: _showPagination ? 1.0 : .0,
-                              duration: Durations.medium4,
-                              curve: Curves.easeInOut,
-                              child: Center(
-                                child: SmoothPageIndicator(
-                                  controller: _viewModel.pageController,
-                                  count: _viewModel.pages.length,
-                                  effect: ScrollingDotsEffect(
-                                    dotWidth: 7.0,
-                                    dotHeight: 7.0,
-                                    dotColor:
-                                        theme.colorScheme.tertiaryContainer,
-                                    activeDotColor: theme.colorScheme.primary,
-                                    activeDotScale: 1.0,
-                                    spacing: 5.0,
-                                    strokeWidth: .0,
-                                  ),
+                  width: 80.0,
+                  height: 30.0,
+                  child: ColoredBox(
+                    color: theme.colorScheme.surfaceContainer
+                        .withValues(alpha: kTranslucentPanelOpacity),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        // -> pagination
+                        if (_viewModel.pages.isNotEmpty)
+                          AnimatedOpacity(
+                            opacity: _showPagination ? 1.0 : .0,
+                            duration: Durations.medium4,
+                            curve: Curves.easeInOut,
+                            child: Center(
+                              child: SmoothPageIndicator(
+                                controller: _viewModel.pageController,
+                                count: _viewModel.pages.length,
+                                effect: ScrollingDotsEffect(
+                                  dotWidth: 7.0,
+                                  dotHeight: 7.0,
+                                  dotColor: theme.colorScheme.tertiaryContainer,
+                                  activeDotColor: theme.colorScheme.primary,
+                                  activeDotScale: 1.0,
+                                  spacing: 5.0,
+                                  strokeWidth: .0,
                                 ),
                               ),
                             ),
-
-                          // -> search
-                          AnimatedOpacity(
-                            opacity: _showPagination ? .0 : 1.0,
-                            duration: Durations.medium2,
-                            curve: Curves.easeInOut,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // -> icon
-                                SvgPicture.asset(
-                                  Assets.icons.magnifyingglass,
-                                  width: 14.0,
-                                  height: 14.0,
-                                  colorFilter: ColorFilter.mode(
-                                    theme.colorScheme.tertiary,
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
-                                const SizedBox(width: 4.0),
-
-                                // -> text
-                                Text(
-                                  "поиск",
-                                  style: GoogleFonts.golosText(
-                                    fontSize: 13.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: theme.colorScheme.tertiary,
-                                  ),
-                                ),
-                                const SizedBox(width: 2.0),
-                              ],
-                            ),
                           ),
-                        ],
-                      ),
+
+                        // -> search
+                        AnimatedOpacity(
+                          opacity: _showPagination ? .0 : 1.0,
+                          duration: Durations.medium2,
+                          curve: Curves.easeInOut,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // -> icon
+                              SvgPicture.asset(
+                                Assets.icons.magnifyingglass,
+                                width: 14.0,
+                                height: 14.0,
+                                colorFilter: ColorFilter.mode(
+                                  theme.colorScheme.tertiary,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                              const SizedBox(width: 4.0),
+
+                              // -> text
+                              Text(
+                                "поиск",
+                                style: GoogleFonts.golosText(
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              const SizedBox(width: 2.0),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

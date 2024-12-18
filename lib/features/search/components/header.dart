@@ -1,5 +1,9 @@
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:flutter_svg/svg.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/app/theme/theme.dart";
+import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/search/page/view_model.dart";
@@ -42,56 +46,79 @@ final class _HeaderDelegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     final theme = Theme.of(context);
+
     final viewModel = context.viewModel<SearchViewModel>();
-    final navigator = Navigator.of(context);
+    final controller = viewModel.input;
+
+    final smoothInputBorder = SmoothInputBorder(const Color(0x00FFFFFF));
+    final fillColor = theme.colorScheme.surfaceContainer;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15.0, .0, 10.0, .0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // -> tabs
-              TabGroupComponent(
-                values: ESearchTab.values,
-                controller: viewModel.tabController,
-              ),
-
-              // -> button close
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: navigator.maybePop<void>,
-                child: SizedBox.square(
-                  dimension: 40.0,
-                  child: Center(
-                    child: SizedBox.square(
-                      dimension: 30.0,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.surfaceContainer,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20.0)),
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            Assets.icons.xmarkSemibold,
-                            width: 20.0,
-                            height: 20.0,
-                            colorFilter: ColorFilter.mode(
-                              theme.colorScheme.onSurface,
-                              BlendMode.srcIn,
-                            ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // -> textinput
+            Expanded(
+              child: SizedBox(
+                height: 40.0,
+                child: TextFormField(
+                  key: controller.key,
+                  focusNode: controller.focus,
+                  controller: controller.controller,
+                  validator: controller.validator,
+                  onTapOutside: controller.onTapOutside,
+                  keyboardType: TextInputType.text,
+                  textCapitalization: TextCapitalization.sentences,
+                  textInputAction: TextInputAction.done,
+                  maxLength: kMaxTitleLength,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  style: GoogleFonts.golosText(
+                    color: theme.colorScheme.onSurface,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  decoration: InputDecoration(
+                    prefixIcon: SizedBox(
+                      width: 20.0,
+                      height: 20.0,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          Assets.icons.magnifyingglass,
+                          width: 20.0,
+                          height: 20.0,
+                          colorFilter: ColorFilter.mode(
+                            theme.colorScheme.tertiary,
+                            BlendMode.srcIn,
                           ),
                         ),
                       ),
                     ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 15.0,
+                      vertical: 9.0,
+                    ),
+                    hintText: "поиск",
+                    counterText: "",
+                    filled: true,
+                    fillColor: fillColor,
+                    focusColor: fillColor,
+                    hoverColor: fillColor,
+                    border: smoothInputBorder,
+                    disabledBorder: smoothInputBorder,
+                    enabledBorder: smoothInputBorder,
+                    errorBorder: smoothInputBorder,
+                    focusedBorder: smoothInputBorder,
+                    focusedErrorBorder: smoothInputBorder,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+
+            // -> button close
+            const CloseButtonComponent(),
+          ],
         ),
       ],
     );

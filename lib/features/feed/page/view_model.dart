@@ -22,9 +22,6 @@ final class FeedPage extends StatefulWidget {
 final class FeedViewModel extends ViewModelState<FeedPage> {
   late final StreamSubscription<Event> _appSub;
   late final StreamSubscription<NavBarEvent> _navbarSub;
-  final _scrollBehavior = StreamController<double>.broadcast();
-
-  Stream<double> get scrollDistanceStream => _scrollBehavior.stream;
 
   final pageController = PageController();
   final List<FeedScrollController> scrollControllers = [];
@@ -41,7 +38,6 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
     final scrollController = FeedScrollController();
     final sub = scrollController.addListener(_onFeedEvent);
     _scrollSubs.insert(pageIndex, sub);
-    scrollController.controller.addListener(_onScroll);
     scrollControllers.insert(pageIndex, scrollController);
   }
 
@@ -58,13 +54,6 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
       curve: Curves.easeInOut,
     );
     _pagingToStart = false;
-  }
-
-  void _onScroll() {
-    final controller = scrollControllers.elementAtOrNull(currentPageIndex);
-    if (controller != null && controller.isReady) {
-      _scrollBehavior.add(controller.distance);
-    }
   }
 
   void _onFeedEvent(FeedScrollControllerEvent event) {
@@ -124,7 +113,6 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
 
   @override
   void dispose() {
-    _scrollBehavior.close();
     _appSub.cancel();
     _navbarSub.cancel();
     for (final sub in _scrollSubs) {

@@ -41,5 +41,5 @@ final class _Route extends ModalRoute {
   bool get opaque => false;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 300);
+  Duration get transitionDuration => const Duration(milliseconds: 200);
 }
