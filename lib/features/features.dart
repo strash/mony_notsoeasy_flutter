@@ -1,5 +1,7 @@
 export "./account/account.dart";
 export "./account_form/account_form.dart";
+export "./accounts/accounts.dart";
+export "./categories/categories.dart";
 export "./category/category.dart";
 export "./category_form/category_form.dart";
 export "./feed/feed.dart";
@@ -12,5 +14,6 @@ export "./start_account/start_account.dart";
 export "./stats/stats.dart";
 export "./tag/tag.dart";
 export "./tag_form/tag_form.dart";
+export "./tags/tags.dart";
 export "./transaction/transaction.dart";
 export "./transaction_form/transaction_form.dart";
