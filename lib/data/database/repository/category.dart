@@ -5,6 +5,9 @@ abstract base class CategoryDatabaseRepository {
   const factory CategoryDatabaseRepository({
     required AppDatabase database,
   }) = _Impl;
+
+  Future<int> count();
+
   Future<CategoryBalanceDto?> getBalance({required String id});
 
   Future<List<CategoryDto>> getAll({
@@ -51,6 +54,16 @@ final class _Impl
       default:
         return (null, null);
     }
+  }
+
+  @override
+  Future<int> count() async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.rawQuery("SELECT COUNT(*) AS count FROM $table;");
+      if (maps.isEmpty) return 0;
+      return maps[0]["count"] as int? ?? 0;
+    });
   }
 
   @override

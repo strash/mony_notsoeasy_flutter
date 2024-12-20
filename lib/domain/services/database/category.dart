@@ -18,6 +18,10 @@ final class DomainCategoryService extends BaseDatabaseService {
         _categoryFactory = categoryFactory,
         _categoryBalanceFactory = categoryBalanceFactory;
 
+  Future<int> count() async {
+    return await _categoryRepo.count();
+  }
+
   Future<CategoryBalanceModel?> getBalance({required String id}) async {
     final dto = await _categoryRepo.getBalance(id: id);
     if (dto == null) return null;

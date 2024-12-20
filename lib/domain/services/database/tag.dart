@@ -17,6 +17,10 @@ final class DomainTagService extends BaseDatabaseService {
         _tagFactory = tagFactory,
         _tagBalanceFactory = tagBalanceFactory;
 
+  Future<int> count() async {
+    return await _tagRepo.count();
+  }
+
   Future<TagBalanceModel?> getBalance({required String id}) async {
     final dto = await _tagRepo.getBalance(id: id);
     if (dto == null) return null;

@@ -83,104 +83,100 @@ final class _HeaderDelegate extends SliverPersistentHeaderDelegate {
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // -> textinput
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(15.0, .0, 10.0, .0),
-                      child: SizedBox.fromSize(
-                        size: const Size.fromHeight(40.0),
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            // -> background
-                            ClipSmoothRect(
-                              radius: const SmoothBorderRadius.all(
-                                SmoothRadius(
-                                  cornerRadius: 15.0,
-                                  cornerSmoothing: 1.0,
-                                ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // -> textinput
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(15.0, .0, 10.0, .0),
+                    child: SizedBox.fromSize(
+                      size: const Size.fromHeight(40.0),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          // -> background
+                          ClipSmoothRect(
+                            radius: const SmoothBorderRadius.all(
+                              SmoothRadius(
+                                cornerRadius: 15.0,
+                                cornerSmoothing: 1.0,
                               ),
-                              child: RepaintBoundary(
-                                child: BackdropFilter(
-                                  filter: ImageFilter.blur(
-                                    sigmaX: sigma,
-                                    sigmaY: sigma,
-                                  ),
-                                  child: ColoredBox(
-                                    color: theme.colorScheme.surfaceContainer
-                                        .withValues(alpha: .7),
-                                  ),
+                            ),
+                            child: RepaintBoundary(
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: sigma,
+                                  sigmaY: sigma,
+                                ),
+                                child: ColoredBox(
+                                  color: theme.colorScheme.surfaceContainer
+                                      .withValues(alpha: .7),
                                 ),
                               ),
                             ),
+                          ),
 
-                            // -> input
-                            TextFormField(
-                              key: controller.key,
-                              focusNode: controller.focus,
-                              controller: controller.controller,
-                              validator: controller.validator,
-                              onTapOutside: controller.onTapOutside,
-                              keyboardType: TextInputType.text,
-                              textCapitalization: TextCapitalization.sentences,
-                              textInputAction: TextInputAction.done,
-                              maxLength: kMaxTitleLength,
-                              maxLengthEnforcement:
-                                  MaxLengthEnforcement.enforced,
-                              style: GoogleFonts.golosText(
-                                color: theme.colorScheme.onSurface,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              decoration: InputDecoration(
-                                prefixIcon: SizedBox(
-                                  width: 20.0,
-                                  height: 20.0,
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      Assets.icons.magnifyingglass,
-                                      width: 20.0,
-                                      height: 20.0,
-                                      colorFilter: ColorFilter.mode(
-                                        theme.colorScheme.tertiary,
-                                        BlendMode.srcIn,
-                                      ),
+                          // -> input
+                          TextFormField(
+                            key: controller.key,
+                            focusNode: controller.focus,
+                            controller: controller.controller,
+                            validator: controller.validator,
+                            onTapOutside: controller.onTapOutside,
+                            keyboardType: TextInputType.text,
+                            textCapitalization: TextCapitalization.sentences,
+                            textInputAction: TextInputAction.done,
+                            maxLength: kMaxTitleLength,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            style: GoogleFonts.golosText(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            decoration: InputDecoration(
+                              prefixIcon: SizedBox(
+                                width: 20.0,
+                                height: 20.0,
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    Assets.icons.magnifyingglass,
+                                    width: 20.0,
+                                    height: 20.0,
+                                    colorFilter: ColorFilter.mode(
+                                      theme.colorScheme.tertiary,
+                                      BlendMode.srcIn,
                                     ),
                                   ),
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 15.0,
-                                  vertical: 9.0,
-                                ),
-                                hintText: "поиск",
-                                counterText: "",
-                                filled: true,
-                                fillColor: fillColor,
-                                focusColor: fillColor,
-                                hoverColor: fillColor,
-                                border: smoothInputBorder,
-                                disabledBorder: smoothInputBorder,
-                                enabledBorder: smoothInputBorder,
-                                errorBorder: smoothInputBorder,
-                                focusedBorder: smoothInputBorder,
-                                focusedErrorBorder: smoothInputBorder,
                               ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 15.0,
+                                vertical: 9.0,
+                              ),
+                              hintText: "поиск",
+                              counterText: "",
+                              filled: true,
+                              fillColor: fillColor,
+                              focusColor: fillColor,
+                              hoverColor: fillColor,
+                              border: smoothInputBorder,
+                              disabledBorder: smoothInputBorder,
+                              enabledBorder: smoothInputBorder,
+                              errorBorder: smoothInputBorder,
+                              focusedBorder: smoothInputBorder,
+                              focusedErrorBorder: smoothInputBorder,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
+                ),
 
-                  // -> button close
-                  const CloseButtonComponent(),
-                ],
-              ),
+                // -> button close
+                const CloseButtonComponent(),
+              ],
             ),
           ],
         ),

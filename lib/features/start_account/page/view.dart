@@ -27,7 +27,7 @@ class StartAccountView extends StatelessWidget {
               child: Stack(
                 children: [
                   SvgPicture.asset(
-                    Assets.icons.widgetSmall,
+                    Assets.icons.widgetSmallHole,
                     width: 150.0,
                     height: 150.0,
                     colorFilter: ColorFilter.mode(

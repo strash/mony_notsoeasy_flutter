@@ -19,6 +19,10 @@ final class DomainAccountService extends BaseDatabaseService {
         _accountFactory = accountFactory,
         _accountBalanceFactory = accountBalanceFactory;
 
+  Future<int> count() async {
+    return await _accountRepo.count();
+  }
+
   Future<List<AccountBalanceModel>> getBalances() async {
     final dtos = await _accountRepo.getBalances();
     return dtos

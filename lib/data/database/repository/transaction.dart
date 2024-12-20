@@ -6,6 +6,8 @@ abstract base class TransactionDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
+  Future<int> count();
+
   Future<List<TransactionDto>> getAll({
     List<String>? accountIds,
     List<String>? categoryIds,
@@ -59,6 +61,16 @@ final class _Impl
     }
     if (where.isEmpty) return ("", null);
     return ("WHERE ${where.join(" AND ")}", args);
+  }
+
+  @override
+  Future<int> count() async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.rawQuery("SELECT COUNT(*) AS count FROM $table;");
+      if (maps.isEmpty) return 0;
+      return maps[0]["count"] as int? ?? 0;
+    });
   }
 
   @override

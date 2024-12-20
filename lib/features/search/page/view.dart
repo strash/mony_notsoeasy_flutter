@@ -33,9 +33,15 @@ class SearchView extends StatelessWidget {
                 // -> appbar
                 const SearchHeaderComponent(),
 
-                // -> content
-                SliverToBoxAdapter(
-                  child: Center(child: Text("Search")),
+                const SliverPadding(padding: EdgeInsets.only(top: 20.0)),
+
+                // -> pages
+                SliverList.builder(
+                  itemCount: ESearchPage.values.length,
+                  itemBuilder: (context, index) {
+                    final item = ESearchPage.values.elementAt(index);
+                    return SearchPageItemComponent(page: item);
+                  },
                 ),
               ],
             ),

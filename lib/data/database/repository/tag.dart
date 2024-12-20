@@ -7,6 +7,8 @@ abstract base class TagDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
+  Future<int> count();
+
   Future<TagBalanceDto?> getBalance({required String id});
 
   Future<List<TagDto>> search({
@@ -61,6 +63,16 @@ final class _Impl
     }
     if (query.isEmpty) return null;
     return (query.join(" AND "), args);
+  }
+
+  @override
+  Future<int> count() async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.rawQuery("SELECT COUNT(*) AS count FROM $table;");
+      if (maps.isEmpty) return 0;
+      return maps[0]["count"] as int? ?? 0;
+    });
   }
 
   @override

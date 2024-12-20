@@ -3,30 +3,12 @@ import "package:mony_app/app.dart";
 import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
-import "package:mony_app/components/components.dart";
 import "package:mony_app/features/search/page/view.dart";
+import "package:mony_app/features/search/use_case/use_case.dart";
+import "package:mony_app/gen/assets.gen.dart";
 
+part "./enums.dart";
 part "./route.dart";
-
-enum ESearchTab implements IDescriptable {
-  top,
-  accounts,
-  categories,
-  tags,
-  ;
-
-  static const ESearchTab defaultValue = top;
-
-  @override
-  String get description {
-    return switch (this) {
-      top => "Топ",
-      accounts => "Счет",
-      categories => "Категория",
-      tags => "Тег",
-    };
-  }
-}
 
 final class SearchPage extends StatefulWidget {
   final Animation<double> animation;
@@ -64,6 +46,11 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
 
   Animation<double> get animation => widget.animation;
 
+  // TODO: обновлять счетчики при добавлении/удалении айтемов
+  Map<ESearchPage, int> pageCounts = {
+    for (final page in ESearchPage.values) page: 0,
+  };
+
   @override
   void dispose() {
     input.dispose();
@@ -74,7 +61,16 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   Widget build(BuildContext context) {
     return ViewModel<SearchViewModel>(
       viewModel: this,
-      child: const SearchView(),
+      useCases: [
+        () => OnPagePressed(),
+      ],
+      child: Builder(
+        builder: (context) {
+          OnPageCountRequested().call(context);
+
+          return const SearchView();
+        },
+      ),
     );
   }
 }

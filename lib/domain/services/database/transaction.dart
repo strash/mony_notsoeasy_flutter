@@ -35,6 +35,10 @@ final class DomainTransactionService extends BaseDatabaseService {
   @override
   int get perPage => 40;
 
+  Future<int> count() async {
+    return await _transactionRepo.count();
+  }
+
   Future<List<TransactionModel>> getAll({
     List<String>? accountIds,
     List<String>? categoryIds,

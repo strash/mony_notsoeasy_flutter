@@ -112,7 +112,7 @@ extension on EFeedMenuItem {
 
   String get icon {
     return switch (this) {
-      EFeedMenuItem.addAccount => Assets.icons.widgetBadgePlus,
+      EFeedMenuItem.addAccount => Assets.icons.widgetSmall,
       EFeedMenuItem.addExpenseCategory => Assets.icons.arrowUpSquare,
       EFeedMenuItem.addIncomeCategory => Assets.icons.arrowDownSquare,
       EFeedMenuItem.addTag => Assets.icons.number,

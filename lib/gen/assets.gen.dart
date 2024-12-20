@@ -45,6 +45,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow.down.square.svg
   String get arrowDownSquare => 'assets/icons/arrow.down.square.svg';
 
+  /// File path: assets/icons/arrow.up.arrow.down.square.svg
+  String get arrowUpArrowDownSquare =>
+      'assets/icons/arrow.up.arrow.down.square.svg';
+
   /// File path: assets/icons/arrow.up.square.svg
   String get arrowUpSquare => 'assets/icons/arrow.up.square.svg';
 
@@ -209,6 +213,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/widget.small.badge.plus.svg
   String get widgetSmallBadgePlus => 'assets/icons/widget.small.badge.plus.svg';
 
+  /// File path: assets/icons/widget.small.hole.svg
+  String get widgetSmallHole => 'assets/icons/widget.small.hole.svg';
+
   /// File path: assets/icons/widget.small.svg
   String get widgetSmall => 'assets/icons/widget.small.svg';
 
@@ -224,6 +231,7 @@ class $AssetsIconsGen {
   /// List of all assets
   List<String> get values => [
         arrowDownSquare,
+        arrowUpArrowDownSquare,
         arrowUpSquare,
         calendar,
         chartBarFill,
@@ -277,6 +285,7 @@ class $AssetsIconsGen {
         walletPassFill,
         widgetBadgePlus,
         widgetSmallBadgePlus,
+        widgetSmallHole,
         widgetSmall,
         xmarkBold,
         xmarkSemibold,
