@@ -21,8 +21,8 @@ final class _OnCategoryDeleted {
 
             return Future.value(
               page.copyWith(
-                scrollPage: 0,
-                canLoadMore: true,
+                scrollPage: 1,
+                canLoadMore: feed.isNotEmpty,
                 feed: feed,
                 balances: balances,
               ),
@@ -40,8 +40,8 @@ final class _OnCategoryDeleted {
 
             return Future.value(
               page.copyWith(
-                scrollPage: 0,
-                canLoadMore: true,
+                scrollPage: 1,
+                canLoadMore: feed.isNotEmpty,
                 feed: feed,
                 balance: balance,
               ),

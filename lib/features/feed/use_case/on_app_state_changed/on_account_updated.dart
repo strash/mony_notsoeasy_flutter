@@ -28,7 +28,7 @@ final class _OnAccountUpdated {
 
             return Future.value(
               page.copyWith(
-                canLoadMore: true,
+                canLoadMore: feed.lastOrNull?.isNotEmpty ?? false,
                 feed: feed.fold<List<TransactionModel>>([], (prev, curr) {
                   return prev..addAll(curr);
                 }),

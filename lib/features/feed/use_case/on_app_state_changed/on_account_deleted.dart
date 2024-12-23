@@ -45,18 +45,19 @@ final class _OnAccountDeleted {
 
           // single account page
           case final FeedPageStateSingleAccount page:
-            if (page.account.id == account.id) {
-              return Future.value(e);
-            } else {
-              final feed = await transactionService.getMany(
-                page: 0,
-                accountIds: [page.account.id],
-              );
+            final id = account.id;
+            if (page.account.id == id) return Future.value(e);
 
-              return Future.value(
-                page.copyWith(scrollPage: 0, canLoadMore: true, feed: feed),
-              );
-            }
+            final feed =
+                await transactionService.getMany(page: 0, accountIds: [id]);
+
+            return Future.value(
+              page.copyWith(
+                scrollPage: 1,
+                canLoadMore: feed.isNotEmpty,
+                feed: feed,
+              ),
+            );
         }
       }),
     );

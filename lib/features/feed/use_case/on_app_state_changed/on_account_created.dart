@@ -45,10 +45,11 @@ final class _OnAccountCreated {
     if (pages.whereType<FeedPageStateSingleAccount>().length > 1 &&
         pages.whereType<FeedPageStateAllAccounts>().isEmpty) {
       viewModel.addPageScroll(0);
+      final feed = await transactionService.getMany(page: 0);
       final page = FeedPageStateAllAccounts(
         scrollPage: 1,
-        canLoadMore: true,
-        feed: await transactionService.getMany(page: 0),
+        canLoadMore: feed.isNotEmpty,
+        feed: feed,
         accounts: await accountSevrice.getAll(),
         balances: await accountSevrice.getBalances(),
       );

@@ -46,8 +46,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
           viewModel.feed = feed;
-          viewModel.scrollPage = 0;
-          viewModel.canLoadMore = true;
+          viewModel.scrollPage = 1;
+          viewModel.canLoadMore = feed.isNotEmpty;
           if (viewModel.controller.isReady) viewModel.controller.jumpTo(.0);
         });
 
@@ -67,9 +67,15 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final id = viewModel.tag.id;
         if (transaction.tags.every((e) => e.id != id)) return;
         final balance = await tagService.getBalance(id: id);
+        final feed = await Future.wait(
+          List.generate(viewModel.scrollPage + 1, (index) {
+            return transactionService.getMany(page: index, tagIds: [id]);
+          }),
+        );
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
-          viewModel.feed = viewModel.feed.merge([transaction.copyWith()]);
+          viewModel.canLoadMore = feed.lastOrNull?.isNotEmpty ?? false;
+          viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
         });
 
       case EventTransactionUpdated():
@@ -82,20 +88,23 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         );
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
+          viewModel.canLoadMore = feed.lastOrNull?.isNotEmpty ?? false;
           viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
-          viewModel.canLoadMore = true;
         });
 
       case EventTransactionDeleted(value: final transaction):
         final id = viewModel.tag.id;
         if (transaction.tags.every((e) => e.id != id)) return;
         final balance = await tagService.getBalance(id: id);
+        final feed = await Future.wait(
+          List.generate(viewModel.scrollPage + 1, (index) {
+            return transactionService.getMany(page: index, tagIds: [id]);
+          }),
+        );
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
-          viewModel.feed = List<TransactionModel>.from(
-            viewModel.feed.where((e) => e.id != transaction.id),
-          );
-          viewModel.canLoadMore = true;
+          viewModel.canLoadMore = feed.lastOrNull?.isNotEmpty ?? false;
+          viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
         });
 
       case EventTagUpdated(value: final tag):

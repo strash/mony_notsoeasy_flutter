@@ -45,8 +45,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
           viewModel.feed = feed;
-          viewModel.scrollPage = 0;
-          viewModel.canLoadMore = true;
+          viewModel.scrollPage = 1;
+          viewModel.canLoadMore = feed.isNotEmpty;
           viewModel.controller.jumpTo(.0);
         });
 
@@ -81,8 +81,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         );
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
+          viewModel.canLoadMore = feed.lastOrNull?.isNotEmpty ?? false;
           viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
-          viewModel.canLoadMore = true;
         });
 
       case EventTagUpdated(value: final tag):

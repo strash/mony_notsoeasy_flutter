@@ -46,6 +46,7 @@ final class _OnTransactionUpdated {
             return Future.value(
               page.copyWith(
                 balance: balance,
+                canLoadMore: feed.lastOrNull?.isNotEmpty ?? false,
                 feed: feed.fold<List<TransactionModel>>([], (prev, curr) {
                   return prev..addAll(curr);
                 }),

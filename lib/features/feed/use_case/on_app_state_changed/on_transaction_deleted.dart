@@ -9,6 +9,7 @@ final class _OnTransactionDeleted {
     EventTransactionDeleted event,
   ) async {
     final accountSevrice = context.read<DomainAccountService>();
+    final transactionService = context.read<DomainTransactionService>();
 
     final transaction = event.value;
 
@@ -18,32 +19,42 @@ final class _OnTransactionDeleted {
           // all accounts page
           case final FeedPageStateAllAccounts page:
             final balances = await accountSevrice.getBalances();
+            final feed = await Future.wait(
+              List.generate(page.scrollPage + 1, (index) {
+                return transactionService.getMany(page: index);
+              }),
+            );
 
             return Future.value(
               page.copyWith(
                 balances: balances,
-                canLoadMore: true,
-                feed: List<TransactionModel>.from(
-                  page.feed.where((e) => e.id != transaction.id),
-                ),
+                canLoadMore: feed.lastOrNull?.isNotEmpty ?? false,
+                feed: feed.fold<List<TransactionModel>>([], (prev, curr) {
+                  return prev..addAll(curr);
+                }),
               ),
             );
 
           // single account page
           case final FeedPageStateSingleAccount page:
             final id = page.account.id;
-
             if (id != transaction.account.id) return Future.value(page);
 
             final balance = await accountSevrice.getBalance(id: id);
+            final feed = await Future.wait(
+              List.generate(page.scrollPage + 1, (index) {
+                return transactionService
+                    .getMany(page: index, accountIds: [id]);
+              }),
+            );
 
             return Future.value(
               page.copyWith(
                 balance: balance,
-                canLoadMore: true,
-                feed: List<TransactionModel>.from(
-                  page.feed.where((e) => e.id != transaction.id),
-                ),
+                canLoadMore: feed.lastOrNull?.isNotEmpty ?? false,
+                feed: feed.fold<List<TransactionModel>>([], (prev, curr) {
+                  return prev..addAll(curr);
+                }),
               ),
             );
         }

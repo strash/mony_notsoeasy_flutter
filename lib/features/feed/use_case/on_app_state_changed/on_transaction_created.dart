@@ -28,7 +28,7 @@ final class _OnTransactionCreated {
             return Future.value(
               page.copyWith(
                 balances: balances,
-                canLoadMore: true,
+                canLoadMore: feed.lastOrNull?.isNotEmpty ?? false,
                 feed: feed.fold<List<TransactionModel>>([], (prev, curr) {
                   return prev..addAll(curr);
                 }),
@@ -54,7 +54,7 @@ final class _OnTransactionCreated {
             return Future.value(
               page.copyWith(
                 balance: balance,
-                canLoadMore: true,
+                canLoadMore: feed.lastOrNull?.isNotEmpty ?? false,
                 feed: feed.fold<List<TransactionModel>>([], (prev, curr) {
                   return prev..addAll(curr);
                 }),
