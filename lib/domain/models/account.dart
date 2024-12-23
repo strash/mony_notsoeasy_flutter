@@ -37,10 +37,10 @@ enum EAccountType implements IDescriptable {
   String get icon {
     return switch (this) {
       EAccountType.debit => "💳",
-      EAccountType.credit => "💰",
+      EAccountType.credit => "🛟",
       EAccountType.cash => "💵",
-      EAccountType.savings => "🪙",
-      EAccountType.investment => "🏦",
+      EAccountType.savings => "🐷",
+      EAccountType.investment => "🦄",
     };
   }
 }
