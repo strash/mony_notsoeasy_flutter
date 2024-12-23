@@ -42,10 +42,7 @@ class AccountsView extends StatelessWidget {
           // -> accounts
           SliverPadding(
             padding: const EdgeInsets.only(top: 10.0),
-            sliver: SliverList.separated(
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 20.0);
-              },
+            sliver: SliverList.builder(
               itemCount: viewModel.accounts.length,
               itemBuilder: (context, index) {
                 final item = viewModel.accounts.elementAt(index);

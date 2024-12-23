@@ -3,7 +3,6 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:rxdart/subjects.dart";
 
 part "./event.dart";
 
@@ -17,7 +16,7 @@ final class AppEventServiceBuilder extends StatefulWidget {
 }
 
 final class AppEventService extends ViewModelState<AppEventServiceBuilder> {
-  final _subject = BehaviorSubject<Event>();
+  final _subject = StreamController<Event>.broadcast();
 
   Stream<Event> get stream => _subject.stream;
 
