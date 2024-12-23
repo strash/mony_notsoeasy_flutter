@@ -41,24 +41,27 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventAccountDeleted() || EventCategoryDeleted():
         final id = viewModel.tag.id;
         final balance = await tagService.getBalance(id: id);
-        final feed = await transactionService.getMany(page: 0, tagIds: [id]);
-        if (!viewModel.context.mounted) return;
+        final List<List<TransactionModel>> feed = [];
+        int scrollPage = 0;
+        do {
+          feed.add(
+            await transactionService.getMany(page: scrollPage++, tagIds: [id]),
+          );
+        } while (scrollPage <= viewModel.scrollPage &&
+            (feed.lastOrNull?.isNotEmpty ?? false));
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
-          viewModel.feed = feed;
-          viewModel.scrollPage = 1;
-          viewModel.canLoadMore = feed.isNotEmpty;
-          if (viewModel.controller.isReady) viewModel.controller.jumpTo(.0);
+          viewModel.scrollPage = scrollPage;
+          viewModel.canLoadMore = feed.lastOrNull?.isNotEmpty ?? false;
+          viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
         });
 
       case EventCategoryUpdated(value: final category):
         viewModel.setProtectedState(() {
           viewModel.feed = List<TransactionModel>.from(
             viewModel.feed.map((e) {
-              if (e.category.id == category.id) {
-                return e.copyWith(category: category.copyWith());
-              }
-              return e;
+              if (e.category.id != category.id) return e;
+              return e.copyWith(category: category.copyWith());
             }),
           );
         });
@@ -81,6 +84,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventTransactionUpdated():
         final id = viewModel.tag.id;
         final balance = await tagService.getBalance(id: id);
+        // NOTE: after update the transaction could be without the tag so we're
+        // just updating the whole thing
         final feed = await Future.wait(
           List.generate(viewModel.scrollPage + 1, (index) {
             return transactionService.getMany(page: index, tagIds: [id]);

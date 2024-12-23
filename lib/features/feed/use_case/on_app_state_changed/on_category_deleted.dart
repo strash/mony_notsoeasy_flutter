@@ -17,33 +17,46 @@ final class _OnCategoryDeleted {
           // all accounts page
           case final FeedPageStateAllAccounts page:
             final balances = await accountSevrice.getBalances();
-            final feed = await transactionService.getMany(page: 0);
+            final List<List<TransactionModel>> feed = [];
+            int scrollPage = 0;
+            do {
+              feed.add(await transactionService.getMany(page: scrollPage++));
+            } while (scrollPage <= page.scrollPage &&
+                (feed.lastOrNull?.isNotEmpty ?? false));
 
             return Future.value(
               page.copyWith(
-                scrollPage: 1,
-                canLoadMore: feed.isNotEmpty,
-                feed: feed,
                 balances: balances,
+                scrollPage: scrollPage,
+                canLoadMore: feed.lastOrNull?.isNotEmpty ?? false,
+                feed: feed.fold<List<TransactionModel>>([], (prev, curr) {
+                  return prev..addAll(curr);
+                }),
               ),
             );
 
           // single account page
           case final FeedPageStateSingleAccount page:
-            final balance = await accountSevrice.getBalance(
-              id: page.account.id,
-            );
-            final feed = await transactionService.getMany(
-              page: 0,
-              accountIds: [page.account.id],
-            );
+            final id = page.account.id;
+            final balance = await accountSevrice.getBalance(id: id);
+            final List<List<TransactionModel>> feed = [];
+            int scrollPage = 0;
+            do {
+              await transactionService.getMany(
+                page: scrollPage++,
+                accountIds: [id],
+              );
+            } while (scrollPage <= page.scrollPage &&
+                (feed.lastOrNull?.isNotEmpty ?? false));
 
             return Future.value(
               page.copyWith(
-                scrollPage: 1,
-                canLoadMore: feed.isNotEmpty,
-                feed: feed,
                 balance: balance,
+                scrollPage: scrollPage,
+                canLoadMore: feed.lastOrNull?.isNotEmpty ?? false,
+                feed: feed.fold<List<TransactionModel>>([], (prev, curr) {
+                  return prev..addAll(curr);
+                }),
               ),
             );
         }
@@ -51,13 +64,5 @@ final class _OnCategoryDeleted {
     );
 
     viewModel.setProtectedState(() => viewModel.pages = pages);
-
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      for (final controller in viewModel.scrollControllers) {
-        if (!controller.isReady) continue;
-        controller.distance = .0;
-        controller.jumpTo(0);
-      }
-    });
   }
 }

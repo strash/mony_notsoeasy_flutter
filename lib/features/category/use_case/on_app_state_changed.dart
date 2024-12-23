@@ -17,6 +17,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     final transactionService = context.read<DomainTransactionService>();
 
     switch (event) {
+      // NOTE: when a tag is created it doesn't mean that it attached to a
+      // transaction so here we're doing nothing about this
       case EventAccountCreated() || EventCategoryCreated() || EventTagCreated():
         break;
 
@@ -38,16 +40,22 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventAccountDeleted():
         final id = viewModel.category.id;
         final balance = await categoryService.getBalance(id: id);
-        final feed = await transactionService.getMany(
-          page: 0,
-          categoryIds: [id],
-        );
+        final List<List<TransactionModel>> feed = [];
+        int scrollPage = 0;
+        do {
+          final value = await transactionService.getMany(
+            page: scrollPage++,
+            categoryIds: [id],
+          );
+          feed.add(value);
+        } while (scrollPage <= viewModel.scrollPage &&
+            (feed.lastOrNull?.isNotEmpty ?? false));
+
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
-          viewModel.feed = feed;
-          viewModel.scrollPage = 1;
-          viewModel.canLoadMore = feed.isNotEmpty;
-          viewModel.controller.jumpTo(.0);
+          viewModel.scrollPage = scrollPage;
+          viewModel.canLoadMore = feed.lastOrNull?.isNotEmpty ?? false;
+          viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
         });
 
       case EventCategoryUpdated(value: final category):
@@ -57,10 +65,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           }
           viewModel.feed = List<TransactionModel>.from(
             viewModel.feed.map((e) {
-              if (e.category.id == category.id) {
-                return e.copyWith(category: category.copyWith());
-              }
-              return e;
+              if (e.category.id != category.id) return e;
+              return e.copyWith(category: category.copyWith());
             }),
           );
         });

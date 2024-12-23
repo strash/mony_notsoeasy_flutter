@@ -38,12 +38,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         if (viewModel.account.id != account.id) return;
         context.close();
 
-      case EventCategoryDeleted():
-        final id = viewModel.account.id;
-        final balance = await accountService.getBalance(id: id);
-        viewModel.setProtectedState(() => viewModel.balance = balance);
-
-      case EventTransactionCreated() ||
+      case EventCategoryDeleted() ||
+            EventTransactionCreated() ||
             EventTransactionUpdated() ||
             EventTransactionDeleted():
         final id = viewModel.account.id;

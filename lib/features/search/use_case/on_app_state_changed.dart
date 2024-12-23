@@ -12,54 +12,72 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
   Future<void> call(BuildContext context, [_TValue? value]) async {
     if (value == null) throw ArgumentError.notNull();
 
-    final accountService = context.read<DomainAccountService>();
-    final categoryService = context.read<DomainCategoryService>();
-    final tagService = context.read<DomainTagService>();
+    final (:viewModel, :event) = value;
 
-    final viewModel = value.viewModel;
-
-    // TODO: обновлять счетчики при добавлении/удалении айтемов
     // TODO: обновлять данные поисковых запросов
 
-    switch (value.event) {
+    switch (event) {
       case EventAccountCreated():
-        final count = await accountService.count();
-        viewModel.setProtectedState(() {
-          viewModel.pageCounts[ESearchPage.accounts] = count;
-        });
+        final pageCounts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+
       case EventAccountUpdated():
         // TODO: Handle this case.
         throw UnimplementedError();
+
       case EventAccountDeleted():
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        final pageCounts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+
       case EventCategoryCreated():
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        final pageCounts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+
       case EventCategoryUpdated():
         // TODO: Handle this case.
         throw UnimplementedError();
+
       case EventCategoryDeleted():
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        final pageCounts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+
       case EventTagCreated():
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        final pageCounts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+
       case EventTagUpdated():
         // TODO: Handle this case.
         throw UnimplementedError();
+
       case EventTagDeleted():
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        final pageCounts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+
       case EventTransactionCreated():
         // TODO: Handle this case.
         throw UnimplementedError();
+
       case EventTransactionUpdated():
         // TODO: Handle this case.
         throw UnimplementedError();
+
       case EventTransactionDeleted():
         // TODO: Handle this case.
         throw UnimplementedError();
     }
+  }
+
+  Future<Map<ESearchPage, int>> _updateCounts(BuildContext context) async {
+    final accountService = context.read<DomainAccountService>();
+    final categoryService = context.read<DomainCategoryService>();
+    final tagService = context.read<DomainTagService>();
+    return {
+      for (final page in ESearchPage.values)
+        page: await switch (page) {
+          ESearchPage.accounts => accountService.count(),
+          ESearchPage.categories => categoryService.count(),
+          ESearchPage.tags => tagService.count(),
+        },
+    };
   }
 }

@@ -6,12 +6,11 @@ class CategoriesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: CustomScrollView(
         slivers: [
           AppBarComponent(
             title: Text("Категории"),
-            useSliver: true,
           ),
         ],
       ),

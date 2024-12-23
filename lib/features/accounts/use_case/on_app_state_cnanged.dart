@@ -12,8 +12,8 @@ final class OnAppStateCnanged extends UseCase<Future<void>, _TValue> {
   Future<void> call(BuildContext context, [_TValue? value]) async {
     if (value == null) throw ArgumentError.notNull();
 
+    final (:viewModel, :event) = value;
     final accountService = context.read<DomainAccountService>();
-    final viewModel = value.viewModel;
 
     switch (value.event) {
       case EventAccountCreated():

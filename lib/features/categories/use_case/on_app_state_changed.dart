@@ -7,7 +7,11 @@ typedef _TValue = ({Event event, CategoriesViewModel viewModel});
 
 final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
   @override
-  Future<void> call(BuildContext context, [_TValue? value]) {
+  Future<void> call(BuildContext context, [_TValue? value]) async {
+    if (value == null) throw ArgumentError.notNull();
+
+    final (:viewModel, :event) = value;
+
     // TODO: implement call
     throw UnimplementedError();
   }

@@ -38,7 +38,6 @@ final class _OnTransactionCreated {
           // single account page
           case final FeedPageStateSingleAccount page:
             final id = page.account.id;
-
             if (id != transaction.account.id) return Future.value(page);
 
             final balance = await accountSevrice.getBalance(id: id);

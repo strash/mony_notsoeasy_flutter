@@ -6,12 +6,11 @@ class TagsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: CustomScrollView(
         slivers: [
           AppBarComponent(
             title: Text("Теги"),
-            useSliver: true,
           ),
         ],
       ),

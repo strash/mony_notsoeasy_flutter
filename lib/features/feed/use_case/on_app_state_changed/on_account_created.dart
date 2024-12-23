@@ -44,7 +44,8 @@ final class _OnAccountCreated {
     // create all accounts page
     if (pages.whereType<FeedPageStateSingleAccount>().length > 1 &&
         pages.whereType<FeedPageStateAllAccounts>().isEmpty) {
-      viewModel.addPageScroll(0);
+      const allPagesIdx = 0;
+      viewModel.addPageScroll(allPagesIdx);
       final feed = await transactionService.getMany(page: 0);
       final page = FeedPageStateAllAccounts(
         scrollPage: 1,
@@ -53,7 +54,7 @@ final class _OnAccountCreated {
         accounts: await accountSevrice.getAll(),
         balances: await accountSevrice.getBalances(),
       );
-      pages.insert(0, page);
+      pages.insert(allPagesIdx, page);
     }
 
     viewModel.setProtectedState(() => viewModel.pages = pages);
