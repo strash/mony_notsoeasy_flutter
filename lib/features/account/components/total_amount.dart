@@ -15,6 +15,10 @@ class AccountTotalAmountComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final dateRange = (
+      lhs: balance.firstTransactionDate,
+      rhs: balance.lastTransactionDate
+    ).transactionsDateRangeDescription;
 
     return SeparatedComponent.list(
       separatorBuilder: (context, index) => const SizedBox(height: 10.0),
@@ -56,17 +60,15 @@ class AccountTotalAmountComponent extends StatelessWidget {
             ),
 
             // -> transactions date range
-            Text(
-              (
-                lhs: balance.firstTransactionDate,
-                rhs: balance.lastTransactionDate
-              ).transactionsDateRangeDescription,
-              style: GoogleFonts.golosText(
-                fontSize: 15.0,
-                fontWeight: FontWeight.w400,
-                color: theme.colorScheme.onSurfaceVariant,
+            if (dateRange.isNotEmpty)
+              Text(
+                dateRange,
+                style: GoogleFonts.golosText(
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w400,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               ),
-            ),
           ],
         ),
       ],

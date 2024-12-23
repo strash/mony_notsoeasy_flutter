@@ -67,13 +67,13 @@ class AccountView extends StatelessWidget {
                         return const SizedBox(height: 30.0);
                       },
                       children: [
-                        // -> total sum title
+                        // -> total sum
                         AccountTotalSumComponent(balance: balance),
 
-                        // -> total amount title
+                        // -> total amount
                         AccountTotalAmountComponent(balance: balance),
 
-                        // -> currency title
+                        // -> currency
                         AccountCurrencyComponent(balance: balance),
                       ],
                     ),
