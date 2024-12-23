@@ -7,10 +7,12 @@ import "package:mony_app/domain/models/account.dart";
 
 class AccountComponent extends StatelessWidget {
   final AccountModel account;
+  final bool showCurrencyTag;
 
   const AccountComponent({
     super.key,
     required this.account,
+    this.showCurrencyTag = false,
   });
 
   @override
@@ -60,15 +62,33 @@ class AccountComponent extends StatelessWidget {
             children: [
               // -> title
               Flexible(
-                child: Text(
-                  account.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.golosText(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                    color: color,
-                  ),
+                child: Row(
+                  children: [
+                    // -> currency tag
+                    if (showCurrencyTag)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2.0, right: 8.0),
+                        child: CurrencyTagComponent(
+                          code: account.currency.code,
+                          background: color,
+                          foreground: theme.colorScheme.surface,
+                        ),
+                      ),
+
+                    // -> title
+                    Flexible(
+                      child: Text(
+                        account.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.golosText(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w600,
+                          color: color,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
 

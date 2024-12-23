@@ -55,7 +55,10 @@ class AccountsView extends StatelessWidget {
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () => onAccountPressed(context, item),
-                    child: AccountComponent(account: item),
+                    child: AccountComponent(
+                      account: item,
+                      showCurrencyTag: true,
+                    ),
                   ),
                 );
               },
