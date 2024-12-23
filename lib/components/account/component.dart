@@ -1,11 +1,9 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/account.dart";
-import "package:mony_app/gen/assets.gen.dart";
 
 class AccountComponent extends StatelessWidget {
   final AccountModel account;
@@ -60,35 +58,17 @@ class AccountComponent extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // -> account
+              // -> title
               Flexible(
-                child: Row(
-                  children: [
-                    // -> title
-                    Flexible(
-                      child: Text(
-                        account.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.golosText(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w600,
-                          color: color,
-                        ),
-                      ),
-                    ),
-
-                    // -> icon
-                    Padding(
-                      padding: const EdgeInsets.only(left: 2.0, top: 1.0),
-                      child: SvgPicture.asset(
-                        Assets.icons.chevronForward,
-                        width: 20.0,
-                        height: 20.0,
-                        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  account.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.golosText(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
                 ),
               ),
 
