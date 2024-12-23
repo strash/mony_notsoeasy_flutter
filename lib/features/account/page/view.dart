@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/account/components/components.dart";
@@ -13,12 +14,17 @@ class AccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bottomOffset = NavBarView.bottomOffset(context);
+    final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
 
     final viewModel = context.viewModel<AccountViewModel>();
     final account = viewModel.account;
     final balance = viewModel.balance;
     final onEditPressed = viewModel<OnEditPressed>();
     final onDeletePressed = viewModel<OnDeletePressed>();
+
+    final color =
+        ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -74,7 +80,10 @@ class AccountView extends StatelessWidget {
                         AccountTotalAmountComponent(balance: balance),
 
                         // -> currency
-                        AccountCurrencyComponent(balance: balance),
+                        AccountCurrencyComponent(
+                          balance: balance,
+                          color: color,
+                        ),
                       ],
                     ),
                 ],
