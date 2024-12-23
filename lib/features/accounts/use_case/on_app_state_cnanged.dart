@@ -16,6 +16,17 @@ final class OnAppStateCnanged extends UseCase<Future<void>, _TValue> {
     final accountService = context.read<DomainAccountService>();
 
     switch (value.event) {
+      case EventCategoryCreated() ||
+            EventCategoryUpdated() ||
+            EventCategoryDeleted() ||
+            EventTagCreated() ||
+            EventTagUpdated() ||
+            EventTagDeleted() ||
+            EventTransactionCreated() ||
+            EventTransactionUpdated() ||
+            EventTransactionDeleted():
+        break;
+
       case EventAccountCreated():
         final accounts = await Future.wait<List<AccountModel>>(
           List.generate(viewModel.scrollPage + 1, (index) {
@@ -29,39 +40,30 @@ final class OnAppStateCnanged extends UseCase<Future<void>, _TValue> {
           });
         });
 
-      case EventAccountUpdated():
-        // TODO: Handle this case.
-        throw UnimplementedError();
+      case EventAccountUpdated(value: final account):
+        viewModel.setProtectedState(() {
+          viewModel.accounts = List<AccountModel>.from(
+            viewModel.accounts.map((e) {
+              return e.id == account.id ? account.copyWith() : e;
+            }),
+          );
+        });
+
       case EventAccountDeleted():
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case EventCategoryCreated():
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case EventCategoryUpdated():
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case EventCategoryDeleted():
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case EventTagCreated():
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case EventTagUpdated():
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case EventTagDeleted():
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case EventTransactionCreated():
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case EventTransactionUpdated():
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case EventTransactionDeleted():
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        if (viewModel.accounts.length == 1) return;
+        final List<List<AccountModel>> accounts = [];
+        int scrollPage = 0;
+        do {
+          accounts.add(await accountService.getMany(page: scrollPage++));
+        } while (scrollPage <= viewModel.scrollPage &&
+            (accounts.lastOrNull?.isNotEmpty ?? false));
+        viewModel.setProtectedState(() {
+          viewModel.scrollPage = scrollPage;
+          viewModel.canLoadMore = accounts.lastOrNull?.isNotEmpty ?? false;
+          viewModel.accounts = accounts.fold([], (prev, curr) {
+            return prev..addAll(curr);
+          });
+        });
     }
   }
 }
