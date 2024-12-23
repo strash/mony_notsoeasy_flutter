@@ -36,6 +36,7 @@ class CurrencyTagComponent extends StatelessWidget {
             height: 1.0,
             fontWeight: FontWeight.w600,
             color: foreground ?? theme.colorScheme.onTertiaryContainer,
+            textStyle: theme.textTheme.bodySmall,
           ),
         ),
       ),
