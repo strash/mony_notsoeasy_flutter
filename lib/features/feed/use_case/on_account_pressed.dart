@@ -9,10 +9,9 @@ final class OnAccountPressed extends UseCase<void, FeedPageState> {
     if (pageState == null) throw ArgumentError.notNull();
 
     switch (pageState) {
-      // TODO: open account list page
       case FeedPageStateAllAccounts():
-        break;
-      // open one account page
+        context.go<void>(const AccountsPage());
+
       case FeedPageStateSingleAccount(:final account):
         context.go<void>(AccountPage(account: account));
     }
