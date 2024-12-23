@@ -8,6 +8,7 @@ export "./calendar/calendar.dart";
 export "./close_button/component.dart";
 export "./color_picker/component.dart";
 export "./context_menu/component.dart";
+export "./currency_tag/component.dart";
 export "./emoji_picker/component.dart";
 export "./empty_state/component.dart";
 export "./feed_empty_state/component.dart";
