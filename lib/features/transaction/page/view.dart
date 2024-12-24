@@ -85,7 +85,7 @@ class TransactionView extends StatelessWidget {
                         behavior: HitTestBehavior.opaque,
                         onTap: () =>
                             onCategoryPressed(context, transaction.category),
-                        child: TransactionCategoryComponent(
+                        child: CategoryComponent(
                           category: transaction.category,
                         ),
                       ),

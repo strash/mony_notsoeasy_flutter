@@ -41,17 +41,17 @@ class AccountsView extends StatelessWidget {
 
           // -> accounts
           SliverPadding(
-            padding: const EdgeInsets.only(top: 10.0),
-            sliver: SliverList.builder(
+            padding: const EdgeInsets.only(top: 20.0),
+            sliver: SliverList.separated(
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 25.0);
+              },
               itemCount: viewModel.accounts.length,
               itemBuilder: (context, index) {
                 final item = viewModel.accounts.elementAt(index);
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0,
-                    vertical: 10.0,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () => onAccountPressed(context, item),
