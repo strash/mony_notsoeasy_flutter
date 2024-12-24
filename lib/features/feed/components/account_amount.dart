@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/currency_tag/component.dart";
