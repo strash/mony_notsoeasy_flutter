@@ -4,7 +4,9 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/bottom_sheet/sheet.dart";
 import "package:mony_app/domain/models/account.dart";
+import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/domain/services/database/transaction.dart";
+import "package:mony_app/domain/services/database/vo/vo.dart";
 import "package:mony_app/features/feed/feed.dart";
 import "package:mony_app/features/transaction_form/transaction_form.dart";
 import "package:provider/provider.dart";
@@ -31,13 +33,25 @@ final class OnNavbarAddTransactionPressed
     );
     if (result == null) return;
 
-    final transactionModel = await transactionService.create(
+    final model = await transactionService.create(
       vo: result.transactionVO,
       tags: result.tags,
     );
+    if (model == null) return;
 
-    if (transactionModel != null) {
-      appService.notify(EventTransactionCreated(transactionModel));
+    appService.notify(EventTransactionCreated(model));
+
+    void action(TransactionTagVariantVO value) {
+      TagModel? tag;
+      for (final element in model.tags) {
+        if (element.title == value.vo.title) {
+          tag = element;
+          break;
+        }
+      }
+      if (tag != null) appService.notify(EventTagCreated(tag));
     }
+
+    result.tags.whereType<TransactionTagVariantVO>().forEach(action);
   }
 }

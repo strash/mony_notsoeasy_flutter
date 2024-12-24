@@ -35,5 +35,18 @@ final class OnEditTransactionPressed
     if (model == null) return;
 
     appService.notify(EventTransactionUpdated(model));
+
+    void action(TransactionTagVariantVO value) {
+      TagModel? tag;
+      for (final element in model.tags) {
+        if (element.title == value.vo.title) {
+          tag = element;
+          break;
+        }
+      }
+      if (tag != null) appService.notify(EventTagCreated(tag));
+    }
+
+    result.tags.whereType<TransactionTagVariantVO>().forEach(action);
   }
 }

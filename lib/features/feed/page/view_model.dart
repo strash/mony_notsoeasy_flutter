@@ -85,7 +85,7 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
           if (currentPageIndex == 0 || _pagingToStart) return;
           openPage(0);
         }
-      case NavBarEventAddTransactionPreseed():
+      case NavBarEventAddTransactionPressed():
         OnNavbarAddTransactionPressed().call(context, this);
     }
   }

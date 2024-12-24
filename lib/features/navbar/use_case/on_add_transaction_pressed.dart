@@ -7,6 +7,6 @@ final class OnAddTransactionPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [dynamic _]) async {
     final viewModel = context.viewModel<NavBarViewModel>();
-    viewModel.subject.add(NavBarEventAddTransactionPreseed());
+    viewModel.subject.add(NavBarEventAddTransactionPressed());
   }
 }

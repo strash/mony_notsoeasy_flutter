@@ -10,4 +10,4 @@ final class NavBarEventTabChanged extends NavBarEvent {
 
 final class NavBarEventScrollToTopRequested extends NavBarEvent {}
 
-final class NavBarEventAddTransactionPreseed extends NavBarEvent {}
+final class NavBarEventAddTransactionPressed extends NavBarEvent {}
