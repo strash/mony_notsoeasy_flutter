@@ -8,6 +8,9 @@ class TagsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: CustomScrollView(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         slivers: [
           AppBarComponent(
             title: Text("Теги"),
