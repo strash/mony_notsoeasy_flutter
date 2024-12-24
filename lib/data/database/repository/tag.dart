@@ -142,6 +142,7 @@ LIMIT $limit OFFSET $offset;
       final where = _getWhere(ids: ids, transactionId: transactionId);
       final List<Map<String, Object?>> maps;
       if (transactionId != null) {
+        // NOTE: we need to sort here by `created` because of transactions
         maps = await db.rawQuery(
           """
 SELECT t.* FROM transaction_tags AS tt

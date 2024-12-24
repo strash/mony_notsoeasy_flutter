@@ -9,7 +9,7 @@ final class DomainAccountService extends BaseDatabaseService {
   final AccountBalanceDatabaseFactoryImpl _accountBalanceFactory;
 
   @override
-  final int perPage = 20;
+  final int perPage = 40;
 
   DomainAccountService({
     required AccountDatabaseRepository accountRepo,

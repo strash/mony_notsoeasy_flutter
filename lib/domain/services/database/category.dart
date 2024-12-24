@@ -8,7 +8,7 @@ final class DomainCategoryService extends BaseDatabaseService {
   final CategoryBalanceDatabaseFactoryImpl _categoryBalanceFactory;
 
   @override
-  final int perPage = 20;
+  final int perPage = 40;
 
   DomainCategoryService({
     required CategoryDatabaseRepository categoryRepo,

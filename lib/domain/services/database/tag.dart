@@ -7,7 +7,7 @@ final class DomainTagService extends BaseDatabaseService {
   final TagBalanceDatabaseFactoryImpl _tagBalanceFactory;
 
   @override
-  int get perPage => 20;
+  int get perPage => 40;
 
   DomainTagService({
     required TagDatabaseRepository tagRepo,
