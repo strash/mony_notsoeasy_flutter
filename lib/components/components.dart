@@ -5,6 +5,7 @@ export "./appbar_button/component.dart";
 export "./back_button/component.dart";
 export "./bottom_sheet/component.dart";
 export "./calendar/calendar.dart";
+export "./category/component.dart";
 export "./close_button/component.dart";
 export "./color_picker/component.dart";
 export "./context_menu/component.dart";
