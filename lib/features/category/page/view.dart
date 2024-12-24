@@ -39,7 +39,6 @@ class CategoryView extends StatelessWidget {
         slivers: [
           // -> appbar
           AppBarComponent(
-            showBackground: false,
             trailing: Row(
               children: [
                 // -> button edit

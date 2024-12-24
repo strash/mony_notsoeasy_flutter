@@ -3,6 +3,7 @@ import "dart:ui";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/constants.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 
 class AppBarComponent extends StatelessWidget {
@@ -93,7 +94,9 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  Widget build(BuildContext context, double _, bool __) {
+  Widget build(BuildContext context, double shrinkOffset, bool __) {
+    final t = shrinkOffset.remap(.0, maxExtent * .15, .0, 1.0);
+
     return _AppBar(
       leading: leading,
       title: title,
@@ -102,6 +105,7 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
       showDragHandle: showDragHandle,
       showBackground: showBackground,
       automaticallyImplyLeading: automaticallyImplyLeading,
+      opacity: t.clamp(.0, 1.0),
     );
   }
 }
@@ -114,6 +118,7 @@ class _AppBar extends StatefulWidget {
   final bool showDragHandle;
   final bool showBackground;
   final bool automaticallyImplyLeading;
+  final double? opacity;
 
   const _AppBar({
     required this.leading,
@@ -123,6 +128,7 @@ class _AppBar extends StatefulWidget {
     required this.showDragHandle,
     required this.showBackground,
     required this.automaticallyImplyLeading,
+    this.opacity,
   });
 
   @override
@@ -189,77 +195,88 @@ class _AppBarState extends State<_AppBar> {
 
     final child = SizedBox.fromSize(
       size: Size.fromHeight(minExtent),
-      child: ColoredBox(
-        color: theme.colorScheme.surface.withValues(
-          alpha: widget.showBackground ? kTranslucentPanelOpacity : .0,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            // -> handle
-            if (widget.showDragHandle) const BottomSheetHandleComponent(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // -> handle
+          if (widget.showDragHandle) const BottomSheetHandleComponent(),
 
-            // -> the rest
-            Row(
-              children: [
-                // -> leading
-                _SizeNotificator(
-                  notifier: _leadingSizeNotifier,
-                  child: (widget.leading == null &&
-                              widget.showDragHandle == false &&
-                              widget.automaticallyImplyLeading
-                          ? const BackButtonComponent()
-                          : widget.leading) ??
-                      const SizedBox(width: 10.0),
-                ),
-                SizedBox(width: _leadingMinWidth),
+          // -> the rest
+          Row(
+            children: [
+              // -> leading
+              _SizeNotificator(
+                notifier: _leadingSizeNotifier,
+                child: (widget.leading == null &&
+                            widget.showDragHandle == false &&
+                            widget.automaticallyImplyLeading
+                        ? const BackButtonComponent()
+                        : widget.leading) ??
+                    const SizedBox(width: 10.0),
+              ),
+              SizedBox(width: _leadingMinWidth),
 
-                // -> title
-                if (widget.title != null)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: padding),
-                      child: DefaultTextStyle(
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: _titleStyle,
-                        child: widget.title!,
-                      ),
+              // -> title
+              if (widget.title != null)
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: padding),
+                    child: DefaultTextStyle(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: _titleStyle,
+                      child: widget.title!,
                     ),
-                  )
-                else
-                  const Spacer(),
-                SizedBox(width: _trailingMinWidth),
+                  ),
+                )
+              else
+                const Spacer(),
+              SizedBox(width: _trailingMinWidth),
 
-                // -> trailing
-                _SizeNotificator(
-                  notifier: _trailingSizeNotifier,
-                  child: (widget.trailing == null &&
-                              widget.showDragHandle &&
-                              widget.automaticallyImplyLeading
-                          ? const CloseButtonComponent()
-                          : widget.trailing) ??
-                      const SizedBox(width: 10.0),
-                ),
-              ],
-            ),
-          ],
-        ),
+              // -> trailing
+              _SizeNotificator(
+                notifier: _trailingSizeNotifier,
+                child: (widget.trailing == null &&
+                            widget.showDragHandle &&
+                            widget.automaticallyImplyLeading
+                        ? const CloseButtonComponent()
+                        : widget.trailing) ??
+                    const SizedBox(width: 10.0),
+              ),
+            ],
+          ),
+        ],
       ),
     );
 
     if (!widget.showBackground) return child;
-    return ClipRect(
-      child: RepaintBoundary(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: kTranslucentPanelBlurSigma,
-            sigmaY: kTranslucentPanelBlurSigma,
+
+    const sigma = kTranslucentPanelBlurSigma;
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        // -> background
+        ClipRect(
+          child: RepaintBoundary(
+            child: Opacity(
+              opacity: widget.opacity ?? 1.0,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+                child: ColoredBox(
+                  color: theme.colorScheme.surface.withValues(
+                    alpha: kTranslucentPanelOpacity,
+                  ),
+                ),
+              ),
+            ),
           ),
-          child: child,
         ),
-      ),
+
+        // -> controls
+        child,
+      ],
     );
   }
 }
