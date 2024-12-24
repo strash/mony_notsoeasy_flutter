@@ -43,11 +43,12 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final List<List<TransactionModel>> feed = [];
         int scrollPage = 0;
         do {
-          final value = await transactionService.getMany(
-            page: scrollPage++,
-            categoryIds: [id],
+          feed.add(
+            await transactionService.getMany(
+              page: scrollPage++,
+              categoryIds: [id],
+            ),
           );
-          feed.add(value);
         } while (scrollPage <= viewModel.scrollPage &&
             (feed.lastOrNull?.isNotEmpty ?? false));
 

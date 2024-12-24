@@ -42,9 +42,11 @@ final class _OnCategoryDeleted {
             final List<List<TransactionModel>> feed = [];
             int scrollPage = 0;
             do {
-              await transactionService.getMany(
-                page: scrollPage++,
-                accountIds: [id],
+              feed.add(
+                await transactionService.getMany(
+                  page: scrollPage++,
+                  accountIds: [id],
+                ),
               );
             } while (scrollPage <= page.scrollPage &&
                 (feed.lastOrNull?.isNotEmpty ?? false));
