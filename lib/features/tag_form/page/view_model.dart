@@ -32,7 +32,8 @@ final class TagFormViewModel extends ViewModelState<TagFormPage> {
 
   void _listener() {
     setProtectedState(() {
-      isSubmitEnabled = titleController.isValid;
+      isSubmitEnabled =
+          titleController.isValid && titleController.text.isNotEmpty;
     });
   }
 
