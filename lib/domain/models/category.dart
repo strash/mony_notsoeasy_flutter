@@ -16,3 +16,13 @@ class CategoryModel with _$CategoryModel {
     required ETransactionType transactionType,
   }) = _CategoryModel;
 }
+
+extension CategoryModelEx on List<CategoryModel> {
+  List<CategoryModel> merge(List<CategoryModel> other) {
+    return List<CategoryModel>.from(
+      where((e) => !other.any((i) => e.id == i.id)),
+    )
+      ..addAll(other)
+      ..sort((a, b) => a.title.compareTo(b.title));
+  }
+}

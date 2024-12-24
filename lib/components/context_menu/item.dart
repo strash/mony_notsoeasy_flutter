@@ -9,9 +9,9 @@ class ContextMenuItemComponent extends StatelessWidget {
 
   const ContextMenuItemComponent({
     super.key,
-    required this.onTap,
     required this.label,
     this.icon,
+    required this.onTap,
   });
 
   @override
