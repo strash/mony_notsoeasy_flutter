@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/components/tag/component.dart";
 import "package:mony_app/domain/models/tag.dart";
-import "package:mony_app/features/transaction/components/tag.dart";
 
 class TransactionTagsComponent extends StatelessWidget {
   final List<TagModel> tags;
@@ -22,7 +22,7 @@ class TransactionTagsComponent extends StatelessWidget {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () => onTap(context, e),
-          child: TransactionTagComponent(tag: e),
+          child: TagComponent(tag: e),
         );
       }).toList(growable: false),
     );
