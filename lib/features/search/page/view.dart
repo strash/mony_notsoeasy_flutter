@@ -29,6 +29,9 @@ class SearchView extends StatelessWidget {
           Opacity(
             opacity: anim.value,
             child: CustomScrollView(
+              physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
               slivers: [
                 // -> appbar
                 const SearchHeaderComponent(),
