@@ -20,4 +20,5 @@ export "./popup/component.dart";
 export "./select/component.dart";
 export "./separated/component.dart";
 export "./tab_group/component.dart";
+export "./tag/component.dart";
 export "./time/time.dart";
