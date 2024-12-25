@@ -52,7 +52,6 @@ class TagView extends StatelessWidget {
                   icon: Assets.icons.trashFill,
                   onTap: () => onDeletePressed(context, tag),
                 ),
-                const SizedBox(width: 8.0),
               ],
             ),
           ),

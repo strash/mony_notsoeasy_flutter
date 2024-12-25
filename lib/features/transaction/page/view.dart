@@ -46,7 +46,6 @@ class TransactionView extends StatelessWidget {
                   icon: Assets.icons.trashFill,
                   onTap: () => onDeletePressed(context, transaction),
                 ),
-                const SizedBox(width: 8.0),
               ],
             ),
           ),

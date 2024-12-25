@@ -27,15 +27,9 @@ class AccountsView extends StatelessWidget {
           // -> appbar
           AppBarComponent(
             title: const Text("Счета"),
-            trailing: Row(
-              children: [
-                // -> button add
-                AppBarButtonComponent(
-                  icon: Assets.icons.plus,
-                  onTap: () => onAddAccountPressed(context),
-                ),
-                const SizedBox(width: 8.0),
-              ],
+            trailing: AppBarButtonComponent(
+              icon: Assets.icons.plus,
+              onTap: () => onAddAccountPressed(context),
             ),
           ),
 

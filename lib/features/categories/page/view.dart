@@ -28,13 +28,8 @@ class CategoriesView extends StatelessWidget {
           // -> app bar
           AppBarComponent(
             title: const Text("Категории"),
-            trailing: Row(
-              children: [
-                CategoriesAddButtonComponent(
-                  onTap: onAddButtonPressed,
-                ),
-                const SizedBox(width: 8.0),
-              ],
+            trailing: CategoriesAddButtonComponent(
+              onTap: onAddButtonPressed,
             ),
           ),
 

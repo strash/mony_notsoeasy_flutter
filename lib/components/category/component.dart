@@ -22,7 +22,6 @@ class CategoryComponent extends StatelessWidget {
     return SeparatedComponent.list(
       direction: Axis.horizontal,
       separatorBuilder: (context, index) => const SizedBox(width: 10.0),
-      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         // -> icon

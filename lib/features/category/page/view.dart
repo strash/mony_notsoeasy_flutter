@@ -53,7 +53,6 @@ class CategoryView extends StatelessWidget {
                   icon: Assets.icons.trashFill,
                   onTap: () => onDeletePressed(context, category),
                 ),
-                const SizedBox(width: 8.0),
               ],
             ),
           ),

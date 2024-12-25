@@ -49,7 +49,6 @@ class AccountView extends StatelessWidget {
                   icon: Assets.icons.trashFill,
                   onTap: () => onDeletePressed(context, account),
                 ),
-                const SizedBox(width: 8.0),
               ],
             ),
           ),

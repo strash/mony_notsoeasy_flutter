@@ -26,18 +26,12 @@ class TagsView extends StatelessWidget {
           parent: AlwaysScrollableScrollPhysics(),
         ),
         slivers: [
-          // -> app bar
+          // -> appbar
           AppBarComponent(
             title: const Text("Теги"),
-            trailing: Row(
-              children: [
-                // -> button add
-                AppBarButtonComponent(
-                  icon: Assets.icons.plus,
-                  onTap: () => onAddTagPressed(context),
-                ),
-                const SizedBox(width: 8.0),
-              ],
+            trailing: AppBarButtonComponent(
+              icon: Assets.icons.plus,
+              onTap: () => onAddTagPressed(context),
             ),
           ),
 
