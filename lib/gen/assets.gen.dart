@@ -222,6 +222,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/xmark.bold.svg
   String get xmarkBold => 'assets/icons/xmark.bold.svg';
 
+  /// File path: assets/icons/xmark.circle.fill.svg
+  String get xmarkCircleFill => 'assets/icons/xmark.circle.fill.svg';
+
   /// File path: assets/icons/xmark.semibold.svg
   String get xmarkSemibold => 'assets/icons/xmark.semibold.svg';
 
@@ -288,6 +291,7 @@ class $AssetsIconsGen {
         widgetSmallHole,
         widgetSmall,
         xmarkBold,
+        xmarkCircleFill,
         xmarkSemibold,
         xmark
       ];
