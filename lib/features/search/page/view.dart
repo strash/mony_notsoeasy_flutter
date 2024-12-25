@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
+import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/search/components/components.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 
@@ -10,6 +11,10 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final viewPadding = MediaQuery.paddingOf(context);
+    final bottomOffset = NavBarView.bottomOffset(context);
+    final pagesTopOffset =
+        viewPadding.top + SearchAppBarComponent.collapsedHeight + 20.0;
 
     final viewModel = context.viewModel<SearchViewModel>();
 
@@ -32,12 +37,13 @@ class SearchView extends StatelessWidget {
                     slivers: [
                       SliverPadding(
                         padding: EdgeInsets.only(
-                          top: MediaQuery.paddingOf(context).top +
-                              AppBarComponent.height +
-                              20.0,
+                          top: viewPadding.top + AppBarComponent.height + 20.0,
                         ),
                         sliver: SliverToBoxAdapter(child: Text("yaya")),
                       ),
+
+                      // -> bottom offset
+                      SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
                     ],
                   )
 
@@ -48,21 +54,22 @@ class SearchView extends StatelessWidget {
                       parent: AlwaysScrollableScrollPhysics(),
                     ),
                     slivers: [
-                      SliverPadding(
-                        padding: EdgeInsets.only(
-                          top: MediaQuery.paddingOf(context).top +
-                              AppBarComponent.height +
-                              20.0,
-                        ),
-                        sliver: SliverList.builder(
-                          itemCount: ESearchPage.values.length,
-                          itemBuilder: (context, index) {
-                            final item = ESearchPage.values.elementAt(index);
+                      // -> top offset
+                      SliverToBoxAdapter(
+                          child: SizedBox(height: pagesTopOffset)),
 
-                            return SearchPageItemComponent(page: item);
-                          },
-                        ),
+                      // -> content
+                      SliverList.builder(
+                        itemCount: ESearchPage.values.length,
+                        itemBuilder: (context, index) {
+                          final item = ESearchPage.values.elementAt(index);
+
+                          return SearchPageItemComponent(page: item);
+                        },
                       ),
+
+                      // -> bottom offset
+                      SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
                     ],
                   ),
           ),
@@ -72,7 +79,7 @@ class SearchView extends StatelessWidget {
             top: .0,
             left: .0,
             right: .0,
-            child: SearchHeaderComponent(),
+            child: SearchAppBarComponent(),
           ),
         ],
       ),

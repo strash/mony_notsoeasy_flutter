@@ -26,6 +26,7 @@ enum ESearchPage implements IDescriptable {
 
 enum ESearchTab implements IDescriptable {
   top,
+  transactions,
   accounts,
   categories,
   tags,
@@ -37,9 +38,10 @@ enum ESearchTab implements IDescriptable {
   String get description {
     return switch (this) {
       top => "Топ",
-      accounts => "Счет",
-      categories => "Категория",
-      tags => "Тег",
+      transactions => "Транзакции",
+      accounts => "Счета",
+      categories => "Категории",
+      tags => "Теги",
     };
   }
 }

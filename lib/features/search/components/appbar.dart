@@ -10,11 +10,17 @@ import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/search/page/view_model.dart";
-import "package:mony_app/features/search/use_case/on_clear_button_pressed.dart";
+import "package:mony_app/features/search/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-class SearchHeaderComponent extends StatelessWidget {
-  const SearchHeaderComponent({super.key});
+class SearchAppBarComponent extends StatelessWidget {
+  static const double _tabSectionHeight = 36.0;
+
+  static const double collapsedHeight = AppBarComponent.height;
+  static const double maximizedHeight =
+      AppBarComponent.height + _tabSectionHeight;
+
+  const SearchAppBarComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +29,7 @@ class SearchHeaderComponent extends StatelessWidget {
     final viewModel = context.viewModel<SearchViewModel>();
     final controller = viewModel.input;
     final onClearPressed = viewModel<OnClearButtonPressed>();
+    final onTabPressed = viewModel<OnTabPressed>();
 
     final smoothInputBorder = SmoothInputBorder(const Color(0x00FFFFFF));
     const fillColor = Color(0x00FFFFFF);
@@ -53,7 +60,7 @@ class SearchHeaderComponent extends StatelessWidget {
                     // -> textinput
                     Flexible(
                       child: SizedBox.fromSize(
-                        size: const Size.fromHeight(AppBarComponent.height),
+                        size: const Size.fromHeight(collapsedHeight),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 10.0,
@@ -165,6 +172,79 @@ class SearchHeaderComponent extends StatelessWidget {
                     // -> button close
                     const CloseButtonComponent(),
                   ],
+                ),
+
+                // TODO: добавить градиенты как в тегах
+                // TODO: при выборе убедиться, что выбранный айтем находиться
+                // полностью во вьюхе. скролить во вью при выборе, если не во
+                // вью
+                // TODO: открывать табы только если viewModel.isSearching
+                // -> search tabs
+                SizedBox(
+                  height: _tabSectionHeight,
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    scrollDirection: Axis.horizontal,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(width: 5.0);
+                    },
+                    itemCount: ESearchTab.values.length,
+                    itemBuilder: (context, index) {
+                      final item = ESearchTab.values.elementAt(index);
+                      final isActive = viewModel.activeTab == item;
+
+                      return GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => onTabPressed(context, item),
+                        child: Center(
+                          child: TweenAnimationBuilder<double>(
+                            tween: Tween<double>(
+                              begin: .0,
+                              end: isActive ? 1.0 : .0,
+                            ),
+                            duration: Durations.short3,
+                            builder: (context, value, child) {
+                              return DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: theme.colorScheme.tertiary
+                                      .withValues(alpha: value),
+                                  shape: const SmoothRectangleBorder(
+                                    borderRadius: SmoothBorderRadius.all(
+                                      SmoothRadius(
+                                        cornerRadius: 12.0,
+                                        cornerSmoothing: 1.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0,
+                                    vertical: 3.0,
+                                  ),
+                                  child: Text(
+                                    item.description,
+                                    style: GoogleFonts.golosText(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.lerp(
+                                        theme.colorScheme.onSurface,
+                                        theme.colorScheme.surface,
+                                        value,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

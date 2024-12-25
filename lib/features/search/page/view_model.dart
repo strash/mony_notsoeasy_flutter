@@ -39,6 +39,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
 
   final input = InputController();
   bool isSearching = false;
+  ESearchTab activeTab = ESearchTab.defaultValue;
 
   Map<ESearchPage, int> counts = {
     for (final page in ESearchPage.values) page: 0,
@@ -94,6 +95,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
       viewModel: this,
       useCases: [
         () => OnClearButtonPressed(),
+        () => OnTabPressed(),
         () => OnPagePressed(),
       ],
       child: Builder(
