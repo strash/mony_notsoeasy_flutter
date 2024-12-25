@@ -5,6 +5,7 @@ import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
+import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/features/search/page/view.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -13,21 +14,14 @@ part "./enums.dart";
 part "./route.dart";
 
 final class SearchPage extends StatefulWidget {
-  final Animation<double> animation;
-
-  const SearchPage({
-    super.key,
-    required this.animation,
-  });
+  const SearchPage({super.key});
 
   static void show(BuildContext context) {
     final navigator = appNavigatorKey.currentState;
     if (navigator == null) return;
     navigator.push<void>(
       _Route(
-        builder: (context, animation) {
-          return SearchPage(animation: animation);
-        },
+        child: const SearchPage(),
         capturedThemes: InheritedTheme.capture(
           from: context,
           to: navigator.context,
@@ -44,12 +38,31 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   late final StreamSubscription<Event> _appSub;
 
   final input = InputController();
+  bool isSearching = false;
 
-  Animation<double> get animation => widget.animation;
-
-  Map<ESearchPage, int> pageCounts = {
+  Map<ESearchPage, int> counts = {
     for (final page in ESearchPage.values) page: 0,
   };
+
+  final List<TransactionModel> transactions = const [];
+  final List<AccountModel> accounts = const [];
+  final List<CategoryModel> categories = const [];
+  final List<TagModel> tags = const [];
+
+  void _setSearchStatus() {
+    setProtectedState(() {
+      isSearching = input.focus.hasFocus || input.text.trim().isNotEmpty;
+    });
+  }
+
+  void _onInputFocused() {
+    _setSearchStatus();
+  }
+
+  void _onInputChanged() {
+    OnInputChanged().call(context, input.text.trim());
+    _setSearchStatus();
+  }
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
@@ -59,6 +72,8 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   @override
   void initState() {
     super.initState();
+    input.focus.addListener(_onInputFocused);
+    input.addListener(_onInputChanged);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
     });
@@ -67,6 +82,8 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   @override
   void dispose() {
     _appSub.cancel();
+    input.focus.removeListener(_onInputFocused);
+    input.removeListener(_onInputChanged);
     input.dispose();
     super.dispose();
   }
@@ -76,6 +93,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
     return ViewModel<SearchViewModel>(
       viewModel: this,
       useCases: [
+        () => OnClearButtonPressed(),
         () => OnPagePressed(),
       ],
       child: Builder(

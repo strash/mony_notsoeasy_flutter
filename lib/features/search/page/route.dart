@@ -2,11 +2,11 @@ part of "./view_model.dart";
 
 final class _Route extends ModalRoute {
   final CapturedThemes capturedThemes;
-  final Widget Function(BuildContext context, Animation<double> anim) builder;
+  final Widget child;
 
   _Route({
     required this.capturedThemes,
-    required this.builder,
+    required this.child,
   });
 
   @override
@@ -26,9 +26,13 @@ final class _Route extends ModalRoute {
   ) {
     return AnimatedBuilder(
       animation: animation,
+      child: child,
       builder: (context, child) {
         return capturedThemes.wrap(
-          builder(context, animation),
+          Opacity(
+            opacity: animation.value,
+            child: child,
+          ),
         );
       },
     );

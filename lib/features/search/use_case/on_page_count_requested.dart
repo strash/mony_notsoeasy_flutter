@@ -23,7 +23,7 @@ final class OnPageCountRequested extends UseCase<Future<void>, dynamic> {
     };
 
     viewModel.setProtectedState(() {
-      viewModel.pageCounts = counts;
+      viewModel.counts = counts;
     });
   }
 }

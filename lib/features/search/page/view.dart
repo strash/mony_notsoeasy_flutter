@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/features/search/components/components.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 
@@ -11,43 +12,67 @@ class SearchView extends StatelessWidget {
     final theme = Theme.of(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
-    final anim = viewModel.animation;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0x00FFFFFF),
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      backgroundColor: theme.colorScheme.surface,
       body: Stack(
-        fit: StackFit.expand,
         children: [
-          // -> background
-          ColoredBox(
-            color: theme.colorScheme.surface.withValues(
-              alpha: anim.value,
-            ),
-          ),
-
-          Opacity(
-            opacity: anim.value,
-            child: CustomScrollView(
-              physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics(),
-              ),
-              slivers: [
-                // -> appbar
-                const SearchHeaderComponent(),
-
-                const SliverPadding(padding: EdgeInsets.only(top: 20.0)),
+          AnimatedSwitcher(
+            duration: Durations.short3,
+            child: viewModel.isSearching
+                // -> search results
+                ? CustomScrollView(
+                    key: const Key("search_resulst"),
+                    physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
+                    slivers: [
+                      SliverPadding(
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.paddingOf(context).top +
+                              AppBarComponent.height +
+                              20.0,
+                        ),
+                        sliver: SliverToBoxAdapter(child: Text("yaya")),
+                      ),
+                    ],
+                  )
 
                 // -> pages
-                SliverList.builder(
-                  itemCount: ESearchPage.values.length,
-                  itemBuilder: (context, index) {
-                    final item = ESearchPage.values.elementAt(index);
-                    return SearchPageItemComponent(page: item);
-                  },
-                ),
-              ],
-            ),
+                : CustomScrollView(
+                    key: const Key("pages"),
+                    physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
+                    slivers: [
+                      SliverPadding(
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.paddingOf(context).top +
+                              AppBarComponent.height +
+                              20.0,
+                        ),
+                        sliver: SliverList.builder(
+                          itemCount: ESearchPage.values.length,
+                          itemBuilder: (context, index) {
+                            final item = ESearchPage.values.elementAt(index);
+
+                            return SearchPageItemComponent(page: item);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
+
+          // -> appbar
+          const Positioned(
+            top: .0,
+            left: .0,
+            right: .0,
+            child: SearchHeaderComponent(),
           ),
         ],
       ),

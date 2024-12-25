@@ -18,40 +18,40 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
     switch (event) {
       case EventAccountCreated():
-        final pageCounts = await _updateCounts(context);
-        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+        final counts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.counts = counts);
 
       case EventAccountUpdated():
         // TODO: Handle this case.
         throw UnimplementedError();
 
       case EventAccountDeleted():
-        final pageCounts = await _updateCounts(context);
-        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+        final counts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.counts = counts);
 
       case EventCategoryCreated():
-        final pageCounts = await _updateCounts(context);
-        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+        final counts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.counts = counts);
 
       case EventCategoryUpdated():
         // TODO: Handle this case.
         throw UnimplementedError();
 
       case EventCategoryDeleted():
-        final pageCounts = await _updateCounts(context);
-        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+        final counts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.counts = counts);
 
       case EventTagCreated():
-        final pageCounts = await _updateCounts(context);
-        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+        final counts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.counts = counts);
 
       case EventTagUpdated():
         // TODO: Handle this case.
         throw UnimplementedError();
 
       case EventTagDeleted():
-        final pageCounts = await _updateCounts(context);
-        viewModel.setProtectedState(() => viewModel.pageCounts = pageCounts);
+        final counts = await _updateCounts(context);
+        viewModel.setProtectedState(() => viewModel.counts = counts);
 
       case EventTransactionCreated():
         // TODO: Handle this case.

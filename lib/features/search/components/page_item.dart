@@ -18,6 +18,7 @@ class SearchPageItemComponent extends StatelessWidget {
     final theme = Theme.of(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
+    final count = "${viewModel.counts[page]}";
     final onPagePressed = viewModel<OnPagePressed>();
 
     return GestureDetector(
@@ -55,7 +56,7 @@ class SearchPageItemComponent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 10.0),
               child: Text(
-                viewModel.pageCounts[page].toString(),
+                count,
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w500,
