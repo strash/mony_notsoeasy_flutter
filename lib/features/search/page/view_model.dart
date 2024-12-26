@@ -52,19 +52,11 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   final List<CategoryModel> categories = const [];
   final List<TagModel> tags = const [];
 
-  void _setSearchStatus() {
-    setProtectedState(() {
-      isSearching = input.focus.hasFocus || input.text.trim().isNotEmpty;
-    });
-  }
-
-  void _onInputFocused() {
-    _setSearchStatus();
-  }
-
   void _onInputChanged() {
     OnInputChanged().call(context, input.text.trim());
-    _setSearchStatus();
+    setProtectedState(() {
+      isSearching = input.text.trim().isNotEmpty;
+    });
   }
 
   void _onAppEvent(Event event) {
@@ -75,7 +67,6 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   @override
   void initState() {
     super.initState();
-    input.focus.addListener(_onInputFocused);
     input.addListener(_onInputChanged);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
@@ -86,7 +77,6 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   @override
   void dispose() {
     _appSub.cancel();
-    input.focus.removeListener(_onInputFocused);
     input.removeListener(_onInputChanged);
     input.dispose();
     tabsScrollController.dispose();

@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/components/components.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/search/components/components.dart";
 import "package:mony_app/features/search/page/view_model.dart";
@@ -13,10 +12,13 @@ class SearchView extends StatelessWidget {
     final theme = Theme.of(context);
     final viewPadding = MediaQuery.paddingOf(context);
     final bottomOffset = NavBarView.bottomOffset(context);
-    final pagesTopOffset =
-        viewPadding.top + SearchAppBarComponent.collapsedHeight + 20.0;
 
     final viewModel = context.viewModel<SearchViewModel>();
+    final topOffset = viewPadding.top +
+        20.0 +
+        (viewModel.isSearching
+            ? SearchAppBarComponent.maximizedHeight
+            : SearchAppBarComponent.collapsedHeight);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -35,12 +37,11 @@ class SearchView extends StatelessWidget {
                       parent: AlwaysScrollableScrollPhysics(),
                     ),
                     slivers: [
-                      SliverPadding(
-                        padding: EdgeInsets.only(
-                          top: viewPadding.top + AppBarComponent.height + 20.0,
-                        ),
-                        sliver: SliverToBoxAdapter(child: Text("yaya")),
-                      ),
+                      // -> top offset
+                      SliverToBoxAdapter(child: SizedBox(height: topOffset)),
+
+                      // -> content
+                      SliverToBoxAdapter(child: Text("yaya")),
 
                       // -> bottom offset
                       SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
@@ -55,8 +56,7 @@ class SearchView extends StatelessWidget {
                     ),
                     slivers: [
                       // -> top offset
-                      SliverToBoxAdapter(
-                          child: SizedBox(height: pagesTopOffset)),
+                      SliverToBoxAdapter(child: SizedBox(height: topOffset)),
 
                       // -> content
                       SliverList.builder(

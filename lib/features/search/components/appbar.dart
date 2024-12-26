@@ -2,6 +2,7 @@ import "dart:ui";
 
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter/rendering.dart";
 import "package:flutter/services.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -15,7 +16,7 @@ import "package:mony_app/features/search/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class SearchAppBarComponent extends StatelessWidget {
-  static const double _tabSectionHeight = 36.0;
+  static const double _tabSectionHeight = 35.0;
 
   static const double collapsedHeight = AppBarComponent.height;
   static const double maximizedHeight =
@@ -26,6 +27,7 @@ class SearchAppBarComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final viewSize = MediaQuery.sizeOf(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
     final controller = viewModel.input;
@@ -174,9 +176,35 @@ class SearchAppBarComponent extends StatelessWidget {
                   ],
                 ),
 
-                // TODO: открывать табы только если viewModel.isSearching
                 // -> search tabs
-                const SearchTabsComponent(height: _tabSectionHeight),
+                TweenAnimationBuilder<double>(
+                  duration: Durations.short3,
+                  tween: Tween<double>(
+                    begin: .0,
+                    end: viewModel.isSearching ? 1.0 : .0,
+                  ),
+                  builder: (context, value, child) {
+                    final height = value.remap(.0, 1.0, .0, _tabSectionHeight);
+
+                    return SizedBox(
+                      height: height,
+                      child: OverflowBox(
+                        minWidth: viewSize.width,
+                        maxWidth: viewSize.width,
+                        minHeight: .0,
+                        maxHeight: _tabSectionHeight,
+                        fit: OverflowBoxFit.deferToChild,
+                        alignment: Alignment.topCenter,
+                        child: Opacity(
+                          opacity: value,
+                          child: const SearchTabsComponent(
+                            height: _tabSectionHeight,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),

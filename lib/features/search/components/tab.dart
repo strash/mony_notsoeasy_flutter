@@ -43,32 +43,30 @@ class SearchTabComponent extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => _onTap(context),
-      child: Center(
-        child: TweenAnimationBuilder<double>(
-          tween: Tween<double>(
-            begin: .0,
-            end: isActive ? 1.0 : .0,
-          ),
-          duration: Durations.short3,
-          builder: (context, value, child) {
-            return DecoratedBox(
-              decoration: ShapeDecoration(
-                color:
-                    theme.colorScheme.onSurfaceVariant.withValues(alpha: value),
-                shape: const SmoothRectangleBorder(
-                  borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(
-                      cornerRadius: 12.0,
-                      cornerSmoothing: 1.0,
-                    ),
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(
+          begin: .0,
+          end: isActive ? 1.0 : .0,
+        ),
+        duration: Durations.short3,
+        builder: (context, value, child) {
+          return DecoratedBox(
+            decoration: ShapeDecoration(
+              color: theme.colorScheme.onSurfaceVariant.withValues(
+                alpha: value,
+              ),
+              shape: const SmoothRectangleBorder(
+                borderRadius: SmoothBorderRadius.all(
+                  SmoothRadius(
+                    cornerRadius: 13.0,
+                    cornerSmoothing: 1.0,
                   ),
                 ),
               ),
+            ),
+            child: Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12.0,
-                  vertical: 3.0,
-                ),
+                padding: const EdgeInsets.fromLTRB(12.0, .0, 12.0, 1.0),
                 child: Text(
                   tab.description,
                   style: GoogleFonts.golosText(
@@ -82,9 +80,9 @@ class SearchTabComponent extends StatelessWidget {
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
