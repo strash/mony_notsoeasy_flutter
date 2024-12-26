@@ -54,12 +54,11 @@ class _PopupButtonComponentState extends State<PopupButtonComponent> {
       return;
     }
 
-    const offset = Offset.zero;
     final position = RelativeRect.fromRect(
       Rect.fromPoints(
-        button.localToGlobal(offset, ancestor: overlay),
+        button.localToGlobal(Offset.zero, ancestor: overlay),
         button.localToGlobal(
-          button.size.bottomRight(Offset.zero) + offset,
+          button.size.bottomRight(Offset.zero),
           ancestor: overlay,
         ),
       ),

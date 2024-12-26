@@ -7,14 +7,34 @@ import "package:mony_app/features/search/page/view_model.dart";
 class SearchTabComponent extends StatelessWidget {
   final ESearchTab tab;
   final bool isActive;
-  final UseCase<Future<void>, ESearchTab> onTap;
+  final EdgeInsets padding;
+  final UseCase<Future<void>, (ESearchTab, RelativeRect, EdgeInsets)> onTap;
 
   const SearchTabComponent({
     super.key,
     required this.tab,
     required this.isActive,
+    required this.padding,
     required this.onTap,
   });
+
+  void _onTap(BuildContext context) {
+    final box = context.findRenderObject() as RenderBox?;
+    final overlay =
+        Navigator.of(context).overlay?.context.findRenderObject() as RenderBox?;
+    if (box == null || overlay == null) return;
+    final rect = RelativeRect.fromRect(
+      Rect.fromPoints(
+        box.localToGlobal(Offset.zero, ancestor: overlay),
+        box.localToGlobal(
+          box.size.bottomRight(Offset.zero),
+          ancestor: overlay,
+        ),
+      ),
+      Offset.zero & overlay.size,
+    );
+    onTap(context, (tab, rect, padding));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +42,7 @@ class SearchTabComponent extends StatelessWidget {
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => onTap(context, tab),
+      onTap: () => _onTap(context),
       child: Center(
         child: TweenAnimationBuilder<double>(
           tween: Tween<double>(
@@ -33,7 +53,8 @@ class SearchTabComponent extends StatelessWidget {
           builder: (context, value, child) {
             return DecoratedBox(
               decoration: ShapeDecoration(
-                color: theme.colorScheme.secondary.withValues(alpha: value),
+                color:
+                    theme.colorScheme.onSurfaceVariant.withValues(alpha: value),
                 shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
                     SmoothRadius(
