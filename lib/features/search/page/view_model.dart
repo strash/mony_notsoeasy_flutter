@@ -41,6 +41,8 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   bool isSearching = false;
   ESearchTab activeTab = ESearchTab.defaultValue;
 
+  final tabsScrollController = ScrollController();
+
   Map<ESearchPage, int> counts = {
     for (final page in ESearchPage.values) page: 0,
   };
@@ -86,6 +88,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
     input.focus.removeListener(_onInputFocused);
     input.removeListener(_onInputChanged);
     input.dispose();
+    tabsScrollController.dispose();
     super.dispose();
   }
 

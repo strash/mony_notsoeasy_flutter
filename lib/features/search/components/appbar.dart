@@ -9,6 +9,8 @@ import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/constants.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
+import "package:mony_app/features/search/components/gradient_tween.dart";
+import "package:mony_app/features/search/components/tab.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -25,6 +27,7 @@ class SearchAppBarComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final viewSize = MediaQuery.sizeOf(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
     final controller = viewModel.input;
@@ -35,6 +38,8 @@ class SearchAppBarComponent extends StatelessWidget {
     const fillColor = Color(0x00FFFFFF);
 
     const sigma = kTranslucentPanelBlurSigma;
+
+    final stop = 30.0.remap(.0, viewSize.width, .0, 1.0);
 
     return ClipRect(
       child: RepaintBoundary(
@@ -174,77 +179,86 @@ class SearchAppBarComponent extends StatelessWidget {
                   ],
                 ),
 
-                // TODO: добавить градиенты как в тегах
                 // TODO: при выборе убедиться, что выбранный айтем находиться
                 // полностью во вьюхе. скролить во вью при выборе, если не во
                 // вью
                 // TODO: открывать табы только если viewModel.isSearching
                 // -> search tabs
-                SizedBox(
-                  height: _tabSectionHeight,
-                  child: ListView.separated(
-                    physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics(),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    scrollDirection: Axis.horizontal,
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(width: 5.0);
-                    },
-                    itemCount: ESearchTab.values.length,
-                    itemBuilder: (context, index) {
-                      final item = ESearchTab.values.elementAt(index);
-                      final isActive = viewModel.activeTab == item;
+                ListenableBuilder(
+                  listenable: viewModel.tabsScrollController,
+                  child: SizedBox(
+                    height: _tabSectionHeight,
+                    child: ListView.separated(
+                      controller: viewModel.tabsScrollController,
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(width: 5.0);
+                      },
+                      itemCount: ESearchTab.values.length,
+                      itemBuilder: (context, index) {
+                        final item = ESearchTab.values.elementAt(index);
+                        final isActive = viewModel.activeTab == item;
 
-                      return GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () => onTabPressed(context, item),
-                        child: Center(
-                          child: TweenAnimationBuilder<double>(
-                            tween: Tween<double>(
-                              begin: .0,
-                              end: isActive ? 1.0 : .0,
-                            ),
-                            duration: Durations.short3,
-                            builder: (context, value, child) {
-                              return DecoratedBox(
-                                decoration: ShapeDecoration(
-                                  color: theme.colorScheme.tertiary
-                                      .withValues(alpha: value),
-                                  shape: const SmoothRectangleBorder(
-                                    borderRadius: SmoothBorderRadius.all(
-                                      SmoothRadius(
-                                        cornerRadius: 12.0,
-                                        cornerSmoothing: 1.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0,
-                                    vertical: 3.0,
-                                  ),
-                                  child: Text(
-                                    item.description,
-                                    style: GoogleFonts.golosText(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.lerp(
-                                        theme.colorScheme.onSurface,
-                                        theme.colorScheme.surface,
-                                        value,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      );
-                    },
+                        return SearchTabComponent(
+                          tab: item,
+                          isActive: isActive,
+                          onTap: onTabPressed,
+                        );
+                      },
+                    ),
                   ),
+                  builder: (context, child) {
+                    final ready = viewModel.tabsScrollController.isReady;
+                    final bool showLeft;
+                    final bool showRight;
+                    if (ready) {
+                      final pos = viewModel.tabsScrollController.position;
+                      showLeft = pos.extentBefore > .0;
+                      showRight = pos.extentAfter > .0;
+                    } else {
+                      showLeft = false;
+                      showRight = false;
+                    }
+
+                    return TweenAnimationBuilder<(Color, Color)>(
+                      duration: Durations.short3,
+                      tween: SearchGradientTween(
+                        begin: (
+                          const Color(0x00FFFFFF),
+                          const Color(0x00FFFFFF),
+                        ),
+                        end: (
+                          showLeft
+                              ? const Color(0x00FFFFFF)
+                              : const Color(0xFFFFFFFF),
+                          showRight
+                              ? const Color(0x00FFFFFF)
+                              : const Color(0xFFFFFFFF),
+                        ),
+                      ),
+                      child: child,
+                      builder: (context, values, child) {
+                        return ShaderMask(
+                          shaderCallback: (rect) {
+                            return LinearGradient(
+                              stops: [.0, stop, 1.0 - stop, 1.0],
+                              colors: [
+                                values.$1,
+                                const Color(0xFFFFFFFF),
+                                const Color(0xFFFFFFFF),
+                                values.$2,
+                              ],
+                            ).createShader(rect);
+                          },
+                          child: child,
+                        );
+                      },
+                    );
+                  },
                 ),
               ],
             ),
