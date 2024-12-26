@@ -37,6 +37,7 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
+      OnInit().call(context, this);
     });
   }
 
@@ -54,12 +55,7 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
         () => OnEditPressed(),
         () => OnDeletePressed(),
       ],
-      child: Builder(
-        builder: (context) {
-          OnInit().call(context, account);
-          return const AccountView();
-        },
-      ),
+      child: const AccountView(),
     );
   }
 }

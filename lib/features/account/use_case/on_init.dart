@@ -1,20 +1,19 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
-import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
 import "package:provider/provider.dart";
 
-final class OnInit extends UseCase<Future<void>, AccountModel> {
+final class OnInit extends UseCase<Future<void>, AccountViewModel> {
   @override
-  Future<void> call(BuildContext context, [AccountModel? account]) async {
-    if (account == null) throw ArgumentError.notNull();
+  Future<void> call(BuildContext context, [AccountViewModel? value]) async {
+    if (value == null) throw ArgumentError.notNull();
 
-    final viewModel = context.viewModel<AccountViewModel>();
+    final account = value.account;
     final accountService = context.read<DomainAccountService>();
 
     final balances = await accountService.getBalance(id: account.id);
     if (balances == null) return;
-    viewModel.setProtectedState(() => viewModel.balance = balances);
+    value.setProtectedState(() => value.balance = balances);
   }
 }

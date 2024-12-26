@@ -79,6 +79,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
     input.addListener(_onInputChanged);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
+      OnPageCountRequested().call(context, this);
     });
   }
 
@@ -101,13 +102,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
         () => OnTabPressed(),
         () => OnPagePressed(),
       ],
-      child: Builder(
-        builder: (context) {
-          OnPageCountRequested().call(context);
-
-          return const SearchView();
-        },
-      ),
+      child: const SearchView(),
     );
   }
 }

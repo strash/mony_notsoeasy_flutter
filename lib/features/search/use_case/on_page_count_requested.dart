@@ -1,17 +1,18 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
-import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:provider/provider.dart";
 
-final class OnPageCountRequested extends UseCase<Future<void>, dynamic> {
+final class OnPageCountRequested
+    extends UseCase<Future<void>, SearchViewModel> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [SearchViewModel? value]) async {
+    if (value == null) throw ArgumentError.notNull();
+
     final accountService = context.read<DomainAccountService>();
     final categoryService = context.read<DomainCategoryService>();
     final tagService = context.read<DomainTagService>();
-    final viewModel = context.viewModel<SearchViewModel>();
 
     final Map<ESearchPage, int> counts = {
       for (final page in ESearchPage.values)
@@ -22,8 +23,8 @@ final class OnPageCountRequested extends UseCase<Future<void>, dynamic> {
         },
     };
 
-    viewModel.setProtectedState(() {
-      viewModel.counts = counts;
+    value.setProtectedState(() {
+      value.counts = counts;
     });
   }
 }
