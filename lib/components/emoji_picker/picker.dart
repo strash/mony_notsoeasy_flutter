@@ -60,7 +60,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
             EmojiPicker(
               textEditingController: widget.controller.controller,
               config: Config(
-                emojiSet: _emojiSet,
+                emojiSet: (locale) => _emojiSet,
                 height: MediaQuery.sizeOf(context).height * 0.48,
                 emojiViewConfig: EmojiViewConfig(
                   emojiSizeMax: 38.0,
