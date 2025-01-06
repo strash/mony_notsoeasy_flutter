@@ -71,8 +71,9 @@ final class _CategoryViewState extends State<_CategoryView> {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final count = config.emojiSet?.call(config.locale).length ?? 1.0;
-          final iconSize = constraints.maxWidth / max(count, 1.0);
+          final categories = config.emojiSet?.call(config.locale);
+          final count = categories?.length ?? 1;
+          final iconSize = constraints.maxWidth / max(count, 1);
           final svgSize = iconSize * 0.65;
 
           return SizedBox.fromSize(
@@ -97,9 +98,7 @@ final class _CategoryViewState extends State<_CategoryView> {
                 // -> icons
                 Center(
                   child: Row(
-                    children: (config.emojiSet?.call(config.locale) ?? const [])
-                        .indexed
-                        .map((e) {
+                    children: (categories ?? const []).indexed.map((e) {
                       final (index, emojiSet) = e;
 
                       return GestureDetector(
