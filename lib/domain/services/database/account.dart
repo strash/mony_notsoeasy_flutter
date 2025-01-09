@@ -19,6 +19,17 @@ final class DomainAccountService extends BaseDatabaseService {
         _accountFactory = accountFactory,
         _accountBalanceFactory = accountBalanceFactory;
 
+  Future<List<AccountModel>> search({String? query, required int page}) async {
+    final dtos = await _accountRepo.search(
+      query: query,
+      limit: perPage,
+      offset: offset(page),
+    );
+    return dtos
+        .map<AccountModel>(_accountFactory.toModel)
+        .toList(growable: false);
+  }
+
   Future<int> count() async {
     return await _accountRepo.count();
   }

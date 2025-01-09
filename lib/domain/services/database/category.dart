@@ -18,6 +18,17 @@ final class DomainCategoryService extends BaseDatabaseService {
         _categoryFactory = categoryFactory,
         _categoryBalanceFactory = categoryBalanceFactory;
 
+  Future<List<CategoryModel>> search({String? query, required int page}) async {
+    final dtos = await _categoryRepo.search(
+      query: query,
+      limit: perPage,
+      offset: offset(page),
+    );
+    return dtos
+        .map<CategoryModel>(_categoryFactory.toModel)
+        .toList(growable: false);
+  }
+
   Future<int> count() async {
     return await _categoryRepo.count();
   }

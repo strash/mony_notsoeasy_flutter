@@ -35,6 +35,18 @@ final class DomainTransactionService extends BaseDatabaseService {
   @override
   int get perPage => 40;
 
+  Future<List<TransactionModel>> search({
+    String? query,
+    required int page,
+  }) async {
+    final dtos = await _transactionRepo.search(
+      query: query,
+      limit: perPage,
+      offset: offset(page),
+    );
+    return _loadDeps(dtos: dtos);
+  }
+
   Future<int> count() async {
     return await _transactionRepo.count();
   }
@@ -49,43 +61,7 @@ final class DomainTransactionService extends BaseDatabaseService {
       categoryIds: categoryIds,
       tagIds: tagIds,
     );
-    final Set<String> unqAccountIds = {};
-    final Set<String> unqCategoryIds = {};
-    for (final element in dtos) {
-      unqAccountIds.add(element.accountId);
-      unqCategoryIds.add(element.categoryId);
-    }
-    final accountDtos = await _accountRepo.getAll(
-      ids: List<String>.from(unqAccountIds),
-    );
-    final categoryDtos = await _categoryRepo.getAll(
-      ids: List<String>.from(unqCategoryIds),
-    );
-    final tagDtos = await Future.wait(
-      dtos.map((e) => _tagRepo.getAll(transactionId: e.id)),
-    );
-    final List<TransactionModel> models = [];
-    for (final (index, dto) in dtos.indexed) {
-      final model = _transactionFactory.toModel(dto)
-        ..addAccount(
-          account: _accountFactory.toModel(
-            accountDtos.singleWhere((e) => e.id == dto.accountId),
-          ),
-        )
-        ..addCategory(
-          category: _categoryFactory.toModel(
-            categoryDtos.singleWhere((e) => e.id == dto.categoryId),
-          ),
-        )
-        ..addTags(
-          tags: tagDtos
-              .elementAt(index)
-              .map<TagModel>(_tagFactory.toModel)
-              .toList(growable: false),
-        );
-      models.add(model.build());
-    }
-    return models;
+    return _loadDeps(dtos: dtos);
   }
 
   Future<List<TransactionModel>> getMany({
@@ -101,43 +77,7 @@ final class DomainTransactionService extends BaseDatabaseService {
       categoryIds: categoryIds,
       tagIds: tagIds,
     );
-    final Set<String> unqAccountIds = {};
-    final Set<String> unqCategoryIds = {};
-    for (final element in dtos) {
-      unqAccountIds.add(element.accountId);
-      unqCategoryIds.add(element.categoryId);
-    }
-    final accountDtos = await _accountRepo.getAll(
-      ids: List<String>.from(unqAccountIds),
-    );
-    final categoryDtos = await _categoryRepo.getAll(
-      ids: List<String>.from(unqCategoryIds),
-    );
-    final tagDtos = await Future.wait(
-      dtos.map((e) => _tagRepo.getAll(transactionId: e.id)),
-    );
-    final List<TransactionModel> models = [];
-    for (final (index, dto) in dtos.indexed) {
-      final model = _transactionFactory.toModel(dto)
-        ..addAccount(
-          account: _accountFactory.toModel(
-            accountDtos.singleWhere((e) => e.id == dto.accountId),
-          ),
-        )
-        ..addCategory(
-          category: _categoryFactory.toModel(
-            categoryDtos.singleWhere((e) => e.id == dto.categoryId),
-          ),
-        )
-        ..addTags(
-          tags: tagDtos
-              .elementAt(index)
-              .map<TagModel>(_tagFactory.toModel)
-              .toList(growable: false),
-        );
-      models.add(model.build());
-    }
-    return models;
+    return _loadDeps(dtos: dtos);
   }
 
   Future<TransactionModel?> create({
@@ -269,5 +209,47 @@ final class DomainTransactionService extends BaseDatabaseService {
 
   Future<void> delete({required String id}) async {
     await _transactionRepo.delete(id: id);
+  }
+
+  Future<List<TransactionModel>> _loadDeps({
+    required List<TransactionDto> dtos,
+  }) async {
+    final Set<String> uniqueAccountIds = {};
+    final Set<String> uniqueCategoryIds = {};
+    for (final element in dtos) {
+      uniqueAccountIds.add(element.accountId);
+      uniqueCategoryIds.add(element.categoryId);
+    }
+    final accountDtos = await _accountRepo.getAll(
+      ids: List<String>.from(uniqueAccountIds),
+    );
+    final categoryDtos = await _categoryRepo.getAll(
+      ids: List<String>.from(uniqueCategoryIds),
+    );
+    final tagDtos = await Future.wait(
+      dtos.map((e) => _tagRepo.getAll(transactionId: e.id)),
+    );
+    final List<TransactionModel> models = [];
+    for (final (index, dto) in dtos.indexed) {
+      final model = _transactionFactory.toModel(dto)
+        ..addAccount(
+          account: _accountFactory.toModel(
+            accountDtos.singleWhere((e) => e.id == dto.accountId),
+          ),
+        )
+        ..addCategory(
+          category: _categoryFactory.toModel(
+            categoryDtos.singleWhere((e) => e.id == dto.categoryId),
+          ),
+        )
+        ..addTags(
+          tags: tagDtos
+              .elementAt(index)
+              .map<TagModel>(_tagFactory.toModel)
+              .toList(growable: false),
+        );
+      models.add(model.build());
+    }
+    return models;
   }
 }
