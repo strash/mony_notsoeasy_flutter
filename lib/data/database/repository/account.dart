@@ -6,6 +6,12 @@ abstract base class AccountDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
+  Future<List<AccountDto>> search({
+    String? query,
+    required int limit,
+    required int offset,
+  });
+
   Future<int> count();
 
   Future<List<AccountBalanceDto>> getBalances();
@@ -39,17 +45,38 @@ final class _Impl
 
   const _Impl({required this.database});
 
-  (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
-    switch ((type, ids)) {
-      case (final String a, final List<String> b):
-        return ("type = ? AND id IN (${getInArguments(b)})", [a, ...b]);
-      case (final String a, null):
-        return ("type = ?", [a]);
-      case (null, final List<String> b):
-        return ("id IN (${getInArguments(b)})", b);
-      default:
-        return (null, null);
-    }
+  @override
+  Future<List<AccountDto>> search({
+    String? query,
+    required int limit,
+    required int offset,
+  }) async {
+    return resolve(() async {
+      final db = await database.db;
+      final List<String?> args = [];
+      final hasQuery = query != null && query.isNotEmpty;
+      if (hasQuery) args.add(queryToGlob(query));
+      final maps = await db.rawQuery(
+        """
+SELECT id, created, updated, title, type, currency_code, color_name, balance
+FROM (
+	SELECT a.*, MAX(tr.date) AS date
+	FROM ${table}_fzf_view AS a_v
+	LEFT JOIN transactions AS tr ON a_v.id = tr.account_id
+	LEFT JOIN $table AS a ON a_v.id = a.id
+	${hasQuery ? "WHERE a_v.value GLOB ?" : ""}
+	GROUP BY a_v.value
+)
+ORDER BY
+	date DESC,
+	updated DESC,
+	title ASC
+LIMIT $limit OFFSET $offset;
+""",
+        args,
+      );
+      return maps.map(AccountDto.fromJson).toList(growable: false);
+    });
   }
 
   @override
@@ -170,5 +197,18 @@ final class _Impl
         whereArgs: [id],
       );
     });
+  }
+
+  (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
+    switch ((type, ids)) {
+      case (final String a, final List<String> b):
+        return ("type = ? AND id IN (${getInArguments(b)})", [a, ...b]);
+      case (final String a, null):
+        return ("type = ?", [a]);
+      case (null, final List<String> b):
+        return ("id IN (${getInArguments(b)})", b);
+      default:
+        return (null, null);
+    }
   }
 }

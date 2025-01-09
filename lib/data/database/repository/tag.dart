@@ -1,4 +1,3 @@
-import "package:flutter/widgets.dart";
 import "package:mony_app/data/database/database.dart";
 import "package:sqflite/sqflite.dart";
 
@@ -7,16 +6,16 @@ abstract base class TagDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
-  Future<int> count();
-
-  Future<TagBalanceDto?> getBalance({required String id});
-
   Future<List<TagDto>> search({
     String? query,
     required int limit,
     required int offset,
     List<String> excludeIds = const [],
   });
+
+  Future<int> count();
+
+  Future<TagBalanceDto?> getBalance({required String id});
 
   Future<List<TagDto>> getAll({
     List<String>? ids,
@@ -47,48 +46,6 @@ final class _Impl
 
   const _Impl({required this.database});
 
-  (String?, List<Object>?)? _getWhere({
-    List<String>? ids,
-    String? transactionId,
-  }) {
-    final List<String> query = [];
-    final List<Object> args = [];
-    if (ids != null) {
-      query.add("t.id IN (${getInArguments(ids)})");
-      args.addAll(ids);
-    }
-    if (transactionId != null) {
-      query.add("tt.transaction_id = ?");
-      args.add(transactionId);
-    }
-    if (query.isEmpty) return null;
-    return (query.join(" AND "), args);
-  }
-
-  @override
-  Future<int> count() async {
-    return resolve(() async {
-      final db = await database.db;
-      final maps = await db.rawQuery("SELECT COUNT(*) AS count FROM $table;");
-      if (maps.isEmpty) return 0;
-      return maps[0]["count"] as int? ?? 0;
-    });
-  }
-
-  @override
-  Future<TagBalanceDto?> getBalance({required String id}) async {
-    return resolve(() async {
-      final db = await database.db;
-      final maps = await db.query(
-        balancesView,
-        where: "id = ?",
-        whereArgs: [id],
-      );
-      if (maps.isEmpty) return null;
-      return TagBalanceDto.fromJson(maps.first);
-    });
-  }
-
   @override
   Future<List<TagDto>> search({
     String? query,
@@ -98,11 +55,11 @@ final class _Impl
   }) async {
     return resolve(() async {
       final db = await database.db;
-      final List<String> q = [];
+      final List<String?> q = [];
       final List<Object?> args = [];
       if (query != null && query.isNotEmpty) {
-        q.add("t_v.value LIKE ?");
-        args.add("%${query.characters.join("%")}%");
+        q.add("t_v.value GLOB ?");
+        args.add(queryToGlob(query));
       }
       if (excludeIds.isNotEmpty) {
         q.add("t_v.id NOT IN (${getInArguments(excludeIds)})");
@@ -129,6 +86,30 @@ LIMIT $limit OFFSET $offset;
         args,
       );
       return maps.map(TagDto.fromJson).toList(growable: false);
+    });
+  }
+
+  @override
+  Future<int> count() async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.rawQuery("SELECT COUNT(*) AS count FROM $table;");
+      if (maps.isEmpty) return 0;
+      return maps[0]["count"] as int? ?? 0;
+    });
+  }
+
+  @override
+  Future<TagBalanceDto?> getBalance({required String id}) async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.query(
+        balancesView,
+        where: "id = ?",
+        whereArgs: [id],
+      );
+      if (maps.isEmpty) return null;
+      return TagBalanceDto.fromJson(maps.first);
     });
   }
 
@@ -240,5 +221,23 @@ ORDER BY tt.created ASC;
         whereArgs: [id],
       );
     });
+  }
+
+  (String?, List<Object>?)? _getWhere({
+    List<String>? ids,
+    String? transactionId,
+  }) {
+    final List<String> query = [];
+    final List<Object> args = [];
+    if (ids != null) {
+      query.add("t.id IN (${getInArguments(ids)})");
+      args.addAll(ids);
+    }
+    if (transactionId != null) {
+      query.add("tt.transaction_id = ?");
+      args.add(transactionId);
+    }
+    if (query.isEmpty) return null;
+    return (query.join(" AND "), args);
   }
 }

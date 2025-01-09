@@ -6,6 +6,12 @@ abstract base class TransactionDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
+  Future<List<TransactionDto>> search({
+    String? query,
+    required int limit,
+    required int offset,
+  });
+
   Future<int> count();
 
   Future<List<TransactionDto>> getAll({
@@ -40,27 +46,32 @@ final class _Impl
 
   const _Impl({required this.database});
 
-  (String, List<Object>?) _getWhere(
-    List<String>? accountIds,
-    List<String>? categoryIds,
-    List<String>? tagIds,
-  ) {
-    final List<String> where = [];
-    final List<String> args = [];
-    if (accountIds != null && accountIds.isNotEmpty) {
-      where.add("tr.account_id in (${getInArguments(accountIds)})");
-      args.addAll(accountIds);
-    }
-    if (categoryIds != null && categoryIds.isNotEmpty) {
-      where.add("tr.category_id in (${getInArguments(categoryIds)})");
-      args.addAll(categoryIds);
-    }
-    if (tagIds != null && tagIds.isNotEmpty) {
-      where.add("tt.tag_id in (${getInArguments(tagIds)})");
-      args.addAll(tagIds);
-    }
-    if (where.isEmpty) return ("", null);
-    return ("WHERE ${where.join(" AND ")}", args);
+  @override
+  Future<List<TransactionDto>> search({
+    String? query,
+    required int limit,
+    required int offset,
+  }) async {
+    return resolve(() async {
+      final db = await database.db;
+      final List<String?> args = [];
+      final hasQuery = query != null && query.isNotEmpty;
+      if (hasQuery) args.add(queryToGlob(query));
+      final maps = await db.rawQuery(
+        """
+SELECT tr.* FROM ${table}_fzf_view AS tr_v
+LEFT JOIN $table AS tr ON tr_v.id = tr.id
+${hasQuery ? "WHERE tr_v.value GLOB ?" : ""}
+GROUP BY tr_v.value
+ORDER BY
+	tr.date DESC,
+	tr.updated DESC
+LIMIT $limit OFFSET $offset;
+""",
+        args,
+      );
+      return maps.map(TransactionDto.fromJson).toList(growable: false);
+    });
   }
 
   @override
@@ -175,5 +186,28 @@ OFFSET $offset;
         whereArgs: [id],
       );
     });
+  }
+
+  (String, List<Object>?) _getWhere(
+    List<String>? accountIds,
+    List<String>? categoryIds,
+    List<String>? tagIds,
+  ) {
+    final List<String> where = [];
+    final List<String> args = [];
+    if (accountIds != null && accountIds.isNotEmpty) {
+      where.add("tr.account_id in (${getInArguments(accountIds)})");
+      args.addAll(accountIds);
+    }
+    if (categoryIds != null && categoryIds.isNotEmpty) {
+      where.add("tr.category_id in (${getInArguments(categoryIds)})");
+      args.addAll(categoryIds);
+    }
+    if (tagIds != null && tagIds.isNotEmpty) {
+      where.add("tt.tag_id in (${getInArguments(tagIds)})");
+      args.addAll(tagIds);
+    }
+    if (where.isEmpty) return ("", null);
+    return ("WHERE ${where.join(" AND ")}", args);
   }
 }

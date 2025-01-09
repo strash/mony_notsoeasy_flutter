@@ -6,6 +6,12 @@ abstract base class CategoryDatabaseRepository {
     required AppDatabase database,
   }) = _Impl;
 
+  Future<List<CategoryDto>> search({
+    String? query,
+    required int limit,
+    required int offset,
+  });
+
   Future<int> count();
 
   Future<CategoryBalanceDto?> getBalance({required String id});
@@ -40,20 +46,38 @@ final class _Impl
 
   const _Impl({required this.database});
 
-  (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
-    switch ((type, ids)) {
-      case (final String a, final List<String> b):
-        return (
-          "transaction_type = ? AND id IN (${getInArguments(b)})",
-          [a, ...b],
-        );
-      case (final String a, null):
-        return ("transaction_type = ?", [a]);
-      case (null, final List<String> b):
-        return ("id IN (${getInArguments(b)})", b);
-      default:
-        return (null, null);
-    }
+  @override
+  Future<List<CategoryDto>> search({
+    String? query,
+    required int limit,
+    required int offset,
+  }) async {
+    return resolve(() async {
+      final db = await database.db;
+      final List<String?> args = [];
+      final hasQuery = query != null && query.isNotEmpty;
+      if (hasQuery) args.add(queryToGlob(query));
+      final maps = await db.rawQuery(
+        """
+SELECT id, created, updated, title, icon, color_name, transaction_type
+FROM (
+	SELECT c.*, MAX(tr.date) AS date
+	FROM ${table}_fzf_view AS c_v
+	LEFT JOIN transactions AS tr ON c_v.id = tr.category_id
+	LEFT JOIN $table AS c ON c_v.id = c.id
+	${hasQuery ? "WHERE c_v.value GLOB ?" : ""}
+	GROUP BY c_v.value
+)
+ORDER BY
+	date DESC,
+	updated DESC,
+	title ASC
+LIMIT $limit OFFSET $offset;
+""",
+        args,
+      );
+      return maps.map(CategoryDto.fromJson).toList(growable: false);
+    });
   }
 
   @override
@@ -168,5 +192,21 @@ final class _Impl
         whereArgs: [id],
       );
     });
+  }
+
+  (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {
+    switch ((type, ids)) {
+      case (final String a, final List<String> b):
+        return (
+          "transaction_type = ? AND id IN (${getInArguments(b)})",
+          [a, ...b],
+        );
+      case (final String a, null):
+        return ("transaction_type = ?", [a]);
+      case (null, final List<String> b):
+        return ("id IN (${getInArguments(b)})", b);
+      default:
+        return (null, null);
+    }
   }
 }

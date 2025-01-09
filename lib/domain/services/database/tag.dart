@@ -17,16 +17,6 @@ final class DomainTagService extends BaseDatabaseService {
         _tagFactory = tagFactory,
         _tagBalanceFactory = tagBalanceFactory;
 
-  Future<int> count() async {
-    return await _tagRepo.count();
-  }
-
-  Future<TagBalanceModel?> getBalance({required String id}) async {
-    final dto = await _tagRepo.getBalance(id: id);
-    if (dto == null) return null;
-    return _tagBalanceFactory.toModel(dto);
-  }
-
   Future<List<TagModel>> search({
     String? query,
     required int page,
@@ -39,6 +29,16 @@ final class DomainTagService extends BaseDatabaseService {
       excludeIds: excludeIds,
     );
     return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
+  }
+
+  Future<int> count() async {
+    return await _tagRepo.count();
+  }
+
+  Future<TagBalanceModel?> getBalance({required String id}) async {
+    final dto = await _tagRepo.getBalance(id: id);
+    if (dto == null) return null;
+    return _tagBalanceFactory.toModel(dto);
   }
 
   Future<List<TagModel>> getAll({List<String>? ids}) async {
