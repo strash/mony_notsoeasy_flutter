@@ -21,13 +21,9 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
     if (!canLoadMore) return;
 
     switch (activeTab) {
-      case ESearchTab.top:
-        break;
-
       case ESearchTab.transactions:
         final service = context.read<DomainTransactionService>();
         final data = await service.search(query: query, page: page + 1);
-        print(data.length);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[activeTab.index] =
               (page: page + 1, canLoadMore: data.isNotEmpty);

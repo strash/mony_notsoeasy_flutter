@@ -25,19 +25,19 @@ enum ESearchPage implements IDescriptable {
 }
 
 enum ESearchTab implements IDescriptable {
-  top,
+  // top,
   transactions,
   accounts,
   categories,
   tags,
   ;
 
-  static const ESearchTab defaultValue = top;
+  static const ESearchTab defaultValue = transactions;
 
   @override
   String get description {
     return switch (this) {
-      top => "Топ",
+      // top => "Топ",
       transactions => "Транзакции",
       accounts => "Счета",
       categories => "Категории",
