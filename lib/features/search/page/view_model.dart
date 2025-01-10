@@ -4,6 +4,7 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_controller.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/features/search/page/view.dart";
@@ -41,22 +42,42 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   bool isSearching = false;
   ESearchTab activeTab = ESearchTab.defaultValue;
 
-  final tabsScrollController = ScrollController();
+  final tabButtonsScrollController = ScrollController();
+
+  late final _pageTabScrollControllers = ESearchTab.values.map((e) {
+    return FeedScrollController();
+  }).toList(growable: false);
+
+  late final List<StreamSubscription<FeedScrollControllerEvent>>
+      _pageTabScrollSubs;
+
+  final List<({int page, bool canLoadMore})> tabPageStates = List.filled(
+    ESearchPage.values.length,
+    (page: 0, canLoadMore: true),
+  );
 
   Map<ESearchPage, int> counts = {
     for (final page in ESearchPage.values) page: 0,
   };
 
-  final List<TransactionModel> transactions = const [];
-  final List<AccountModel> accounts = const [];
-  final List<CategoryModel> categories = const [];
-  final List<TagModel> tags = const [];
+  List<TransactionModel> transactions = const [];
+  List<AccountModel> accounts = const [];
+  List<CategoryModel> categories = const [];
+  List<TagModel> tags = const [];
+
+  ScrollController getPageTabController(ESearchTab tab) {
+    return _pageTabScrollControllers.elementAt(tab.index).controller;
+  }
 
   void _onInputChanged() {
-    OnInputChanged().call(context, input.text.trim());
+    OnInputChanged().call(context, (input.text.trim(), this));
     setProtectedState(() {
       isSearching = input.text.trim().isNotEmpty;
     });
+  }
+
+  void _onScroll(FeedScrollControllerEvent event) {
+    OnPageTabScrolled().call(context, (input.text.trim(), this));
   }
 
   void _onAppEvent(Event event) {
@@ -68,6 +89,9 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   void initState() {
     super.initState();
     input.addListener(_onInputChanged);
+    _pageTabScrollSubs = _pageTabScrollControllers
+        .map((e) => e.addListener(_onScroll))
+        .toList(growable: false);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
       OnPageCountRequested().call(context, this);
@@ -79,7 +103,20 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
     _appSub.cancel();
     input.removeListener(_onInputChanged);
     input.dispose();
-    tabsScrollController.dispose();
+    tabButtonsScrollController.dispose();
+
+    void cancelForeach(StreamSubscription<FeedScrollControllerEvent> sub) {
+      sub.cancel();
+    }
+
+    _pageTabScrollSubs.forEach(cancelForeach);
+
+    void disposeForeach(FeedScrollController controller) {
+      controller.dispose();
+    }
+
+    _pageTabScrollControllers.forEach(disposeForeach);
+
     super.dispose();
   }
 
@@ -89,8 +126,9 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
       viewModel: this,
       useCases: [
         () => OnClearButtonPressed(),
-        () => OnTabPressed(),
+        () => OnTabButtonPressed(),
         () => OnPagePressed(),
+        () => OnTransactionPressed(),
       ],
       child: const SearchView(),
     );

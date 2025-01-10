@@ -5,10 +5,10 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
 
-class SearchPageItemComponent extends StatelessWidget {
+class SearchPageButtonComponent extends StatelessWidget {
   final ESearchPage page;
 
-  const SearchPageItemComponent({
+  const SearchPageButtonComponent({
     super.key,
     required this.page,
   });

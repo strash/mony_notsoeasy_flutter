@@ -30,22 +30,16 @@ class SearchView extends StatelessWidget {
           AnimatedSwitcher(
             duration: Durations.short3,
             child: viewModel.isSearching
-                // -> search results
-                ? CustomScrollView(
-                    key: const Key("search_resulst"),
-                    physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics(),
+                // -> search result tabs
+                ? AnimatedSwitcher(
+                    key: const Key("tabs"),
+                    duration: Durations.short3,
+                    child: SearchTabPageComponent(
+                      key: Key("tab_${viewModel.activeTab.name}"),
+                      tab: viewModel.activeTab,
+                      topOffset: topOffset,
+                      bottomOffset: bottomOffset,
                     ),
-                    slivers: [
-                      // -> top offset
-                      SliverToBoxAdapter(child: SizedBox(height: topOffset)),
-
-                      // -> content
-                      SliverToBoxAdapter(child: Text("yaya")),
-
-                      // -> bottom offset
-                      SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
-                    ],
                   )
 
                 // -> pages
@@ -64,7 +58,7 @@ class SearchView extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final item = ESearchPage.values.elementAt(index);
 
-                          return SearchPageItemComponent(page: item);
+                          return SearchPageButtonComponent(page: item);
                         },
                       ),
 

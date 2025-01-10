@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/search/components/components.dart";
 import "package:mony_app/features/search/search.dart";
-import "package:mony_app/features/search/use_case/on_tab_pressed.dart";
+import "package:mony_app/features/search/use_case/on_tab_button_pressed.dart";
 
 class SearchTabsComponent extends StatelessWidget {
   final double height;
@@ -19,16 +19,16 @@ class SearchTabsComponent extends StatelessWidget {
     const padding = EdgeInsets.symmetric(horizontal: 10.0);
 
     final viewModel = context.viewModel<SearchViewModel>();
-    final onTabPressed = viewModel<OnTabPressed>();
+    final onTabPressed = viewModel<OnTabButtonPressed>();
 
     return SizedBox(
       height: height,
       child: Padding(
         padding: const EdgeInsets.only(top: 2.0, bottom: 5.0),
         child: ListenableBuilder(
-          listenable: viewModel.tabsScrollController,
+          listenable: viewModel.tabButtonsScrollController,
           child: ListView.separated(
-            controller: viewModel.tabsScrollController,
+            controller: viewModel.tabButtonsScrollController,
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
             ),
@@ -51,11 +51,11 @@ class SearchTabsComponent extends StatelessWidget {
             },
           ),
           builder: (context, child) {
-            final ready = viewModel.tabsScrollController.isReady;
+            final ready = viewModel.tabButtonsScrollController.isReady;
             final bool showLeft;
             final bool showRight;
             if (ready) {
-              final pos = viewModel.tabsScrollController.position;
+              final pos = viewModel.tabButtonsScrollController.position;
               showLeft = pos.extentBefore > .0;
               showRight = pos.extentAfter > .0;
             } else {

@@ -5,7 +5,7 @@ import "package:mony_app/features/features.dart";
 
 typedef _TValue = (ESearchTab, RelativeRect, EdgeInsets);
 
-final class OnTabPressed extends UseCase<Future<void>, _TValue> {
+final class OnTabButtonPressed extends UseCase<Future<void>, _TValue> {
   @override
   Future<void> call(BuildContext context, [_TValue? value]) async {
     if (value == null) throw ArgumentError.notNull();
@@ -17,8 +17,8 @@ final class OnTabPressed extends UseCase<Future<void>, _TValue> {
     });
 
     // move selected tab into the view
-    if (viewModel.tabsScrollController.isReady) {
-      final position = viewModel.tabsScrollController.position.pixels;
+    if (viewModel.tabButtonsScrollController.isReady) {
+      final position = viewModel.tabButtonsScrollController.position.pixels;
       final rect = value.$2;
       final padding = value.$3;
       double? offset;
@@ -28,7 +28,7 @@ final class OnTabPressed extends UseCase<Future<void>, _TValue> {
         offset = position + (rect.right - padding.right).abs();
       }
       if (offset != null) {
-        viewModel.tabsScrollController.animateTo(
+        viewModel.tabButtonsScrollController.animateTo(
           offset,
           duration: Durations.short3,
           curve: Curves.easeInOut,
