@@ -19,7 +19,7 @@ mixin DatabaseRepositoryMixin {
   /// Преобразует запрос в GLOB паттерн:
   /// ```dart
   /// final query = "Парам";
-  /// print(queryToGlob(query)); // *[пП][аА][рР][аА][мМ]*
+  /// print(queryToGlob(query)); // *[пП]*[аА]*[рР]*[аА]*[мМ]*
   /// ```
   /// ---
   /// `NOTE:` LIKE не обращает внимание на регистр, НО только для ascii символов
@@ -29,7 +29,7 @@ mixin DatabaseRepositoryMixin {
     if (query == null || query.characters.isEmpty) return null;
     final join = query.characters.fold<List<String>>([], (prev, curr) {
       return prev..addAll(["[", curr.toLowerCase(), curr.toUpperCase(), "]"]);
-    }).join();
+    }).join("*");
     return "*$join*";
   }
 }
