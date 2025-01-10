@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/search/components/components.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 
@@ -11,7 +10,7 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewPadding = MediaQuery.paddingOf(context);
-    final bottomOffset = NavBarView.bottomOffset(context);
+    final bottomOffset = MediaQuery.of(context).viewPadding.bottom + 50.0;
 
     final viewModel = context.viewModel<SearchViewModel>();
     final topOffset = viewPadding.top +
