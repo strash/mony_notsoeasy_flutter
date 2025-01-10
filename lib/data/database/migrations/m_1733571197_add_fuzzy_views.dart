@@ -44,13 +44,13 @@ CREATE VIEW IF NOT EXISTS $_transactionsFzfView(id, value) AS
 SELECT
 	tr.id,
 	(
-		(
+		COALESCE((
 			SELECT GROUP_CONCAT(t.title, ' ')
 			FROM $_transactionTagsTable AS tt
 			JOIN $_tagsTable AS t ON tt.tag_id = t.id
 			WHERE tr.id = tt.transaction_id
 			GROUP BY tt.transaction_id
-		) || ' ' ||
+		), '') || ' ' ||
 		tr.note || ' ' ||
 		tr.amount || ' ' ||
 		(
