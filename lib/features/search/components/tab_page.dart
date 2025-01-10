@@ -32,20 +32,20 @@ class SearchTabPageComponent extends StatelessWidget {
 
         // -> content
         ...switch (tab) {
-          ESearchTab.top => [SliverToBoxAdapter(child: Text(tab.description))],
           ESearchTab.transactions => viewModel.transactions.map((e) {
               return SliverToBoxAdapter(
                 child: FeedItemComponent(
                   transaction: e,
+                  showFullDate: true,
                   onTap: onTransactionPressed,
                 ),
               );
             }),
           ESearchTab.accounts => [
-              SliverToBoxAdapter(child: Text(tab.description))
+              SliverToBoxAdapter(child: Text(tab.description)),
             ],
           ESearchTab.categories => [
-              SliverToBoxAdapter(child: Text(tab.description))
+              SliverToBoxAdapter(child: Text(tab.description)),
             ],
           ESearchTab.tags => [SliverToBoxAdapter(child: Text(tab.description))],
         },
