@@ -4,15 +4,22 @@ import "package:intl/intl.dart";
 
 class FeedItemTimeComponent extends StatelessWidget {
   final DateTime date;
+  final bool showFullDate;
 
   const FeedItemTimeComponent({
     super.key,
     required this.date,
+    required this.showFullDate,
   });
 
   @override
   Widget build(BuildContext context) {
-    final formatter = DateFormat("HH:mm");
+    final now = DateTime.now();
+    final formatter = DateFormat(
+      showFullDate
+          ? (now.year != date.year ? "HH:mm, dd MMM yyyy" : "HH:mm, dd MMM")
+          : "HH:mm",
+    );
 
     return Text(
       formatter.format(date),

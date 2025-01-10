@@ -8,11 +8,13 @@ import "package:mony_app/domain/models/transaction.dart";
 
 class FeedItemComponent extends StatelessWidget {
   final TransactionModel transaction;
+  final bool showFullDate;
   final UseCase<void, TransactionModel> onTap;
 
   const FeedItemComponent({
     super.key,
     required this.transaction,
+    this.showFullDate = false,
     required this.onTap,
   });
 
@@ -120,7 +122,10 @@ class FeedItemComponent extends StatelessWidget {
                     Row(
                       children: [
                         // -> time
-                        FeedItemTimeComponent(date: transaction.date),
+                        FeedItemTimeComponent(
+                          date: transaction.date,
+                          showFullDate: showFullDate,
+                        ),
                         const SizedBox(width: 15.0),
 
                         // -> note
