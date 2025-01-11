@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/account/component.dart";
 import "package:mony_app/components/feed_item/component.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
@@ -31,23 +32,57 @@ class SearchTabPageComponent extends StatelessWidget {
         SliverToBoxAdapter(child: SizedBox(height: topOffset)),
 
         // -> content
-        ...switch (tab) {
-          ESearchTab.transactions => viewModel.transactions.map((e) {
-              return SliverToBoxAdapter(
-                child: FeedItemComponent(
-                  transaction: e,
-                  showFullDate: true,
-                  onTap: onTransactionPressed,
-                ),
-              );
-            }),
-          ESearchTab.accounts => [
-              SliverToBoxAdapter(child: Text(tab.description)),
-            ],
-          ESearchTab.categories => [
-              SliverToBoxAdapter(child: Text(tab.description)),
-            ],
-          ESearchTab.tags => [SliverToBoxAdapter(child: Text(tab.description))],
+        switch (tab) {
+          // TODO: добавить эмптистейты
+          // TODO: везде, где есть списки, прописать колбэк нахождения айтема и
+          // добавить ключи
+          ESearchTab.transactions => SliverList.separated(
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 25.0);
+              },
+              itemCount: viewModel.transactions.length,
+              itemBuilder: (context, index) {
+                final item = viewModel.transactions.elementAt(index);
+
+                return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => onTransactionPressed(context, item),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: FeedItemComponent(
+                      transaction: item,
+                      showFullDate: true,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ESearchTab.accounts => SliverList.separated(
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 25.0);
+              },
+              itemCount: viewModel.accounts.length,
+              itemBuilder: (context, index) {
+                final item = viewModel.accounts.elementAt(index);
+
+                return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  // TODO: action
+                  onTap: () => print(item.title),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: AccountComponent(
+                      account: item,
+                      showCurrencyTag: true,
+                    ),
+                  ),
+                );
+              },
+            ),
+          // TODO: добавить списки категорий и тегов
+          ESearchTab.categories =>
+            SliverToBoxAdapter(child: Text(tab.description)),
+          ESearchTab.tags => SliverToBoxAdapter(child: Text(tab.description)),
         },
 
         // -> bottom offset
