@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/account/component.dart";
+import "package:mony_app/components/category/component.dart";
 import "package:mony_app/components/feed_item/component.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
@@ -22,6 +23,7 @@ class SearchTabPageComponent extends StatelessWidget {
     final viewModel = context.viewModel<SearchViewModel>();
     final onTransactionPressed = viewModel<OnTransactionPressed>();
     final onAccountPressed = viewModel<OnAccountPressed>();
+    final onCategoryPressed = viewModel<OnCategoryPressed>();
 
     return CustomScrollView(
       controller: viewModel.getPageTabController(tab),
@@ -96,8 +98,30 @@ class SearchTabPageComponent extends StatelessWidget {
 
           // TODO: добавить списки категорий и тегов
           // -> categories
-          ESearchTab.categories =>
-            SliverToBoxAdapter(child: Text(tab.description)),
+          ESearchTab.categories => SliverList.separated(
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index =
+                    viewModel.categories.indexWhere((e) => e.id == id);
+                return index != -1 ? index : null;
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 25.0);
+              },
+              itemCount: viewModel.categories.length,
+              itemBuilder: (context, index) {
+                final item = viewModel.categories.elementAt(index);
+
+                return GestureDetector(
+                  onTap: () => onCategoryPressed.call(context, item),
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: CategoryComponent(category: item),
+                  ),
+                );
+              },
+            ),
 
           // -> tags
           ESearchTab.tags => SliverToBoxAdapter(child: Text(tab.description)),
