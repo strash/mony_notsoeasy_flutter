@@ -124,7 +124,10 @@ class FeedView extends StatelessWidget {
                         else
                           SliverPadding(
                             padding: EdgeInsets.only(bottom: bottomOffset),
-                            sliver: SliverList.builder(
+                            sliver: SliverList.separated(
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(height: 25.0);
+                              },
                               itemCount: feed.length,
                               findChildIndexCallback: (key) {
                                 final id = (key as ValueKey<String>).value;
@@ -138,14 +141,33 @@ class FeedView extends StatelessWidget {
                                 final key = feed.key(item, keyPrefix);
 
                                 return switch (item) {
-                                  FeedItemSection() => FeedSectionComponent(
-                                      key: key,
-                                      section: item,
+                                  FeedItemSection() => Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        20.0,
+                                        30.0,
+                                        20.0,
+                                        .0,
+                                      ),
+                                      child: FeedSectionComponent(
+                                        key: key,
+                                        section: item,
+                                      ),
                                     ),
-                                  FeedItemTransaction() => FeedItemComponent(
-                                      key: key,
-                                      transaction: item.transaction,
-                                      onTap: onTransactionPressed,
+                                  FeedItemTransaction() => GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () => onTransactionPressed(
+                                        context,
+                                        item.transaction,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20.0,
+                                        ),
+                                        child: FeedItemComponent(
+                                          key: key,
+                                          transaction: item.transaction,
+                                        ),
+                                      ),
                                     )
                                 };
                               },
