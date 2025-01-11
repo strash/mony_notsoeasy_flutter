@@ -14,7 +14,7 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
     final (query, viewModel) = value;
 
     final activeTab = viewModel.activeTab;
-    final (page: page, canLoadMore: canLoadMore) =
+    final (scrollPage: scrollPage, canLoadMore: canLoadMore) =
         viewModel.tabPageStates.elementAt(activeTab.index);
 
     if (!canLoadMore) return;
@@ -22,37 +22,37 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
     switch (activeTab) {
       case ESearchTab.transactions:
         final service = context.read<DomainTransactionService>();
-        final data = await service.search(query: query, page: page + 1);
+        final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[activeTab.index] =
-              (page: page + 1, canLoadMore: data.isNotEmpty);
+              (scrollPage: scrollPage + 1, canLoadMore: data.isNotEmpty);
           viewModel.transactions = viewModel.transactions.merge(data);
         });
 
       case ESearchTab.accounts:
         final service = context.read<DomainAccountService>();
-        final data = await service.search(query: query, page: page + 1);
+        final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[activeTab.index] =
-              (page: page + 1, canLoadMore: data.isNotEmpty);
+              (scrollPage: scrollPage + 1, canLoadMore: data.isNotEmpty);
           viewModel.accounts.merge(data);
         });
 
       case ESearchTab.categories:
         final service = context.read<DomainCategoryService>();
-        final data = await service.search(query: query, page: page + 1);
+        final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[activeTab.index] =
-              (page: page + 1, canLoadMore: data.isNotEmpty);
+              (scrollPage: scrollPage + 1, canLoadMore: data.isNotEmpty);
           viewModel.categories.merge(data);
         });
 
       case ESearchTab.tags:
         final service = context.read<DomainTagService>();
-        final data = await service.search(query: query, page: page + 1);
+        final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[activeTab.index] =
-              (page: page + 1, canLoadMore: data.isNotEmpty);
+              (scrollPage: scrollPage + 1, canLoadMore: data.isNotEmpty);
           viewModel.tags.merge(data);
         });
     }

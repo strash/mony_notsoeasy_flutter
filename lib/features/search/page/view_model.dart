@@ -51,9 +51,9 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   late final List<StreamSubscription<FeedScrollControllerEvent>>
       _pageTabScrollSubs;
 
-  final List<({int page, bool canLoadMore})> tabPageStates = List.filled(
+  final List<({int scrollPage, bool canLoadMore})> tabPageStates = List.filled(
     ESearchTab.values.length,
-    (page: 0, canLoadMore: true),
+    (scrollPage: 0, canLoadMore: true),
   );
 
   Map<ESearchPage, int> counts = {

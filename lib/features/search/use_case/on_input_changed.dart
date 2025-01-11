@@ -20,7 +20,7 @@ final class OnInputChanged extends UseCase<Future<void>, _TValue> {
 
     // reset pages
     for (int i = 0; i < viewModel.tabPageStates.length; i++) {
-      viewModel.tabPageStates[i] = (page: 0, canLoadMore: true);
+      viewModel.tabPageStates[i] = (scrollPage: 0, canLoadMore: true);
     }
 
     final transactions = await transactionService.search(
