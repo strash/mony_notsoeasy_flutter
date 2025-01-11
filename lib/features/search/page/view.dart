@@ -29,7 +29,7 @@ class SearchView extends StatelessWidget {
           AnimatedSwitcher(
             duration: Durations.short3,
             child: viewModel.isSearching
-                // -> search result tabs
+                // -> search tab pages
                 ? AnimatedSwitcher(
                     key: const Key("tabs"),
                     duration: Durations.short3,

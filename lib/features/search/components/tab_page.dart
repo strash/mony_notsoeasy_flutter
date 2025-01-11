@@ -34,9 +34,14 @@ class SearchTabPageComponent extends StatelessWidget {
         // -> content
         switch (tab) {
           // TODO: добавить эмптистейты
-          // TODO: везде, где есть списки, прописать колбэк нахождения айтема и
-          // добавить ключи
+          // -> transactions
           ESearchTab.transactions => SliverList.separated(
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index =
+                    viewModel.transactions.indexWhere((e) => e.id == id);
+                return index != -1 ? index : null;
+              },
               separatorBuilder: (context, index) {
                 return const SizedBox(height: 25.0);
               },
@@ -45,6 +50,7 @@ class SearchTabPageComponent extends StatelessWidget {
                 final item = viewModel.transactions.elementAt(index);
 
                 return GestureDetector(
+                  key: ValueKey<String>(item.id),
                   behavior: HitTestBehavior.opaque,
                   onTap: () => onTransactionPressed(context, item),
                   child: Padding(
@@ -57,7 +63,14 @@ class SearchTabPageComponent extends StatelessWidget {
                 );
               },
             ),
+
+          // -> accounts
           ESearchTab.accounts => SliverList.separated(
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index = viewModel.accounts.indexWhere((e) => e.id == id);
+                return index != -1 ? index : null;
+              },
               separatorBuilder: (context, index) {
                 return const SizedBox(height: 25.0);
               },
@@ -66,6 +79,7 @@ class SearchTabPageComponent extends StatelessWidget {
                 final item = viewModel.accounts.elementAt(index);
 
                 return GestureDetector(
+                  key: ValueKey<String>(item.id),
                   behavior: HitTestBehavior.opaque,
                   // TODO: action
                   onTap: () => print(item.title),
@@ -79,9 +93,13 @@ class SearchTabPageComponent extends StatelessWidget {
                 );
               },
             ),
+
           // TODO: добавить списки категорий и тегов
+          // -> categories
           ESearchTab.categories =>
             SliverToBoxAdapter(child: Text(tab.description)),
+
+          // -> tags
           ESearchTab.tags => SliverToBoxAdapter(child: Text(tab.description)),
         },
 

@@ -37,6 +37,12 @@ class CategoriesView extends StatelessWidget {
           SliverPadding(
             padding: const EdgeInsets.only(top: 20.0),
             sliver: SliverList.separated(
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index =
+                    viewModel.categories.indexWhere((e) => e.id == id);
+                return index != -1 ? index : null;
+              },
               separatorBuilder: (context, index) {
                 return const SizedBox(height: 25.0);
               },
@@ -45,6 +51,7 @@ class CategoriesView extends StatelessWidget {
                 final item = viewModel.categories.elementAt(index);
 
                 return GestureDetector(
+                  key: ValueKey<String>(item.id),
                   behavior: HitTestBehavior.opaque,
                   onTap: () => onCategoryPressed(context, item),
                   child: Padding(

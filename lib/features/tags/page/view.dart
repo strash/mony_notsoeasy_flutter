@@ -39,6 +39,11 @@ class TagsView extends StatelessWidget {
           SliverPadding(
             padding: const EdgeInsets.only(top: 20.0),
             sliver: SliverList.separated(
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index = viewModel.tags.indexWhere((e) => e.id == id);
+                return index != -1 ? index : null;
+              },
               separatorBuilder: (context, index) {
                 return const SizedBox(height: 25.0);
               },
@@ -47,17 +52,18 @@ class TagsView extends StatelessWidget {
                 final item = viewModel.tags.elementAt(index);
 
                 return GestureDetector(
+                  key: ValueKey<String>(item.id),
                   behavior: HitTestBehavior.opaque,
                   onTap: () => onTagPressed(context, item),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Flexible(
                           child: TagComponent(tag: item),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

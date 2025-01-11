@@ -37,6 +37,11 @@ class AccountsView extends StatelessWidget {
           SliverPadding(
             padding: const EdgeInsets.only(top: 20.0),
             sliver: SliverList.separated(
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index = viewModel.accounts.indexWhere((e) => e.id == id);
+                return index != -1 ? index : null;
+              },
               separatorBuilder: (context, index) {
                 return const SizedBox(height: 25.0);
               },
@@ -44,11 +49,12 @@ class AccountsView extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = viewModel.accounts.elementAt(index);
 
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => onAccountPressed(context, item),
+                return GestureDetector(
+                  key: ValueKey<String>(item.id),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => onAccountPressed(context, item),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: AccountComponent(
                       account: item,
                       showCurrencyTag: true,
