@@ -52,7 +52,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
       _pageTabScrollSubs;
 
   final List<({int page, bool canLoadMore})> tabPageStates = List.filled(
-    ESearchPage.values.length,
+    ESearchTab.values.length,
     (page: 0, canLoadMore: true),
   );
 
@@ -131,6 +131,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
         () => OnTransactionPressed(),
         () => OnAccountPressed(),
         () => OnCategoryPressed(),
+        () => OnTagPressed(),
       ],
       child: const SearchView(),
     );

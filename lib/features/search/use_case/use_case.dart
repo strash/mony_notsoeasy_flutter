@@ -7,4 +7,5 @@ export "./on_page_count_requested.dart";
 export "./on_page_pressed.dart";
 export "./on_page_tab_scrolled.dart";
 export "./on_tab_button_pressed.dart";
+export "./on_tag_pressed.dart";
 export "./on_transaction_pressed.dart";
