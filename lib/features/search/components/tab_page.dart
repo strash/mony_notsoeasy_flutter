@@ -21,6 +21,7 @@ class SearchTabPageComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.viewModel<SearchViewModel>();
     final onTransactionPressed = viewModel<OnTransactionPressed>();
+    final onAccountPressed = viewModel<OnAccountPressed>();
 
     return CustomScrollView(
       controller: viewModel.getPageTabController(tab),
@@ -81,8 +82,7 @@ class SearchTabPageComponent extends StatelessWidget {
                 return GestureDetector(
                   key: ValueKey<String>(item.id),
                   behavior: HitTestBehavior.opaque,
-                  // TODO: action
-                  onTap: () => print(item.title),
+                  onTap: () => onAccountPressed.call(context, item),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: AccountComponent(

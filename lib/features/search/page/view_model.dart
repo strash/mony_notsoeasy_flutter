@@ -129,6 +129,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
         () => OnTabButtonPressed(),
         () => OnPagePressed(),
         () => OnTransactionPressed(),
+        () => OnAccountPressed(),
       ],
       child: const SearchView(),
     );
