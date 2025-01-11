@@ -11,11 +11,13 @@ class AccountsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<AccountsViewModel>();
     final onAddAccountPressed = viewModel<OnAddAccountPressed>();
     final onAccountPressed = viewModel<OnAccountPressed>();
+    final isEmpty = viewModel.accounts.isEmpty;
 
     return Scaffold(
       body: CustomScrollView(
@@ -33,40 +35,55 @@ class AccountsView extends StatelessWidget {
             ),
           ),
 
-          // -> accounts
-          SliverPadding(
-            padding: const EdgeInsets.only(top: 20.0),
-            sliver: SliverList.separated(
-              findChildIndexCallback: (key) {
-                final id = (key as ValueKey).value;
-                final index = viewModel.accounts.indexWhere((e) => e.id == id);
-                return index != -1 ? index : null;
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 25.0);
-              },
-              itemCount: viewModel.accounts.length,
-              itemBuilder: (context, index) {
-                final item = viewModel.accounts.elementAt(index);
+          // -> empty state
+          if (isEmpty)
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: bottomOffset),
+                child: FeedEmptyStateComponent(
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
+            )
 
-                return GestureDetector(
-                  key: ValueKey<String>(item.id),
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => onAccountPressed(context, item),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: AccountComponent(
-                      account: item,
-                      showCurrencyTag: true,
+          // -> accounts
+          else
+            SliverPadding(
+              padding: const EdgeInsets.only(top: 20.0),
+              sliver: SliverList.separated(
+                findChildIndexCallback: (key) {
+                  final id = (key as ValueKey).value;
+                  final index =
+                      viewModel.accounts.indexWhere((e) => e.id == id);
+                  return index != -1 ? index : null;
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: 25.0);
+                },
+                itemCount: viewModel.accounts.length,
+                itemBuilder: (context, index) {
+                  final item = viewModel.accounts.elementAt(index);
+
+                  return GestureDetector(
+                    key: ValueKey<String>(item.id),
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => onAccountPressed(context, item),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: AccountComponent(
+                        account: item,
+                        showCurrencyTag: true,
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
 
           // -> bottom offset
-          SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
+          if (!isEmpty)
+            SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
         ],
       ),
     );
