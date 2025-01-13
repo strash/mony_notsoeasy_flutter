@@ -221,12 +221,17 @@ class _AppBarState extends State<_AppBar> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: padding),
-                    child: DefaultTextStyle(
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: _titleStyle,
-                      child: widget.title!,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minHeight: AppBarComponent.height,
+                      ),
+                      child: DefaultTextStyle(
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: _titleStyle,
+                        child: Center(child: widget.title),
+                      ),
                     ),
                   ),
                 )
