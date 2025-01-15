@@ -42,6 +42,9 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/a.circle.svg
+  String get aCircle => 'assets/icons/a.circle.svg';
+
   /// File path: assets/icons/arrow.down.square.svg
   String get arrowDownSquare => 'assets/icons/arrow.down.square.svg';
 
@@ -149,6 +152,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/minus.svg
   String get minus => 'assets/icons/minus.svg';
 
+  /// File path: assets/icons/moon.fill.svg
+  String get moonFill => 'assets/icons/moon.fill.svg';
+
   /// File path: assets/icons/note.text.svg
   String get noteText => 'assets/icons/note.text.svg';
 
@@ -198,6 +204,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/square.and.arrow.down.svg
   String get squareAndArrowDown => 'assets/icons/square.and.arrow.down.svg';
 
+  /// File path: assets/icons/sun.max.fill.svg
+  String get sunMaxFill => 'assets/icons/sun.max.fill.svg';
+
   /// File path: assets/icons/trash.fill.svg
   String get trashFill => 'assets/icons/trash.fill.svg';
 
@@ -233,6 +242,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<String> get values => [
+        aCircle,
         arrowDownSquare,
         arrowUpArrowDownSquare,
         arrowUpSquare,
@@ -267,6 +277,7 @@ class $AssetsIconsGen {
         locationSlashFill,
         magnifyingglass,
         minus,
+        moonFill,
         noteText,
         number,
         pencilBold,
@@ -283,6 +294,7 @@ class $AssetsIconsGen {
         repeat,
         sparkles,
         squareAndArrowDown,
+        sunMaxFill,
         trashFill,
         trash,
         walletPassFill,
