@@ -41,8 +41,8 @@ final class EventCategoryDeleted extends Event {
 // -> tag
 
 final class EventTagCreated extends Event {
-	final TagModel value;
-	const EventTagCreated(this.value);
+  final TagModel value;
+  const EventTagCreated(this.value);
 }
 
 final class EventTagUpdated extends Event {
@@ -70,4 +70,11 @@ final class EventTransactionUpdated extends Event {
 final class EventTransactionDeleted extends Event {
   final TransactionModel value;
   EventTransactionDeleted(this.value);
+}
+
+// -> settings
+
+final class EventSettingsThemeModeChanged extends Event {
+  final ThemeMode value;
+  EventSettingsThemeModeChanged(this.value);
 }

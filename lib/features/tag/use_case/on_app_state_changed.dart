@@ -20,7 +20,10 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     final transactionService = context.read<DomainTransactionService>();
 
     switch (event) {
-      case EventAccountCreated() || EventCategoryCreated() || EventTagCreated():
+      case EventAccountCreated() ||
+            EventCategoryCreated() ||
+            EventTagCreated() ||
+            EventSettingsThemeModeChanged():
         break;
 
       case EventAccountUpdated(value: final account):

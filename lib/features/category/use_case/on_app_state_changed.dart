@@ -19,7 +19,10 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     switch (event) {
       // NOTE: when a tag is created it doesn't mean that it attached to a
       // transaction so here we're doing nothing about this
-      case EventAccountCreated() || EventCategoryCreated() || EventTagCreated():
+      case EventAccountCreated() ||
+            EventCategoryCreated() ||
+            EventTagCreated() ||
+            EventSettingsThemeModeChanged():
         break;
 
       case EventAccountUpdated(value: final account):

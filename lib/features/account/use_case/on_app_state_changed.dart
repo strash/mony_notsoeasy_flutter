@@ -22,7 +22,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             EventCategoryUpdated() ||
             EventTagCreated() ||
             EventTagUpdated() ||
-            EventTagDeleted():
+            EventTagDeleted() ||
+            EventSettingsThemeModeChanged():
         break;
 
       case EventAccountUpdated(value: final account):

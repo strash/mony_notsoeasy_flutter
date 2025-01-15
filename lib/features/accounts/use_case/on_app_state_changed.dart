@@ -7,7 +7,7 @@ import "package:provider/provider.dart";
 
 typedef _TValue = ({Event event, AccountsViewModel viewModel});
 
-final class OnAppStateCnanged extends UseCase<Future<void>, _TValue> {
+final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
   @override
   Future<void> call(BuildContext context, [_TValue? value]) async {
     if (value == null) throw ArgumentError.notNull();
@@ -24,7 +24,8 @@ final class OnAppStateCnanged extends UseCase<Future<void>, _TValue> {
             EventTagDeleted() ||
             EventTransactionCreated() ||
             EventTransactionUpdated() ||
-            EventTransactionDeleted():
+            EventTransactionDeleted() ||
+            EventSettingsThemeModeChanged():
         break;
 
       case EventAccountCreated():

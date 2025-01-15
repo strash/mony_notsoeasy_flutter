@@ -27,7 +27,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     final (:viewModel, :event) = value;
 
     switch (event) {
-      case EventCategoryCreated() || EventTagCreated():
+      case EventCategoryCreated() ||
+            EventTagCreated() ||
+            EventSettingsThemeModeChanged():
         break;
 
       case EventAccountCreated():

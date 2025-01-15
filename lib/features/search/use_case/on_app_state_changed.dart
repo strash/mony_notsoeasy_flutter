@@ -22,6 +22,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     final query = viewModel.input.text.trim();
 
     switch (event) {
+      case EventSettingsThemeModeChanged():
+        break;
+
       case EventAccountCreated():
         final counts = await _updateCounts(context);
         final tabIndex = ESearchTab.accounts.index;
