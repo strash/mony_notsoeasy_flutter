@@ -1,0 +1,71 @@
+import "package:figma_squircle_updated/figma_squircle.dart";
+import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
+
+class SettingsListItemComponent extends StatelessWidget {
+  final Widget title;
+  final Widget? trailing;
+  final VoidCallback? onTap;
+
+  const SettingsListItemComponent({
+    super.key,
+    required this.title,
+    this.trailing,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 50.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: theme.colorScheme.surfaceContainerHighest,
+              shape: const SmoothRectangleBorder(
+                borderRadius: SmoothBorderRadius.all(
+                  SmoothRadius(
+                    cornerRadius: 15.0,
+                    cornerSmoothing: 1.0,
+                  ),
+                ),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // -> title
+                  DefaultTextStyle(
+                    style: GoogleFonts.golosText(
+                      fontSize: 16.0,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                    child: title,
+                  ),
+
+                  // -> trailing
+                  if (trailing != null)
+                    DefaultTextStyle(
+                      style: GoogleFonts.golosText(
+                        fontSize: 16.0,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                      child: trailing!,
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

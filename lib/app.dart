@@ -1,14 +1,52 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:flutter_localizations/flutter_localizations.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:provider/provider.dart";
+import "package:rxdart/transformers.dart";
 
 final appNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "app_key");
 
-class MonyApp extends StatelessWidget {
+class MonyApp extends StatefulWidget {
   const MonyApp({super.key});
+
+  @override
+  State<MonyApp> createState() => _MonyAppState();
+}
+
+class _MonyAppState extends State<MonyApp> {
+  late final StreamSubscription<Event> _appSub;
+
+  ThemeMode mode = ThemeMode.system;
+
+  void _onThemeModeChanged(EventSettingsThemeModeChanged event) {
+    if (!mounted) return;
+    setState(() => mode = event.value);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      _appSub = context
+          .viewModel<AppEventService>()
+          .stream
+          .whereType<EventSettingsThemeModeChanged>()
+          .listen(_onThemeModeChanged);
+      final sharedPrefService = context.read<DomainSharedPrefenecesService>();
+      final m = await sharedPrefService.getSettingsThemeMode();
+      setState(() => mode = m);
+    });
+  }
+
+  @override
+  void dispose() {
+    _appSub.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +59,7 @@ class MonyApp extends StatelessWidget {
         eventService: eventService,
         accountService: accountService,
       ),
-      // TODO: добавить смену темы через AppEventService
+      themeMode: mode,
       theme: lightTheme,
       darkTheme: darkTheme,
       localizationsDelegates: const [
