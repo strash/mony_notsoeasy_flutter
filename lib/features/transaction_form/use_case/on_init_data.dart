@@ -13,7 +13,7 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
   ]) async {
     if (viewModel == null) throw ArgumentError.notNull();
 
-    final prefService = context.read<DomainSharedPrefenecesService>();
+    final prefService = context.read<DomainSharedPreferencesService>();
     final accountService = context.read<DomainAccountService>();
     final categoryService = context.read<DomainCategoryService>();
     final transactionService = context.read<DomainTransactionService>();

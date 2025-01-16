@@ -68,6 +68,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   List<TagModel> tags = const [];
 
   bool isCentsVisible = true;
+  bool isColorsVisible = true;
 
   ScrollController getPageTabController(ESearchTab tab) {
     return _pageTabScrollControllers.elementAt(tab.index).controller;
@@ -99,11 +100,12 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final isVisible = await context
-          .read<DomainSharedPrefenecesService>()
-          .isSettingsCentsVisible();
+      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final colors = await sharedPrefService.isSettingsColorsVisible();
+      final cents = await sharedPrefService.isSettingsCentsVisible();
       setProtectedState(() {
-        isCentsVisible = isVisible;
+        isColorsVisible = colors;
+        isCentsVisible = cents;
       });
 
       if (!mounted) return;

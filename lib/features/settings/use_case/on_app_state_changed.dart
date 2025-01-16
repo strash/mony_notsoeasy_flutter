@@ -9,7 +9,7 @@ final class OnAppStateChanged extends UseCase<void, _TValue> {
   void call(BuildContext context, [_TValue? value]) {
     if (value == null) throw ArgumentError.notNull();
 
-    final (event: event, viewModel: viewModel) = value;
+    final (:event, :viewModel) = value;
 
     switch (event) {
       case EventAccountCreated() ||
@@ -26,14 +26,19 @@ final class OnAppStateChanged extends UseCase<void, _TValue> {
             EventTransactionDeleted():
         break;
 
-      case EventSettingsThemeModeChanged(value: final mode):
+      case EventSettingsThemeModeChanged(:final value):
         viewModel.setProtectedState(() {
-          viewModel.themeMode = mode;
+          viewModel.themeMode = value;
         });
 
-      case EventSettingsCentsVisibilityChanged(value: final isVisible):
+      case EventSettingsColorsVisibilityChanged(:final value):
         viewModel.setProtectedState(() {
-          viewModel.isCentsVisible = isVisible;
+          viewModel.isColorsVisible = value;
+        });
+
+      case EventSettingsCentsVisibilityChanged(:final value):
+        viewModel.setProtectedState(() {
+          viewModel.isCentsVisible = value;
         });
     }
   }

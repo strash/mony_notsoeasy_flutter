@@ -61,7 +61,10 @@ class AccountView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // -> icon
-                  AccountIconComponent(account: account),
+                  AccountIconComponent(
+                    account: account,
+                    showColors: viewModel.isColorsVisible,
+                  ),
                   const SizedBox(height: 40.0),
 
                   // -> amount
@@ -87,6 +90,7 @@ class AccountView extends StatelessWidget {
                         AccountCurrencyComponent(
                           balance: balance,
                           color: color,
+                          showColors: viewModel.isColorsVisible,
                         ),
                       ],
                     ),

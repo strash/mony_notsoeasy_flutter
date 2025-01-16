@@ -10,12 +10,14 @@ import "package:mony_app/features/feed/feed.dart";
 class FeedAccountComponent extends StatelessWidget {
   final FeedPageState page;
   final bool showDecimal;
+  final bool showColors;
   final UseCase<void, FeedPageState> onTap;
 
   const FeedAccountComponent({
     super.key,
     required this.page,
     required this.showDecimal,
+    required this.showColors,
     required this.onTap,
   });
 
@@ -72,8 +74,10 @@ class FeedAccountComponent extends StatelessWidget {
                   color: theme.colorScheme.primary,
                 ),
               ),
-            FeedPageStateSingleAccount(:final account) =>
-              AccountComponent(account: account),
+            FeedPageStateSingleAccount(:final account) => AccountComponent(
+                account: account,
+                showColors: showColors,
+              ),
           },
 
           const SizedBox(height: 20.0),

@@ -195,9 +195,14 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           });
         });
 
-      case EventSettingsCentsVisibilityChanged(value: final isVisible):
+      case EventSettingsColorsVisibilityChanged(:final value):
         viewModel.setProtectedState(() {
-          viewModel.isCentsVisible = isVisible;
+          viewModel.isColorsVisible = value;
+        });
+
+      case EventSettingsCentsVisibilityChanged(:final value):
+        viewModel.setProtectedState(() {
+          viewModel.isCentsVisible = value;
         });
     }
   }

@@ -32,9 +32,9 @@ void main() async {
           ),
 
           // -> shared preferences service
-          Provider<DomainSharedPrefenecesService>(
+          Provider<DomainSharedPreferencesService>(
             create: (context) {
-              return DomainSharedPrefenecesService(
+              return DomainSharedPreferencesService(
                 sharedPrefencesRepository:
                     SharedPreferencesLocalStorageRepository(
                   preferences: SharedPreferencesAsync(),

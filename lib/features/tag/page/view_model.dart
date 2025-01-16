@@ -37,6 +37,7 @@ final class TagViewModel extends ViewModelState<TagPage> {
   int scrollPage = 0;
   bool canLoadMore = true;
 
+  bool isColorsVisible = true;
   bool isCentsVisible = true;
 
   void _onFeedEvent(FeedScrollControllerEvent event) {
@@ -56,11 +57,12 @@ final class TagViewModel extends ViewModelState<TagPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final isVisible = await context
-          .read<DomainSharedPrefenecesService>()
-          .isSettingsCentsVisible();
+      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final colors = await sharedPrefService.isSettingsColorsVisible();
+      final cents = await sharedPrefService.isSettingsCentsVisible();
       setProtectedState(() {
-        isCentsVisible = isVisible;
+        isColorsVisible = colors;
+        isCentsVisible = cents;
       });
 
       if (!mounted) return;

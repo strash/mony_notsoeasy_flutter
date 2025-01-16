@@ -37,6 +37,7 @@ final class CategoryViewModel extends ViewModelState<CategoryPage> {
   bool canLoadMore = true;
 
   bool isCentsVisible = true;
+  bool isColorsVisible = true;
 
   void _onFeedEvent(FeedScrollControllerEvent event) {
     if (!mounted) return;
@@ -55,11 +56,12 @@ final class CategoryViewModel extends ViewModelState<CategoryPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final isVisible = await context
-          .read<DomainSharedPrefenecesService>()
-          .isSettingsCentsVisible();
+      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final colors = await sharedPrefService.isSettingsColorsVisible();
+      final cents = await sharedPrefService.isSettingsCentsVisible();
       setProtectedState(() {
-        isCentsVisible = isVisible;
+        isColorsVisible = colors;
+        isCentsVisible = cents;
       });
 
       if (!mounted) return;

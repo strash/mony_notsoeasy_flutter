@@ -40,7 +40,9 @@ class TransactionFormAccountComponent extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 2.0, right: 6.0),
                           child: CurrencyTagComponent(
                             code: account.currency.code,
-                            background: _getColor(context, account),
+                            background: viewModel.isColorsVisible
+                                ? _getColor(context, account)
+                                : theme.colorScheme.onSurfaceVariant,
                             foreground: theme.colorScheme.surface,
                           ),
                         ),
@@ -52,7 +54,9 @@ class TransactionFormAccountComponent extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: DefaultTextStyle.of(context).style.copyWith(
-                                  color: _getColor(context, account),
+                                  color: viewModel.isColorsVisible
+                                      ? _getColor(context, account)
+                                      : theme.colorScheme.onSurface,
                                 ),
                           ),
                         ),
@@ -77,9 +81,16 @@ class TransactionFormAccountComponent extends StatelessWidget {
                           dimension: 36.0,
                           child: DecoratedBox(
                             decoration: ShapeDecoration(
-                              color: _getColor(context, e),
-                              shape: const SmoothRectangleBorder(
-                                borderRadius: SmoothBorderRadius.all(
+                              color: viewModel.isColorsVisible
+                                  ? _getColor(context, e)
+                                  : null,
+                              shape: SmoothRectangleBorder(
+                                side: BorderSide(
+                                  color: theme.colorScheme.outline.withValues(
+                                    alpha: viewModel.isColorsVisible ? .0 : 1.0,
+                                  ),
+                                ),
+                                borderRadius: const SmoothBorderRadius.all(
                                   SmoothRadius(
                                     cornerRadius: 14.0,
                                     cornerSmoothing: 1.0,
@@ -115,7 +126,9 @@ class TransactionFormAccountComponent extends StatelessWidget {
                                     ),
                                     child: CurrencyTagComponent(
                                       code: e.currency.code,
-                                      background: _getColor(context, e),
+                                      background: viewModel.isColorsVisible
+                                          ? _getColor(context, e)
+                                          : theme.colorScheme.onSurfaceVariant,
                                       foreground: theme.colorScheme.surface,
                                     ),
                                   ),
@@ -128,7 +141,9 @@ class TransactionFormAccountComponent extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: style.copyWith(
                                         fontWeight: FontWeight.w600,
-                                        color: _getColor(context, e),
+                                        color: viewModel.isColorsVisible
+                                            ? _getColor(context, e)
+                                            : theme.colorScheme.onSurface,
                                       ),
                                     ),
                                   ),

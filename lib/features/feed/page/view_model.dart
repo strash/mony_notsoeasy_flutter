@@ -37,6 +37,7 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
   }
 
   bool isCentsVisible = true;
+  bool isColorsVisible = true;
 
   void addPageScroll(int pageIndex) {
     final scrollController = FeedScrollController();
@@ -106,11 +107,12 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
       _navbarSub =
           context.viewModel<NavBarViewModel>().subject.listen(_onNavBarEvent);
 
-      final isVisible = await context
-          .read<DomainSharedPrefenecesService>()
-          .isSettingsCentsVisible();
+      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final colors = await sharedPrefService.isSettingsColorsVisible();
+      final cents = await sharedPrefService.isSettingsCentsVisible();
       setProtectedState(() {
-        isCentsVisible = isVisible;
+        isColorsVisible = colors;
+        isCentsVisible = cents;
       });
 
       if (!mounted) return;

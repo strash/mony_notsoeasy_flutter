@@ -10,7 +10,7 @@ final class OnKeyboardHintAccepted extends UseCase<Future<void>, dynamic> {
   Future<void> call(BuildContext context, [dynamic _]) async {
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
-    final prefService = context.read<DomainSharedPrefenecesService>();
+    final prefService = context.read<DomainSharedPreferencesService>();
 
     final isKeyboardHintAccepted =
         await prefService.acceptNewTransactionKeyboardHint();

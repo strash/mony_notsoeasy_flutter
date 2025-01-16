@@ -7,8 +7,13 @@ import "package:mony_app/domain/models/category.dart";
 
 class CategoryComponent extends StatelessWidget {
   final CategoryModel category;
+  final bool showColors;
 
-  const CategoryComponent({super.key, required this.category});
+  const CategoryComponent({
+    super.key,
+    required this.category,
+    required this.showColors,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +34,19 @@ class CategoryComponent extends StatelessWidget {
           dimension: iconDimension,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [color2, color],
-              ),
-              shape: const SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius.all(
+              gradient: showColors
+                  ? LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [color2, color],
+                    )
+                  : null,
+              shape: SmoothRectangleBorder(
+                side: BorderSide(
+                  color: theme.colorScheme.outline
+                      .withValues(alpha: showColors ? .0 : 1.0),
+                ),
+                borderRadius: const SmoothBorderRadius.all(
                   SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
                 ),
               ),
@@ -63,7 +74,7 @@ class CategoryComponent extends StatelessWidget {
                   style: GoogleFonts.golosText(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
-                    color: color,
+                    color: showColors ? color : theme.colorScheme.onSurface,
                   ),
                 ),
               ),

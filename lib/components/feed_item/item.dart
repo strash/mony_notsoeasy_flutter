@@ -10,12 +10,14 @@ class FeedItemComponent extends StatelessWidget {
   final TransactionModel transaction;
   final bool showFullDate;
   final bool showDecimal;
+  final bool showColors;
 
   const FeedItemComponent({
     super.key,
     required this.transaction,
     this.showFullDate = false,
     required this.showDecimal,
+    required this.showColors,
   });
 
   @override
@@ -39,13 +41,19 @@ class FeedItemComponent extends StatelessWidget {
             dimension: iconDimension,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [color, categoryColor],
-                ),
-                shape: const SmoothRectangleBorder(
-                  borderRadius: SmoothBorderRadius.all(
+                gradient: showColors
+                    ? LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [color, categoryColor],
+                      )
+                    : null,
+                shape: SmoothRectangleBorder(
+                  side: BorderSide(
+                    color: theme.colorScheme.outline
+                        .withValues(alpha: showColors ? .0 : 1.0),
+                  ),
+                  borderRadius: const SmoothBorderRadius.all(
                     SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
                   ),
                 ),
@@ -79,7 +87,9 @@ class FeedItemComponent extends StatelessWidget {
                       style: GoogleFonts.golosText(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
-                        color: categoryColor,
+                        color: showColors
+                            ? categoryColor
+                            : theme.colorScheme.onSurface,
                       ),
                     ),
                   ),

@@ -1,15 +1,16 @@
 import "package:flutter/material.dart";
 import "package:mony_app/data/local_storage/repository/shared_preferences.dart";
 
-final class DomainSharedPrefenecesService {
+final class DomainSharedPreferencesService {
   final SharedPreferencesLocalStorageRepository _repo;
 
   final _newTransactionKeyboardHintKey =
       "is_new_transaction_keybord_hint_accepted";
   final _settingsThemeMode = "settings_theme_mode";
+  final _settingsColors = "settings_colors";
   final _settingsCents = "settings_cents";
 
-  DomainSharedPrefenecesService({
+  DomainSharedPreferencesService({
     required SharedPreferencesLocalStorageRepository sharedPrefencesRepository,
   }) : _repo = sharedPrefencesRepository;
 
@@ -34,6 +35,14 @@ final class DomainSharedPrefenecesService {
 
   Future<void> setSettingsThemeMode(ThemeMode value) async {
     await _repo.setInt(_settingsThemeMode, value.index);
+  }
+
+  Future<bool> isSettingsColorsVisible() async {
+    return await _repo.getBool(_settingsColors) ?? true;
+  }
+
+  Future<void> setSettingsColors(bool value) async {
+    await _repo.setBool(_settingsColors, value);
   }
 
   Future<bool> isSettingsCentsVisible() async {

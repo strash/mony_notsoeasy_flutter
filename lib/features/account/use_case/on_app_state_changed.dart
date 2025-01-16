@@ -48,6 +48,11 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final balance = await accountService.getBalance(id: id);
         if (balance == null) return;
         viewModel.setProtectedState(() => viewModel.balance = balance);
+
+      case EventSettingsColorsVisibilityChanged(:final value):
+        viewModel.setProtectedState(() {
+          viewModel.isColorsVisible = value;
+        });
     }
   }
 }

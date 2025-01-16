@@ -9,7 +9,11 @@ import "package:mony_app/features/transaction_form/page/view_model.dart";
 class TransactionFormCategoryComponent extends StatelessWidget {
   const TransactionFormCategoryComponent({super.key});
 
-  Widget _getCategory(BuildContext context, CategoryModel category) {
+  Widget _getCategory(
+    BuildContext context,
+    CategoryModel category,
+    bool isColorsVisible,
+  ) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
     final color =
@@ -22,9 +26,14 @@ class TransactionFormCategoryComponent extends StatelessWidget {
           dimension: 36.0,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              color: color,
-              shape: const SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius.all(
+              color: isColorsVisible ? color : null,
+              shape: SmoothRectangleBorder(
+                side: BorderSide(
+                  color: theme.colorScheme.outline.withValues(
+                    alpha: isColorsVisible ? .0 : 1.0,
+                  ),
+                ),
+                borderRadius: const SmoothBorderRadius.all(
                   SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 1.0),
                 ),
               ),
@@ -74,7 +83,11 @@ class TransactionFormCategoryComponent extends StatelessWidget {
               activeEntry: controller.value != null
                   ? Builder(
                       builder: (context) {
-                        return _getCategory(context, controller.value!);
+                        return _getCategory(
+                          context,
+                          controller.value!,
+                          viewModel.isColorsVisible,
+                        );
                       },
                     )
                   : null,
@@ -89,7 +102,11 @@ class TransactionFormCategoryComponent extends StatelessWidget {
                     equal: (lhs, rhs) => lhs != null && lhs.id == rhs.id,
                     child: Builder(
                       builder: (context) {
-                        return _getCategory(context, e);
+                        return _getCategory(
+                          context,
+                          e,
+                          viewModel.isColorsVisible,
+                        );
                       },
                     ),
                   );

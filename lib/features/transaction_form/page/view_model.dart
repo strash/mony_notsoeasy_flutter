@@ -10,6 +10,7 @@ import "package:mony_app/features/transaction_form/components/keyboard_button_ty
 import "package:mony_app/features/transaction_form/page/view.dart";
 import "package:mony_app/features/transaction_form/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:provider/provider.dart";
 
 final class TransactionFormVO {
   final TransactionVO transactionVO;
@@ -38,6 +39,8 @@ final class TransactionFormPage extends StatefulWidget {
 
 final class TransactionFormViewModel
     extends ViewModelState<TransactionFormPage> {
+  bool isColorsVisible = true;
+
   TransactionModel? get transaction => widget.transaction;
   AccountModel? get account => widget.account;
 
@@ -167,7 +170,16 @@ final class TransactionFormViewModel
     amountNotifier = ValueNotifier<String>(
       (hasFraction ? amount.roundToFraction(2) : amount.toInt()).toString(),
     );
-    OnInitData().call(context, this);
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final colors = await sharedPrefService.isSettingsColorsVisible();
+      setProtectedState(() {
+        isColorsVisible = colors;
+      });
+
+      if (!mounted) return;
+      OnInitData().call(context, this);
+    });
   }
 
   @override

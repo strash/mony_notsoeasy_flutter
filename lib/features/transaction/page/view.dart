@@ -79,7 +79,10 @@ class TransactionView extends StatelessWidget {
                         behavior: HitTestBehavior.opaque,
                         onTap: () =>
                             onAccountPressed(context, transaction.account),
-                        child: AccountComponent(account: transaction.account),
+                        child: AccountComponent(
+                          account: transaction.account,
+                          showColors: viewModel.isColorsVisible,
+                        ),
                       ),
 
                       // -> category
@@ -89,6 +92,7 @@ class TransactionView extends StatelessWidget {
                             onCategoryPressed(context, transaction.category),
                         child: CategoryComponent(
                           category: transaction.category,
+                          showColors: viewModel.isColorsVisible,
                         ),
                       ),
 

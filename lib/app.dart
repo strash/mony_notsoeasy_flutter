@@ -36,7 +36,7 @@ class _MonyAppState extends State<MonyApp> {
           .stream
           .whereType<EventSettingsThemeModeChanged>()
           .listen(_onThemeModeChanged);
-      final sharedPrefService = context.read<DomainSharedPrefenecesService>();
+      final sharedPrefService = context.read<DomainSharedPreferencesService>();
       final m = await sharedPrefService.getSettingsThemeMode();
       setState(() => mode = m);
     });

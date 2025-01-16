@@ -7,6 +7,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account/page/view.dart";
 import "package:mony_app/features/account/use_case/use_case.dart";
+import "package:provider/provider.dart";
 
 final class AccountPage extends StatefulWidget {
   final AccountModel account;
@@ -27,6 +28,8 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
 
   AccountBalanceModel? balance;
 
+  bool isColorsVisible = true;
+
   void _onAppEvent(Event event) {
     if (!mounted) return;
     OnAppStateChanged().call(context, (event: event, viewModel: this));
@@ -35,8 +38,16 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
+
+      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final colors = await sharedPrefService.isSettingsColorsVisible();
+      setProtectedState(() {
+        isColorsVisible = colors;
+      });
+
+      if (!mounted) return;
       OnInit().call(context, this);
     });
   }

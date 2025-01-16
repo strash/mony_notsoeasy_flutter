@@ -72,7 +72,10 @@ class CategoriesView extends StatelessWidget {
                     onTap: () => onCategoryPressed(context, item),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: CategoryComponent(category: item),
+                      child: CategoryComponent(
+                        category: item,
+                        showColors: viewModel.isColorsVisible,
+                      ),
                     ),
                   );
                 },

@@ -65,6 +65,11 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             return prev..addAll(curr);
           });
         });
+
+      case EventSettingsColorsVisibilityChanged(:final value):
+        viewModel.setProtectedState(() {
+          viewModel.isColorsVisible = value;
+        });
     }
   }
 }

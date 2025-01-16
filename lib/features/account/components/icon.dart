@@ -6,10 +6,12 @@ import "package:mony_app/domain/domain.dart";
 
 class AccountIconComponent extends StatelessWidget {
   final AccountModel account;
+  final bool showColors;
 
   const AccountIconComponent({
     super.key,
     required this.account,
+    required this.showColors,
   });
 
   @override
@@ -29,13 +31,19 @@ class AccountIconComponent extends StatelessWidget {
             dimension: 100.0,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [color2, color],
-                ),
-                shape: const SmoothRectangleBorder(
-                  borderRadius: SmoothBorderRadius.all(
+                gradient: showColors
+                    ? LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [color2, color],
+                      )
+                    : null,
+                shape: SmoothRectangleBorder(
+                  side: BorderSide(
+                    color: theme.colorScheme.outline
+                        .withValues(alpha: showColors ? .0 : 1.0),
+                  ),
+                  borderRadius: const SmoothBorderRadius.all(
                     SmoothRadius(cornerRadius: 40.0, cornerSmoothing: 1.0),
                   ),
                 ),
@@ -58,7 +66,7 @@ class AccountIconComponent extends StatelessWidget {
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
-            color: color,
+            color: showColors ? color : theme.colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 2.0),

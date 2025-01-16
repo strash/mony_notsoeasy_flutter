@@ -65,7 +65,10 @@ class CategoryView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // -> icon
-                  CategoryIconComponent(category: viewModel.category),
+                  CategoryIconComponent(
+                    category: viewModel.category,
+                    showColors: viewModel.isColorsVisible,
+                  ),
                   const SizedBox(height: 40.0),
 
                   // -> balance
@@ -89,8 +92,10 @@ class CategoryView extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(bottom: bottomOffset),
                 child: FeedEmptyStateComponent(
-                  color: ex?.from(category.colorName).color ??
-                      theme.colorScheme.onSurface,
+                  color: viewModel.isColorsVisible
+                      ? (ex?.from(category.colorName).color ??
+                          theme.colorScheme.onSurface)
+                      : theme.colorScheme.onSurface,
                 ),
               ),
             )
@@ -132,6 +137,7 @@ class CategoryView extends StatelessWidget {
                           key: key,
                           transaction: item.transaction,
                           showDecimal: viewModel.isCentsVisible,
+                          showColors: viewModel.isColorsVisible,
                         ),
                       ),
                     )

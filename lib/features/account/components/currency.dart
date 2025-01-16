@@ -6,11 +6,13 @@ import "package:mony_app/domain/domain.dart";
 class AccountCurrencyComponent extends StatelessWidget {
   final AccountBalanceModel balance;
   final Color color;
+  final bool showColors;
 
   const AccountCurrencyComponent({
     super.key,
     required this.balance,
     required this.color,
+    required this.showColors,
   });
 
   @override
@@ -49,7 +51,8 @@ class AccountCurrencyComponent extends StatelessWidget {
               padding: const EdgeInsets.only(top: 2.0),
               child: CurrencyTagComponent(
                 code: balance.currency.code,
-                background: color,
+                background:
+                    showColors ? color : theme.colorScheme.onSurfaceVariant,
                 foreground: theme.colorScheme.surface,
               ),
             ),

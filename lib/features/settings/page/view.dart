@@ -18,7 +18,8 @@ class SettingsView extends StatelessWidget {
 
     final viewModel = context.viewModel<SettingsViewModel>();
     final onThemeModePressed = viewModel<OnThemeModePressed>();
-    final onCentsToggled = viewModel<OnToggleCentsPressed>();
+    final onColorsToggled = viewModel<OnColorsToggled>();
+    final onCentsToggled = viewModel<OnCentsToggled>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -42,7 +43,6 @@ class SettingsView extends StatelessWidget {
                 return const SizedBox(height: 20.0);
               },
               children: [
-                // -> visuals
                 SettingsGroupComponent(
                   children: [
                     // -> theme mode
@@ -66,11 +66,30 @@ class SettingsView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // TODO: Меньше цвета (чб категории и счета)
+
+                    // -> color mode
+                    SettingsEntryComponent(
+                      onTap: () => onColorsToggled(context),
+                      title: const Text("Меньше цвета"),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: SvgPicture.asset(
+                          switch (viewModel.isColorsVisible) {
+                            true => Assets.icons.eyeSlash,
+                            false => Assets.icons.eye,
+                          },
+                          width: 26.0,
+                          height: 26.0,
+                          colorFilter: ColorFilter.mode(
+                            theme.colorScheme.onSurfaceVariant,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
 
-                // -> toggles
                 SettingsGroupComponent(
                   children: [
                     // -> cents
@@ -87,7 +106,10 @@ class SettingsView extends StatelessWidget {
                           width: 26.0,
                           height: 26.0,
                           colorFilter: ColorFilter.mode(
-                            theme.colorScheme.onSurfaceVariant,
+                            switch (viewModel.isCentsVisible) {
+                              true => theme.colorScheme.secondary,
+                              false => theme.colorScheme.onSurfaceVariant,
+                            },
                             BlendMode.srcIn,
                           ),
                         ),

@@ -130,6 +130,7 @@ class TagView extends StatelessWidget {
                           key: key,
                           transaction: item.transaction,
                           showDecimal: viewModel.isCentsVisible,
+                          showColors: viewModel.isColorsVisible,
                         ),
                       ),
                     )

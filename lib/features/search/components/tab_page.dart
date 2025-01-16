@@ -81,6 +81,7 @@ class SearchTabPageComponent extends StatelessWidget {
                         transaction: item,
                         showFullDate: true,
                         showDecimal: viewModel.isCentsVisible,
+                        showColors: viewModel.isColorsVisible,
                       ),
                     ),
                   );
@@ -111,6 +112,7 @@ class SearchTabPageComponent extends StatelessWidget {
                       child: AccountComponent(
                         account: item,
                         showCurrencyTag: true,
+                        showColors: viewModel.isColorsVisible,
                       ),
                     ),
                   );
@@ -138,7 +140,10 @@ class SearchTabPageComponent extends StatelessWidget {
                     behavior: HitTestBehavior.opaque,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: CategoryComponent(category: item),
+                      child: CategoryComponent(
+                        category: item,
+                        showColors: viewModel.isColorsVisible,
+                      ),
                     ),
                   );
                 },

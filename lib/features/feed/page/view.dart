@@ -95,6 +95,7 @@ class FeedView extends StatelessWidget {
                               page: page,
                               onTap: onAccountPressed,
                               showDecimal: viewModel.isCentsVisible,
+                              showColors: viewModel.isColorsVisible,
                             ),
                           ),
                         ),
@@ -114,8 +115,10 @@ class FeedView extends StatelessWidget {
                                   ),
                                 FeedPageStateSingleAccount(:final account) =>
                                   FeedEmptyStateComponent(
-                                    color: ex?.from(account.colorName).color ??
-                                        theme.colorScheme.onSurface,
+                                    color: viewModel.isColorsVisible
+                                        ? (ex?.from(account.colorName).color ??
+                                            theme.colorScheme.onSurface)
+                                        : theme.colorScheme.onSurface,
                                   ),
                               },
                             ),
@@ -169,6 +172,7 @@ class FeedView extends StatelessWidget {
                                           key: key,
                                           transaction: item.transaction,
                                           showDecimal: viewModel.isCentsVisible,
+                                          showColors: viewModel.isColorsVisible,
                                         ),
                                       ),
                                     )

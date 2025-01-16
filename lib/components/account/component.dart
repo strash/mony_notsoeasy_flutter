@@ -8,11 +8,13 @@ import "package:mony_app/domain/models/account.dart";
 class AccountComponent extends StatelessWidget {
   final AccountModel account;
   final bool showCurrencyTag;
+  final bool showColors;
 
   const AccountComponent({
     super.key,
     required this.account,
     this.showCurrencyTag = false,
+    required this.showColors,
   });
 
   @override
@@ -34,13 +36,19 @@ class AccountComponent extends StatelessWidget {
           dimension: iconDimension,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [color2, color],
-              ),
-              shape: const SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius.all(
+              gradient: showColors
+                  ? LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [color2, color],
+                    )
+                  : null,
+              shape: SmoothRectangleBorder(
+                side: BorderSide(
+                  color: theme.colorScheme.outline
+                      .withValues(alpha: showColors ? .0 : 1.0),
+                ),
+                borderRadius: const SmoothBorderRadius.all(
                   SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 1.0),
                 ),
               ),
@@ -69,7 +77,9 @@ class AccountComponent extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 2.0, right: 8.0),
                         child: CurrencyTagComponent(
                           code: account.currency.code,
-                          background: color,
+                          background: showColors
+                              ? color
+                              : theme.colorScheme.onSurfaceVariant,
                           foreground: theme.colorScheme.surface,
                         ),
                       ),
@@ -83,7 +93,8 @@ class AccountComponent extends StatelessWidget {
                         style: GoogleFonts.golosText(
                           fontSize: 18.0,
                           fontWeight: FontWeight.w600,
-                          color: color,
+                          color:
+                              showColors ? color : theme.colorScheme.onSurface,
                         ),
                       ),
                     ),
