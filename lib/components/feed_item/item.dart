@@ -124,27 +124,31 @@ class FeedItemComponent extends StatelessWidget {
                       date: transaction.date,
                       showFullDate: showFullDate,
                     ),
-                    const SizedBox(width: 15.0),
+                    const SizedBox(width: 12.0),
 
                     // -> note
-                    Flexible(
-                      child: Text(
-                        transaction.note,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.golosText(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
+                    if (transaction.note.isNotEmpty ||
+                        transaction.tags.isNotEmpty)
+                      Flexible(
+                        child: transaction.note.isNotEmpty
+                            ? Text(
+                                transaction.note,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.golosText(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                              )
+                            : FeedItemTagsComponent(tags: transaction.tags),
                       ),
-                    ),
                   ],
                 ),
               ),
 
               // -> tags
-              if (transaction.tags.isNotEmpty)
+              if (transaction.tags.isNotEmpty && transaction.note.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(top: 7.0),
                   child: FeedItemTagsComponent(tags: transaction.tags),
