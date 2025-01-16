@@ -60,7 +60,7 @@ class SettingsView extends StatelessWidget {
                           width: 26.0,
                           height: 26.0,
                           colorFilter: ColorFilter.mode(
-                            theme.colorScheme.onSurfaceVariant,
+                            theme.colorScheme.secondary,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -81,7 +81,7 @@ class SettingsView extends StatelessWidget {
                           width: 26.0,
                           height: 26.0,
                           colorFilter: ColorFilter.mode(
-                            theme.colorScheme.onSurfaceVariant,
+                            theme.colorScheme.secondary,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -106,10 +106,7 @@ class SettingsView extends StatelessWidget {
                           width: 26.0,
                           height: 26.0,
                           colorFilter: ColorFilter.mode(
-                            switch (viewModel.isCentsVisible) {
-                              true => theme.colorScheme.secondary,
-                              false => theme.colorScheme.onSurfaceVariant,
-                            },
+                            theme.colorScheme.secondary,
                             BlendMode.srcIn,
                           ),
                         ),
