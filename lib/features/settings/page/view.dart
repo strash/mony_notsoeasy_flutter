@@ -70,18 +70,19 @@ class SettingsView extends StatelessWidget {
                     // -> color mode
                     SettingsEntryComponent(
                       onTap: () => onColorsToggled(context),
-                      title: const Text("Меньше цвета"),
+                      title: const Text("Больше цвета"),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 15.0),
                         child: SvgPicture.asset(
-                          switch (viewModel.isColorsVisible) {
-                            true => Assets.icons.eyeSlash,
-                            false => Assets.icons.eye,
-                          },
+                          viewModel.isColorsVisible
+                              ? Assets.icons.eye
+                              : Assets.icons.eyeSlash,
                           width: 26.0,
                           height: 26.0,
                           colorFilter: ColorFilter.mode(
-                            theme.colorScheme.secondary,
+                            viewModel.isColorsVisible
+                                ? theme.colorScheme.secondary
+                                : theme.colorScheme.onSurfaceVariant,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -99,14 +100,15 @@ class SettingsView extends StatelessWidget {
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 15.0),
                         child: SvgPicture.asset(
-                          switch (viewModel.isCentsVisible) {
-                            true => Assets.icons.eye,
-                            false => Assets.icons.eyeSlash,
-                          },
+                          viewModel.isCentsVisible
+                              ? Assets.icons.eye
+                              : Assets.icons.eyeSlash,
                           width: 26.0,
                           height: 26.0,
                           colorFilter: ColorFilter.mode(
-                            theme.colorScheme.secondary,
+                            viewModel.isCentsVisible
+                                ? theme.colorScheme.secondary
+                                : theme.colorScheme.onSurfaceVariant,
                             BlendMode.srcIn,
                           ),
                         ),
