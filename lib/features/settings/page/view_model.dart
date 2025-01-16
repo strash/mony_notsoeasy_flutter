@@ -18,7 +18,9 @@ class SettingsPage extends StatefulWidget {
 final class SettingsViewModel extends ViewModelState<SettingsPage> {
   late final StreamSubscription<Event> _appSub;
 
-  ThemeMode mode = ThemeMode.system;
+  ThemeMode themeMode = ThemeMode.system;
+
+  bool isCentsVisible = true;
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
@@ -30,10 +32,14 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timastamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
-      final m = await context
-          .read<DomainSharedPrefenecesService>()
-          .getSettingsThemeMode();
-      setProtectedState(() => mode = m);
+
+      final read = context.read<DomainSharedPrefenecesService>();
+      final mode = await read.getSettingsThemeMode();
+      final isVisible = await read.isSettingsCentsVisible();
+      setProtectedState(() {
+        themeMode = mode;
+        isCentsVisible = isVisible;
+      });
     });
   }
 
@@ -49,6 +55,7 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
       viewModel: this,
       useCases: [
         () => OnThemeModePressed(),
+        () => OnToggleCentsPressed(),
       ],
       child: const SettingsView(),
     );

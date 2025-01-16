@@ -13,7 +13,7 @@ final class OnKeyboardHintAccepted extends UseCase<Future<void>, dynamic> {
     final prefService = context.read<DomainSharedPrefenecesService>();
 
     final isKeyboardHintAccepted =
-        await prefService.setIsNewTransactionKeyboardHintAccepted();
+        await prefService.acceptNewTransactionKeyboardHint();
 
     viewModel.setProtectedState(() {
       viewModel.isKeyboardHintAccepted = isKeyboardHintAccepted;

@@ -5,7 +5,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/settings/components/components.dart";
 import "package:mony_app/features/settings/page/view_model.dart";
-import "package:mony_app/features/settings/use_case/on_theme_mode_pressed.dart";
+import "package:mony_app/features/settings/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class SettingsView extends StatelessWidget {
@@ -18,6 +18,7 @@ class SettingsView extends StatelessWidget {
 
     final viewModel = context.viewModel<SettingsViewModel>();
     final onThemeModePressed = viewModel<OnThemeModePressed>();
+    final onCentsToggled = viewModel<OnToggleCentsPressed>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -38,44 +39,65 @@ class SettingsView extends StatelessWidget {
             child: SeparatedComponent.list(
               mainAxisSize: MainAxisSize.min,
               separatorBuilder: (context, index) {
-                return const SizedBox(height: 15.0);
+                return const SizedBox(height: 20.0);
               },
               children: [
-                // -> theme
-                SettingsListItemComponent(
-                  onTap: () => onThemeModePressed(context),
-                  title: const Text("Тема"),
-                  trailing: Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: SvgPicture.asset(
-                      switch (viewModel.mode) {
-                        ThemeMode.system => Assets.icons.aCircle,
-                        ThemeMode.light => Assets.icons.sunMaxFill,
-                        ThemeMode.dark => Assets.icons.moonFill,
-                      },
-                      width: 26.0,
-                      height: 26.0,
-                      colorFilter: ColorFilter.mode(
-                        theme.colorScheme.onSurfaceVariant,
-                        BlendMode.srcIn,
+                // -> visuals
+                SettingsGroupComponent(
+                  children: [
+                    // -> theme mode
+                    SettingsEntryComponent(
+                      onTap: () => onThemeModePressed(context),
+                      title: const Text("Тема"),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: SvgPicture.asset(
+                          switch (viewModel.themeMode) {
+                            ThemeMode.system => Assets.icons.aCircle,
+                            ThemeMode.light => Assets.icons.sunMaxFill,
+                            ThemeMode.dark => Assets.icons.moonFill,
+                          },
+                          width: 26.0,
+                          height: 26.0,
+                          colorFilter: ColorFilter.mode(
+                            theme.colorScheme.onSurfaceVariant,
+                            BlendMode.srcIn,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    // TODO: Меньше цвета (чб категории и счета)
+                  ],
                 ),
 
-                // TODO: Меньше цвета (чб категории и счета)
+                // -> toggles
+                SettingsGroupComponent(
+                  children: [
+                    // -> cents
+                    SettingsEntryComponent(
+                      onTap: () => onCentsToggled(context),
+                      title: const Text("Копейки"),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: SvgPicture.asset(
+                          switch (viewModel.isCentsVisible) {
+                            true => Assets.icons.eye,
+                            false => Assets.icons.eyeSlash,
+                          },
+                          width: 26.0,
+                          height: 26.0,
+                          colorFilter: ColorFilter.mode(
+                            theme.colorScheme.onSurfaceVariant,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                    ),
 
-                // TODO: Отображать копейки
-                SettingsListItemComponent(
-                  // onTap: () => onThemeModePressed(context),
-                  title: const Text("Отображать копейки"),
-                  trailing: Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: Switch.adaptive(value: true, onChanged: (value) {}),
-                  ),
+                    // TODO: Отображать теги в ленте
+                  ],
                 ),
 
-                // TODO: Отображать теги в ленте
                 // TODO: Тип транзакции по-умолчанию при создании транзакции
                 // TODO: Подтверждать удаление транзакций (да/нет)
                 // TODO: Подтверждать удаление счета (да/нет)

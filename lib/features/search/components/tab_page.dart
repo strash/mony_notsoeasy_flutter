@@ -80,6 +80,7 @@ class SearchTabPageComponent extends StatelessWidget {
                       child: FeedItemComponent(
                         transaction: item,
                         showFullDate: true,
+                        showDecimal: viewModel.isCentsVisible,
                       ),
                     ),
                   );

@@ -72,10 +72,16 @@ class AccountView extends StatelessWidget {
                       },
                       children: [
                         // -> total sum
-                        AccountTotalSumComponent(balance: balance),
+                        AccountTotalSumComponent(
+                          balance: balance,
+                          showDecimal: true,
+                        ),
 
                         // -> total amount
-                        AccountTotalAmountComponent(balance: balance),
+                        AccountTotalAmountComponent(
+                          balance: balance,
+                          showDecimal: true,
+                        ),
 
                         // -> currency
                         AccountCurrencyComponent(

@@ -9,11 +9,13 @@ import "package:mony_app/features/feed/feed.dart";
 
 class FeedAccountComponent extends StatelessWidget {
   final FeedPageState page;
+  final bool showDecimal;
   final UseCase<void, FeedPageState> onTap;
 
   const FeedAccountComponent({
     super.key,
     required this.page,
+    required this.showDecimal,
     required this.onTap,
   });
 
@@ -38,6 +40,7 @@ class FeedAccountComponent extends StatelessWidget {
                       amount: e.totalSum.currency(
                         name: e.currency.name,
                         symbol: e.currency.symbol,
+                        showDecimal: showDecimal,
                       ),
                       code: e.currency.code,
                     );
@@ -48,6 +51,7 @@ class FeedAccountComponent extends StatelessWidget {
                 amount: page.balance.totalSum.currency(
                   name: page.balance.currency.name,
                   symbol: page.balance.currency.symbol,
+                  showDecimal: showDecimal,
                 ),
                 code: page.balance.currency.code,
               ),

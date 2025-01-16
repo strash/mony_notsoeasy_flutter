@@ -28,7 +28,12 @@ final class OnAppStateChanged extends UseCase<void, _TValue> {
 
       case EventSettingsThemeModeChanged(value: final mode):
         viewModel.setProtectedState(() {
-          viewModel.mode = mode;
+          viewModel.themeMode = mode;
+        });
+
+      case EventSettingsCentsVisibilityChanged(value: final isVisible):
+        viewModel.setProtectedState(() {
+          viewModel.isCentsVisible = isVisible;
         });
     }
   }

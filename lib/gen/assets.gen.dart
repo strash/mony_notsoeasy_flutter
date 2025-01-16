@@ -124,6 +124,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/exclamationmark.circle.svg
   String get exclamationmarkCircle => 'assets/icons/exclamationmark.circle.svg';
 
+  /// File path: assets/icons/eye.slash.svg
+  String get eyeSlash => 'assets/icons/eye.slash.svg';
+
+  /// File path: assets/icons/eye.svg
+  String get eye => 'assets/icons/eye.svg';
+
   /// File path: assets/icons/gearshape.fill.svg
   String get gearshapeFill => 'assets/icons/gearshape.fill.svg';
 
@@ -268,6 +274,8 @@ class $AssetsIconsGen {
         emojiTravel,
         exclamationmarkCircleFill,
         exclamationmarkCircle,
+        eyeSlash,
+        eye,
         gearshapeFill,
         handPointUpLeft,
         infoCircle,

@@ -6,10 +6,12 @@ import "package:mony_app/domain/domain.dart";
 
 class AccountTotalSumComponent extends StatelessWidget {
   final AccountBalanceModel balance;
+  final bool showDecimal;
 
   const AccountTotalSumComponent({
     super.key,
     required this.balance,
+    required this.showDecimal,
   });
 
   @override
@@ -34,6 +36,7 @@ class AccountTotalSumComponent extends StatelessWidget {
           balance.totalSum.currency(
             name: balance.currency.name,
             symbol: balance.currency.symbol,
+            showDecimal: showDecimal,
           ),
           style: GoogleFonts.golosText(
             fontSize: 18.0,

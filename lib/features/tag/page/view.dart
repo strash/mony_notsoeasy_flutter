@@ -71,7 +71,10 @@ class TagView extends StatelessWidget {
                   if (balance != null && balance.totalAmount.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 30.0),
-                      child: TagTotalAmountComponent(balance: balance),
+                      child: TagTotalAmountComponent(
+                        balance: balance,
+                        showDecimal: true,
+                      ),
                     ),
                 ],
               ),
@@ -114,6 +117,7 @@ class TagView extends StatelessWidget {
                       child: FeedSectionComponent(
                         key: key,
                         section: item,
+                        showDecimal: viewModel.isCentsVisible,
                       ),
                     ),
                   FeedItemTransaction() => GestureDetector(
@@ -125,6 +129,7 @@ class TagView extends StatelessWidget {
                         child: FeedItemComponent(
                           key: key,
                           transaction: item.transaction,
+                          showDecimal: viewModel.isCentsVisible,
                         ),
                       ),
                     )

@@ -6,10 +6,12 @@ import "package:mony_app/domain/models/tag_balance.dart";
 
 class TagTotalAmountComponent extends StatelessWidget {
   final TagBalanceModel balance;
+  final bool showDecimal;
 
   const TagTotalAmountComponent({
     super.key,
     required this.balance,
+    required this.showDecimal,
   });
 
   @override
@@ -41,6 +43,7 @@ class TagTotalAmountComponent extends StatelessWidget {
               totalAmount.currency(
                 name: currency.name,
                 symbol: currency.symbol,
+                showDecimal: showDecimal,
               ),
               style: GoogleFonts.golosText(
                 fontSize: 18.0,

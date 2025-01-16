@@ -4,9 +4,10 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/common.dart";
-import "package:mony_app/domain/models/models.dart";
+import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/tag/page/view.dart";
 import "package:mony_app/features/tag/use_case/use_case.dart";
+import "package:provider/provider.dart";
 
 final class TagPage extends StatefulWidget {
   final TagModel tag;
@@ -36,6 +37,8 @@ final class TagViewModel extends ViewModelState<TagPage> {
   int scrollPage = 0;
   bool canLoadMore = true;
 
+  bool isCentsVisible = true;
+
   void _onFeedEvent(FeedScrollControllerEvent event) {
     if (!mounted) return;
     OnDataFetched().call(context, this);
@@ -52,6 +55,15 @@ final class TagViewModel extends ViewModelState<TagPage> {
     _scrollSub = _scrollController.addListener(_onFeedEvent);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
+
+      final isVisible = await context
+          .read<DomainSharedPrefenecesService>()
+          .isSettingsCentsVisible();
+      setProtectedState(() {
+        isCentsVisible = isVisible;
+      });
+
+      if (!mounted) return;
       await OnInit().call(context, this);
     });
   }

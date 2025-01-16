@@ -94,6 +94,7 @@ class FeedView extends StatelessWidget {
                             child: FeedAccountComponent(
                               page: page,
                               onTap: onAccountPressed,
+                              showDecimal: viewModel.isCentsVisible,
                             ),
                           ),
                         ),
@@ -151,6 +152,7 @@ class FeedView extends StatelessWidget {
                                       child: FeedSectionComponent(
                                         key: key,
                                         section: item,
+                                        showDecimal: viewModel.isCentsVisible,
                                       ),
                                     ),
                                   FeedItemTransaction() => GestureDetector(
@@ -166,6 +168,7 @@ class FeedView extends StatelessWidget {
                                         child: FeedItemComponent(
                                           key: key,
                                           transaction: item.transaction,
+                                          showDecimal: viewModel.isCentsVisible,
                                         ),
                                       ),
                                     )

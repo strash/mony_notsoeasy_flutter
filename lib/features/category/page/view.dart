@@ -72,7 +72,10 @@ class CategoryView extends StatelessWidget {
                   if (balance != null && balance.totalAmount.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 30.0),
-                      child: CategoryTotalAmountComponent(balance: balance),
+                      child: CategoryTotalAmountComponent(
+                        balance: balance,
+                        showDecimal: true,
+                      ),
                     ),
                 ],
               ),
@@ -116,6 +119,7 @@ class CategoryView extends StatelessWidget {
                       child: FeedSectionComponent(
                         key: key,
                         section: item,
+                        showDecimal: viewModel.isCentsVisible,
                       ),
                     ),
                   FeedItemTransaction() => GestureDetector(
@@ -127,6 +131,7 @@ class CategoryView extends StatelessWidget {
                         child: FeedItemComponent(
                           key: key,
                           transaction: item.transaction,
+                          showDecimal: viewModel.isCentsVisible,
                         ),
                       ),
                     )

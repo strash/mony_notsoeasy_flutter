@@ -8,10 +8,12 @@ import "package:mony_app/features/feed/page/view_model.dart";
 
 class FeedSectionComponent extends StatelessWidget {
   final FeedItemSection section;
+  final bool showDecimal;
 
   const FeedSectionComponent({
     super.key,
     required this.section,
+    required this.showDecimal,
   });
 
   @override
@@ -46,7 +48,11 @@ class FeedSectionComponent extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 2.0),
             children: section.total.entries.map(
               (e) => Text(
-                e.value.currency(name: e.key.name, symbol: e.key.symbol),
+                e.value.currency(
+                  name: e.key.name,
+                  symbol: e.key.symbol,
+                  showDecimal: showDecimal,
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.golosText(

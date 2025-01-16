@@ -6,6 +6,7 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/page/view.dart";
 import "package:mony_app/features/category/use_case/use_case.dart";
+import "package:provider/provider.dart";
 
 final class CategoryPage extends StatefulWidget {
   final CategoryModel category;
@@ -35,6 +36,8 @@ final class CategoryViewModel extends ViewModelState<CategoryPage> {
   int scrollPage = 0;
   bool canLoadMore = true;
 
+  bool isCentsVisible = true;
+
   void _onFeedEvent(FeedScrollControllerEvent event) {
     if (!mounted) return;
     OnDataFetched().call(context, this);
@@ -51,7 +54,16 @@ final class CategoryViewModel extends ViewModelState<CategoryPage> {
     _scrollSub = _scrollController.addListener(_onFeedEvent);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
-      await OnInit().call(context, this);
+
+      final isVisible = await context
+          .read<DomainSharedPrefenecesService>()
+          .isSettingsCentsVisible();
+      setProtectedState(() {
+        isCentsVisible = isVisible;
+      });
+
+      if (!mounted) return;
+      OnInit().call(context, this);
     });
   }
 

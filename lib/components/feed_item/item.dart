@@ -9,11 +9,13 @@ import "package:mony_app/domain/models/transaction.dart";
 class FeedItemComponent extends StatelessWidget {
   final TransactionModel transaction;
   final bool showFullDate;
+  final bool showDecimal;
 
   const FeedItemComponent({
     super.key,
     required this.transaction,
     this.showFullDate = false,
+    required this.showDecimal,
   });
 
   @override
@@ -88,6 +90,7 @@ class FeedItemComponent extends StatelessWidget {
                     transaction.amount.currency(
                       name: transaction.account.currency.name,
                       symbol: transaction.account.currency.symbol,
+                      showDecimal: showDecimal,
                     ),
                     style: GoogleFonts.golosText(
                       fontSize: 18.0,

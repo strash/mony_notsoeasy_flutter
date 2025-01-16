@@ -5,8 +5,13 @@ import "package:mony_app/domain/models/transaction.dart";
 
 class TransactionAmountComponent extends StatelessWidget {
   final TransactionModel transaction;
+  final bool showDecimal;
 
-  const TransactionAmountComponent({super.key, required this.transaction});
+  const TransactionAmountComponent({
+    super.key,
+    required this.transaction,
+    required this.showDecimal,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +23,7 @@ class TransactionAmountComponent extends StatelessWidget {
           transaction.amount.currency(
             name: transaction.account.currency.name,
             symbol: transaction.account.currency.symbol,
+            showDecimal: showDecimal,
           ),
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(

@@ -3,10 +3,12 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/feed.dart";
 import "package:mony_app/features/feed/page/view.dart";
 import "package:mony_app/features/feed/use_case/use_case.dart";
 import "package:mony_app/features/navbar/navbar.dart";
+import "package:provider/provider.dart";
 
 export "./state.dart";
 
@@ -33,6 +35,8 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
     if (!pageController.isReady) return 0;
     return pageController.page?.toInt() ?? 0;
   }
+
+  bool isCentsVisible = true;
 
   void addPageScroll(int pageIndex) {
     final scrollController = FeedScrollController();
@@ -102,6 +106,14 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
       _navbarSub =
           context.viewModel<NavBarViewModel>().subject.listen(_onNavBarEvent);
 
+      final isVisible = await context
+          .read<DomainSharedPrefenecesService>()
+          .isSettingsCentsVisible();
+      setProtectedState(() {
+        isCentsVisible = isVisible;
+      });
+
+      if (!mounted) return;
       // -> scroll controllers
       OnInit().call(context, this).then((_) {
         for (final (index, _) in pages.indexed) {

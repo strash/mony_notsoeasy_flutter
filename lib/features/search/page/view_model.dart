@@ -7,9 +7,11 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_controller.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
 import "package:mony_app/domain/models/models.dart";
+import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/search/page/view.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:provider/provider.dart";
 
 part "./enums.dart";
 part "./route.dart";
@@ -65,6 +67,8 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   List<CategoryModel> categories = const [];
   List<TagModel> tags = const [];
 
+  bool isCentsVisible = true;
+
   ScrollController getPageTabController(ESearchTab tab) {
     return _pageTabScrollControllers.elementAt(tab.index).controller;
   }
@@ -92,8 +96,17 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
     _pageTabScrollSubs = _pageTabScrollControllers
         .map((e) => e.addListener(_onScroll))
         .toList(growable: false);
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
+
+      final isVisible = await context
+          .read<DomainSharedPrefenecesService>()
+          .isSettingsCentsVisible();
+      setProtectedState(() {
+        isCentsVisible = isVisible;
+      });
+
+      if (!mounted) return;
       OnPageCountRequested().call(context, this);
     });
   }

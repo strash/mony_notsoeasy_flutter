@@ -7,6 +7,7 @@ final class DomainSharedPrefenecesService {
   final _newTransactionKeyboardHintKey =
       "is_new_transaction_keybord_hint_accepted";
   final _settingsThemeMode = "settings_theme_mode";
+  final _settingsCents = "settings_cents";
 
   DomainSharedPrefenecesService({
     required SharedPreferencesLocalStorageRepository sharedPrefencesRepository,
@@ -18,7 +19,7 @@ final class DomainSharedPrefenecesService {
     return await _repo.getBool(_newTransactionKeyboardHintKey) ?? false;
   }
 
-  Future<bool> setIsNewTransactionKeyboardHintAccepted() async {
+  Future<bool> acceptNewTransactionKeyboardHint() async {
     await _repo.setBool(_newTransactionKeyboardHintKey, true);
     return true;
   }
@@ -31,7 +32,15 @@ final class DomainSharedPrefenecesService {
     );
   }
 
-  Future<void> setSettingsThemeMode(ThemeMode mode) async {
-    await _repo.setInt(_settingsThemeMode, mode.index);
+  Future<void> setSettingsThemeMode(ThemeMode value) async {
+    await _repo.setInt(_settingsThemeMode, value.index);
+  }
+
+  Future<bool> isSettingsCentsVisible() async {
+    return await _repo.getBool(_settingsCents) ?? true;
+  }
+
+  Future<void> setSettingsCents(bool value) async {
+    await _repo.setBool(_settingsCents, value);
   }
 }

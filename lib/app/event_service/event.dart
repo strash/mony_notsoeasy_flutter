@@ -78,3 +78,8 @@ final class EventSettingsThemeModeChanged extends Event {
   final ThemeMode value;
   EventSettingsThemeModeChanged(this.value);
 }
+
+final class EventSettingsCentsVisibilityChanged extends Event {
+  final bool value;
+  EventSettingsCentsVisibilityChanged(this.value);
+}

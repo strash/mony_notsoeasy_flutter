@@ -59,7 +59,10 @@ class TransactionView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // -> amount
-                  TransactionAmountComponent(transaction: transaction),
+                  TransactionAmountComponent(
+                    transaction: transaction,
+                    showDecimal: true,
+                  ),
                   const SizedBox(height: 10.0),
 
                   // -> date
