@@ -22,8 +22,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     final query = viewModel.input.text.trim();
 
     switch (event) {
-      case EventSettingsThemeModeChanged() ||
-            EventSettingsDefaultTransactionTypeChanged():
+      case EventSettingsThemeModeChanged():
         break;
 
       case EventAccountCreated():

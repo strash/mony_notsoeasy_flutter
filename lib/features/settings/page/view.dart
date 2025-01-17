@@ -72,9 +72,12 @@ class SettingsView extends StatelessWidget {
                           builder: (context) {
                             return Text(
                               viewModel.isColorsVisible ? "Весело" : "Скучно",
-                              style: DefaultTextStyle.of(context)
-                                  .style
-                                  .copyWith(color: theme.colorScheme.secondary),
+                              style:
+                                  DefaultTextStyle.of(context).style.copyWith(
+                                        color: viewModel.isColorsVisible
+                                            ? theme.colorScheme.secondary
+                                            : theme.colorScheme.tertiary,
+                                      ),
                             );
                           },
                         ),
