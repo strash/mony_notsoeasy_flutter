@@ -39,6 +39,7 @@ final class TagViewModel extends ViewModelState<TagPage> {
 
   bool isColorsVisible = true;
   bool isCentsVisible = true;
+  bool isTagsVisible = true;
 
   void _onFeedEvent(FeedScrollControllerEvent event) {
     if (!mounted) return;
@@ -60,9 +61,11 @@ final class TagViewModel extends ViewModelState<TagPage> {
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       final cents = await sharedPrefService.isSettingsCentsVisible();
+      final tags = await sharedPrefService.isSettingsTagsVisible();
       setProtectedState(() {
         isColorsVisible = colors;
         isCentsVisible = cents;
+        isTagsVisible = tags;
       });
 
       if (!mounted) return;

@@ -82,6 +82,7 @@ class SearchTabPageComponent extends StatelessWidget {
                         showFullDate: true,
                         showDecimal: viewModel.isCentsVisible,
                         showColors: viewModel.isColorsVisible,
+                        showTags: viewModel.isTagsVisible,
                       ),
                     ),
                   );

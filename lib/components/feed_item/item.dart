@@ -11,6 +11,7 @@ class FeedItemComponent extends StatelessWidget {
   final bool showFullDate;
   final bool showDecimal;
   final bool showColors;
+  final bool showTags;
 
   const FeedItemComponent({
     super.key,
@@ -18,6 +19,7 @@ class FeedItemComponent extends StatelessWidget {
     this.showFullDate = false,
     required this.showDecimal,
     required this.showColors,
+    required this.showTags,
   });
 
   @override
@@ -126,9 +128,9 @@ class FeedItemComponent extends StatelessWidget {
                     ),
                     const SizedBox(width: 12.0),
 
-                    // -> note
+                    // -> note or tags
                     if (transaction.note.isNotEmpty ||
-                        transaction.tags.isNotEmpty)
+                        transaction.tags.isNotEmpty && showTags)
                       Flexible(
                         child: transaction.note.isNotEmpty
                             ? Text(
@@ -148,7 +150,9 @@ class FeedItemComponent extends StatelessWidget {
               ),
 
               // -> tags
-              if (transaction.tags.isNotEmpty && transaction.note.isNotEmpty)
+              if (transaction.tags.isNotEmpty &&
+                  showTags &&
+                  transaction.note.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(top: 7.0),
                   child: FeedItemTagsComponent(tags: transaction.tags),

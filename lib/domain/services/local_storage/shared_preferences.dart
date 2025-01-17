@@ -9,6 +9,7 @@ final class DomainSharedPreferencesService {
   final _settingsThemeMode = "settings_theme_mode";
   final _settingsColors = "settings_colors";
   final _settingsCents = "settings_cents";
+  final _settingsTags = "settings_tags";
 
   DomainSharedPreferencesService({
     required SharedPreferencesLocalStorageRepository sharedPrefencesRepository,
@@ -51,5 +52,13 @@ final class DomainSharedPreferencesService {
 
   Future<void> setSettingsCents(bool value) async {
     await _repo.setBool(_settingsCents, value);
+  }
+
+  Future<bool> isSettingsTagsVisible() async {
+    return await _repo.getBool(_settingsTags) ?? true;
+  }
+
+  Future<void> setSettingsTagsVisibility(bool value) async {
+    await _repo.setBool(_settingsTags, value);
   }
 }

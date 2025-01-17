@@ -19,7 +19,7 @@ class SettingsGroupComponent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: theme.colorScheme.surfaceContainerHighest,
+          color: theme.colorScheme.surfaceContainer,
           shape: const SmoothRectangleBorder(
             borderRadius: SmoothBorderRadius.all(
               SmoothRadius(
@@ -34,7 +34,7 @@ class SettingsGroupComponent extends StatelessWidget {
           separatorBuilder: (context, index) {
             return SizedBox.fromSize(
               size: const Size.fromHeight(1.0),
-              child: ColoredBox(color: theme.colorScheme.surfaceContainer),
+              child: ColoredBox(color: theme.colorScheme.surfaceContainerLow),
             );
           },
           children: children,

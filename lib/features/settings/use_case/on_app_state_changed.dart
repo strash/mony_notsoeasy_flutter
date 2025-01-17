@@ -40,6 +40,11 @@ final class OnAppStateChanged extends UseCase<void, _TValue> {
         viewModel.setProtectedState(() {
           viewModel.isCentsVisible = value;
         });
+
+      case EventSettingsTagsVisibilityChanged(:final value):
+        viewModel.setProtectedState(() {
+          viewModel.isTagsVisible = value;
+        });
     }
   }
 }

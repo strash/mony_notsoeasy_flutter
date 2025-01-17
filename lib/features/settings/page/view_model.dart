@@ -21,6 +21,7 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
   ThemeMode themeMode = ThemeMode.system;
   bool isColorsVisible = true;
   bool isCentsVisible = true;
+  bool isTagsVisible = true;
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
@@ -33,14 +34,16 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
     WidgetsBinding.instance.addPostFrameCallback((timastamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final read = context.read<DomainSharedPreferencesService>();
-      final mode = await read.getSettingsThemeMode();
-      final colors = await read.isSettingsColorsVisible();
-      final cents = await read.isSettingsCentsVisible();
+      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final mode = await sharedPrefService.getSettingsThemeMode();
+      final colors = await sharedPrefService.isSettingsColorsVisible();
+      final cents = await sharedPrefService.isSettingsCentsVisible();
+      final tags = await sharedPrefService.isSettingsTagsVisible();
       setProtectedState(() {
         themeMode = mode;
         isColorsVisible = colors;
         isCentsVisible = cents;
+        isTagsVisible = tags;
       });
     });
   }
@@ -59,6 +62,7 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
         () => OnThemeModePressed(),
         () => OnColorsToggled(),
         () => OnCentsToggled(),
+        () => OnTagsToggled(),
       ],
       child: const SettingsView(),
     );

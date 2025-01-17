@@ -88,3 +88,8 @@ final class EventSettingsCentsVisibilityChanged extends Event {
   final bool value;
   EventSettingsCentsVisibilityChanged(this.value);
 }
+
+final class EventSettingsTagsVisibilityChanged extends Event {
+  final bool value;
+  EventSettingsTagsVisibilityChanged(this.value);
+}

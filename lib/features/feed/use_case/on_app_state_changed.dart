@@ -18,6 +18,7 @@ part "./on_app_state_changed/on_transaction_deleted.dart";
 part "./on_app_state_changed/on_transaction_updated.dart";
 part "./on_app_state_changed/on_settings_cents_visibility_changed.dart";
 part "./on_app_state_changed/on_settings_colors_visibility_changed.dart";
+part "./on_app_state_changed/on_settings_tags_visibility_changed.dart";
 
 typedef _TValue = ({FeedViewModel viewModel, Event event});
 
@@ -70,6 +71,10 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventSettingsCentsVisibilityChanged():
         const _OnSettingsCentsVisibilityChanged()
+            .call(context, viewModel, event);
+
+      case EventSettingsTagsVisibilityChanged():
+        const _OnSettingsTagsVisibilityChanged()
             .call(context, viewModel, event);
     }
   }

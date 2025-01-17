@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/navbar/page/view.dart";
@@ -20,6 +19,7 @@ class SettingsView extends StatelessWidget {
     final onThemeModePressed = viewModel<OnThemeModePressed>();
     final onColorsToggled = viewModel<OnColorsToggled>();
     final onCentsToggled = viewModel<OnCentsToggled>();
+    final onTagsToggled = viewModel<OnTagsToggled>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -49,21 +49,13 @@ class SettingsView extends StatelessWidget {
                     SettingsEntryComponent(
                       onTap: () => onThemeModePressed(context),
                       title: const Text("Тема"),
-                      trailing: Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: SvgPicture.asset(
-                          switch (viewModel.themeMode) {
-                            ThemeMode.system => Assets.icons.aCircle,
-                            ThemeMode.light => Assets.icons.sunMaxFill,
-                            ThemeMode.dark => Assets.icons.moonFill,
-                          },
-                          width: 26.0,
-                          height: 26.0,
-                          colorFilter: ColorFilter.mode(
-                            theme.colorScheme.secondary,
-                            BlendMode.srcIn,
-                          ),
-                        ),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: switch (viewModel.themeMode) {
+                          ThemeMode.system => Assets.icons.aCircle,
+                          ThemeMode.light => Assets.icons.sunMaxFill,
+                          ThemeMode.dark => Assets.icons.moonFill,
+                        },
+                        color: theme.colorScheme.secondary,
                       ),
                     ),
 
@@ -71,21 +63,13 @@ class SettingsView extends StatelessWidget {
                     SettingsEntryComponent(
                       onTap: () => onColorsToggled(context),
                       title: const Text("Больше цвета"),
-                      trailing: Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: SvgPicture.asset(
-                          viewModel.isColorsVisible
-                              ? Assets.icons.eye
-                              : Assets.icons.eyeSlash,
-                          width: 26.0,
-                          height: 26.0,
-                          colorFilter: ColorFilter.mode(
-                            viewModel.isColorsVisible
-                                ? theme.colorScheme.secondary
-                                : theme.colorScheme.onSurfaceVariant,
-                            BlendMode.srcIn,
-                          ),
-                        ),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: viewModel.isColorsVisible
+                            ? Assets.icons.eye
+                            : Assets.icons.eyeSlash,
+                        color: viewModel.isColorsVisible
+                            ? theme.colorScheme.secondary
+                            : theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -97,25 +81,29 @@ class SettingsView extends StatelessWidget {
                     SettingsEntryComponent(
                       onTap: () => onCentsToggled(context),
                       title: const Text("Копейки"),
-                      trailing: Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: SvgPicture.asset(
-                          viewModel.isCentsVisible
-                              ? Assets.icons.eye
-                              : Assets.icons.eyeSlash,
-                          width: 26.0,
-                          height: 26.0,
-                          colorFilter: ColorFilter.mode(
-                            viewModel.isCentsVisible
-                                ? theme.colorScheme.secondary
-                                : theme.colorScheme.onSurfaceVariant,
-                            BlendMode.srcIn,
-                          ),
-                        ),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: viewModel.isCentsVisible
+                            ? Assets.icons.eye
+                            : Assets.icons.eyeSlash,
+                        color: viewModel.isCentsVisible
+                            ? theme.colorScheme.secondary
+                            : theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
 
-                    // TODO: Отображать теги в ленте
+                    // tags in feed
+                    SettingsEntryComponent(
+                      onTap: () => onTagsToggled(context),
+                      title: const Text("Теги в ленте"),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: viewModel.isTagsVisible
+                            ? Assets.icons.eye
+                            : Assets.icons.eyeSlash,
+                        color: viewModel.isTagsVisible
+                            ? theme.colorScheme.secondary
+                            : theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
                   ],
                 ),
 

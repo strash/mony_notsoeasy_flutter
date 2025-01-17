@@ -69,6 +69,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
 
   bool isCentsVisible = true;
   bool isColorsVisible = true;
+  bool isTagsVisible = true;
 
   ScrollController getPageTabController(ESearchTab tab) {
     return _pageTabScrollControllers.elementAt(tab.index).controller;
@@ -103,9 +104,11 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       final cents = await sharedPrefService.isSettingsCentsVisible();
+      final tags = await sharedPrefService.isSettingsTagsVisible();
       setProtectedState(() {
         isColorsVisible = colors;
         isCentsVisible = cents;
+        isTagsVisible = tags;
       });
 
       if (!mounted) return;
