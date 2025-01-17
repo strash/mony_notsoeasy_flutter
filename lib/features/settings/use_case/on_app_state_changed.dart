@@ -45,6 +45,11 @@ final class OnAppStateChanged extends UseCase<void, _TValue> {
         viewModel.setProtectedState(() {
           viewModel.isTagsVisible = value;
         });
+
+      case EventSettingsDefaultTransactionTypeChanged(:final value):
+        viewModel.setProtectedState(() {
+          viewModel.defaultTransactionType = value;
+        });
     }
   }
 }

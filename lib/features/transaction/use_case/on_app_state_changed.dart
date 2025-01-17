@@ -21,7 +21,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             EventTransactionCreated() ||
             EventSettingsThemeModeChanged() ||
             EventSettingsCentsVisibilityChanged() ||
-            EventSettingsTagsVisibilityChanged():
+            EventSettingsTagsVisibilityChanged() ||
+            EventSettingsDefaultTransactionTypeChanged():
         break;
 
       case EventAccountUpdated(value: final account):

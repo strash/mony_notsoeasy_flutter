@@ -172,9 +172,15 @@ final class TransactionFormViewModel
     );
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final hint =
+          await sharedPrefService.isNewTransactionKeyboardHintAccepted();
       final colors = await sharedPrefService.isSettingsColorsVisible();
+      final transactionType =
+          await sharedPrefService.getSettingsDefaultTransactionType();
       setProtectedState(() {
+        isKeyboardHintAccepted = hint;
         isColorsVisible = colors;
+        if (transaction == null) typeController.value = transactionType;
       });
 
       if (!mounted) return;

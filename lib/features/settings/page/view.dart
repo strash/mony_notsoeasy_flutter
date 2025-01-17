@@ -20,6 +20,7 @@ class SettingsView extends StatelessWidget {
     final onColorsToggled = viewModel<OnColorsToggled>();
     final onCentsToggled = viewModel<OnCentsToggled>();
     final onTagsToggled = viewModel<OnTagsToggled>();
+    final onTransactionToggled = viewModel<OnTransactionTypeToggled>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -44,6 +45,11 @@ class SettingsView extends StatelessWidget {
               },
               children: [
                 SettingsGroupComponent(
+                  footer: Text(
+                    viewModel.isColorsVisible
+                        ? "Если слишком весело, можно сделать скучнее."
+                        : "Если слишком скучно, можно сделать веселее.",
+                  ),
                   children: [
                     // -> theme mode
                     SettingsEntryComponent(
@@ -65,11 +71,11 @@ class SettingsView extends StatelessWidget {
                       title: const Text("Больше цвета"),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon: viewModel.isColorsVisible
-                            ? Assets.icons.eye
-                            : Assets.icons.eyeSlash,
+                            ? Assets.icons.checkmark
+                            : Assets.icons.xmark,
                         color: viewModel.isColorsVisible
                             ? theme.colorScheme.secondary
-                            : theme.colorScheme.onSurfaceVariant,
+                            : theme.colorScheme.error,
                       ),
                     ),
                   ],
@@ -80,34 +86,58 @@ class SettingsView extends StatelessWidget {
                     // -> cents
                     SettingsEntryComponent(
                       onTap: () => onCentsToggled(context),
-                      title: const Text("Копейки"),
+                      title: const Text("Отображать копейки"),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon: viewModel.isCentsVisible
-                            ? Assets.icons.eye
-                            : Assets.icons.eyeSlash,
+                            ? Assets.icons.checkmark
+                            : Assets.icons.xmark,
                         color: viewModel.isCentsVisible
                             ? theme.colorScheme.secondary
-                            : theme.colorScheme.onSurfaceVariant,
+                            : theme.colorScheme.error,
                       ),
                     ),
 
                     // tags in feed
                     SettingsEntryComponent(
                       onTap: () => onTagsToggled(context),
-                      title: const Text("Теги в ленте"),
+                      title: const Text("Отображать теги в ленте"),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon: viewModel.isTagsVisible
-                            ? Assets.icons.eye
-                            : Assets.icons.eyeSlash,
+                            ? Assets.icons.checkmark
+                            : Assets.icons.xmark,
                         color: viewModel.isTagsVisible
                             ? theme.colorScheme.secondary
-                            : theme.colorScheme.onSurfaceVariant,
+                            : theme.colorScheme.error,
                       ),
                     ),
                   ],
                 ),
 
-                // TODO: Тип транзакции по-умолчанию при создании транзакции
+                // -> default transaction type
+                SettingsGroupComponent(
+                  footer: const Text("При создании новой транзакции этот "
+                      "тип будет выбран по-умолчанию."),
+                  children: [
+                    SettingsEntryComponent(
+                      onTap: () => onTransactionToggled(context),
+                      title: const Text("Тип транзакции"),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: Builder(
+                          builder: (context) {
+                            return Text(
+                              viewModel.defaultTransactionType.description,
+                              style: DefaultTextStyle.of(context)
+                                  .style
+                                  .copyWith(color: theme.colorScheme.secondary),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
                 // TODO: Подтверждать удаление транзакций (да/нет)
                 // TODO: Подтверждать удаление счета (да/нет)
                 // TODO: Подтверждать удаление категории (да/нет)

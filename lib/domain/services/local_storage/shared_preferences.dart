@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/data/local_storage/repository/shared_preferences.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
 
 final class DomainSharedPreferencesService {
   final SharedPreferencesLocalStorageRepository _repo;
@@ -10,6 +11,7 @@ final class DomainSharedPreferencesService {
   final _settingsColors = "settings_colors";
   final _settingsCents = "settings_cents";
   final _settingsTags = "settings_tags";
+  final _settingsDefaultTransactionType = "sttings_default_transaction_type";
 
   DomainSharedPreferencesService({
     required SharedPreferencesLocalStorageRepository sharedPrefencesRepository,
@@ -60,5 +62,15 @@ final class DomainSharedPreferencesService {
 
   Future<void> setSettingsTagsVisibility(bool value) async {
     await _repo.setBool(_settingsTags, value);
+  }
+
+  Future<ETransactionType> getSettingsDefaultTransactionType() async {
+    final value = await _repo.getString(_settingsDefaultTransactionType) ??
+        ETransactionType.defaultValue.value;
+    return ETransactionType.from(value);
+  }
+
+  Future<void> setSettingsDefaultTransactionType(ETransactionType value) async {
+    await _repo.setString(_settingsDefaultTransactionType, value.value);
   }
 }

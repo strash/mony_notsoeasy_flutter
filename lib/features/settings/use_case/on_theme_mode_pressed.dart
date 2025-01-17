@@ -11,13 +11,13 @@ final class OnThemeModePressed extends UseCase<Future<void>, dynamic> {
     final sharedPrefService = context.read<DomainSharedPreferencesService>();
     final appService = context.viewModel<AppEventService>();
 
-    final currMode = await sharedPrefService.getSettingsThemeMode();
-    final mode = ThemeMode.values.elementAt(
-      (currMode.index + 1).wrapi(0, ThemeMode.values.length),
+    final currValue = await sharedPrefService.getSettingsThemeMode();
+    final value = ThemeMode.values.elementAt(
+      (currValue.index + 1).wrapi(0, ThemeMode.values.length),
     );
 
-    sharedPrefService.setSettingsThemeMode(mode);
+    sharedPrefService.setSettingsThemeMode(value);
 
-    appService.notify(EventSettingsThemeModeChanged(mode));
+    appService.notify(EventSettingsThemeModeChanged(value));
   }
 }

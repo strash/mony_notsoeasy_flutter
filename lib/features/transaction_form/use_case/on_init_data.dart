@@ -13,13 +13,9 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
   ]) async {
     if (viewModel == null) throw ArgumentError.notNull();
 
-    final prefService = context.read<DomainSharedPreferencesService>();
     final accountService = context.read<DomainAccountService>();
     final categoryService = context.read<DomainCategoryService>();
     final transactionService = context.read<DomainTransactionService>();
-
-    final isKeyboardHintAccepted =
-        await prefService.isNewTransactionKeyboardHintAccepted();
 
     final transaction = viewModel.transaction;
     final accounts = await accountService.getAll();
@@ -59,7 +55,6 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
     viewModel.setProtectedState(() {
       viewModel.accounts = accounts;
       viewModel.categories = categories;
-      viewModel.isKeyboardHintAccepted = isKeyboardHintAccepted;
     });
   }
 }

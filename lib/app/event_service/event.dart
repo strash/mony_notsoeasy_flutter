@@ -93,3 +93,8 @@ final class EventSettingsTagsVisibilityChanged extends Event {
   final bool value;
   EventSettingsTagsVisibilityChanged(this.value);
 }
+
+final class EventSettingsDefaultTransactionTypeChanged extends Event {
+  final ETransactionType value;
+  EventSettingsDefaultTransactionTypeChanged(this.value);
+}

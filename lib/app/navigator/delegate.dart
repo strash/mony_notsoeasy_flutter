@@ -44,7 +44,8 @@ final class NavigatorDelegate extends RouterDelegate<Object>
           EventSettingsThemeModeChanged() ||
           EventSettingsColorsVisibilityChanged() ||
           EventSettingsCentsVisibilityChanged() ||
-          EventSettingsTagsVisibilityChanged() =>
+          EventSettingsTagsVisibilityChanged() ||
+          EventSettingsDefaultTransactionTypeChanged() =>
             false,
         };
       }),
