@@ -87,7 +87,7 @@ class _TabGroupComponentState<T extends IDescriptable>
 
           // -> active bg
           ListenableBuilder(
-            listenable: Listenable.merge([_rectNotifier, widget.controller]),
+            listenable: _rectNotifier,
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: theme.colorScheme.surface,
