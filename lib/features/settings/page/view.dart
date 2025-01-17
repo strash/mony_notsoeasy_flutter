@@ -138,13 +138,102 @@ class SettingsView extends StatelessWidget {
                   ],
                 ),
 
-                // TODO: Подтверждать удаление транзакций (да/нет)
-                // TODO: Подтверждать удаление счета (да/нет)
-                // TODO: Подтверждать удаление категории (да/нет)
-                // TODO: Подтверждать удаление тега (да/нет)
-                // TODO: Экспорт
-                // TODO: Импорт
+                // -> deletion confirmations
+                SettingsGroupComponent(
+                  header: const Text("Подтверждение удаления"),
+                  children: [
+                    // TODO: Подтверждать удаление транзакций (да/нет)
+                    SettingsEntryComponent(
+                      title: const Text("Транзакций"),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: viewModel.isTagsVisible
+                            ? Assets.icons.checkmark
+                            : Assets.icons.xmark,
+                        color: viewModel.isTagsVisible
+                            ? theme.colorScheme.secondary
+                            : theme.colorScheme.error,
+                      ),
+                    ),
+
+                    // TODO: Подтверждать удаление счета (да/нет)
+                    SettingsEntryComponent(
+                      title: const Text("Счетов"),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: viewModel.isTagsVisible
+                            ? Assets.icons.checkmark
+                            : Assets.icons.xmark,
+                        color: viewModel.isTagsVisible
+                            ? theme.colorScheme.secondary
+                            : theme.colorScheme.error,
+                      ),
+                    ),
+
+                    // TODO: Подтверждать удаление категории (да/нет)
+                    SettingsEntryComponent(
+                      title: const Text("Категорий"),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: viewModel.isTagsVisible
+                            ? Assets.icons.checkmark
+                            : Assets.icons.xmark,
+                        color: viewModel.isTagsVisible
+                            ? theme.colorScheme.secondary
+                            : theme.colorScheme.error,
+                      ),
+                    ),
+
+                    // TODO: Подтверждать удаление тега (да/нет)
+                    SettingsEntryComponent(
+                      title: const Text("Тегов"),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: viewModel.isTagsVisible
+                            ? Assets.icons.checkmark
+                            : Assets.icons.xmark,
+                        color: viewModel.isTagsVisible
+                            ? theme.colorScheme.secondary
+                            : theme.colorScheme.error,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SettingsGroupComponent(
+                  children: [
+                    // TODO: Импорт
+                    // -> import
+                    SettingsEntryComponent(
+                      title: Text("Импорт"),
+                    ),
+
+                    // TODO: Экспорт
+                    // -> export
+                    SettingsEntryComponent(
+                      title: Text("Экспорт"),
+                    ),
+                  ],
+                ),
+
                 // TODO: Удаление данных
+                // -> delete data
+                SettingsGroupComponent(
+                  children: [
+                    SettingsEntryComponent(
+                      title: Flexible(
+                        child: Builder(
+                          builder: (context) {
+                            return Center(
+                              child: Text(
+                                "Удалить все данные",
+                                style: DefaultTextStyle.of(context)
+                                    .style
+                                    .copyWith(color: theme.colorScheme.error),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

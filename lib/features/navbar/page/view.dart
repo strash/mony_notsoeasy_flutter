@@ -78,7 +78,7 @@ class NavBarView extends StatelessWidget {
                               tileMode: TileMode.repeated,
                             ),
                             child: ColoredBox(
-                              color: theme.colorScheme.surfaceContainer
+                              color: theme.colorScheme.surfaceContainerHigh
                                   .withValues(alpha: kTranslucentPanelOpacity),
                               child: Row(
                                 children: NavBarTabItem.values.map((e) {

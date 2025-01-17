@@ -6,12 +6,14 @@ import "package:mony_app/features/settings/components/entry.dart";
 
 class SettingsGroupComponent extends StatelessWidget {
   final List<SettingsEntryComponent> children;
+  final Widget? header;
   final Widget? footer;
 
   const SettingsGroupComponent({
     super.key,
-    required this.children,
+    this.header,
     this.footer,
+    required this.children,
   });
 
   @override
@@ -23,6 +25,20 @@ class SettingsGroupComponent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // -> header
+          if (header != null)
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: DefaultTextStyle(
+                style: GoogleFonts.golosText(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+                child: header!,
+              ),
+            ),
+
           // -> container
           DecoratedBox(
             decoration: ShapeDecoration(

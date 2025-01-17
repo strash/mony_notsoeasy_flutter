@@ -41,6 +41,7 @@ class SettingsEntryComponent extends StatelessWidget {
                 DefaultTextStyle(
                   style: GoogleFonts.golosText(
                     fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                   child: trailing!,

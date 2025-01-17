@@ -17,8 +17,8 @@ class SettingsEntryTrailingIconComponent extends StatelessWidget {
       padding: const EdgeInsets.only(right: 15.0),
       child: SvgPicture.asset(
         icon,
-        width: 26.0,
-        height: 26.0,
+        width: 24.0,
+        height: 24.0,
         colorFilter: ColorFilter.mode(
           color,
           BlendMode.srcIn,
