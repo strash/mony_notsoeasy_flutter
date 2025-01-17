@@ -16,11 +16,20 @@ class SettingsView extends StatelessWidget {
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<SettingsViewModel>();
+
     final onThemeModePressed = viewModel<OnThemeModePressed>();
     final onColorsToggled = viewModel<OnColorsToggled>();
+
     final onCentsToggled = viewModel<OnCentsToggled>();
     final onTagsToggled = viewModel<OnTagsToggled>();
+
     final onTransactionToggled = viewModel<OnTransactionTypeToggled>();
+
+    final onConfirmTransactionToggled =
+        viewModel<OnConfirmTransactionToggled>();
+    final onConfirmAccountToggled = viewModel<OnConfirmAccountToggled>();
+    final onConfirmCategoryToggled = viewModel<OnConfirmCategoryToggled>();
+    final onConfirmTagToggled = viewModel<OnConfirmTagToggled>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -147,53 +156,50 @@ class SettingsView extends StatelessWidget {
                 SettingsGroupComponent(
                   header: const Text("Подтверждение удаления"),
                   children: [
-                    // TODO: Подтверждать удаление транзакций (да/нет)
                     SettingsEntryComponent(
+                      onTap: () => onConfirmTransactionToggled(context),
                       title: const Text("Транзакций"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.isTagsVisible
+                        icon: viewModel.confirmTransaction
                             ? Assets.icons.checkmark
                             : Assets.icons.xmark,
-                        color: viewModel.isTagsVisible
+                        color: viewModel.confirmTransaction
                             ? theme.colorScheme.secondary
                             : theme.colorScheme.error,
                       ),
                     ),
-
-                    // TODO: Подтверждать удаление счета (да/нет)
                     SettingsEntryComponent(
+                      onTap: () => onConfirmAccountToggled(context),
                       title: const Text("Счетов"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.isTagsVisible
+                        icon: viewModel.confirmAccount
                             ? Assets.icons.checkmark
                             : Assets.icons.xmark,
-                        color: viewModel.isTagsVisible
+                        color: viewModel.confirmAccount
                             ? theme.colorScheme.secondary
                             : theme.colorScheme.error,
                       ),
                     ),
-
-                    // TODO: Подтверждать удаление категории (да/нет)
                     SettingsEntryComponent(
+                      onTap: () => onConfirmCategoryToggled(context),
                       title: const Text("Категорий"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.isTagsVisible
+                        icon: viewModel.confirmCategory
                             ? Assets.icons.checkmark
                             : Assets.icons.xmark,
-                        color: viewModel.isTagsVisible
+                        color: viewModel.confirmCategory
                             ? theme.colorScheme.secondary
                             : theme.colorScheme.error,
                       ),
                     ),
-
-                    // TODO: Подтверждать удаление тега (да/нет)
                     SettingsEntryComponent(
+                      onTap: () => onConfirmTagToggled(context),
                       title: const Text("Тегов"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.isTagsVisible
+                        icon: viewModel.confirmTag
                             ? Assets.icons.checkmark
                             : Assets.icons.xmark,
-                        color: viewModel.isTagsVisible
+                        color: viewModel.confirmTag
                             ? theme.colorScheme.secondary
                             : theme.colorScheme.error,
                       ),

@@ -11,14 +11,20 @@ final class OnDeleteTransactionPressed
   Future<void> call(BuildContext context, [TransactionModel? value]) async {
     if (value == null) throw ArgumentError.notNull();
 
-    final result = await AlertComponet.show(
-      context,
-      title: const Text("Удаление транзакции"),
-      description: const Text(
-        // TODO: не забыть сделать эту фичу
-        "Эту проверку можно отключить в настройках.",
-      ),
-    );
+    final sharedPrefService = context.read<DomainSharedPreferencesService>();
+    final shouldConfirm =
+        await sharedPrefService.getSettingsConfirmTransaction();
+
+    if (!context.mounted) return;
+    final result = shouldConfirm
+        ? await AlertComponet.show(
+            context,
+            title: const Text("Удаление транзакции"),
+            description: const Text(
+              "Эту проверку можно отключить в настройках.",
+            ),
+          )
+        : EAlertResult.ok;
 
     if (!context.mounted || result == null) return;
 

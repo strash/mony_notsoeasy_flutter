@@ -12,6 +12,10 @@ final class DomainSharedPreferencesService {
   final _settingsCents = "settings_cents";
   final _settingsTags = "settings_tags";
   final _settingsDefaultTransactionType = "sttings_default_transaction_type";
+  final _settingsConfirmTransaction = "setting_confirm_transaction";
+  final _settingsConfirmAccount = "settings_confirm_account";
+  final _settingsConfirmCategory = "settings_confirm_category";
+  final _settingsConfirmTag = "settings_confirm_tag";
 
   DomainSharedPreferencesService({
     required SharedPreferencesLocalStorageRepository sharedPrefencesRepository,
@@ -72,5 +76,37 @@ final class DomainSharedPreferencesService {
 
   Future<void> setSettingsDefaultTransactionType(ETransactionType value) async {
     await _repo.setString(_settingsDefaultTransactionType, value.value);
+  }
+
+  Future<bool> getSettingsConfirmTransaction() async {
+    return await _repo.getBool(_settingsConfirmTransaction) ?? true;
+  }
+
+  Future<void> setSettingsConfirmTransaction(bool value) async {
+    await _repo.setBool(_settingsConfirmTransaction, value);
+  }
+
+  Future<bool> getSettingsConfirmAccount() async {
+    return await _repo.getBool(_settingsConfirmAccount) ?? true;
+  }
+
+  Future<void> setSettingsConfirmAccount(bool value) async {
+    await _repo.setBool(_settingsConfirmAccount, value);
+  }
+
+  Future<bool> getSettingsConfirmCategory() async {
+    return await _repo.getBool(_settingsConfirmCategory) ?? true;
+  }
+
+  Future<void> setSettingsConfirmCategory(bool value) async {
+    await _repo.setBool(_settingsConfirmCategory, value);
+  }
+
+  Future<bool> getSettingsConfirmTag() async {
+    return await _repo.getBool(_settingsConfirmTag) ?? true;
+  }
+
+  Future<void> setSettingsConfirmTag(bool value) async {
+    await _repo.setBool(_settingsConfirmTag, value);
   }
 }

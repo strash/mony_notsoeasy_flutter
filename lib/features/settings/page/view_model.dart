@@ -23,6 +23,10 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
   bool isCentsVisible = true;
   bool isTagsVisible = true;
   ETransactionType defaultTransactionType = ETransactionType.defaultValue;
+  bool confirmTransaction = true;
+  bool confirmAccount = true;
+  bool confirmCategory = true;
+  bool confirmTag = true;
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
@@ -42,12 +46,21 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
       final tags = await sharedPrefService.isSettingsTagsVisible();
       final transactionType =
           await sharedPrefService.getSettingsDefaultTransactionType();
+      final confTransaction =
+          await sharedPrefService.getSettingsConfirmTransaction();
+      final confAccount = await sharedPrefService.getSettingsConfirmAccount();
+      final confCategory = await sharedPrefService.getSettingsConfirmCategory();
+      final confTag = await sharedPrefService.getSettingsConfirmTag();
       setProtectedState(() {
         themeMode = mode;
         isColorsVisible = colors;
         isCentsVisible = cents;
         isTagsVisible = tags;
         defaultTransactionType = transactionType;
+        confirmTransaction = confTransaction;
+        confirmAccount = confAccount;
+        confirmCategory = confCategory;
+        confirmTag = confTag;
       });
     });
   }
@@ -68,6 +81,10 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
         () => OnCentsToggled(),
         () => OnTagsToggled(),
         () => OnTransactionTypeToggled(),
+        () => OnConfirmTransactionToggled(),
+        () => OnConfirmAccountToggled(),
+        () => OnConfirmCategoryToggled(),
+        () => OnConfirmTagToggled(),
       ],
       child: const SettingsView(),
     );

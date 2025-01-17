@@ -10,14 +10,20 @@ final class OnDeletePressed extends UseCase<Future<void>, CategoryModel> {
   Future<void> call(BuildContext context, [CategoryModel? value]) async {
     if (value == null) throw ArgumentError.notNull();
 
-    final result = await AlertComponet.show(
-      context,
-      title: const Text("Удаление категории"),
-      description: const Text(
-        "Вместе с категорией будут удалены все транзакции, связанные с этой "
-        "категорией.",
-      ),
-    );
+    final sharedPrefService = context.read<DomainSharedPreferencesService>();
+    final shouldConfirm = await sharedPrefService.getSettingsConfirmCategory();
+
+    if (!context.mounted) return;
+    final result = shouldConfirm
+        ? await AlertComponet.show(
+            context,
+            title: const Text("Удаление категории"),
+            description: const Text(
+              "Вместе с категорией будут удалены все транзакции, связанные с "
+              "этой категорией. Эту проверку можно отключить в настройках.",
+            ),
+          )
+        : EAlertResult.ok;
 
     if (!context.mounted || result == null) return;
 

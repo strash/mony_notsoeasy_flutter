@@ -5,6 +5,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/alert/component.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/services/database/account.dart";
+import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:provider/provider.dart";
 
 final class OnDeletePressed extends UseCase<Future<void>, AccountModel> {
@@ -12,14 +13,20 @@ final class OnDeletePressed extends UseCase<Future<void>, AccountModel> {
   Future<void> call(BuildContext context, [AccountModel? value]) async {
     if (value == null) throw ArgumentError.notNull();
 
-    final result = await AlertComponet.show(
-      context,
-      title: const Text("Удаление счета"),
-      description: const Text(
-        "Вместе со счетом будут удалены все транзакции, связанные с этим "
-        "счетом.",
-      ),
-    );
+    final sharedPrefService = context.read<DomainSharedPreferencesService>();
+    final shouldConfirm = await sharedPrefService.getSettingsConfirmAccount();
+
+    if (!context.mounted) return;
+    final result = shouldConfirm
+        ? await AlertComponet.show(
+            context,
+            title: const Text("Удаление счета"),
+            description: const Text(
+              "Вместе со счетом будут удалены все транзакции, связанные с этим "
+              "счетом. Эту проверку можно отключить в настройках.",
+            ),
+          )
+        : EAlertResult.ok;
 
     if (!context.mounted || result == null) return;
 
