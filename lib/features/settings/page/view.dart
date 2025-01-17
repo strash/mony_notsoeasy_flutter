@@ -45,11 +45,8 @@ class SettingsView extends StatelessWidget {
               },
               children: [
                 SettingsGroupComponent(
-                  footer: Text(
-                    viewModel.isColorsVisible
-                        ? "Если слишком весело, можно сделать скучнее."
-                        : "Если слишком скучно, можно сделать веселее.",
-                  ),
+                  footer:
+                      const Text("Влияет на счета, категории и транзакции."),
                   children: [
                     // -> theme mode
                     SettingsEntryComponent(
@@ -68,14 +65,19 @@ class SettingsView extends StatelessWidget {
                     // -> color mode
                     SettingsEntryComponent(
                       onTap: () => onColorsToggled(context),
-                      title: const Text("Больше цвета"),
-                      trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.isColorsVisible
-                            ? Assets.icons.checkmark
-                            : Assets.icons.xmark,
-                        color: viewModel.isColorsVisible
-                            ? theme.colorScheme.secondary
-                            : theme.colorScheme.error,
+                      title: const Text("Внений вид"),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: Builder(
+                          builder: (context) {
+                            return Text(
+                              viewModel.isColorsVisible ? "Весело" : "Скучно",
+                              style: DefaultTextStyle.of(context)
+                                  .style
+                                  .copyWith(color: theme.colorScheme.secondary),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
