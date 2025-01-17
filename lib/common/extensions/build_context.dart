@@ -24,10 +24,14 @@ extension BuildContextEx on BuildContext {
     bool rootNavigator = false,
     bool noTransition = false,
   }) {
-    var navigator = Navigator.of(this);
-    if (rootNavigator) navigator = appNavigatorKey.currentState!;
+    final NavigatorState navigator;
+    if (rootNavigator) {
+      navigator = appNavigatorKey.currentState!;
+    } else {
+      navigator = Navigator.of(this);
+    }
 
-    Route<T> route = MaterialPageRoute(builder: (context) => page);
+    final Route<T> route;
     if (noTransition) {
       route = PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 200),
@@ -40,7 +44,10 @@ extension BuildContextEx on BuildContext {
         },
         pageBuilder: (context, _, __) => page,
       );
+    } else {
+      route = MaterialPageRoute(builder: (context) => page);
     }
+
     return navigator.push<T>(route);
   }
 }
