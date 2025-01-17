@@ -132,9 +132,12 @@ class _TabGroupComponentState<T extends IDescriptable>
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: widget.values.map((value) {
+                    final isActive = value == widget.controller.value;
+
                     return TabGroupEntryComponent<T>(
+                      key: Key("${value.name}_$isActive"),
                       value: value,
-                      isActive: value == widget.controller.value,
+                      isActive: isActive,
                       rectNotifier: _rectNotifier,
                       parent: _getBox,
                       onTap: (T newValue) {
