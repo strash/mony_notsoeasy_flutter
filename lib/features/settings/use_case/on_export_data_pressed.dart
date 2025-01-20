@@ -15,6 +15,8 @@ final class OnExportDataPressed extends UseCase<Future<void>, dynamic> {
     final rec = await transactionService.dumpData();
     final Map<String, dynamic> data = {
       "version": const String.fromEnvironment("MIGRATE_VERSION"),
+      "build_name": const String.fromEnvironment("BUILD_NAME"),
+      "build_number": const String.fromEnvironment("BUILD_NUMBER"),
       "name": "mony_app",
       "date": DateTime.now().toUtc().toIso8601String(),
       "accounts": await accountService.dumpData(),
