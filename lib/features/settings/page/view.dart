@@ -31,6 +31,8 @@ class SettingsView extends StatelessWidget {
     final onConfirmCategoryToggled = viewModel<OnConfirmCategoryToggled>();
     final onConfirmTagToggled = viewModel<OnConfirmTagToggled>();
 
+    final onImportDataPressed = viewModel<OnImportDataPressed>();
+    final onExportDataPressed = viewModel<OnExportDataPressed>();
     final onDeleteDataPressed = viewModel<OnDeleteDataPressed>();
 
     return Scaffold(
@@ -209,18 +211,18 @@ class SettingsView extends StatelessWidget {
                   ],
                 ),
 
-                const SettingsGroupComponent(
+                SettingsGroupComponent(
                   children: [
-                    // TODO: Импорт
                     // -> import
                     SettingsEntryComponent(
-                      title: Text("Импорт"),
+                      onTap: () => onImportDataPressed(context),
+                      title: const Text("Импорт"),
                     ),
 
-                    // TODO: Экспорт
                     // -> export
                     SettingsEntryComponent(
-                      title: Text("Экспорт"),
+                      onTap: () => onExportDataPressed(context),
+                      title: const Text("Экспорт"),
                     ),
                   ],
                 ),
