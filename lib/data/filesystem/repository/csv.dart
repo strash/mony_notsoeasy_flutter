@@ -13,16 +13,18 @@ abstract base class CsvFilesystemRepository {
 }
 
 final class _Impl implements CsvFilesystemRepository {
-  final FilePicker _filePicker;
+  final FilePicker filePicker;
 
-  const _Impl({required FilePicker filePicker}) : _filePicker = filePicker;
+  const _Impl({required this.filePicker});
+
+  String get fileExtension => "csv";
 
   @override
   Future<Stream<String>?> read() async {
     try {
-      final result = await _filePicker.pickFiles(
+      final result = await filePicker.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ["csv"],
+        allowedExtensions: [fileExtension],
       );
       if (result == null) return null;
       final platformFile = result.files.single;

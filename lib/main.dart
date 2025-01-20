@@ -38,6 +38,9 @@ void main() async {
                 csvFilesystemRepository: CsvFilesystemRepository(
                   filePicker: FilePicker.platform,
                 ),
+                monyFileFilesystemRepository: MonyFileFilesystemRepository(
+                  filePicker: FilePicker.platform,
+                ),
               );
             },
           ),

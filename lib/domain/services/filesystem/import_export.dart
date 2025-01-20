@@ -1,16 +1,21 @@
+import "dart:convert";
+
 import "package:csv/csv.dart";
 import "package:mony_app/data/filesystem/filesystem.dart";
 import "package:mony_app/domain/services/database/vo/imported_csv.dart";
 
 final class DomainImportExportService {
-  final CsvFilesystemRepository _csvFilesystemRepository;
+  final CsvFilesystemRepository _csvRepo;
+  final MonyFileFilesystemRepository _monyFileRepo;
 
   DomainImportExportService({
     required CsvFilesystemRepository csvFilesystemRepository,
-  }) : _csvFilesystemRepository = csvFilesystemRepository;
+    required MonyFileFilesystemRepository monyFileFilesystemRepository,
+  })  : _csvRepo = csvFilesystemRepository,
+        _monyFileRepo = monyFileFilesystemRepository;
 
-  Future<ImportedCsvVO?> read() async {
-    final content = await _csvFilesystemRepository.read();
+  Future<ImportedCsvVO?> importCSV() async {
+    final content = await _csvRepo.read();
     if (content == null) return null;
     const converter = CsvToListConverter(
       convertEmptyTo: EmptyValue.NULL,
@@ -36,5 +41,17 @@ final class DomainImportExportService {
       ++lineIndex;
     }
     return ImportedCsvVO(columns: columns, entries: entries);
+  }
+
+  Future<Map<String, dynamic>?> importMONY() async {
+    final content = await _monyFileRepo.read();
+    if (content == null) return null;
+    final data = jsonDecode(content);
+    if (data is Map<String, dynamic>) return data;
+    return null;
+  }
+
+  Future<void> exportData(Map<String, dynamic> data) async {
+    await _monyFileRepo.write(jsonEncode(data));
   }
 }

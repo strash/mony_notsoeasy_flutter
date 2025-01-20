@@ -13,7 +13,7 @@ final class OnSelectFilePressed extends UseCase<void, dynamic> {
     try {
       subject.add(ImportEventLoadingCsv());
       final service = context.read<DomainImportExportService>();
-      final csv = await service.read();
+      final csv = await service.importCSV();
       if (!context.mounted) return;
       final step = ImportModelCsv(csv: csv);
       if (step.isReady()) {
