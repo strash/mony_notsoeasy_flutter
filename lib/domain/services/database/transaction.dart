@@ -216,6 +216,17 @@ final class DomainTransactionService extends BaseDatabaseService {
     await _transactionRepo.purge();
   }
 
+  Future<
+      ({
+        List<Map<String, dynamic>> transactions,
+        List<Map<String, dynamic>> transactionTags,
+      })> dumpData() async {
+    return (
+      transactions: await _transactionRepo.dump(),
+      transactionTags: await _transactionTagRepo.dump(),
+    );
+  }
+
   Future<List<TransactionModel>> _loadDeps({
     required List<TransactionDto> dtos,
   }) async {

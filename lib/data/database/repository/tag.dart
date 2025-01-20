@@ -36,6 +36,8 @@ abstract base class TagDatabaseRepository {
   Future<void> delete({required String id});
 
   Future<void> purge();
+
+  Future<List<Map<String, dynamic>>> dump();
 }
 
 final class _Impl
@@ -230,6 +232,14 @@ ORDER BY tt.created ASC;
     return resolve(() async {
       final db = await database.db;
       await db.delete(table);
+    });
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> dump() async {
+    return resolve(() async {
+      final db = await database.db;
+      return db.rawQuery("SELECT * FROM $table;");
     });
   }
 

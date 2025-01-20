@@ -10,8 +10,19 @@ final class OnExportDataPressed extends UseCase<Future<void>, dynamic> {
     final categoryService = context.read<DomainCategoryService>();
     final tagService = context.read<DomainTagService>();
     final transactionService = context.read<DomainTransactionService>();
-
     final importExportService = context.read<DomainImportExportService>();
-    await importExportService.exportData({"test": 123});
+
+    final rec = await transactionService.dumpData();
+    final Map<String, dynamic> data = {
+      "version": const String.fromEnvironment("MIGRATE_VERSION"),
+      "name": "mony_app",
+      "date": DateTime.now().toUtc().toIso8601String(),
+      "accounts": await accountService.dumpData(),
+      "categories": await categoryService.dumpData(),
+      "tags": await tagService.dumpData(),
+      "transactions": rec.transactions,
+      "transaction_tags": rec.transactionTags,
+    };
+    await importExportService.exportData(data);
   }
 }

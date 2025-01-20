@@ -40,6 +40,8 @@ abstract base class CategoryDatabaseRepository {
   Future<void> purge();
 
   Future<void> createDefaultCategories();
+
+  Future<List<Map<String, dynamic>>> dump();
 }
 
 final class _Impl
@@ -216,6 +218,14 @@ LIMIT $limit OFFSET $offset;
   Future<void> createDefaultCategories() async {
     final db = await database.db;
     await migration.up(db);
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> dump() async {
+    return resolve(() async {
+      final db = await database.db;
+      return db.rawQuery("SELECT * FROM $table;");
+    });
   }
 
   (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {

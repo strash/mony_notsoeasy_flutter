@@ -104,4 +104,8 @@ final class DomainCategoryService extends BaseDatabaseService {
   Future<void> createDefaultCategories() async {
     await _categoryRepo.createDefaultCategories();
   }
+
+  Future<List<Map<String, dynamic>>> dumpData() async {
+    return _categoryRepo.dump();
+  }
 }
