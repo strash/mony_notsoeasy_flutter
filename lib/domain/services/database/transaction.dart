@@ -211,6 +211,11 @@ final class DomainTransactionService extends BaseDatabaseService {
     await _transactionRepo.delete(id: id);
   }
 
+  Future<void> purgeData() async {
+    await _transactionTagRepo.purge();
+    await _transactionRepo.purge();
+  }
+
   Future<List<TransactionModel>> _loadDeps({
     required List<TransactionDto> dtos,
   }) async {

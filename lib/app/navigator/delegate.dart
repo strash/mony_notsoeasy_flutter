@@ -29,24 +29,28 @@ final class NavigatorDelegate extends RouterDelegate<Object>
   Widget build(BuildContext context) {
     return StreamBuilder<Event>(
       stream: _eventService.stream.where((event) {
-        return switch (event) {
-          EventAccountCreated() || EventAccountDeleted() => true,
-          EventAccountUpdated() ||
-          EventCategoryCreated() ||
-          EventCategoryUpdated() ||
-          EventCategoryDeleted() ||
-          EventTransactionCreated() ||
-          EventTransactionUpdated() ||
-          EventTransactionDeleted() ||
-          EventTagCreated() ||
-          EventTagUpdated() ||
-          EventTagDeleted() ||
-          EventSettingsThemeModeChanged() ||
-          EventSettingsColorsVisibilityChanged() ||
-          EventSettingsCentsVisibilityChanged() ||
-          EventSettingsTagsVisibilityChanged() =>
-            false,
-        };
+        switch (event) {
+          case EventAccountCreated() ||
+                EventAccountDeleted() ||
+                EventSettingsDataDeletionRequested():
+            return true;
+
+          case EventAccountUpdated() ||
+                EventCategoryCreated() ||
+                EventCategoryUpdated() ||
+                EventCategoryDeleted() ||
+                EventTransactionCreated() ||
+                EventTransactionUpdated() ||
+                EventTransactionDeleted() ||
+                EventTagCreated() ||
+                EventTagUpdated() ||
+                EventTagDeleted() ||
+                EventSettingsThemeModeChanged() ||
+                EventSettingsColorsVisibilityChanged() ||
+                EventSettingsCentsVisibilityChanged() ||
+                EventSettingsTagsVisibilityChanged():
+            return false;
+        }
       }),
       builder: (context, snapshot) {
         return FutureBuilder<bool>(

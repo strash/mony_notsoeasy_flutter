@@ -4,6 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/data/data.dart";
+import "package:mony_app/data/database/migrations/m_1728413017_seed_default_categories.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
@@ -15,6 +16,16 @@ void main() async {
 
   final appDatabase = AppDatabase.instance();
   await appDatabase.db;
+
+  final accountRepo = AccountDatabaseRepository(database: appDatabase);
+  final categoryRepo = CategoryDatabaseRepository(
+    database: appDatabase,
+    defaultCategoryMigration: M1728413017SeedDefaultCategories(),
+  );
+  final tagRepo = TagDatabaseRepository(database: appDatabase);
+  final transactionRepo = TransactionDatabaseRepository(database: appDatabase);
+  final transactionTagRepo =
+      TransactionTagDatabaseRepository(database: appDatabase);
 
   runApp(
     AppEventServiceBuilder(
@@ -47,7 +58,7 @@ void main() async {
           Provider<DomainAccountService>(
             create: (context) {
               return DomainAccountService(
-                accountRepo: AccountDatabaseRepository(database: appDatabase),
+                accountRepo: accountRepo,
                 accountFactory: AccountDatabaseFactoryImpl(),
                 accountBalanceFactory: AccountBalanceDatabaseFactoryImpl(),
               );
@@ -58,7 +69,7 @@ void main() async {
           Provider<DomainCategoryService>(
             create: (context) {
               return DomainCategoryService(
-                categoryRepo: CategoryDatabaseRepository(database: appDatabase),
+                categoryRepo: categoryRepo,
                 categoryFactory: CategoryDatabaseFactoryImpl(),
                 categoryBalanceFactory: CategoryBalanceDatabaseFactoryImpl(),
               );
@@ -69,7 +80,7 @@ void main() async {
           Provider<DomainTagService>(
             create: (context) {
               return DomainTagService(
-                tagRepo: TagDatabaseRepository(database: appDatabase),
+                tagRepo: tagRepo,
                 tagFactory: TagDatabaseFactoryImpl(),
                 tagBalanceFactory: TagBalanceDatabaseFactoryImpl(),
               );
@@ -80,13 +91,11 @@ void main() async {
           Provider<DomainTransactionService>(
             create: (context) {
               return DomainTransactionService(
-                transactionRepo:
-                    TransactionDatabaseRepository(database: appDatabase),
-                transactionTagRepo:
-                    TransactionTagDatabaseRepository(database: appDatabase),
-                tagRepo: TagDatabaseRepository(database: appDatabase),
-                accountRepo: AccountDatabaseRepository(database: appDatabase),
-                categoryRepo: CategoryDatabaseRepository(database: appDatabase),
+                transactionRepo: transactionRepo,
+                transactionTagRepo: transactionTagRepo,
+                tagRepo: tagRepo,
+                accountRepo: accountRepo,
+                categoryRepo: categoryRepo,
                 transactionFactory: TransactionDatabaseFactoryImpl(),
                 tagFactory: TagDatabaseFactoryImpl(),
                 accountFactory: AccountDatabaseFactoryImpl(),

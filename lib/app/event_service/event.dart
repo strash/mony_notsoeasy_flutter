@@ -93,3 +93,5 @@ final class EventSettingsTagsVisibilityChanged extends Event {
   final bool value;
   EventSettingsTagsVisibilityChanged(this.value);
 }
+
+final class EventSettingsDataDeletionRequested extends Event {}

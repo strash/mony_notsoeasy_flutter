@@ -85,6 +85,7 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
         () => OnConfirmAccountToggled(),
         () => OnConfirmCategoryToggled(),
         () => OnConfirmTagToggled(),
+        () => OnDeleteDataPressed(),
       ],
       child: const SettingsView(),
     );

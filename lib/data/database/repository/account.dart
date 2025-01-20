@@ -33,6 +33,8 @@ abstract base class AccountDatabaseRepository {
   Future<void> update({required AccountDto dto});
 
   Future<void> delete({required String id});
+
+  Future<void> purge();
 }
 
 final class _Impl
@@ -196,6 +198,14 @@ LIMIT $limit OFFSET $offset;
         where: "id = ?",
         whereArgs: [id],
       );
+    });
+  }
+
+  @override
+  Future<void> purge() async {
+    return resolve(() async {
+      final db = await database.db;
+      await db.delete(table);
     });
   }
 

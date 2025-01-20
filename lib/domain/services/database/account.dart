@@ -101,4 +101,8 @@ final class DomainAccountService extends BaseDatabaseService {
   Future<void> delete({required String id}) async {
     await _accountRepo.delete(id: id);
   }
+
+  Future<void> purgeData() async {
+    await _accountRepo.purge();
+  }
 }

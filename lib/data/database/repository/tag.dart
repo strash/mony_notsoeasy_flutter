@@ -34,6 +34,8 @@ abstract base class TagDatabaseRepository {
   Future<void> update({required TagDto dto});
 
   Future<void> delete({required String id});
+
+  Future<void> purge();
 }
 
 final class _Impl
@@ -220,6 +222,14 @@ ORDER BY tt.created ASC;
         where: "id = ?",
         whereArgs: [id],
       );
+    });
+  }
+
+  @override
+  Future<void> purge() async {
+    return resolve(() async {
+      final db = await database.db;
+      await db.delete(table);
     });
   }
 

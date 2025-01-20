@@ -52,6 +52,7 @@ class AppDatabase {
       onConfigure: (db) async {
         await db.execute("PRAGMA foreign_keys = ON");
         await db.rawQuery("PRAGMA journal_mode = WAL");
+        await db.execute("VACUUM;");
       },
       onCreate: (db, version) async {
         _migrations.getFor(0, version).forEach((e) async => await e.up(db));

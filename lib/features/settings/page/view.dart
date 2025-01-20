@@ -31,6 +31,8 @@ class SettingsView extends StatelessWidget {
     final onConfirmCategoryToggled = viewModel<OnConfirmCategoryToggled>();
     final onConfirmTagToggled = viewModel<OnConfirmTagToggled>();
 
+    final onDeleteDataPressed = viewModel<OnDeleteDataPressed>();
+
     return Scaffold(
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(
@@ -223,11 +225,11 @@ class SettingsView extends StatelessWidget {
                   ],
                 ),
 
-                // TODO: Удаление данных
                 // -> delete data
                 SettingsGroupComponent(
                   children: [
                     SettingsEntryComponent(
+                      onTap: () => onDeleteDataPressed(context),
                       title: Flexible(
                         child: Builder(
                           builder: (context) {

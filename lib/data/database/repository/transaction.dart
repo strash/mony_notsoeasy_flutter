@@ -35,6 +35,8 @@ abstract base class TransactionDatabaseRepository {
   Future<void> update({required TransactionDto dto});
 
   Future<void> delete({required String id});
+
+  Future<void> purge();
 }
 
 final class _Impl
@@ -185,6 +187,14 @@ OFFSET $offset;
         where: "id = ?",
         whereArgs: [id],
       );
+    });
+  }
+
+  @override
+  Future<void> purge() async {
+    return resolve(() async {
+      final db = await database.db;
+      await db.delete(table);
     });
   }
 

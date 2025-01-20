@@ -1,9 +1,11 @@
 import "package:mony_app/data/database/database.dart";
+import "package:mony_app/data/database/migration_service.dart";
 import "package:sqflite/sqflite.dart";
 
 abstract base class CategoryDatabaseRepository {
   const factory CategoryDatabaseRepository({
     required AppDatabase database,
+    required BaseMigration defaultCategoryMigration,
   }) = _Impl;
 
   Future<List<CategoryDto>> search({
@@ -34,17 +36,25 @@ abstract base class CategoryDatabaseRepository {
   Future<void> update({required CategoryDto dto});
 
   Future<void> delete({required String id});
+
+  Future<void> purge();
+
+  Future<void> createDefaultCategories();
 }
 
 final class _Impl
     with DatabaseRepositoryMixin
     implements CategoryDatabaseRepository {
   final AppDatabase database;
+  final BaseMigration migration;
 
   String get table => "categories";
   String get balancesView => "category_balances_view";
 
-  const _Impl({required this.database});
+  const _Impl({
+    required this.database,
+    required BaseMigration defaultCategoryMigration,
+  }) : migration = defaultCategoryMigration;
 
   @override
   Future<List<CategoryDto>> search({
@@ -192,6 +202,20 @@ LIMIT $limit OFFSET $offset;
         whereArgs: [id],
       );
     });
+  }
+
+  @override
+  Future<void> purge() async {
+    return resolve(() async {
+      final db = await database.db;
+      await db.delete(table);
+    });
+  }
+
+  @override
+  Future<void> createDefaultCategories() async {
+    final db = await database.db;
+    await migration.up(db);
   }
 
   (String?, List<Object>?) _getWhere(String? type, List<String>? ids) {

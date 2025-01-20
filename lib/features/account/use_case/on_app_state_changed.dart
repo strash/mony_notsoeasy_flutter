@@ -25,7 +25,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             EventTagDeleted() ||
             EventSettingsThemeModeChanged() ||
             EventSettingsCentsVisibilityChanged() ||
-            EventSettingsTagsVisibilityChanged():
+            EventSettingsTagsVisibilityChanged() ||
+            EventSettingsDataDeletionRequested():
         break;
 
       case EventAccountUpdated(value: final account):

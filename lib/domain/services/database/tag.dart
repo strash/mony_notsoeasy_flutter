@@ -82,4 +82,8 @@ final class DomainTagService extends BaseDatabaseService {
   Future<void> delete({required String id}) async {
     await _tagRepo.delete(id: id);
   }
+
+  Future<void> purgeData() async {
+    await _tagRepo.purge();
+  }
 }

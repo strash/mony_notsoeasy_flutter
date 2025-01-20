@@ -13,6 +13,8 @@ abstract base class TransactionTagDatabaseRepository {
   Future<void> create({required TransactionTagDto dto});
 
   Future<void> delete({required String id});
+
+  Future<void> purge();
 }
 
 final class _Impl
@@ -75,6 +77,14 @@ final class _Impl
         where: "id = ?",
         whereArgs: [id],
       );
+    });
+  }
+
+  @override
+  Future<void> purge() async {
+    return resolve(() async {
+      final db = await database.db;
+      await db.delete(table);
     });
   }
 }

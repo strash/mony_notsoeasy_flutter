@@ -96,4 +96,12 @@ final class DomainCategoryService extends BaseDatabaseService {
   Future<void> delete({required String id}) async {
     await _categoryRepo.delete(id: id);
   }
+
+  Future<void> purgeData() async {
+    await _categoryRepo.purge();
+  }
+
+  Future<void> createDefaultCategories() async {
+    await _categoryRepo.createDefaultCategories();
+  }
 }
