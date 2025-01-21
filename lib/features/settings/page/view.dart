@@ -229,13 +229,20 @@ class SettingsView extends StatelessWidget {
                                 ),
                               ),
                             )
-                          : null,
+                          : SettingsEntryTrailingIconComponent(
+                              icon: Assets.icons.squareAndArrowDown,
+                              color: theme.colorScheme.tertiary,
+                            ),
                     ),
 
                     // -> export
                     SettingsEntryComponent(
                       onTap: () => onExportDataPressed(context),
                       title: const Text("Экспорт"),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: Assets.icons.squareAndArrowUp,
+                        color: theme.colorScheme.tertiary,
+                      ),
                     ),
                   ],
                 ),

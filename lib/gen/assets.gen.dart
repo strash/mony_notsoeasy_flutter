@@ -210,6 +210,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/square.and.arrow.down.svg
   String get squareAndArrowDown => 'assets/icons/square.and.arrow.down.svg';
 
+  /// File path: assets/icons/square.and.arrow.up.svg
+  String get squareAndArrowUp => 'assets/icons/square.and.arrow.up.svg';
+
   /// File path: assets/icons/sun.max.fill.svg
   String get sunMaxFill => 'assets/icons/sun.max.fill.svg';
 
@@ -302,6 +305,7 @@ class $AssetsIconsGen {
         repeat,
         sparkles,
         squareAndArrowDown,
+        squareAndArrowUp,
         sunMaxFill,
         trashFill,
         trash,
