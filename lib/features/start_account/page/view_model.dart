@@ -11,13 +11,15 @@ final class StartAccountPage extends StatefulWidget {
 }
 
 final class StartAccountViewModel extends ViewModelState<StartAccountPage> {
+  bool isImportInProgress = false;
   @override
   Widget build(BuildContext context) {
     return ViewModel<StartAccountViewModel>(
       viewModel: this,
       useCases: [
         () => OnShowAccountFormPressed(),
-        () => OnImportDataPressed(),
+        () => OnImportMonyDataPressed(),
+        () => OnImportCsvDataPressed(),
       ],
       child: const StartAccountView(),
     );

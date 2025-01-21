@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/start_account/start_account.dart";
 import "package:mony_app/features/start_account/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -14,7 +15,8 @@ class StartAccountView extends StatelessWidget {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<StartAccountViewModel>();
     final onCreateAccountPressed = viewModel<OnShowAccountFormPressed>();
-    final onImportDataPressed = viewModel<OnImportDataPressed>();
+    final onImportMonyPressed = viewModel<OnImportMonyDataPressed>();
+    final onImportCsvPressed = viewModel<OnImportCsvDataPressed>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -71,8 +73,8 @@ class StartAccountView extends StatelessWidget {
                     "Для начала нужно завести счет, в который можно "
                     "добавлять новые транзакции. Позже будет возможность "
                     "создать другие счета.\n\nСейчас можно либо создать "
-                    "новый счет, либо импортировать свои данные в виде "
-                    "CSV файла.",
+                    "новый счет, либо импортировать свои данные из "
+                    "export_mony.json файла или из CSV файла.",
                     style: GoogleFonts.golosText(
                       fontSize: 15.0,
                       height: 1.3,
@@ -86,13 +88,18 @@ class StartAccountView extends StatelessWidget {
             // -> buttons
             Padding(
               padding: const EdgeInsets.fromLTRB(15.0, .0, 15.0, 40.0),
-              child: Column(
+              child: SeparatedComponent.list(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: 15.0);
+                },
                 children: [
                   // -> button create account
                   FilledButton(
-                    onPressed: () => onCreateAccountPressed(context),
+                    onPressed: !viewModel.isImportInProgress
+                        ? () => onCreateAccountPressed(context)
+                        : null,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -110,37 +117,83 @@ class StartAccountView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20.0),
 
-                  // -> button import data
-                  FilledButton(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: theme.colorScheme.tertiary,
-                    ),
-                    onPressed: () => onImportDataPressed(context),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Импорт из CSV",
-                          style: GoogleFonts.golosText(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w600,
-                            color: theme.colorScheme.onTertiary,
+                  SeparatedComponent.list(
+                    direction: Axis.horizontal,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(width: 15.0);
+                    },
+                    children: [
+                      // -> button import from mony file
+                      Expanded(
+                        child: FilledButton(
+                          style: FilledButton.styleFrom(
+                            backgroundColor: theme.colorScheme.tertiary,
+                          ),
+                          onPressed: !viewModel.isImportInProgress
+                              ? () => onImportMonyPressed(context)
+                              : null,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Mony",
+                                style: GoogleFonts.golosText(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: theme.colorScheme.onTertiary,
+                                ),
+                              ),
+                              const SizedBox(width: 8.0),
+                              SvgPicture.asset(
+                                Assets.icons.squareAndArrowDown,
+                                width: 22.0,
+                                height: 22.0,
+                                colorFilter: ColorFilter.mode(
+                                  theme.colorScheme.onTertiary,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(width: 8.0),
-                        SvgPicture.asset(
-                          Assets.icons.squareAndArrowDown,
-                          width: 22.0,
-                          height: 22.0,
-                          colorFilter: ColorFilter.mode(
-                            theme.colorScheme.onTertiary,
-                            BlendMode.srcIn,
+                      ),
+
+                      // -> button import from csv
+                      Expanded(
+                        child: FilledButton(
+                          style: FilledButton.styleFrom(
+                            backgroundColor: theme.colorScheme.tertiary,
+                          ),
+                          onPressed: !viewModel.isImportInProgress
+                              ? () => onImportCsvPressed(context)
+                              : null,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "CSV",
+                                style: GoogleFonts.golosText(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: theme.colorScheme.onTertiary,
+                                ),
+                              ),
+                              const SizedBox(width: 8.0),
+                              SvgPicture.asset(
+                                Assets.icons.squareAndArrowDown,
+                                width: 22.0,
+                                height: 22.0,
+                                colorFilter: ColorFilter.mode(
+                                  theme.colorScheme.onTertiary,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -15,8 +15,8 @@ final class NavigatorDelegate extends RouterDelegate<Object>
   })  : _accountService = accountService,
         _eventService = eventService;
 
-  Future<bool> _checkAccounts() async {
-    return (await _accountService.getAll()).isNotEmpty;
+  Future<bool> _hasAccounts() async {
+    return (await _accountService.count()) > 0;
   }
 
   @override
@@ -30,13 +30,13 @@ final class NavigatorDelegate extends RouterDelegate<Object>
     return StreamBuilder<Event>(
       stream: _eventService.stream.where((event) {
         switch (event) {
-          case EventAccountCreated() ||
-                EventAccountDeleted() ||
+          case EventAccountDeleted() ||
                 EventSettingsDataDeletionRequested() ||
                 EventDataImported():
             return true;
 
-          case EventAccountUpdated() ||
+          case EventAccountCreated() ||
+                EventAccountUpdated() ||
                 EventCategoryCreated() ||
                 EventCategoryUpdated() ||
                 EventCategoryDeleted() ||
@@ -55,7 +55,7 @@ final class NavigatorDelegate extends RouterDelegate<Object>
       }),
       builder: (context, snapshot) {
         return FutureBuilder<bool>(
-          future: _checkAccounts(),
+          future: _hasAccounts(),
           builder: (context, fSnapshot) {
             Widget child = const Scaffold(
               body: Center(child: CircularProgressIndicator.adaptive()),
