@@ -21,6 +21,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
     final query = viewModel.input.text.trim();
 
+    if (!context.mounted) return;
+
     switch (event) {
       case EventSettingsThemeModeChanged() ||
             EventSettingsDataDeletionRequested():
@@ -29,7 +31,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventAccountCreated():
         final counts = await _updateCounts(context);
         final tabIndex = ESearchTab.accounts.index;
-        final (scrollPage: scrollPage, canLoadMore: _) =
+        final (:scrollPage, canLoadMore: _) =
             viewModel.tabPageStates.elementAt(tabIndex);
         final accounts = await Future.wait<List<AccountModel>>(
           List.generate(scrollPage + 1, (index) {
@@ -48,12 +50,11 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         });
 
       case EventAccountUpdated() || EventAccountDeleted():
-        if (!context.mounted) return;
         final counts = await _updateCounts(context);
         final List<List<AccountModel>> accounts = [];
         int page = 0;
         final tabIndex = ESearchTab.accounts.index;
-        final (scrollPage: scrollPage, canLoadMore: _) =
+        final (:scrollPage, canLoadMore: _) =
             viewModel.tabPageStates.elementAt(tabIndex);
         do {
           accounts.add(await accountService.search(query: query, page: page++));
@@ -73,7 +74,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventCategoryCreated():
         final counts = await _updateCounts(context);
         final tabIndex = ESearchTab.categories.index;
-        final (scrollPage: scrollPage, canLoadMore: _) =
+        final (:scrollPage, canLoadMore: _) =
             viewModel.tabPageStates.elementAt(tabIndex);
         final categories = await Future.wait<List<CategoryModel>>(
           List.generate(scrollPage + 1, (index) {
@@ -92,12 +93,11 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         });
 
       case EventCategoryUpdated() || EventCategoryDeleted():
-        if (!context.mounted) return;
         final counts = await _updateCounts(context);
         final List<List<CategoryModel>> categories = [];
         int page = 0;
         final tabIndex = ESearchTab.categories.index;
-        final (scrollPage: scrollPage, canLoadMore: _) =
+        final (:scrollPage, canLoadMore: _) =
             viewModel.tabPageStates.elementAt(tabIndex);
         do {
           categories.add(
@@ -119,7 +119,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventTagCreated():
         final counts = await _updateCounts(context);
         final tabIndex = ESearchTab.tags.index;
-        final (scrollPage: scrollPage, canLoadMore: _) =
+        final (:scrollPage, canLoadMore: _) =
             viewModel.tabPageStates.elementAt(tabIndex);
         final tags = await Future.wait<List<TagModel>>(
           List.generate(scrollPage + 1, (index) {
@@ -136,12 +136,11 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         });
 
       case EventTagUpdated() || EventTagDeleted():
-        if (!context.mounted) return;
         final counts = await _updateCounts(context);
         final List<List<TagModel>> tags = [];
         int page = 0;
         final tabIndex = ESearchTab.tags.index;
-        final (scrollPage: scrollPage, canLoadMore: _) =
+        final (:scrollPage, canLoadMore: _) =
             viewModel.tabPageStates.elementAt(tabIndex);
         do {
           tags.add(await tagService.search(query: query, page: page++));
@@ -156,8 +155,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         });
 
       case EventTransactionCreated():
+        final counts = await _updateCounts(context);
         final tabIndex = ESearchTab.transactions.index;
-        final (scrollPage: scrollPage, canLoadMore: _) =
+        final (:scrollPage, canLoadMore: _) =
             viewModel.tabPageStates.elementAt(tabIndex);
         final transactions = await Future.wait<List<TransactionModel>>(
           List.generate(scrollPage + 1, (index) {
@@ -172,14 +172,14 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.transactions = transactions.fold([], (prev, curr) {
             return prev..addAll(curr);
           });
+          viewModel.counts = counts;
         });
 
       case EventTransactionUpdated() || EventTransactionDeleted():
-        if (!context.mounted) return;
         final List<List<TransactionModel>> transactions = [];
         int page = 0;
         final tabIndex = ESearchTab.transactions.index;
-        final (scrollPage: scrollPage, canLoadMore: _) =
+        final (:scrollPage, canLoadMore: _) =
             viewModel.tabPageStates.elementAt(tabIndex);
         do {
           transactions
@@ -195,6 +195,71 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             return prev..addAll(curr);
           });
         });
+
+      case EventDataImported():
+        final counts = await _updateCounts(context);
+        for (final tab in ESearchTab.values) {
+          final tabIndex = tab.index;
+          final (:scrollPage, canLoadMore: _) =
+              viewModel.tabPageStates.elementAt(tabIndex);
+          List<List<Object>> data = [];
+          switch (tab) {
+            case ESearchTab.transactions:
+              data = await Future.wait<List<TransactionModel>>(
+                List.generate(scrollPage + 1, (index) {
+                  return transactionService.search(query: query, page: index);
+                }),
+              );
+              viewModel.setProtectedState(() {
+                viewModel.transactions =
+                    data.cast<List<TransactionModel>>().fold([], (prev, curr) {
+                  return prev..addAll(curr);
+                });
+              });
+            case ESearchTab.accounts:
+              data = await Future.wait<List<AccountModel>>(
+                List.generate(scrollPage + 1, (index) {
+                  return accountService.search(query: query, page: index);
+                }),
+              );
+              viewModel.setProtectedState(() {
+                viewModel.accounts =
+                    data.cast<List<AccountModel>>().fold([], (prev, curr) {
+                  return prev..addAll(curr);
+                });
+              });
+            case ESearchTab.categories:
+              data = await Future.wait<List<CategoryModel>>(
+                List.generate(scrollPage + 1, (index) {
+                  return categoryService.search(query: query, page: index);
+                }),
+              );
+              viewModel.setProtectedState(() {
+                viewModel.categories =
+                    data.cast<List<CategoryModel>>().fold([], (prev, curr) {
+                  return prev..addAll(curr);
+                });
+              });
+            case ESearchTab.tags:
+              data = await Future.wait<List<TagModel>>(
+                List.generate(scrollPage + 1, (index) {
+                  return tagService.search(query: query, page: index);
+                }),
+              );
+              viewModel.setProtectedState(() {
+                viewModel.tags = data
+                    .cast<List<TagModel>>()
+                    .fold([], (prev, curr) => prev..addAll(curr));
+              });
+          }
+          viewModel.setProtectedState(() {
+            viewModel.tabPageStates[tabIndex] = (
+              scrollPage: scrollPage,
+              canLoadMore: data.lastOrNull?.isNotEmpty ?? false
+            );
+          });
+        }
+        viewModel.setProtectedState(() => viewModel.counts = counts);
 
       case EventSettingsColorsVisibilityChanged(:final value):
         viewModel.setProtectedState(() {

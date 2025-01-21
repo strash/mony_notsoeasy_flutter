@@ -196,7 +196,7 @@ ORDER BY tt.created ASC;
       await db.insert(
         table,
         dto.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.rollback,
+        conflictAlgorithm: ConflictAlgorithm.replace,
       );
     });
   }

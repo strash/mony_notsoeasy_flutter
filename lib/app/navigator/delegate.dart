@@ -32,7 +32,8 @@ final class NavigatorDelegate extends RouterDelegate<Object>
         switch (event) {
           case EventAccountCreated() ||
                 EventAccountDeleted() ||
-                EventSettingsDataDeletionRequested():
+                EventSettingsDataDeletionRequested() ||
+                EventDataImported():
             return true;
 
           case EventAccountUpdated() ||

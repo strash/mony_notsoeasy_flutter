@@ -4,6 +4,7 @@ import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/feed.dart";
+import "package:mony_app/features/feed/use_case/on_init.dart";
 import "package:provider/provider.dart";
 
 part "./on_app_state_changed/on_account_created.dart";
@@ -11,14 +12,15 @@ part "./on_app_state_changed/on_account_deleted.dart";
 part "./on_app_state_changed/on_account_updated.dart";
 part "./on_app_state_changed/on_category_deleted.dart";
 part "./on_app_state_changed/on_category_updated.dart";
+part "./on_app_state_changed/on_data_imported.dart";
+part "./on_app_state_changed/on_settings_cents_visibility_changed.dart";
+part "./on_app_state_changed/on_settings_colors_visibility_changed.dart";
+part "./on_app_state_changed/on_settings_tags_visibility_changed.dart";
 part "./on_app_state_changed/on_tag_deleted.dart";
 part "./on_app_state_changed/on_tag_updated.dart";
 part "./on_app_state_changed/on_transaction_created.dart";
 part "./on_app_state_changed/on_transaction_deleted.dart";
 part "./on_app_state_changed/on_transaction_updated.dart";
-part "./on_app_state_changed/on_settings_cents_visibility_changed.dart";
-part "./on_app_state_changed/on_settings_colors_visibility_changed.dart";
-part "./on_app_state_changed/on_settings_tags_visibility_changed.dart";
 
 typedef _TValue = ({FeedViewModel viewModel, Event event});
 
@@ -77,6 +79,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventSettingsTagsVisibilityChanged():
         const _OnSettingsTagsVisibilityChanged()
             .call(context, viewModel, event);
+
+      case EventDataImported():
+        const _OnDataImported().call(context, viewModel, event);
     }
   }
 }

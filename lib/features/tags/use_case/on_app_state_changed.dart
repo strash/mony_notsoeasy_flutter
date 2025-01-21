@@ -32,7 +32,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             EventSettingsDataDeletionRequested():
         break;
 
-      case EventTagCreated():
+      case EventTagCreated() || EventDataImported():
         final tags = await Future.wait<List<TagModel>>(
           List.generate(viewModel.scrollPage + 1, (index) {
             return tagService.getMany(page: index);

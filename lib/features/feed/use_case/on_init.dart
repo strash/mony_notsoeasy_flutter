@@ -46,7 +46,11 @@ final class OnInit extends UseCase<Future<void>, FeedViewModel> {
     }
 
     viewModel.setProtectedState(() {
+      viewModel.clearScrollControllers();
       viewModel.pages = pages;
+      for (final (index, _) in pages.indexed) {
+        viewModel.addPageScroll(index);
+      }
     });
   }
 }

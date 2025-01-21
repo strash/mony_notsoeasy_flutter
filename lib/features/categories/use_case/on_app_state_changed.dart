@@ -31,7 +31,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             EventSettingsDataDeletionRequested():
         break;
 
-      case EventCategoryCreated():
+      case EventCategoryCreated() || EventDataImported():
         final categories = await Future.wait<List<CategoryModel>>(
           List.generate(viewModel.scrollPage + 1, (index) {
             return categoryService.getMany(page: index);

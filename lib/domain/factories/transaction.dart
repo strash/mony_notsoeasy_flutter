@@ -2,7 +2,7 @@ import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/factories/factories.dart";
 import "package:mony_app/domain/domain.dart";
 
-final class TransactionDatabaseFactoryImpl
+final class TransactionDatabaseFactoryImpl extends BaseDatabaseFactory
     implements ITransactionDatabaseFactory<BaseTransactionBuilder> {
   @override
   TransactionModelBuilder toModel(TransactionDto dto) {

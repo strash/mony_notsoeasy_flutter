@@ -24,7 +24,8 @@ final class OnAppStateChanged extends UseCase<void, _TValue> {
             EventTransactionCreated() ||
             EventTransactionUpdated() ||
             EventTransactionDeleted() ||
-            EventSettingsDataDeletionRequested():
+            EventSettingsDataDeletionRequested() ||
+            EventDataImported():
         break;
 
       case EventSettingsThemeModeChanged(:final value):

@@ -84,7 +84,7 @@ class SettingsView extends StatelessWidget {
                         child: Builder(
                           builder: (context) {
                             return Text(
-                              viewModel.isColorsVisible ? "Весело" : "Скучно",
+                              viewModel.isColorsVisible ? "Веселый" : "Скучный",
                               style:
                                   DefaultTextStyle.of(context).style.copyWith(
                                         color: viewModel.isColorsVisible
@@ -215,8 +215,21 @@ class SettingsView extends StatelessWidget {
                   children: [
                     // -> import
                     SettingsEntryComponent(
-                      onTap: () => onImportDataPressed(context),
+                      onTap: !viewModel.isImportInProgress
+                          ? () => onImportDataPressed(context)
+                          : null,
                       title: const Text("Импорт"),
+                      trailing: viewModel.isImportInProgress
+                          ? const Padding(
+                              padding: EdgeInsets.only(right: 15.0),
+                              child: SizedBox.square(
+                                dimension: 24.0,
+                                child: CircularProgressIndicator.adaptive(
+                                  strokeWidth: 3.0,
+                                ),
+                              ),
+                            )
+                          : null,
                     ),
 
                     // -> export

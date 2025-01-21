@@ -162,10 +162,9 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
 
     // -> go to the main screen
 
-    final account = accounts.entries.map((e) => e.value).first;
     navigator.popUntil((route) => route.isFirst);
 
-    appService.notify(EventAccountCreated(account));
+    appService.notify(EventDataImported());
   }
 }
 
@@ -220,7 +219,7 @@ final class _TransactionBuilder {
     }
     return (
       vo: TransactionVO(
-        amout: amount,
+        amount: amount,
         date: date,
         note: _note ?? "",
         accountId: accountId,

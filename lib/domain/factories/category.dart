@@ -3,7 +3,7 @@ import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/factories/factories.dart";
 import "package:mony_app/domain/domain.dart";
 
-final class CategoryDatabaseFactoryImpl
+final class CategoryDatabaseFactoryImpl extends BaseDatabaseFactory
     implements ICategoryDatabaseFactory<CategoryModel> {
   @override
   CategoryModel toModel(CategoryDto dto) {
@@ -28,6 +28,28 @@ final class CategoryDatabaseFactoryImpl
       icon: model.icon,
       colorName: model.colorName.name,
       transactionType: model.transactionType.value,
+    );
+  }
+
+  CategoryModel fromVO(CategoryVO vo) {
+    final defaultColumns = newDefaultColumns;
+    final CategoryVO(
+      :id,
+      :created,
+      :updated,
+      :title,
+      :icon,
+      :colorName,
+      :transactionType,
+    ) = vo;
+    return CategoryModel(
+      id: id ?? defaultColumns.id,
+      created: created ?? defaultColumns.now,
+      updated: updated ?? defaultColumns.now,
+      title: title,
+      icon: icon,
+      colorName: EColorName.from(colorName),
+      transactionType: transactionType,
     );
   }
 }

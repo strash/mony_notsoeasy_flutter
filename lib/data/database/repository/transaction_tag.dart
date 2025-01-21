@@ -65,7 +65,7 @@ final class _Impl
       await db.insert(
         table,
         dto.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.rollback,
+        conflictAlgorithm: ConflictAlgorithm.replace,
       );
     });
   }

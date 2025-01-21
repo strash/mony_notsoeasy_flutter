@@ -80,16 +80,31 @@ final class DomainTransactionService extends BaseDatabaseService {
     return _loadDeps(dtos: dtos);
   }
 
+  Future<TransactionModel?> getOne({required String id}) async {
+    final dto = await _transactionRepo.getOne(id: id);
+    if (dto == null) return null;
+    final accountDto = await _accountRepo.getOne(id: dto.accountId);
+    if (accountDto == null) return null;
+    final categoryDto = await _categoryRepo.getOne(id: dto.categoryId);
+    if (categoryDto == null) return null;
+    final tagDtos = await _tagRepo.getAll(transactionId: id);
+    final model = _transactionFactory.toModel(dto)
+      ..addAccount(account: _accountFactory.toModel(accountDto))
+      ..addCategory(category: _categoryFactory.toModel(categoryDto))
+      ..addTags(tags: tagDtos.map(_tagFactory.toModel).toList(growable: false));
+    return model.build();
+  }
+
   Future<TransactionModel?> create({
     required TransactionVO vo,
     required List<TransactionTagVariant> tags,
   }) async {
     final defaultColumns = newDefaultColumns;
     final dto = TransactionDto(
-      id: defaultColumns.id,
-      created: defaultColumns.now.toUtc().toIso8601String(),
-      updated: defaultColumns.now.toUtc().toIso8601String(),
-      amount: vo.amout,
+      id: vo.id ?? defaultColumns.id,
+      created: (vo.created ?? defaultColumns.now).toUtc().toIso8601String(),
+      updated: (vo.updated ?? defaultColumns.now).toUtc().toIso8601String(),
+      amount: vo.amount,
       date: vo.date.toUtc().toIso8601String(),
       note: vo.note,
       accountId: vo.accountId,
@@ -140,6 +155,18 @@ final class DomainTransactionService extends BaseDatabaseService {
         .build();
   }
 
+  Future<void> createTransactionTag(TransactionTagVO vo) async {
+    final defaultColumns = newDefaultColumns;
+    final dto = TransactionTagDto(
+      id: vo.id ?? defaultColumns.id,
+      created: (vo.created ?? defaultColumns.now).toUtc().toIso8601String(),
+      updated: (vo.updated ?? defaultColumns.now).toUtc().toIso8601String(),
+      transactionId: vo.transactionId,
+      tagId: vo.tagId,
+    );
+    await _transactionTagRepo.create(dto: dto);
+  }
+
   Future<TransactionModel?> update({
     required TransactionModel transaction,
     required TransactionVO vo,
@@ -150,7 +177,7 @@ final class DomainTransactionService extends BaseDatabaseService {
       id: transaction.id,
       created: transaction.created.toUtc().toIso8601String(),
       updated: defaultColumns.now.toUtc().toIso8601String(),
-      amount: vo.amout,
+      amount: vo.amount,
       date: vo.date.toUtc().toIso8601String(),
       note: vo.note,
       accountId: vo.accountId,

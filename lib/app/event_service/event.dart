@@ -94,4 +94,6 @@ final class EventSettingsTagsVisibilityChanged extends Event {
   EventSettingsTagsVisibilityChanged(this.value);
 }
 
+final class EventDataImported extends Event {}
+
 final class EventSettingsDataDeletionRequested extends Event {}

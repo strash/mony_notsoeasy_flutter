@@ -172,7 +172,7 @@ LIMIT $limit OFFSET $offset;
       await db.insert(
         table,
         dto.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.rollback,
+        conflictAlgorithm: ConflictAlgorithm.replace,
       );
     });
   }

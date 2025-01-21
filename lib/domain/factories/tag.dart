@@ -2,7 +2,8 @@ import "package:mony_app/data/database/dto/dto.dart";
 import "package:mony_app/data/database/factories/factories.dart";
 import "package:mony_app/domain/domain.dart";
 
-final class TagDatabaseFactoryImpl implements ITagDatabaseFactory<TagModel> {
+final class TagDatabaseFactoryImpl extends BaseDatabaseFactory
+    implements ITagDatabaseFactory<TagModel> {
   @override
   TagModel toModel(TagDto dto) {
     return TagModel(
@@ -20,6 +21,17 @@ final class TagDatabaseFactoryImpl implements ITagDatabaseFactory<TagModel> {
       created: model.created.toUtc().toIso8601String(),
       updated: model.updated.toUtc().toIso8601String(),
       title: model.title,
+    );
+  }
+
+  TagModel fromVO(TagVO vo) {
+    final defaultColumns = newDefaultColumns;
+    final TagVO(:id, :created, :updated, :title) = vo;
+    return TagModel(
+      id: id ?? defaultColumns.id,
+      created: created ?? defaultColumns.now,
+      updated: updated ?? defaultColumns.now,
+      title: vo.title,
     );
   }
 }

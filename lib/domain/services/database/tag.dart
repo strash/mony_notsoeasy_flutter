@@ -61,13 +61,7 @@ final class DomainTagService extends BaseDatabaseService {
   }
 
   Future<TagModel> create({required TagVO vo}) async {
-    final defaultColumns = newDefaultColumns;
-    final model = TagModel(
-      id: defaultColumns.id,
-      created: defaultColumns.now,
-      updated: defaultColumns.now,
-      title: vo.title,
-    );
+    final model = _tagFactory.fromVO(vo);
     await _tagRepo.create(dto: _tagFactory.toDto(model));
     return model;
   }

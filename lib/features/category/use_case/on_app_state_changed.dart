@@ -122,6 +122,22 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
         });
 
+      case EventDataImported():
+        final id = viewModel.category.id;
+        final category = await categoryService.getOne(id: id);
+        final balance = await categoryService.getBalance(id: id);
+        final feed = await Future.wait<List<TransactionModel>>(
+          List.generate(viewModel.scrollPage + 1, (index) {
+            return transactionService.getMany(page: index, categoryIds: [id]);
+          }),
+        );
+        viewModel.setProtectedState(() {
+          if (category != null) viewModel.category = category;
+          viewModel.balance = balance;
+          viewModel.canLoadMore = feed.lastOrNull?.isNotEmpty ?? false;
+          viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
+        });
+
       case EventSettingsColorsVisibilityChanged(:final value):
         viewModel.setProtectedState(() {
           viewModel.isColorsVisible = value;

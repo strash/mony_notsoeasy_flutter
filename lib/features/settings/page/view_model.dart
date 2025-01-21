@@ -28,6 +28,8 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
   bool confirmCategory = true;
   bool confirmTag = true;
 
+  bool isImportInProgress = false;
+
   void _onAppEvent(Event event) {
     if (!mounted) return;
     OnAppStateChanged().call(context, (event: event, viewModel: this));

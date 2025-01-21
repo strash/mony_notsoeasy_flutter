@@ -55,6 +55,15 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         viewModel.setProtectedState(() {
           viewModel.isColorsVisible = value;
         });
+
+      case EventDataImported():
+        final id = viewModel.account.id;
+        final account = await accountService.getOne(id: id);
+        final balance = await accountService.getBalance(id: id);
+        viewModel.setProtectedState(() {
+          if (account != null) viewModel.account = account;
+          if (balance != null) viewModel.balance = balance;
+        });
     }
   }
 }

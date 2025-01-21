@@ -159,6 +159,22 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         viewModel.setProtectedState(() {
           viewModel.isTagsVisible = value;
         });
+
+      case EventDataImported():
+        final id = viewModel.tag.id;
+        final tag = await tagService.getOne(id: id);
+        final balance = await tagService.getBalance(id: id);
+        final feed = await Future.wait(
+          List.generate(viewModel.scrollPage + 1, (index) {
+            return transactionService.getMany(page: index, tagIds: [id]);
+          }),
+        );
+        viewModel.setProtectedState(() {
+          if (tag != null) viewModel.tag = tag;
+          viewModel.balance = balance;
+          viewModel.canLoadMore = feed.lastOrNull?.isNotEmpty ?? false;
+          viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
+        });
     }
   }
 }

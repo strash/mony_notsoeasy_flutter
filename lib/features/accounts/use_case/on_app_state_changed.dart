@@ -31,7 +31,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             EventSettingsDataDeletionRequested():
         break;
 
-      case EventAccountCreated():
+      case EventAccountCreated() || EventDataImported():
         final accounts = await Future.wait<List<AccountModel>>(
           List.generate(viewModel.scrollPage + 1, (index) {
             return accountService.getMany(page: index);

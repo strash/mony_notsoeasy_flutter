@@ -52,6 +52,17 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
     _scrollSubs.removeAt(pageIndex).cancel();
   }
 
+  void clearScrollControllers() {
+    for (final sub in _scrollSubs) {
+      sub.cancel();
+    }
+    for (final controller in scrollControllers) {
+      controller.dispose();
+    }
+    _scrollSubs.clear();
+    scrollControllers.clear();
+  }
+
   Future<void> openPage(int pageIndex) async {
     _pagingToStart = true;
     await pageController.animateToPage(
@@ -120,11 +131,7 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
 
       if (!mounted) return;
       // -> scroll controllers
-      OnInit().call(context, this).then((_) {
-        for (final (index, _) in pages.indexed) {
-          addPageScroll(index);
-        }
-      });
+      OnInit().call(context, this);
     });
   }
 
@@ -132,12 +139,7 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
   void dispose() {
     _appSub.cancel();
     _navbarSub.cancel();
-    for (final sub in _scrollSubs) {
-      sub.cancel();
-    }
-    for (final controller in scrollControllers) {
-      controller.dispose();
-    }
+    clearScrollControllers();
     pageController.dispose();
     super.dispose();
   }

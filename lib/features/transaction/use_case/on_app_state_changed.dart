@@ -3,7 +3,9 @@ import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/tag.dart";
+import "package:mony_app/domain/services/database/transaction.dart";
 import "package:mony_app/features/transaction/page/view_model.dart";
+import "package:provider/provider.dart";
 
 typedef _TValue = ({TransactionViewModel viewModel, Event event});
 
@@ -13,6 +15,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     if (value == null) throw ArgumentError.notNull();
 
     final (:viewModel, :event) = value;
+
+    final transactionService = context.read<DomainTransactionService>();
 
     switch (event) {
       case EventAccountCreated() ||
@@ -77,6 +81,13 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
               viewModel.transaction.tags.where((e) => e.id != tag.id),
             ),
           );
+        });
+
+      case EventDataImported():
+        final id = viewModel.transaction.id;
+        final transaction = await transactionService.getOne(id: id);
+        viewModel.setProtectedState(() {
+          if (transaction != null) viewModel.transaction = transaction;
         });
 
       case EventSettingsColorsVisibilityChanged(:final value):
