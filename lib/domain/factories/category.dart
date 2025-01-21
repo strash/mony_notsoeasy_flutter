@@ -33,23 +33,14 @@ final class CategoryDatabaseFactoryImpl extends BaseDatabaseFactory
 
   CategoryModel fromVO(CategoryVO vo) {
     final defaultColumns = newDefaultColumns;
-    final CategoryVO(
-      :id,
-      :created,
-      :updated,
-      :title,
-      :icon,
-      :colorName,
-      :transactionType,
-    ) = vo;
     return CategoryModel(
-      id: id ?? defaultColumns.id,
-      created: created ?? defaultColumns.now,
-      updated: updated ?? defaultColumns.now,
-      title: title,
-      icon: icon,
-      colorName: EColorName.from(colorName),
-      transactionType: transactionType,
+      id: vo.id ?? defaultColumns.id,
+      created: vo.created ?? defaultColumns.now,
+      updated: vo.updated ?? defaultColumns.now,
+      title: vo.title,
+      icon: vo.icon,
+      colorName: EColorName.from(vo.colorName),
+      transactionType: vo.transactionType,
     );
   }
 }

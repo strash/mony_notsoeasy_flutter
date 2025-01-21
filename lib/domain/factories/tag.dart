@@ -26,11 +26,10 @@ final class TagDatabaseFactoryImpl extends BaseDatabaseFactory
 
   TagModel fromVO(TagVO vo) {
     final defaultColumns = newDefaultColumns;
-    final TagVO(:id, :created, :updated, :title) = vo;
     return TagModel(
-      id: id ?? defaultColumns.id,
-      created: created ?? defaultColumns.now,
-      updated: updated ?? defaultColumns.now,
+      id: vo.id ?? defaultColumns.id,
+      created: vo.created ?? defaultColumns.now,
+      updated: vo.updated ?? defaultColumns.now,
       title: vo.title,
     );
   }

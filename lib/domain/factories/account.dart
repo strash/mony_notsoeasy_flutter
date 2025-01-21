@@ -36,25 +36,15 @@ final class AccountDatabaseFactoryImpl extends BaseDatabaseFactory
 
   AccountModel fromVO(AccountVO vo) {
     final defaultColumns = newDefaultColumns;
-    final AccountVO(
-      :id,
-      :created,
-      :updated,
-      :title,
-      :type,
-      :currencyCode,
-      :colorName,
-      :balance
-    ) = vo;
     return AccountModel(
-      id: id ?? defaultColumns.id,
-      created: created ?? defaultColumns.now,
-      updated: updated ?? defaultColumns.now,
-      title: title,
-      type: type,
-      currency: FiatCurrency.fromCode(currencyCode),
-      colorName: EColorName.from(colorName),
-      balance: balance,
+      id: vo.id ?? defaultColumns.id,
+      created: vo.created ?? defaultColumns.now,
+      updated: vo.updated ?? defaultColumns.now,
+      title: vo.title,
+      type: vo.type,
+      currency: FiatCurrency.fromCode(vo.currencyCode),
+      colorName: EColorName.from(vo.colorName),
+      balance: vo.balance,
     );
   }
 }
