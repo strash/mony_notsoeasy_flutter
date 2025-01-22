@@ -43,6 +43,13 @@ class _ContextMenuComponentState extends State<ContextMenuComponent> {
     Rect rect = Rect.fromLTWH(init.left, init.top, size.width, size.height);
     if (isOnRight) {
       rect = rect.shift(-Offset(size.width - init.width, .0));
+      // offset from the right edge of the screen
+      if (rect.right.toInt() == viewSize.width.toInt()) {
+        rect = rect.shift(-Offset(widget.offset, .0));
+      }
+    } else {
+      // offset from the left edge of the screen
+      if (rect.left.toInt() == 0) rect = rect.shift(Offset(widget.offset, .0));
     }
     if (!isOnTop) {
       rect = rect.shift(Offset(.0, init.height + widget.offset));
