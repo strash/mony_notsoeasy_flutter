@@ -1,0 +1,129 @@
+enum EChartQuantityGroup { day, month, year, weekday, date }
+
+abstract base class ChartPlottableValue<T extends Object> {
+  /// Just a meta information which won't be visualized.
+  String get label;
+
+  /// This is a numeric value like a [double] or [int] for quantitative data,
+  /// [DateTime] for temporal data, or [String] for categorical data.
+  T get value;
+
+  int compareTo(T other);
+
+  @override
+  int get hashCode;
+
+  @override
+  bool operator ==(covariant ChartPlottableValue<T> other);
+
+  num operator +(covariant ChartPlottableValue<T> other);
+
+  static ChartPlottableValue<num> quantitative(
+    String label, {
+    required num value,
+  }) {
+    return _QuantitativeImpl(label, value: value);
+  }
+
+  static ChartPlottableValue<DateTime> temporal(
+    String label, {
+    required DateTime value,
+    EChartQuantityGroup quantity = EChartQuantityGroup.date,
+  }) {
+    return _TemporalImpl(label, value: value, quantity: quantity);
+  }
+
+  static ChartPlottableValue<String> categorical(
+    String label, {
+    required String value,
+  }) {
+    return _CategoricalImpl(label, value: value);
+  }
+}
+
+final class _QuantitativeImpl implements ChartPlottableValue<num> {
+  @override
+  final String label;
+
+  @override
+  final num value;
+
+  const _QuantitativeImpl(this.label, {required this.value});
+
+  @override
+  int compareTo(num other) => value.compareTo(other);
+
+  @override
+  int get hashCode => value.hashCode;
+
+  @override
+  bool operator ==(_QuantitativeImpl other) => hashCode == hashCode;
+
+  @override
+  num operator +(_QuantitativeImpl other) => value + other.value;
+}
+
+final class _TemporalImpl implements ChartPlottableValue<DateTime> {
+  @override
+  final String label;
+  @override
+  final DateTime value;
+  final EChartQuantityGroup quantity;
+
+  const _TemporalImpl(
+    this.label, {
+    required this.value,
+    required this.quantity,
+  });
+
+  @override
+  int compareTo(DateTime other) {
+    return switch (quantity) {
+      EChartQuantityGroup.day => value.day.compareTo(other.day),
+      EChartQuantityGroup.month => value.month.compareTo(other.month),
+      EChartQuantityGroup.year => value.year.compareTo(other.year),
+      EChartQuantityGroup.weekday => value.weekday.compareTo(other.weekday),
+      EChartQuantityGroup.date => value.compareTo(other),
+    };
+  }
+
+  @override
+  int get hashCode {
+    return switch (quantity) {
+      EChartQuantityGroup.day => value.day.hashCode,
+      EChartQuantityGroup.month => value.month.hashCode,
+      EChartQuantityGroup.year => value.year.hashCode,
+      EChartQuantityGroup.weekday => value.weekday.hashCode,
+      EChartQuantityGroup.date => value.hashCode,
+    };
+  }
+
+  @override
+  bool operator ==(_TemporalImpl other) {
+    return hashCode == hashCode;
+  }
+
+  @override
+  int operator +(_TemporalImpl other) => 1 + 1;
+}
+
+final class _CategoricalImpl implements ChartPlottableValue<String> {
+  @override
+  final String label;
+  @override
+  final String value;
+
+  const _CategoricalImpl(this.label, {required this.value});
+
+  @override
+  int compareTo(String other) => value.compareTo(other);
+
+  @override
+  int get hashCode => value.hashCode;
+
+  @override
+  bool operator ==(_CategoricalImpl other) => hashCode == hashCode;
+
+  @override
+  int operator +(_CategoricalImpl other) => 1 + 1;
+}
