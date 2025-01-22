@@ -13,6 +13,7 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
   @override
   Future<void> call(BuildContext context, [EFeedMenuItem? value]) async {
     if (value == null) throw ArgumentError.notNull();
+
     switch (value) {
       case EFeedMenuItem.addAccount:
         _addAccount(context);

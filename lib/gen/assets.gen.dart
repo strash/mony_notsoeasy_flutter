@@ -45,12 +45,18 @@ class $AssetsIconsGen {
   /// File path: assets/icons/a.circle.svg
   String get aCircle => 'assets/icons/a.circle.svg';
 
+  /// File path: assets/icons/arrow.down.forward.svg
+  String get arrowDownForward => 'assets/icons/arrow.down.forward.svg';
+
   /// File path: assets/icons/arrow.down.square.svg
   String get arrowDownSquare => 'assets/icons/arrow.down.square.svg';
 
   /// File path: assets/icons/arrow.up.arrow.down.square.svg
   String get arrowUpArrowDownSquare =>
       'assets/icons/arrow.up.arrow.down.square.svg';
+
+  /// File path: assets/icons/arrow.up.forward.svg
+  String get arrowUpForward => 'assets/icons/arrow.up.forward.svg';
 
   /// File path: assets/icons/arrow.up.square.svg
   String get arrowUpSquare => 'assets/icons/arrow.up.square.svg';
@@ -252,8 +258,10 @@ class $AssetsIconsGen {
   /// List of all assets
   List<String> get values => [
         aCircle,
+        arrowDownForward,
         arrowDownSquare,
         arrowUpArrowDownSquare,
+        arrowUpForward,
         arrowUpSquare,
         calendar,
         chartBarFill,

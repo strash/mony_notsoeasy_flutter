@@ -192,7 +192,7 @@ class FeedView extends StatelessWidget {
           // -> pager
           const FeedPagerComponent(),
 
-          // -> button add account
+          // -> button add account/category/tag
           FeedAddButtonComponent(onTap: onMenuAddPressed),
         ],
       ),

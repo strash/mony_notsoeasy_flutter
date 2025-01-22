@@ -14,8 +14,8 @@ enum ECategoriesMenuItem {
 
   String get icon {
     return switch (this) {
-      addExpenseCategory => Assets.icons.arrowUpSquare,
-      addIncomeCategory => Assets.icons.arrowDownSquare,
+      addExpenseCategory => Assets.icons.arrowUpForward,
+      addIncomeCategory => Assets.icons.arrowDownForward,
     };
   }
 }

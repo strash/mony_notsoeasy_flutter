@@ -113,8 +113,8 @@ extension on EFeedMenuItem {
   String get icon {
     return switch (this) {
       EFeedMenuItem.addAccount => Assets.icons.widgetSmall,
-      EFeedMenuItem.addExpenseCategory => Assets.icons.arrowUpSquare,
-      EFeedMenuItem.addIncomeCategory => Assets.icons.arrowDownSquare,
+      EFeedMenuItem.addExpenseCategory => Assets.icons.arrowUpForward,
+      EFeedMenuItem.addIncomeCategory => Assets.icons.arrowDownForward,
       EFeedMenuItem.addTag => Assets.icons.number,
     };
   }
