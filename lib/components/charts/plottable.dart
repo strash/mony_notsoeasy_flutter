@@ -1,4 +1,10 @@
-enum EChartQuantityGroup { day, month, year, weekday, date }
+enum EChartTemporalComponent {
+  day,
+  month,
+  year,
+  weekday,
+  date,
+}
 
 abstract base class ChartPlottableValue<T extends Object> {
   /// Just a meta information which won't be visualized.
@@ -28,9 +34,9 @@ abstract base class ChartPlottableValue<T extends Object> {
   static ChartPlottableValue<DateTime> temporal(
     String label, {
     required DateTime value,
-    EChartQuantityGroup quantity = EChartQuantityGroup.date,
+    EChartTemporalComponent component = EChartTemporalComponent.date,
   }) {
-    return _TemporalImpl(label, value: value, quantity: quantity);
+    return _TemporalImpl(label, value: value, component: component);
   }
 
   static ChartPlottableValue<String> categorical(
@@ -68,33 +74,33 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
   final String label;
   @override
   final DateTime value;
-  final EChartQuantityGroup quantity;
+  final EChartTemporalComponent component;
 
   const _TemporalImpl(
     this.label, {
     required this.value,
-    required this.quantity,
+    required this.component,
   });
 
   @override
   int compareTo(DateTime other) {
-    return switch (quantity) {
-      EChartQuantityGroup.day => value.day.compareTo(other.day),
-      EChartQuantityGroup.month => value.month.compareTo(other.month),
-      EChartQuantityGroup.year => value.year.compareTo(other.year),
-      EChartQuantityGroup.weekday => value.weekday.compareTo(other.weekday),
-      EChartQuantityGroup.date => value.compareTo(other),
+    return switch (component) {
+      EChartTemporalComponent.day => value.day.compareTo(other.day),
+      EChartTemporalComponent.month => value.month.compareTo(other.month),
+      EChartTemporalComponent.year => value.year.compareTo(other.year),
+      EChartTemporalComponent.weekday => value.weekday.compareTo(other.weekday),
+      EChartTemporalComponent.date => value.compareTo(other),
     };
   }
 
   @override
   int get hashCode {
-    return switch (quantity) {
-      EChartQuantityGroup.day => value.day.hashCode,
-      EChartQuantityGroup.month => value.month.hashCode,
-      EChartQuantityGroup.year => value.year.hashCode,
-      EChartQuantityGroup.weekday => value.weekday.hashCode,
-      EChartQuantityGroup.date => value.hashCode,
+    return switch (component) {
+      EChartTemporalComponent.day => value.day.hashCode,
+      EChartTemporalComponent.month => value.month.hashCode,
+      EChartTemporalComponent.year => value.year.hashCode,
+      EChartTemporalComponent.weekday => value.weekday.hashCode,
+      EChartTemporalComponent.date => value.hashCode,
     };
   }
 

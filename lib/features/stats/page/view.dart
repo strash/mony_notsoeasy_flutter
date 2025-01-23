@@ -76,7 +76,7 @@ class StatsView extends StatelessWidget {
                         x: ChartPlottableValue.temporal(
                           "Date",
                           value: e.date,
-                          quantity: EChartQuantityGroup.day,
+                          component: EChartTemporalComponent.day,
                         ),
                         y: ChartPlottableValue.quantitative(
                           "Expense",
