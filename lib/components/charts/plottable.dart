@@ -1,7 +1,6 @@
 part of "./chart.dart";
 
 enum EChartTemporalComponent {
-  day,
   month,
   year,
   weekday,
@@ -67,7 +66,7 @@ final class _QuantitativeImpl implements ChartPlottableValue<num> {
   int get hashCode => value.hashCode;
 
   @override
-  bool operator ==(_QuantitativeImpl other) => hashCode == hashCode;
+  bool operator ==(_QuantitativeImpl other) => hashCode == other.hashCode;
 
   @override
   num operator +(num other) => numericValue + other;
@@ -86,11 +85,10 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
   @override
   num get numericValue {
     return switch (component) {
-      EChartTemporalComponent.day => value.day,
       EChartTemporalComponent.month => value.month,
       EChartTemporalComponent.year => value.year,
       EChartTemporalComponent.weekday => value.weekday,
-      EChartTemporalComponent.date => value.millisecondsSinceEpoch,
+      EChartTemporalComponent.date => value.startOfDay.millisecondsSinceEpoch,
     };
   }
 
@@ -105,12 +103,12 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
   @override
   int compareTo(ChartPlottableValue<DateTime> other) {
     return switch (component) {
-      EChartTemporalComponent.day => value.day.compareTo(other.value.day),
       EChartTemporalComponent.month => value.month.compareTo(other.value.month),
       EChartTemporalComponent.year => value.year.compareTo(other.value.year),
       EChartTemporalComponent.weekday =>
         value.weekday.compareTo(other.value.weekday),
-      EChartTemporalComponent.date => value.compareTo(other.value),
+      EChartTemporalComponent.date =>
+        value.startOfDay.compareTo(other.value.startOfDay),
     };
   }
 
@@ -118,7 +116,7 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
   int get hashCode => value.hashCode;
 
   @override
-  bool operator ==(_TemporalImpl other) => hashCode == hashCode;
+  bool operator ==(_TemporalImpl other) => hashCode == other.hashCode;
 
   @override
   num operator +(num other) => numericValue + other;
@@ -148,7 +146,7 @@ final class _CategoricalImpl implements ChartPlottableValue<String> {
   int get hashCode => value.hashCode;
 
   @override
-  bool operator ==(_CategoricalImpl other) => hashCode == hashCode;
+  bool operator ==(_CategoricalImpl other) => hashCode == other.hashCode;
 
   @override
   num operator +(num other) => numericValue + other;

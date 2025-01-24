@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/charts/component.dart";
+import "package:mony_app/features/navbar/page/view.dart";
 
 enum _ETestCategory { one, two, three }
 
@@ -18,16 +20,17 @@ class StatsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final bottomOffset = NavBarView.bottomOffset(context);
+
     final values = [
-      _TestValue(value: 3, date: DateTime.now(), category: _ETestCategory.two),
-      _TestValue(value: 10, date: DateTime.now(), category: _ETestCategory.one),
+      _TestValue(value: 1, date: DateTime.now(), category: _ETestCategory.one),
       _TestValue(
-        value: 12,
+        value: 8,
         date: DateTime.now().add(const Duration(days: 1)),
         category: _ETestCategory.two,
       ),
       _TestValue(
-        value: 5,
+        value: 10,
         date: DateTime.now().add(const Duration(days: 1)),
         category: _ETestCategory.one,
       ),
@@ -42,7 +45,7 @@ class StatsView extends StatelessWidget {
         category: _ETestCategory.three,
       ),
       _TestValue(
-        value: 8,
+        value: 15,
         date: DateTime.now().add(const Duration(days: 2)),
         category: _ETestCategory.two,
       ),
@@ -64,7 +67,7 @@ class StatsView extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
             sliver: SliverToBoxAdapter(
               child: AspectRatio(
-                aspectRatio: 1.3,
+                aspectRatio: 1.25,
                 child: ChartComponent(
                   config: ChartConfig(
                     gridColor: theme.colorScheme.onSurfaceVariant
@@ -72,11 +75,18 @@ class StatsView extends StatelessWidget {
                     groupColor: (group) {
                       return switch (group as _ETestCategory?) {
                         null => theme.colorScheme.error,
-                        _ETestCategory.one => theme.colorScheme.primary,
+                        _ETestCategory.one => Colors.indigoAccent,
                         _ETestCategory.two => theme.colorScheme.secondary,
-                        _ETestCategory.three => theme.colorScheme.error,
+                        _ETestCategory.three => Colors.deepOrangeAccent,
                       };
                     },
+                    padding: 5.0,
+                    radius: 5.0,
+                    legendStyle: GoogleFonts.golosText(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w500,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                   ),
                   data: values.map((e) {
                     return ChartMarkComponent.bar(
@@ -96,6 +106,9 @@ class StatsView extends StatelessWidget {
               ),
             ),
           ),
+
+          // -> bottom offset
+          SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
         ],
       ),
     );
