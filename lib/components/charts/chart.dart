@@ -122,7 +122,6 @@ final class _Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    print(data);
     final paint = Paint();
 
     // grid
@@ -162,7 +161,9 @@ final class _Painter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(_Painter oldDelegate) {
+    return data != oldDelegate.data ||
+        config != oldDelegate.config ||
+        maxValue != oldDelegate.maxValue;
   }
 }
