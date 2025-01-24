@@ -19,6 +19,8 @@ class StatsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final values = [
+      _TestValue(value: 3, date: DateTime.now(), category: _ETestCategory.two),
+      _TestValue(value: 10, date: DateTime.now(), category: _ETestCategory.one),
       _TestValue(
         value: 12,
         date: DateTime.now().add(const Duration(days: 1)),
@@ -44,8 +46,6 @@ class StatsView extends StatelessWidget {
         date: DateTime.now().add(const Duration(days: 2)),
         category: _ETestCategory.two,
       ),
-      _TestValue(value: 3, date: DateTime.now(), category: _ETestCategory.one),
-      _TestValue(value: 10, date: DateTime.now(), category: _ETestCategory.one),
     ];
 
     return Scaffold(
@@ -65,27 +65,33 @@ class StatsView extends StatelessWidget {
             sliver: SliverToBoxAdapter(
               child: AspectRatio(
                 aspectRatio: 1.3,
-                child: ColoredBox(
-                  color: theme.colorScheme.surfaceDim,
-                  child: ChartComponent(
-                    config: ChartConfig(
-                      gridColor: theme.colorScheme.onSurfaceVariant,
-                    ),
-                    data: values.map((e) {
-                      return ChartMarkComponent.bar(
-                        x: ChartPlottableValue.temporal(
-                          "Date",
-                          value: e.date,
-                          component: EChartTemporalComponent.weekday,
-                        ),
-                        y: ChartPlottableValue.quantitative(
-                          "Expense",
-                          value: e.value,
-                        ),
-                        groupBy: e.category,
-                      );
-                    }).toList(growable: false),
+                child: ChartComponent(
+                  config: ChartConfig(
+                    gridColor: theme.colorScheme.onSurfaceVariant
+                        .withValues(alpha: .5),
+                    groupColor: (group) {
+                      return switch (group as _ETestCategory?) {
+                        null => theme.colorScheme.error,
+                        _ETestCategory.one => theme.colorScheme.primary,
+                        _ETestCategory.two => theme.colorScheme.secondary,
+                        _ETestCategory.three => theme.colorScheme.error,
+                      };
+                    },
                   ),
+                  data: values.map((e) {
+                    return ChartMarkComponent.bar(
+                      x: ChartPlottableValue.temporal(
+                        "Date",
+                        value: e.date,
+                        component: EChartTemporalComponent.weekday,
+                      ),
+                      y: ChartPlottableValue.quantitative(
+                        "Expense",
+                        value: e.value,
+                      ),
+                      groupBy: e.category,
+                    );
+                  }).toList(growable: false),
                 ),
               ),
             ),

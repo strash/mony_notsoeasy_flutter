@@ -17,7 +17,12 @@ abstract base class ChartMarkComponent {
     required ChartPlottableValue y,
     Object? groupBy,
   }) {
-    return _BarMark(type: EChartMark.bar, x: x, y: y, groupBy: groupBy);
+    return _BarMark(
+      type: EChartMark.bar,
+      x: x,
+      y: y,
+      groupBy: groupBy,
+    );
   }
 }
 

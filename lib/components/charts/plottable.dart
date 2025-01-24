@@ -15,6 +15,7 @@ abstract base class ChartPlottableValue<T extends Object> {
   /// This is a numeric value like a [double] or [int] for quantitative data,
   /// [DateTime] for temporal data, or [String] for categorical data.
   T get value;
+  num get numericValue;
 
   int compareTo(covariant ChartPlottableValue other);
 
@@ -24,7 +25,7 @@ abstract base class ChartPlottableValue<T extends Object> {
   @override
   bool operator ==(covariant ChartPlottableValue<T> other);
 
-  num operator +(covariant ChartPlottableValue<T> other);
+  num operator +(num other);
 
   static ChartPlottableValue<num> quantitative(
     String label, {
@@ -54,6 +55,8 @@ final class _QuantitativeImpl implements ChartPlottableValue<num> {
   final String label;
   @override
   final num value;
+  @override
+  num get numericValue => value;
 
   const _QuantitativeImpl(this.label, {required this.value});
 
@@ -67,7 +70,7 @@ final class _QuantitativeImpl implements ChartPlottableValue<num> {
   bool operator ==(_QuantitativeImpl other) => hashCode == hashCode;
 
   @override
-  num operator +(_QuantitativeImpl other) => value + other.value;
+  num operator +(num other) => numericValue + other;
 
   @override
   String toString() {
@@ -80,6 +83,17 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
   final String label;
   @override
   final DateTime value;
+  @override
+  num get numericValue {
+    return switch (component) {
+      EChartTemporalComponent.day => value.day,
+      EChartTemporalComponent.month => value.month,
+      EChartTemporalComponent.year => value.year,
+      EChartTemporalComponent.weekday => value.weekday,
+      EChartTemporalComponent.date => value.millisecondsSinceEpoch,
+    };
+  }
+
   final EChartTemporalComponent component;
 
   const _TemporalImpl(
@@ -101,23 +115,13 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
   }
 
   @override
-  int get hashCode {
-    return switch (component) {
-      EChartTemporalComponent.day => value.day.hashCode,
-      EChartTemporalComponent.month => value.month.hashCode,
-      EChartTemporalComponent.year => value.year.hashCode,
-      EChartTemporalComponent.weekday => value.weekday.hashCode,
-      EChartTemporalComponent.date => value.hashCode,
-    };
-  }
+  int get hashCode => value.hashCode;
 
   @override
-  bool operator ==(_TemporalImpl other) {
-    return hashCode == hashCode;
-  }
+  bool operator ==(_TemporalImpl other) => hashCode == hashCode;
 
   @override
-  int operator +(_TemporalImpl other) => 1 + 1;
+  num operator +(num other) => numericValue + other;
 
   @override
   String toString() {
@@ -130,6 +134,8 @@ final class _CategoricalImpl implements ChartPlottableValue<String> {
   final String label;
   @override
   final String value;
+  @override
+  num get numericValue => value.length;
 
   const _CategoricalImpl(this.label, {required this.value});
 
@@ -145,7 +151,7 @@ final class _CategoricalImpl implements ChartPlottableValue<String> {
   bool operator ==(_CategoricalImpl other) => hashCode == hashCode;
 
   @override
-  int operator +(_CategoricalImpl other) => 1 + 1;
+  num operator +(num other) => numericValue + other;
 
   @override
   String toString() {
