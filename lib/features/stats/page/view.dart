@@ -19,8 +19,6 @@ class StatsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final values = [
-      _TestValue(value: 3, date: DateTime.now(), category: _ETestCategory.one),
-      _TestValue(value: 10, date: DateTime.now(), category: _ETestCategory.one),
       _TestValue(
         value: 12,
         date: DateTime.now().add(const Duration(days: 1)),
@@ -37,7 +35,7 @@ class StatsView extends StatelessWidget {
         category: _ETestCategory.one,
       ),
       _TestValue(
-        value: 21,
+        value: 12,
         date: DateTime.now().add(const Duration(days: 2)),
         category: _ETestCategory.three,
       ),
@@ -46,6 +44,8 @@ class StatsView extends StatelessWidget {
         date: DateTime.now().add(const Duration(days: 2)),
         category: _ETestCategory.two,
       ),
+      _TestValue(value: 3, date: DateTime.now(), category: _ETestCategory.one),
+      _TestValue(value: 10, date: DateTime.now(), category: _ETestCategory.one),
     ];
 
     return Scaffold(
@@ -72,17 +72,17 @@ class StatsView extends StatelessWidget {
                       gridColor: theme.colorScheme.onSurfaceVariant,
                     ),
                     data: values.map((e) {
-                      return ChartBarMarkComponent(
+                      return ChartMarkComponent.bar(
                         x: ChartPlottableValue.temporal(
                           "Date",
                           value: e.date,
-                          component: EChartTemporalComponent.day,
+                          component: EChartTemporalComponent.weekday,
                         ),
                         y: ChartPlottableValue.quantitative(
                           "Expense",
                           value: e.value,
                         ),
-                        // groupBy: groupBy,
+                        groupBy: e.category,
                       );
                     }).toList(growable: false),
                   ),

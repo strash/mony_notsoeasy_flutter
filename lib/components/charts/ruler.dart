@@ -1,5 +1,5 @@
 import "package:flutter/rendering.dart";
-import "package:mony_app/components/charts/plottable.dart";
+import "package:mony_app/components/charts/chart.dart";
 
 final class ChartRulerComponent {
   final ChartPlottableValue threshold;

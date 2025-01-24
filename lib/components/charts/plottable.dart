@@ -1,3 +1,5 @@
+part of "./chart.dart";
+
 enum EChartTemporalComponent {
   day,
   month,
@@ -14,7 +16,7 @@ abstract base class ChartPlottableValue<T extends Object> {
   /// [DateTime] for temporal data, or [String] for categorical data.
   T get value;
 
-  int compareTo(T other);
+  int compareTo(covariant ChartPlottableValue other);
 
   @override
   int get hashCode;
@@ -50,14 +52,13 @@ abstract base class ChartPlottableValue<T extends Object> {
 final class _QuantitativeImpl implements ChartPlottableValue<num> {
   @override
   final String label;
-
   @override
   final num value;
 
   const _QuantitativeImpl(this.label, {required this.value});
 
   @override
-  int compareTo(num other) => value.compareTo(other);
+  int compareTo(ChartPlottableValue<num> other) => value.compareTo(other.value);
 
   @override
   int get hashCode => value.hashCode;
@@ -67,6 +68,11 @@ final class _QuantitativeImpl implements ChartPlottableValue<num> {
 
   @override
   num operator +(_QuantitativeImpl other) => value + other.value;
+
+  @override
+  String toString() {
+    return "$label - $value";
+  }
 }
 
 final class _TemporalImpl implements ChartPlottableValue<DateTime> {
@@ -83,13 +89,14 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
   });
 
   @override
-  int compareTo(DateTime other) {
+  int compareTo(ChartPlottableValue<DateTime> other) {
     return switch (component) {
-      EChartTemporalComponent.day => value.day.compareTo(other.day),
-      EChartTemporalComponent.month => value.month.compareTo(other.month),
-      EChartTemporalComponent.year => value.year.compareTo(other.year),
-      EChartTemporalComponent.weekday => value.weekday.compareTo(other.weekday),
-      EChartTemporalComponent.date => value.compareTo(other),
+      EChartTemporalComponent.day => value.day.compareTo(other.value.day),
+      EChartTemporalComponent.month => value.month.compareTo(other.value.month),
+      EChartTemporalComponent.year => value.year.compareTo(other.value.year),
+      EChartTemporalComponent.weekday =>
+        value.weekday.compareTo(other.value.weekday),
+      EChartTemporalComponent.date => value.compareTo(other.value),
     };
   }
 
@@ -111,6 +118,11 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
 
   @override
   int operator +(_TemporalImpl other) => 1 + 1;
+
+  @override
+  String toString() {
+    return "$label - $value (${component.name})";
+  }
 }
 
 final class _CategoricalImpl implements ChartPlottableValue<String> {
@@ -122,7 +134,9 @@ final class _CategoricalImpl implements ChartPlottableValue<String> {
   const _CategoricalImpl(this.label, {required this.value});
 
   @override
-  int compareTo(String other) => value.compareTo(other);
+  int compareTo(ChartPlottableValue<String> other) {
+    return value.compareTo(other.value);
+  }
 
   @override
   int get hashCode => value.hashCode;
@@ -132,4 +146,9 @@ final class _CategoricalImpl implements ChartPlottableValue<String> {
 
   @override
   int operator +(_CategoricalImpl other) => 1 + 1;
+
+  @override
+  String toString() {
+    return "$label - $value";
+  }
 }
