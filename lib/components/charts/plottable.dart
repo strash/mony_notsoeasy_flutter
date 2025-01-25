@@ -1,10 +1,17 @@
 part of "./chart.dart";
 
-enum EChartTemporalComponent {
-  month,
+enum EChartTemporalView {
+  /// To show a list of months in a year
   year,
+
+  /// To show a list of days in a month
+  month,
+
+  /// To show a list of days in a week
   weekday,
-  date,
+  ;
+
+  static const EChartTemporalView defaultValue = month;
 }
 
 abstract base class ChartPlottableValue<T extends Object> {
@@ -36,7 +43,7 @@ abstract base class ChartPlottableValue<T extends Object> {
   static ChartPlottableValue<DateTime> temporal(
     String label, {
     required DateTime value,
-    EChartTemporalComponent component = EChartTemporalComponent.date,
+    EChartTemporalView component = EChartTemporalView.defaultValue,
   }) {
     return _TemporalImpl(label, value: value, component: component);
   }
@@ -85,14 +92,13 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
   @override
   num get numericValue {
     return switch (component) {
-      EChartTemporalComponent.month => value.month,
-      EChartTemporalComponent.year => value.year,
-      EChartTemporalComponent.weekday => value.weekday,
-      EChartTemporalComponent.date => value.startOfDay.millisecondsSinceEpoch,
+      EChartTemporalView.year => value.year,
+      EChartTemporalView.month => value.month,
+      EChartTemporalView.weekday => value.weekday,
     };
   }
 
-  final EChartTemporalComponent component;
+  final EChartTemporalView component;
 
   const _TemporalImpl(
     this.label, {
@@ -102,14 +108,7 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
 
   @override
   int compareTo(ChartPlottableValue<DateTime> other) {
-    return switch (component) {
-      EChartTemporalComponent.month => value.month.compareTo(other.value.month),
-      EChartTemporalComponent.year => value.year.compareTo(other.value.year),
-      EChartTemporalComponent.weekday =>
-        value.weekday.compareTo(other.value.weekday),
-      EChartTemporalComponent.date =>
-        value.startOfDay.compareTo(other.value.startOfDay),
-    };
+    return value.compareTo(other.value);
   }
 
   @override
