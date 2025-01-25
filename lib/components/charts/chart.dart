@@ -118,20 +118,19 @@ final class ChartComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = _prepareData(context);
     // TODO: округлять значение
-    final maxValue = data.fold(
-      .0,
-      (prev, curr) => max(
+    final maxValue = data.fold(.0, (prev, curr) {
+      final y = curr["y"] as List<Map<String, dynamic>>;
+      return max(
         prev,
-        (curr["y"] as List<Map<String, dynamic>>)
-            .fold(.0, (p, c) => p + (c["value"] as num)),
-      ),
-    );
+        y.fold(.0, (yPrev, yCurr) => yPrev + (yCurr["value"] as num)),
+      );
+    });
 
     return CustomPaint(
       painter: _Painter(
         config: config,
         data: data,
-        maxValue: maxValue + 2,
+        maxValue: maxValue,
       ),
     );
   }
