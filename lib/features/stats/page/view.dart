@@ -1,18 +1,12 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/app/theme/theme.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/charts/component.dart";
+import "package:mony_app/domain/models/category.dart";
 import "package:mony_app/features/navbar/page/view.dart";
-
-enum _ETestCategory { one, two, three }
-
-final class _TestValue {
-  final double value;
-  final DateTime date;
-  final _ETestCategory category;
-
-  _TestValue({required this.value, required this.date, required this.category});
-}
+import "package:mony_app/features/stats/page/view_model.dart";
 
 class StatsView extends StatelessWidget {
   const StatsView({super.key});
@@ -20,36 +14,10 @@ class StatsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
     final bottomOffset = NavBarView.bottomOffset(context);
 
-    final values = [
-      _TestValue(value: 1, date: DateTime.now(), category: _ETestCategory.one),
-      _TestValue(
-        value: 8,
-        date: DateTime.now().add(const Duration(days: 1)),
-        category: _ETestCategory.two,
-      ),
-      _TestValue(
-        value: 10,
-        date: DateTime.now().add(const Duration(days: 1)),
-        category: _ETestCategory.one,
-      ),
-      _TestValue(
-        value: 5,
-        date: DateTime.now().add(const Duration(days: 2)),
-        category: _ETestCategory.one,
-      ),
-      _TestValue(
-        value: 12,
-        date: DateTime.now().add(const Duration(days: 2)),
-        category: _ETestCategory.three,
-      ),
-      _TestValue(
-        value: 15,
-        date: DateTime.now().add(const Duration(days: 2)),
-        category: _ETestCategory.two,
-      ),
-    ];
+    final viewModel = context.viewModel<StatsViewModel>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -70,34 +38,41 @@ class StatsView extends StatelessWidget {
                 aspectRatio: 1.25,
                 child: ChartComponent(
                   config: ChartConfig(
+                    padding: 2.0,
+                    radius: 4.0,
                     gridColor: theme.colorScheme.onSurfaceVariant
                         .withValues(alpha: .5),
-                    groupColor: (group) {
-                      return switch (group as _ETestCategory?) {
-                        null => theme.colorScheme.error,
-                        _ETestCategory.one => Colors.indigoAccent,
-                        _ETestCategory.two => theme.colorScheme.secondary,
-                        _ETestCategory.three => Colors.deepOrangeAccent,
-                      };
-                    },
-                    padding: 5.0,
-                    radius: 5.0,
                     legendStyle: GoogleFonts.golosText(
-                      fontSize: 14.0,
+                      fontSize: 12.0,
                       fontWeight: FontWeight.w500,
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
+                    groupColor: (group) {
+                      final category = group as CategoryModel?;
+                      if (category == null || ex == null) {
+                        return theme.colorScheme.tertiaryContainer;
+                      }
+                      return ex.from(category.colorName).color;
+                    },
+                    compareTo: (groupA, groupB) {
+                      final a = groupA as CategoryModel?;
+                      final b = groupB as CategoryModel?;
+                      return a?.title.compareTo(b?.title ?? "") ?? 0;
+                    },
                   ),
-                  data: values.map((e) {
+                  data: viewModel.transactions.where((e) {
+                    return e.category.transactionType ==
+                        viewModel.activeTransactionType;
+                  }).map((e) {
                     return ChartMarkComponent.bar(
                       x: ChartPlottableValue.temporal(
                         "Date",
-                        value: e.date,
-                        component: EChartTemporalComponent.weekday,
+                        value: e.date.startOfDay,
+                        component: viewModel.activeTemporalView,
                       ),
                       y: ChartPlottableValue.quantitative(
                         "Expense",
-                        value: e.value,
+                        value: e.amount.abs(),
                       ),
                       groupBy: e.category,
                     );
