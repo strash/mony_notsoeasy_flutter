@@ -80,6 +80,18 @@ final class DomainTransactionService extends BaseDatabaseService {
     return _loadDeps(dtos: dtos);
   }
 
+  Future<List<TransactionModel>> getRange({
+    required DateTime from,
+    required DateTime to,
+  }) async {
+    final offset = from.timeZoneOffset;
+    final dtos = await _transactionRepo.getRange(
+      from: from.add(offset).toUtc().toIso8601String(),
+      to: to.add(offset).toUtc().toIso8601String(),
+    );
+    return _loadDeps(dtos: dtos);
+  }
+
   Future<TransactionModel?> getOne({required String id}) async {
     final dto = await _transactionRepo.getOne(id: id);
     if (dto == null) return null;

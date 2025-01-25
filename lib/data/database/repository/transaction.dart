@@ -30,6 +30,22 @@ abstract base class TransactionDatabaseRepository {
 
   Future<TransactionDto?> getOne({required String id});
 
+  /// Retrieves a list of transactions that occurred between two dates.
+  ///
+  /// The `from` date is inclusive, while the `to` date is exclusive.
+  /// This means that if `from` is set to "2024-01-02T10:11:12.123Z" and `to` is
+  /// set to "2024-01-03T10:11:12.123Z", the returned list will include
+  /// transactions that occurred on "2024-01-02" only, and will not include
+  /// any transactions from "2024-01-03".
+  ///
+  /// - Parameters:
+  ///   - `from`: inclusive.
+  ///   - `to`: exclusive.
+  Future<List<TransactionDto>> getRange({
+    required String from,
+    required String to,
+  });
+
   Future<void> create({required TransactionDto dto});
 
   Future<void> update({required TransactionDto dto});
@@ -99,8 +115,7 @@ LIMIT $limit OFFSET $offset;
       final where = _getWhere(accountIds, categoryIds, tagIds);
       final maps = await db.rawQuery(
         """
-SELECT tr.*
-FROM transactions AS tr
+SELECT tr.* FROM $table AS tr
 LEFT JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
 ${where.$1}
 GROUP BY tr.id
@@ -125,8 +140,7 @@ ORDER BY tr.date DESC;
       final where = _getWhere(accountIds, categoryIds, tagIds);
       final maps = await db.rawQuery(
         """
-SELECT tr.*
-FROM transactions AS tr
+SELECT tr.* FROM $table AS tr
 LEFT JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
 ${where.$1}
 GROUP BY tr.id
@@ -151,6 +165,25 @@ OFFSET $offset;
       );
       if (map.isEmpty) return null;
       return TransactionDto.fromJson(map.first);
+    });
+  }
+
+  @override
+  Future<List<TransactionDto>> getRange({
+    required String from,
+    required String to,
+  }) async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.rawQuery(
+        """
+SELECT * FROM $table
+WHERE date BETWEEN DATE(?) AND DATE(?)
+ORDER BY date DESC;
+""",
+        [from, to],
+      );
+      return maps.map(TransactionDto.fromJson).toList(growable: false);
     });
   }
 
