@@ -32,14 +32,15 @@ extension DateTimeEx on DateTime {
   /// ```dart
   /// final loc = MaterialLocalizations.of(context);
   /// final index = DateTime.now().weekDayIndex(loc);
-  /// // will print 'M' if it's Monday and the language is English
   /// print(DateTimeEx.weekDayList(loc)[index]);
+  /// // will print 'M' if it's Monday and the language is English
   /// ```
   int weekDayIndex(MaterialLocalizations localizations) {
+    const daysPerWeek = DateTime.daysPerWeek;
     // to zero based week (DateTime.weekday starts from 1 and end at 7)
-    final weekday = this.weekday.wrapi(0, 7);
+    final weekday = this.weekday.wrapi(0, daysPerWeek);
     // substract offset and wrap again
-    return (weekday - localizations.firstDayOfWeekIndex).wrapi(0, 7);
+    return (weekday - localizations.firstDayOfWeekIndex).wrapi(0, daysPerWeek);
   }
 
   /// Returns a [DateTime] object representing the start of the current day.
@@ -150,6 +151,13 @@ extension DateTimeEx on DateTime {
     return DateTime(offsettedMonth.year, offsettedMonth.month);
   }
 
+  /// Returns the first day of the week for the given [DateTime] instance
+  /// based on the provided [localizations].
+  DateTime firstDayOfWeek(MaterialLocalizations localizations) {
+    final index = weekDayIndex(localizations);
+    return subtract(Duration(days: index)).startOfDay;
+  }
+
   /// Returns a new date with the month shifted by the specified `offset`.
   ///
   /// The `offset` can be any integer:
@@ -182,7 +190,7 @@ extension DateTimeEx on DateTime {
   /// final date1 = DateTime(2023, 1, 15);
   /// final date2 = DateTime(2024, 3, 10);
   /// final monthsDifference = date1.monthOffset(date2);
-  /// print(monthsDifference); // Output: 14
+  /// print(monthsDifference); // 14
   /// ```
   int monthOffset(DateTime other) {
     final int yearDiff = other.year - year;
@@ -190,5 +198,54 @@ extension DateTimeEx on DateTime {
     int totalMonthDiff = yearDiff * 12 + monthDiff;
     if (other.day < day) totalMonthDiff--;
     return totalMonthDiff;
+  }
+
+  /// Returns a list of [DateTime] objects representing the first day of
+  /// each month in the year of the current [DateTime] instance.
+  ///
+  /// Example:
+  /// ```dart
+  /// final dateTime = DateTime(2025, DateTime.september);
+  /// print(dateTime.monthsOfYear());
+  /// // [2025-01-01 00:00:00.000, ... 2025-12-01 00:00:00.000]
+  /// ```
+  List<DateTime> monthsOfYear() {
+    return List.generate(DateTime.monthsPerYear, (index) {
+      final month = (index + 1).wrapi(DateTime.january, DateTime.december + 1);
+      return DateTime(year, month);
+    }).toList(growable: false);
+  }
+
+  /// Returns a list of [DateTime] objects representing each day of the
+  /// month for the current [DateTime] instance.
+  ///
+  /// Example:
+  /// ```dart
+  /// final dateTime = DateTime(2025, DateTime.january, 25);
+  /// print(dateTime.daysOfMonth());
+  /// // [2025-01-01 00:00:00.000, ... 2025-01-31 00:00:00.000]
+  /// ```
+  List<DateTime> daysOfMonth() {
+    return List.generate(daysInMonth, (index) {
+      return DateTime(year, month, index + 1);
+    });
+  }
+
+  /// Returns a list of [DateTime] objects representing each day of the
+  /// week for the current [DateTime] instance, based on the provided
+  /// [localizations].
+  ///
+  /// Example:
+  /// ```dart
+  /// final loc = MaterialLocalizations.of(context);
+  /// final dateTime = DateTime(2025, DateTime.january, 25);
+  /// print(dateTime.daysOfWeek(loc));
+  /// // [2025-01-19 00:00:00.000, ... 2025-01-25 00:00:00.000]
+  /// ```
+  List<DateTime> daysOfWeek(MaterialLocalizations localizations) {
+    final startOfWeek = firstDayOfWeek(localizations).startOfDay;
+    return List.generate(DateTime.daysPerWeek, (index) {
+      return startOfWeek.add(Duration(days: index));
+    });
   }
 }

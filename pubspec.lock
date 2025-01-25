@@ -446,18 +446,18 @@ packages:
     dependency: transitive
     description:
       name: l10n_currencies
-      sha256: "7203c16b673a4b7039fb8d74bceef96f1fca80839b224d8e4445c39ff7283da6"
+      sha256: "2e3d1d7be7bc12a37ef4bcc53805a0ce218f25ea959b3386779cb220d1181340"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "1.0.0"
   l10n_languages:
     dependency: transitive
     description:
       name: l10n_languages
-      sha256: "8399add92b5520d5fd3db90f4e62be09fbd1dc48b244dc2fa327790b297435a6"
+      sha256: "324e115dbc4d20e9bb504930e843848c233648ecbba40da59af4d6a0fc24bcfa"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "1.0.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -686,18 +686,18 @@ packages:
     dependency: "direct main"
     description:
       name: sealed_currencies
-      sha256: "506a8facca33c163b4aa0231c6b032cba48d9a2281dd2dbb20bb2995d76fe606"
+      sha256: "24030ad84f0abdfc90b2306a6668b114eb66d725bf72c4638a9bf563c0581078"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   sealed_languages:
     dependency: transitive
     description:
       name: sealed_languages
-      sha256: "629c0f2bb6084b8b9a6e22c4fd2ca632cac3fcfa64018713d920f70811ec0261"
+      sha256: "89534d887680d2f67a82fc9937fd712c5d90b9fa9909de46a3bd7f2df6dde52a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -710,10 +710,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "138b7bbbc7f59c56236e426c37afb8f78cbc57b094ac64c440e0bb90e380a4f5"
+      sha256: "986dc7b7d14f38064bfa85ace28df1f1a66d4fba32e4b1079d4ea537d9541b01"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.4.3"
   shared_preferences_foundation:
     dependency: transitive
     description:
