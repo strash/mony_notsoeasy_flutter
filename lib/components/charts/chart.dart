@@ -45,9 +45,6 @@ final class ChartComponent extends StatelessWidget {
   List<Map<String, dynamic>> _prepareData(BuildContext context) {
     final intl = intl_lib.Intl();
     final loc = MaterialLocalizations.of(context);
-    // NOTE: sort here because if not the first value could be from the
-    // next period
-    data.sort((a, b) => a.compareTo(b));
 
     // map
     List<Map<String, dynamic>> list = [];
@@ -105,6 +102,7 @@ final class ChartComponent extends StatelessWidget {
         list[index] = Map.from(listItem);
       }
     } else {
+      data.sort((a, b) => a.compareTo(b));
       for (final item in data) {
         final value = item.x.value;
         final legend = item.x.value.toString();

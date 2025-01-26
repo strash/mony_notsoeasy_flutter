@@ -25,6 +25,9 @@ class StatsView extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomScrollView(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         slivers: [
           // -> app bar
           const AppBarComponent(

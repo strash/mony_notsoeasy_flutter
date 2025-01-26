@@ -43,14 +43,17 @@ final class _Painter extends CustomPainter {
 
       final y = value["y"] as List<Map<String, dynamic>>?;
       if (y != null) {
+        const minHeight = 5.0;
         canvas.save();
 
         // mask for mark groups
         barMaxHeight = size.height - legendSize.height - 5.0;
         final totalHeight =
             y.fold(.0, (prev, curr) => prev + (curr["value"] as num));
-        final totalDisplayedHeight =
-            totalHeight.remap(.0, maxValue.toDouble(), .0, barMaxHeight);
+        final totalDisplayedHeight = max(
+          minHeight,
+          totalHeight.remap(.0, maxValue.toDouble(), .0, barMaxHeight),
+        );
         Path clipPath = Path()
           ..moveTo(left, config.radius) // top left
           ..arcToPoint(
@@ -76,9 +79,10 @@ final class _Painter extends CustomPainter {
         for (final group in y) {
           paint.color = config.groupColor(group["groupBy"]);
           final height = group["value"] as num;
-          final displayedHeight = height
-              .toDouble()
-              .remap(.0, maxValue.toDouble(), .0, barMaxHeight);
+          final displayedHeight = max(
+            minHeight,
+            height.toDouble().remap(.0, maxValue.toDouble(), .0, barMaxHeight),
+          );
           Rect rect = Rect.fromLTWH(left, .0, width, displayedHeight);
           // invert by vertical and offset to the right
           rect = rect.shift(
