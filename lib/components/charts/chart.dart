@@ -1,6 +1,6 @@
 import "dart:math";
 
-import "package:flutter/widgets.dart";
+import "package:flutter/material.dart";
 import "package:intl/intl.dart" as intl_lib;
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/charts/config.dart";
@@ -44,74 +44,95 @@ final class ChartComponent extends StatelessWidget {
 
   List<Map<String, dynamic>> _prepareData(BuildContext context) {
     final intl = intl_lib.Intl();
-    // sort items
-    data.sort((a, b) => a.compareTo(b));
-
-    // TODO: автоматически добавлять недостающие Y айтемы если Y - дата
-    if (data.firstOrNull is ChartPlottableValue<DateTime>) {
-      final iter = data.iterator;
-      DateTime? prevValue;
-      while (iter.moveNext()) {
-        final value = iter.current.y.value as DateTime;
-        if (prevValue != null && prevValue.isSameDateAs(value)) {
-          continue;
-        }
-        // FIXME: theres nothing going on right now
-        prevValue = value;
-      }
-    }
+    final loc = MaterialLocalizations.of(context);
 
     // map
-    final List<Map<String, dynamic>> list = [];
-    for (final item in data) {
-      final xValue = item.x.value;
-      final String xLegend;
-      final int idx;
-      if (item.x is ChartPlottableValue<DateTime>) {
-        final date = (item.x.value as DateTime).startOfDay;
-        final x = item.x as _TemporalImpl;
-        final formatter = intl.date(
-          switch (x.component) {
-            EChartTemporalView.year => "MMM",
-            EChartTemporalView.month => "d",
-            EChartTemporalView.weekday => "E",
-          },
-        );
-        // FIXME: для EChartTemporalView.month отображать не все дни в легеде.
-        // пропускать некоторые даты и оставлять например каждые семь дней
-        xLegend = formatter.format(date);
-        final value = xValue as DateTime;
-        idx = list.indexWhere((e) {
-          final curr = e["x"] as DateTime;
-          if (x.component == EChartTemporalView.year) {
-            return curr.year == value.year && curr.month == value.month;
-          }
-          return curr.isSameDateAs(value);
-        });
-      } else {
-        xLegend = item.x.value.toString();
-        idx = list.indexWhere((e) => e["x"] == xValue);
-      }
-      if (idx == -1) {
-        final groups = [
-          {"value": item.y.numericValue, "groupBy": item.groupBy},
-        ];
-        list.add({"x": xValue, "xLegend": xLegend, "y": groups});
-      } else {
-        final groups = list[idx]["y"] as List<Map<String, dynamic>>;
-        final groupIdx = groups.indexWhere((e) => e["groupBy"] == item.groupBy);
-        if (groupIdx == -1) {
-          groups.add({"value": item.y.numericValue, "groupBy": item.groupBy});
-        } else {
-          final sum = (groups[groupIdx]["value"] as num) + item.y.numericValue;
-          groups[groupIdx]["value"] = sum;
+    List<Map<String, dynamic>> list = [];
+
+    if (data.firstOrNull?.x is ChartPlottableValue<DateTime>) {
+      final List<DateTime> dates;
+      final EChartTemporalView temporalView;
+      final String formatString;
+      {
+        final x = data.first.x as _TemporalImpl;
+        temporalView = x.component;
+        switch (temporalView) {
+          case EChartTemporalView.year:
+            dates = x.value.monthsOfYear();
+            formatString = "MMM";
+          case EChartTemporalView.month:
+            dates = x.value.daysOfMonth();
+            formatString = "d";
+          case EChartTemporalView.weekday:
+            dates = x.value.daysOfWeek(loc);
+            formatString = "E";
         }
-        // sort groups
-        groups.sort((a, b) => config.compareTo(a["groupBy"], b["groupBy"]));
-        list[idx] = {"x": xValue, "xLegend": xLegend, "y": groups};
+      }
+      list = List.filled(dates.length, {});
+      final formatter = intl.date(formatString);
+      for (final item in data) {
+        final x = item.x as ChartPlottableValue<DateTime>;
+        for (final (dateIndex, date) in dates.indexed) {
+          final sameDate = switch (temporalView) {
+            EChartTemporalView.year => x.value.isSameMonthAs(date),
+            _ => x.value.isSameDateAs(date),
+          };
+          if (!sameDate) continue;
+
+          final listItem = list.elementAt(dateIndex);
+          if (listItem.isEmpty) {
+            final legend = formatter.format(date);
+            final groups = [
+              {"value": item.y.numericValue, "groupBy": item.groupBy},
+            ];
+            list[dateIndex] = {"x": date, "xLegend": legend, "y": groups};
+          } else {
+            listItem["y"] = _updateGroup(mark: item, listItem: listItem);
+            list[dateIndex] = listItem;
+          }
+          break;
+        }
+      }
+      // FIXME: для EChartTemporalView.month отображать не все дни в
+      // легеде. пропускать некоторые даты и оставлять например каждые семь дней
+    } else {
+      // sort items
+      data.sort((a, b) => a.compareTo(b));
+
+      for (final item in data) {
+        final value = item.x.value;
+        final legend = item.x.value.toString();
+        final idx = list.indexWhere((e) => e["x"] == value);
+        if (idx == -1) {
+          final groups = [
+            {"value": item.y.numericValue, "groupBy": item.groupBy},
+          ];
+          list.add({"x": value, "xLegend": legend, "y": groups});
+        } else {
+          final listItem = list[idx];
+          listItem["y"] = _updateGroup(mark: item, listItem: listItem);
+          list[idx] = listItem;
+        }
       }
     }
     return list;
+  }
+
+  List<Map<String, dynamic>> _updateGroup({
+    required ChartMarkComponent mark,
+    required Map<String, dynamic> listItem,
+  }) {
+    final groups = listItem["y"] as List<Map<String, dynamic>>;
+    final groupIdx = groups.indexWhere((e) => e["groupBy"] == mark.groupBy);
+    if (groupIdx == -1) {
+      groups.add({"value": mark.y.numericValue, "groupBy": mark.groupBy});
+    } else {
+      final groupValue = groups[groupIdx]["value"] as num;
+      groups[groupIdx]["value"] = groupValue + mark.y.numericValue;
+    }
+    // sort groups
+    groups.sort((a, b) => config.compareTo(a["groupBy"], b["groupBy"]));
+    return groups;
   }
 
   @override
@@ -119,7 +140,8 @@ final class ChartComponent extends StatelessWidget {
     final data = _prepareData(context);
     // TODO: округлять значение
     final maxValue = data.fold(.0, (prev, curr) {
-      final y = curr["y"] as List<Map<String, dynamic>>;
+      final y = curr["y"] as List<Map<String, dynamic>>?;
+      if (y == null) return prev;
       return max(
         prev,
         y.fold(.0, (yPrev, yCurr) => yPrev + (yCurr["value"] as num)),
@@ -133,5 +155,11 @@ final class ChartComponent extends StatelessWidget {
         maxValue: maxValue,
       ),
     );
+  }
+}
+
+extension on DateTime {
+  bool isSameMonthAs(DateTime other) {
+    return year == other.year && month == other.month;
   }
 }
