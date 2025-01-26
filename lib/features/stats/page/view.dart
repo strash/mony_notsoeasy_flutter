@@ -18,6 +18,9 @@ class StatsView extends StatelessWidget {
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<StatsViewModel>();
+    final transactions = viewModel.transactions.where((e) {
+      return e.category.transactionType == viewModel.activeTransactionType;
+    });
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -36,48 +39,58 @@ class StatsView extends StatelessWidget {
             sliver: SliverToBoxAdapter(
               child: AspectRatio(
                 aspectRatio: 1.25,
-                child: ChartComponent(
-                  config: ChartConfig(
-                    padding: 2.0,
-                    radius: 4.0,
-                    gridColor: theme.colorScheme.onSurfaceVariant
-                        .withValues(alpha: .5),
-                    legendStyle: GoogleFonts.golosText(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w500,
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                    groupColor: (group) {
-                      final category = group as CategoryModel?;
-                      if (category == null || ex == null) {
-                        return theme.colorScheme.tertiaryContainer;
-                      }
-                      return ex.from(category.colorName).color;
-                    },
-                    compareTo: (groupA, groupB) {
-                      final a = groupA as CategoryModel?;
-                      final b = groupB as CategoryModel?;
-                      return a?.title.compareTo(b?.title ?? "") ?? 0;
-                    },
-                  ),
-                  data: viewModel.transactions.where((e) {
-                    return e.category.transactionType ==
-                        viewModel.activeTransactionType;
-                  }).map((e) {
-                    return ChartMarkComponent.bar(
-                      x: ChartPlottableValue.temporal(
-                        "Date",
-                        value: e.date.startOfDay,
-                        component: viewModel.activeTemporalView,
+                child: transactions.isNotEmpty
+                    // -> chart
+                    ? ChartComponent(
+                        config: ChartConfig(
+                          padding: 2.0,
+                          radius: 4.0,
+                          gridColor: theme.colorScheme.onSurfaceVariant
+                              .withValues(alpha: .5),
+                          legendStyle: GoogleFonts.golosText(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w500,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                          groupColor: (group) {
+                            final category = group as CategoryModel?;
+                            if (category == null || ex == null) {
+                              return theme.colorScheme.tertiaryContainer;
+                            }
+                            return ex.from(category.colorName).color;
+                          },
+                          compareTo: (groupA, groupB) {
+                            final a = groupA as CategoryModel?;
+                            final b = groupB as CategoryModel?;
+                            return a?.title.compareTo(b?.title ?? "") ?? 0;
+                          },
+                        ),
+                        data: transactions.map((e) {
+                          return ChartMarkComponent.bar(
+                            x: ChartPlottableValue.temporal(
+                              "Date",
+                              value: e.date.startOfDay,
+                              component: viewModel.activeTemporalView,
+                            ),
+                            y: ChartPlottableValue.quantitative(
+                              "Expense",
+                              value: e.amount.abs(),
+                            ),
+                            groupBy: e.category,
+                          );
+                        }).toList(growable: false),
+                      )
+
+                    // -> empty state
+                    : Center(
+                        child: Text(
+                          "Нет данных",
+                          style: GoogleFonts.golosText(
+                            fontSize: 16.0,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
                       ),
-                      y: ChartPlottableValue.quantitative(
-                        "Expense",
-                        value: e.amount.abs(),
-                      ),
-                      groupBy: e.category,
-                    );
-                  }).toList(growable: false),
-                ),
               ),
             ),
           ),

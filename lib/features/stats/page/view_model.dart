@@ -15,12 +15,14 @@ final class StatsPage extends StatefulWidget {
 }
 
 final class StatsViewModel extends ViewModelState<StatsPage> {
-  EChartTemporalView activeTemporalView = EChartTemporalView.weekday;
+  EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
 
   ETransactionType activeTransactionType = ETransactionType.defaultValue;
 
   DateTime activeYear = DateTime.now().startOfDay;
-  DateTime activeMonth = DateTime.now().startOfDay;
+  // FIXME: убрать хардкод
+  DateTime activeMonth =
+      DateTime.now().subtract(const Duration(days: 5)).startOfDay;
   DateTime activeWeek = DateTime.now().startOfDay;
 
   List<TransactionModel> transactions = [];
