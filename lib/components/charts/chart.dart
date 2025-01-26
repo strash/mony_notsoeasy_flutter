@@ -1,7 +1,7 @@
 import "dart:math";
 
 import "package:flutter/material.dart";
-import "package:intl/intl.dart" as intl_lib;
+import "package:intl/intl.dart" as intl;
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/charts/config.dart";
 import "package:mony_app/components/charts/mark.dart";
@@ -43,7 +43,6 @@ final class ChartComponent extends StatelessWidget {
         );
 
   List<Map<String, dynamic>> _prepareData(BuildContext context) {
-    final intl = intl_lib.Intl();
     final loc = MaterialLocalizations.of(context);
 
     // map
@@ -52,20 +51,20 @@ final class ChartComponent extends StatelessWidget {
     if (data.firstOrNull?.x is ChartPlottableValue<DateTime>) {
       final List<DateTime> dates;
       final EChartTemporalView temporalView;
-      final String formatString;
+      final intl.DateFormat formatter;
       {
         final x = data.first.x as _TemporalImpl;
         temporalView = x.component;
         switch (temporalView) {
           case EChartTemporalView.year:
             dates = x.value.monthsOfYear();
-            formatString = "MMM";
+            formatter = intl.DateFormat("MMM");
           case EChartTemporalView.month:
             dates = x.value.daysOfMonth();
-            formatString = "d";
+            formatter = intl.DateFormat("d");
           case EChartTemporalView.week:
             dates = x.value.daysOfWeek(loc);
-            formatString = "E";
+            formatter = intl.DateFormat("E");
         }
       }
       list = List.filled(dates.length, {});
@@ -91,7 +90,6 @@ final class ChartComponent extends StatelessWidget {
         }
       }
       // set legends
-      final formatter = intl.date(formatString);
       for (final (index, date) in dates.indexed) {
         final listItem = list.elementAt(index);
         listItem["xLegend"] = formatter.format(date);
@@ -139,10 +137,7 @@ final class ChartComponent extends StatelessWidget {
     return groups;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final data = _prepareData(context);
-    // FIXME: округлять значение
+  double _maxValue(List<Map<String, dynamic>> data) {
     final maxValue = data.fold(.0, (prev, curr) {
       final y = curr["y"] as List<Map<String, dynamic>>?;
       if (y == null) return prev;
@@ -151,12 +146,23 @@ final class ChartComponent extends StatelessWidget {
         y.fold(.0, (yPrev, yCurr) => yPrev + (yCurr["value"] as num)),
       );
     });
+    final zoomLevel = max(1, maxValue.toInt().toString().length - 2);
+    final mod = List.filled(zoomLevel, 10).fold(1, (p, c) => p * c);
+    final rem = maxValue % mod;
+    final mul = (maxValue - rem) / mod;
+    return mul * mod + mod;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final data = _prepareData(context);
+    final value = _maxValue(data);
 
     return CustomPaint(
       painter: _Painter(
         config: config,
         data: data,
-        maxValue: maxValue,
+        maxValue: value,
       ),
     );
   }

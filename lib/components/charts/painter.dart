@@ -16,10 +16,77 @@ final class _Painter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
 
+    // vertical legend
+    final maxValueLegend = TextSpan(
+      text: config.yFormatter(maxValue),
+      style: config.legendStyle,
+    );
+    final verticalLegendPainter = TextPainter(
+      text: maxValueLegend,
+      textDirection: TextDirection.ltr,
+    );
+    verticalLegendPainter.layout();
+    final maxValueLegendSize = verticalLegendPainter.size;
+    verticalLegendPainter.paint(
+      canvas,
+      Offset(size.width - maxValueLegendSize.width, .0),
+    );
+
+    final thirdValue = maxValue / 3;
+    final secondLineY =
+        thirdValue.remap(.0, maxValue.toDouble(), .0, size.height);
+    final thirdLineY =
+        (thirdValue * 2.0).remap(.0, maxValue.toDouble(), .0, size.height);
+
+    final secondValueLegend = TextSpan(
+      text: config.yFormatter(maxValue - thirdValue),
+      style: config.legendStyle,
+    );
+    verticalLegendPainter.text = secondValueLegend;
+    verticalLegendPainter.layout();
+    final secondValueLegendSize = verticalLegendPainter.size;
+    verticalLegendPainter.paint(
+      canvas,
+      Offset(size.width - secondValueLegendSize.width, secondLineY),
+    );
+
+    final thirdValueLegend = TextSpan(
+      text: config.yFormatter(thirdValue),
+      style: config.legendStyle,
+    );
+    verticalLegendPainter.text = thirdValueLegend;
+    verticalLegendPainter.layout();
+    final thirdValueLegendSize = verticalLegendPainter.size;
+    verticalLegendPainter.paint(
+      canvas,
+      Offset(size.width - thirdValueLegendSize.width, thirdLineY),
+    );
+
+    final vLegendWidth = [
+          maxValueLegendSize.width,
+          secondValueLegendSize.width,
+          thirdValueLegendSize.width,
+        ].fold(.0, (prev, curr) => max(prev, curr)) +
+        6.0;
+
+    // middle horizontal lines
+    paint.strokeWidth = 1.0;
+    paint.color = config.gridSecondaryColor;
+    canvas.drawLine(
+      Offset(.0, secondLineY),
+      Offset(size.width, secondLineY),
+      paint,
+    );
+    canvas.drawLine(
+      Offset(.0, thirdLineY),
+      Offset(size.width, thirdLineY),
+      paint,
+    );
+
     // marks
     paint.strokeWidth = 0;
-    final sectionWidth = size.width / max(1, data.length);
-    final width = max(10.0, sectionWidth - config.padding * 2.0);
+    final sectionWidth = (size.width - vLegendWidth) / max(1, data.length);
+    final barWidth = max(6.0, sectionWidth - config.padding);
     double barMaxHeight = size.height;
     for (final (index, value) in data.indexed) {
       // legend
@@ -60,17 +127,17 @@ final class _Painter extends CustomPainter {
             Offset(left + config.radius, .0),
             radius: Radius.circular(config.radius),
           ) // top left radius
-          ..lineTo(left + width - config.radius, .0) // top right
+          ..lineTo(left + barWidth - config.radius, .0) // top right
           ..arcToPoint(
-            Offset(left + width, config.radius),
+            Offset(left + barWidth, config.radius),
             radius: Radius.circular(config.radius),
           ) // top right radius
-          ..lineTo(left + width, totalDisplayedHeight) // bottom right
+          ..lineTo(left + barWidth, totalDisplayedHeight) // bottom right
           ..lineTo(left, totalDisplayedHeight) // bottom left
           ..close();
         // invert by vertical and offset to the right
         clipPath = clipPath.shift(
-          Offset(config.padding, barMaxHeight - totalDisplayedHeight),
+          Offset(config.padding * 0.5, barMaxHeight - totalDisplayedHeight),
         );
         canvas.clipPath(clipPath);
 
@@ -83,10 +150,13 @@ final class _Painter extends CustomPainter {
             minHeight,
             height.toDouble().remap(.0, maxValue.toDouble(), .0, barMaxHeight),
           );
-          Rect rect = Rect.fromLTWH(left, .0, width, displayedHeight);
+          Rect rect = Rect.fromLTWH(left, .0, barWidth, displayedHeight);
           // invert by vertical and offset to the right
           rect = rect.shift(
-            Offset(config.padding, barMaxHeight - offset - displayedHeight),
+            Offset(
+              config.padding * 0.5,
+              barMaxHeight - offset - displayedHeight,
+            ),
           );
           canvas.drawRect(rect, paint);
           offset += displayedHeight;
@@ -97,6 +167,21 @@ final class _Painter extends CustomPainter {
 
       legendPainter.dispose();
     }
+    final bottomValueLegend = TextSpan(
+      text: config.yFormatter(0),
+      style: config.legendStyle,
+    );
+    verticalLegendPainter.text = bottomValueLegend;
+    verticalLegendPainter.layout();
+    final bottomValueLegendSize = verticalLegendPainter.size;
+    verticalLegendPainter.paint(
+      canvas,
+      Offset(
+        size.width - bottomValueLegendSize.width,
+        barMaxHeight - bottomValueLegendSize.height,
+      ),
+    );
+    verticalLegendPainter.dispose();
 
     // grid
     paint.strokeWidth = 1.0;
