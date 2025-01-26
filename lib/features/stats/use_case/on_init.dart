@@ -10,12 +10,20 @@ final class OnInit extends UseCase<Future<void>, StatsViewModel> {
     if (viewModel == null) throw ArgumentError.notNull();
 
     final transactionService = context.read<DomainTransactionService>();
+    final accountService = context.read<DomainAccountService>();
 
     final (from, to) = viewModel.period;
 
-    final transactions = await transactionService.getRange(from: from, to: to);
+    final accounts = await accountService.getAll();
+    final transactions = await transactionService.getRange(
+      from: from,
+      to: to,
+      accountIds: [accounts.first.id],
+    );
 
     viewModel.setProtectedState(() {
+      viewModel.accounts = accounts;
+      viewModel.activeAccount = accounts.first;
       viewModel.transactions = transactions;
     });
   }

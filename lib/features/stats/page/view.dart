@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:intl/intl.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
@@ -18,9 +19,17 @@ class StatsView extends StatelessWidget {
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<StatsViewModel>();
+    final account = viewModel.activeAccount;
     final transactions = viewModel.transactions.where((e) {
       return e.category.transactionType == viewModel.activeTransactionType;
     });
+    final formatter = account != null
+        ? NumberFormat.compactCurrency(
+            name: account.currency.name,
+            symbol: account.currency.symbol,
+            decimalDigits: 0,
+          )
+        : NumberFormat.compact();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -46,20 +55,22 @@ class StatsView extends StatelessWidget {
                     // -> chart
                     ? ChartComponent(
                         config: ChartConfig(
+                          gridColor: theme.colorScheme.onSurfaceVariant
+                              .withValues(alpha: .4),
+                          gridSecondaryColor: theme.colorScheme.onSurfaceVariant
+                              .withValues(alpha: .4),
                           padding: switch (viewModel.activeTemporalView) {
-                            EChartTemporalView.year => 2.0,
-                            EChartTemporalView.month => 2.0,
-                            EChartTemporalView.week => 4.0,
+                            EChartTemporalView.year => 3.0,
+                            EChartTemporalView.month => 1.5,
+                            EChartTemporalView.week => 5.0,
                           },
                           radius: switch (viewModel.activeTemporalView) {
-                            EChartTemporalView.year => 5.0,
+                            EChartTemporalView.year => 6.0,
                             EChartTemporalView.month => 3.0,
-                            EChartTemporalView.week => 8.0,
+                            EChartTemporalView.week => 10.0,
                           },
-                          gridColor: theme.colorScheme.onSurfaceVariant
-                              .withValues(alpha: .5),
                           legendStyle: GoogleFonts.golosText(
-                            fontSize: 12.0,
+                            fontSize: 11.0,
                             fontWeight: FontWeight.w500,
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -74,6 +85,9 @@ class StatsView extends StatelessWidget {
                             final a = groupA as CategoryModel?;
                             final b = groupB as CategoryModel?;
                             return a?.title.compareTo(b?.title ?? "") ?? 0;
+                          },
+                          yFormatter: (value) {
+                            return formatter.format(value);
                           },
                         ),
                         data: transactions.map((e) {

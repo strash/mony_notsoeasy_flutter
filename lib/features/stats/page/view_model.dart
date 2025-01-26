@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/charts/component.dart";
+import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/features/stats/page/view.dart";
@@ -17,6 +18,9 @@ final class StatsPage extends StatefulWidget {
 final class StatsViewModel extends ViewModelState<StatsPage> {
   EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
 
+  List<AccountModel> accounts = [];
+  AccountModel? activeAccount;
+
   ETransactionType activeTransactionType = ETransactionType.defaultValue;
 
   // FIXME: убрать хардкод
@@ -25,7 +29,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   DateTime activeMonth =
       DateTime.now().subtract(const Duration(days: 60)).startOfDay;
   DateTime activeWeek =
-      DateTime.now().subtract(const Duration(days: 5)).startOfDay;
+      DateTime.now().subtract(const Duration(days: 65)).startOfDay;
 
   List<TransactionModel> transactions = [];
 
