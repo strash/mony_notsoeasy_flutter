@@ -44,6 +44,7 @@ abstract base class TransactionDatabaseRepository {
   Future<List<TransactionDto>> getRange({
     required String from,
     required String to,
+    required List<String> accountIds,
   });
 
   Future<void> create({required TransactionDto dto});
@@ -172,16 +173,20 @@ OFFSET $offset;
   Future<List<TransactionDto>> getRange({
     required String from,
     required String to,
+    required List<String> accountIds,
   }) async {
     return resolve(() async {
       final db = await database.db;
+      final where = accountIds.isNotEmpty
+          ? "AND tr.account_id IN (${getInArguments(accountIds)})"
+          : "";
       final maps = await db.rawQuery(
         """
 SELECT * FROM $table AS tr
-WHERE tr.date BETWEEN ? AND ?
+WHERE tr.date BETWEEN ? AND ? $where
 ORDER BY tr.date DESC;
 """,
-        [from, to],
+        [from, to, ...accountIds],
       );
       return maps.map(TransactionDto.fromJson).toList(growable: false);
     });
