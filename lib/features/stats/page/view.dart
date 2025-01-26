@@ -38,13 +38,21 @@ class StatsView extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
             sliver: SliverToBoxAdapter(
               child: AspectRatio(
-                aspectRatio: 1.25,
+                aspectRatio: 1.15,
                 child: transactions.isNotEmpty
                     // -> chart
                     ? ChartComponent(
                         config: ChartConfig(
-                          padding: 2.0,
-                          radius: 4.0,
+                          padding: switch (viewModel.activeTemporalView) {
+                            EChartTemporalView.year => 2.0,
+                            EChartTemporalView.month => 2.0,
+                            EChartTemporalView.week => 4.0,
+                          },
+                          radius: switch (viewModel.activeTemporalView) {
+                            EChartTemporalView.year => 5.0,
+                            EChartTemporalView.month => 3.0,
+                            EChartTemporalView.week => 8.0,
+                          },
                           gridColor: theme.colorScheme.onSurfaceVariant
                               .withValues(alpha: .5),
                           legendStyle: GoogleFonts.golosText(

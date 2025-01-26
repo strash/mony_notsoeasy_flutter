@@ -19,11 +19,13 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
 
   ETransactionType activeTransactionType = ETransactionType.defaultValue;
 
-  DateTime activeYear = DateTime.now().startOfDay;
   // FIXME: убрать хардкод
+  DateTime activeYear =
+      DateTime.now().subtract(const Duration(days: 60)).startOfDay;
   DateTime activeMonth =
+      DateTime.now().subtract(const Duration(days: 60)).startOfDay;
+  DateTime activeWeek =
       DateTime.now().subtract(const Duration(days: 5)).startOfDay;
-  DateTime activeWeek = DateTime.now().startOfDay;
 
   List<TransactionModel> transactions = [];
 
@@ -40,7 +42,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
         final list = activeMonth.daysOfMonth();
         from = list.first;
         to = list.last.add(const Duration(days: 1));
-      case EChartTemporalView.weekday:
+      case EChartTemporalView.week:
         final list = activeWeek.daysOfWeek(loc);
         from = list.first;
         to = list.last.add(const Duration(days: 1));

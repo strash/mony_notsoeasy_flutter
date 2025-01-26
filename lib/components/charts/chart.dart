@@ -45,6 +45,9 @@ final class ChartComponent extends StatelessWidget {
   List<Map<String, dynamic>> _prepareData(BuildContext context) {
     final intl = intl_lib.Intl();
     final loc = MaterialLocalizations.of(context);
+    // NOTE: sort here because if not the first value could be from the
+    // next period
+    data.sort((a, b) => a.compareTo(b));
 
     // map
     List<Map<String, dynamic>> list = [];
@@ -63,13 +66,12 @@ final class ChartComponent extends StatelessWidget {
           case EChartTemporalView.month:
             dates = x.value.daysOfMonth();
             formatString = "d";
-          case EChartTemporalView.weekday:
+          case EChartTemporalView.week:
             dates = x.value.daysOfWeek(loc);
             formatString = "E";
         }
       }
       list = List.filled(dates.length, {});
-      final formatter = intl.date(formatString);
       for (final item in data) {
         final x = item.x as ChartPlottableValue<DateTime>;
         for (final (dateIndex, date) in dates.indexed) {
@@ -78,27 +80,31 @@ final class ChartComponent extends StatelessWidget {
             _ => x.value.isSameDateAs(date),
           };
           if (!sameDate) continue;
-
           final listItem = list.elementAt(dateIndex);
           if (listItem.isEmpty) {
-            final legend = formatter.format(date);
             final groups = [
               {"value": item.y.numericValue, "groupBy": item.groupBy},
             ];
-            list[dateIndex] = {"x": date, "xLegend": legend, "y": groups};
+            list[dateIndex] = {"x": date, "y": groups};
           } else {
             listItem["y"] = _updateGroup(mark: item, listItem: listItem);
-            list[dateIndex] = listItem;
+            list[dateIndex] = Map.from(listItem);
           }
           break;
         }
       }
-      // FIXME: для EChartTemporalView.month отображать не все дни в
-      // легеде. пропускать некоторые даты и оставлять например каждые семь дней
+      // set legends
+      final formatter = intl.date(formatString);
+      for (final (index, date) in dates.indexed) {
+        final listItem = list.elementAt(index);
+        listItem["xLegend"] = formatter.format(date);
+        if (temporalView == EChartTemporalView.month &&
+            (index % 5 != 0 && index != 0 && index + 1 < list.length)) {
+          listItem["xLegend"] = "";
+        }
+        list[index] = Map.from(listItem);
+      }
     } else {
-      // sort items
-      data.sort((a, b) => a.compareTo(b));
-
       for (final item in data) {
         final value = item.x.value;
         final legend = item.x.value.toString();
@@ -111,7 +117,7 @@ final class ChartComponent extends StatelessWidget {
         } else {
           final listItem = list[idx];
           listItem["y"] = _updateGroup(mark: item, listItem: listItem);
-          list[idx] = listItem;
+          list[idx] = Map.from(listItem);
         }
       }
     }
@@ -138,7 +144,7 @@ final class ChartComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = _prepareData(context);
-    // TODO: округлять значение
+    // FIXME: округлять значение
     final maxValue = data.fold(.0, (prev, curr) {
       final y = curr["y"] as List<Map<String, dynamic>>?;
       if (y == null) return prev;

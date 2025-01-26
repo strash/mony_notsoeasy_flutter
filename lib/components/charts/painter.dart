@@ -22,10 +22,7 @@ final class _Painter extends CustomPainter {
     final width = max(10.0, sectionWidth - config.padding * 2.0);
     double barMaxHeight = size.height;
     for (final (index, value) in data.indexed) {
-      final y = value["y"] as List<Map<String, dynamic>>?;
-
       // legend
-      final left = index * sectionWidth;
       final legend = TextSpan(
         text: value["xLegend"]?.toString() ?? "",
         style: config.legendStyle,
@@ -35,13 +32,16 @@ final class _Painter extends CustomPainter {
         textAlign: TextAlign.center,
         textDirection: TextDirection.ltr,
       );
-      legendPainter.layout(minWidth: sectionWidth, maxWidth: sectionWidth);
+      legendPainter.layout(minWidth: sectionWidth);
+
       final legendSize = legendPainter.size;
+      final left = index * sectionWidth;
       legendPainter.paint(
         canvas,
         Offset(left, size.height - legendSize.height),
       );
 
+      final y = value["y"] as List<Map<String, dynamic>>?;
       if (y != null) {
         canvas.save();
 

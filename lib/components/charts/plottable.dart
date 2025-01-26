@@ -8,7 +8,7 @@ enum EChartTemporalView {
   month,
 
   /// To show a list of days in a week
-  weekday,
+  week,
   ;
 
   static const EChartTemporalView defaultValue = month;
@@ -94,7 +94,7 @@ final class _TemporalImpl implements ChartPlottableValue<DateTime> {
     return switch (component) {
       EChartTemporalView.year => value.year,
       EChartTemporalView.month => value.month,
-      EChartTemporalView.weekday => value.weekday,
+      EChartTemporalView.week => value.weekday,
     };
   }
 
