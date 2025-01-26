@@ -126,7 +126,9 @@ extension DateTimeEx on DateTime {
   /// Returns:
   /// - An integer representing the number of days in the month.
   int get daysInMonth {
-    if (isLeapYear && month == 2) return _monthLength[month - 1] + 1;
+    if (isLeapYear && month == DateTime.february) {
+      return _monthLength[month - 1] + 1;
+    }
     return _monthLength[month - 1];
   }
 
