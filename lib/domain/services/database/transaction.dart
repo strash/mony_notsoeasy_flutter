@@ -84,10 +84,9 @@ final class DomainTransactionService extends BaseDatabaseService {
     required DateTime from,
     required DateTime to,
   }) async {
-    final offset = from.timeZoneOffset;
     final dtos = await _transactionRepo.getRange(
-      from: from.add(offset).toUtc().toIso8601String(),
-      to: to.add(offset).toUtc().toIso8601String(),
+      from: from.toUtc().toIso8601String(),
+      to: to.toUtc().toIso8601String(),
     );
     return _loadDeps(dtos: dtos);
   }

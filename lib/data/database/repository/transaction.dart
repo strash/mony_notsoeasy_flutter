@@ -177,9 +177,9 @@ OFFSET $offset;
       final db = await database.db;
       final maps = await db.rawQuery(
         """
-SELECT * FROM $table
-WHERE date BETWEEN DATE(?) AND DATE(?)
-ORDER BY date DESC;
+SELECT * FROM $table AS tr
+WHERE tr.date BETWEEN ? AND ?
+ORDER BY tr.date DESC;
 """,
         [from, to],
       );
