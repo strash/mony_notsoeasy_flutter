@@ -143,8 +143,12 @@ final class ChartComponent extends StatelessWidget {
         y.fold(.0, (yPrev, yCurr) => yPrev + (yCurr["value"] as num)),
       );
     });
-    final zoomLevel = max(1, maxValue.toInt().toString().length - 2);
-    final mod = List.filled(zoomLevel, 10).fold(1, (p, c) => p * c);
+    final ref = maxValue / 100;
+    int mod = 1;
+    while (mod < ref) {
+      mod *= 10;
+    }
+    mod = max(mod, 10);
     final rem = maxValue % mod;
     final mul = (maxValue - rem) / mod;
     return mul * mod + mod;
