@@ -5,20 +5,17 @@ import "package:intl/intl.dart" as intl;
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/charts/config.dart";
 import "package:mony_app/components/charts/mark.dart";
-import "package:mony_app/components/charts/ruler.dart";
 
 part "./painter.dart";
 part "./plottable.dart";
 
 final class ChartComponent extends StatelessWidget {
   final List<ChartMarkComponent> data;
-  final List<ChartRulerComponent> rulers;
   final ChartConfig config;
 
   ChartComponent({
     super.key,
     required this.data,
-    this.rulers = const [],
     required this.config,
   })  : assert(
           EChartMark.values.every((mark) => data.every((e) => e.type == mark)),
