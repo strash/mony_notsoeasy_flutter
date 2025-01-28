@@ -16,105 +16,42 @@ final class _Painter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
 
-    // vertical legend
-    final maxValueLegend = TextSpan(
-      text: config.yFormatter(maxValue),
-      style: config.legendStyle,
-    );
-    final verticalLegendPainter = TextPainter(
-      text: maxValueLegend,
-      textDirection: TextDirection.ltr,
-    );
-    verticalLegendPainter.layout();
-    final maxValueLegendSize = verticalLegendPainter.size;
-    verticalLegendPainter.paint(
-      canvas,
-      Offset(size.width - maxValueLegendSize.width, .0),
-    );
-
     final thirdValue = maxValue / 3;
-    final secondLineY =
-        thirdValue.remap(.0, maxValue.toDouble(), .0, size.height);
-    final thirdLineY =
-        (thirdValue * 2.0).remap(.0, maxValue.toDouble(), .0, size.height);
 
-    final secondValueLegend = TextSpan(
-      text: config.yFormatter(maxValue - thirdValue),
-      style: config.legendStyle,
-    );
-    verticalLegendPainter.text = secondValueLegend;
-    verticalLegendPainter.layout();
-    final secondValueLegendSize = verticalLegendPainter.size;
-    verticalLegendPainter.paint(
-      canvas,
-      Offset(size.width - secondValueLegendSize.width, secondLineY),
-    );
-
-    final thirdValueLegend = TextSpan(
-      text: config.yFormatter(thirdValue),
-      style: config.legendStyle,
-    );
-    verticalLegendPainter.text = thirdValueLegend;
-    verticalLegendPainter.layout();
-    final thirdValueLegendSize = verticalLegendPainter.size;
-    verticalLegendPainter.paint(
-      canvas,
-      Offset(size.width - thirdValueLegendSize.width, thirdLineY),
-    );
-
-    final vLegendWidth = [
-          maxValueLegendSize.width,
-          secondValueLegendSize.width,
-          thirdValueLegendSize.width,
-        ].fold(.0, (prev, curr) => max(prev, curr)) +
-        6.0;
-
-    // middle horizontal lines
-    paint.strokeWidth = 1.0;
-    paint.color = config.gridSecondaryColor;
-    canvas.drawLine(
-      Offset(.0, secondLineY),
-      Offset(size.width, secondLineY),
-      paint,
-    );
-    canvas.drawLine(
-      Offset(.0, thirdLineY),
-      Offset(size.width, thirdLineY),
-      paint,
-    );
+    // max legend width
+    final vMaxLegendWidth = config.padding +
+        [maxValue, maxValue - thirdValue, thirdValue, .0].map((e) {
+          return _measureLegend(
+            text: config.yFormatter(e),
+            style: config.legendStyle,
+          );
+        }).fold(.0, (prev, curr) => max(prev, curr.width));
 
     // marks
     paint.strokeWidth = 0;
-    final sectionWidth = (size.width - vLegendWidth) / max(1, data.length);
+    final sectionWidth = (size.width - vMaxLegendWidth) / max(1, data.length);
     final barWidth = max(6.0, sectionWidth - config.padding);
     double barMaxHeight = size.height;
     for (final (index, value) in data.indexed) {
-      // legend
-      final legend = TextSpan(
-        text: value["xLegend"]?.toString() ?? "",
-        style: config.legendStyle,
-      );
-      final legendPainter = TextPainter(
-        text: legend,
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr,
-      );
-      legendPainter.layout(minWidth: sectionWidth);
-
-      final legendSize = legendPainter.size;
       final left = index * sectionWidth;
-      legendPainter.paint(
-        canvas,
-        Offset(left, size.height - legendSize.height),
+
+      // legend
+      final legendSize = _paintLegend(
+        canvas: canvas,
+        text: value["xLegend"]?.toString() ?? "",
+        textAlign: TextAlign.center,
+        style: config.legendStyle,
+        minWidth: sectionWidth,
+        offset: (textSize) => Offset(left, size.height - textSize.height),
       );
 
       final y = value["y"] as List<Map<String, dynamic>>?;
       if (y != null) {
-        const minHeight = 5.0;
         canvas.save();
 
         // mask for mark groups
-        barMaxHeight = size.height - legendSize.height - 5.0;
+        const minHeight = 5.0;
+        barMaxHeight = size.height - legendSize.height - 3.0;
         final totalHeight =
             y.fold(.0, (prev, curr) => prev + (curr["value"] as num));
         final totalDisplayedHeight = max(
@@ -135,7 +72,7 @@ final class _Painter extends CustomPainter {
           ..lineTo(left + barWidth, totalDisplayedHeight) // bottom right
           ..lineTo(left, totalDisplayedHeight) // bottom left
           ..close();
-        // invert by vertical and offset to the right
+        // invert vertically and offset to the right
         clipPath = clipPath.shift(
           Offset(config.padding * 0.5, barMaxHeight - totalDisplayedHeight),
         );
@@ -164,36 +101,164 @@ final class _Painter extends CustomPainter {
 
         canvas.restore();
       }
-
-      legendPainter.dispose();
     }
-    final bottomValueLegend = TextSpan(
+
+    // top vertical legend
+    _paintLegend(
+      canvas: canvas,
+      text: config.yFormatter(maxValue),
+      style: config.legendStyle,
+      offset: (textSize) => Offset(size.width - textSize.width, .0),
+    );
+
+    // first middle vertical legend
+    final secondLineY =
+        thirdValue.remap(.0, maxValue.toDouble(), .0, barMaxHeight);
+    _paintLegend(
+      canvas: canvas,
+      text: config.yFormatter(maxValue - thirdValue),
+      style: config.legendStyle,
+      offset: (textSize) => Offset(size.width - textSize.width, secondLineY),
+    );
+
+    // second middle vertical legend
+    final thirdLineY =
+        (thirdValue * 2.0).remap(.0, maxValue.toDouble(), .0, barMaxHeight);
+    _paintLegend(
+      canvas: canvas,
+      text: config.yFormatter(thirdValue),
+      style: config.legendStyle,
+      offset: (textSize) => Offset(size.width - textSize.width, thirdLineY),
+    );
+
+    // bottom vertical legend
+    _paintLegend(
+      canvas: canvas,
       text: config.yFormatter(0),
       style: config.legendStyle,
+      offset: (textSize) {
+        return Offset(
+          size.width - textSize.width,
+          barMaxHeight - textSize.height,
+        );
+      },
     );
-    verticalLegendPainter.text = bottomValueLegend;
-    verticalLegendPainter.layout();
-    final bottomValueLegendSize = verticalLegendPainter.size;
-    verticalLegendPainter.paint(
-      canvas,
-      Offset(
-        size.width - bottomValueLegendSize.width,
-        barMaxHeight - bottomValueLegendSize.height,
-      ),
-    );
-    verticalLegendPainter.dispose();
 
     // grid
     paint.strokeWidth = 1.0;
     paint.color = config.gridColor;
     // top line
     canvas.drawLine(Offset.zero, Offset(size.width, .0), paint);
+    // middle horizontal lines
+    paint.strokeWidth = 1.0;
+    paint.color = config.gridSecondaryColor;
+    canvas.drawLine(
+      Offset(.0, secondLineY),
+      Offset(size.width, secondLineY),
+      paint,
+    );
+    canvas.drawLine(
+      Offset(.0, thirdLineY),
+      Offset(size.width, thirdLineY),
+      paint,
+    );
     // bottom line
+    paint.color = config.gridColor;
+    paint.colorFilter = null;
     canvas.drawLine(
       Offset(.0, barMaxHeight),
       Offset(size.width, barMaxHeight),
       paint,
     );
+
+    // median
+    if (config.showMedian &&
+        config.medianLineColor != null &&
+        config.medianStyle != null) {
+      final values = data.map((value) {
+        final y = value["y"] as List<Map<String, dynamic>>?;
+        if (y == null) return 0;
+        return y.fold(.0, (prev, curr) => prev + (curr["value"] as num? ?? .0));
+      });
+      final median =
+          values.fold(.0, (prev, curr) => prev + curr) / max(1, values.length);
+      final yPos = barMaxHeight -
+          median.remap(.0, maxValue.toDouble(), .0, barMaxHeight);
+      final medianPadding = config.medianPadding;
+
+      // legend
+      _paintLegend(
+        canvas: canvas,
+        text: config.yFormatter(median),
+        style: config.medianStyle!,
+        // NOTE: drawing a rect with a line here because why not
+        offset: (textSize) {
+          // line
+          paint.color = config.medianLineColor!;
+          canvas.drawLine(
+            Offset(.0, yPos),
+            Offset(
+              size.width - textSize.width - medianPadding.horizontal,
+              yPos,
+            ),
+            paint,
+          );
+
+          // rect
+          final medianRect = RRect.fromRectAndRadius(
+            Rect.fromLTWH(
+              size.width - textSize.width - medianPadding.horizontal,
+              yPos - textSize.height * .5 - medianPadding.top,
+              textSize.width + medianPadding.horizontal,
+              textSize.height + medianPadding.vertical,
+            ),
+            Radius.circular(config.medianRadius),
+          );
+          canvas.drawRRect(medianRect, paint);
+
+          return Offset(
+            size.width - textSize.width - medianPadding.right,
+            yPos - textSize.height * .5 - textSize.height * .04,
+          );
+        },
+      );
+    }
+  }
+
+  Size _measureLegend({
+    required String text,
+    required TextStyle style,
+    double minWidth = .0,
+    double maxWidth = double.infinity,
+  }) {
+    final legend = TextSpan(text: text, style: style);
+    final painter = TextPainter(text: legend, textDirection: TextDirection.ltr);
+    painter.layout(minWidth: minWidth, maxWidth: maxWidth);
+    final size = painter.size;
+    painter.dispose();
+    return size;
+  }
+
+  Size _paintLegend({
+    required Canvas canvas,
+    required String text,
+    TextAlign textAlign = TextAlign.start,
+    required TextStyle style,
+    double minWidth = .0,
+    double maxWidth = double.infinity,
+    required Offset Function(Size size) offset,
+  }) {
+    final legend = TextSpan(text: text, style: style);
+    final painter = TextPainter(
+      text: legend,
+      textAlign: textAlign,
+      textDirection: TextDirection.ltr,
+    );
+    painter.layout(minWidth: minWidth, maxWidth: maxWidth);
+    final size = painter.size;
+    painter.paint(canvas, offset(size));
+    painter.dispose();
+    return size;
   }
 
   @override

@@ -37,6 +37,13 @@ final class ChartComponent extends StatelessWidget {
           data.every((e) => e.groupBy == null) ||
               data.every((e) => e.groupBy is Object),
           "every groupBy should be the same type or null",
+        ),
+        assert(
+          config.showMedian == false ||
+              config.showMedian == true &&
+                  config.medianLineColor != null &&
+                  config.medianStyle != null,
+          "to show median provide medianColor and medianStyle",
         );
 
   List<Map<String, dynamic>> _prepareData(BuildContext context) {

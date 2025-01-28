@@ -58,7 +58,19 @@ class StatsView extends StatelessWidget {
                           gridColor: theme.colorScheme.onSurfaceVariant
                               .withValues(alpha: .4),
                           gridSecondaryColor: theme.colorScheme.onSurfaceVariant
-                              .withValues(alpha: .4),
+                              .withValues(alpha: .2),
+                          showMedian: true,
+                          medianLineColor: theme.colorScheme.primary,
+                          medianPadding: const EdgeInsets.symmetric(
+                            horizontal: 4.5,
+                            vertical: 1.5,
+                          ),
+                          medianRadius: 6.0,
+                          medianStyle: GoogleFonts.golosText(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
+                            color: theme.colorScheme.onPrimary,
+                          ),
                           padding: switch (viewModel.activeTemporalView) {
                             EChartTemporalView.year => 3.0,
                             EChartTemporalView.month => 1.5,
