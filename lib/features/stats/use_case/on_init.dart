@@ -15,10 +15,12 @@ final class OnInit extends UseCase<Future<void>, StatsViewModel> {
     final (from, to) = viewModel.period;
 
     final accounts = await accountService.getAll();
+    if (accounts.isEmpty) return;
     final transactions = await transactionService.getRange(
       from: from,
       to: to,
-      accountIds: [accounts.first.id],
+      accountId: accounts.first.id,
+      transactionType: viewModel.activeTransactionType,
     );
 
     viewModel.setProtectedState(() {

@@ -62,6 +62,9 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   Widget build(BuildContext context) {
     return ViewModel<StatsViewModel>(
       viewModel: this,
+      useCases: [
+        () => OnTemporalButtonPressed(),
+      ],
       child: const StatsView(),
     );
   }
