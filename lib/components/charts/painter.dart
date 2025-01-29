@@ -175,15 +175,17 @@ final class _Painter extends CustomPainter {
     if (config.showMedian &&
         config.medianLineColor != null &&
         config.medianStyle != null) {
-      final values = data.map((value) {
-        final y = value["y"] as List<Map<String, dynamic>>?;
-        if (y == null) return 0;
-        return y.fold(.0, (prev, curr) => prev + (curr["value"] as num? ?? .0));
+      final count = data
+          .where((e) => e["y"] != null && (e["y"] as List).isNotEmpty)
+          .length;
+      final values = data.fold(.0, (prev, curr) {
+        final y = curr["y"] as List<Map<String, dynamic>>?;
+        if (y == null) return prev;
+        return prev + y.fold(.0, (p, c) => p + (c["value"] as num? ?? .0));
       });
-      final median =
-          values.fold(.0, (prev, curr) => prev + curr) / max(1, values.length);
+      final median = values / max(1, count);
       final yPos = barMaxHeight -
-          median.remap(.0, maxValue.toDouble(), .0, barMaxHeight);
+          (median.remap(.0, maxValue.toDouble(), .0, barMaxHeight));
       final medianPadding = config.medianPadding;
 
       // legend
