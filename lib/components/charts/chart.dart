@@ -166,11 +166,16 @@ final class ChartComponent extends StatelessWidget {
     final data = _prepareData(context);
     final value = _maxValue(data);
 
-    return CustomPaint(
-      painter: _Painter(
-        config: config,
-        data: data,
-        maxValue: value,
+    return AnimatedSwitcher(
+      duration: Durations.short3,
+      child: CustomPaint(
+        key: Key(data.toString()),
+        size: Size.infinite,
+        painter: _Painter(
+          config: config,
+          data: data,
+          maxValue: value,
+        ),
       ),
     );
   }
