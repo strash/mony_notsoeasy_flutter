@@ -12,7 +12,7 @@ final class OnInit extends UseCase<Future<void>, StatsViewModel> {
     final transactionService = context.read<DomainTransactionService>();
     final accountService = context.read<DomainAccountService>();
 
-    final (from, to) = viewModel.period;
+    final (from, to) = viewModel.exclusiveDateRange;
 
     final accounts = await accountService.getAll();
     if (accounts.isEmpty) return;

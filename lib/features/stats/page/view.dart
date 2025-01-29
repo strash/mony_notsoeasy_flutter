@@ -1,7 +1,10 @@
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/stats/components/components.dart";
+import "package:mony_app/features/stats/page/view_model.dart";
 
 class StatsView extends StatelessWidget {
   const StatsView({super.key});
@@ -26,16 +29,51 @@ class StatsView extends StatelessWidget {
           ),
 
           // -> account select
+          const SliverPadding(padding: EdgeInsets.only(top: 10.0)),
           const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
               child: StatsAccountSelectComponent(),
             ),
           ),
 
-          // -> chart
+          const SliverPadding(padding: EdgeInsets.only(top: 15.0)),
           const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // -> total amount
+                  StatsTotalAmountComponent(),
+
+                  // -> date range
+                  StatsDateRangeComponent(),
+                ],
+              ),
+            ),
+          ),
+
+          const SliverPadding(padding: EdgeInsets.only(top: 15.0)),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            sliver: SliverToBoxAdapter(
+              child: Text("Сумма расходов"),
+            ),
+          ),
+
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            sliver: SliverToBoxAdapter(
+              child: Text("Сумма доходов"),
+            ),
+          ),
+
+          // -> chart
+          const SliverPadding(padding: EdgeInsets.only(top: 15.0)),
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
               child: StatsChartComponent(),
             ),

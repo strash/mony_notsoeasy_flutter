@@ -19,7 +19,9 @@ final class StatsPage extends StatefulWidget {
 }
 
 final class StatsViewModel extends ViewModelState<StatsPage> {
+  bool isCentsVisible = true;
   bool isColorsVisible = true;
+  bool isTagsVisible = true;
 
   List<AccountModel> accounts = [];
 
@@ -34,7 +36,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
   late final accountController = SelectController<AccountModel?>(null);
 
-  (DateTime, DateTime) get period {
+  (DateTime, DateTime) get exclusiveDateRange {
     final loc = MaterialLocalizations.of(context);
     final DateTime from;
     final DateTime to;
@@ -67,7 +69,13 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
 
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
-      setProtectedState(() => isColorsVisible = colors);
+      final cents = await sharedPrefService.isSettingsCentsVisible();
+      final tags = await sharedPrefService.isSettingsTagsVisible();
+      setProtectedState(() {
+        isColorsVisible = colors;
+        isCentsVisible = cents;
+        isTagsVisible = tags;
+      });
 
       if (!mounted) return;
       await OnInit().call(context, this);

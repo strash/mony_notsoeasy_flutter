@@ -17,104 +17,97 @@ class StatsChartComponent extends StatelessWidget {
 
     final viewModel = context.viewModel<StatsViewModel>();
     final transactions = viewModel.transactions;
+    final account = viewModel.accountController.value;
+    final formatter = account != null
+        ? NumberFormat.compactCurrency(
+            name: account.currency.name,
+            symbol: account.currency.symbol,
+            decimalDigits: 0,
+          )
+        : NumberFormat.compact();
 
-    // NOTE: have to listen to the controller to use the right formatter
-    return ListenableBuilder(
-      listenable: viewModel.accountController,
-      builder: (context, child) {
-        final account = viewModel.accountController.value;
-        final formatter = account != null
-            ? NumberFormat.compactCurrency(
-                name: account.currency.name,
-                symbol: account.currency.symbol,
-                decimalDigits: 0,
-              )
-            : NumberFormat.compact();
-
-        return AspectRatio(
-          aspectRatio: 1.15,
-          child: transactions.isNotEmpty
-              // -> chart
-              ? ChartComponent(
-                  config: ChartConfig(
-                    gridColor: theme.colorScheme.onSurfaceVariant
-                        .withValues(alpha: .4),
-                    gridSecondaryColor: theme.colorScheme.onSurfaceVariant
-                        .withValues(alpha: .2),
-                    showMedian: true,
-                    medianLineColor: theme.colorScheme.primary,
-                    medianPadding: const EdgeInsets.symmetric(
-                      horizontal: 4.5,
-                      vertical: 1.5,
-                    ),
-                    medianRadius: 6.0,
-                    medianStyle: GoogleFonts.golosText(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w600,
-                      color: theme.colorScheme.onPrimary,
-                    ),
-                    padding: switch (viewModel.activeTemporalView) {
-                      EChartTemporalView.year => 3.0,
-                      EChartTemporalView.month => 1.5,
-                      EChartTemporalView.week => 5.0,
-                    },
-                    radius: switch (viewModel.activeTemporalView) {
-                      EChartTemporalView.year => 6.0,
-                      EChartTemporalView.month => 3.0,
-                      EChartTemporalView.week => 10.0,
-                    },
-                    legendStyle: GoogleFonts.golosText(
-                      fontSize: 11.0,
-                      fontWeight: FontWeight.w500,
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                    groupColor: (group) {
-                      final category = group as CategoryModel?;
-                      // TODO: проверить переключение цвета в настроках
-                      if (!viewModel.isColorsVisible ||
-                          category == null ||
-                          ex == null) {
-                        return theme.colorScheme.tertiary;
-                      }
-                      return ex.from(category.colorName).color;
-                    },
-                    compareTo: (groupA, groupB) {
-                      final a = groupA as CategoryModel?;
-                      final b = groupB as CategoryModel?;
-                      return a?.title.compareTo(b?.title ?? "") ?? 0;
-                    },
-                    yFormatter: (value) {
-                      return formatter.format(value);
-                    },
-                  ),
-                  data: transactions.map((e) {
-                    return ChartMarkComponent.bar(
-                      x: ChartPlottableValue.temporal(
-                        "Date",
-                        value: e.date.startOfDay,
-                        component: viewModel.activeTemporalView,
-                      ),
-                      y: ChartPlottableValue.quantitative(
-                        "Expense",
-                        value: e.amount.abs(),
-                      ),
-                      groupBy: e.category,
-                    );
-                  }).toList(growable: false),
-                )
-
-              // -> empty state
-              : Center(
-                  child: Text(
-                    "Нет данных",
-                    style: GoogleFonts.golosText(
-                      fontSize: 16.0,
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
+    return AspectRatio(
+      aspectRatio: 1.3,
+      child: transactions.isNotEmpty
+          // -> chart
+          ? ChartComponent(
+              config: ChartConfig(
+                gridColor:
+                    theme.colorScheme.onSurfaceVariant.withValues(alpha: .4),
+                gridSecondaryColor:
+                    theme.colorScheme.onSurfaceVariant.withValues(alpha: .2),
+                showMedian: true,
+                medianLineColor: theme.colorScheme.primary,
+                medianPadding: const EdgeInsets.symmetric(
+                  horizontal: 4.5,
+                  vertical: 1.5,
                 ),
-        );
-      },
+                medianRadius: 6.0,
+                medianStyle: GoogleFonts.golosText(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w600,
+                  color: theme.colorScheme.onPrimary,
+                ),
+                padding: switch (viewModel.activeTemporalView) {
+                  EChartTemporalView.year => 3.0,
+                  EChartTemporalView.month => 1.5,
+                  EChartTemporalView.week => 5.0,
+                },
+                radius: switch (viewModel.activeTemporalView) {
+                  EChartTemporalView.year => 6.0,
+                  EChartTemporalView.month => 3.0,
+                  EChartTemporalView.week => 10.0,
+                },
+                legendStyle: GoogleFonts.golosText(
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.w500,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+                groupColor: (group) {
+                  final category = group as CategoryModel?;
+                  // TODO: проверить переключение цвета в настроках
+                  if (!viewModel.isColorsVisible ||
+                      category == null ||
+                      ex == null) {
+                    return theme.colorScheme.tertiary;
+                  }
+                  return ex.from(category.colorName).color;
+                },
+                compareTo: (groupA, groupB) {
+                  final a = groupA as CategoryModel?;
+                  final b = groupB as CategoryModel?;
+                  return a?.title.compareTo(b?.title ?? "") ?? 0;
+                },
+                yFormatter: (value) {
+                  return formatter.format(value);
+                },
+              ),
+              data: transactions.map((e) {
+                return ChartMarkComponent.bar(
+                  x: ChartPlottableValue.temporal(
+                    "Date",
+                    value: e.date.startOfDay,
+                    component: viewModel.activeTemporalView,
+                  ),
+                  y: ChartPlottableValue.quantitative(
+                    "Expense",
+                    value: e.amount.abs(),
+                  ),
+                  groupBy: viewModel.isColorsVisible ? e.category : null,
+                );
+              }).toList(growable: false),
+            )
+
+          // -> empty state
+          : Center(
+              child: Text(
+                "Нет данных",
+                style: GoogleFonts.golosText(
+                  fontSize: 16.0,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
     );
   }
 }

@@ -12,7 +12,7 @@ final class OnAccountSelected extends UseCase<Future<void>, StatsViewModel> {
 
     final transactionService = context.read<DomainTransactionService>();
 
-    final (from, to) = viewModel.period;
+    final (from, to) = viewModel.exclusiveDateRange;
 
     final transactions = await transactionService.getRange(
       from: from,
