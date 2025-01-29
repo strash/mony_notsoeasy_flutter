@@ -163,9 +163,9 @@ extension DateTimeEx on DateTime {
   /// Returns a new date with the month shifted by the specified `offset`.
   ///
   /// The `offset` can be any integer:
-  /// - `0` represents the current month,
+  /// - ` 0` represents the current month,
   /// - `-1` represents the previous month,
-  /// - `1` represents the next month.
+  /// - ` 1` represents the next month.
   ///
   /// Example:
   /// ```dart
