@@ -18,8 +18,8 @@ class AccountTotalAmountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final dateRange = (
-      lhs: balance.firstTransactionDate,
-      rhs: balance.lastTransactionDate
+      balance.firstTransactionDate,
+      balance.lastTransactionDate
     ).transactionsDateRangeDescription;
 
     return SeparatedComponent.list(

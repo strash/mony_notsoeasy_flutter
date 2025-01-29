@@ -1,10 +1,10 @@
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 
-extension DateRangeEx on ({DateTime? lhs, DateTime? rhs}) {
+extension DateRangeEx on (DateTime?, DateTime?) {
   String get transactionsDateRangeDescription {
     final now = DateTime.now();
-    switch ((lhs, rhs)) {
+    switch (($1, $2)) {
       case (null, final DateTime rhs):
         final rhsFormatter = DateFormat(
           now.year != rhs.year ? "EEE, dd MMMM yyyy" : "EEE, dd MMMM",

@@ -70,8 +70,8 @@ class CategoryTotalAmountComponent extends StatelessWidget {
             // -> transactions date range
             Text(
               (
-                lhs: balance.firstTransactionDate,
-                rhs: balance.lastTransactionDate
+                balance.firstTransactionDate,
+                balance.lastTransactionDate,
               ).transactionsDateRangeDescription,
               style: GoogleFonts.golosText(
                 fontSize: 15.0,
