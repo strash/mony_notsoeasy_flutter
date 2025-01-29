@@ -13,7 +13,10 @@ final class OnTemporalButtonPressed
     if (value == null) throw ArgumentError.notNull();
 
     final viewModel = context.viewModel<StatsViewModel>();
-    if (viewModel.activeAccount == null) return;
+    if (viewModel.activeAccount == null ||
+        viewModel.activeTemporalView == value) {
+      return;
+    }
     final transactionService = context.read<DomainTransactionService>();
 
     viewModel.activeTemporalView = value;
