@@ -83,12 +83,14 @@ final class DomainTransactionService extends BaseDatabaseService {
   Future<List<TransactionModel>> getRange({
     required DateTime from,
     required DateTime to,
-    List<String> accountIds = const [],
+    required String accountId,
+    required ETransactionType transactionType,
   }) async {
     final dtos = await _transactionRepo.getRange(
       from: from.toUtc().toIso8601String(),
       to: to.toUtc().toIso8601String(),
-      accountIds: accountIds,
+      accountId: accountId,
+      transactionType: transactionType.value,
     );
     return _loadDeps(dtos: dtos);
   }
