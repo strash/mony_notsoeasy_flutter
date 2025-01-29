@@ -2,11 +2,14 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/charts/component.dart";
+import "package:mony_app/components/select/select.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
+import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/stats/page/view.dart";
 import "package:mony_app/features/stats/use_case/use_case.dart";
+import "package:provider/provider.dart";
 
 final class StatsPage extends StatefulWidget {
   const StatsPage({super.key});
@@ -16,10 +19,9 @@ final class StatsPage extends StatefulWidget {
 }
 
 final class StatsViewModel extends ViewModelState<StatsPage> {
-  EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
+  bool isColorsVisible = true;
 
   List<AccountModel> accounts = [];
-  AccountModel? activeAccount;
 
   ETransactionType activeTransactionType = ETransactionType.defaultValue;
 
@@ -28,6 +30,9 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   DateTime activeWeek = DateTime.now().startOfDay;
 
   List<TransactionModel> transactions = [];
+
+  EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
+  late final accountController = SelectController<AccountModel?>(null);
 
   (DateTime, DateTime) get period {
     final loc = MaterialLocalizations.of(context);
@@ -50,11 +55,22 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
     return (from, to);
   }
 
+  void _onAccountSelected() {
+    OnAccountSelected().call(context, this);
+  }
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      OnInit().call(context, this);
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      accountController.addListener(_onAccountSelected);
+
+      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final colors = await sharedPrefService.isSettingsColorsVisible();
+      setProtectedState(() => isColorsVisible = colors);
+
+      if (!mounted) return;
+      await OnInit().call(context, this);
     });
   }
 

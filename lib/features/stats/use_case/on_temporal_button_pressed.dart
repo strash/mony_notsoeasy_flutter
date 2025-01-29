@@ -13,7 +13,7 @@ final class OnTemporalButtonPressed
     if (value == null) throw ArgumentError.notNull();
 
     final viewModel = context.viewModel<StatsViewModel>();
-    if (viewModel.activeAccount == null ||
+    if (viewModel.accountController.value == null ||
         viewModel.activeTemporalView == value) {
       return;
     }
@@ -25,7 +25,7 @@ final class OnTemporalButtonPressed
     final transactions = await transactionService.getRange(
       from: from,
       to: to,
-      accountId: viewModel.activeAccount!.id,
+      accountId: viewModel.accountController.value!.id,
       transactionType: viewModel.activeTransactionType,
     );
 
