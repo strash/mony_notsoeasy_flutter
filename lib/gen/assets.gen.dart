@@ -158,6 +158,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/location.slash.fill.svg
   String get locationSlashFill => 'assets/icons/location.slash.fill.svg';
 
+  /// File path: assets/icons/m.square.svg
+  String get mSquare => 'assets/icons/m.square.svg';
+
   /// File path: assets/icons/magnifyingglass.svg
   String get magnifyingglass => 'assets/icons/magnifyingglass.svg';
 
@@ -228,6 +231,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/trash.svg
   String get trash => 'assets/icons/trash.svg';
 
+  /// File path: assets/icons/w.square.svg
+  String get wSquare => 'assets/icons/w.square.svg';
+
   /// File path: assets/icons/wallet.pass.fill.svg
   String get walletPassFill => 'assets/icons/wallet.pass.fill.svg';
 
@@ -254,6 +260,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/xmark.svg
   String get xmark => 'assets/icons/xmark.svg';
+
+  /// File path: assets/icons/y.square.svg
+  String get ySquare => 'assets/icons/y.square.svg';
 
   /// List of all assets
   List<String> get values => [
@@ -294,6 +303,7 @@ class $AssetsIconsGen {
         link,
         listBulletBelowRectangle,
         locationSlashFill,
+        mSquare,
         magnifyingglass,
         minus,
         moonFill,
@@ -317,6 +327,7 @@ class $AssetsIconsGen {
         sunMaxFill,
         trashFill,
         trash,
+        wSquare,
         walletPassFill,
         widgetBadgePlus,
         widgetSmallBadgePlus,
@@ -325,7 +336,8 @@ class $AssetsIconsGen {
         xmarkBold,
         xmarkCircleFill,
         xmarkSemibold,
-        xmark
+        xmark,
+        ySquare
       ];
 }
 
