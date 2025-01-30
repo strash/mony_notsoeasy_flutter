@@ -9,14 +9,17 @@ final class AccountBalanceDatabaseFactoryImpl
   AccountBalanceModel toModel(AccountBalanceDto dto) {
     return AccountBalanceModel(
       id: dto.id,
+      created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
       currency: FiatCurrency.fromCode(dto.currencyCode),
       balance: dto.balance.toDouble(),
       totalAmount: dto.totalAmount.toDouble(),
-      totalSum: dto.totalSum.toDouble(),
-      created: DateTime.tryParse(dto.created)?.toLocal() ?? DateTime.now(),
+      expenseAmount: dto.expenseAmount.toDouble(),
+      incomeAmount: dto.incomeAmount.toDouble(),
+      totalCount: dto.totalCount,
+      expenseCount: dto.expenseCount,
+      incomeCount: dto.incomeCount,
       firstTransactionDate: DateTime.tryParse(dto.firstTransactionDate ?? ""),
       lastTransactionDate: DateTime.tryParse(dto.lastTransactionDate ?? ""),
-      transactionsCount: dto.transactionsCount,
     );
   }
 
@@ -24,15 +27,18 @@ final class AccountBalanceDatabaseFactoryImpl
   AccountBalanceDto toDto(AccountBalanceModel model) {
     return AccountBalanceDto(
       id: model.id,
+      created: model.created.toUtc().toIso8601String(),
       currencyCode: model.currency.code,
       balance: model.balance,
       totalAmount: model.totalAmount,
-      totalSum: model.totalSum,
-      created: model.created.toUtc().toIso8601String(),
+      expenseAmount: model.expenseAmount,
+      incomeAmount: model.incomeAmount,
+      totalCount: model.totalCount,
+      expenseCount: model.expenseCount,
+      incomeCount: model.incomeCount,
       firstTransactionDate:
           model.firstTransactionDate?.toUtc().toIso8601String(),
       lastTransactionDate: model.lastTransactionDate?.toUtc().toIso8601String(),
-      transactionsCount: model.transactionsCount,
     );
   }
 }

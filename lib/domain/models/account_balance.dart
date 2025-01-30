@@ -7,15 +7,24 @@ part "account_balance.freezed.dart";
 class AccountBalanceModel with _$AccountBalanceModel {
   const factory AccountBalanceModel({
     required String id,
+    required DateTime created,
     required FiatCurrency currency,
     required double balance,
     required double totalAmount,
-    required double totalSum,
-    required DateTime created,
+    required double expenseAmount,
+    required double incomeAmount,
+    required int totalCount,
+    required int expenseCount,
+    required int incomeCount,
     required DateTime? firstTransactionDate,
     required DateTime? lastTransactionDate,
-    required int transactionsCount,
   }) = _AccountBalanceModel;
+}
+
+extension AccountBalanceModelEx on AccountBalanceModel {
+  double get totalSum {
+    return balance + totalAmount;
+  }
 }
 
 extension AccountBalanceModelListEx on List<AccountBalanceModel> {
@@ -31,10 +40,10 @@ extension AccountBalanceModelListEx on List<AccountBalanceModel> {
     final Map<String, AccountBalanceModel> map = {};
     for (final element in this) {
       final name = element.currency.name;
-      map[name] = map[name]?.copyWith(
-            balance: (map[name]?.balance ?? .0) + element.balance,
-            totalAmount: (map[name]?.totalAmount ?? .0) + element.totalAmount,
-            totalSum: (map[name]?.totalSum ?? .0) + element.totalSum,
+      final item = map[name];
+      map[name] = item?.copyWith(
+            balance: item.balance + element.balance,
+            totalAmount: item.totalAmount + element.totalAmount,
           ) ??
           element;
     }

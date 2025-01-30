@@ -12,6 +12,7 @@ final class MigrationService {
     M1730475693RemoveTypeColumnFromTransactions(),
     M1733564630AddBalanceViews(),
     M1733571197AddFuzzyViews(),
+    M1738233399UpdateAccountBalanceView(),
   ];
 
   Iterable<BaseMigration> getFor(int from, int to) {
