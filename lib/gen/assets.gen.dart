@@ -45,6 +45,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/a.circle.svg
   String get aCircle => 'assets/icons/a.circle.svg';
 
+  /// File path: assets/icons/arrow.down.forward.bold.svg
+  String get arrowDownForwardBold => 'assets/icons/arrow.down.forward.bold.svg';
+
+  /// File path: assets/icons/arrow.down.forward.semibold.svg
+  String get arrowDownForwardSemibold =>
+      'assets/icons/arrow.down.forward.semibold.svg';
+
   /// File path: assets/icons/arrow.down.forward.svg
   String get arrowDownForward => 'assets/icons/arrow.down.forward.svg';
 
@@ -54,6 +61,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow.up.arrow.down.square.svg
   String get arrowUpArrowDownSquare =>
       'assets/icons/arrow.up.arrow.down.square.svg';
+
+  /// File path: assets/icons/arrow.up.forward.bold.svg
+  String get arrowUpForwardBold => 'assets/icons/arrow.up.forward.bold.svg';
+
+  /// File path: assets/icons/arrow.up.forward.semibold.svg
+  String get arrowUpForwardSemibold =>
+      'assets/icons/arrow.up.forward.semibold.svg';
 
   /// File path: assets/icons/arrow.up.forward.svg
   String get arrowUpForward => 'assets/icons/arrow.up.forward.svg';
@@ -267,9 +281,13 @@ class $AssetsIconsGen {
   /// List of all assets
   List<String> get values => [
         aCircle,
+        arrowDownForwardBold,
+        arrowDownForwardSemibold,
         arrowDownForward,
         arrowDownSquare,
         arrowUpArrowDownSquare,
+        arrowUpForwardBold,
+        arrowUpForwardSemibold,
         arrowUpForward,
         arrowUpSquare,
         calendar,

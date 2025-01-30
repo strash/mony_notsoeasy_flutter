@@ -150,8 +150,8 @@ class AccountTotalAmountComponent extends StatelessWidget {
 extension on ETransactionType {
   String get icon {
     return switch (this) {
-      ETransactionType.expense => Assets.icons.arrowUpForward,
-      ETransactionType.income => Assets.icons.arrowDownForward,
+      ETransactionType.expense => Assets.icons.arrowUpForwardBold,
+      ETransactionType.income => Assets.icons.arrowDownForwardBold,
     };
   }
 

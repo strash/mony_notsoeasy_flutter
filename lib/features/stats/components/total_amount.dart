@@ -3,6 +3,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/separated/component.dart";
+import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
 
 class StatsTotalAmountComponent extends StatelessWidget {
@@ -11,12 +12,24 @@ class StatsTotalAmountComponent extends StatelessWidget {
   String _getCount(int count) {
     final formatter = NumberFormat();
     final formatted = formatter.format(count);
-    final res = switch (count.wordCaseHint) {
+    return switch (count.wordCaseHint) {
       EWordCaseHint.nominative => "$formatted транзакция",
       EWordCaseHint.genitive => "$formatted транзакции",
       EWordCaseHint.accusative => "$formatted транзакций",
     };
-    return res;
+  }
+
+  String _getAmount(
+    AccountModel? account,
+    AccountBalanceModel? balance,
+    bool showDecimal,
+  ) {
+    if (account == null || balance == null) return "0";
+    return balance.totalAmount.currency(
+      name: account.currency.name,
+      symbol: account.currency.symbol,
+      showDecimal: showDecimal,
+    );
   }
 
   @override
@@ -47,13 +60,7 @@ class StatsTotalAmountComponent extends StatelessWidget {
                 // -> amount
                 FittedBox(
                   child: Text(
-                    account == null || balance == null
-                        ? "0"
-                        : balance.totalAmount.currency(
-                            name: account.currency.name,
-                            symbol: account.currency.symbol,
-                            showDecimal: viewModel.isCentsVisible,
-                          ),
+                    _getAmount(account, balance, viewModel.isCentsVisible),
                     style: GoogleFonts.golosText(
                       fontSize: 28.0,
                       height: 1.0,
