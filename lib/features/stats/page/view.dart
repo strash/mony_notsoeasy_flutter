@@ -85,16 +85,16 @@ class StatsView extends StatelessWidget {
 
           // -> chart legend (categories)
           const SliverPadding(padding: EdgeInsets.only(top: 15.0)),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
               child: Text("Легенда категорий"),
             ),
           ),
 
           // -> transactions
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
               child: Text("Транзакции"),
             ),

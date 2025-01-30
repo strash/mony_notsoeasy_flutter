@@ -73,7 +73,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                     const SizedBox(height: 4.0),
                     FittedBox(
                       child: Text(
-                        "₽12,345.34",
+                        "placeholder",
                         style: GoogleFonts.golosText(
                           fontSize: 16.0,
                           height: 1.0,
