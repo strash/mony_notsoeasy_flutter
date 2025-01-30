@@ -27,27 +27,24 @@ class StatsView extends StatelessWidget {
           ),
 
           // -> account select
-          const SliverPadding(padding: EdgeInsets.only(top: 10.0)),
           const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            padding: EdgeInsets.only(left: 15.0, top: 10.0, right: 15.0),
             sliver: SliverToBoxAdapter(
               child: StatsAccountSelectComponent(),
             ),
           ),
 
           // -> total amount
-          const SliverPadding(padding: EdgeInsets.only(top: 20.0)),
           const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
             sliver: SliverToBoxAdapter(
               child: StatsTotalAmountComponent(),
             ),
           ),
 
           // -> transaction type selector
-          const SliverPadding(padding: EdgeInsets.only(top: 20.0)),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
             sliver: SliverToBoxAdapter(
               child: SeparatedComponent.builder(
                 direction: Axis.horizontal,
@@ -65,18 +62,16 @@ class StatsView extends StatelessWidget {
           ),
 
           // -> chart
-          const SliverPadding(padding: EdgeInsets.only(top: 20.0)),
           const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
             sliver: SliverToBoxAdapter(
               child: StatsChartComponent(),
             ),
           ),
 
           // -> chart legend (categories)
-          const SliverPadding(padding: EdgeInsets.only(top: 15.0)),
           const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            padding: EdgeInsets.only(left: 15.0, top: 15.0, right: 15.0),
             sliver: SliverToBoxAdapter(
               child: Text("[Легенда категорий]"),
             ),
@@ -84,7 +79,7 @@ class StatsView extends StatelessWidget {
 
           // -> transactions
           const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            padding: EdgeInsets.only(left: 15.0, top: 15.0, right: 15.0),
             sliver: SliverToBoxAdapter(
               child: Text("[Транзакции]"),
             ),
