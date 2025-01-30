@@ -39,53 +39,51 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(10.0, 6.0, 8.0, 6.0),
-          child: Row(
+          padding: const EdgeInsets.symmetric(horizontal: 13.0, vertical: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // -> icon
-              SvgPicture.asset(
-                type.icon,
-                width: 24.0,
-                height: 24.0,
-                colorFilter: ColorFilter.mode(
-                  type.getColor(context),
-                  BlendMode.srcIn,
-                ),
+              Row(
+                children: [
+                  // -> icon
+                  SvgPicture.asset(
+                    type.icon,
+                    width: 16.0,
+                    height: 16.0,
+                    colorFilter: ColorFilter.mode(
+                      type.getColor(context),
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  const SizedBox(width: 5.0),
+
+                  // -> type description and count
+                  Text(
+                    "${type.description} ([count])",
+                    style: GoogleFonts.golosText(
+                      fontSize: 14.0,
+                      height: 1.0,
+                      fontWeight: FontWeight.w500,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
               ),
 
-              const SizedBox(width: 7.0),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // -> type description
-                    Text(
-                      type.description,
-                      style: GoogleFonts.golosText(
-                        fontSize: 14.0,
-                        height: 1.0,
-                        fontWeight: FontWeight.w500,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-
-                    // -> total amount
-                    const SizedBox(height: 4.0),
-                    FittedBox(
-                      child: Text(
-                        "placeholder",
-                        style: GoogleFonts.golosText(
-                          fontSize: 16.0,
-                          height: 1.0,
-                          fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 2.0),
-                  ],
+              // -> total amount
+              const SizedBox(height: 4.0),
+              FittedBox(
+                child: Text(
+                  "[placeholder]",
+                  style: GoogleFonts.golosText(
+                    fontSize: 18.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface,
+                  ),
                 ),
               ),
+              const SizedBox(height: 2.0),
             ],
           ),
         ),

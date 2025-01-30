@@ -46,6 +46,8 @@ class StatsView extends StatelessWidget {
                   // -> total amount
                   StatsTotalAmountComponent(),
 
+                  Text("[количество транзакций]"),
+
                   // -> date range
                   SizedBox(height: 5.0),
                   StatsDateRangeComponent(),
@@ -88,7 +90,7 @@ class StatsView extends StatelessWidget {
           const SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
-              child: Text("Легенда категорий"),
+              child: Text("[Легенда категорий]"),
             ),
           ),
 
@@ -96,7 +98,7 @@ class StatsView extends StatelessWidget {
           const SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
-              child: Text("Транзакции"),
+              child: Text("[Транзакции]"),
             ),
           ),
 
