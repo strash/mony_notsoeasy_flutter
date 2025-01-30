@@ -45,6 +45,20 @@ final class DomainAccountService extends BaseDatabaseService {
     return _accountBalanceFactory.toModel(dto);
   }
 
+  Future<AccountBalanceModel?> getBalanceForDateRange({
+    required String id,
+    required DateTime from,
+    required DateTime to,
+  }) async {
+    final dto = await _accountRepo.getBalanceForDateRange(
+      id: id,
+      from: from.toUtc().toIso8601String(),
+      to: to.toUtc().toIso8601String(),
+    );
+    if (dto == null) return null;
+    return _accountBalanceFactory.toModel(dto);
+  }
+
   Future<List<AccountModel>> getAll({EAccountType? type}) async {
     final dtos = await _accountRepo.getAll(type: type?.value);
     return dtos

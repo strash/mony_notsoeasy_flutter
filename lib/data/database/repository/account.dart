@@ -18,6 +18,12 @@ abstract base class AccountDatabaseRepository {
 
   Future<AccountBalanceDto?> getBalance({required String id});
 
+  Future<AccountBalanceDto?> getBalanceForDateRange({
+    required String id,
+    required String from,
+    required String to,
+  });
+
   Future<List<AccountDto>> getAll({String? type, List<String>? ids});
 
   Future<List<AccountDto>> getMany({
@@ -110,6 +116,41 @@ LIMIT $limit OFFSET $offset;
         balancesView,
         where: "id = ?",
         whereArgs: [id],
+      );
+      if (maps.isEmpty) return null;
+      return AccountBalanceDto.fromJson(maps.first);
+    });
+  }
+
+  @override
+  Future<AccountBalanceDto?> getBalanceForDateRange({
+    required String id,
+    required String from,
+    required String to,
+  }) async {
+    return resolve(() async {
+      final db = await database.db;
+      final maps = await db.rawQuery(
+        """
+SELECT
+	a.id,
+	a.created,
+	a.currency_code,
+	a.balance,
+	COALESCE(SUM(tr.amount), 0.0) AS total_amount,
+	SUM(IIF(tr.amount < 0, tr.amount, 0)) AS expense_amount,
+	SUM(IIF(tr.amount >= 0, tr.amount, 0)) AS income_amount,
+	COALESCE(COUNT(tr.id),0) AS total_count,
+	SUM(IIF(tr.amount < 0, 1, 0)) AS expense_count,
+	SUM(IIF(tr.amount >= 0, 1, 0)) AS income_count,
+	MIN(tr.date) AS first_transaction_date,
+	MAX(tr.date) AS last_transaction_date
+FROM $table AS a
+LEFT JOIN transactions AS tr ON a.id = tr.account_id
+WHERE a.id = ? AND tr.date BETWEEN ? AND ?
+GROUP BY a.id;
+""",
+        [id, from, to],
       );
       if (maps.isEmpty) return null;
       return AccountBalanceDto.fromJson(maps.first);

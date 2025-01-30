@@ -28,8 +28,6 @@ abstract base class TransactionDatabaseRepository {
     List<String>? tagIds,
   });
 
-  Future<TransactionDto?> getOne({required String id});
-
   /// Retrieves a list of transactions that occurred between two dates.
   ///
   /// The `from` date is inclusive, while the `to` date is exclusive.
@@ -47,6 +45,8 @@ abstract base class TransactionDatabaseRepository {
     required String accountId,
     required String transactionType,
   });
+
+  Future<TransactionDto?> getOne({required String id});
 
   Future<void> create({required TransactionDto dto});
 
@@ -157,20 +157,6 @@ OFFSET $offset;
   }
 
   @override
-  Future<TransactionDto?> getOne({required String id}) async {
-    return resolve(() async {
-      final db = await database.db;
-      final map = await db.query(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
-      if (map.isEmpty) return null;
-      return TransactionDto.fromJson(map.first);
-    });
-  }
-
-  @override
   Future<List<TransactionDto>> getRange({
     required String from,
     required String to,
@@ -200,6 +186,20 @@ ORDER BY tr.date DESC;
         args,
       );
       return maps.map(TransactionDto.fromJson).toList(growable: false);
+    });
+  }
+
+  @override
+  Future<TransactionDto?> getOne({required String id}) async {
+    return resolve(() async {
+      final db = await database.db;
+      final map = await db.query(
+        table,
+        where: "id = ?",
+        whereArgs: [id],
+      );
+      if (map.isEmpty) return null;
+      return TransactionDto.fromJson(map.first);
     });
   }
 
