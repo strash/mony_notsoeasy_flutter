@@ -20,21 +20,24 @@ class StatsTotalAmountComponent extends StatelessWidget {
       builder: (context, constraints) {
         return AnimatedSwitcher(
           duration: Durations.short3,
-          child: SizedBox(
+          child: ConstrainedBox(
             key: Key(totalAmount.toString()),
-            width: constraints.maxWidth,
-            child: Text(
-              account == null
-                  ? "Не выбран счет"
-                  : totalAmount.currency(
-                      name: account.currency.name,
-                      symbol: account.currency.symbol,
-                      showDecimal: viewModel.isCentsVisible,
-                    ),
-              style: GoogleFonts.golosText(
-                fontSize: 24.0,
-                fontWeight: FontWeight.w600,
-                color: theme.colorScheme.onSurface,
+            constraints: constraints,
+            child: FittedBox(
+              child: Text(
+                account == null
+                    ? "Не выбран счет"
+                    : totalAmount.currency(
+                        name: account.currency.name,
+                        symbol: account.currency.symbol,
+                        showDecimal: viewModel.isCentsVisible,
+                      ),
+                style: GoogleFonts.golosText(
+                  fontSize: 28.0,
+                  height: 1.0,
+                  fontWeight: FontWeight.w600,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
             ),
           ),

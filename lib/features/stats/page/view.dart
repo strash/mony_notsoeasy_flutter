@@ -1,10 +1,8 @@
 import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/stats/components/components.dart";
-import "package:mony_app/features/stats/page/view_model.dart";
 
 class StatsView extends StatelessWidget {
   const StatsView({super.key});
@@ -37,7 +35,7 @@ class StatsView extends StatelessWidget {
             ),
           ),
 
-          const SliverPadding(padding: EdgeInsets.only(top: 15.0)),
+          const SliverPadding(padding: EdgeInsets.only(top: 20.0)),
           const SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
@@ -49,29 +47,35 @@ class StatsView extends StatelessWidget {
                   StatsTotalAmountComponent(),
 
                   // -> date range
+                  SizedBox(height: 5.0),
                   StatsDateRangeComponent(),
                 ],
               ),
             ),
           ),
 
-          const SliverPadding(padding: EdgeInsets.only(top: 15.0)),
+          // -> transaction type selector
+          const SliverPadding(padding: EdgeInsets.only(top: 20.0)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
-              child: Text("Сумма расходов"),
-            ),
-          ),
+              child: SeparatedComponent.builder(
+                direction: Axis.horizontal,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(width: 10.0);
+                },
+                itemCount: ETransactionType.values.length,
+                itemBuilder: (context, index) {
+                  final item = ETransactionType.values.elementAt(index);
 
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            sliver: SliverToBoxAdapter(
-              child: Text("Сумма доходов"),
+                  return StatsTransactionTypeButtonComponent(type: item);
+                },
+              ),
             ),
           ),
 
           // -> chart
-          const SliverPadding(padding: EdgeInsets.only(top: 15.0)),
+          const SliverPadding(padding: EdgeInsets.only(top: 20.0)),
           const SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
