@@ -4,6 +4,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/charts/component.dart";
 import "package:mony_app/components/select/select.dart";
 import "package:mony_app/domain/models/account.dart";
+import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
@@ -23,9 +24,11 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   bool isColorsVisible = true;
   bool isTagsVisible = true;
 
-  List<AccountModel> accounts = [];
-
   ETransactionType activeTransactionType = ETransactionType.defaultValue;
+
+  List<AccountModel> accounts = [];
+  late final accountController = SelectController<AccountModel?>(null);
+  AccountBalanceModel? activeAccountBalance;
 
   DateTime activeYear = DateTime.now().startOfDay;
   DateTime activeMonth = DateTime.now().startOfDay;
@@ -34,7 +37,6 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   List<TransactionModel> transactions = [];
 
   EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
-  late final accountController = SelectController<AccountModel?>(null);
 
   (DateTime, DateTime) get exclusiveDateRange {
     final loc = MaterialLocalizations.of(context);

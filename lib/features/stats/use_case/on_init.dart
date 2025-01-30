@@ -16,6 +16,11 @@ final class OnInit extends UseCase<Future<void>, StatsViewModel> {
 
     final accounts = await accountService.getAll();
     if (accounts.isEmpty) return;
+    final balance = await accountService.getBalanceForDateRange(
+      id: accounts.first.id,
+      from: from,
+      to: to,
+    );
     final transactions = await transactionService.getRange(
       from: from,
       to: to,
@@ -26,6 +31,7 @@ final class OnInit extends UseCase<Future<void>, StatsViewModel> {
     viewModel.setProtectedState(() {
       viewModel.accounts = accounts;
       viewModel.accountController.value = accounts.first;
+      viewModel.activeAccountBalance = balance;
       viewModel.transactions = transactions;
     });
   }

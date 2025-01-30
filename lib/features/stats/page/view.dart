@@ -35,24 +35,12 @@ class StatsView extends StatelessWidget {
             ),
           ),
 
+          // -> total amount
           const SliverPadding(padding: EdgeInsets.only(top: 20.0)),
           const SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             sliver: SliverToBoxAdapter(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // -> total amount
-                  StatsTotalAmountComponent(),
-
-                  Text("[количество транзакций]"),
-
-                  // -> date range
-                  SizedBox(height: 5.0),
-                  StatsDateRangeComponent(),
-                ],
-              ),
+              child: StatsTotalAmountComponent(),
             ),
           ),
 
