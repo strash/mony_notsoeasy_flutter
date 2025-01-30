@@ -3,10 +3,7 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/charts/component.dart";
 import "package:mony_app/components/select/select.dart";
-import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/models/models.dart";
-import "package:mony_app/domain/models/transaction.dart";
-import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/stats/page/view.dart";
 import "package:mony_app/features/stats/use_case/use_case.dart";
@@ -24,19 +21,17 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   bool isColorsVisible = true;
   bool isTagsVisible = true;
 
+  EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
+  late final accountController = SelectController<AccountModel?>(null);
   ETransactionType activeTransactionType = ETransactionType.defaultValue;
 
   List<AccountModel> accounts = [];
-  late final accountController = SelectController<AccountModel?>(null);
   AccountBalanceModel? activeAccountBalance;
+  List<TransactionModel> transactions = [];
 
   DateTime activeYear = DateTime.now().startOfDay;
   DateTime activeMonth = DateTime.now().startOfDay;
   DateTime activeWeek = DateTime.now().startOfDay;
-
-  List<TransactionModel> transactions = [];
-
-  EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
 
   (DateTime, DateTime) get exclusiveDateRange {
     final loc = MaterialLocalizations.of(context);
@@ -90,6 +85,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
       viewModel: this,
       useCases: [
         () => OnTemporalButtonPressed(),
+        () => OnTransactionTypeSelected(),
       ],
       child: const StatsView(),
     );
