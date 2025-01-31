@@ -27,7 +27,7 @@ class StatsChartComponent extends StatelessWidget {
         : NumberFormat.compact();
 
     return AspectRatio(
-      aspectRatio: 1.3,
+      aspectRatio: 1.5,
       child: transactions.isNotEmpty
           // -> chart
           ? ChartComponent(
@@ -93,6 +93,7 @@ class StatsChartComponent extends StatelessWidget {
                     "Expense",
                     value: e.amount.abs(),
                   ),
+                  // TODO: проверить переключение цвета в настроках
                   groupBy: viewModel.isColorsVisible ? e.category : null,
                 );
               }).toList(growable: false),

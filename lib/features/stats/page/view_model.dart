@@ -54,6 +54,22 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
     return (from, to);
   }
 
+  List<(double, CategoryModel)> get categories {
+    final List<(double, CategoryModel)> list = [];
+    for (final element in transactions) {
+      final amount = element.amount.abs();
+      final index = list.indexWhere((e) => e.$2.id == element.category.id);
+      if (index == -1) {
+        list.add((amount, element.category));
+        continue;
+      }
+      final item = list.elementAt(index);
+      list[index] = (item.$1 + amount, element.category);
+    }
+    list.sort((a, b) => b.$1.compareTo(a.$1));
+    return list;
+  }
+
   void _onAccountSelected() {
     OnAccountSelected().call(context, this);
   }

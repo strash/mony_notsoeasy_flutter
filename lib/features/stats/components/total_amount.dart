@@ -64,34 +64,23 @@ class StatsTotalAmountComponent extends StatelessWidget {
                     style: GoogleFonts.golosText(
                       fontSize: 28.0,
                       height: 1.0,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       color: theme.colorScheme.onSurface,
                     ),
                   ),
                 ),
 
-                // -> count
+                // -> count and date range
                 if (balance != null)
                   Text(
-                    _getCount(balance.totalCount),
+                    "$dateRangeDescription • ${_getCount(balance.totalCount)}",
                     style: GoogleFonts.golosText(
-                      fontSize: 16.0,
+                      fontSize: 14.0,
                       height: 1.0,
                       fontWeight: FontWeight.w500,
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
-
-                // -> date range
-                Text(
-                  dateRangeDescription,
-                  style: GoogleFonts.golosText(
-                    fontSize: 16.0,
-                    height: 1.0,
-                    fontWeight: FontWeight.w500,
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
               ],
             ),
           ),

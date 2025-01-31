@@ -101,7 +101,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
                       style: GoogleFonts.golosText(
                         fontSize: 18.0,
                         height: 1.0,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: theme.colorScheme.onSurface,
                       ),
                     ),

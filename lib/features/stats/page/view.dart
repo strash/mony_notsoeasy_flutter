@@ -61,6 +61,7 @@ class StatsView extends StatelessWidget {
             ),
           ),
 
+          // TODO: paging
           // -> chart
           const SliverPadding(
             padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
@@ -73,7 +74,7 @@ class StatsView extends StatelessWidget {
           const SliverPadding(
             padding: EdgeInsets.only(left: 15.0, top: 15.0, right: 15.0),
             sliver: SliverToBoxAdapter(
-              child: Text("[Легенда категорий]"),
+              child: StatsCategoriesComponent(),
             ),
           ),
 
