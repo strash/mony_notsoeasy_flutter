@@ -3,7 +3,6 @@ import "dart:math";
 import "package:flutter/material.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/domain/models/category.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
 
 class StatsCategoriesComponent extends StatelessWidget {
@@ -17,6 +16,12 @@ class StatsCategoriesComponent extends StatelessWidget {
     final viewModel = context.viewModel<StatsViewModel>();
     final categories = viewModel.categories;
     final totalCount = categories.fold(.0, (prev, curr) => prev + curr.$1);
+    final chartData = categories.map((e) {
+      return (
+        e.$1,
+        ex != null ? ex.from(e.$2.colorName).color : theme.colorScheme.tertiary,
+      );
+    });
 
     return SizedBox.fromSize(
       size: const Size.fromHeight(20.0),
@@ -26,16 +31,11 @@ class StatsCategoriesComponent extends StatelessWidget {
           key: Key("${totalCount}_$categories"),
           size: Size.infinite,
           painter: _Painter(
-            totalCount: totalCount,
             minWidth: 4.0,
             padding: 2.5,
             radius: 4.0,
-            data: categories,
-            color: (name) {
-              return ex != null && name != null
-                  ? ex.from(name).color
-                  : theme.colorScheme.tertiary;
-            },
+            totalCount: totalCount,
+            data: chartData,
           ),
         ),
       ),
@@ -44,20 +44,18 @@ class StatsCategoriesComponent extends StatelessWidget {
 }
 
 final class _Painter extends CustomPainter {
-  final double totalCount;
   final double minWidth;
   final double padding;
   final double radius;
-  final List<(double, CategoryModel)> data;
-  final Color Function(EColorName? colorName) color;
+  final double totalCount;
+  final Iterable<(double, Color)> data;
 
   _Painter({
-    required this.totalCount,
     required this.minWidth,
     required this.padding,
     required this.radius,
+    required this.totalCount,
     required this.data,
-    required this.color,
   });
 
   @override
@@ -86,7 +84,7 @@ final class _Painter extends CustomPainter {
 
     double offset = .0;
     for (final (index, element) in data.indexed) {
-      paint.color = color(element.$2.colorName);
+      paint.color = element.$2;
       final width = widths.elementAt(index);
       final rect = Rect.fromLTWH(.0 + offset, .0, width, size.height);
       final rrect = RRect.fromRectAndRadius(rect, Radius.circular(radius));
