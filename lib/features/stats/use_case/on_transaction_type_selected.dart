@@ -37,5 +37,7 @@ final class OnTransactionTypeSelected
       viewModel.activeAccountBalance = balance;
       viewModel.transactions = transactions;
     });
+
+    viewModel.resetCategoryScrollController();
   }
 }

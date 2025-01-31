@@ -53,7 +53,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
     final account = viewModel.accountController.value;
     final balance = viewModel.activeAccountBalance;
     final isActive = viewModel.activeTransactionType == type;
-    final key = "${_getCount(balance)}_"
+    final key = "stats_transaction_type_buttons_${_getCount(balance)}_"
         "${_getAmount(account, balance, viewModel.isCentsVisible)}";
 
     final onTypeSelected = viewModel<OnTransactionTypeSelected>();

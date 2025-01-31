@@ -31,5 +31,7 @@ final class OnAccountSelected extends UseCase<Future<void>, StatsViewModel> {
       viewModel.activeAccountBalance = balance;
       viewModel.transactions = transactions;
     });
+
+    viewModel.resetCategoryScrollController();
   }
 }

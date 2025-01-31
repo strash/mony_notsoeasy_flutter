@@ -33,6 +33,8 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   DateTime activeMonth = DateTime.now().startOfDay;
   DateTime activeWeek = DateTime.now().startOfDay;
 
+  final categoryScrollController = ScrollController();
+
   (DateTime, DateTime) get exclusiveDateRange {
     final loc = MaterialLocalizations.of(context);
     final DateTime from;
@@ -70,6 +72,14 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
     return list;
   }
 
+  void resetCategoryScrollController() {
+    if (!categoryScrollController.isReady) return;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      categoryScrollController.jumpTo(1.0);
+      categoryScrollController.jumpTo(.0);
+    });
+  }
+
   void _onAccountSelected() {
     OnAccountSelected().call(context, this);
   }
@@ -93,6 +103,13 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
       if (!mounted) return;
       await OnInit().call(context, this);
     });
+  }
+
+  @override
+  void dispose() {
+    accountController.dispose();
+    categoryScrollController.dispose();
+    super.dispose();
   }
 
   @override

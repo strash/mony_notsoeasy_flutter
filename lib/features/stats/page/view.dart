@@ -72,7 +72,7 @@ class StatsView extends StatelessWidget {
 
           // -> chart legend (categories)
           const SliverPadding(
-            padding: EdgeInsets.only(top: 15.0),
+            padding: EdgeInsets.only(top: 20.0),
             sliver: SliverToBoxAdapter(
               child: StatsCategoriesComponent(padding: 15.0),
             ),

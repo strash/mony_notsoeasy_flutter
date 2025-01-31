@@ -44,7 +44,7 @@ class StatsTotalAmountComponent extends StatelessWidget {
       dates.$1,
       dates.$2.subtract(const Duration(days: 1))
     ).transactionsDateRangeDescription;
-    final key =
+    final key = "stats_total_amount_"
         "${balance?.totalAmount}_${balance?.totalCount}_$dateRangeDescription";
 
     return LayoutBuilder(
