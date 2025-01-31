@@ -1,12 +1,21 @@
 import "dart:math";
 
+import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:intl/intl.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
 
 class StatsCategoriesComponent extends StatelessWidget {
-  const StatsCategoriesComponent({super.key});
+  final double padding;
+
+  const StatsCategoriesComponent({
+    super.key,
+    required this.padding,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +32,130 @@ class StatsCategoriesComponent extends StatelessWidget {
       );
     });
 
-    return SizedBox.fromSize(
-      size: const Size.fromHeight(20.0),
-      child: AnimatedSwitcher(
-        duration: Durations.short3,
-        child: CustomPaint(
-          key: Key("${totalCount}_$categories"),
-          size: Size.infinite,
-          painter: _Painter(
-            minWidth: 4.0,
-            padding: 2.5,
-            radius: 4.0,
-            totalCount: totalCount,
-            data: chartData,
+    final account = viewModel.accountController.value;
+    final formatter = NumberFormat.decimalPatternDigits(decimalDigits: 2);
+
+    return AnimatedSwitcher(
+      duration: Durations.short3,
+      child: SeparatedComponent.list(
+        key: Key("${totalCount}_$categories"),
+        mainAxisSize: MainAxisSize.min,
+        separatorBuilder: (context, index) {
+          return const SizedBox(height: 10.0);
+        },
+        children: [
+          // -> chart
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: padding),
+            child: SizedBox.fromSize(
+              size: const Size.fromHeight(20.0),
+              child: CustomPaint(
+                size: Size.infinite,
+                painter: _Painter(
+                  minWidth: 4.0,
+                  padding: 2.5,
+                  radius: 4.0,
+                  totalCount: totalCount,
+                  data: chartData,
+                ),
+              ),
+            ),
           ),
-        ),
+
+          // -> legend
+          Row(
+            children: [
+              Expanded(
+                // TODO: gradient
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: padding),
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  scrollDirection: Axis.horizontal,
+                  child: SeparatedComponent.builder(
+                    direction: Axis.horizontal,
+                    mainAxisSize: MainAxisSize.min,
+                    itemCount: categories.length,
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(width: 25.0);
+                    },
+                    itemBuilder: (context, index) {
+                      final item = categories.elementAt(index);
+                      final value = account != null
+                          ? item.$1.currency(
+                              name: account.currency.name,
+                              symbol: account.currency.symbol,
+                              showDecimal: viewModel.isCentsVisible,
+                            )
+                          : formatter.format(item.$1);
+                      final color = chartData.elementAt(index).$2;
+                      final percent = formatter
+                          .format(item.$1 * 100 / max(1.0, totalCount));
+
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // -> color marker
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 1.5, right: 5.0),
+                            child: SizedBox.square(
+                              dimension: 12.0,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  color: color,
+                                  shape: const SmoothRectangleBorder(
+                                    borderRadius: SmoothBorderRadius.all(
+                                      SmoothRadius(
+                                        cornerRadius: 3.0,
+                                        cornerSmoothing: 1.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // -> info
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // -> title
+                              Text(
+                                item.$2.title,
+                                style: GoogleFonts.golosText(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.0,
+                                  color: theme.colorScheme.onSurface,
+                                ),
+                              ),
+                              const SizedBox(height: 3.0),
+
+                              // -> amount
+                              Text(
+                                "$value\n$percent%",
+                                style: GoogleFonts.golosText(
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.3,
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
