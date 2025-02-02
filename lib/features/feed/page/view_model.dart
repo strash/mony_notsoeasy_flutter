@@ -87,6 +87,9 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
 
   void _onNavBarEvent(NavBarEvent e) {
     if (!context.mounted) return;
+    final navBar = context.viewModel<NavBarViewModel>();
+    if (navBar.currentTab != ENavBarTabItem.feed) return;
+
     switch (e) {
       case NavBarEventTabChanged():
         break;
@@ -94,9 +97,7 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
         final controller = scrollControllers.elementAt(currentPageIndex);
         // -> scroll to top
         if (controller.isReady && controller.position.pixels > .0) {
-          context
-              .viewModel<NavBarViewModel>()
-              .returnToTop(controller.controller);
+          navBar.returnToTop(controller.controller);
           // -> open first page
         } else {
           if (currentPageIndex == 0 || _pagingToStart) return;
