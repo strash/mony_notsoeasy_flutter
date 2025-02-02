@@ -119,6 +119,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
       useCases: [
         () => OnTemporalButtonPressed(),
         () => OnTransactionTypeSelected(),
+        () => OnTransactionPressed(),
       ],
       child: const StatsView(),
     );
