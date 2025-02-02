@@ -4,9 +4,9 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/navbar/navbar.dart";
 import "package:mony_app/features/navbar/use_case/on_pop_tabs_to_root_requested.dart";
 
-final class OnTabChangeRequested extends UseCase<void, NavBarTabItem> {
+final class OnTabChangeRequested extends UseCase<void, ENavBarTabItem> {
   @override
-  void call(BuildContext context, [NavBarTabItem? value]) {
+  void call(BuildContext context, [ENavBarTabItem? value]) {
     if (value == null) throw ArgumentError.notNull();
     final viewModel = context.viewModel<NavBarViewModel>();
     final popTabToRoot = viewModel<OnPopTabsToRootRequested>();

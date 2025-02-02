@@ -39,7 +39,7 @@ class NavBarView extends StatelessWidget {
               // -> pages
               IndexedStack(
                 index: viewModel.currentTab.index,
-                children: NavBarTabItem.values.map((e) {
+                children: ENavBarTabItem.values.map((e) {
                   return NavigatorWrapper(
                     navigatorKey: viewModel.getNavigatorTabKey(e),
                     onGenerateRoute: (settings) {
@@ -81,7 +81,7 @@ class NavBarView extends StatelessWidget {
                               color: theme.colorScheme.surfaceContainerHigh
                                   .withValues(alpha: kTranslucentPanelOpacity),
                               child: Row(
-                                children: NavBarTabItem.values.map((e) {
+                                children: ENavBarTabItem.values.map((e) {
                                   return Expanded(
                                     child: NavBarTabComponent(index: e.index),
                                   );

@@ -9,26 +9,26 @@ import "package:rxdart/subjects.dart";
 
 export "./event.dart";
 
-enum NavBarTabItem implements IDescriptable {
+enum ENavBarTabItem implements IDescriptable {
   feed,
   stats,
   settings,
   ;
 
-  static int get length => NavBarTabItem.values.length;
+  static int get length => ENavBarTabItem.values.length;
 
-  static NavBarTabItem get defaultValue => NavBarTabItem.feed;
+  static ENavBarTabItem get defaultValue => ENavBarTabItem.feed;
 
-  static NavBarTabItem from(int index) {
-    return NavBarTabItem.values.elementAt(index);
+  static ENavBarTabItem from(int index) {
+    return ENavBarTabItem.values.elementAt(index);
   }
 
   @override
   String get description {
     return switch (this) {
-      NavBarTabItem.feed => "Лента",
-      NavBarTabItem.stats => "Статистика",
-      NavBarTabItem.settings => "Настройки",
+      ENavBarTabItem.feed => "Лента",
+      ENavBarTabItem.stats => "Статистика",
+      ENavBarTabItem.settings => "Настройки",
     };
   }
 }
@@ -42,24 +42,24 @@ class NavBarPage extends StatefulWidget {
 
 final class NavBarViewModel extends ViewModelState<NavBarPage> {
   final subject = BehaviorSubject<NavBarEvent>.seeded(
-    NavBarEventTabChanged(NavBarTabItem.defaultValue),
+    NavBarEventTabChanged(ENavBarTabItem.defaultValue),
   );
 
-  NavBarTabItem currentTab = NavBarTabItem.defaultValue;
+  ENavBarTabItem currentTab = ENavBarTabItem.defaultValue;
 
-  final _routes = NavBarTabItem.values.map((e) {
+  final _routes = ENavBarTabItem.values.map((e) {
     return switch (e) {
-      NavBarTabItem.feed => const FeedPage(),
-      NavBarTabItem.stats => const StatsPage(),
-      NavBarTabItem.settings => const SettingsPage(),
+      ENavBarTabItem.feed => const FeedPage(),
+      ENavBarTabItem.stats => const StatsPage(),
+      ENavBarTabItem.settings => const SettingsPage(),
     };
   }).toList(growable: false);
 
-  final _navigatorTabKeys = NavBarTabItem.values.map((e) {
+  final _navigatorTabKeys = ENavBarTabItem.values.map((e) {
     return GlobalKey<NavigatorState>(debugLabel: "Tab $e");
   }).toList(growable: false);
 
-  GlobalKey<NavigatorState> getNavigatorTabKey(NavBarTabItem tab) {
+  GlobalKey<NavigatorState> getNavigatorTabKey(ENavBarTabItem tab) {
     return _navigatorTabKeys.elementAt(tab.index);
   }
 
@@ -71,7 +71,7 @@ final class NavBarViewModel extends ViewModelState<NavBarPage> {
     scrollController.animateTo(.0, duration: duration, curve: curve);
   }
 
-  Route<dynamic> onGenerateRoute(NavBarTabItem tab, RouteSettings settings) {
+  Route<dynamic> onGenerateRoute(ENavBarTabItem tab, RouteSettings settings) {
     return MaterialPageRoute(
       settings: settings,
       builder: (context) => _routes.elementAt(tab.index),
