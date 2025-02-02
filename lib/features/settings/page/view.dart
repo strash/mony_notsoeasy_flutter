@@ -37,6 +37,7 @@ class SettingsView extends StatelessWidget {
 
     return Scaffold(
       body: CustomScrollView(
+        controller: viewModel.scrollController,
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),
