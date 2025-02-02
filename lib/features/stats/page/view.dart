@@ -35,6 +35,7 @@ class StatsView extends StatelessWidget {
           ),
 
           // -> total amount
+          // TODO: открывать календарь чтобы переключить на другой период
           const SliverPadding(
             padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
             sliver: SliverToBoxAdapter(
@@ -61,7 +62,6 @@ class StatsView extends StatelessWidget {
             ),
           ),
 
-          // TODO: paging
           // -> chart
           const SliverPadding(
             padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),

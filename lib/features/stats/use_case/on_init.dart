@@ -16,11 +16,13 @@ final class OnInit extends UseCase<Future<void>, StatsViewModel> {
 
     final accounts = await accountService.getAll();
     if (accounts.isEmpty) return;
+
     final balance = await accountService.getBalanceForDateRange(
       id: accounts.first.id,
       from: from,
       to: to,
     );
+
     final transactions = await transactionService.getRange(
       from: from,
       to: to,

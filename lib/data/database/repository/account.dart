@@ -132,23 +132,36 @@ LIMIT $limit OFFSET $offset;
       final db = await database.db;
       final maps = await db.rawQuery(
         """
+WITH cte_tr AS (
+	SELECT
+		COALESCE(SUM(amount), 0.0) AS total_amount,
+		SUM(IIF(amount < 0, amount, 0)) AS expense_amount,
+		SUM(IIF(amount >= 0, amount, 0)) AS income_amount,
+		COALESCE(COUNT(id), 0) AS total_count,
+		SUM(IIF(amount < 0, 1, 0)) AS expense_count,
+		SUM(IIF(amount >= 0, 1, 0)) AS income_count,
+		MIN(date) AS first_transaction_date,
+		MAX(date) AS last_transaction_date
+	FROM transactions
+	WHERE account_id = ?1 AND date BETWEEN ?2 AND ?3
+	GROUP BY account_id
+)
+
 SELECT
-	a.id,
-	a.created,
-	a.currency_code,
-	a.balance,
-	COALESCE(SUM(tr.amount), 0.0) AS total_amount,
-	SUM(IIF(tr.amount < 0, tr.amount, 0)) AS expense_amount,
-	SUM(IIF(tr.amount >= 0, tr.amount, 0)) AS income_amount,
-	COALESCE(COUNT(tr.id),0) AS total_count,
-	SUM(IIF(tr.amount < 0, 1, 0)) AS expense_count,
-	SUM(IIF(tr.amount >= 0, 1, 0)) AS income_count,
-	MIN(tr.date) AS first_transaction_date,
-	MAX(tr.date) AS last_transaction_date
-FROM $table AS a
-LEFT JOIN transactions AS tr ON a.id = tr.account_id
-WHERE a.id = ? AND tr.date BETWEEN ? AND ?
-GROUP BY a.id;
+	id,
+	created,
+	currency_code,
+	balance,
+	COALESCE((SELECT total_amount FROM cte_tr), 0) AS total_amount,
+	COALESCE((SELECT expense_amount FROM cte_tr), 0) AS expense_amount,
+	COALESCE((SELECT income_amount FROM cte_tr), 0) AS income_amount,
+	COALESCE((SELECT total_count FROM cte_tr), 0) AS total_count,
+	COALESCE((SELECT expense_count FROM cte_tr), 0) AS expense_count,
+	COALESCE((SELECT income_count FROM cte_tr), 0) AS income_count,
+	(SELECT first_transaction_date FROM cte_tr) AS first_transaction_date,
+	(SELECT last_transaction_date FROM cte_tr) AS last_transaction_date
+FROM $table
+WHERE id = ?1;
 """,
         [id, from, to],
       );
