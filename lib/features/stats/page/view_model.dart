@@ -8,7 +8,6 @@ import "package:mony_app/components/select/select.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/navbar/navbar.dart";
-import "package:mony_app/features/navbar/page/event.dart";
 import "package:mony_app/features/stats/page/view.dart";
 import "package:mony_app/features/stats/use_case/use_case.dart";
 import "package:provider/provider.dart";
@@ -94,7 +93,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
-    // TODO
+    // TODO: handle app states
     // OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 
@@ -112,9 +111,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
           navBar.returnToTop(scrollController);
           // -> set current date
         } else {
-          // TODO
-          // if (currentPageIndex == 0 || _pagingToStart) return;
-          // openPage(0);
+          // TODO: set current date
         }
       case NavBarEventAddTransactionPressed():
         OnNavbarAddTransactionPressed().call(context, this);

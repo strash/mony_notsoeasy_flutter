@@ -19,7 +19,7 @@ class StatsView extends StatelessWidget {
     final viewModel = context.viewModel<StatsViewModel>();
     final transactions = viewModel.transactions;
     final feed = transactions.toFeed();
-    const keyPrefix = "stats";
+    const keyPrefix = "stats_feed";
 
     final onTransactionPressed = viewModel<OnTransactionPressed>();
 
