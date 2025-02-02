@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -5,6 +7,8 @@ import "package:mony_app/components/charts/component.dart";
 import "package:mony_app/components/select/select.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
+import "package:mony_app/features/navbar/navbar.dart";
+import "package:mony_app/features/navbar/page/event.dart";
 import "package:mony_app/features/stats/page/view.dart";
 import "package:mony_app/features/stats/use_case/use_case.dart";
 import "package:provider/provider.dart";
@@ -17,9 +21,15 @@ final class StatsPage extends StatefulWidget {
 }
 
 final class StatsViewModel extends ViewModelState<StatsPage> {
+  late final StreamSubscription<Event> _appSub;
+  late final StreamSubscription<NavBarEvent> _navbarSub;
+
   bool isCentsVisible = true;
   bool isColorsVisible = true;
   bool isTagsVisible = true;
+
+  final scrollController = ScrollController();
+  final categoryScrollController = ScrollController();
 
   EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
   late final accountController = SelectController<AccountModel?>(null);
@@ -32,8 +42,6 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   DateTime activeYear = DateTime.now().startOfDay;
   DateTime activeMonth = DateTime.now().startOfDay;
   DateTime activeWeek = DateTime.now().startOfDay;
-
-  final categoryScrollController = ScrollController();
 
   (DateTime, DateTime) get exclusiveDateRange {
     final loc = MaterialLocalizations.of(context);
@@ -84,10 +92,46 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
     OnAccountSelected().call(context, this);
   }
 
+  void _onAppEvent(Event event) {
+    if (!mounted) return;
+    // TODO
+    // OnAppStateChanged().call(context, (event: event, viewModel: this));
+  }
+
+  void _onNavBarEvent(NavBarEvent e) {
+    if (!context.mounted) return;
+    final navBar = context.viewModel<NavBarViewModel>();
+    if (navBar.currentTab != ENavBarTabItem.stats) return;
+
+    switch (e) {
+      case NavBarEventTabChanged():
+        break;
+      case NavBarEventScrollToTopRequested():
+        // -> scroll to top
+        if (scrollController.isReady && scrollController.position.pixels > .0) {
+          navBar.returnToTop(scrollController);
+          // -> set current date
+        } else {
+          // TODO
+          // if (currentPageIndex == 0 || _pagingToStart) return;
+          // openPage(0);
+        }
+      case NavBarEventAddTransactionPressed():
+        OnNavbarAddTransactionPressed().call(context, this);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      // -> app events
+      _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
+
+      // -> navbar
+      _navbarSub =
+          context.viewModel<NavBarViewModel>().subject.listen(_onNavBarEvent);
+
       accountController.addListener(_onAccountSelected);
 
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
@@ -107,7 +151,10 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
 
   @override
   void dispose() {
+    _appSub.cancel();
+    _navbarSub.cancel();
     accountController.dispose();
+    scrollController.dispose();
     categoryScrollController.dispose();
     super.dispose();
   }
