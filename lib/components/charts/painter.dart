@@ -15,6 +15,7 @@ final class _Painter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
+    const markMinHeight = 4.0;
 
     final thirdValue = maxValue / 3;
 
@@ -50,12 +51,11 @@ final class _Painter extends CustomPainter {
         canvas.save();
 
         // mask for mark groups
-        const minHeight = 5.0;
         barMaxHeight = size.height - legendSize.height - 3.0;
         final totalHeight =
             y.fold(.0, (prev, curr) => prev + (curr["value"] as num));
         final totalDisplayedHeight = max(
-          minHeight,
+          markMinHeight,
           totalHeight.remap(.0, maxValue.toDouble(), .0, barMaxHeight),
         );
         Path clipPath = Path()
@@ -79,13 +79,18 @@ final class _Painter extends CustomPainter {
         canvas.clipPath(clipPath);
 
         // mark groups
+        y.sort((a, b) {
+          final aV = a["value"] as num;
+          final bV = b["value"] as num;
+          return aV.compareTo(bV);
+        });
         double offset = .0;
         for (final group in y) {
           paint.color = config.groupColor(group["groupBy"]);
-          final height = group["value"] as num;
+          final value = group["value"] as num;
           final displayedHeight = max(
-            minHeight,
-            height.toDouble().remap(.0, maxValue.toDouble(), .0, barMaxHeight),
+            markMinHeight,
+            value.toDouble().remap(.0, maxValue.toDouble(), .0, barMaxHeight),
           );
           Rect rect = Rect.fromLTWH(left, .0, barWidth, displayedHeight);
           // invert by vertical and offset to the right
@@ -139,7 +144,7 @@ final class _Painter extends CustomPainter {
       offset: (textSize) {
         return Offset(
           size.width - textSize.width,
-          barMaxHeight - textSize.height,
+          barMaxHeight - textSize.height - 1.0,
         );
       },
     );

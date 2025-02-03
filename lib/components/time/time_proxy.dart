@@ -16,7 +16,7 @@ class TimeProxyComponent extends StatelessWidget {
 
     return SizedBox(
       width: 90.0,
-      height: 48.0,
+      height: 46.0,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: theme.colorScheme.surfaceContainer,

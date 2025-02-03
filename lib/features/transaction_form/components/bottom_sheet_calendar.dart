@@ -58,9 +58,10 @@ class _TransactionFormBottomSheetCalendarComponentState
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final size = MediaQuery.sizeOf(context);
+    final viewSize = MediaQuery.sizeOf(context);
     const padding = EdgeInsets.symmetric(horizontal: 10.0);
-    final itemWidth = (size.width - padding.horizontal) / DateTime.daysPerWeek;
+    final itemWidth =
+        (viewSize.width - padding.horizontal) / DateTime.daysPerWeek;
     final isSameMonth =
         _visibleMonth.isSameDateAs(DateTime.now().firstDayOfMonth());
 

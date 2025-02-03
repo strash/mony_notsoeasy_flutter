@@ -36,24 +36,24 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // -> date time
-                ListenableBuilder(
-                  listenable: Listenable.merge([
-                    viewModel.dateController,
-                    viewModel.timeController,
-                  ]),
-                  builder: (context, child) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 1.0),
-                      child: Text(
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 1.0),
+                  child: ListenableBuilder(
+                    listenable: Listenable.merge([
+                      viewModel.dateController,
+                      viewModel.timeController,
+                    ]),
+                    builder: (context, child) {
+                      return Text(
                         viewModel.dateTimeDescription,
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w500,
                           color: theme.colorScheme.onSurface,
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(width: 6.0),
 
