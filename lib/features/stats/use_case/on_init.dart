@@ -33,7 +33,7 @@ final class OnInit extends UseCase<Future<void>, StatsViewModel> {
     viewModel.setProtectedState(() {
       viewModel.accounts = accounts;
       viewModel.accountController.value = accounts.first;
-      viewModel.activeAccountBalance = balance;
+      viewModel.balance = balance;
       viewModel.transactions = transactions;
     });
   }

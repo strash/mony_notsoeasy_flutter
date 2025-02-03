@@ -28,7 +28,7 @@ final class OnAccountSelected extends UseCase<Future<void>, StatsViewModel> {
     );
 
     viewModel.setProtectedState(() {
-      viewModel.activeAccountBalance = balance;
+      viewModel.balance = balance;
       viewModel.transactions = transactions;
     });
 

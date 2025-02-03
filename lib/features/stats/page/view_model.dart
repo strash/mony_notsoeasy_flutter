@@ -3,6 +3,7 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/calendar/component.dart";
 import "package:mony_app/components/charts/component.dart";
 import "package:mony_app/components/select/select.dart";
 import "package:mony_app/domain/models/models.dart";
@@ -27,36 +28,35 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   bool isColorsVisible = true;
   bool isTagsVisible = true;
 
-  final scrollController = ScrollController();
-  final categoryScrollController = ScrollController();
-
   EChartTemporalView activeTemporalView = EChartTemporalView.defaultValue;
-  late final accountController = SelectController<AccountModel?>(null);
   ETransactionType activeTransactionType = ETransactionType.defaultValue;
 
   List<AccountModel> accounts = [];
-  AccountBalanceModel? activeAccountBalance;
+  AccountBalanceModel? balance;
   List<TransactionModel> transactions = [];
 
-  DateTime activeYear = DateTime.now().startOfDay;
-  DateTime activeMonth = DateTime.now().startOfDay;
-  DateTime activeWeek = DateTime.now().startOfDay;
+  final scrollController = ScrollController();
+  final categoryScrollController = ScrollController();
+
+  final accountController = SelectController<AccountModel?>(null);
+  final dateController = CalendarController(DateTime.now().startOfDay);
 
   (DateTime, DateTime) get exclusiveDateRange {
     final loc = MaterialLocalizations.of(context);
     final DateTime from;
     final DateTime to;
+    final date = dateController.value!;
     switch (activeTemporalView) {
       case EChartTemporalView.year:
-        final list = activeYear.monthsOfYear();
+        final list = date.monthsOfYear();
         from = list.first;
         to = list.last.offsetMonth(1);
       case EChartTemporalView.month:
-        final list = activeMonth.daysOfMonth();
+        final list = date.daysOfMonth();
         from = list.first;
         to = list.last.add(const Duration(days: 1));
       case EChartTemporalView.week:
-        final list = activeWeek.daysOfWeek(loc);
+        final list = date.daysOfWeek(loc);
         from = list.first;
         to = list.last.add(const Duration(days: 1));
     }
@@ -97,6 +97,10 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
     // OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 
+  void _onDateChanged() {
+    OnDateChanged().call(context, this);
+  }
+
   void _onNavBarEvent(NavBarEvent e) {
     if (!context.mounted) return;
     final navBar = context.viewModel<NavBarViewModel>();
@@ -111,7 +115,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
           navBar.returnToTop(scrollController);
           // -> set current date
         } else {
-          // TODO: set current date
+          dateController.value = DateTime.now().startOfDay;
         }
       case NavBarEventAddTransactionPressed():
         OnNavbarAddTransactionPressed().call(context, this);
@@ -123,13 +127,15 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       // -> app events
-      _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
+      final appService = context.viewModel<AppEventService>();
+      _appSub = appService.listen(_onAppEvent);
 
       // -> navbar
-      _navbarSub =
-          context.viewModel<NavBarViewModel>().subject.listen(_onNavBarEvent);
+      final navBar = context.viewModel<NavBarViewModel>();
+      _navbarSub = navBar.subject.listen(_onNavBarEvent);
 
       accountController.addListener(_onAccountSelected);
+      dateController.addListener(_onDateChanged);
 
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
@@ -150,9 +156,15 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
   void dispose() {
     _appSub.cancel();
     _navbarSub.cancel();
-    accountController.dispose();
+
     scrollController.dispose();
     categoryScrollController.dispose();
+
+    accountController.removeListener(_onAccountSelected);
+    accountController.dispose();
+    dateController.removeListener(_onDateChanged);
+    dateController.dispose();
+
     super.dispose();
   }
 
@@ -162,6 +174,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
       viewModel: this,
       useCases: [
         () => OnTemporalButtonPressed(),
+        () => OnDatePressed(),
         () => OnTransactionTypeSelected(),
         () => OnTransactionPressed(),
       ],

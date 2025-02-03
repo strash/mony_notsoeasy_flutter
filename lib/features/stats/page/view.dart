@@ -48,12 +48,18 @@ class StatsView extends StatelessWidget {
           ),
 
           // -> total amount
-          // TODO: открывать календарь чтобы переключить на другой период
-          // TODO: слушать навбар и скролить до верха при тапе на иконку
           const SliverPadding(
             padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
             sliver: SliverToBoxAdapter(
               child: StatsTotalAmountComponent(),
+            ),
+          ),
+
+          // -> date range
+          const SliverPadding(
+            padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
+            sliver: SliverToBoxAdapter(
+              child: StatsDateRangeComponent(),
             ),
           ),
 
@@ -84,6 +90,7 @@ class StatsView extends StatelessWidget {
             ),
           ),
 
+          // TODO: фильтровать по категориям
           // -> chart legend (categories)
           const SliverPadding(
             padding: EdgeInsets.only(top: 20.0),

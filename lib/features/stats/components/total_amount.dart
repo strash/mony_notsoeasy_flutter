@@ -38,42 +38,51 @@ class StatsTotalAmountComponent extends StatelessWidget {
 
     final viewModel = context.viewModel<StatsViewModel>();
     final account = viewModel.accountController.value;
-    final balance = viewModel.activeAccountBalance;
-    final dates = viewModel.exclusiveDateRange;
-    final dateRangeDescription = (
-      dates.$1,
-      dates.$2.subtract(const Duration(days: 1))
-    ).transactionsDateRangeDescription;
-    final key = "stats_total_amount_"
-        "${balance?.totalAmount}_${balance?.totalCount}_$dateRangeDescription";
+    final balance = viewModel.balance;
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return AnimatedSwitcher(
-          duration: Durations.short3,
-          child: ConstrainedBox(
-            key: Key(key),
-            constraints: constraints,
-            child: SeparatedComponent.list(
-              separatorBuilder: (context, index) => const SizedBox(height: 6.0),
-              children: [
-                // -> amount
-                FittedBox(
-                  child: Text(
-                    _getAmount(account, balance, viewModel.isCentsVisible),
-                    style: GoogleFonts.golosText(
-                      fontSize: 28.0,
-                      height: 1.0,
-                      fontWeight: FontWeight.w500,
-                      color: theme.colorScheme.onSurface,
+        return ConstrainedBox(
+          constraints: constraints,
+          child: SeparatedComponent.list(
+            separatorBuilder: (context, index) => const SizedBox(height: 6.0),
+            children: [
+              // -> amount
+              AnimatedSwitcher(
+                duration: Durations.short3,
+                child: Row(
+                  key: Key((balance?.totalAmount).toString()),
+                  children: [
+                    FittedBox(
+                      child: AnimatedSwitcher(
+                        duration: Durations.short3,
+                        child: Text(
+                          _getAmount(
+                            account,
+                            balance,
+                            viewModel.isCentsVisible,
+                          ),
+                          style: GoogleFonts.golosText(
+                            fontSize: 28.0,
+                            height: 1.0,
+                            fontWeight: FontWeight.w500,
+                            color: theme.colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
+              ),
 
-                // -> count and date range
-                if (balance != null)
-                  Text(
-                    "$dateRangeDescription • ${_getCount(balance.totalCount)}",
+              // -> count
+              AnimatedSwitcher(
+                duration: Durations.short3,
+                child: SizedBox(
+                  key: Key((balance?.totalCount).toString()),
+                  width: double.infinity,
+                  child: Text(
+                    _getCount(balance?.totalCount ?? 0),
                     style: GoogleFonts.golosText(
                       fontSize: 14.0,
                       height: 1.0,
@@ -81,8 +90,9 @@ class StatsTotalAmountComponent extends StatelessWidget {
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
         );
       },

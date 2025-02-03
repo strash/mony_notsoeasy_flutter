@@ -34,7 +34,7 @@ final class OnTransactionTypeSelected
 
     viewModel.setProtectedState(() {
       viewModel.activeTransactionType = value;
-      viewModel.activeAccountBalance = balance;
+      viewModel.balance = balance;
       viewModel.transactions = transactions;
     });
 
