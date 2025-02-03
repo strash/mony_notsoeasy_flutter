@@ -65,7 +65,7 @@ class StatsView extends StatelessWidget {
 
           // -> transaction type selector
           SliverPadding(
-            padding: const EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
+            padding: const EdgeInsets.only(left: 15.0, top: 15.0, right: 15.0),
             sliver: SliverToBoxAdapter(
               child: SeparatedComponent.builder(
                 direction: Axis.horizontal,
@@ -84,7 +84,7 @@ class StatsView extends StatelessWidget {
 
           // -> chart
           const SliverPadding(
-            padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
+            padding: EdgeInsets.only(left: 15.0, top: 15.0, right: 15.0),
             sliver: SliverToBoxAdapter(
               child: StatsChartComponent(),
             ),

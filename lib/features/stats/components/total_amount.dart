@@ -39,39 +39,34 @@ class StatsTotalAmountComponent extends StatelessWidget {
     final viewModel = context.viewModel<StatsViewModel>();
     final account = viewModel.accountController.value;
     final balance = viewModel.balance;
+    final amount = _getAmount(account, balance, viewModel.isCentsVisible);
+    final count = _getCount(balance?.totalCount ?? 0);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         return ConstrainedBox(
           constraints: constraints,
           child: SeparatedComponent.list(
+            crossAxisAlignment: CrossAxisAlignment.center,
             separatorBuilder: (context, index) => const SizedBox(height: 6.0),
             children: [
               // -> amount
               AnimatedSwitcher(
                 duration: Durations.short3,
-                child: Row(
-                  key: Key((balance?.totalAmount).toString()),
-                  children: [
-                    FittedBox(
-                      child: AnimatedSwitcher(
-                        duration: Durations.short3,
-                        child: Text(
-                          _getAmount(
-                            account,
-                            balance,
-                            viewModel.isCentsVisible,
-                          ),
-                          style: GoogleFonts.golosText(
-                            fontSize: 28.0,
-                            height: 1.0,
-                            fontWeight: FontWeight.w500,
-                            color: theme.colorScheme.onSurface,
-                          ),
-                        ),
+                child: FittedBox(
+                  key: Key("stats_total_amount_$amount"),
+                  child: AnimatedSwitcher(
+                    duration: Durations.short3,
+                    child: Text(
+                      amount,
+                      style: GoogleFonts.golosText(
+                        fontSize: 28.0,
+                        height: 1.0,
+                        fontWeight: FontWeight.w500,
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
 
@@ -79,10 +74,11 @@ class StatsTotalAmountComponent extends StatelessWidget {
               AnimatedSwitcher(
                 duration: Durations.short3,
                 child: SizedBox(
-                  key: Key((balance?.totalCount).toString()),
+                  key: Key("stats_total_amount_$count"),
                   width: double.infinity,
                   child: Text(
-                    _getCount(balance?.totalCount ?? 0),
+                    count,
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.golosText(
                       fontSize: 14.0,
                       height: 1.0,
