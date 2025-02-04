@@ -20,13 +20,13 @@ class StatsCategoriesChartComponent extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: SizedBox.fromSize(
-        size: const Size.fromHeight(18.0),
+        size: const Size.fromHeight(8.0),
         child: CustomPaint(
           size: Size.infinite,
           painter: _Painter(
             minWidth: 4.0,
-            padding: 2.5,
-            radius: 4.0,
+            padding: 3.0,
+            radius: 3.0,
             totalCount: totalCount,
             data: data,
           ),

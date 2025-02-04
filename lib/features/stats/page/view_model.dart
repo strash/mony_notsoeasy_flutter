@@ -93,8 +93,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
 
   void _onAppEvent(Event event) {
     if (!mounted) return;
-    // TODO: handle app states
-    // OnAppStateChanged().call(context, (event: event, viewModel: this));
+    OnAppStateChanged().call(context, (event: event, viewModel: this));
   }
 
   void _onDateChanged() {

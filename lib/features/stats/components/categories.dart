@@ -25,14 +25,16 @@ class StatsCategoriesComponent extends StatelessWidget {
     final chartData = categories.map((e) {
       return (
         e.$1,
-        ex != null ? ex.from(e.$2.colorName).color : theme.colorScheme.tertiary,
+        ex != null && viewModel.isColorsVisible
+            ? ex.from(e.$2.colorName).color
+            : theme.colorScheme.tertiary,
       );
     });
 
     return SeparatedComponent.list(
       mainAxisSize: MainAxisSize.min,
       separatorBuilder: (context, index) {
-        return const SizedBox(height: 15.0);
+        return const SizedBox(height: 10.0);
       },
       children: [
         // -> chart

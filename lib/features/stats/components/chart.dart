@@ -65,7 +65,6 @@ class StatsChartComponent extends StatelessWidget {
                 ),
                 groupColor: (group) {
                   final category = group as CategoryModel?;
-                  // TODO: проверить переключение цвета в настроках
                   if (!viewModel.isColorsVisible ||
                       category == null ||
                       ex == null) {
@@ -93,7 +92,6 @@ class StatsChartComponent extends StatelessWidget {
                     "Expense",
                     value: e.amount.abs(),
                   ),
-                  // TODO: проверить переключение цвета в настроках
                   groupBy: viewModel.isColorsVisible ? e.category : null,
                 );
               }).toList(growable: false),

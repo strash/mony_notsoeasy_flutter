@@ -178,7 +178,7 @@ OFFSET $offset;
 
       final maps = await db.rawQuery(
         """
-SELECT * FROM $table AS tr
+SELECT tr.* FROM $table AS tr
 LEFT JOIN categories AS c ON tr.category_id = c.id
 WHERE tr.date BETWEEN ? AND ? $where
 ORDER BY tr.date DESC;
