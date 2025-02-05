@@ -9,7 +9,6 @@ import "package:mony_app/domain/domain.dart";
 import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
-// TODO: добавить отзывы
 // TODO: добавить вибрации тут и там при тапе
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +27,10 @@ void main() async {
   final transactionRepo = TransactionDatabaseRepository(database: appDatabase);
   final transactionTagRepo =
       TransactionTagDatabaseRepository(database: appDatabase);
+
+  final sharedPrefRepo = SharedPreferencesLocalStorageRepository(
+    preferences: SharedPreferencesAsync(),
+  );
 
   runApp(
     AppEventServiceBuilder(
@@ -51,10 +54,16 @@ void main() async {
           Provider<DomainSharedPreferencesService>(
             create: (context) {
               return DomainSharedPreferencesService(
-                sharedPrefencesRepository:
-                    SharedPreferencesLocalStorageRepository(
-                  preferences: SharedPreferencesAsync(),
-                ),
+                sharedPrefencesRepository: sharedPrefRepo,
+              );
+            },
+          ),
+
+          // -> app review service
+          Provider<AppReviewService>(
+            create: (context) {
+              return AppReviewService(
+                sharedPreferencesRepository: sharedPrefRepo,
               );
             },
           ),

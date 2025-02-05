@@ -100,7 +100,7 @@ final class ChartComponent extends StatelessWidget {
         switch (temporalView) {
           case EChartTemporalView.year:
             if (locale.languageCode == "ru") {
-              listItem["xLegend"] = format.substring(0, 1);
+              listItem["xLegend"] = format.substring(0, 3);
             }
           case EChartTemporalView.month:
             if (index % 5 != 0 && index != 0 && index + 1 < list.length) {

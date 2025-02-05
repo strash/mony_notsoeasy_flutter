@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/navbar/page/view.dart";
@@ -6,6 +7,7 @@ import "package:mony_app/features/settings/components/components.dart";
 import "package:mony_app/features/settings/page/view_model.dart";
 import "package:mony_app/features/settings/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:provider/provider.dart";
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -35,6 +37,8 @@ class SettingsView extends StatelessWidget {
     final onExportDataPressed = viewModel<OnExportDataPressed>();
     final onDeleteDataPressed = viewModel<OnDeleteDataPressed>();
 
+    final _reviewService = context.read<AppReviewService>();
+
     return Scaffold(
       body: CustomScrollView(
         controller: viewModel.scrollController,
@@ -62,6 +66,11 @@ class SettingsView extends StatelessWidget {
                   footer:
                       const Text("Влияет на счета, категории и транзакции."),
                   children: [
+                    // TODO: request a review
+                    SettingsEntryComponent(
+                      onTap: () => _reviewService.requestReview(),
+                      title: const Text("Request a review"),
+                    ),
                     // -> theme mode
                     SettingsEntryComponent(
                       onTap: () => onThemeModePressed(context),
