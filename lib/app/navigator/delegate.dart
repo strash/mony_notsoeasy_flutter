@@ -30,13 +30,13 @@ final class NavigatorDelegate extends RouterDelegate<Object>
     return StreamBuilder<Event>(
       stream: _eventService.stream.where((event) {
         switch (event) {
-          case EventAccountDeleted() ||
+          case EventAccountCreated() ||
+                EventAccountDeleted() ||
                 EventSettingsDataDeletionRequested() ||
                 EventDataImported():
             return true;
 
-          case EventAccountCreated() ||
-                EventAccountUpdated() ||
+          case EventAccountUpdated() ||
                 EventCategoryCreated() ||
                 EventCategoryUpdated() ||
                 EventCategoryDeleted() ||
