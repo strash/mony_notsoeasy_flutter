@@ -71,7 +71,8 @@ final class _CategoryViewState extends State<_CategoryView> {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final categories = config.emojiSet?.call(config.locale);
+          final locale = Localizations.localeOf(context);
+          final categories = config.emojiSet?.call(locale);
           final count = categories?.length ?? 1;
           final iconSize = constraints.maxWidth / max(count, 1);
           final svgSize = iconSize * 0.65;

@@ -29,20 +29,20 @@ class _TransactionFormBottomSheetCalendarComponentState
 
   String _monthDescription = "";
 
-  void _setDescription() {
+  void _setDescription(String locale) {
     if (mounted) {
       final now = DateTime.now();
       final formatter = _visibleMonth.year == now.year
-          ? DateFormat("MMMM")
-          : DateFormat("MMMM y");
+          ? DateFormat("MMMM", locale)
+          : DateFormat("MMMM y", locale);
       setState(() => _monthDescription = formatter.format(_visibleMonth));
     }
   }
 
-  void _onMonthChanged(DateTime newValue) {
+  void _onMonthChanged(String locale, DateTime newValue) {
     if (mounted) {
       setState(() => _visibleMonth = newValue);
-      _setDescription();
+      _setDescription(locale);
     }
   }
 
@@ -51,7 +51,6 @@ class _TransactionFormBottomSheetCalendarComponentState
     super.initState();
     if (mounted) {
       setState(() => _visibleMonth = widget.dateController.visibleMonth);
-      _setDescription();
     }
   }
 
@@ -62,8 +61,11 @@ class _TransactionFormBottomSheetCalendarComponentState
     const padding = EdgeInsets.symmetric(horizontal: 10.0);
     final itemWidth =
         (viewSize.width - padding.horizontal) / DateTime.daysPerWeek;
+
+    final locale = Localizations.localeOf(context);
     final isSameMonth =
         _visibleMonth.isSameDateAs(DateTime.now().firstDayOfMonth());
+    _setDescription(locale.languageCode);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -132,7 +134,9 @@ class _TransactionFormBottomSheetCalendarComponentState
           padding: padding,
           itemHeight: itemWidth,
           childDelegate: const CalendarChildDelegate(),
-          onMonthChanged: _onMonthChanged,
+          onMonthChanged: (value) {
+            _onMonthChanged(locale.languageCode, value);
+          },
         ),
 
         // -> offset

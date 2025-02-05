@@ -13,8 +13,8 @@ final class TimeController extends ChangeNotifier {
 
   TimeController(DateTime value) : _value = value;
 
-  String get formattedValue {
-    final formatter = DateFormat("HH:mm");
+  String formattedValue(String locale) {
+    final formatter = DateFormat("HH:mm", locale);
     return formatter.format(value);
   }
 

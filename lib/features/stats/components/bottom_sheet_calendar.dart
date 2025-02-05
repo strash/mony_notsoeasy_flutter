@@ -25,20 +25,20 @@ class _StatsBottomSheetCalendarComponentState
 
   String _monthDescription = "";
 
-  void _setDescription() {
+  void _setDescription(String locale) {
     if (mounted) {
       final now = DateTime.now();
       final formatter = _visibleMonth.year == now.year
-          ? DateFormat("MMMM")
-          : DateFormat("MMMM y");
+          ? DateFormat("MMMM", locale)
+          : DateFormat("MMMM y", locale);
       setState(() => _monthDescription = formatter.format(_visibleMonth));
     }
   }
 
-  void _onMonthChanged(DateTime newValue) {
+  void _onMonthChanged(String locale, DateTime newValue) {
     if (mounted) {
       setState(() => _visibleMonth = newValue);
-      _setDescription();
+      _setDescription(locale);
     }
   }
 
@@ -47,7 +47,6 @@ class _StatsBottomSheetCalendarComponentState
     super.initState();
     if (mounted) {
       setState(() => _visibleMonth = widget.dateController.visibleMonth);
-      _setDescription();
     }
   }
 
@@ -59,8 +58,10 @@ class _StatsBottomSheetCalendarComponentState
     final itemWidth =
         (viewSize.width - padding.horizontal) / DateTime.daysPerWeek;
 
+    final locale = Localizations.localeOf(context);
     final isSameMonth =
         _visibleMonth.isSameDateAs(DateTime.now().firstDayOfMonth());
+    _setDescription(locale.languageCode);
 
     // TODO: добавить селектор месяца и года
     return Column(
@@ -127,7 +128,9 @@ class _StatsBottomSheetCalendarComponentState
           padding: padding,
           itemHeight: itemWidth,
           childDelegate: const CalendarChildDelegate(),
-          onMonthChanged: _onMonthChanged,
+          onMonthChanged: (value) {
+            _onMonthChanged(locale.languageCode, value);
+          },
         ),
 
         // -> offset

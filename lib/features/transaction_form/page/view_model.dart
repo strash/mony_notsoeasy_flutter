@@ -83,16 +83,20 @@ final class TransactionFormViewModel
   List<TransactionTagVariant> attachedTags = const [];
 
   bool isKeyboardHintAccepted = false;
+  String decimalSeparator = ".";
 
   final RegExp regEx = RegExp(r"\d*?[.,]\d{2}$");
   List<List<TransactionFormButtonType>> get buttons {
     return List<List<TransactionFormButtonType>>.generate(3, (rowIndex) {
       return List<TransactionFormButtonType>.generate(3, (colIndex) {
+        final value = (colIndex + 1 + rowIndex * 3).toString();
+
         return TransactionFormButtonTypeSymbol(
-          value: (colIndex + 1 + rowIndex * 3).toString(),
+          value: value,
+          displayedValue: value,
           color: Theme.of(context).colorScheme.surfaceContainer,
-          isEnabled: (value) {
-            final trim = value.trim();
+          isEnabled: (newValue) {
+            final trim = newValue.trim();
             return !regEx.hasMatch(trim) && trim.length != kMaxAmountLength;
           },
         );
@@ -101,6 +105,7 @@ final class TransactionFormViewModel
       ..add([
         TransactionFormButtonTypeSymbol(
           value: ".",
+          displayedValue: decimalSeparator,
           color: Theme.of(context).colorScheme.surfaceContainer,
           isEnabled: (value) {
             final trim = value.trim();
@@ -109,6 +114,7 @@ final class TransactionFormViewModel
         ),
         TransactionFormButtonTypeSymbol(
           value: "0",
+          displayedValue: "0",
           color: Theme.of(context).colorScheme.surfaceContainer,
           isEnabled: (value) {
             final trim = value.trim();
@@ -135,7 +141,8 @@ final class TransactionFormViewModel
   }
 
   String get dateTimeDescription {
-    final formatter = DateFormat("d MMM yyyy, HH:mm");
+    final locale = Localizations.localeOf(context);
+    final formatter = DateFormat("d MMM yyyy, HH:mm", locale.languageCode);
     final date = DateTime(
       dateController.value!.year,
       dateController.value!.month,
@@ -147,16 +154,16 @@ final class TransactionFormViewModel
     return formatter.format(date);
   }
 
-  String get amountDescription {
-    final formatter = NumberFormat.decimalPattern();
+  String amountDescription(String locale) {
+    final formatter = NumberFormat.decimalPattern(locale);
     final parsedValue = double.parse(amountNotifier.value);
     final formattedValue = formatter.format(parsedValue);
     if (amountNotifier.value.endsWith(".")) {
-      return "$formattedValue.";
+      return "$formattedValue$decimalSeparator";
     } else if (amountNotifier.value.endsWith(".0")) {
-      return "$formattedValue.0";
+      return "$formattedValue${decimalSeparator}0";
     } else if (amountNotifier.value.endsWith(".00")) {
-      return "$formattedValue.00";
+      return "$formattedValue${decimalSeparator}00";
     } else {
       return formattedValue;
     }
@@ -165,12 +172,18 @@ final class TransactionFormViewModel
   @override
   void initState() {
     super.initState();
+
     final amount = transaction?.amount.abs() ?? .0;
     final hasFraction = amount.hasFraction;
     amountNotifier = ValueNotifier<String>(
       (hasFraction ? amount.roundToFraction(2) : amount.toInt()).toString(),
     );
+
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      final locale = Localizations.localeOf(context);
+      final formatter = NumberFormat.decimalPattern(locale.languageCode);
+      decimalSeparator = formatter.symbols.DECIMAL_SEP;
+
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
       final hint =
           await sharedPrefService.isNewTransactionKeyboardHintAccepted();

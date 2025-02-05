@@ -20,11 +20,13 @@ class AccountTotalAmountComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final locale = Localizations.localeOf(context);
     final dateRange = (
       balance.firstTransactionDate,
       balance.lastTransactionDate
-    ).transactionsDateRangeDescription;
-    final formatter = NumberFormat();
+    ).transactionsDateRangeDescription(locale.languageCode);
+    final formatter = NumberFormat.decimalPattern(locale.languageCode);
 
     return SeparatedComponent.list(
       separatorBuilder: (context, index) => const SizedBox(height: 15.0),
@@ -94,6 +96,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
                         ETransactionType.income => balance.incomeAmount,
                       }
                           .currency(
+                        locale: locale.languageCode,
                         name: balance.currency.name,
                         symbol: balance.currency.symbol,
                         showDecimal: showDecimal,
@@ -117,8 +120,11 @@ class AccountTotalAmountComponent extends StatelessWidget {
           children: [
             // -> transactions count
             Text(
-              "${balance.totalCount.transactionsCountDescription}\n"
+              "${balance.totalCount.transactionsCountDescription(
+                locale.languageCode,
+              )}\n"
               "с общей стоимостью ${balance.totalAmount.currency(
+                locale: locale.languageCode,
                 name: balance.currency.name,
                 symbol: balance.currency.symbol,
                 showDecimal: showDecimal,

@@ -27,6 +27,8 @@ class FeedItemComponent extends StatelessWidget {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
 
+    final locale = Localizations.localeOf(context);
+
     final categoryColor = ex?.from(transaction.category.colorName).color ??
         theme.colorScheme.surfaceContainer;
     final color = Color.lerp(categoryColor, const Color(0xFFFFFFFF), .3)!;
@@ -100,6 +102,7 @@ class FeedItemComponent extends StatelessWidget {
                   // -> amount
                   Text(
                     transaction.amount.currency(
+                      locale: locale.languageCode,
                       name: transaction.account.currency.name,
                       symbol: transaction.account.currency.symbol,
                       showDecimal: showDecimal,

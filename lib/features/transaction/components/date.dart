@@ -14,10 +14,12 @@ class TransactionDateComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final now = DateTime.now();
+    final locale = Localizations.localeOf(context);
     final dateFormatter = DateFormat(
       now.year != date.year
           ? "EEE, dd MMMM yyyy, HH:mm"
           : "EEE, dd MMMM, HH:mm",
+      locale.languageCode,
     );
     final formattedDate = dateFormatter.format(date);
 

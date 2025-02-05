@@ -21,12 +21,14 @@ class ImportMapAccountsComponent extends StatelessWidget {
     final viewModel = context.viewModel<ImportViewModel>();
     final onAccountPressed = viewModel<OnAccountButtonPressed>();
     final accountModel = viewModel.currentStep;
+    final locale = Localizations.localeOf(context);
     if (accountModel is! ImportModelAccount) return const SizedBox();
     String description =
         "Нужно создать счет. К нему будут привязаны все транзакции. "
         "Позже можно будет создать другие счета.";
     if (accountModel.isFromData) {
-      description = "Я нашел ${accountModel.numberOfAccountsDescription}. "
+      description = "Я нашел "
+          "${accountModel.numberOfAccountsDescription(locale.languageCode)}. "
           "${accountModel.accounts.length == 1 ? "Его" : "Их"} "
           "нужно дополнить информацией. Это быстро.";
     }

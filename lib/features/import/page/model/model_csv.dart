@@ -11,9 +11,9 @@ final class ImportModelCsv extends ImportModel {
     return csv.entries.length;
   }
 
-  String get numberOfEntriesDescription {
+  String numberOfEntriesDescription(String locale) {
     final count = numberOfEntries;
-    final formatter = NumberFormat.decimalPattern();
+    final formatter = NumberFormat.decimalPattern(locale);
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {
       EWordCaseHint.nominative => "$formatted запись",

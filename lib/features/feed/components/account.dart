@@ -25,6 +25,8 @@ class FeedAccountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final locale = Localizations.localeOf(context);
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => onTap(context, page),
@@ -40,6 +42,7 @@ class FeedAccountComponent extends StatelessWidget {
                   (e) {
                     return FeedAccountAmountComponent(
                       amount: e.totalSum.currency(
+                        locale: locale.languageCode,
                         name: e.currency.name,
                         symbol: e.currency.symbol,
                         showDecimal: showDecimal,
@@ -51,6 +54,7 @@ class FeedAccountComponent extends StatelessWidget {
               ),
             final FeedPageStateSingleAccount page => FeedAccountAmountComponent(
                 amount: page.balance.totalSum.currency(
+                  locale: locale.languageCode,
                   name: page.balance.currency.name,
                   symbol: page.balance.currency.symbol,
                   showDecimal: showDecimal,

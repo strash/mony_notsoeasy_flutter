@@ -40,7 +40,11 @@ class StatsCategoriesLegendComponent extends StatelessWidget {
     const opaque = Color(0xFFFFFFFF);
     const transparent = Color(0x00FFFFFF);
 
-    final formatter = NumberFormat.decimalPatternDigits(decimalDigits: 2);
+    final locale = Localizations.localeOf(context);
+    final formatter = NumberFormat.decimalPatternDigits(
+      locale: locale.languageCode,
+      decimalDigits: 2,
+    );
 
     return ListenableBuilder(
       listenable: controller,
@@ -63,6 +67,7 @@ class StatsCategoriesLegendComponent extends StatelessWidget {
             final item = categories.elementAt(index);
             final value = account != null
                 ? item.$1.currency(
+                    locale: locale.languageCode,
                     name: account!.currency.name,
                     symbol: account!.currency.symbol,
                     showDecimal: isCentsVisible,

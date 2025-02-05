@@ -18,6 +18,8 @@ class AccountTotalSumComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final locale = Localizations.localeOf(context);
+
     return SeparatedComponent.list(
       separatorBuilder: (context, index) => const SizedBox(height: 10.0),
       children: [
@@ -34,6 +36,7 @@ class AccountTotalSumComponent extends StatelessWidget {
         // -> sum
         Text(
           balance.totalSum.currency(
+            locale: locale.languageCode,
             name: balance.currency.name,
             symbol: balance.currency.symbol,
             showDecimal: showDecimal,

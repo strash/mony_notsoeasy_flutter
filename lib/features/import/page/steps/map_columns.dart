@@ -18,13 +18,15 @@ class ImportMapColumnsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final locale = Localizations.localeOf(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final csvModel = viewModel.steps.whereType<ImportModelCsv>().firstOrNull;
     if (csvModel == null) throw ArgumentError.value(csvModel);
     final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
     final onInfoPressed = viewModel<OnColumnInfoPressed>();
     final numberOfEntries = csvModel.numberOfEntries;
-    final numberOfEntriesDescription = csvModel.numberOfEntriesDescription;
+    final numberOfEntriesDescription =
+        csvModel.numberOfEntriesDescription(locale.languageCode);
     final currentMappedColumn = viewModel.currentStep as ImportModelColumn;
     final count = numberOfEntries > 0 ? viewModel.currentEntryIndex + 1 : 0;
 

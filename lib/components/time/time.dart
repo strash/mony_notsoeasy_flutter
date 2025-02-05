@@ -53,6 +53,8 @@ class TimeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
+
     return PopupButtonComponent(
       showBackground: false,
       blurBackground: false,
@@ -62,7 +64,9 @@ class TimeComponent extends StatelessWidget {
           onTap: isOpened ? null : activate,
           child: Opacity(
             opacity: isOpened ? .0 : 1.0,
-            child: TimeProxyComponent(time: controller.formattedValue),
+            child: TimeProxyComponent(
+              time: controller.formattedValue(locale.languageCode),
+            ),
           ),
         );
       },
@@ -75,7 +79,9 @@ class TimeComponent extends StatelessWidget {
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: dismiss,
-                child: TimeProxyComponent(time: controller.formattedValue),
+                child: TimeProxyComponent(
+                  time: controller.formattedValue(locale.languageCode),
+                ),
               );
             },
           ),

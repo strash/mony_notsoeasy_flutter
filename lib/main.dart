@@ -9,6 +9,8 @@ import "package:mony_app/domain/domain.dart";
 import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
+// TODO: добавить отзывы
+// TODO: добавить вибрации тут и там при тапе
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

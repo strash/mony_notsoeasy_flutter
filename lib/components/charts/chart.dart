@@ -47,8 +47,7 @@ final class ChartComponent extends StatelessWidget {
         );
 
   List<Map<String, dynamic>> _prepareData(BuildContext context) {
-    final loc = MaterialLocalizations.of(context);
-
+    final locale = Localizations.localeOf(context);
     // map
     List<Map<String, dynamic>> list = [];
 
@@ -62,13 +61,13 @@ final class ChartComponent extends StatelessWidget {
         switch (temporalView) {
           case EChartTemporalView.year:
             dates = x.value.monthsOfYear();
-            formatter = intl.DateFormat("MMM");
+            formatter = intl.DateFormat("MMM", locale.languageCode);
           case EChartTemporalView.month:
             dates = x.value.daysOfMonth();
-            formatter = intl.DateFormat("d");
+            formatter = intl.DateFormat("d", locale.languageCode);
           case EChartTemporalView.week:
-            dates = x.value.daysOfWeek(loc);
-            formatter = intl.DateFormat("E");
+            dates = x.value.daysOfWeek(MaterialLocalizations.of(context));
+            formatter = intl.DateFormat("E", locale.languageCode);
         }
       }
       list = List.filled(dates.length, {});
@@ -96,10 +95,19 @@ final class ChartComponent extends StatelessWidget {
       // set legends
       for (final (index, date) in dates.indexed) {
         final listItem = list.elementAt(index);
-        listItem["xLegend"] = formatter.format(date);
-        if (temporalView == EChartTemporalView.month &&
-            (index % 5 != 0 && index != 0 && index + 1 < list.length)) {
-          listItem["xLegend"] = "";
+        final format = formatter.format(date);
+        listItem["xLegend"] = format;
+        switch (temporalView) {
+          case EChartTemporalView.year:
+            if (locale.languageCode == "ru") {
+              listItem["xLegend"] = format.substring(0, 1);
+            }
+          case EChartTemporalView.month:
+            if (index % 5 != 0 && index != 0 && index + 1 < list.length) {
+              listItem["xLegend"] = "";
+            }
+          case EChartTemporalView.week:
+            break;
         }
         list[index] = Map.from(listItem);
       }

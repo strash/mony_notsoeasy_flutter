@@ -62,9 +62,12 @@ class TypesTableComponent extends StatelessWidget {
     return padding;
   }
 
-  String _getFormattedValue(MapEntry<ImportModelColumn, String> entry) {
-    final dateFormatter = DateFormat("dd-MM-yyyy");
-    final amountFormatter = NumberFormat.compact();
+  String _getFormattedValue(
+    String locale,
+    MapEntry<ImportModelColumn, String> entry,
+  ) {
+    final dateFormatter = DateFormat("dd-MM-yyyy", locale);
+    final amountFormatter = NumberFormat.compact(locale: locale);
     final String value;
     if (entry.key.column == EImportColumn.date) {
       value = dateFormatter.format(DateTime.parse(entry.value));
@@ -83,6 +86,8 @@ class TypesTableComponent extends StatelessWidget {
         .take(5)
         .map(_getFilteredEntries)
         .toList(growable: false);
+
+    final locale = Localizations.localeOf(context);
 
     return Table(
       columnWidths: _getColumnWidths(filteredMappedEntries.first),
@@ -129,7 +134,7 @@ class TypesTableComponent extends StatelessWidget {
                 child: Padding(
                   padding: _getPadding(r.$1, e.length),
                   child: Text(
-                    _getFormattedValue(r.$2),
+                    _getFormattedValue(locale.languageCode, r.$2),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: r.$2.key.column == EImportColumn.amount

@@ -7,9 +7,11 @@ extension DoubleEx on double {
   String currency({
     required String name,
     required String? symbol,
+    required String locale,
     bool showDecimal = true,
   }) {
     final formatter = NumberFormat.currency(
+      locale: locale,
       name: name,
       symbol: symbol,
       decimalDigits: showDecimal ? 2 : 0,

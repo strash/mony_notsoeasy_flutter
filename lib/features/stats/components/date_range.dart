@@ -14,6 +14,8 @@ class StatsDateRangeComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final locale = Localizations.localeOf(context);
+
     final viewModel = context.viewModel<StatsViewModel>();
     final onDatePressed = viewModel<OnDatePressed>();
 
@@ -43,7 +45,7 @@ class StatsDateRangeComponent extends StatelessWidget {
                     final dateRangeDescription = (
                       dates.$1,
                       dates.$2.subtract(const Duration(days: 1))
-                    ).transactionsDateRangeDescription;
+                    ).transactionsDateRangeDescription(locale.languageCode);
 
                     return AnimatedSwitcher(
                       duration: Durations.short3,

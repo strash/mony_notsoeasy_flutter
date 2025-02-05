@@ -17,10 +17,13 @@ class TransactionAmountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final locale = Localizations.localeOf(context);
+
     return Center(
       child: FittedBox(
         child: Text(
           transaction.amount.currency(
+            locale: locale.languageCode,
             name: transaction.account.currency.name,
             symbol: transaction.account.currency.symbol,
             showDecimal: showDecimal,

@@ -34,10 +34,10 @@ final class ImportModelCategory extends ImportModel {
     };
   }
 
-  String get numberOfCategoriesDescription {
+  String numberOfCategoriesDescription(String locale) {
     final count = mappedCategories.value.entries
         .fold<int>(0, (prev, curr) => prev + curr.value.length);
-    final formatter = NumberFormat.decimalPattern();
+    final formatter = NumberFormat.decimalPattern(locale);
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {
       EWordCaseHint.nominative => "$formatted категория",

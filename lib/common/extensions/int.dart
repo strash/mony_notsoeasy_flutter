@@ -12,8 +12,8 @@ enum EWordCaseHint {
 }
 
 extension IntEx on int {
-  String get transactionsCountDescription {
-    final formatter = NumberFormat.decimalPattern();
+  String transactionsCountDescription(String locale) {
+    final formatter = NumberFormat.decimalPattern(locale);
     final formattedCount = formatter.format(this);
 
     return switch (wordCaseHint) {

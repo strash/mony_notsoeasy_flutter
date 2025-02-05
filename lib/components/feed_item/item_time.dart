@@ -15,10 +15,12 @@ class FeedItemTimeComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
+    final locale = Localizations.localeOf(context);
     final formatter = DateFormat(
       showFullDate
           ? (now.year != date.year ? "HH:mm, dd MMM yyyy" : "HH:mm, dd MMM")
           : "HH:mm",
+      locale.languageCode,
     );
 
     return Text(

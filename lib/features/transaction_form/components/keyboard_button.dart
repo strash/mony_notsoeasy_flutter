@@ -90,7 +90,7 @@ class _TransactionFormSymbolButtonComponentState
                     curve: Curves.easeInOut,
                     child: switch (widget.button) {
                       final TransactionFormButtonTypeSymbol button => Text(
-                          button.value,
+                          button.displayedValue,
                           style: GoogleFonts.golosText(
                             fontSize: 34.0,
                             fontWeight: FontWeight.w500,

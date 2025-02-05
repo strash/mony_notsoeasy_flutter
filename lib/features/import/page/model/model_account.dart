@@ -7,9 +7,9 @@ final class ImportModelAccount extends ImportModel {
     return accounts.every((e) => e.originalTitle != null);
   }
 
-  String get numberOfAccountsDescription {
+  String numberOfAccountsDescription(String locale) {
     final count = accounts.length;
-    final formatter = NumberFormat.decimalPattern();
+    final formatter = NumberFormat.decimalPattern(locale);
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {
       EWordCaseHint.nominative => "$formatted счет",

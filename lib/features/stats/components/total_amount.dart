@@ -9,8 +9,8 @@ import "package:mony_app/features/stats/page/view_model.dart";
 class StatsTotalAmountComponent extends StatelessWidget {
   const StatsTotalAmountComponent({super.key});
 
-  String _getCount(int count) {
-    final formatter = NumberFormat();
+  String _getCount(String locale, int count) {
+    final formatter = NumberFormat.decimalPattern(locale);
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {
       EWordCaseHint.nominative => "$formatted транзакция",
@@ -20,12 +20,14 @@ class StatsTotalAmountComponent extends StatelessWidget {
   }
 
   String _getAmount(
+    String locale,
     AccountModel? account,
     AccountBalanceModel? balance,
     bool showDecimal,
   ) {
     if (account == null || balance == null) return "0";
     return balance.totalAmount.currency(
+      locale: locale,
       name: account.currency.name,
       symbol: account.currency.symbol,
       showDecimal: showDecimal,
@@ -36,11 +38,18 @@ class StatsTotalAmountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final locale = Localizations.localeOf(context);
+
     final viewModel = context.viewModel<StatsViewModel>();
     final account = viewModel.accountController.value;
     final balance = viewModel.balance;
-    final amount = _getAmount(account, balance, viewModel.isCentsVisible);
-    final count = _getCount(balance?.totalCount ?? 0);
+    final amount = _getAmount(
+      locale.languageCode,
+      account,
+      balance,
+      viewModel.isCentsVisible,
+    );
+    final count = _getCount(locale.languageCode, balance?.totalCount ?? 0);
 
     return LayoutBuilder(
       builder: (context, constraints) {

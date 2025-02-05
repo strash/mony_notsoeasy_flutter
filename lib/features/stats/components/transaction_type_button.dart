@@ -18,9 +18,9 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
     required this.type,
   });
 
-  String _getCount(AccountBalanceModel? balance) {
+  String _getCount(String locale, AccountBalanceModel? balance) {
     if (balance == null) return "0";
-    return NumberFormat().format(
+    return NumberFormat.decimalPattern(locale).format(
       switch (type) {
         ETransactionType.expense => balance.expenseCount,
         ETransactionType.income => balance.incomeCount,
@@ -29,6 +29,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
   }
 
   String _getAmount(
+    String locale,
     AccountModel? account,
     AccountBalanceModel? balance,
     bool showDecimal,
@@ -39,6 +40,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
       ETransactionType.income => balance.incomeAmount,
     }
         .currency(
+      locale: locale,
       name: account.currency.name,
       symbol: account.currency.symbol,
       showDecimal: showDecimal,
@@ -49,12 +51,20 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final locale = Localizations.localeOf(context);
+
     final viewModel = context.viewModel<StatsViewModel>();
     final account = viewModel.accountController.value;
     final balance = viewModel.balance;
     final isActive = viewModel.activeTransactionType == type;
-    final key = "stats_transaction_type_buttons_${_getCount(balance)}_"
-        "${_getAmount(account, balance, viewModel.isCentsVisible)}";
+    final amount = _getAmount(
+      locale.languageCode,
+      account,
+      balance,
+      viewModel.isCentsVisible,
+    );
+    final count = _getCount(locale.languageCode, balance);
+    final key = "stats_transaction_type_buttons_${count}_$amount";
 
     final onTypeSelected = viewModel<OnTransactionTypeSelected>();
 
@@ -105,7 +115,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
 
                       // -> type description and count
                       Text(
-                        "${type.description} (${_getCount(balance)})",
+                        "${type.description} ($count)",
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
                           height: 1.0,
@@ -119,7 +129,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                   // -> total amount
                   FittedBox(
                     child: Text(
-                      _getAmount(account, balance, viewModel.isCentsVisible),
+                      amount,
                       style: GoogleFonts.golosText(
                         fontSize: 18.0,
                         height: 1.0,

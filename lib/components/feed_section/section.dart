@@ -19,9 +19,12 @@ class FeedSectionComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     final now = DateTime.now();
+    final locale = Localizations.localeOf(context);
     final dateFormatter = DateFormat(
       now.year != section.date.year ? "EEE, dd MMMM yyyy" : "EEE, dd MMMM",
+      locale.languageCode,
     );
     final formattedDate = dateFormatter.format(section.date);
 
@@ -49,6 +52,7 @@ class FeedSectionComponent extends StatelessWidget {
             children: section.total.entries.map(
               (e) => Text(
                 e.value.currency(
+                  locale: locale.languageCode,
                   name: e.key.name,
                   symbol: e.key.symbol,
                   showDecimal: showDecimal,

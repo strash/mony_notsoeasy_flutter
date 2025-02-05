@@ -13,6 +13,7 @@ class TransactionFormAmountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<TransactionFormViewModel>();
+    final locale = Localizations.localeOf(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -62,7 +63,7 @@ class TransactionFormAmountComponent extends StatelessWidget {
                 listenable: viewModel.amountNotifier,
                 builder: (context, child) {
                   return Text(
-                    viewModel.amountDescription,
+                    viewModel.amountDescription(locale.languageCode),
                     style: GoogleFonts.golosText(
                       fontSize: 50.0,
                       color: theme.colorScheme.onSurface,

@@ -18,6 +18,8 @@ class TagTotalAmountComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final locale = Localizations.localeOf(context);
+
     return SeparatedComponent.list(
       separatorBuilder: (context, index) => const SizedBox(height: 10.0),
       children: [
@@ -41,6 +43,7 @@ class TagTotalAmountComponent extends StatelessWidget {
 
             return Text(
               totalAmount.currency(
+                locale: locale.languageCode,
                 name: currency.name,
                 symbol: currency.symbol,
                 showDecimal: showDecimal,
@@ -59,7 +62,8 @@ class TagTotalAmountComponent extends StatelessWidget {
           children: [
             // -> transactions count
             Text(
-              balance.transactionsCount.transactionsCountDescription,
+              balance.transactionsCount
+                  .transactionsCountDescription(locale.languageCode),
               style: GoogleFonts.golosText(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,
@@ -72,7 +76,7 @@ class TagTotalAmountComponent extends StatelessWidget {
               (
                 balance.firstTransactionDate,
                 balance.lastTransactionDate,
-              ).transactionsDateRangeDescription,
+              ).transactionsDateRangeDescription(locale.languageCode),
               style: GoogleFonts.golosText(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,

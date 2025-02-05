@@ -17,14 +17,9 @@ class StatsChartComponent extends StatelessWidget {
 
     final viewModel = context.viewModel<StatsViewModel>();
     final transactions = viewModel.transactions;
-    final account = viewModel.accountController.value;
-    final formatter = account != null
-        ? NumberFormat.compactCurrency(
-            name: account.currency.name,
-            symbol: account.currency.symbol,
-            decimalDigits: 0,
-          )
-        : NumberFormat.compact();
+
+    // NOTE: we don't want "1,23 тыс." instead "1.23K" so don't pass a locale
+    final formatter = NumberFormat.compact();
 
     return AspectRatio(
       aspectRatio: 1.5,

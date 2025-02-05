@@ -13,7 +13,10 @@ class AccountSettedItemComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-    final formatter = NumberFormat.compact();
+
+    final locale = Localizations.localeOf(context);
+    final formatter = NumberFormat.compact(locale: locale.languageCode);
+
     final color = ex?.from(EColorName.from(account.colorName)).color ??
         theme.colorScheme.onSurface;
 

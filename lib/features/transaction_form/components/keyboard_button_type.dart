@@ -9,11 +9,13 @@ sealed class TransactionFormButtonType {
 
 final class TransactionFormButtonTypeSymbol extends TransactionFormButtonType {
   final String value;
+  final String displayedValue;
 
   TransactionFormButtonTypeSymbol({
     required super.color,
     required super.isEnabled,
     required this.value,
+    required this.displayedValue,
   });
 }
 
