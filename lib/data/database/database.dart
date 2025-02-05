@@ -36,7 +36,11 @@ class AppDatabase {
 
   Future<Database> _openDb() async {
     String dbPath = await getDatabasesPath();
-    if (kDebugMode) {
+    const isDbOnDevice = bool.fromEnvironment(
+      "DEV_DB_ON_DEVICE",
+      defaultValue: true,
+    );
+    if (kDebugMode && !isDbOnDevice) {
       const pathToLocalDB = String.fromEnvironment("DEV_PATH_TO_LOCAL_DB");
       if (pathToLocalDB.isNotEmpty) {
         final dir = Directory(pathToLocalDB);
