@@ -1,5 +1,7 @@
 import "package:file_picker/file_picker.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:flutter_rustore_review/flutter_rustore_review.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
@@ -14,6 +16,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   GoogleFonts.config.allowRuntimeFetching = false;
+  if (appFlavor == "prod_rustore_flavor") {
+    await RustoreReviewClient.initialize();
+  }
 
   final appDatabase = AppDatabase.instance();
   await appDatabase.db;

@@ -1,16 +1,16 @@
 import "package:flutter/foundation.dart";
 import "package:flutter/services.dart";
+import "package:flutter_rustore_review/flutter_rustore_review.dart";
 import "package:mony_app/data/local_storage/local_storage.dart";
 
 final class AppReviewService {
   final _channelName = "strash.mony/review";
   final _methodName = "requestReview";
   final _sharedAttemptsCountKey = "app_review.attempts_to_call_count";
-  final _sharedVersionKey = "app_review.version_with_last_call";
 
-  final _requestThreshold = 10;
+  final _requestThreshold = 3;
 
-  final String _appVersion;
+  final String? _appFlavor;
 
   final SharedPreferencesLocalStorageRepository _sharedPrefRepo;
 
@@ -18,41 +18,52 @@ final class AppReviewService {
     required SharedPreferencesLocalStorageRepository
         sharedPreferencesRepository,
   })  : _sharedPrefRepo = sharedPreferencesRepository,
-        _appVersion = "${const String.fromEnvironment(
-          "BUILD_NAME",
-          defaultValue: "1.0.0",
-        )}_"
-            "${const String.fromEnvironment(
-          "BUILD_NUMBER",
-          defaultValue: "0",
-        )}";
+        _appFlavor = appFlavor;
 
   Future<bool> _canRequestReview() async {
     final count = await _sharedPrefRepo.getInt(_sharedAttemptsCountKey);
-    final version = await _sharedPrefRepo.getString(_sharedVersionKey);
-    if (count == null || version == null) {
-      await _sharedPrefRepo.setInt(_sharedAttemptsCountKey, 0);
-      await _sharedPrefRepo.setString(_sharedVersionKey, _appVersion);
+    if (count == null) {
+      await _sharedPrefRepo.setInt(_sharedAttemptsCountKey, 1);
       return false;
     }
-    final canRequestReview =
-        count >= _requestThreshold && version != _appVersion;
+    final canRequest = count >= _requestThreshold;
     await _sharedPrefRepo.setInt(
       _sharedAttemptsCountKey,
-      canRequestReview ? 0 : count + 1,
+      canRequest ? 0 : count + 1,
     );
-    await _sharedPrefRepo.setString(_sharedVersionKey, _appVersion);
-    return canRequestReview;
+    return canRequest;
   }
 
   Future<void> requestReview() async {
-    final channel = MethodChannel(_channelName);
-    try {
-      final res = await channel.invokeMethod<String>(_methodName);
-      print(res);
-    } on PlatformException catch (e) {
-      if (kDebugMode) print(e.message);
-      rethrow;
+    final canRequestReview = await _canRequestReview();
+    if (!canRequestReview) return;
+    await Future.delayed(const Duration(seconds: 1));
+    await _makeRequest();
+  }
+
+  Future<void> requestImmediateReview() async {
+    await _makeRequest();
+  }
+
+  Future<void> _makeRequest() async {
+    if (_appFlavor == "prod_rustore_flavor") {
+      RustoreReviewClient.request().then((value) {
+        RustoreReviewClient.review().then(
+          (value) {
+            if (kDebugMode) print("success review");
+          },
+          onError: (err) {
+            if (kDebugMode) print("onError: $err");
+          },
+        );
+      });
+    } else {
+      final channel = MethodChannel(_channelName);
+      try {
+        await channel.invokeMethod<String>(_methodName);
+      } catch (e) {
+        if (kDebugMode) print(e);
+      }
     }
   }
 }

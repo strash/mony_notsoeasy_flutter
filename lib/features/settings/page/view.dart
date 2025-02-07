@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/navbar/page/view.dart";
@@ -7,7 +6,6 @@ import "package:mony_app/features/settings/components/components.dart";
 import "package:mony_app/features/settings/page/view_model.dart";
 import "package:mony_app/features/settings/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
-import "package:provider/provider.dart";
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -35,9 +33,8 @@ class SettingsView extends StatelessWidget {
 
     final onImportDataPressed = viewModel<OnImportDataPressed>();
     final onExportDataPressed = viewModel<OnExportDataPressed>();
+    final onReviewPressed = viewModel<OnReviewPressed>();
     final onDeleteDataPressed = viewModel<OnDeleteDataPressed>();
-
-    final _reviewService = context.read<AppReviewService>();
 
     return Scaffold(
       body: CustomScrollView(
@@ -66,11 +63,6 @@ class SettingsView extends StatelessWidget {
                   footer:
                       const Text("Влияет на счета, категории и транзакции."),
                   children: [
-                    // TODO: request a review
-                    SettingsEntryComponent(
-                      onTap: () => _reviewService.requestReview(),
-                      title: const Text("Request a review"),
-                    ),
                     // -> theme mode
                     SettingsEntryComponent(
                       onTap: () => onThemeModePressed(context),
@@ -251,6 +243,20 @@ class SettingsView extends StatelessWidget {
                       title: const Text("Экспорт"),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon: Assets.icons.squareAndArrowUp,
+                        color: theme.colorScheme.tertiary,
+                      ),
+                    ),
+                  ],
+                ),
+
+                // -> request a review
+                SettingsGroupComponent(
+                  children: [
+                    SettingsEntryComponent(
+                      onTap: () => onReviewPressed(context),
+                      title: const Text("Оценить приложение"),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: Assets.icons.star,
                         color: theme.colorScheme.tertiary,
                       ),
                     ),
