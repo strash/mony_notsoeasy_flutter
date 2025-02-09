@@ -28,7 +28,7 @@ class NavBarButtonPlusComponent extends StatelessWidget {
               borderRadius: SmoothBorderRadius.all(
                 SmoothRadius(
                   cornerRadius: NavBarView.kRadius,
-                  cornerSmoothing: 1.0,
+                  cornerSmoothing: 0.6,
                 ),
               ),
             ),

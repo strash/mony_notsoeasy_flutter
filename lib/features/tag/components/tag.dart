@@ -26,7 +26,7 @@ class TagTagComponent extends StatelessWidget {
               color: theme.colorScheme.surfaceContainerHigh,
               shape: const SmoothRectangleBorder(
                 borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 1.0),
+                  SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 0.6),
                 ),
               ),
             ),

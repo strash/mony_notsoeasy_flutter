@@ -23,7 +23,7 @@ class CurrencyTagComponent extends StatelessWidget {
         color: background ?? theme.colorScheme.tertiaryContainer,
         shape: const SmoothRectangleBorder(
           borderRadius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 5.0, cornerSmoothing: 1.0),
+            SmoothRadius(cornerRadius: 5.0, cornerSmoothing: 0.6),
           ),
         ),
       ),

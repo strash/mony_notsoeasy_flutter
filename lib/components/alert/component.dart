@@ -69,7 +69,7 @@ class AlertComponet extends StatelessWidget {
         width: viewSize.width - 50.0,
         child: ClipSmoothRect(
           radius: const SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 25.0, cornerSmoothing: 1.0),
+            SmoothRadius(cornerRadius: 25.0, cornerSmoothing: 0.6),
           ),
           child: BackdropFilter(
             filter: ImageFilter.blur(

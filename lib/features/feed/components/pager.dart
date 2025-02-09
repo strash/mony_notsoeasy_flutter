@@ -73,7 +73,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
           child: IgnorePointer(
             child: ClipSmoothRect(
               radius: const SmoothBorderRadius.all(
-                SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
+                SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
               ),
               child: BackdropFilter(
                 filter: ImageFilter.blur(

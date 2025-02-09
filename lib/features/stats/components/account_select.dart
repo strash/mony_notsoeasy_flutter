@@ -97,7 +97,7 @@ class StatsAccountSelectComponent extends StatelessWidget {
                                 borderRadius: const SmoothBorderRadius.all(
                                   SmoothRadius(
                                     cornerRadius: 14.0,
-                                    cornerSmoothing: 1.0,
+                                    cornerSmoothing: 0.6,
                                   ),
                                 ),
                               ),

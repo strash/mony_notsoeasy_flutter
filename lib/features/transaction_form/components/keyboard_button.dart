@@ -116,7 +116,7 @@ class _TransactionFormSymbolButtonComponentState
                     radius: const SmoothBorderRadius.all(
                       SmoothRadius(
                         cornerRadius: 20.0,
-                        cornerSmoothing: 1.0,
+                        cornerSmoothing: 0.6,
                       ),
                     ),
                     child: ColoredBox(

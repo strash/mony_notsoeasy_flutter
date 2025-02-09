@@ -35,12 +35,12 @@ class _ColorGridState extends State<_ColorGrid> {
     final viewSize = MediaQuery.sizeOf(context);
     final itemWidth = (viewSize.width - _padding.horizontal) / 12;
     final borderRadius = SmoothBorderRadius.all(
-      SmoothRadius(cornerRadius: _cursorInnerRadius, cornerSmoothing: 1.0),
+      SmoothRadius(cornerRadius: _cursorInnerRadius, cornerSmoothing: 0.6),
     );
     final cursorBorderRadius = SmoothBorderRadius.all(
       SmoothRadius(
         cornerRadius: _cursorInnerRadius + _cursorThickness,
-        cornerSmoothing: 1.0,
+        cornerSmoothing: 0.6,
       ),
     );
     final itemSize = Size(itemWidth * 12, itemWidth * 10);

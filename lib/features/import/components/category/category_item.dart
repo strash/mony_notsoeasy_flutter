@@ -58,7 +58,7 @@ class ImportCategoryItemComponent extends StatelessWidget {
           shape: SmoothRectangleBorder(
             side: BorderSide(color: border),
             borderRadius: const SmoothBorderRadius.all(
-              SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 1.0),
+              SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 0.6),
             ),
           ),
         ),

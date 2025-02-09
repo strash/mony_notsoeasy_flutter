@@ -50,7 +50,7 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
                 },
                 shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 18.0, cornerSmoothing: 1.0),
+                    SmoothRadius(cornerRadius: 18.0, cornerSmoothing: 0.6),
                   ),
                 ),
               ),

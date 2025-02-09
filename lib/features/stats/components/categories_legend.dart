@@ -93,7 +93,7 @@ class StatsCategoriesLegendComponent extends StatelessWidget {
                           borderRadius: SmoothBorderRadius.all(
                             SmoothRadius(
                               cornerRadius: 3.0,
-                              cornerSmoothing: 1.0,
+                              cornerSmoothing: 0.6,
                             ),
                           ),
                         ),

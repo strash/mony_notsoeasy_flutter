@@ -29,7 +29,7 @@ class BottomSheetHandleComponent extends StatelessWidget {
                     theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                 shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 2.0, cornerSmoothing: 1.0),
+                    SmoothRadius(cornerRadius: 2.0, cornerSmoothing: 0.6),
                   ),
                 ),
               ),

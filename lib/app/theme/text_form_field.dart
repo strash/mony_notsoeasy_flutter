@@ -11,7 +11,7 @@ final class SmoothInputBorder extends InputBorder {
       : _shape = SmoothRectangleBorder(
           side: BorderSide(color: color),
           borderRadius: const SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
+            SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
           ),
         );
 

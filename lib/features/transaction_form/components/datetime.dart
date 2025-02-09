@@ -26,7 +26,7 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
             shape: SmoothRectangleBorder(
               side: BorderSide(color: theme.colorScheme.outlineVariant),
               borderRadius: const SmoothBorderRadius.all(
-                SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 1.0),
+                SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 0.6),
               ),
             ),
           ),

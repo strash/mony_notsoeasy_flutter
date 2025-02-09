@@ -68,7 +68,7 @@ class NavBarView extends StatelessWidget {
                           radius: const SmoothBorderRadius.all(
                             SmoothRadius(
                               cornerRadius: kRadius,
-                              cornerSmoothing: 1.0,
+                              cornerSmoothing: 0.6,
                             ),
                           ),
                           child: BackdropFilter(

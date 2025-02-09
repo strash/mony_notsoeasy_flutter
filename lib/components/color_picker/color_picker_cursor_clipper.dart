@@ -24,7 +24,7 @@ final class _CursorClipper extends CustomClipper<Path> {
       rectTo,
       SmoothRadius(
         cornerRadius: radius,
-        cornerSmoothing: 1.0,
+        cornerSmoothing: 0.6,
       ),
     );
     pathFrom.addRect(rectFrom);

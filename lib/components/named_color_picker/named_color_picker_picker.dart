@@ -57,7 +57,7 @@ class NamedColorPickerComponent extends StatelessWidget {
                             theme.colorScheme.onSurface.withValues(alpha: 0.1),
                       ),
                       borderRadius: const SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
+                        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
                       ),
                     ),
                   ),

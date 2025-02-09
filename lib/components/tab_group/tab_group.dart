@@ -68,7 +68,7 @@ class _TabGroupComponentState<T extends IDescriptable>
 
     return ClipSmoothRect(
       radius: const SmoothBorderRadius.all(
-        SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 1.0),
+        SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 0.6),
       ),
       child: Stack(
         children: [
@@ -101,7 +101,7 @@ class _TabGroupComponentState<T extends IDescriptable>
                 ],
                 shape: const SmoothRectangleBorder(
                   borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 11.0, cornerSmoothing: 1.0),
+                    SmoothRadius(cornerRadius: 11.0, cornerSmoothing: 0.6),
                   ),
                 ),
               ),

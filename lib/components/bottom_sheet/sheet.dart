@@ -84,7 +84,7 @@ class _BottomSheetComponentState extends State<BottomSheetComponent>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const radius = SmoothRadius(cornerRadius: 26.0, cornerSmoothing: 1.0);
+    const radius = SmoothRadius(cornerRadius: 26.0, cornerSmoothing: 0.6);
 
     return ValueListenableBuilder<double>(
       valueListenable: keyboardNotifier,

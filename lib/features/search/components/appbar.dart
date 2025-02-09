@@ -76,7 +76,7 @@ class SearchAppBarComponent extends StatelessWidget {
                                 radius: const SmoothBorderRadius.all(
                                   SmoothRadius(
                                     cornerRadius: 15.0,
-                                    cornerSmoothing: 1.0,
+                                    cornerSmoothing: 0.6,
                                   ),
                                 ),
                                 child: RepaintBoundary(

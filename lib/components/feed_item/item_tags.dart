@@ -47,7 +47,7 @@ class FeedItemTagsComponent extends StatelessWidget {
                           borderRadius: SmoothBorderRadius.all(
                             SmoothRadius(
                               cornerRadius: 6.0,
-                              cornerSmoothing: 1.0,
+                              cornerSmoothing: 0.6,
                             ),
                           ),
                         ),

@@ -44,7 +44,7 @@ class CategoryIconComponent extends StatelessWidget {
                         .withValues(alpha: showColors ? .0 : 1.0),
                   ),
                   borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 30.0, cornerSmoothing: 1.0),
+                    SmoothRadius(cornerRadius: 30.0, cornerSmoothing: 0.6),
                   ),
                 ),
               ),

@@ -85,7 +85,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                       : const Color(0x00FFFFFF),
                 ),
                 borderRadius: const SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 1.0),
+                  SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
                 ),
               ),
             ),

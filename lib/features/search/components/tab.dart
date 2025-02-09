@@ -59,7 +59,7 @@ class SearchTabComponent extends StatelessWidget {
                 borderRadius: SmoothBorderRadius.all(
                   SmoothRadius(
                     cornerRadius: 13.0,
-                    cornerSmoothing: 1.0,
+                    cornerSmoothing: 0.6,
                   ),
                 ),
               ),
