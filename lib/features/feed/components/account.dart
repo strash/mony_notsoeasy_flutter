@@ -37,9 +37,10 @@ class FeedAccountComponent extends StatelessWidget {
           // -> sums
           switch (page) {
             final FeedPageStateAllAccounts page => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: page.balances.foldByCurrency().map(
-                  (e) {
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: page.balances
+                  .foldByCurrency()
+                  .map((e) {
                     return FeedAccountAmountComponent(
                       amount: e.totalSum.currency(
                         locale: locale.languageCode,
@@ -49,39 +50,39 @@ class FeedAccountComponent extends StatelessWidget {
                       ),
                       code: e.currency.code,
                     );
-                  },
-                ).toList(growable: false),
-              ),
+                  })
+                  .toList(growable: false),
+            ),
             final FeedPageStateSingleAccount page => FeedAccountAmountComponent(
-                amount: page.balance.totalSum.currency(
-                  locale: locale.languageCode,
-                  name: page.balance.currency.name,
-                  symbol: page.balance.currency.symbol,
-                  showDecimal: showDecimal,
-                ),
-                code: page.balance.currency.code,
+              amount: page.balance.totalSum.currency(
+                locale: locale.languageCode,
+                name: page.balance.currency.name,
+                symbol: page.balance.currency.symbol,
+                showDecimal: showDecimal,
               ),
+              code: page.balance.currency.code,
+            ),
           },
           const SizedBox(height: 10.0),
 
           // -> account
           switch (page) {
             FeedPageStateAllAccounts() => Text(
-                "Все счета",
-                textAlign: TextAlign.start,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.golosText(
-                  fontSize: 18.0,
-                  height: 1.2,
-                  fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.primary,
-                ),
+              "Все счета",
+              textAlign: TextAlign.start,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.golosText(
+                fontSize: 18.0,
+                height: 1.2,
+                fontWeight: FontWeight.w600,
+                color: theme.colorScheme.primary,
               ),
+            ),
             FeedPageStateSingleAccount(:final account) => AccountComponent(
-                account: account,
-                showColors: showColors,
-              ),
+              account: account,
+              showColors: showColors,
+            ),
           },
 
           const SizedBox(height: 20.0),

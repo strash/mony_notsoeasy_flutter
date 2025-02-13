@@ -14,10 +14,7 @@ part "./color_picker_item.dart";
 class ColorPickerComponent extends StatefulWidget {
   final ColorPickerController controller;
 
-  const ColorPickerComponent({
-    super.key,
-    required this.controller,
-  });
+  const ColorPickerComponent({super.key, required this.controller});
 
   @override
   State<ColorPickerComponent> createState() => _ColorPickerComponentState();
@@ -65,10 +62,7 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
                 shape: SmoothRectangleBorder(
                   side: BorderSide(color: color!),
                   borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(
-                      cornerRadius: 15.0,
-                      cornerSmoothing: 0.6,
-                    ),
+                    SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
                   ),
                 ),
               ),
@@ -84,8 +78,9 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
                         color: color ?? const Color(0x00FFFFFF),
                         shape: SmoothRectangleBorder(
                           side: BorderSide(
-                            color: theme.colorScheme.onSurface
-                                .withValues(alpha: 0.1),
+                            color: theme.colorScheme.onSurface.withValues(
+                              alpha: 0.1,
+                            ),
                           ),
                           borderRadius: const SmoothBorderRadius.all(
                             SmoothRadius(

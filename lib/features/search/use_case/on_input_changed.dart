@@ -23,10 +23,7 @@ final class OnInputChanged extends UseCase<Future<void>, _TValue> {
       viewModel.tabPageStates[i] = (scrollPage: 0, canLoadMore: true);
     }
 
-    final transactions = await transactionService.search(
-      query: query,
-      page: 0,
-    );
+    final transactions = await transactionService.search(query: query, page: 0);
     final accounts = await accountService.search(query: query, page: 0);
     final categories = await categoryService.search(query: query, page: 0);
     final tags = await tagService.search(query: query, page: 0);

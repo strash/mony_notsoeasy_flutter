@@ -52,135 +52,131 @@ class SearchTabPageComponent extends StatelessWidget {
               ),
             ),
           )
-
         // -> content
         else
           switch (tab) {
             // -> transactions
             ESearchTab.transactions => SliverList.separated(
-                findChildIndexCallback: (key) {
-                  final id = (key as ValueKey).value;
-                  final index =
-                      viewModel.transactions.indexWhere((e) => e.id == id);
-                  return index != -1 ? index : null;
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 25.0);
-                },
-                itemCount: viewModel.transactions.length,
-                itemBuilder: (context, index) {
-                  final item = viewModel.transactions.elementAt(index);
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index = viewModel.transactions.indexWhere(
+                  (e) => e.id == id,
+                );
+                return index != -1 ? index : null;
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 25.0);
+              },
+              itemCount: viewModel.transactions.length,
+              itemBuilder: (context, index) {
+                final item = viewModel.transactions.elementAt(index);
 
-                  return GestureDetector(
-                    key: ValueKey<String>(item.id),
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => onTransactionPressed(context, item),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: FeedItemComponent(
-                        transaction: item,
-                        showFullDate: true,
-                        showDecimal: viewModel.isCentsVisible,
-                        showColors: viewModel.isColorsVisible,
-                        showTags: viewModel.isTagsVisible,
-                      ),
+                return GestureDetector(
+                  key: ValueKey<String>(item.id),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => onTransactionPressed(context, item),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: FeedItemComponent(
+                      transaction: item,
+                      showFullDate: true,
+                      showDecimal: viewModel.isCentsVisible,
+                      showColors: viewModel.isColorsVisible,
+                      showTags: viewModel.isTagsVisible,
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
+            ),
 
             // -> accounts
             ESearchTab.accounts => SliverList.separated(
-                findChildIndexCallback: (key) {
-                  final id = (key as ValueKey).value;
-                  final index =
-                      viewModel.accounts.indexWhere((e) => e.id == id);
-                  return index != -1 ? index : null;
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 25.0);
-                },
-                itemCount: viewModel.accounts.length,
-                itemBuilder: (context, index) {
-                  final item = viewModel.accounts.elementAt(index);
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index = viewModel.accounts.indexWhere((e) => e.id == id);
+                return index != -1 ? index : null;
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 25.0);
+              },
+              itemCount: viewModel.accounts.length,
+              itemBuilder: (context, index) {
+                final item = viewModel.accounts.elementAt(index);
 
-                  return GestureDetector(
-                    key: ValueKey<String>(item.id),
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => onAccountPressed.call(context, item),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: AccountComponent(
-                        account: item,
-                        showCurrencyTag: true,
-                        showColors: viewModel.isColorsVisible,
-                      ),
+                return GestureDetector(
+                  key: ValueKey<String>(item.id),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => onAccountPressed.call(context, item),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: AccountComponent(
+                      account: item,
+                      showCurrencyTag: true,
+                      showColors: viewModel.isColorsVisible,
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
+            ),
 
             // -> categories
             ESearchTab.categories => SliverList.separated(
-                findChildIndexCallback: (key) {
-                  final id = (key as ValueKey).value;
-                  final index =
-                      viewModel.categories.indexWhere((e) => e.id == id);
-                  return index != -1 ? index : null;
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 25.0);
-                },
-                itemCount: viewModel.categories.length,
-                itemBuilder: (context, index) {
-                  final item = viewModel.categories.elementAt(index);
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index = viewModel.categories.indexWhere(
+                  (e) => e.id == id,
+                );
+                return index != -1 ? index : null;
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 25.0);
+              },
+              itemCount: viewModel.categories.length,
+              itemBuilder: (context, index) {
+                final item = viewModel.categories.elementAt(index);
 
-                  return GestureDetector(
-                    key: ValueKey<String>(item.id),
-                    onTap: () => onCategoryPressed.call(context, item),
-                    behavior: HitTestBehavior.opaque,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: CategoryComponent(
-                        category: item,
-                        showColors: viewModel.isColorsVisible,
-                      ),
+                return GestureDetector(
+                  key: ValueKey<String>(item.id),
+                  onTap: () => onCategoryPressed.call(context, item),
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: CategoryComponent(
+                      category: item,
+                      showColors: viewModel.isColorsVisible,
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
+            ),
 
             // -> tags
             ESearchTab.tags => SliverList.separated(
-                findChildIndexCallback: (key) {
-                  final id = (key as ValueKey).value;
-                  final index = viewModel.tags.indexWhere((e) => e.id == id);
-                  return index != -1 ? index : null;
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 25.0);
-                },
-                itemCount: viewModel.tags.length,
-                itemBuilder: (context, index) {
-                  final item = viewModel.tags.elementAt(index);
+              findChildIndexCallback: (key) {
+                final id = (key as ValueKey).value;
+                final index = viewModel.tags.indexWhere((e) => e.id == id);
+                return index != -1 ? index : null;
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 25.0);
+              },
+              itemCount: viewModel.tags.length,
+              itemBuilder: (context, index) {
+                final item = viewModel.tags.elementAt(index);
 
-                  return GestureDetector(
-                    key: ValueKey<String>(item.id),
-                    onTap: () => onTagPressed.call(context, item),
-                    behavior: HitTestBehavior.opaque,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: TagComponent(tag: item),
-                          ),
-                        ],
-                      ),
+                return GestureDetector(
+                  key: ValueKey<String>(item.id),
+                  onTap: () => onTagPressed.call(context, item),
+                  behavior: HitTestBehavior.opaque,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [Flexible(child: TagComponent(tag: item))],
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
+            ),
           },
 
         // -> bottom offset

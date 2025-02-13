@@ -131,23 +131,25 @@ class _TabGroupComponentState<T extends IDescriptable>
                 return Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: widget.values.map((value) {
-                    final isActive = value == widget.controller.value;
+                  children: widget.values
+                      .map((value) {
+                        final isActive = value == widget.controller.value;
 
-                    return TabGroupEntryComponent<T>(
-                      key: Key("${value.name}_$isActive"),
-                      value: value,
-                      isActive: isActive,
-                      rectNotifier: _rectNotifier,
-                      parent: _getBox,
-                      onTap: (T newValue) {
-                        widget.controller.value = newValue;
-                        if (widget.onSelected != null) {
-                          widget.onSelected!.call(newValue);
-                        }
-                      },
-                    );
-                  }).toList(growable: false),
+                        return TabGroupEntryComponent<T>(
+                          key: Key("${value.name}_$isActive"),
+                          value: value,
+                          isActive: isActive,
+                          rectNotifier: _rectNotifier,
+                          parent: _getBox,
+                          onTap: (T newValue) {
+                            widget.controller.value = newValue;
+                            if (widget.onSelected != null) {
+                              widget.onSelected!.call(newValue);
+                            }
+                          },
+                        );
+                      })
+                      .toList(growable: false),
                 );
               },
             ),

@@ -7,10 +7,7 @@ import "package:mony_app/features/import/import.dart";
 class EntryListComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const EntryListComponent({
-    super.key,
-    this.event,
-  });
+  const EntryListComponent({super.key, this.event});
 
   static const double columnWidth = 100.0;
   static const double columnGap = 15.0;
@@ -19,8 +16,9 @@ class EntryListComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final entry =
-        viewModel.csv?.entries.elementAtOrNull(viewModel.currentEntryIndex);
+    final entry = viewModel.csv?.entries.elementAtOrNull(
+      viewModel.currentEntryIndex,
+    );
 
     if (entry == null) return const SizedBox();
 
@@ -46,9 +44,11 @@ class EntryListComponent extends StatelessWidget {
 
             // -> body
             Column(
-              children: entry.entries.map((e) {
-                return EntryListRowComponent(entry: e, event: event);
-              }).toList(growable: false),
+              children: entry.entries
+                  .map((e) {
+                    return EntryListRowComponent(entry: e, event: event);
+                  })
+                  .toList(growable: false),
             ),
           ],
         ),

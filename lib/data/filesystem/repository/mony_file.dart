@@ -5,9 +5,8 @@ import "package:file_picker/file_picker.dart";
 import "package:flutter/foundation.dart";
 
 abstract base class MonyFileFilesystemRepository {
-  const factory MonyFileFilesystemRepository({
-    required FilePicker filePicker,
-  }) = _Impl;
+  const factory MonyFileFilesystemRepository({required FilePicker filePicker}) =
+      _Impl;
 
   Future<String?> read();
 
@@ -46,9 +45,7 @@ final class _Impl implements MonyFileFilesystemRepository {
         fileName: "export_mony.$fileExtension",
         type: FileType.custom,
         allowedExtensions: [fileExtension],
-        bytes: Uint8List.fromList(
-          utf8.encode(data),
-        ),
+        bytes: Uint8List.fromList(utf8.encode(data)),
       );
     } catch (e) {
       if (kDebugMode) print(e);

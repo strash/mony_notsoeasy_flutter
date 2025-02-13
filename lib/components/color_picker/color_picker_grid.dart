@@ -11,8 +11,12 @@ class _ColorGrid extends StatefulWidget {
 
 class _ColorGridState extends State<_ColorGrid> {
   Rect? _rect;
-  late final _padding =
-      EdgeInsets.fromLTRB(10.0, 0.0, 10.0, widget.bottom + 40.0);
+  late final _padding = EdgeInsets.fromLTRB(
+    10.0,
+    0.0,
+    10.0,
+    widget.bottom + 40.0,
+  );
   final double _cursorThickness = 5.0;
   final _cursorInnerRadius = 9.0;
 
@@ -44,9 +48,10 @@ class _ColorGridState extends State<_ColorGrid> {
       ),
     );
     final itemSize = Size(itemWidth * 12, itemWidth * 10);
-    final shadow = MediaQuery.platformBrightnessOf(context) == Brightness.light
-        ? theme.colorScheme.shadow
-        : theme.colorScheme.shadow.withValues(alpha: 0.3);
+    final shadow =
+        MediaQuery.platformBrightnessOf(context) == Brightness.light
+            ? theme.colorScheme.shadow
+            : theme.colorScheme.shadow.withValues(alpha: 0.3);
 
     return Padding(
       padding: _padding,
@@ -61,21 +66,25 @@ class _ColorGridState extends State<_ColorGrid> {
               borderRadius: borderRadius,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: palette.map((row) {
-                  return Expanded(
-                    child: Row(
-                      children: row.map((color) {
-                        return Expanded(
-                          child: _ColorGridItem(
-                            color: color,
-                            getAncestorBox: _getRenderBox,
-                            onSelected: _onSelected,
-                          ),
-                        );
-                      }).toList(growable: false),
-                    ),
-                  );
-                }).toList(growable: false),
+                children: palette
+                    .map((row) {
+                      return Expanded(
+                        child: Row(
+                          children: row
+                              .map((color) {
+                                return Expanded(
+                                  child: _ColorGridItem(
+                                    color: color,
+                                    getAncestorBox: _getRenderBox,
+                                    onSelected: _onSelected,
+                                  ),
+                                );
+                              })
+                              .toList(growable: false),
+                        ),
+                      );
+                    })
+                    .toList(growable: false),
               ),
             ),
 

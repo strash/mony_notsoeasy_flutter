@@ -3,10 +3,7 @@ part of "./select.dart";
 final class _SelectValueProvider<T> extends InheritedWidget {
   final SelectController<T?> controller;
 
-  const _SelectValueProvider({
-    required super.child,
-    required this.controller,
-  });
+  const _SelectValueProvider({required super.child, required this.controller});
 
   static SelectController<T?>? maybeOf<T>(BuildContext context) {
     final p =

@@ -9,10 +9,7 @@ import "package:mony_app/features/import/components/components.dart";
 class ImportMapTransactionTypePage extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportMapTransactionTypePage({
-    super.key,
-    this.event,
-  });
+  const ImportMapTransactionTypePage({super.key, this.event});
 
   @override
   Widget build(BuildContext context) {

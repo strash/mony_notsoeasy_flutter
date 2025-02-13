@@ -16,9 +16,9 @@ final class AppReviewService {
 
   AppReviewService({
     required SharedPreferencesLocalStorageRepository
-        sharedPreferencesRepository,
-  })  : _sharedPrefRepo = sharedPreferencesRepository,
-        _appFlavor = appFlavor;
+    sharedPreferencesRepository,
+  }) : _sharedPrefRepo = sharedPreferencesRepository,
+       _appFlavor = appFlavor;
 
   Future<bool> _canRequestReview() async {
     final count = await _sharedPrefRepo.getInt(_sharedAttemptsCountKey);

@@ -17,7 +17,8 @@ class AccountSettedItemComponent extends StatelessWidget {
     final locale = Localizations.localeOf(context);
     final formatter = NumberFormat.compact(locale: locale.languageCode);
 
-    final color = ex?.from(EColorName.from(account.colorName)).color ??
+    final color =
+        ex?.from(EColorName.from(account.colorName)).color ??
         theme.colorScheme.onSurface;
 
     return Padding(
@@ -65,9 +66,10 @@ class AccountSettedItemComponent extends StatelessWidget {
               fontSize: 16.0,
               height: 1.0,
               fontWeight: FontWeight.w500,
-              color: account.balance >= 0.0
-                  ? theme.colorScheme.secondary
-                  : theme.colorScheme.error,
+              color:
+                  account.balance >= 0.0
+                      ? theme.colorScheme.secondary
+                      : theme.colorScheme.error,
             ),
           ),
         ],

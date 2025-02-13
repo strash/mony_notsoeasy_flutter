@@ -69,8 +69,7 @@ final class _Impl
       final List<String?> args = [];
       final hasQuery = query != null && query.isNotEmpty;
       if (hasQuery) args.add(queryToGlob(query));
-      final maps = await db.rawQuery(
-        """
+      final maps = await db.rawQuery("""
 SELECT id, created, updated, title, icon, color_name, transaction_type
 FROM (
 	SELECT c.*, MAX(tr.date) AS date
@@ -85,9 +84,7 @@ ORDER BY
 	updated DESC,
 	title ASC
 LIMIT $limit OFFSET $offset;
-""",
-        args,
-      );
+""", args);
       return maps.map(CategoryDto.fromJson).toList(growable: false);
     });
   }
@@ -158,11 +155,7 @@ LIMIT $limit OFFSET $offset;
   Future<CategoryDto?> getOne({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      final map = await db.query(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
+      final map = await db.query(table, where: "id = ?", whereArgs: [id]);
       if (map.isEmpty) return null;
       return CategoryDto.fromJson(map.first);
     });
@@ -198,11 +191,7 @@ LIMIT $limit OFFSET $offset;
   Future<void> delete({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      await db.delete(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
+      await db.delete(table, where: "id = ?", whereArgs: [id]);
     });
   }
 

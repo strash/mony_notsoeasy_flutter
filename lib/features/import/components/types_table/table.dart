@@ -6,13 +6,11 @@ import "package:mony_app/features/import/page/view_model.dart";
 class TypesTableComponent extends StatelessWidget {
   final ImportModelTransactionTypeVO transactionsByType;
 
-  TypesTableComponent({
-    super.key,
-    required this.transactionsByType,
-  }) : assert(
-          transactionsByType.entries.isNotEmpty,
-          "Entries shouldn't be empty",
-        );
+  TypesTableComponent({super.key, required this.transactionsByType})
+    : assert(
+        transactionsByType.entries.isNotEmpty,
+        "Entries shouldn't be empty",
+      );
 
   List<MapEntry<ImportModelColumn, String>> _getFilteredEntries(
     Map<ImportModelColumn, String> entry,
@@ -99,26 +97,32 @@ class TypesTableComponent extends StatelessWidget {
               bottom: BorderSide(color: theme.colorScheme.outline),
             ),
           ),
-          children: filteredMappedEntries.first.indexed.map((e) {
-            return TableCell(
-              child: Padding(
-                padding: _getPadding(e.$1, filteredMappedEntries.first.length),
-                child: Text(
-                  e.$2.key.column.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: e.$2.key.column == EImportColumn.amount
-                      ? TextAlign.right
-                      : TextAlign.left,
-                  style: GoogleFonts.golosText(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w600,
-                    color: theme.colorScheme.tertiary,
+          children: filteredMappedEntries.first.indexed
+              .map((e) {
+                return TableCell(
+                  child: Padding(
+                    padding: _getPadding(
+                      e.$1,
+                      filteredMappedEntries.first.length,
+                    ),
+                    child: Text(
+                      e.$2.key.column.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign:
+                          e.$2.key.column == EImportColumn.amount
+                              ? TextAlign.right
+                              : TextAlign.left,
+                      style: GoogleFonts.golosText(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.tertiary,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            );
-          }).toList(growable: false),
+                );
+              })
+              .toList(growable: false),
         ),
 
         // -> rows
@@ -129,26 +133,29 @@ class TypesTableComponent extends StatelessWidget {
                 bottom: BorderSide(color: theme.colorScheme.outlineVariant),
               ),
             ),
-            children: e.indexed.map((r) {
-              return TableCell(
-                child: Padding(
-                  padding: _getPadding(r.$1, e.length),
-                  child: Text(
-                    _getFormattedValue(locale.languageCode, r.$2),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: r.$2.key.column == EImportColumn.amount
-                        ? TextAlign.right
-                        : TextAlign.left,
-                    style: GoogleFonts.golosText(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w400,
-                      color: theme.colorScheme.onSurface,
+            children: e.indexed
+                .map((r) {
+                  return TableCell(
+                    child: Padding(
+                      padding: _getPadding(r.$1, e.length),
+                      child: Text(
+                        _getFormattedValue(locale.languageCode, r.$2),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign:
+                            r.$2.key.column == EImportColumn.amount
+                                ? TextAlign.right
+                                : TextAlign.left,
+                        style: GoogleFonts.golosText(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w400,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
-            }).toList(growable: false),
+                  );
+                })
+                .toList(growable: false),
           );
         }),
       ],

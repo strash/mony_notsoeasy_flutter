@@ -23,9 +23,7 @@ final class OnNavbarAddTransactionPressed
       context,
       showDragHandle: false,
       builder: (context, bottom) {
-        return TransactionFormPage(
-          account: viewModel.accountController.value,
-        );
+        return TransactionFormPage(account: viewModel.accountController.value);
       },
     );
     if (result == null) return;

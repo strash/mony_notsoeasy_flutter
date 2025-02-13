@@ -13,7 +13,8 @@ class SearchView extends StatelessWidget {
     final bottomOffset = MediaQuery.of(context).viewPadding.bottom + 50.0;
 
     final viewModel = context.viewModel<SearchViewModel>();
-    final topOffset = viewPadding.top +
+    final topOffset =
+        viewPadding.top +
         20.0 +
         (viewModel.isSearching
             ? SearchAppBarComponent.maximizedHeight
@@ -28,43 +29,45 @@ class SearchView extends StatelessWidget {
         children: [
           AnimatedSwitcher(
             duration: Durations.short3,
-            child: viewModel.isSearching
-                // -> search tab pages
-                ? AnimatedSwitcher(
-                    key: const Key("tabs"),
-                    duration: Durations.short3,
-                    child: SearchTabPageComponent(
-                      key: Key("tab_${viewModel.activeTab.name}"),
-                      tab: viewModel.activeTab,
-                      topOffset: topOffset,
-                      bottomOffset: bottomOffset,
-                    ),
-                  )
-
-                // -> pages
-                : CustomScrollView(
-                    key: const Key("pages"),
-                    physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics(),
-                    ),
-                    slivers: [
-                      // -> top offset
-                      SliverToBoxAdapter(child: SizedBox(height: topOffset)),
-
-                      // -> content
-                      SliverList.builder(
-                        itemCount: ESearchPage.values.length,
-                        itemBuilder: (context, index) {
-                          final item = ESearchPage.values.elementAt(index);
-
-                          return SearchPageButtonComponent(page: item);
-                        },
+            child:
+                viewModel.isSearching
+                    // -> search tab pages
+                    ? AnimatedSwitcher(
+                      key: const Key("tabs"),
+                      duration: Durations.short3,
+                      child: SearchTabPageComponent(
+                        key: Key("tab_${viewModel.activeTab.name}"),
+                        tab: viewModel.activeTab,
+                        topOffset: topOffset,
+                        bottomOffset: bottomOffset,
                       ),
+                    )
+                    // -> pages
+                    : CustomScrollView(
+                      key: const Key("pages"),
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      slivers: [
+                        // -> top offset
+                        SliverToBoxAdapter(child: SizedBox(height: topOffset)),
 
-                      // -> bottom offset
-                      SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
-                    ],
-                  ),
+                        // -> content
+                        SliverList.builder(
+                          itemCount: ESearchPage.values.length,
+                          itemBuilder: (context, index) {
+                            final item = ESearchPage.values.elementAt(index);
+
+                            return SearchPageButtonComponent(page: item);
+                          },
+                        ),
+
+                        // -> bottom offset
+                        SliverToBoxAdapter(
+                          child: SizedBox(height: bottomOffset),
+                        ),
+                      ],
+                    ),
           ),
 
           // -> appbar

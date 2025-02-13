@@ -7,10 +7,7 @@ import "package:mony_app/gen/assets.gen.dart";
 class ImportLoadCsvComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportLoadCsvComponent({
-    super.key,
-    required this.event,
-  });
+  const ImportLoadCsvComponent({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +51,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
 
           // -> loader
           if (event is ImportEventLoadingCsv)
-            const Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
+            const Center(child: CircularProgressIndicator.adaptive()),
 
           // -> error
           if (event is ImportEventErrorLoadingCsv)

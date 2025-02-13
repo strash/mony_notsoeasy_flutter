@@ -8,10 +8,7 @@ final _filledButtonThemeData = FilledButtonThemeData(
     splashFactory: NoSplash.splashFactory,
     shape: const SmoothRectangleBorder(
       borderRadius: SmoothBorderRadius.all(
-        SmoothRadius(
-          cornerRadius: 15.0,
-          cornerSmoothing: 0.6,
-        ),
+        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
       ),
     ),
     minimumSize: const Size.square(48.0),

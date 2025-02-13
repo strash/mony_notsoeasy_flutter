@@ -71,13 +71,15 @@ class ImportCategorySectionComponent extends StatelessWidget {
           Wrap(
             spacing: 8.0,
             runSpacing: 8.0,
-            children: categories.map((e) {
-              return ImportCategoryItemComponent(
-                category: e,
-                onTap: onTap,
-                onReset: onReset,
-              );
-            }).toList(growable: false),
+            children: categories
+                .map((e) {
+                  return ImportCategoryItemComponent(
+                    category: e,
+                    onTap: onTap,
+                    onReset: onReset,
+                  );
+                })
+                .toList(growable: false),
           ),
         ],
       ),

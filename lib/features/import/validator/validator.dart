@@ -15,7 +15,7 @@ final class ValidationResult {
   ValidationResult.ok(String message) : this(ok: message, error: null);
 
   ValidationResult.error(String message)
-      : this(ok: null, error: message.replaceAll("Exception: ", ""));
+    : this(ok: null, error: message.replaceAll("Exception: ", ""));
 }
 
 abstract base class BaseValidator {

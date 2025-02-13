@@ -27,14 +27,13 @@ final class AccountFormPage extends StatefulWidget {
 final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
   final titleController = InputController();
   final colorController = NamedColorPickerController(EColorName.random());
-  final typeController =
-      SelectController<EAccountType?>(EAccountType.defaultValue);
+  final typeController = SelectController<EAccountType?>(
+    EAccountType.defaultValue,
+  );
   final currencyController = SelectController<FiatCurrency?>(
     FiatCurrency.fromCode(kDefaultCurrencyCode),
   );
-  final balanceController = InputController(
-    validators: [AmountValidator()],
-  );
+  final balanceController = InputController(validators: [AmountValidator()]);
 
   bool isSubmitEnabled = false;
 
@@ -45,10 +44,12 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
   void _listener() {
     setProtectedState(() {
       final balanseTrim = balanceController.text.trim();
-      final balanceIsEmptyOrValid = balanseTrim.isEmpty ||
+      final balanceIsEmptyOrValid =
+          balanseTrim.isEmpty ||
           balanseTrim.isNotEmpty && balanceController.isValid;
 
-      isSubmitEnabled = titleController.isValid &&
+      isSubmitEnabled =
+          titleController.isValid &&
           titleController.text.trim().isNotEmpty &&
           colorController.value != null &&
           typeController.value != null &&

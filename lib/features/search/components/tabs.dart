@@ -7,10 +7,7 @@ import "package:mony_app/features/search/use_case/on_tab_button_pressed.dart";
 class SearchTabsComponent extends StatelessWidget {
   final double height;
 
-  const SearchTabsComponent({
-    super.key,
-    required this.height,
-  });
+  const SearchTabsComponent({super.key, required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +63,7 @@ class SearchTabsComponent extends StatelessWidget {
             return TweenAnimationBuilder<(Color, Color)>(
               duration: Durations.short3,
               tween: SearchGradientTween(
-                begin: (
-                  const Color(0x00FFFFFF),
-                  const Color(0x00FFFFFF),
-                ),
+                begin: (const Color(0x00FFFFFF), const Color(0x00FFFFFF)),
                 end: (
                   showLeft ? const Color(0x00FFFFFF) : const Color(0xFFFFFFFF),
                   showRight ? const Color(0x00FFFFFF) : const Color(0xFFFFFFFF),

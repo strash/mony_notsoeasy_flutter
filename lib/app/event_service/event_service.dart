@@ -36,9 +36,6 @@ final class AppEventService extends ViewModelState<AppEventServiceBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModel<AppEventService>(
-      viewModel: this,
-      child: widget.child,
-    );
+    return ViewModel<AppEventService>(viewModel: this, child: widget.child);
   }
 }

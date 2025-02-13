@@ -7,10 +7,7 @@ import "package:mony_app/domain/models/tag.dart";
 class FeedItemTagsComponent extends StatelessWidget {
   final List<TagModel> tags;
 
-  const FeedItemTagsComponent({
-    super.key,
-    required this.tags,
-  });
+  const FeedItemTagsComponent({super.key, required this.tags});
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +59,7 @@ class FeedItemTagsComponent extends StatelessWidget {
                               fontSize: 13.0,
                               height: 1.0,
                               fontWeight: FontWeight.w500,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onTertiaryContainer,
+                              color: theme.colorScheme.onTertiaryContainer,
                             ),
                           ),
                         ),

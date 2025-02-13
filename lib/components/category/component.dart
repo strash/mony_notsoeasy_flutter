@@ -34,17 +34,19 @@ class CategoryComponent extends StatelessWidget {
           dimension: iconDimension,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              gradient: showColors
-                  ? LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [color2, color],
-                    )
-                  : null,
+              gradient:
+                  showColors
+                      ? LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [color2, color],
+                      )
+                      : null,
               shape: SmoothRectangleBorder(
                 side: BorderSide(
-                  color: theme.colorScheme.outline
-                      .withValues(alpha: showColors ? .0 : 1.0),
+                  color: theme.colorScheme.outline.withValues(
+                    alpha: showColors ? .0 : 1.0,
+                  ),
                 ),
                 borderRadius: const SmoothBorderRadius.all(
                   SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
@@ -52,10 +54,7 @@ class CategoryComponent extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: Text(
-                category.icon,
-                style: theme.textTheme.headlineMedium,
-              ),
+              child: Text(category.icon, style: theme.textTheme.headlineMedium),
             ),
           ),
         ),

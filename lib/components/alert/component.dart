@@ -9,8 +9,7 @@ import "package:mony_app/components/components.dart";
 
 enum EAlertResult implements IDescriptable {
   cancel,
-  ok,
-  ;
+  ok;
 
   @override
   String get description {
@@ -25,11 +24,7 @@ class AlertComponet extends StatelessWidget {
   final Widget? title;
   final Widget? description;
 
-  const AlertComponet({
-    super.key,
-    this.title,
-    this.description,
-  });
+  const AlertComponet({super.key, this.title, this.description});
 
   static Future<EAlertResult?> show(
     BuildContext context, {
@@ -44,17 +39,11 @@ class AlertComponet extends StatelessWidget {
       DialogRoute<EAlertResult>(
         context: context,
         builder: (context) {
-          return AlertComponet(
-            title: title,
-            description: description,
-          );
+          return AlertComponet(title: title, description: description);
         },
         barrierColor: theme.colorScheme.scrim.withValues(alpha: 0.4),
         barrierDismissible: false,
-        themes: InheritedTheme.capture(
-          from: context,
-          to: navigator.context,
-        ),
+        themes: InheritedTheme.capture(from: context, to: navigator.context),
       ),
     );
   }
@@ -77,8 +66,9 @@ class AlertComponet extends StatelessWidget {
               sigmaY: kTranslucentPanelBlurSigma,
             ),
             child: ColoredBox(
-              color: theme.colorScheme.surfaceContainer
-                  .withValues(alpha: kTranslucentPanelOpacity),
+              color: theme.colorScheme.surfaceContainer.withValues(
+                alpha: kTranslucentPanelOpacity,
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
@@ -102,8 +92,12 @@ class AlertComponet extends StatelessWidget {
                     // -> description
                     if (description != null)
                       Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 30.0),
+                        padding: const EdgeInsets.fromLTRB(
+                          10.0,
+                          10.0,
+                          10.0,
+                          30.0,
+                        ),
                         child: DefaultTextStyle(
                           textAlign: TextAlign.center,
                           style: GoogleFonts.golosText(
@@ -128,11 +122,13 @@ class AlertComponet extends StatelessWidget {
 
                         return Expanded(
                           child: FilledButton(
-                            style: item == EAlertResult.cancel
-                                ? FilledButton.styleFrom(
-                                    backgroundColor: theme.colorScheme.tertiary,
-                                  )
-                                : null,
+                            style:
+                                item == EAlertResult.cancel
+                                    ? FilledButton.styleFrom(
+                                      backgroundColor:
+                                          theme.colorScheme.tertiary,
+                                    )
+                                    : null,
                             onPressed: () {
                               Navigator.of(context).pop<EAlertResult>(item);
                             },

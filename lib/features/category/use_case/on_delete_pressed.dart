@@ -14,16 +14,19 @@ final class OnDeletePressed extends UseCase<Future<void>, CategoryModel> {
     final shouldConfirm = await sharedPrefService.getSettingsConfirmCategory();
 
     if (!context.mounted) return;
-    final result = shouldConfirm
-        ? await AlertComponet.show(
-            context,
-            title: const Text("Удаление категории"),
-            description: const Text(
-              "Вместе с категорией будут удалены все транзакции, связанные с "
-              "этой категорией. Эту проверку можно отключить в настройках.",
-            ),
-          )
-        : EAlertResult.ok;
+    final EAlertResult? result;
+    if (shouldConfirm) {
+      result = await AlertComponet.show(
+        context,
+        title: const Text("Удаление категории"),
+        description: const Text(
+          "Вместе с категорией будут удалены все транзакции, связанные с "
+          "этой категорией. Эту проверку можно отключить в настройках.",
+        ),
+      );
+    } else {
+      result = EAlertResult.ok;
+    }
 
     if (!context.mounted || result == null) return;
 

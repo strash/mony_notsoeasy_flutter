@@ -8,10 +8,7 @@ import "package:mony_app/features/search/use_case/use_case.dart";
 class SearchPageButtonComponent extends StatelessWidget {
   final ESearchPage page;
 
-  const SearchPageButtonComponent({
-    super.key,
-    required this.page,
-  });
+  const SearchPageButtonComponent({super.key, required this.page});
 
   @override
   Widget build(BuildContext context) {

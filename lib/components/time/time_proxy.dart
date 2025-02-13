@@ -5,10 +5,7 @@ import "package:google_fonts/google_fonts.dart";
 class TimeProxyComponent extends StatelessWidget {
   final String time;
 
-  const TimeProxyComponent({
-    super.key,
-    required this.time,
-  });
+  const TimeProxyComponent({super.key, required this.time});
 
   @override
   Widget build(BuildContext context) {

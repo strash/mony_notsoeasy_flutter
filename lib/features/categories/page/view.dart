@@ -31,9 +31,7 @@ class CategoriesView extends StatelessWidget {
           // -> app bar
           AppBarComponent(
             title: const Text("Категории"),
-            trailing: CategoriesAddButtonComponent(
-              onTap: onAddButtonPressed,
-            ),
+            trailing: CategoriesAddButtonComponent(onTap: onAddButtonPressed),
           ),
 
           // -> empty state
@@ -47,7 +45,6 @@ class CategoriesView extends StatelessWidget {
                 ),
               ),
             )
-
           // -> categories
           else
             SliverPadding(
@@ -55,8 +52,9 @@ class CategoriesView extends StatelessWidget {
               sliver: SliverList.separated(
                 findChildIndexCallback: (key) {
                   final id = (key as ValueKey).value;
-                  final index =
-                      viewModel.categories.indexWhere((e) => e.id == id);
+                  final index = viewModel.categories.indexWhere(
+                    (e) => e.id == id,
+                  );
                   return index != -1 ? index : null;
                 },
                 separatorBuilder: (context, index) {

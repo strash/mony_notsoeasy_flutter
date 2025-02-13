@@ -57,8 +57,5 @@ final class ImportModelAccountVO {
   final String? originalTitle;
   final AccountVO? account;
 
-  ImportModelAccountVO({
-    required this.originalTitle,
-    required this.account,
-  });
+  ImportModelAccountVO({required this.originalTitle, required this.account});
 }

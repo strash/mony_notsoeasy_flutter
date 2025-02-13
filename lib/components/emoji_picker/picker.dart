@@ -14,10 +14,7 @@ part "./category_view.dart";
 class EmojiPickerComponent extends StatefulWidget {
   final InputController controller;
 
-  const EmojiPickerComponent({
-    super.key,
-    required this.controller,
-  });
+  const EmojiPickerComponent({super.key, required this.controller});
 
   @override
   State<EmojiPickerComponent> createState() => _EmojiPickerComponentState();
@@ -26,15 +23,17 @@ class EmojiPickerComponent extends StatefulWidget {
 class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
   bool _isActive = false;
 
-  final _emojiSet = defaultEmojiSet.map((e) {
-    if (e.category == Category.OBJECTS) {
-      return e.copyWith(
-        category: e.category,
-        emoji: List<Emoji>.of(e.emoji)..add(const Emoji("🛒", "Shopping Cart")),
-      );
-    }
-    return e;
-  }).toList(growable: false);
+  final _emojiSet = defaultEmojiSet
+      .map((e) {
+        return (e.category == Category.OBJECTS)
+            ? e.copyWith(
+              category: e.category,
+              emoji: List<Emoji>.of(e.emoji)
+                ..add(const Emoji("🛒", "Shopping Cart")),
+            )
+            : e;
+      })
+      .toList(growable: false);
 
   Future<void> _onTap(BuildContext context) async {
     setState(() => _isActive = true);
@@ -82,8 +81,9 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
                   dividerColor: const Color(0x00000000),
                   backspaceColor: theme.colorScheme.primary,
                 ),
-                bottomActionBarConfig:
-                    const BottomActionBarConfig(enabled: false),
+                bottomActionBarConfig: const BottomActionBarConfig(
+                  enabled: false,
+                ),
               ),
               onEmojiSelected: (category, emoji) {
                 widget.controller.text = emoji.emoji;
@@ -124,10 +124,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
                 shape: SmoothRectangleBorder(
                   side: BorderSide(color: color!),
                   borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(
-                      cornerRadius: 15.0,
-                      cornerSmoothing: 0.6,
-                    ),
+                    SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
                   ),
                 ),
               ),

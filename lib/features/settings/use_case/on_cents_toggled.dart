@@ -15,8 +15,6 @@ final class OnCentsToggled extends UseCase<Future<void>, dynamic> {
 
     await sharedPrefService.setSettingsCents(value);
 
-    appService.notify(
-      EventSettingsCentsVisibilityChanged(value),
-    );
+    appService.notify(EventSettingsCentsVisibilityChanged(value));
   }
 }

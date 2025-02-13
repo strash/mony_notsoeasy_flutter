@@ -70,10 +70,7 @@ final class AccountsViewModel extends ViewModelState<AccountsPage> {
   Widget build(BuildContext context) {
     return ViewModel<AccountsViewModel>(
       viewModel: this,
-      useCases: [
-        () => OnAddAccountPressed(),
-        () => OnAccountPressed(),
-      ],
+      useCases: [() => OnAddAccountPressed(), () => OnAccountPressed()],
       child: const AccountsView(),
     );
   }

@@ -6,12 +6,7 @@ final class TagVO {
   final DateTime? updated;
   final String title;
 
-  const TagVO({
-    this.id,
-    this.created,
-    this.updated,
-    required this.title,
-  });
+  const TagVO({this.id, this.created, this.updated, required this.title});
 
   static TagVO? from(Map<String, dynamic> map) {
     final String? id = map["id"] as String?;

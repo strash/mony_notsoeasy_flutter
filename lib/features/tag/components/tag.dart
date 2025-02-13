@@ -6,10 +6,7 @@ import "package:mony_app/domain/models/tag.dart";
 class TagTagComponent extends StatelessWidget {
   final TagModel tag;
 
-  const TagTagComponent({
-    super.key,
-    required this.tag,
-  });
+  const TagTagComponent({super.key, required this.tag});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +28,10 @@ class TagTagComponent extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15.0,
+                vertical: 10.0,
+              ),
               child: Text(
                 "#${tag.title}",
                 style: GoogleFonts.golosText(

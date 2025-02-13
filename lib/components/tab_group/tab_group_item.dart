@@ -78,16 +78,17 @@ class _TabGroupEntryComponentState<T extends IDescriptable>
           duration: Durations.short4,
           tween: ColorTween(
             begin: theme.colorScheme.onSurfaceVariant,
-            end: widget.isActive
-                ? theme.colorScheme.onSurface
-                : theme.colorScheme.onSurfaceVariant,
+            end:
+                widget.isActive
+                    ? theme.colorScheme.onSurface
+                    : theme.colorScheme.onSurfaceVariant,
           ),
           builder: (context, color, child) {
             return Text(
               widget.value.description,
-              style: TabGroupEntryComponent.style(context).copyWith(
-                color: color,
-              ),
+              style: TabGroupEntryComponent.style(
+                context,
+              ).copyWith(color: color),
             );
           },
         ),

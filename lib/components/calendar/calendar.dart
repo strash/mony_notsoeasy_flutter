@@ -84,8 +84,9 @@ class _CalendarComponentState extends State<CalendarComponent> {
     }
     // at edge (real shit)
     if (atEdge) {
-      _controller.scrollController
-          .jumpTo(_controller.scrollController.position.extentInside);
+      _controller.scrollController.jumpTo(
+        _controller.scrollController.position.extentInside,
+      );
       final monthOffset = switch (direction) {
         ScrollDirection.idle => 0,
         ScrollDirection.forward => 0 - 1,
@@ -116,13 +117,15 @@ class _CalendarComponentState extends State<CalendarComponent> {
         if (!mounted) return;
         setState(() {
           if (dir == ScrollDirection.reverse) {
-            _list = List<_Month>.from(_list)
-              ..removeAt(_list.length - 1)
-              ..add(month);
+            _list =
+                List<_Month>.from(_list)
+                  ..removeAt(_list.length - 1)
+                  ..add(month);
           } else {
-            _list = List<_Month>.from(_list)
-              ..removeAt(0)
-              ..insert(0, month);
+            _list =
+                List<_Month>.from(_list)
+                  ..removeAt(0)
+                  ..insert(0, month);
           }
         });
       case CalendarEventDoneMoving():
@@ -167,7 +170,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
         return ConstrainedBox(
           constraints: BoxConstraints(
             maxWidth: constraints.maxWidth,
-            maxHeight: widget.itemHeight * _lines +
+            maxHeight:
+                widget.itemHeight * _lines +
                 widget.padding.vertical +
                 weekHeight,
           ),
@@ -182,16 +186,18 @@ class _CalendarComponentState extends State<CalendarComponent> {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: DateTimeEx.weekDayList(loc).map<Widget>((e) {
-                      return Text(
-                        e,
-                        style: GoogleFonts.golosText(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      );
-                    }).toList(growable: false),
+                    children: DateTimeEx.weekDayList(loc)
+                        .map<Widget>((e) {
+                          return Text(
+                            e,
+                            style: GoogleFonts.golosText(
+                              fontSize: 13.0,
+                              fontWeight: FontWeight.w600,
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          );
+                        })
+                        .toList(growable: false),
                   ),
                 ),
               ),

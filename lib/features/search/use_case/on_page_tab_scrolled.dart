@@ -14,8 +14,9 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
     final (query, viewModel) = value;
 
     final activeTab = viewModel.activeTab;
-    final (scrollPage: scrollPage, canLoadMore: canLoadMore) =
-        viewModel.tabPageStates.elementAt(activeTab.index);
+    final (scrollPage: scrollPage, canLoadMore: canLoadMore) = viewModel
+        .tabPageStates
+        .elementAt(activeTab.index);
 
     if (!canLoadMore) return;
 
@@ -24,8 +25,10 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
         final service = context.read<DomainTransactionService>();
         final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
-          viewModel.tabPageStates[activeTab.index] =
-              (scrollPage: scrollPage + 1, canLoadMore: data.isNotEmpty);
+          viewModel.tabPageStates[activeTab.index] = (
+            scrollPage: scrollPage + 1,
+            canLoadMore: data.isNotEmpty,
+          );
           viewModel.transactions = viewModel.transactions.merge(data);
         });
 
@@ -33,8 +36,10 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
         final service = context.read<DomainAccountService>();
         final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
-          viewModel.tabPageStates[activeTab.index] =
-              (scrollPage: scrollPage + 1, canLoadMore: data.isNotEmpty);
+          viewModel.tabPageStates[activeTab.index] = (
+            scrollPage: scrollPage + 1,
+            canLoadMore: data.isNotEmpty,
+          );
           viewModel.accounts.merge(data);
         });
 
@@ -42,8 +47,10 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
         final service = context.read<DomainCategoryService>();
         final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
-          viewModel.tabPageStates[activeTab.index] =
-              (scrollPage: scrollPage + 1, canLoadMore: data.isNotEmpty);
+          viewModel.tabPageStates[activeTab.index] = (
+            scrollPage: scrollPage + 1,
+            canLoadMore: data.isNotEmpty,
+          );
           viewModel.categories.merge(data);
         });
 
@@ -51,8 +58,10 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
         final service = context.read<DomainTagService>();
         final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
-          viewModel.tabPageStates[activeTab.index] =
-              (scrollPage: scrollPage + 1, canLoadMore: data.isNotEmpty);
+          viewModel.tabPageStates[activeTab.index] = (
+            scrollPage: scrollPage + 1,
+            canLoadMore: data.isNotEmpty,
+          );
           viewModel.tags.merge(data);
         });
     }

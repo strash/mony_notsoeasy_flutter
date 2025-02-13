@@ -24,8 +24,8 @@ class TransactionModel with _$TransactionModel {
 extension TransactionModelListEx on List<TransactionModel> {
   List<TransactionModel> merge(List<TransactionModel> other) {
     return List<TransactionModel>.from(
-      where((e) => !other.any((i) => e.id == i.id)),
-    )
+        where((e) => !other.any((i) => e.id == i.id)),
+      )
       ..addAll(other)
       ..sort((a, b) => b.date.compareTo(a.date));
   }
@@ -48,9 +48,10 @@ extension TransactionModelListEx on List<TransactionModel> {
     for (final element in feed.indexed) {
       switch (element.$2) {
         case final FeedItemSection section:
-          final sectionEntries = feed.skip(element.$1 + 1).takeWhile((e) {
-            return e is FeedItemTransaction;
-          }).cast<FeedItemTransaction>();
+          final sectionEntries =
+              feed.skip(element.$1 + 1).takeWhile((e) {
+                return e is FeedItemTransaction;
+              }).cast<FeedItemTransaction>();
           final Map<FiatCurrency, double> total = {};
           for (final FeedItemTransaction item in sectionEntries) {
             final cur = item.transaction.account.currency;

@@ -23,62 +23,71 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
       child: Wrap(
         spacing: 8.0,
         runSpacing: 8.0,
-        children: categories.map((e) {
-          final color =
-              ex?.from(e.colorName).color ?? theme.colorScheme.surfaceContainer;
+        children: categories
+            .map((e) {
+              final color =
+                  ex?.from(e.colorName).color ??
+                  theme.colorScheme.surfaceContainer;
 
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => Navigator.of(context).pop<CategoryModel>(e),
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: color.withValues(alpha: .25),
-                shape: SmoothRectangleBorder(
-                  side: BorderSide(color: color),
-                  borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 0.6),
-                  ),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 15.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // -> icon
-                    Padding(
-                      padding: const EdgeInsets.only(right: 3.0, bottom: 1.0),
-                      child: Text(
-                        e.icon,
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          height: .0,
-                          fontSize: 18.0,
-                        ),
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => Navigator.of(context).pop<CategoryModel>(e),
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color.withValues(alpha: .25),
+                    shape: SmoothRectangleBorder(
+                      side: BorderSide(color: color),
+                      borderRadius: const SmoothBorderRadius.all(
+                        SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 0.6),
                       ),
                     ),
-
-                    // -> title
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 5.0, bottom: 7.0),
-                        child: Text(
-                          e.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.golosText(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                            color: theme.colorScheme.onSurface,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 15.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // -> icon
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 3.0,
+                            bottom: 1.0,
+                          ),
+                          child: Text(
+                            e.icon,
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                              height: .0,
+                              fontSize: 18.0,
+                            ),
                           ),
                         ),
-                      ),
+
+                        // -> title
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 5.0,
+                              bottom: 7.0,
+                            ),
+                            child: Text(
+                              e.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.golosText(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w500,
+                                color: theme.colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          );
-        }).toList(growable: false),
+              );
+            })
+            .toList(growable: false),
       ),
     );
   }

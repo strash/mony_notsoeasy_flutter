@@ -18,15 +18,15 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
     switch (event) {
       case EventAccountCreated() ||
-            EventCategoryCreated() ||
-            EventCategoryUpdated() ||
-            EventTagCreated() ||
-            EventTagUpdated() ||
-            EventTagDeleted() ||
-            EventSettingsThemeModeChanged() ||
-            EventSettingsCentsVisibilityChanged() ||
-            EventSettingsTagsVisibilityChanged() ||
-            EventSettingsDataDeletionRequested():
+          EventCategoryCreated() ||
+          EventCategoryUpdated() ||
+          EventTagCreated() ||
+          EventTagUpdated() ||
+          EventTagDeleted() ||
+          EventSettingsThemeModeChanged() ||
+          EventSettingsCentsVisibilityChanged() ||
+          EventSettingsTagsVisibilityChanged() ||
+          EventSettingsDataDeletionRequested():
         break;
 
       case EventAccountUpdated(value: final account):
@@ -43,9 +43,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         context.close();
 
       case EventCategoryDeleted() ||
-            EventTransactionCreated() ||
-            EventTransactionUpdated() ||
-            EventTransactionDeleted():
+          EventTransactionCreated() ||
+          EventTransactionUpdated() ||
+          EventTransactionDeleted():
         final id = viewModel.account.id;
         final balance = await accountService.getBalance(id: id);
         if (balance == null) return;

@@ -207,7 +207,8 @@ class _AppBarState extends State<_AppBar> {
               // -> leading
               _SizeNotificator(
                 notifier: _leadingSizeNotifier,
-                child: (widget.leading == null &&
+                child:
+                    (widget.leading == null &&
                             widget.showDragHandle == false &&
                             widget.automaticallyImplyLeading
                         ? const BackButtonComponent()
@@ -242,7 +243,8 @@ class _AppBarState extends State<_AppBar> {
               // -> trailing
               _SizeNotificator(
                 notifier: _trailingSizeNotifier,
-                child: (widget.trailing == null &&
+                child:
+                    (widget.trailing == null &&
                             widget.showDragHandle &&
                             widget.automaticallyImplyLeading
                         ? const CloseButtonComponent()
@@ -290,10 +292,7 @@ class _SizeNotificator extends StatelessWidget {
   final ValueNotifier<Size> notifier;
   final Widget child;
 
-  const _SizeNotificator({
-    required this.notifier,
-    required this.child,
-  });
+  const _SizeNotificator({required this.notifier, required this.child});
 
   @override
   Widget build(BuildContext context) {

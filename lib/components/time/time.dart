@@ -13,10 +13,7 @@ class TimeComponent extends StatelessWidget {
   double get _size => 200.0;
   double get _offset => 8.0;
 
-  const TimeComponent({
-    super.key,
-    required this.controller,
-  });
+  const TimeComponent({super.key, required this.controller});
 
   Rect _popupRect(BuildContext context, Rect proxyRect) {
     final viewSize = MediaQuery.sizeOf(context);

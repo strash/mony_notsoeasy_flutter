@@ -44,7 +44,7 @@ class StatsDateRangeComponent extends StatelessWidget {
                     final dates = viewModel.exclusiveDateRange;
                     final dateRangeDescription = (
                       dates.$1,
-                      dates.$2.subtract(const Duration(days: 1))
+                      dates.$2.subtract(const Duration(days: 1)),
                     ).transactionsDateRangeDescription(locale.languageCode);
 
                     return AnimatedSwitcher(

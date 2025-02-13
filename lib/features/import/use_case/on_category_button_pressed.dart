@@ -63,11 +63,11 @@ final class OnCategoryButtonPressed
         final categoryVO = switch (value) {
           ImportModelCategoryVariantVO(:final vo) => vo,
           _ => CategoryVO(
-              title: value.originalTitle,
-              icon: "",
-              colorName: EColorName.random().name,
-              transactionType: value.transactionType,
-            ),
+            title: value.originalTitle,
+            icon: "",
+            colorName: EColorName.random().name,
+            transactionType: value.transactionType,
+          ),
         };
         final List<String> titles;
         if (value case final ImportModelCategoryVariantVO vo) {

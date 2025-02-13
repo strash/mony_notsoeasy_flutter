@@ -28,8 +28,10 @@ class ImportView extends StatelessWidget {
                   // -> appbar
                   TweenAnimationBuilder<int>(
                     duration: Durations.long4,
-                    tween:
-                        IntTween(begin: 0, end: viewModel.progressPercentage),
+                    tween: IntTween(
+                      begin: 0,
+                      end: viewModel.progressPercentage,
+                    ),
                     builder: (context, progress, child) {
                       return AppBarComponent(title: Text("$progress%"));
                     },
@@ -61,14 +63,16 @@ class ImportView extends StatelessWidget {
                             ImportMapAccountsComponent(event: event),
                           ImportEventMapTransactionType() =>
                             ImportMapTransactionTypePage(event: event),
-                          ImportEventMapCategories() =>
-                            ImportMapCategoriesPage(event: event),
-                          ImportEventToDb() =>
-                            ImportImportToDbPage(event: event),
+                          ImportEventMapCategories() => ImportMapCategoriesPage(
+                            event: event,
+                          ),
+                          ImportEventToDb() => ImportImportToDbPage(
+                            event: event,
+                          ),
                           // just in case
                           null => const Center(
-                              child: CircularProgressIndicator.adaptive(),
-                            ),
+                            child: CircularProgressIndicator.adaptive(),
+                          ),
                         },
                       ),
                     ),
@@ -89,8 +93,9 @@ class ImportView extends StatelessWidget {
                       // button select file
                       ImportEventInitial() ||
                       ImportEventLoadingCsv() ||
-                      ImportEventErrorLoadingCsv() =>
-                        SelectFileButtonComponent(event: event),
+                      ImportEventErrorLoadingCsv() => SelectFileButtonComponent(
+                        event: event,
+                      ),
                       // backward/forward buttons
                       ImportEventMappingColumns() ||
                       ImportEventValidatingMappedColumns() ||
@@ -98,8 +103,9 @@ class ImportView extends StatelessWidget {
                       ImportEventMappingColumnsValidated() ||
                       ImportEventMapAccounts() ||
                       ImportEventMapTransactionType() ||
-                      ImportEventMapCategories() =>
-                        NavigationButtonsComponent(event: event),
+                      ImportEventMapCategories() => NavigationButtonsComponent(
+                        event: event,
+                      ),
                       // just in case
                       ImportEventToDb() || null => const SizedBox(),
                     },

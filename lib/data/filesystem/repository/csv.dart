@@ -5,9 +5,8 @@ import "package:file_picker/file_picker.dart";
 import "package:flutter/foundation.dart";
 
 abstract base class CsvFilesystemRepository {
-  const factory CsvFilesystemRepository({
-    required FilePicker filePicker,
-  }) = _Impl;
+  const factory CsvFilesystemRepository({required FilePicker filePicker}) =
+      _Impl;
 
   Future<Stream<String>?> read();
 }

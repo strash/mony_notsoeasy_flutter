@@ -26,11 +26,11 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       case ImportEventMapCategories():
         _onCategoriesMapped(context);
       case ImportEventInitial() ||
-            ImportEventLoadingCsv() ||
-            ImportEventErrorLoadingCsv() ||
-            ImportEventValidatingMappedColumns() ||
-            ImportEventErrorMappingColumns() ||
-            ImportEventToDb():
+          ImportEventLoadingCsv() ||
+          ImportEventErrorLoadingCsv() ||
+          ImportEventValidatingMappedColumns() ||
+          ImportEventErrorMappingColumns() ||
+          ImportEventToDb():
         break;
     }
   }
@@ -65,8 +65,10 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       viewModel.setProtectedState(() {
         viewModel.steps = List<ImportModel>.from(viewModel.steps)
           ..add(currentColumn);
-        viewModel.currentStep =
-            ImportModelColumn(column: nextCol, columnKey: null);
+        viewModel.currentStep = ImportModelColumn(
+          column: nextCol,
+          columnKey: null,
+        );
       });
     }
   }
@@ -84,9 +86,10 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
         ..add(validation);
       viewModel.currentStep = accountModel;
     });
-    final accountColumn = validation.mappedColumns.where((e) {
-      return e.column == EImportColumn.account;
-    }).firstOrNull;
+    final accountColumn =
+        validation.mappedColumns.where((e) {
+          return e.column == EImportColumn.account;
+        }).firstOrNull;
     // single required account
     if (accountColumn == null || accountColumn.columnKey == null) {
       viewModel.setProtectedState(() {
@@ -103,9 +106,11 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
         }
       }
       viewModel.setProtectedState(() {
-        accountModel.accounts = accounts.map((e) {
-          return ImportModelAccountVO(originalTitle: e, account: null);
-        }).toList(growable: false);
+        accountModel.accounts = accounts
+            .map((e) {
+              return ImportModelAccountVO(originalTitle: e, account: null);
+            })
+            .toList(growable: false);
       });
     }
   }
@@ -121,8 +126,9 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     final validation =
         viewModel.steps.whereType<ImportModelColumnValidation>().firstOrNull;
     if (validation == null) throw ArgumentError.notNull();
-    final hasMappedTransactionType = validation.mappedColumns
-        .any((e) => e.column == EImportColumn.transactionType);
+    final hasMappedTransactionType = validation.mappedColumns.any(
+      (e) => e.column == EImportColumn.transactionType,
+    );
     final typeModel = ImportModelTransactionType(validation: validation);
     // NOTE: setting type model anyway
     viewModel.setProtectedState(() {

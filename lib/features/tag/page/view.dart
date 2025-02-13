@@ -91,7 +91,6 @@ class TagView extends StatelessWidget {
                 ),
               ),
             )
-
           // -> feed
           else
             SliverList.separated(
@@ -112,28 +111,28 @@ class TagView extends StatelessWidget {
 
                 return switch (item) {
                   FeedItemSection() => Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, .0),
-                      child: FeedSectionComponent(
+                    padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, .0),
+                    child: FeedSectionComponent(
+                      key: key,
+                      section: item,
+                      showDecimal: viewModel.isCentsVisible,
+                    ),
+                  ),
+                  FeedItemTransaction() => GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap:
+                        () => onTransactionPressed(context, item.transaction),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: FeedItemComponent(
                         key: key,
-                        section: item,
+                        transaction: item.transaction,
                         showDecimal: viewModel.isCentsVisible,
+                        showColors: viewModel.isColorsVisible,
+                        showTags: viewModel.isTagsVisible,
                       ),
                     ),
-                  FeedItemTransaction() => GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () =>
-                          onTransactionPressed(context, item.transaction),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: FeedItemComponent(
-                          key: key,
-                          transaction: item.transaction,
-                          showDecimal: viewModel.isCentsVisible,
-                          showColors: viewModel.isColorsVisible,
-                          showTags: viewModel.isTagsVisible,
-                        ),
-                      ),
-                    )
+                  ),
                 };
               },
             ),

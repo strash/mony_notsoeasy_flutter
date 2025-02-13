@@ -5,11 +5,7 @@ import "package:intl/intl.dart";
 /// - `nominative`: 1 год, месяц, день, программа и тд,
 /// - `genitive`: 2 года, месяца, дня, программы и тд,
 /// - `accusative`: 5 лет, месяцев, дней, программ и тд.
-enum EWordCaseHint {
-  nominative,
-  genitive,
-  accusative;
-}
+enum EWordCaseHint { nominative, genitive, accusative }
 
 extension IntEx on int {
   String transactionsCountDescription(String locale) {

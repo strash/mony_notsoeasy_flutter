@@ -8,12 +8,12 @@ final class SmoothInputBorder extends InputBorder {
   final SmoothRectangleBorder _shape;
 
   SmoothInputBorder(this.color)
-      : _shape = SmoothRectangleBorder(
-          side: BorderSide(color: color),
-          borderRadius: const SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
-          ),
-        );
+    : _shape = SmoothRectangleBorder(
+        side: BorderSide(color: color),
+        borderRadius: const SmoothBorderRadius.all(
+          SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
+        ),
+      );
 
   @override
   InputBorder copyWith({BorderSide? borderSide}) => SmoothInputBorder(color);

@@ -8,8 +8,7 @@ enum EChartTemporalView {
   month,
 
   /// To show a list of days in a week
-  week,
-  ;
+  week;
 
   static const EChartTemporalView defaultValue = month;
 }

@@ -20,10 +20,10 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       // NOTE: when a tag is created it doesn't mean that it attached to a
       // transaction so here we're doing nothing about this
       case EventAccountCreated() ||
-            EventCategoryCreated() ||
-            EventTagCreated() ||
-            EventSettingsThemeModeChanged() ||
-            EventSettingsDataDeletionRequested():
+          EventCategoryCreated() ||
+          EventTagCreated() ||
+          EventSettingsThemeModeChanged() ||
+          EventSettingsDataDeletionRequested():
         break;
 
       case EventAccountUpdated(value: final account):
@@ -81,8 +81,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         context.close();
 
       case EventTransactionCreated() ||
-            EventTransactionUpdated() ||
-            EventTransactionDeleted():
+          EventTransactionUpdated() ||
+          EventTransactionDeleted():
         final id = viewModel.category.id;
         final balance = await categoryService.getBalance(id: id);
         final feed = await Future.wait<List<TransactionModel>>(
@@ -114,9 +114,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.feed = List<TransactionModel>.from(
             viewModel.feed.map((e) {
               return e.copyWith(
-                tags: List<TagModel>.from(
-                  e.tags.where((t) => t.id != tag.id),
-                ),
+                tags: List<TagModel>.from(e.tags.where((t) => t.id != tag.id)),
               );
             }),
           );

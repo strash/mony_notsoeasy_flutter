@@ -16,15 +16,16 @@ final class OnDeleteTransactionPressed
         await sharedPrefService.getSettingsConfirmTransaction();
 
     if (!context.mounted) return;
-    final result = shouldConfirm
-        ? await AlertComponet.show(
-            context,
-            title: const Text("Удаление транзакции"),
-            description: const Text(
-              "Эту проверку можно отключить в настройках.",
-            ),
-          )
-        : EAlertResult.ok;
+    final result =
+        shouldConfirm
+            ? await AlertComponet.show(
+              context,
+              title: const Text("Удаление транзакции"),
+              description: const Text(
+                "Эту проверку можно отключить в настройках.",
+              ),
+            )
+            : EAlertResult.ok;
 
     if (!context.mounted || result == null) return;
 

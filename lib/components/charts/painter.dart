@@ -6,11 +6,7 @@ final class _Painter extends CustomPainter {
   final List<Map<String, dynamic>> data;
   final num maxValue;
 
-  _Painter({
-    required this.config,
-    required this.data,
-    required this.maxValue,
-  });
+  _Painter({required this.config, required this.data, required this.maxValue});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -20,13 +16,16 @@ final class _Painter extends CustomPainter {
     final thirdValue = maxValue / 3;
 
     // max legend width
-    final vMaxLegendWidth = config.padding +
-        [maxValue, maxValue - thirdValue, thirdValue, .0].map((e) {
-          return _measureLegend(
-            text: config.yFormatter(e),
-            style: config.legendStyle,
-          );
-        }).fold(.0, (prev, curr) => max(prev, curr.width));
+    final vMaxLegendWidth =
+        config.padding +
+        [maxValue, maxValue - thirdValue, thirdValue, .0]
+            .map((e) {
+              return _measureLegend(
+                text: config.yFormatter(e),
+                style: config.legendStyle,
+              );
+            })
+            .fold(.0, (prev, curr) => max(prev, curr.width));
 
     // marks
     paint.strokeWidth = 0;
@@ -52,26 +51,29 @@ final class _Painter extends CustomPainter {
 
         // mask for mark groups
         barMaxHeight = size.height - legendSize.height - 3.0;
-        final totalHeight =
-            y.fold(.0, (prev, curr) => prev + (curr["value"] as num));
+        final totalHeight = y.fold(
+          .0,
+          (prev, curr) => prev + (curr["value"] as num),
+        );
         final totalDisplayedHeight = max(
           markMinHeight,
           totalHeight.remap(.0, maxValue.toDouble(), .0, barMaxHeight),
         );
-        Path clipPath = Path()
-          ..moveTo(left, config.radius) // top left
-          ..arcToPoint(
-            Offset(left + config.radius, .0),
-            radius: Radius.circular(config.radius),
-          ) // top left radius
-          ..lineTo(left + barWidth - config.radius, .0) // top right
-          ..arcToPoint(
-            Offset(left + barWidth, config.radius),
-            radius: Radius.circular(config.radius),
-          ) // top right radius
-          ..lineTo(left + barWidth, totalDisplayedHeight) // bottom right
-          ..lineTo(left, totalDisplayedHeight) // bottom left
-          ..close();
+        Path clipPath =
+            Path()
+              ..moveTo(left, config.radius) // top left
+              ..arcToPoint(
+                Offset(left + config.radius, .0),
+                radius: Radius.circular(config.radius),
+              ) // top left radius
+              ..lineTo(left + barWidth - config.radius, .0) // top right
+              ..arcToPoint(
+                Offset(left + barWidth, config.radius),
+                radius: Radius.circular(config.radius),
+              ) // top right radius
+              ..lineTo(left + barWidth, totalDisplayedHeight) // bottom right
+              ..lineTo(left, totalDisplayedHeight) // bottom left
+              ..close();
         // invert vertically and offset to the right
         clipPath = clipPath.shift(
           Offset(config.padding * 0.5, barMaxHeight - totalDisplayedHeight),
@@ -117,8 +119,12 @@ final class _Painter extends CustomPainter {
     );
 
     // first middle vertical legend
-    final secondLineY =
-        thirdValue.remap(.0, maxValue.toDouble(), .0, barMaxHeight);
+    final secondLineY = thirdValue.remap(
+      .0,
+      maxValue.toDouble(),
+      .0,
+      barMaxHeight,
+    );
     _paintLegend(
       canvas: canvas,
       text: config.yFormatter(maxValue - thirdValue),
@@ -127,8 +133,12 @@ final class _Painter extends CustomPainter {
     );
 
     // second middle vertical legend
-    final thirdLineY =
-        (thirdValue * 2.0).remap(.0, maxValue.toDouble(), .0, barMaxHeight);
+    final thirdLineY = (thirdValue * 2.0).remap(
+      .0,
+      maxValue.toDouble(),
+      .0,
+      barMaxHeight,
+    );
     _paintLegend(
       canvas: canvas,
       text: config.yFormatter(thirdValue),
@@ -180,16 +190,18 @@ final class _Painter extends CustomPainter {
     if (config.showMedian &&
         config.medianLineColor != null &&
         config.medianStyle != null) {
-      final count = data
-          .where((e) => e["y"] != null && (e["y"] as List).isNotEmpty)
-          .length;
+      final count =
+          data
+              .where((e) => e["y"] != null && (e["y"] as List).isNotEmpty)
+              .length;
       final values = data.fold(.0, (prev, curr) {
         final y = curr["y"] as List<Map<String, dynamic>>?;
         if (y == null) return prev;
         return prev + y.fold(.0, (p, c) => p + (c["value"] as num? ?? .0));
       });
       final median = values / max(1, count);
-      final yPos = barMaxHeight -
+      final yPos =
+          barMaxHeight -
           (median.remap(.0, maxValue.toDouble(), .0, barMaxHeight));
       final medianPadding = config.medianPadding;
 

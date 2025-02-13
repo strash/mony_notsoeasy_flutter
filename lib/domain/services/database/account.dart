@@ -13,9 +13,9 @@ final class DomainAccountService extends BaseDatabaseService {
     required AccountDatabaseRepository accountRepo,
     required AccountDatabaseFactoryImpl accountFactory,
     required AccountBalanceDatabaseFactoryImpl accountBalanceFactory,
-  })  : _accountRepo = accountRepo,
-        _accountFactory = accountFactory,
-        _accountBalanceFactory = accountBalanceFactory;
+  }) : _accountRepo = accountRepo,
+       _accountFactory = accountFactory,
+       _accountBalanceFactory = accountBalanceFactory;
 
   Future<List<AccountModel>> search({String? query, required int page}) async {
     final dtos = await _accountRepo.search(

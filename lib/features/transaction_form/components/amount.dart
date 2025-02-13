@@ -44,11 +44,11 @@ class TransactionFormAmountComponent extends StatelessWidget {
                         colorFilter: ColorFilter.mode(
                           viewModel.isColorsVisible
                               ? switch (viewModel.typeController.value) {
-                                  ETransactionType.expense =>
-                                    theme.colorScheme.error,
-                                  ETransactionType.income =>
-                                    theme.colorScheme.secondary,
-                                }
+                                ETransactionType.expense =>
+                                  theme.colorScheme.error,
+                                ETransactionType.income =>
+                                  theme.colorScheme.secondary,
+                              }
                               : theme.colorScheme.onSurfaceVariant,
                           BlendMode.srcIn,
                         ),

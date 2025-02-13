@@ -13,12 +13,10 @@ class FeedView extends StatelessWidget {
   const FeedView({super.key});
 
   ValueKey<String> _pageKey(FeedPageState page) {
-    return ValueKey<String>(
-      switch (page) {
-        FeedPageStateAllAccounts() => page.accounts.map((e) => e.id).join(),
-        FeedPageStateSingleAccount() => page.account.id,
-      },
-    );
+    return ValueKey<String>(switch (page) {
+      FeedPageStateAllAccounts() => page.accounts.map((e) => e.id).join(),
+      FeedPageStateSingleAccount() => page.account.id,
+    });
   }
 
   @override
@@ -115,15 +113,17 @@ class FeedView extends StatelessWidget {
                                   ),
                                 FeedPageStateSingleAccount(:final account) =>
                                   FeedEmptyStateComponent(
-                                    color: viewModel.isColorsVisible
-                                        ? (ex?.from(account.colorName).color ??
-                                            theme.colorScheme.onSurface)
-                                        : theme.colorScheme.onSurface,
+                                    color:
+                                        viewModel.isColorsVisible
+                                            ? (ex
+                                                    ?.from(account.colorName)
+                                                    .color ??
+                                                theme.colorScheme.onSurface)
+                                            : theme.colorScheme.onSurface,
                                   ),
                               },
                             ),
                           )
-
                         // -> feed
                         else
                           SliverPadding(
@@ -146,37 +146,38 @@ class FeedView extends StatelessWidget {
 
                                 return switch (item) {
                                   FeedItemSection() => Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                        20.0,
-                                        30.0,
-                                        20.0,
-                                        .0,
+                                    padding: const EdgeInsets.fromLTRB(
+                                      20.0,
+                                      30.0,
+                                      20.0,
+                                      .0,
+                                    ),
+                                    child: FeedSectionComponent(
+                                      key: key,
+                                      section: item,
+                                      showDecimal: viewModel.isCentsVisible,
+                                    ),
+                                  ),
+                                  FeedItemTransaction() => GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap:
+                                        () => onTransactionPressed(
+                                          context,
+                                          item.transaction,
+                                        ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0,
                                       ),
-                                      child: FeedSectionComponent(
+                                      child: FeedItemComponent(
                                         key: key,
-                                        section: item,
+                                        transaction: item.transaction,
                                         showDecimal: viewModel.isCentsVisible,
+                                        showColors: viewModel.isColorsVisible,
+                                        showTags: viewModel.isTagsVisible,
                                       ),
                                     ),
-                                  FeedItemTransaction() => GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () => onTransactionPressed(
-                                        context,
-                                        item.transaction,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0,
-                                        ),
-                                        child: FeedItemComponent(
-                                          key: key,
-                                          transaction: item.transaction,
-                                          showDecimal: viewModel.isCentsVisible,
-                                          showColors: viewModel.isColorsVisible,
-                                          showTags: viewModel.isTagsVisible,
-                                        ),
-                                      ),
-                                    )
+                                  ),
                                 };
                               },
                             ),

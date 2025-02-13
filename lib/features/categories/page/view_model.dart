@@ -70,10 +70,7 @@ final class CategoriesViewModel extends ViewModelState<CategoriesPage> {
   Widget build(BuildContext context) {
     return ViewModel<CategoriesViewModel>(
       viewModel: this,
-      useCases: [
-        () => OnMenuAddPressed(),
-        () => OnCategoryPressed(),
-      ],
+      useCases: [() => OnMenuAddPressed(), () => OnCategoryPressed()],
       child: const CategoriesView(),
     );
   }

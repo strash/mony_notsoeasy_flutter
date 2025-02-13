@@ -14,9 +14,7 @@ class TagModel with _$TagModel {
 
 extension TagsModelEx on List<TagModel> {
   List<TagModel> merge(List<TagModel> other) {
-    return List<TagModel>.from(
-      where((e) => !other.any((i) => e.id == i.id)),
-    )
+    return List<TagModel>.from(where((e) => !other.any((i) => e.id == i.id)))
       ..addAll(other)
       ..sort((a, b) => a.title.compareTo(b.title));
   }

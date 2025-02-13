@@ -54,9 +54,7 @@ class TransactionFormBackgroundComponent extends StatelessWidget {
           curve: Curves.easeInOut,
           tween: _GradientTween(begin: begin, end: end),
           builder: (context, gradient, child) {
-            return DecoratedBox(
-              decoration: BoxDecoration(gradient: gradient),
-            );
+            return DecoratedBox(decoration: BoxDecoration(gradient: gradient));
           },
         );
       },

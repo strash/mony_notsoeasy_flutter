@@ -51,9 +51,7 @@ class SearchAppBarComponent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 // -> safe area
-                SizedBox(
-                  height: MediaQuery.paddingOf(context).top,
-                ),
+                SizedBox(height: MediaQuery.paddingOf(context).top),
 
                 // -> textinput and button close
                 Row(
@@ -127,27 +125,30 @@ class SearchAppBarComponent extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  suffixIcon: controller.text.trim().isNotEmpty
-                                      ? GestureDetector(
-                                          behavior: HitTestBehavior.opaque,
-                                          onTap: () => onClearPressed(context),
-                                          child: SizedBox.square(
-                                            dimension: 24.0,
-                                            child: Center(
-                                              child: SvgPicture.asset(
-                                                Assets.icons.xmarkCircleFill,
-                                                width: 24.0,
-                                                height: 24.0,
-                                                colorFilter: ColorFilter.mode(
-                                                  theme.colorScheme
-                                                      .onSurfaceVariant,
-                                                  BlendMode.srcIn,
+                                  suffixIcon:
+                                      controller.text.trim().isNotEmpty
+                                          ? GestureDetector(
+                                            behavior: HitTestBehavior.opaque,
+                                            onTap:
+                                                () => onClearPressed(context),
+                                            child: SizedBox.square(
+                                              dimension: 24.0,
+                                              child: Center(
+                                                child: SvgPicture.asset(
+                                                  Assets.icons.xmarkCircleFill,
+                                                  width: 24.0,
+                                                  height: 24.0,
+                                                  colorFilter: ColorFilter.mode(
+                                                    theme
+                                                        .colorScheme
+                                                        .onSurfaceVariant,
+                                                    BlendMode.srcIn,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        )
-                                      : null,
+                                          )
+                                          : null,
                                   contentPadding: const EdgeInsets.symmetric(
                                     vertical: 9.0,
                                   ),

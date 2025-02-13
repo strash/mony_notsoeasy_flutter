@@ -58,10 +58,7 @@ final class TagsViewModel extends ViewModelState<TagsPage> {
   Widget build(BuildContext context) {
     return ViewModel<TagsViewModel>(
       viewModel: this,
-      useCases: [
-        () => OnAddTagPressed(),
-        () => OnTagPressed(),
-      ],
+      useCases: [() => OnAddTagPressed(), () => OnTagPressed()],
       child: const TagsView(),
     );
   }

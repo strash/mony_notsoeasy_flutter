@@ -60,8 +60,9 @@ class SettingsView extends StatelessWidget {
               },
               children: [
                 SettingsGroupComponent(
-                  footer:
-                      const Text("Влияет на счета, категории и транзакции."),
+                  footer: const Text(
+                    "Влияет на счета, категории и транзакции.",
+                  ),
                   children: [
                     // -> theme mode
                     SettingsEntryComponent(
@@ -87,12 +88,14 @@ class SettingsView extends StatelessWidget {
                           builder: (context) {
                             return Text(
                               viewModel.isColorsVisible ? "Веселый" : "Скучный",
-                              style:
-                                  DefaultTextStyle.of(context).style.copyWith(
-                                        color: viewModel.isColorsVisible
-                                            ? theme.colorScheme.secondary
-                                            : theme.colorScheme.tertiary,
-                                      ),
+                              style: DefaultTextStyle.of(
+                                context,
+                              ).style.copyWith(
+                                color:
+                                    viewModel.isColorsVisible
+                                        ? theme.colorScheme.secondary
+                                        : theme.colorScheme.tertiary,
+                              ),
                             );
                           },
                         ),
@@ -108,12 +111,14 @@ class SettingsView extends StatelessWidget {
                       onTap: () => onCentsToggled(context),
                       title: const Text("Отображать копейки"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.isCentsVisible
-                            ? Assets.icons.checkmark
-                            : Assets.icons.xmark,
-                        color: viewModel.isCentsVisible
-                            ? theme.colorScheme.secondary
-                            : theme.colorScheme.error,
+                        icon:
+                            viewModel.isCentsVisible
+                                ? Assets.icons.checkmark
+                                : Assets.icons.xmark,
+                        color:
+                            viewModel.isCentsVisible
+                                ? theme.colorScheme.secondary
+                                : theme.colorScheme.error,
                       ),
                     ),
 
@@ -122,12 +127,14 @@ class SettingsView extends StatelessWidget {
                       onTap: () => onTagsToggled(context),
                       title: const Text("Отображать теги в ленте"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.isTagsVisible
-                            ? Assets.icons.checkmark
-                            : Assets.icons.xmark,
-                        color: viewModel.isTagsVisible
-                            ? theme.colorScheme.secondary
-                            : theme.colorScheme.error,
+                        icon:
+                            viewModel.isTagsVisible
+                                ? Assets.icons.checkmark
+                                : Assets.icons.xmark,
+                        color:
+                            viewModel.isTagsVisible
+                                ? theme.colorScheme.secondary
+                                : theme.colorScheme.error,
                       ),
                     ),
                   ],
@@ -135,8 +142,10 @@ class SettingsView extends StatelessWidget {
 
                 // -> default transaction type
                 SettingsGroupComponent(
-                  footer: const Text("При создании новой транзакции этот "
-                      "тип будет выбран по-умолчанию."),
+                  footer: const Text(
+                    "При создании новой транзакции этот "
+                    "тип будет выбран по-умолчанию.",
+                  ),
                   children: [
                     SettingsEntryComponent(
                       onTap: () => onTransactionToggled(context),
@@ -147,8 +156,7 @@ class SettingsView extends StatelessWidget {
                           builder: (context) {
                             return Text(
                               viewModel.defaultTransactionType.description,
-                              style: DefaultTextStyle.of(context)
-                                  .style
+                              style: DefaultTextStyle.of(context).style
                                   .copyWith(color: theme.colorScheme.secondary),
                             );
                           },
@@ -166,48 +174,56 @@ class SettingsView extends StatelessWidget {
                       onTap: () => onConfirmTransactionToggled(context),
                       title: const Text("Транзакций"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.confirmTransaction
-                            ? Assets.icons.checkmark
-                            : Assets.icons.xmark,
-                        color: viewModel.confirmTransaction
-                            ? theme.colorScheme.secondary
-                            : theme.colorScheme.error,
+                        icon:
+                            viewModel.confirmTransaction
+                                ? Assets.icons.checkmark
+                                : Assets.icons.xmark,
+                        color:
+                            viewModel.confirmTransaction
+                                ? theme.colorScheme.secondary
+                                : theme.colorScheme.error,
                       ),
                     ),
                     SettingsEntryComponent(
                       onTap: () => onConfirmAccountToggled(context),
                       title: const Text("Счетов"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.confirmAccount
-                            ? Assets.icons.checkmark
-                            : Assets.icons.xmark,
-                        color: viewModel.confirmAccount
-                            ? theme.colorScheme.secondary
-                            : theme.colorScheme.error,
+                        icon:
+                            viewModel.confirmAccount
+                                ? Assets.icons.checkmark
+                                : Assets.icons.xmark,
+                        color:
+                            viewModel.confirmAccount
+                                ? theme.colorScheme.secondary
+                                : theme.colorScheme.error,
                       ),
                     ),
                     SettingsEntryComponent(
                       onTap: () => onConfirmCategoryToggled(context),
                       title: const Text("Категорий"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.confirmCategory
-                            ? Assets.icons.checkmark
-                            : Assets.icons.xmark,
-                        color: viewModel.confirmCategory
-                            ? theme.colorScheme.secondary
-                            : theme.colorScheme.error,
+                        icon:
+                            viewModel.confirmCategory
+                                ? Assets.icons.checkmark
+                                : Assets.icons.xmark,
+                        color:
+                            viewModel.confirmCategory
+                                ? theme.colorScheme.secondary
+                                : theme.colorScheme.error,
                       ),
                     ),
                     SettingsEntryComponent(
                       onTap: () => onConfirmTagToggled(context),
                       title: const Text("Тегов"),
                       trailing: SettingsEntryTrailingIconComponent(
-                        icon: viewModel.confirmTag
-                            ? Assets.icons.checkmark
-                            : Assets.icons.xmark,
-                        color: viewModel.confirmTag
-                            ? theme.colorScheme.secondary
-                            : theme.colorScheme.error,
+                        icon:
+                            viewModel.confirmTag
+                                ? Assets.icons.checkmark
+                                : Assets.icons.xmark,
+                        color:
+                            viewModel.confirmTag
+                                ? theme.colorScheme.secondary
+                                : theme.colorScheme.error,
                       ),
                     ),
                   ],
@@ -217,24 +233,26 @@ class SettingsView extends StatelessWidget {
                   children: [
                     // -> import
                     SettingsEntryComponent(
-                      onTap: !viewModel.isImportInProgress
-                          ? () => onImportDataPressed(context)
-                          : null,
+                      onTap:
+                          !viewModel.isImportInProgress
+                              ? () => onImportDataPressed(context)
+                              : null,
                       title: const Text("Импорт"),
-                      trailing: viewModel.isImportInProgress
-                          ? const Padding(
-                              padding: EdgeInsets.only(right: 15.0),
-                              child: SizedBox.square(
-                                dimension: 24.0,
-                                child: CircularProgressIndicator.adaptive(
-                                  strokeWidth: 3.0,
+                      trailing:
+                          viewModel.isImportInProgress
+                              ? const Padding(
+                                padding: EdgeInsets.only(right: 15.0),
+                                child: SizedBox.square(
+                                  dimension: 24.0,
+                                  child: CircularProgressIndicator.adaptive(
+                                    strokeWidth: 3.0,
+                                  ),
                                 ),
+                              )
+                              : SettingsEntryTrailingIconComponent(
+                                icon: Assets.icons.squareAndArrowDown,
+                                color: theme.colorScheme.tertiary,
                               ),
-                            )
-                          : SettingsEntryTrailingIconComponent(
-                              icon: Assets.icons.squareAndArrowDown,
-                              color: theme.colorScheme.tertiary,
-                            ),
                     ),
 
                     // -> export
@@ -274,8 +292,7 @@ class SettingsView extends StatelessWidget {
                             return Center(
                               child: Text(
                                 "Удалить все данные",
-                                style: DefaultTextStyle.of(context)
-                                    .style
+                                style: DefaultTextStyle.of(context).style
                                     .copyWith(color: theme.colorScheme.error),
                               ),
                             );

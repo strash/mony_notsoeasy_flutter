@@ -18,10 +18,7 @@ final class OnEditPressed extends UseCase<Future<void>, TagModel> {
       context,
       showDragHandle: false,
       builder: (context, bottom) {
-        return TagFormPage(
-          keyboardHeight: bottom,
-          tag: TagVariantModel(value),
-        );
+        return TagFormPage(keyboardHeight: bottom, tag: TagVariantModel(value));
       },
     );
 

@@ -13,23 +13,27 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
     // go back
     switch (event) {
       case ImportEventInitial() ||
-            ImportEventLoadingCsv() ||
-            ImportEventErrorLoadingCsv() ||
-            ImportEventToDb():
+          ImportEventLoadingCsv() ||
+          ImportEventErrorLoadingCsv() ||
+          ImportEventToDb():
         return;
+
       case ImportEventMappingColumns():
         _stepBack(viewModel);
         if (viewModel.currentStep is ImportModelCsv) {
           subject.add(ImportEventInitial());
         }
+
       case ImportEventValidatingMappedColumns() ||
-            ImportEventErrorMappingColumns() ||
-            ImportEventMappingColumnsValidated():
+          ImportEventErrorMappingColumns() ||
+          ImportEventMappingColumnsValidated():
         _stepBack(viewModel);
         subject.add(ImportEventMappingColumns());
+
       case ImportEventMapAccounts():
         _stepBack(viewModel);
         subject.add(ImportEventMappingColumnsValidated());
+
       case ImportEventMapTransactionType():
         _stepBack(viewModel);
         subject.add(ImportEventMapAccounts());
@@ -37,13 +41,16 @@ final class OnBackwardPressed extends UseCase<Future<void>, ImportEvent?> {
           viewModel.additionalSteps--;
           viewModel.transactionTypeController.value = ETransactionType.expense;
         });
+
       case ImportEventMapCategories():
-        final validation = viewModel.steps
-            .whereType<ImportModelColumnValidation>()
-            .firstOrNull;
+        final validation =
+            viewModel.steps
+                .whereType<ImportModelColumnValidation>()
+                .firstOrNull;
         if (validation == null) throw ArgumentError.notNull();
-        if (validation.mappedColumns
-            .any((e) => e.column == EImportColumn.transactionType)) {
+        if (validation.mappedColumns.any(
+          (e) => e.column == EImportColumn.transactionType,
+        )) {
           _stepBack(viewModel);
           subject.add(ImportEventMapTransactionType());
         } else {

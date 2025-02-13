@@ -2,9 +2,8 @@ import "package:mony_app/data/database/database.dart";
 import "package:sqflite/sqflite.dart";
 
 abstract base class TransactionDatabaseRepository {
-  const factory TransactionDatabaseRepository({
-    required AppDatabase database,
-  }) = _Impl;
+  const factory TransactionDatabaseRepository({required AppDatabase database}) =
+      _Impl;
 
   Future<List<TransactionDto>> search({
     String? query,
@@ -79,8 +78,7 @@ final class _Impl
       final List<String?> args = [];
       final hasQuery = query != null && query.isNotEmpty;
       if (hasQuery) args.add(queryToGlob(query));
-      final maps = await db.rawQuery(
-        """
+      final maps = await db.rawQuery("""
 SELECT tr.* FROM ${table}_fzf_view AS tr_v
 LEFT JOIN $table AS tr ON tr_v.id = tr.id
 ${hasQuery ? "WHERE tr_v.value GLOB ?" : ""}
@@ -89,9 +87,7 @@ ORDER BY
 	tr.date DESC,
 	tr.updated DESC
 LIMIT $limit OFFSET $offset;
-""",
-        args,
-      );
+""", args);
       return maps.map(TransactionDto.fromJson).toList(growable: false);
     });
   }
@@ -115,16 +111,13 @@ LIMIT $limit OFFSET $offset;
     return resolve(() async {
       final db = await database.db;
       final where = _getWhere(accountIds, categoryIds, tagIds);
-      final maps = await db.rawQuery(
-        """
+      final maps = await db.rawQuery("""
 SELECT tr.* FROM $table AS tr
 LEFT JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
 ${where.$1}
 GROUP BY tr.id
 ORDER BY tr.date DESC;
-""",
-        where.$2,
-      );
+""", where.$2);
       return maps.map(TransactionDto.fromJson).toList(growable: false);
     });
   }
@@ -140,8 +133,7 @@ ORDER BY tr.date DESC;
     return resolve(() async {
       final db = await database.db;
       final where = _getWhere(accountIds, categoryIds, tagIds);
-      final maps = await db.rawQuery(
-        """
+      final maps = await db.rawQuery("""
 SELECT tr.* FROM $table AS tr
 LEFT JOIN transaction_tags AS tt ON tr.id = tt.transaction_id
 ${where.$1}
@@ -149,9 +141,7 @@ GROUP BY tr.id
 ORDER BY tr.date DESC
 LIMIT $limit
 OFFSET $offset;
-""",
-        where.$2,
-      );
+""", where.$2);
       return maps.map(TransactionDto.fromJson).toList(growable: false);
     });
   }
@@ -176,15 +166,12 @@ OFFSET $offset;
         args.add(transactionType);
       }
 
-      final maps = await db.rawQuery(
-        """
+      final maps = await db.rawQuery("""
 SELECT tr.* FROM $table AS tr
 LEFT JOIN categories AS c ON tr.category_id = c.id
 WHERE tr.date BETWEEN ? AND ? $where
 ORDER BY tr.date DESC;
-""",
-        args,
-      );
+""", args);
       return maps.map(TransactionDto.fromJson).toList(growable: false);
     });
   }
@@ -193,11 +180,7 @@ ORDER BY tr.date DESC;
   Future<TransactionDto?> getOne({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      final map = await db.query(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
+      final map = await db.query(table, where: "id = ?", whereArgs: [id]);
       if (map.isEmpty) return null;
       return TransactionDto.fromJson(map.first);
     });
@@ -233,11 +216,7 @@ ORDER BY tr.date DESC;
   Future<void> delete({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      await db.delete(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
+      await db.delete(table, where: "id = ?", whereArgs: [id]);
     });
   }
 

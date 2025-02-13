@@ -62,9 +62,10 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
                     fontSize: 20.0,
                     height: 1.0,
                     fontWeight: FontWeight.w500,
-                    color: isActive
-                        ? theme.colorScheme.onSecondary
-                        : theme.colorScheme.onSurface,
+                    color:
+                        isActive
+                            ? theme.colorScheme.onSecondary
+                            : theme.colorScheme.onSurface,
                   ),
                 ),
               ),

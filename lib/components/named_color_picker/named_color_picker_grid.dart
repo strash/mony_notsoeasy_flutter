@@ -24,14 +24,16 @@ class _ColorGrid extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           crossAxisCount: 6,
-          children: EColorName.values.map((e) {
-            return ListenableBuilder(
-              listenable: _NamedColorPickerValueProvider.of(context),
-              builder: (context, child) {
-                return _ColorGridItem(colorName: e);
-              },
-            );
-          }).toList(growable: false),
+          children: EColorName.values
+              .map((e) {
+                return ListenableBuilder(
+                  listenable: _NamedColorPickerValueProvider.of(context),
+                  builder: (context, child) {
+                    return _ColorGridItem(colorName: e);
+                  },
+                );
+              })
+              .toList(growable: false),
         ),
       ],
     );

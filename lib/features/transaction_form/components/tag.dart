@@ -5,10 +5,7 @@ import "package:google_fonts/google_fonts.dart";
 class TransactionFormTagComponent extends StatelessWidget {
   final WidgetBuilder builder;
 
-  const TransactionFormTagComponent({
-    super.key,
-    required this.builder,
-  });
+  const TransactionFormTagComponent({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {

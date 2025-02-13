@@ -9,8 +9,7 @@ enum EAccountType implements IDescriptable {
   credit(value: "credit"),
   cash(value: "cash"),
   savings(value: "savings"),
-  investment(value: "investment"),
-  ;
+  investment(value: "investment");
 
   final String value;
 
@@ -64,8 +63,8 @@ class AccountModel with _$AccountModel {
 extension AccountModelEx on List<AccountModel> {
   List<AccountModel> merge(List<AccountModel> other) {
     return List<AccountModel>.from(
-      where((e) => !other.any((i) => e.id == i.id)),
-    )
+        where((e) => !other.any((i) => e.id == i.id)),
+      )
       ..addAll(other)
       ..sort((a, b) => a.created.compareTo(b.created));
   }

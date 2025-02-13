@@ -12,10 +12,7 @@ import "package:provider/provider.dart";
 final class AccountPage extends StatefulWidget {
   final AccountModel account;
 
-  const AccountPage({
-    super.key,
-    required this.account,
-  });
+  const AccountPage({super.key, required this.account});
 
   @override
   ViewModelState<AccountPage> createState() => AccountViewModel();
@@ -62,10 +59,7 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
   Widget build(BuildContext context) {
     return ViewModel<AccountViewModel>(
       viewModel: this,
-      useCases: [
-        () => OnEditPressed(),
-        () => OnDeletePressed(),
-      ],
+      useCases: [() => OnEditPressed(), () => OnDeletePressed()],
       child: const AccountView(),
     );
   }

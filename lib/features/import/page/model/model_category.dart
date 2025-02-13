@@ -12,31 +12,34 @@ final class ImportModelCategory extends ImportModel {
   }
 
   Map<ImportModelTransactionTypeVO, List<ImportModelCategoryVariant>>
-      _mapCategories() {
+  _mapCategories() {
     return {
       for (final entry in typeModel.mappedEntriesByType)
         entry: Set<String>.from(
-          entry.entries
-              .map(
-                (e) => e.entries
-                    .where((c) => c.key.column == EImportColumn.category)
-                    .map((c) => c.value)
-                    .toList(growable: false),
-              )
-              .toList(growable: false)
-              .foldValue([], (prev, curr) => [...prev ?? [], ...curr]),
-        ).map((e) {
-          return ImportModelCategoryVariantEmpty(
-            originalTitle: e,
-            transactionType: entry.transactionType,
-          );
-        }).toList(growable: false),
+              entry.entries
+                  .map((e) {
+                    return e.entries
+                        .where((c) => c.key.column == EImportColumn.category)
+                        .map((c) => c.value)
+                        .toList(growable: false);
+                  })
+                  .toList(growable: false)
+                  .foldValue([], (prev, curr) => [...prev ?? [], ...curr]),
+            )
+            .map((e) {
+              return ImportModelCategoryVariantEmpty(
+                originalTitle: e,
+                transactionType: entry.transactionType,
+              );
+            })
+            .toList(growable: false),
     };
   }
 
   String numberOfCategoriesDescription(String locale) {
-    final count = mappedCategories.value.entries
-        .fold<int>(0, (prev, curr) => prev + curr.value.length);
+    final count = mappedCategories.value.entries.fold<int>(0, (prev, curr) {
+      return prev + curr.value.length;
+    });
     final formatter = NumberFormat.decimalPattern(locale);
     final formatted = formatter.format(count);
     return switch (count.wordCaseHint) {
@@ -72,9 +75,10 @@ final class ImportModelCategory extends ImportModel {
       final mapped = Map<ImportModelTransactionTypeVO, _TListVO>.from(
         mappedCategories.value,
       );
-      mapped[type] = List<ImportModelCategoryVariant>.from(list)
-        ..removeAt(index)
-        ..insert(index, category);
+      mapped[type] =
+          List<ImportModelCategoryVariant>.from(list)
+            ..removeAt(index)
+            ..insert(index, category);
       mappedCategories.value = mapped;
       break;
     }
@@ -82,9 +86,9 @@ final class ImportModelCategory extends ImportModel {
 
   @override
   bool isReady() {
-    return mappedCategories.value.entries.every(
-      (e) => e.value.every((c) => c is! ImportModelCategoryVariantEmpty),
-    );
+    return mappedCategories.value.entries.every((e) {
+      return e.value.every((c) => c is! ImportModelCategoryVariantEmpty);
+    });
   }
 
   @override

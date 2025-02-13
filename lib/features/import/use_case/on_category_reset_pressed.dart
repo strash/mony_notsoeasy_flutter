@@ -15,13 +15,11 @@ final class OnCategoryResetPressed
       throw ArgumentError.value(categoryModel);
     }
 
-    categoryModel.remap(
-      switch (value) {
-        ImportModelCategoryVariantEmpty() => value,
-        final ImportModelCategoryVariantModel item => item.toEmpty(),
-        final ImportModelCategoryVariantVO item => item.toEmpty(),
-      },
-    );
+    categoryModel.remap(switch (value) {
+      ImportModelCategoryVariantEmpty() => value,
+      final ImportModelCategoryVariantModel item => item.toEmpty(),
+      final ImportModelCategoryVariantVO item => item.toEmpty(),
+    });
 
     // NOTE: trigger the step navigation to check if model is ready
     viewModel.setProtectedState(() {});

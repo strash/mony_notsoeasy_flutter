@@ -42,25 +42,19 @@ class StatsView extends StatelessWidget {
           // -> account select
           const SliverPadding(
             padding: EdgeInsets.only(left: 15.0, top: 10.0, right: 15.0),
-            sliver: SliverToBoxAdapter(
-              child: StatsAccountSelectComponent(),
-            ),
+            sliver: SliverToBoxAdapter(child: StatsAccountSelectComponent()),
           ),
 
           // -> total amount
           const SliverPadding(
             padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
-            sliver: SliverToBoxAdapter(
-              child: StatsTotalAmountComponent(),
-            ),
+            sliver: SliverToBoxAdapter(child: StatsTotalAmountComponent()),
           ),
 
           // -> date range
           const SliverPadding(
             padding: EdgeInsets.only(left: 15.0, top: 20.0, right: 15.0),
-            sliver: SliverToBoxAdapter(
-              child: StatsDateRangeComponent(),
-            ),
+            sliver: SliverToBoxAdapter(child: StatsDateRangeComponent()),
           ),
 
           // -> transaction type selector
@@ -85,9 +79,7 @@ class StatsView extends StatelessWidget {
           // -> chart
           const SliverPadding(
             padding: EdgeInsets.only(left: 15.0, top: 15.0, right: 15.0),
-            sliver: SliverToBoxAdapter(
-              child: StatsChartComponent(),
-            ),
+            sliver: SliverToBoxAdapter(child: StatsChartComponent()),
           ),
 
           // TODO: фильтровать по категориям
@@ -120,32 +112,28 @@ class StatsView extends StatelessWidget {
 
                 return switch (item) {
                   FeedItemSection() => Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, .0),
-                      child: FeedSectionComponent(
+                    padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, .0),
+                    child: FeedSectionComponent(
+                      key: key,
+                      section: item,
+                      showDecimal: viewModel.isCentsVisible,
+                    ),
+                  ),
+                  FeedItemTransaction() => GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap:
+                        () => onTransactionPressed(context, item.transaction),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: FeedItemComponent(
                         key: key,
-                        section: item,
+                        transaction: item.transaction,
                         showDecimal: viewModel.isCentsVisible,
+                        showColors: viewModel.isColorsVisible,
+                        showTags: viewModel.isTagsVisible,
                       ),
                     ),
-                  FeedItemTransaction() => GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => onTransactionPressed(
-                        context,
-                        item.transaction,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0,
-                        ),
-                        child: FeedItemComponent(
-                          key: key,
-                          transaction: item.transaction,
-                          showDecimal: viewModel.isCentsVisible,
-                          showColors: viewModel.isColorsVisible,
-                          showTags: viewModel.isTagsVisible,
-                        ),
-                      ),
-                    )
+                  ),
                 };
               },
             ),

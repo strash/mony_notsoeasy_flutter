@@ -79,9 +79,7 @@ final class TagFormViewModel extends ViewModelState<TagFormPage> {
   Widget build(BuildContext context) {
     return ViewModel<TagFormViewModel>(
       viewModel: this,
-      useCases: [
-        () => OnSubmitPressed(),
-      ],
+      useCases: [() => OnSubmitPressed()],
       child: TagFormView(keyboardHeight: widget.keyboardHeight),
     );
   }

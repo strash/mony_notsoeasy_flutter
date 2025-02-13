@@ -26,10 +26,7 @@ class SearchTabComponent extends StatelessWidget {
     final rect = RelativeRect.fromRect(
       Rect.fromPoints(
         box.localToGlobal(Offset.zero, ancestor: overlay),
-        box.localToGlobal(
-          box.size.bottomRight(Offset.zero),
-          ancestor: overlay,
-        ),
+        box.localToGlobal(box.size.bottomRight(Offset.zero), ancestor: overlay),
       ),
       Offset.zero & overlay.size,
     );
@@ -44,10 +41,7 @@ class SearchTabComponent extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: () => _onTap(context),
       child: TweenAnimationBuilder<double>(
-        tween: Tween<double>(
-          begin: .0,
-          end: isActive ? 1.0 : .0,
-        ),
+        tween: Tween<double>(begin: .0, end: isActive ? 1.0 : .0),
         duration: Durations.short3,
         builder: (context, value, child) {
           return DecoratedBox(
@@ -57,10 +51,7 @@ class SearchTabComponent extends StatelessWidget {
               ),
               shape: const SmoothRectangleBorder(
                 borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(
-                    cornerRadius: 13.0,
-                    cornerSmoothing: 0.6,
-                  ),
+                  SmoothRadius(cornerRadius: 13.0, cornerSmoothing: 0.6),
                 ),
               ),
             ),

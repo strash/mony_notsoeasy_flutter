@@ -2,9 +2,7 @@ import "package:mony_app/data/database/database.dart";
 import "package:sqflite/sqflite.dart";
 
 abstract base class TagDatabaseRepository {
-  const factory TagDatabaseRepository({
-    required AppDatabase database,
-  }) = _Impl;
+  const factory TagDatabaseRepository({required AppDatabase database}) = _Impl;
 
   Future<List<TagDto>> search({
     String? query,
@@ -17,15 +15,9 @@ abstract base class TagDatabaseRepository {
 
   Future<TagBalanceDto?> getBalance({required String id});
 
-  Future<List<TagDto>> getAll({
-    List<String>? ids,
-    String? transactionId,
-  });
+  Future<List<TagDto>> getAll({List<String>? ids, String? transactionId});
 
-  Future<List<TagDto>> getMany({
-    required int limit,
-    required int offset,
-  });
+  Future<List<TagDto>> getMany({required int limit, required int offset});
 
   Future<TagDto?> getOne({String? id, String? title});
 
@@ -69,8 +61,7 @@ final class _Impl
         q.add("t_v.id NOT IN (${getInArguments(excludeIds)})");
         args.addAll(excludeIds);
       }
-      final maps = await db.rawQuery(
-        """
+      final maps = await db.rawQuery("""
 SELECT id, created, updated, title
 FROM (
 	SELECT t.*, MAX(tr.date) AS date
@@ -86,9 +77,7 @@ ORDER BY
 	updated DESC,
 	title ASC
 LIMIT $limit OFFSET $offset;
-""",
-        args,
-      );
+""", args);
       return maps.map(TagDto.fromJson).toList(growable: false);
     });
   }
@@ -128,15 +117,12 @@ LIMIT $limit OFFSET $offset;
       final List<Map<String, Object?>> maps;
       if (transactionId != null) {
         // NOTE: we need to sort here by `created` because of transactions
-        maps = await db.rawQuery(
-          """
+        maps = await db.rawQuery("""
 SELECT t.* FROM transaction_tags AS tt
 RIGHT JOIN $table AS t ON tt.tag_id = t.id
 WHERE ${where?.$1}
 ORDER BY tt.created ASC;
-""",
-          where?.$2,
-        );
+""", where?.$2);
       } else {
         final q = where != null ? "WHERE ${where.$1}" : "";
         maps = await db.rawQuery(
@@ -172,18 +158,14 @@ ORDER BY tt.created ASC;
       final db = await database.db;
       final where = switch ((id, title)) {
         (final String id, final String title) => (
-            "id = ? AND title = ?",
-            [id, title]
-          ),
+          "id = ? AND title = ?",
+          [id, title],
+        ),
         (final String id, null) => ("id = ?", [id]),
         (null, final String title) => ("title = ?", [title]),
         (null, null) => throw UnimplementedError(),
       };
-      final map = await db.query(
-        table,
-        where: where.$1,
-        whereArgs: where.$2,
-      );
+      final map = await db.query(table, where: where.$1, whereArgs: where.$2);
       if (map.isEmpty) return null;
       return TagDto.fromJson(map.first);
     });
@@ -219,11 +201,7 @@ ORDER BY tt.created ASC;
   Future<void> delete({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      await db.delete(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
+      await db.delete(table, where: "id = ?", whereArgs: [id]);
     });
   }
 

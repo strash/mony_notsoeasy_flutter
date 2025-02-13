@@ -33,9 +33,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
     switch (event) {
       case EventCategoryCreated() ||
-            EventTagCreated() ||
-            EventSettingsThemeModeChanged() ||
-            EventSettingsDataDeletionRequested():
+          EventTagCreated() ||
+          EventSettingsThemeModeChanged() ||
+          EventSettingsDataDeletionRequested():
         break;
 
       case EventAccountCreated():
@@ -69,16 +69,25 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         const _OnTagDeleted().call(context, viewModel, event);
 
       case EventSettingsColorsVisibilityChanged():
-        const _OnSettingsColorsVisibilityChanged()
-            .call(context, viewModel, event);
+        const _OnSettingsColorsVisibilityChanged().call(
+          context,
+          viewModel,
+          event,
+        );
 
       case EventSettingsCentsVisibilityChanged():
-        const _OnSettingsCentsVisibilityChanged()
-            .call(context, viewModel, event);
+        const _OnSettingsCentsVisibilityChanged().call(
+          context,
+          viewModel,
+          event,
+        );
 
       case EventSettingsTagsVisibilityChanged():
-        const _OnSettingsTagsVisibilityChanged()
-            .call(context, viewModel, event);
+        const _OnSettingsTagsVisibilityChanged().call(
+          context,
+          viewModel,
+          event,
+        );
 
       case EventDataImported():
         const _OnDataImported().call(context, viewModel, event);

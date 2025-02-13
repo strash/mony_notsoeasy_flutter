@@ -22,15 +22,15 @@ final class DomainTransactionService extends BaseDatabaseService {
     required TagDatabaseFactoryImpl tagFactory,
     required AccountDatabaseFactoryImpl accountFactory,
     required CategoryDatabaseFactoryImpl categoryFactory,
-  })  : _transactionRepo = transactionRepo,
-        _transactionTagRepo = transactionTagRepo,
-        _tagRepo = tagRepo,
-        _accountRepo = accountRepo,
-        _categoryRepo = categoryRepo,
-        _transactionFactory = transactionFactory,
-        _tagFactory = tagFactory,
-        _accountFactory = accountFactory,
-        _categoryFactory = categoryFactory;
+  }) : _transactionRepo = transactionRepo,
+       _transactionTagRepo = transactionTagRepo,
+       _tagRepo = tagRepo,
+       _accountRepo = accountRepo,
+       _categoryRepo = categoryRepo,
+       _transactionFactory = transactionFactory,
+       _tagFactory = tagFactory,
+       _accountFactory = accountFactory,
+       _categoryFactory = categoryFactory;
 
   @override
   int get perPage => 40;
@@ -103,10 +103,13 @@ final class DomainTransactionService extends BaseDatabaseService {
     final categoryDto = await _categoryRepo.getOne(id: dto.categoryId);
     if (categoryDto == null) return null;
     final tagDtos = await _tagRepo.getAll(transactionId: id);
-    final model = _transactionFactory.toModel(dto)
-      ..addAccount(account: _accountFactory.toModel(accountDto))
-      ..addCategory(category: _categoryFactory.toModel(categoryDto))
-      ..addTags(tags: tagDtos.map(_tagFactory.toModel).toList(growable: false));
+    final model =
+        _transactionFactory.toModel(dto)
+          ..addAccount(account: _accountFactory.toModel(accountDto))
+          ..addCategory(category: _categoryFactory.toModel(categoryDto))
+          ..addTags(
+            tags: tagDtos.map(_tagFactory.toModel).toList(growable: false),
+          );
     return model.build();
   }
 
@@ -202,8 +205,9 @@ final class DomainTransactionService extends BaseDatabaseService {
     final categoryDto = await _categoryRepo.getOne(id: dto.categoryId);
     if (accountDto == null || categoryDto == null) return null;
     // delete old transaction tags
-    final oldTransactionTagDtos =
-        await _transactionTagRepo.getAll(transactionId: transaction.id);
+    final oldTransactionTagDtos = await _transactionTagRepo.getAll(
+      transactionId: transaction.id,
+    );
     await Future.wait(
       oldTransactionTagDtos.map((e) => _transactionTagRepo.delete(id: e.id)),
     );
@@ -259,10 +263,12 @@ final class DomainTransactionService extends BaseDatabaseService {
   }
 
   Future<
-      ({
-        List<Map<String, dynamic>> transactions,
-        List<Map<String, dynamic>> transactionTags,
-      })> dumpData() async {
+    ({
+      List<Map<String, dynamic>> transactions,
+      List<Map<String, dynamic>> transactionTags,
+    })
+  >
+  dumpData() async {
     return (
       transactions: await _transactionRepo.dump(),
       transactionTags: await _transactionTagRepo.dump(),
@@ -289,23 +295,24 @@ final class DomainTransactionService extends BaseDatabaseService {
     );
     final List<TransactionModel> models = [];
     for (final (index, dto) in dtos.indexed) {
-      final model = _transactionFactory.toModel(dto)
-        ..addAccount(
-          account: _accountFactory.toModel(
-            accountDtos.singleWhere((e) => e.id == dto.accountId),
-          ),
-        )
-        ..addCategory(
-          category: _categoryFactory.toModel(
-            categoryDtos.singleWhere((e) => e.id == dto.categoryId),
-          ),
-        )
-        ..addTags(
-          tags: tagDtos
-              .elementAt(index)
-              .map<TagModel>(_tagFactory.toModel)
-              .toList(growable: false),
-        );
+      final model =
+          _transactionFactory.toModel(dto)
+            ..addAccount(
+              account: _accountFactory.toModel(
+                accountDtos.singleWhere((e) => e.id == dto.accountId),
+              ),
+            )
+            ..addCategory(
+              category: _categoryFactory.toModel(
+                categoryDtos.singleWhere((e) => e.id == dto.categoryId),
+              ),
+            )
+            ..addTags(
+              tags: tagDtos
+                  .elementAt(index)
+                  .map<TagModel>(_tagFactory.toModel)
+                  .toList(growable: false),
+            );
       models.add(model.build());
     }
     return models;

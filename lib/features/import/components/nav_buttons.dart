@@ -8,10 +8,7 @@ import "package:mony_app/gen/assets.gen.dart";
 class NavigationButtonsComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const NavigationButtonsComponent({
-    super.key,
-    this.event,
-  });
+  const NavigationButtonsComponent({super.key, this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +16,8 @@ class NavigationButtonsComponent extends StatelessWidget {
     final viewModel = context.viewModel<ImportViewModel>();
     final onBackwardPressed = viewModel<OnBackwardPressed>();
     final onForwardPressed = viewModel<OnForwardPressed>();
-    final backEnabled = event is! ImportEventInitial &&
+    final backEnabled =
+        event is! ImportEventInitial &&
         event is! ImportEventLoadingCsv &&
         event is! ImportEventErrorLoadingCsv &&
         event is! ImportEventValidatingMappedColumns;
@@ -51,9 +49,10 @@ class NavigationButtonsComponent extends StatelessWidget {
         // -> button next
         Expanded(
           child: FilledButton(
-            onPressed: viewModel.currentStep.isReady()
-                ? () => onForwardPressed(context, event)
-                : null,
+            onPressed:
+                viewModel.currentStep.isReady()
+                    ? () => onForwardPressed(context, event)
+                    : null,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

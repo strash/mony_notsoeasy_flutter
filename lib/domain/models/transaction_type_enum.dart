@@ -2,8 +2,7 @@ import "package:mony_app/app/descriptable/descriptable.dart";
 
 enum ETransactionType implements IDescriptable {
   expense(value: "expense"),
-  income(value: "income"),
-  ;
+  income(value: "income");
 
   final String value;
 

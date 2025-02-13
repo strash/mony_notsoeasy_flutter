@@ -38,9 +38,10 @@ class _Month extends StatelessWidget {
                 child: Center(
                   child: SizedBox(
                     height: height,
-                    child: !isEmpty
-                        ? childDelegate.build(context, controller, current)
-                        : const SizedBox(),
+                    child:
+                        !isEmpty
+                            ? childDelegate.build(context, controller, current)
+                            : const SizedBox(),
                   ),
                 ),
               );

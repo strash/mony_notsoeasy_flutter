@@ -45,10 +45,7 @@ class SettingsGroupComponent extends StatelessWidget {
               color: theme.colorScheme.surfaceContainer,
               shape: const SmoothRectangleBorder(
                 borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(
-                    cornerRadius: 15.0,
-                    cornerSmoothing: 0.6,
-                  ),
+                  SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
                 ),
               ),
             ),
@@ -57,8 +54,9 @@ class SettingsGroupComponent extends StatelessWidget {
               separatorBuilder: (context, index) {
                 return SizedBox.fromSize(
                   size: const Size.fromHeight(1.0),
-                  child:
-                      ColoredBox(color: theme.colorScheme.surfaceContainerLow),
+                  child: ColoredBox(
+                    color: theme.colorScheme.surfaceContainerLow,
+                  ),
                 );
               },
               children: children,

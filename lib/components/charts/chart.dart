@@ -13,38 +13,35 @@ final class ChartComponent extends StatelessWidget {
   final List<ChartMarkComponent> data;
   final ChartConfig config;
 
-  ChartComponent({
-    super.key,
-    required this.data,
-    required this.config,
-  })  : assert(
-          EChartMark.values.every((mark) => data.every((e) => e.type == mark)),
-          "every mark should be the same EChartMark type",
-        ),
-        assert(
-          data.every((e) => e.x is ChartPlottableValue<num>) ||
-              data.every((e) => e.x is ChartPlottableValue<DateTime>) ||
-              data.every((e) => e.x is ChartPlottableValue<String>),
-          "every X should be the same plottable type",
-        ),
-        assert(
-          (data.every((e) => e.y is ChartPlottableValue<num>) ||
-              data.every((e) => e.y is ChartPlottableValue<DateTime>) ||
-              data.every((e) => e.y is ChartPlottableValue<String>)),
-          "every Y should be the same plottable type",
-        ),
-        assert(
-          data.every((e) => e.groupBy == null) ||
-              data.every((e) => e.groupBy is Object),
-          "every groupBy should be the same type or null",
-        ),
-        assert(
-          config.showMedian == false ||
-              config.showMedian == true &&
-                  config.medianLineColor != null &&
-                  config.medianStyle != null,
-          "to show median provide medianColor and medianStyle",
-        );
+  ChartComponent({super.key, required this.data, required this.config})
+    : assert(
+        EChartMark.values.every((mark) => data.every((e) => e.type == mark)),
+        "every mark should be the same EChartMark type",
+      ),
+      assert(
+        data.every((e) => e.x is ChartPlottableValue<num>) ||
+            data.every((e) => e.x is ChartPlottableValue<DateTime>) ||
+            data.every((e) => e.x is ChartPlottableValue<String>),
+        "every X should be the same plottable type",
+      ),
+      assert(
+        (data.every((e) => e.y is ChartPlottableValue<num>) ||
+            data.every((e) => e.y is ChartPlottableValue<DateTime>) ||
+            data.every((e) => e.y is ChartPlottableValue<String>)),
+        "every Y should be the same plottable type",
+      ),
+      assert(
+        data.every((e) => e.groupBy == null) ||
+            data.every((e) => e.groupBy is Object),
+        "every groupBy should be the same type or null",
+      ),
+      assert(
+        config.showMedian == false ||
+            config.showMedian == true &&
+                config.medianLineColor != null &&
+                config.medianStyle != null,
+        "to show median provide medianColor and medianStyle",
+      );
 
   List<Map<String, dynamic>> _prepareData(BuildContext context) {
     final locale = Localizations.localeOf(context);
@@ -179,11 +176,7 @@ final class ChartComponent extends StatelessWidget {
       child: CustomPaint(
         key: Key(data.toString()),
         size: Size.infinite,
-        painter: _Painter(
-          config: config,
-          data: data,
-          maxValue: value,
-        ),
+        painter: _Painter(config: config, data: data, maxValue: value),
       ),
     );
   }

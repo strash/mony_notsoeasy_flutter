@@ -27,9 +27,12 @@ mixin DatabaseRepositoryMixin {
   /// искать с помощью LIKE нельзя в нашем случае.
   String? queryToGlob(String? query) {
     if (query == null || query.characters.isEmpty) return null;
-    final join = query.characters.fold<List<String>>([], (prev, curr) {
-      return prev..addAll(["[", curr.toLowerCase(), curr.toUpperCase(), "]"]);
-    }).join("*");
+    final join = query.characters
+        .fold<List<String>>([], (prev, curr) {
+          return prev
+            ..addAll(["[", curr.toLowerCase(), curr.toUpperCase(), "]"]);
+        })
+        .join("*");
     return "*$join*";
   }
 }

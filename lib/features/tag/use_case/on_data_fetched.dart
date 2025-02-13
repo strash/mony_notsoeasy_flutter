@@ -6,10 +6,7 @@ import "package:provider/provider.dart";
 
 final class OnDataFetched extends UseCase<Future<void>, TagViewModel> {
   @override
-  Future<void> call(
-    BuildContext context, [
-    TagViewModel? viewModel,
-  ]) async {
+  Future<void> call(BuildContext context, [TagViewModel? viewModel]) async {
     if (viewModel == null) throw ArgumentError.notNull();
     if (!viewModel.canLoadMore) return;
 

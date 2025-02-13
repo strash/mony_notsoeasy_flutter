@@ -8,10 +8,7 @@ import "package:mony_app/gen/assets.gen.dart";
 class CategoriesAddButtonComponent extends StatelessWidget {
   final UseCase<Future<void>, ECategoriesMenuItem> onTap;
 
-  const CategoriesAddButtonComponent({
-    super.key,
-    required this.onTap,
-  });
+  const CategoriesAddButtonComponent({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

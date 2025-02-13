@@ -2,20 +2,18 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:mony_app/components/components.dart";
 
-typedef TPopupButtonBuilder = Widget Function(
-  BuildContext context,
-  bool isOpened,
-  VoidCallback activate,
-);
+typedef TPopupButtonBuilder =
+    Widget Function(BuildContext context, bool isOpened, VoidCallback activate);
 
 typedef TPopupBuilder = TPopupButtonProxyBuilder;
 
-typedef TPopupButtonProxyBuilder = Widget Function(
-  BuildContext context,
-  double animation,
-  Rect proxyRect,
-  VoidCallback dismiss,
-);
+typedef TPopupButtonProxyBuilder =
+    Widget Function(
+      BuildContext context,
+      double animation,
+      Rect proxyRect,
+      VoidCallback dismiss,
+    );
 
 class PopupButtonComponent extends StatefulWidget {
   final TPopupButtonBuilder builder;

@@ -9,10 +9,7 @@ import "package:mony_app/features/import/use_case/use_case.dart";
 class ImportMapCategoriesPage extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportMapCategoriesPage({
-    super.key,
-    this.event,
-  });
+  const ImportMapCategoriesPage({super.key, this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +65,9 @@ class ImportMapCategoriesPage extends StatelessWidget {
         ValueListenableBuilder(
           valueListenable: categoryModel.mappedCategories,
           builder: (context, categories, child) {
-            final filtered =
-                categories.entries.where((e) => e.value.isNotEmpty);
+            final filtered = categories.entries.where(
+              (e) => e.value.isNotEmpty,
+            );
 
             return SeparatedComponent.builder(
               itemCount: filtered.length,
@@ -81,12 +79,12 @@ class ImportMapCategoriesPage extends StatelessWidget {
 
                 return ImportCategorySectionComponent(
                   transactionType: key.transactionType,
-                  categories: value
-                    ..sort((a, b) {
-                      return a.originalTitle
-                          .toLowerCase()
-                          .compareTo(b.originalTitle.toLowerCase());
-                    }),
+                  categories:
+                      value..sort((a, b) {
+                        return a.originalTitle.toLowerCase().compareTo(
+                          b.originalTitle.toLowerCase(),
+                        );
+                      }),
                   onTap: onCategoryPressed,
                   onReset: onCategoryResetPressed,
                 );

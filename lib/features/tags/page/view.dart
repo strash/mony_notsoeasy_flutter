@@ -49,7 +49,6 @@ class TagsView extends StatelessWidget {
                 ),
               ),
             )
-
           // -> tags
           else
             SliverPadding(
@@ -74,11 +73,7 @@ class TagsView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Row(
-                        children: [
-                          Flexible(
-                            child: TagComponent(tag: item),
-                          ),
-                        ],
+                        children: [Flexible(child: TagComponent(tag: item))],
                       ),
                     ),
                   );

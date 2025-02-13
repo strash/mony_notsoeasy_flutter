@@ -11,10 +11,7 @@ import "package:mony_app/gen/assets.gen.dart";
 class FeedAddButtonComponent extends StatelessWidget {
   final UseCase<Future<void>, EFeedMenuItem> onTap;
 
-  const FeedAddButtonComponent({
-    super.key,
-    required this.onTap,
-  });
+  const FeedAddButtonComponent({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +37,9 @@ class FeedAddButtonComponent extends StatelessWidget {
                       sigmaY: kTranslucentPanelBlurSigma,
                     ),
                     child: ColoredBox(
-                      color: theme.colorScheme.surfaceContainer
-                          .withValues(alpha: .5),
+                      color: theme.colorScheme.surfaceContainer.withValues(
+                        alpha: .5,
+                      ),
                       child: Center(
                         child: SvgPicture.asset(
                           Assets.icons.plusSemibold,

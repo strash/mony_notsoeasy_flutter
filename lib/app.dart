@@ -68,10 +68,7 @@ class _MonyAppState extends State<MonyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale("en", "EN"),
-        Locale("ru", "RU"),
-      ],
+      supportedLocales: const [Locale("en", "EN"), Locale("ru", "RU")],
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         return NavigatorWrapper(

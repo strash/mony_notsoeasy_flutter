@@ -17,16 +17,19 @@ final class OnDeletePressed extends UseCase<Future<void>, AccountModel> {
     final shouldConfirm = await sharedPrefService.getSettingsConfirmAccount();
 
     if (!context.mounted) return;
-    final result = shouldConfirm
-        ? await AlertComponet.show(
-            context,
-            title: const Text("Удаление счета"),
-            description: const Text(
-              "Вместе со счетом будут удалены все транзакции, связанные с этим "
-              "счетом. Эту проверку можно отключить в настройках.",
-            ),
-          )
-        : EAlertResult.ok;
+    final EAlertResult? result;
+    if (shouldConfirm) {
+      result = await AlertComponet.show(
+        context,
+        title: const Text("Удаление счета"),
+        description: const Text(
+          "Вместе со счетом будут удалены все транзакции, связанные с "
+          "этим счетом. Эту проверку можно отключить в настройках.",
+        ),
+      );
+    } else {
+      result = EAlertResult.ok;
+    }
 
     if (!context.mounted || result == null) return;
 

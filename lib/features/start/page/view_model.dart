@@ -15,9 +15,7 @@ final class StartViewModel extends ViewModelState<StartPage> {
   Widget build(BuildContext context) {
     return ViewModel<StartViewModel>(
       viewModel: this,
-      useCases: [
-        () => OnButtonStartPressed(),
-      ],
+      useCases: [() => OnButtonStartPressed()],
       child: const StartView(),
     );
   }

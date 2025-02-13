@@ -18,8 +18,7 @@ enum EColorName {
   maximumBluePurple,
   richBrilliantLavender,
   orchid,
-  cadet,
-  ;
+  cadet;
 
   static EColorName get defaultValue => vividMalachite;
 
@@ -53,8 +52,7 @@ final class ColorExtension extends ThemeExtension<ColorExtension> {
   @override
   ThemeExtension<ColorExtension> copyWith({List<ColorWithName>? palette}) {
     return ColorExtension(
-      palette: this
-          .palette
+      palette: this.palette
           .map((e) => palette?.where((i) => e.name == i.name).firstOrNull ?? e)
           .toList(growable: false),
     );
@@ -63,11 +61,14 @@ final class ColorExtension extends ThemeExtension<ColorExtension> {
   @override
   ThemeExtension<ColorExtension> lerp(ColorExtension other, double t) {
     return ColorExtension(
-      palette: palette.map((e) {
-        return e.copyWith(
-          color: Color.lerp(e.color, other.from(e.name).color, t) ?? e.color,
-        );
-      }).toList(growable: false),
+      palette: palette
+          .map((e) {
+            return e.copyWith(
+              color:
+                  Color.lerp(e.color, other.from(e.name).color, t) ?? e.color,
+            );
+          })
+          .toList(growable: false),
     );
   }
 }

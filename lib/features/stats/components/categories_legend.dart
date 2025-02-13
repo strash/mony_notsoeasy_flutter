@@ -65,17 +65,19 @@ class StatsCategoriesLegendComponent extends StatelessWidget {
           },
           itemBuilder: (context, index) {
             final item = categories.elementAt(index);
-            final value = account != null
-                ? item.$1.currency(
-                    locale: locale.languageCode,
-                    name: account!.currency.name,
-                    symbol: account!.currency.symbol,
-                    showDecimal: isCentsVisible,
-                  )
-                : formatter.format(item.$1);
+            final value =
+                account != null
+                    ? item.$1.currency(
+                      locale: locale.languageCode,
+                      name: account!.currency.name,
+                      symbol: account!.currency.symbol,
+                      showDecimal: isCentsVisible,
+                    )
+                    : formatter.format(item.$1);
             final color = data.elementAt(index).$2;
-            final percent =
-                formatter.format(item.$1 * 100 / max(1.0, totalCount));
+            final percent = formatter.format(
+              item.$1 * 100 / max(1.0, totalCount),
+            );
 
             return Row(
               mainAxisSize: MainAxisSize.min,

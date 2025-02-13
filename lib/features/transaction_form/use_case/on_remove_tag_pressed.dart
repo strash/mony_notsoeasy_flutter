@@ -11,9 +11,9 @@ final class OnRemoveTagPressed extends UseCase<void, TransactionTagVariant> {
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
     viewModel.setProtectedState(() {
-      viewModel.attachedTags =
-          List<TransactionTagVariant>.from(viewModel.attachedTags)
-            ..remove(value);
+      viewModel.attachedTags = List<TransactionTagVariant>.from(
+        viewModel.attachedTags,
+      )..remove(value);
     });
   }
 }

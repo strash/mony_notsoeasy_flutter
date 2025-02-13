@@ -10,19 +10,16 @@ class EntryListRowComponent extends StatelessWidget {
   final MapEntry<String, String> entry;
   final ImportEvent? event;
 
-  const EntryListRowComponent({
-    super.key,
-    required this.entry,
-    this.event,
-  });
+  const EntryListRowComponent({super.key, required this.entry, this.event});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final column = viewModel.mappedColumns
-        .where((e) => e.columnKey == entry.key)
-        .firstOrNull;
+    final column =
+        viewModel.mappedColumns
+            .where((e) => e.columnKey == entry.key)
+            .firstOrNull;
     final activeColumn = viewModel.currentColumn;
     final onColumnSelected = viewModel<OnColumnSelected>();
 
@@ -79,14 +76,17 @@ class EntryListRowComponent extends StatelessWidget {
             // -> selection
             AnimatedOpacity(
               duration: Durations.short2,
-              opacity: (activeColumn != null &&
-                          activeColumn.columnKey == entry.key) ||
-                      (column?.columnKey == entry.key)
-                  ? 1.0
-                  : 0.0,
+              opacity:
+                  (activeColumn != null &&
+                              activeColumn.columnKey == entry.key) ||
+                          (column?.columnKey == entry.key)
+                      ? 1.0
+                      : 0.0,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 7.0, vertical: 3.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 7.0,
+                  vertical: 3.0,
+                ),
                 child: Row(
                   children: [
                     SizedBox.fromSize(
@@ -96,9 +96,10 @@ class EntryListRowComponent extends StatelessWidget {
                       child: TweenAnimationBuilder<Color?>(
                         tween: ColorTween(
                           begin: theme.colorScheme.secondary,
-                          end: column?.columnKey == entry.key
-                              ? theme.colorScheme.tertiary
-                              : theme.colorScheme.secondary,
+                          end:
+                              column?.columnKey == entry.key
+                                  ? theme.colorScheme.tertiary
+                                  : theme.colorScheme.secondary,
                         ),
                         duration: Durations.short2,
                         child: Padding(

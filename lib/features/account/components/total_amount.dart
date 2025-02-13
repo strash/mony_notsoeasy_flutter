@@ -24,9 +24,17 @@ class AccountTotalAmountComponent extends StatelessWidget {
     final locale = Localizations.localeOf(context);
     final dateRange = (
       balance.firstTransactionDate,
-      balance.lastTransactionDate
+      balance.lastTransactionDate,
     ).transactionsDateRangeDescription(locale.languageCode);
     final formatter = NumberFormat.decimalPattern(locale.languageCode);
+    final transactionsCountDescription = balance.totalCount
+        .transactionsCountDescription(locale.languageCode);
+    final amount = balance.totalAmount.currency(
+      locale: locale.languageCode,
+      name: balance.currency.name,
+      symbol: balance.currency.symbol,
+      showDecimal: showDecimal,
+    );
 
     return SeparatedComponent.list(
       separatorBuilder: (context, index) => const SizedBox(height: 15.0),
@@ -71,12 +79,10 @@ class AccountTotalAmountComponent extends StatelessWidget {
 
                       // -> type description and count
                       Text(
-                        "${item.description} (${formatter.format(
-                          switch (item) {
-                            ETransactionType.expense => balance.expenseCount,
-                            ETransactionType.income => balance.incomeCount,
-                          },
-                        )})",
+                        "${item.description} (${formatter.format(switch (item) {
+                          ETransactionType.expense => balance.expenseCount,
+                          ETransactionType.income => balance.incomeCount,
+                        })})",
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
                           height: 1.0,
@@ -94,8 +100,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
                       switch (item) {
                         ETransactionType.expense => balance.expenseAmount,
                         ETransactionType.income => balance.incomeAmount,
-                      }
-                          .currency(
+                      }.currency(
                         locale: locale.languageCode,
                         name: balance.currency.name,
                         symbol: balance.currency.symbol,
@@ -120,15 +125,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
           children: [
             // -> transactions count
             Text(
-              "${balance.totalCount.transactionsCountDescription(
-                locale.languageCode,
-              )}\n"
-              "с общей стоимостью ${balance.totalAmount.currency(
-                locale: locale.languageCode,
-                name: balance.currency.name,
-                symbol: balance.currency.symbol,
-                showDecimal: showDecimal,
-              )}",
+              "$transactionsCountDescription\nс общей стоимостью $amount",
               style: GoogleFonts.golosText(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,

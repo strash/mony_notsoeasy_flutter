@@ -10,10 +10,7 @@ import "package:mony_app/gen/assets.gen.dart";
 class ImportMapColumnsComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportMapColumnsComponent({
-    super.key,
-    this.event,
-  });
+  const ImportMapColumnsComponent({super.key, this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +22,9 @@ class ImportMapColumnsComponent extends StatelessWidget {
     final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
     final onInfoPressed = viewModel<OnColumnInfoPressed>();
     final numberOfEntries = csvModel.numberOfEntries;
-    final numberOfEntriesDescription =
-        csvModel.numberOfEntriesDescription(locale.languageCode);
+    final numberOfEntriesDescription = csvModel.numberOfEntriesDescription(
+      locale.languageCode,
+    );
     final currentMappedColumn = viewModel.currentStep as ImportModelColumn;
     final count = numberOfEntries > 0 ? viewModel.currentEntryIndex + 1 : 0;
 

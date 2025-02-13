@@ -6,10 +6,7 @@ final class ImportModelColumnValidation extends ImportModel {
   final results = ValueNotifier<List<ValidationResult>>([]);
   List<Map<ImportModelColumn, String>> mappedEntries = [];
 
-  ImportModelColumnValidation({
-    required this.csvModel,
-    required this.columns,
-  }) {
+  ImportModelColumnValidation({required this.csvModel, required this.columns}) {
     mappedEntries = _mapEntries();
   }
 

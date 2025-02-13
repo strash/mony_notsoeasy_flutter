@@ -48,11 +48,7 @@ final class _Impl
   Future<TransactionTagDto?> getOne({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      final map = await db.query(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
+      final map = await db.query(table, where: "id = ?", whereArgs: [id]);
       if (map.isEmpty) return null;
       return TransactionTagDto.fromJson(map.first);
     });
@@ -74,11 +70,7 @@ final class _Impl
   Future<void> delete({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      await db.delete(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
+      await db.delete(table, where: "id = ?", whereArgs: [id]);
     });
   }
 

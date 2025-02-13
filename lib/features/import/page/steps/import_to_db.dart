@@ -5,10 +5,7 @@ import "package:mony_app/features/import/import.dart";
 class ImportImportToDbPage extends StatelessWidget {
   final ImportEvent event;
 
-  const ImportImportToDbPage({
-    super.key,
-    required this.event,
-  });
+  const ImportImportToDbPage({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +48,7 @@ class ImportImportToDbPage extends StatelessWidget {
         // -> loader
         const AspectRatio(
           aspectRatio: 1.0,
-          child: Center(
-            child: CircularProgressIndicator.adaptive(),
-          ),
+          child: Center(child: CircularProgressIndicator.adaptive()),
         ),
       ],
     );

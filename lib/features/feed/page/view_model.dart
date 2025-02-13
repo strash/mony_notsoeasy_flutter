@@ -117,8 +117,9 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
       // -> navbar
-      _navbarSub =
-          context.viewModel<NavBarViewModel>().subject.listen(_onNavBarEvent);
+      _navbarSub = context.viewModel<NavBarViewModel>().subject.listen(
+        _onNavBarEvent,
+      );
 
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();

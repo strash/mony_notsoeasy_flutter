@@ -21,8 +21,9 @@ class StartView extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              theme.colorScheme.secondary
-                  .withValues(alpha: brightness == Brightness.light ? .8 : .4),
+              theme.colorScheme.secondary.withValues(
+                alpha: brightness == Brightness.light ? .8 : .4,
+              ),
               theme.colorScheme.surface.withValues(alpha: .1),
             ],
             stops: const [.0, .6],
@@ -53,10 +54,11 @@ class StartView extends StatelessWidget {
                                 BoxShadow(
                                   color: theme.colorScheme.secondaryContainer
                                       .withValues(
-                                    alpha: brightness == Brightness.light
-                                        ? .6
-                                        : .3,
-                                  ),
+                                        alpha:
+                                            brightness == Brightness.light
+                                                ? .6
+                                                : .3,
+                                      ),
                                   blurRadius: 40.0,
                                   blurStyle: BlurStyle.outer,
                                 ),
@@ -123,8 +125,12 @@ class StartView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(15.0, .0, 15.0, 40.0),
+                          padding: const EdgeInsets.fromLTRB(
+                            15.0,
+                            .0,
+                            15.0,
+                            40.0,
+                          ),
                           child: FilledButton(
                             onPressed: () => onButtonStartPressed(context),
                             child: const Text("Супер, дальше!"),

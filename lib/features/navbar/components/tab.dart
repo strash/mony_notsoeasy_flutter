@@ -18,10 +18,7 @@ extension on ENavBarTabItem {
 class NavBarTabComponent extends StatelessWidget {
   final int index;
 
-  const NavBarTabComponent({
-    super.key,
-    required this.index,
-  });
+  const NavBarTabComponent({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +35,10 @@ class NavBarTabComponent extends StatelessWidget {
         curve: Curves.easeInOutQuad,
         tween: ColorTween(
           begin: theme.colorScheme.onSurface,
-          end: viewModel.currentTab == tab
-              ? theme.colorScheme.onSurface
-              : theme.colorScheme.onSurfaceVariant,
+          end:
+              viewModel.currentTab == tab
+                  ? theme.colorScheme.onSurface
+                  : theme.colorScheme.onSurfaceVariant,
         ),
         builder: (context, color, child) {
           return Center(

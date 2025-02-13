@@ -57,120 +57,122 @@ class TransactionFormTagsComponent extends StatelessWidget {
                 child: switch (viewModel.attachedTags.isEmpty) {
                   // -> placeholder
                   true => Align(
-                      key: Key("tags_${viewModel.attachedTags.isEmpty}"),
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Добавь теги...",
-                        style: GoogleFonts.golosText(
-                          fontSize: 15.0,
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
+                    key: Key("tags_${viewModel.attachedTags.isEmpty}"),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Добавь теги...",
+                      style: GoogleFonts.golosText(
+                        fontSize: 15.0,
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
+                  ),
                   // -> tags
                   false => Stack(
-                      key: Key("tags_${viewModel.attachedTags.isEmpty}"),
-                      children: [
-                        ListView.separated(
-                          controller: controller,
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics(),
-                          ),
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(width: 5.0);
-                          },
-                          itemCount: viewModel.attachedTags.length,
-                          itemBuilder: (context, index) {
-                            final item =
-                                viewModel.attachedTags.elementAtOrNull(index);
-                            if (item == null) return const SizedBox();
+                    key: Key("tags_${viewModel.attachedTags.isEmpty}"),
+                    children: [
+                      ListView.separated(
+                        controller: controller,
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics(),
+                        ),
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(width: 5.0);
+                        },
+                        itemCount: viewModel.attachedTags.length,
+                        itemBuilder: (context, index) {
+                          final item = viewModel.attachedTags.elementAtOrNull(
+                            index,
+                          );
+                          if (item == null) return const SizedBox();
 
-                            final title = switch (item) {
-                              TransactionTagVariantVO(:final vo) => vo.title,
-                              TransactionTagVariantModel(:final model) =>
-                                model.title,
-                            };
+                          final title = switch (item) {
+                            TransactionTagVariantVO(:final vo) => vo.title,
+                            TransactionTagVariantModel(:final model) =>
+                              model.title,
+                          };
 
-                            return TransactionFormTagComponent(
-                              builder: (context) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 12.0,
-                                    right: 8.0,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      // -> title
-                                      Text(title),
-                                      const SizedBox(width: 3.0),
+                          return TransactionFormTagComponent(
+                            builder: (context) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 12.0,
+                                  right: 8.0,
+                                ),
+                                child: Row(
+                                  children: [
+                                    // -> title
+                                    Text(title),
+                                    const SizedBox(width: 3.0),
 
-                                      // -> button remove
-                                      GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () =>
-                                            onRemoveTagPressed(context, item),
-                                        child: SvgPicture.asset(
-                                          Assets.icons.xmarkSemibold,
-                                          width: 16.0,
-                                          height: 16.0,
-                                          colorFilter: ColorFilter.mode(
-                                            theme.colorScheme.onSurfaceVariant,
-                                            BlendMode.srcIn,
-                                          ),
+                                    // -> button remove
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap:
+                                          () =>
+                                              onRemoveTagPressed(context, item),
+                                      child: SvgPicture.asset(
+                                        Assets.icons.xmarkSemibold,
+                                        width: 16.0,
+                                        height: 16.0,
+                                        colorFilter: ColorFilter.mode(
+                                          theme.colorScheme.onSurfaceVariant,
+                                          BlendMode.srcIn,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+
+                      // -> left gradient
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: ListenableBuilder(
+                          listenable: controller,
+                          builder: (context, child) {
+                            if (!controller.isReady) {
+                              return const SizedBox();
+                            }
+
+                            final position = controller.position;
+                            final isVisible = position.extentBefore > .0;
+
+                            return TransactionFormTagsGradientComponent(
+                              isVisible: isVisible,
+                              isLeft: true,
                             );
                           },
                         ),
+                      ),
 
-                        // -> left gradient
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: ListenableBuilder(
-                            listenable: controller,
-                            builder: (context, child) {
-                              if (!controller.isReady) {
-                                return const SizedBox();
-                              }
+                      // -> right gradient
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ListenableBuilder(
+                          listenable: controller,
+                          builder: (context, child) {
+                            if (!controller.isReady) {
+                              return const SizedBox();
+                            }
 
-                              final position = controller.position;
-                              final isVisible = position.extentBefore > .0;
+                            final position = controller.position;
+                            final isVisible = position.extentAfter > .0;
 
-                              return TransactionFormTagsGradientComponent(
-                                isVisible: isVisible,
-                                isLeft: true,
-                              );
-                            },
-                          ),
+                            return TransactionFormTagsGradientComponent(
+                              isVisible: isVisible,
+                              isLeft: false,
+                            );
+                          },
                         ),
-
-                        // -> right gradient
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: ListenableBuilder(
-                            listenable: controller,
-                            builder: (context, child) {
-                              if (!controller.isReady) {
-                                return const SizedBox();
-                              }
-
-                              final position = controller.position;
-                              final isVisible = position.extentAfter > .0;
-
-                              return TransactionFormTagsGradientComponent(
-                                isVisible: isVisible,
-                                isLeft: false,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
                 },
               ),
             ),

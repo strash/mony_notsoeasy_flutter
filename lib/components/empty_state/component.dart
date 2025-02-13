@@ -24,8 +24,8 @@ class EmptyStateComponent extends StatelessWidget {
           // -> empty state
           SliverFillRemaining(
             child: SeparatedComponent.list(
-              separatorBuilder: (context, index) =>
-                  const SizedBox(height: 10.0),
+              separatorBuilder:
+                  (context, index) => const SizedBox(height: 10.0),
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

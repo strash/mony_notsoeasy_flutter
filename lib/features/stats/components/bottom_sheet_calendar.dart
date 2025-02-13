@@ -28,9 +28,10 @@ class _StatsBottomSheetCalendarComponentState
   void _setDescription(String locale) {
     if (mounted) {
       final now = DateTime.now();
-      final formatter = _visibleMonth.year == now.year
-          ? DateFormat("MMMM", locale)
-          : DateFormat("MMMM y", locale);
+      final formatter =
+          _visibleMonth.year == now.year
+              ? DateFormat("MMMM", locale)
+              : DateFormat("MMMM y", locale);
       setState(() => _monthDescription = formatter.format(_visibleMonth));
     }
   }
@@ -59,8 +60,9 @@ class _StatsBottomSheetCalendarComponentState
         (viewSize.width - padding.horizontal) / DateTime.daysPerWeek;
 
     final locale = Localizations.localeOf(context);
-    final isSameMonth =
-        _visibleMonth.isSameDateAs(DateTime.now().firstDayOfMonth());
+    final isSameMonth = _visibleMonth.isSameDateAs(
+      DateTime.now().firstDayOfMonth(),
+    );
     _setDescription(locale.languageCode);
 
     // TODO: добавить селектор месяца и года
@@ -100,18 +102,21 @@ class _StatsBottomSheetCalendarComponentState
                   // -> button back to today
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: isSameMonth
-                        ? null
-                        : () => widget.dateController.moveTo(DateTime.now()),
+                    onTap:
+                        isSameMonth
+                            ? null
+                            : () =>
+                                widget.dateController.moveTo(DateTime.now()),
                     child: AnimatedDefaultTextStyle(
                       duration: Durations.short4,
                       curve: Curves.easeInOut,
                       style: GoogleFonts.golosText(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w500,
-                        color: isSameMonth
-                            ? theme.colorScheme.onSurfaceVariant
-                            : theme.colorScheme.secondary,
+                        color:
+                            isSameMonth
+                                ? theme.colorScheme.onSurfaceVariant
+                                : theme.colorScheme.secondary,
                       ),
                       child: const Text("Сегодня"),
                     ),

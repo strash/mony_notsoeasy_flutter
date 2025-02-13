@@ -18,10 +18,8 @@ export "./model/model.dart";
 // - мержить счета?
 // - ?
 
-typedef TPressedCategoryValue = ({
-  ETransactionType transactionType,
-  ImportModelCategoryVariant category,
-});
+typedef TPressedCategoryValue =
+    ({ETransactionType transactionType, ImportModelCategoryVariant category});
 
 final class ImportPage extends StatefulWidget {
   const ImportPage({super.key});
@@ -62,8 +60,9 @@ final class ImportViewModel extends ViewModelState<ImportPage> {
     return steps.whereType<ImportModelColumn>().toList(growable: false);
   }
 
-  final transactionTypeController =
-      TabGroupController(ETransactionType.expense);
+  final transactionTypeController = TabGroupController(
+    ETransactionType.expense,
+  );
 
   void _transactionTypeListener() {
     final typeModel = currentStep;

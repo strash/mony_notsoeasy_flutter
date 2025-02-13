@@ -29,7 +29,8 @@ class FeedItemComponent extends StatelessWidget {
 
     final locale = Localizations.localeOf(context);
 
-    final categoryColor = ex?.from(transaction.category.colorName).color ??
+    final categoryColor =
+        ex?.from(transaction.category.colorName).color ??
         theme.colorScheme.surfaceContainer;
     final color = Color.lerp(categoryColor, const Color(0xFFFFFFFF), .3)!;
     const iconDimension = 50.0;
@@ -45,17 +46,19 @@ class FeedItemComponent extends StatelessWidget {
             dimension: iconDimension,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                gradient: showColors
-                    ? LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [color, categoryColor],
-                      )
-                    : null,
+                gradient:
+                    showColors
+                        ? LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [color, categoryColor],
+                        )
+                        : null,
                 shape: SmoothRectangleBorder(
                   side: BorderSide(
-                    color: theme.colorScheme.outline
-                        .withValues(alpha: showColors ? .0 : 1.0),
+                    color: theme.colorScheme.outline.withValues(
+                      alpha: showColors ? .0 : 1.0,
+                    ),
                   ),
                   borderRadius: const SmoothBorderRadius.all(
                     SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
@@ -91,9 +94,10 @@ class FeedItemComponent extends StatelessWidget {
                       style: GoogleFonts.golosText(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
-                        color: showColors
-                            ? categoryColor
-                            : theme.colorScheme.onSurface,
+                        color:
+                            showColors
+                                ? categoryColor
+                                : theme.colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -110,9 +114,10 @@ class FeedItemComponent extends StatelessWidget {
                     style: GoogleFonts.golosText(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w600,
-                      color: transaction.amount.isNegative
-                          ? theme.colorScheme.onSurface
-                          : theme.colorScheme.secondary,
+                      color:
+                          transaction.amount.isNegative
+                              ? theme.colorScheme.onSurface
+                              : theme.colorScheme.secondary,
                     ),
                   ),
                 ],
@@ -135,18 +140,19 @@ class FeedItemComponent extends StatelessWidget {
                     if (transaction.note.isNotEmpty ||
                         transaction.tags.isNotEmpty && showTags)
                       Flexible(
-                        child: transaction.note.isNotEmpty
-                            ? Text(
-                                transaction.note,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.golosText(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w400,
-                                  color: theme.colorScheme.onSurfaceVariant,
-                                ),
-                              )
-                            : FeedItemTagsComponent(tags: transaction.tags),
+                        child:
+                            transaction.note.isNotEmpty
+                                ? Text(
+                                  transaction.note,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.golosText(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: theme.colorScheme.onSurfaceVariant,
+                                  ),
+                                )
+                                : FeedItemTagsComponent(tags: transaction.tags),
                       ),
                   ],
                 ),

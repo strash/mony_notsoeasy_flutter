@@ -14,8 +14,6 @@ final class OnTagsToggled extends UseCase<Future<void>, dynamic> {
     final value = !currValue;
     await sharedPrefService.setSettingsTagsVisibility(value);
 
-    appService.notify(
-      EventSettingsTagsVisibilityChanged(value),
-    );
+    appService.notify(EventSettingsTagsVisibilityChanged(value));
   }
 }

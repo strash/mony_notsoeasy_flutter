@@ -30,8 +30,9 @@ void main() async {
   );
   final tagRepo = TagDatabaseRepository(database: appDatabase);
   final transactionRepo = TransactionDatabaseRepository(database: appDatabase);
-  final transactionTagRepo =
-      TransactionTagDatabaseRepository(database: appDatabase);
+  final transactionTagRepo = TransactionTagDatabaseRepository(
+    database: appDatabase,
+  );
 
   final sharedPrefRepo = SharedPreferencesLocalStorageRepository(
     preferences: SharedPreferencesAsync(),

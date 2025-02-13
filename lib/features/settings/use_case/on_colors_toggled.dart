@@ -15,8 +15,6 @@ final class OnColorsToggled extends UseCase<Future<void>, dynamic> {
     final value = !currValue;
     await sharedPrefService.setSettingsColors(value);
 
-    appService.notify(
-      EventSettingsColorsVisibilityChanged(value),
-    );
+    appService.notify(EventSettingsColorsVisibilityChanged(value));
   }
 }

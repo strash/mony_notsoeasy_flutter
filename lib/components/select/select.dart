@@ -16,7 +16,7 @@ class SelectComponent<T> extends StatefulWidget {
   final Widget? activeEntry;
   final bool expand;
   final List<SelectEntryComponent<T>> Function(BuildContext context)
-      entryBuilder;
+  entryBuilder;
 
   const SelectComponent({
     super.key,
@@ -90,34 +90,36 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                 ),
               ),
               child: Padding(
-                padding: (widget.activeEntryPadding != null &&
-                        widget.activeEntry != null)
-                    ? widget.activeEntryPadding!
-                    : const EdgeInsets.only(left: 15.0, right: 7.0),
+                padding:
+                    (widget.activeEntryPadding != null &&
+                            widget.activeEntry != null)
+                        ? widget.activeEntryPadding!
+                        : const EdgeInsets.only(left: 15.0, right: 7.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // -> placeholder
                     Flexible(
-                      child: widget.activeEntry == null
-                          ? Text(
-                              placeholderText,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.golosText(
-                                fontSize: 16.0,
-                                color: theme.colorScheme.onSurfaceVariant
-                                    .withValues(alpha: .6),
+                      child:
+                          widget.activeEntry == null
+                              ? Text(
+                                placeholderText,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.golosText(
+                                  fontSize: 16.0,
+                                  color: theme.colorScheme.onSurfaceVariant
+                                      .withValues(alpha: .6),
+                                ),
+                              )
+                              : DefaultTextStyle(
+                                style: GoogleFonts.golosText(
+                                  fontSize: 16.0,
+                                  color: theme.colorScheme.onSurface,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                child: widget.activeEntry!,
                               ),
-                            )
-                          : DefaultTextStyle(
-                              style: GoogleFonts.golosText(
-                                fontSize: 16.0,
-                                color: theme.colorScheme.onSurface,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              child: widget.activeEntry!,
-                            ),
                     ),
 
                     // -> icon

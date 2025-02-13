@@ -10,10 +10,7 @@ import "package:mony_app/features/import/use_case/use_case.dart";
 class ImportMapAccountsComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportMapAccountsComponent({
-    super.key,
-    this.event,
-  });
+  const ImportMapAccountsComponent({super.key, this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +24,8 @@ class ImportMapAccountsComponent extends StatelessWidget {
         "Нужно создать счет. К нему будут привязаны все транзакции. "
         "Позже можно будет создать другие счета.";
     if (accountModel.isFromData) {
-      description = "Я нашел "
+      description =
+          "Я нашел "
           "${accountModel.numberOfAccountsDescription(locale.languageCode)}. "
           "${accountModel.accounts.length == 1 ? "Его" : "Их"} "
           "нужно дополнить информацией. Это быстро.";
@@ -82,8 +80,9 @@ class ImportMapAccountsComponent extends StatelessWidget {
                 onTap: () => onAccountPressed(context, accountEntry),
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: theme.colorScheme.surfaceContainer
-                        .withValues(alpha: 0.5),
+                    color: theme.colorScheme.surfaceContainer.withValues(
+                      alpha: 0.5,
+                    ),
                     shape: SmoothRectangleBorder(
                       side: BorderSide(color: theme.colorScheme.outlineVariant),
                       borderRadius: const SmoothBorderRadius.all(
@@ -91,11 +90,12 @@ class ImportMapAccountsComponent extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: account != null
-                      ? AccountSettedItemComponent(account: account)
-                      : AccountUnsettedItemComponent(
-                          title: accountEntry.originalTitle,
-                        ),
+                  child:
+                      account != null
+                          ? AccountSettedItemComponent(account: account)
+                          : AccountUnsettedItemComponent(
+                            title: accountEntry.originalTitle,
+                          ),
                 ),
               );
             },

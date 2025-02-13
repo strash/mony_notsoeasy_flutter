@@ -6,10 +6,7 @@ import "package:mony_app/domain/models/tag.dart";
 class TagComponent extends StatelessWidget {
   final TagModel tag;
 
-  const TagComponent({
-    super.key,
-    required this.tag,
-  });
+  const TagComponent({super.key, required this.tag});
 
   @override
   Widget build(BuildContext context) {

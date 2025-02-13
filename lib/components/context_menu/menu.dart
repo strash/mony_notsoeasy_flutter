@@ -8,7 +8,7 @@ class ContextMenuComponent extends StatefulWidget {
   final bool blurBackground;
   final WidgetBuilder buttonBuilder;
   final Widget Function(BuildContext context, VoidCallback dismiss)
-      itemsBuilder;
+  itemsBuilder;
 
   const ContextMenuComponent({
     super.key,

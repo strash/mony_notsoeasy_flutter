@@ -25,12 +25,12 @@ class SeparatedComponent extends StatelessWidget {
     required int itemCount,
     required this.separatorBuilder,
     required IndexedWidgetBuilder itemBuilder,
-  })  : _type = _Type.builder,
-        // ignore: prefer_initializing_formals
-        itemCount = itemCount,
-        // ignore: prefer_initializing_formals
-        itemBuilder = itemBuilder,
-        children = null;
+  }) : _type = _Type.builder,
+       // ignore: prefer_initializing_formals
+       itemCount = itemCount,
+       // ignore: prefer_initializing_formals
+       itemBuilder = itemBuilder,
+       children = null;
 
   const SeparatedComponent.list({
     super.key,
@@ -40,11 +40,11 @@ class SeparatedComponent extends StatelessWidget {
     this.crossAxisAlignment = CrossAxisAlignment.start,
     required this.separatorBuilder,
     required Iterable<Widget> children,
-  })  : _type = _Type.list,
-        // ignore: prefer_initializing_formals
-        children = children,
-        itemCount = null,
-        itemBuilder = null;
+  }) : _type = _Type.list,
+       // ignore: prefer_initializing_formals
+       children = children,
+       itemCount = null,
+       itemBuilder = null;
 
   @override
   Widget build(BuildContext context) {
@@ -70,17 +70,17 @@ class SeparatedComponent extends StatelessWidget {
 
     return switch (direction) {
       Axis.horizontal => Row(
-          mainAxisSize: mainAxisSize,
-          mainAxisAlignment: mainAxisAlignment,
-          crossAxisAlignment: crossAxisAlignment,
-          children: list,
-        ),
+        mainAxisSize: mainAxisSize,
+        mainAxisAlignment: mainAxisAlignment,
+        crossAxisAlignment: crossAxisAlignment,
+        children: list,
+      ),
       Axis.vertical => Column(
-          mainAxisSize: mainAxisSize,
-          mainAxisAlignment: mainAxisAlignment,
-          crossAxisAlignment: crossAxisAlignment,
-          children: list,
-        ),
+        mainAxisSize: mainAxisSize,
+        mainAxisAlignment: mainAxisAlignment,
+        crossAxisAlignment: crossAxisAlignment,
+        children: list,
+      ),
     };
   }
 }

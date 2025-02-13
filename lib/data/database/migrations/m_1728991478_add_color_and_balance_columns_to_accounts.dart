@@ -8,10 +8,14 @@ final class M1728991478AddColorAndBalanceColumnsToAccounts
   @override
   Future<void> up(Database db) async {
     final batch = db.batch();
-    batch.execute("ALTER TABLE $_table "
-        "ADD COLUMN color_name TEXT DEFAULT '' NOT NULL;");
-    batch.execute("ALTER TABLE $_table "
-        "ADD COLUMN balance REAL DEFAULT 0 NOT NULL;");
+    batch.execute(
+      "ALTER TABLE $_table "
+      "ADD COLUMN color_name TEXT DEFAULT '' NOT NULL;",
+    );
+    batch.execute(
+      "ALTER TABLE $_table "
+      "ADD COLUMN balance REAL DEFAULT 0 NOT NULL;",
+    );
     await batch.commit();
   }
 

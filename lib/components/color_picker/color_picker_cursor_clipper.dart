@@ -4,10 +4,7 @@ final class _CursorClipper extends CustomClipper<Path> {
   final EdgeInsets padding;
   final double radius;
 
-  const _CursorClipper({
-    required this.padding,
-    required this.radius,
-  });
+  const _CursorClipper({required this.padding, required this.radius});
 
   @override
   Path getClip(Size size) {
@@ -22,10 +19,7 @@ final class _CursorClipper extends CustomClipper<Path> {
     );
     final rrectTo = RRect.fromRectAndRadius(
       rectTo,
-      SmoothRadius(
-        cornerRadius: radius,
-        cornerSmoothing: 0.6,
-      ),
+      SmoothRadius(cornerRadius: radius, cornerSmoothing: 0.6),
     );
     pathFrom.addRect(rectFrom);
     pathTo.addRRect(rrectTo);

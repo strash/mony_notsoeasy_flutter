@@ -38,8 +38,10 @@ class CategoryTotalAmountComponent extends StatelessWidget {
           itemCount: balance.totalAmount.entries.length,
           separatorBuilder: (context, index) => const SizedBox(height: 3.0),
           itemBuilder: (context, index) {
-            final MapEntry(key: currency, value: totalAmount) =
-                balance.totalAmount.entries.elementAt(index);
+            final MapEntry(key: currency, value: totalAmount) = balance
+                .totalAmount
+                .entries
+                .elementAt(index);
 
             return Text(
               totalAmount.currency(
@@ -62,8 +64,9 @@ class CategoryTotalAmountComponent extends StatelessWidget {
           children: [
             // -> transactions count
             Text(
-              balance.transactionsCount
-                  .transactionsCountDescription(locale.languageCode),
+              balance.transactionsCount.transactionsCountDescription(
+                locale.languageCode,
+              ),
               style: GoogleFonts.golosText(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,

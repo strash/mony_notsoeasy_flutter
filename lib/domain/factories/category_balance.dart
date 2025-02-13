@@ -33,9 +33,10 @@ final class CategoryBalanceDatabaseFactoryImpl
       id: model.id,
       created: model.created.toUtc().toIso8601String(),
       transactionsCount: model.transactionsCount,
-      totalAmount: model.totalAmount.entries
-          .map((e) => MapEntry(e.key.code, e.value))
-          .toString(),
+      totalAmount:
+          model.totalAmount.entries
+              .map((e) => MapEntry(e.key.code, e.value))
+              .toString(),
       firstTransactionDate:
           model.firstTransactionDate?.toUtc().toIso8601String(),
       lastTransactionDate: model.lastTransactionDate?.toUtc().toIso8601String(),

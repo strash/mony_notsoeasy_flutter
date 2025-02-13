@@ -48,9 +48,9 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
       for (final MapEntry(key: type, value: list) in mappedCategories.entries)
         type.transactionType: Map.fromEntries(
           await Future.wait<MapEntry<String, CategoryModel>>(
-            list
-                .where((e) => e is! ImportModelCategoryVariantEmpty)
-                .map((e) async {
+            list.where((e) => e is! ImportModelCategoryVariantEmpty).map((
+              e,
+            ) async {
               if (e case ImportModelCategoryVariantModel(:final model)) {
                 return Future.value(MapEntry(e.originalTitle, model));
               }
@@ -105,8 +105,9 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
               case EImportColumn.category:
                 if (categories.containsKey(transactionType) &&
                     categories[transactionType]!.containsKey(value)) {
-                  builder
-                      .addCategoryId(categories[transactionType]![value]!.id);
+                  builder.addCategoryId(
+                    categories[transactionType]![value]!.id,
+                  );
                 }
               case EImportColumn.transactionType:
                 continue;

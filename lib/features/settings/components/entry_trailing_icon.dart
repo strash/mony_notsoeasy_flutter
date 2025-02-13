@@ -19,10 +19,7 @@ class SettingsEntryTrailingIconComponent extends StatelessWidget {
         icon,
         width: 24.0,
         height: 24.0,
-        colorFilter: ColorFilter.mode(
-          color,
-          BlendMode.srcIn,
-        ),
+        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
       ),
     );
   }

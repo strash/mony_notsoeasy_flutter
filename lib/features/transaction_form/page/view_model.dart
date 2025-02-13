@@ -16,21 +16,14 @@ final class TransactionFormVO {
   final TransactionVO transactionVO;
   final List<TransactionTagVariant> tags;
 
-  TransactionFormVO({
-    required this.transactionVO,
-    required this.tags,
-  });
+  TransactionFormVO({required this.transactionVO, required this.tags});
 }
 
 final class TransactionFormPage extends StatefulWidget {
   final TransactionModel? transaction;
   final AccountModel? account;
 
-  const TransactionFormPage({
-    super.key,
-    this.transaction,
-    this.account,
-  });
+  const TransactionFormPage({super.key, this.transaction, this.account});
 
   @override
   ViewModelState<TransactionFormPage> createState() =>
@@ -48,15 +41,18 @@ final class TransactionFormViewModel
     transaction?.category.transactionType ?? ETransactionType.defaultValue,
   );
 
-  late final dateController =
-      CalendarController(transaction?.date ?? DateTime.now());
-  late final timeController =
-      TimeController(transaction?.date ?? DateTime.now());
+  late final dateController = CalendarController(
+    transaction?.date ?? DateTime.now(),
+  );
+  late final timeController = TimeController(
+    transaction?.date ?? DateTime.now(),
+  );
 
   late final ValueNotifier<String> amountNotifier;
 
-  late final accountController =
-      SelectController<AccountModel?>(transaction?.account);
+  late final accountController = SelectController<AccountModel?>(
+    transaction?.account,
+  );
 
   late final expenseCategoryController = SelectController<CategoryModel?>(
     transaction?.category.transactionType == ETransactionType.expense
@@ -101,43 +97,41 @@ final class TransactionFormViewModel
           },
         );
       });
-    })
-      ..add([
-        TransactionFormButtonTypeSymbol(
-          value: ".",
-          displayedValue: decimalSeparator,
-          color: Theme.of(context).colorScheme.surfaceContainer,
-          isEnabled: (value) {
-            final trim = value.trim();
-            return !trim.contains(".") && trim.length != kMaxAmountLength;
-          },
-        ),
-        TransactionFormButtonTypeSymbol(
-          value: "0",
-          displayedValue: "0",
-          color: Theme.of(context).colorScheme.surfaceContainer,
-          isEnabled: (value) {
-            final trim = value.trim();
-            return !regEx.hasMatch(trim) && trim.length != kMaxAmountLength;
-          },
-        ),
-        TransactionFormButtonTypeAction(
-          icon: Assets.icons.checkmarkBold,
-          color: Theme.of(context).colorScheme.secondary,
-          isEnabled: (value) {
-            final trim = value.trim();
-            final hasCategory = switch (typeController.value) {
-              ETransactionType.expense =>
-                expenseCategoryController.value != null,
-              ETransactionType.income => incomeCategoryController.value != null,
-            };
-            return trim.isNotEmpty &&
-                trim != "0" &&
-                accountController.value != null &&
-                hasCategory;
-          },
-        ),
-      ]);
+    })..add([
+      TransactionFormButtonTypeSymbol(
+        value: ".",
+        displayedValue: decimalSeparator,
+        color: Theme.of(context).colorScheme.surfaceContainer,
+        isEnabled: (value) {
+          final trim = value.trim();
+          return !trim.contains(".") && trim.length != kMaxAmountLength;
+        },
+      ),
+      TransactionFormButtonTypeSymbol(
+        value: "0",
+        displayedValue: "0",
+        color: Theme.of(context).colorScheme.surfaceContainer,
+        isEnabled: (value) {
+          final trim = value.trim();
+          return !regEx.hasMatch(trim) && trim.length != kMaxAmountLength;
+        },
+      ),
+      TransactionFormButtonTypeAction(
+        icon: Assets.icons.checkmarkBold,
+        color: Theme.of(context).colorScheme.secondary,
+        isEnabled: (value) {
+          final trim = value.trim();
+          final hasCategory = switch (typeController.value) {
+            ETransactionType.expense => expenseCategoryController.value != null,
+            ETransactionType.income => incomeCategoryController.value != null,
+          };
+          return trim.isNotEmpty &&
+              trim != "0" &&
+              accountController.value != null &&
+              hasCategory;
+        },
+      ),
+    ]);
   }
 
   String get dateTimeDescription {

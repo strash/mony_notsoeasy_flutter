@@ -54,9 +54,10 @@ class TransactionFormNoteComponent extends StatelessWidget {
                       curve: Curves.easeInOut,
                       style: GoogleFonts.golosText(
                         fontSize: 16.0,
-                        color: note.isNotEmpty
-                            ? theme.colorScheme.onSurface
-                            : theme.colorScheme.onSurfaceVariant,
+                        color:
+                            note.isNotEmpty
+                                ? theme.colorScheme.onSurface
+                                : theme.colorScheme.onSurfaceVariant,
                       ),
                       child: Text(
                         note.isNotEmpty ? note : "Добавь заметку...",

@@ -2,9 +2,8 @@ import "package:mony_app/data/database/database.dart";
 import "package:sqflite/sqflite.dart";
 
 abstract base class AccountDatabaseRepository {
-  const factory AccountDatabaseRepository({
-    required AppDatabase database,
-  }) = _Impl;
+  const factory AccountDatabaseRepository({required AppDatabase database}) =
+      _Impl;
 
   Future<List<AccountDto>> search({
     String? query,
@@ -66,8 +65,7 @@ final class _Impl
       final List<String?> args = [];
       final hasQuery = query != null && query.isNotEmpty;
       if (hasQuery) args.add(queryToGlob(query));
-      final maps = await db.rawQuery(
-        """
+      final maps = await db.rawQuery("""
 SELECT id, created, updated, title, type, currency_code, color_name, balance
 FROM (
 	SELECT a.*, MAX(tr.date) AS date
@@ -82,9 +80,7 @@ ORDER BY
 	updated DESC,
 	title ASC
 LIMIT $limit OFFSET $offset;
-""",
-        args,
-      );
+""", args);
       return maps.map(AccountDto.fromJson).toList(growable: false);
     });
   }
@@ -209,11 +205,7 @@ WHERE id = ?1;
   Future<AccountDto?> getOne({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      final map = await db.query(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
+      final map = await db.query(table, where: "id = ?", whereArgs: [id]);
       if (map.isEmpty) return null;
       return AccountDto.fromJson(map.first);
     });
@@ -249,11 +241,7 @@ WHERE id = ?1;
   Future<void> delete({required String id}) async {
     return resolve(() async {
       final db = await database.db;
-      await db.delete(
-        table,
-        where: "id = ?",
-        whereArgs: [id],
-      );
+      await db.delete(table, where: "id = ?", whereArgs: [id]);
     });
   }
 

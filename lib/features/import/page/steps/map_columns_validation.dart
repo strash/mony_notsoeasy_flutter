@@ -8,10 +8,7 @@ import "package:mony_app/gen/assets.gen.dart";
 class ImportMapColumnsValidationComponent extends StatelessWidget {
   final ImportEvent? event;
 
-  const ImportMapColumnsValidationComponent({
-    super.key,
-    this.event,
-  });
+  const ImportMapColumnsValidationComponent({super.key, this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -67,55 +64,58 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
             builder: (context, results, child) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: results.map((e) {
-                  return TweenAnimationBuilder<double>(
-                    tween: Tween<double>(begin: 0.0, end: 1.0),
-                    duration: Durations.short4,
-                    builder: (context, opacity, child) {
-                      return Opacity(
-                        opacity: opacity,
-                        child: Row(
-                          children: [
-                            // -> icon
-                            SvgPicture.asset(
-                              e.ok != null
-                                  ? Assets.icons.checkmarkCircleFill
-                                  : Assets.icons.exclamationmarkCircleFill,
-                              width: 20.0,
-                              height: 20.0,
-                              colorFilter: ColorFilter.mode(
-                                e.ok != null
-                                    ? theme.colorScheme.secondary
-                                    : theme.colorScheme.error,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-
-                            // -> result
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0,
-                                  vertical: 5.0,
-                                ),
-                                child: Text(
-                                  e.ok != null ? e.ok! : e.error!,
-                                  style: GoogleFonts.golosText(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: e.ok != null
-                                        ? theme.colorScheme.onSurface
+                children: results
+                    .map((e) {
+                      return TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0.0, end: 1.0),
+                        duration: Durations.short4,
+                        builder: (context, opacity, child) {
+                          return Opacity(
+                            opacity: opacity,
+                            child: Row(
+                              children: [
+                                // -> icon
+                                SvgPicture.asset(
+                                  e.ok != null
+                                      ? Assets.icons.checkmarkCircleFill
+                                      : Assets.icons.exclamationmarkCircleFill,
+                                  width: 20.0,
+                                  height: 20.0,
+                                  colorFilter: ColorFilter.mode(
+                                    e.ok != null
+                                        ? theme.colorScheme.secondary
                                         : theme.colorScheme.error,
+                                    BlendMode.srcIn,
                                   ),
                                 ),
-                              ),
+
+                                // -> result
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0,
+                                      vertical: 5.0,
+                                    ),
+                                    child: Text(
+                                      e.ok != null ? e.ok! : e.error!,
+                                      style: GoogleFonts.golosText(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color:
+                                            e.ok != null
+                                                ? theme.colorScheme.onSurface
+                                                : theme.colorScheme.error,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       );
-                    },
-                  );
-                }).toList(growable: false),
+                    })
+                    .toList(growable: false),
               );
             },
           ),

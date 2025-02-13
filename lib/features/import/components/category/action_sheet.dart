@@ -7,14 +7,13 @@ import "package:mony_app/gen/assets.gen.dart";
 
 enum EImportCategoryMenuAction implements IDescriptable {
   link,
-  create,
-  ;
+  create;
 
   @override
   String get description => switch (this) {
-        EImportCategoryMenuAction.link => "Привязать",
-        EImportCategoryMenuAction.create => "Дополнить",
-      };
+    EImportCategoryMenuAction.link => "Привязать",
+    EImportCategoryMenuAction.create => "Дополнить",
+  };
 }
 
 class ImportCategoryActionBottomSheetComponent extends StatelessWidget {

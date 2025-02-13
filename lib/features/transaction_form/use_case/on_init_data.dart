@@ -29,9 +29,10 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
       if (viewModel.account == null) {
         final lastTransactions = await transactionService.getMany(page: 0);
         final hasAccount = lastTransactions.firstOrNull != null;
-        viewModel.accountController.value = hasAccount
-            ? lastTransactions.first.account.copyWith()
-            : accounts.firstOrNull?.copyWith();
+        viewModel.accountController.value =
+            hasAccount
+                ? lastTransactions.first.account.copyWith()
+                : accounts.firstOrNull?.copyWith();
       } else {
         viewModel.accountController.value = viewModel.account!.copyWith();
       }
@@ -39,9 +40,9 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
       viewModel.accountController.value =
           viewModel.account?.copyWith() ?? viewModel.transaction?.account;
       viewModel.setProtectedState(() {
-        viewModel.attachedTags = transaction.tags.map((e) {
-          return TransactionTagVariantModel(e);
-        }).toList(growable: false);
+        viewModel.attachedTags = transaction.tags
+            .map((e) => TransactionTagVariantModel(e))
+            .toList(growable: false);
       });
       // NOTE: wait before controller is attached
       WidgetsBinding.instance.addPostFrameCallback((timestamp) {

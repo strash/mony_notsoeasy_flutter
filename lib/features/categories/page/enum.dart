@@ -2,8 +2,7 @@ import "package:mony_app/gen/assets.gen.dart";
 
 enum ECategoriesMenuItem {
   addExpenseCategory,
-  addIncomeCategory,
-  ;
+  addIncomeCategory;
 
   String get description {
     return switch (this) {

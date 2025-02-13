@@ -56,9 +56,7 @@ class _ColorGridItemState extends State<_ColorGridItem> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: _onTap,
-      child: SizedBox.expand(
-        child: ColoredBox(color: widget.color),
-      ),
+      child: SizedBox.expand(child: ColoredBox(color: widget.color)),
     );
   }
 }

@@ -5,10 +5,7 @@ import "package:intl/intl.dart";
 class TransactionDateComponent extends StatelessWidget {
   final DateTime date;
 
-  const TransactionDateComponent({
-    super.key,
-    required this.date,
-  });
+  const TransactionDateComponent({super.key, required this.date});
 
   @override
   Widget build(BuildContext context) {

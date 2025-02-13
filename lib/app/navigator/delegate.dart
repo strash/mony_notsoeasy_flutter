@@ -12,8 +12,8 @@ final class NavigatorDelegate extends RouterDelegate<Object>
   NavigatorDelegate({
     required AppEventService eventService,
     required DomainAccountService accountService,
-  })  : _accountService = accountService,
-        _eventService = eventService;
+  }) : _accountService = accountService,
+       _eventService = eventService;
 
   Future<bool> _hasAccounts() async {
     return (await _accountService.count()) > 0;
@@ -31,25 +31,25 @@ final class NavigatorDelegate extends RouterDelegate<Object>
       stream: _eventService.stream.where((event) {
         switch (event) {
           case EventAccountCreated() ||
-                EventAccountDeleted() ||
-                EventSettingsDataDeletionRequested() ||
-                EventDataImported():
+              EventAccountDeleted() ||
+              EventSettingsDataDeletionRequested() ||
+              EventDataImported():
             return true;
 
           case EventAccountUpdated() ||
-                EventCategoryCreated() ||
-                EventCategoryUpdated() ||
-                EventCategoryDeleted() ||
-                EventTransactionCreated() ||
-                EventTransactionUpdated() ||
-                EventTransactionDeleted() ||
-                EventTagCreated() ||
-                EventTagUpdated() ||
-                EventTagDeleted() ||
-                EventSettingsThemeModeChanged() ||
-                EventSettingsColorsVisibilityChanged() ||
-                EventSettingsCentsVisibilityChanged() ||
-                EventSettingsTagsVisibilityChanged():
+              EventCategoryCreated() ||
+              EventCategoryUpdated() ||
+              EventCategoryDeleted() ||
+              EventTransactionCreated() ||
+              EventTransactionUpdated() ||
+              EventTransactionDeleted() ||
+              EventTagCreated() ||
+              EventTagUpdated() ||
+              EventTagDeleted() ||
+              EventSettingsThemeModeChanged() ||
+              EventSettingsColorsVisibilityChanged() ||
+              EventSettingsCentsVisibilityChanged() ||
+              EventSettingsTagsVisibilityChanged():
             return false;
         }
       }),

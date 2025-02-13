@@ -89,8 +89,9 @@ final class _CategoryViewState extends State<_CategoryView> {
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         color: theme.colorScheme.surfaceContainer,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(25.0)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(25.0),
+                        ),
                       ),
                     ),
                   ),
@@ -99,43 +100,49 @@ final class _CategoryViewState extends State<_CategoryView> {
                 // -> icons
                 Center(
                   child: Row(
-                    children: (categories ?? const []).indexed.map((e) {
-                      final (index, emojiSet) = e;
+                    children: (categories ?? const []).indexed
+                        .map((e) {
+                          final (index, emojiSet) = e;
 
-                      return GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () => _onTap(index),
-                        child: SizedBox.square(
-                          dimension: iconSize,
-                          child: Center(
-                            child: SvgPicture.asset(
-                              switch (emojiSet.category) {
-                                Category.RECENT => Assets.icons.emojiResent,
-                                Category.SMILEYS => Assets.icons.emojiSmiley,
-                                Category.ANIMALS => Assets.icons.emojiAnimal,
-                                Category.FOODS => Assets.icons.emojiFood,
-                                Category.ACTIVITIES =>
-                                  Assets.icons.emojiActivity,
-                                Category.TRAVEL => Assets.icons.emojiTravel,
-                                Category.OBJECTS => Assets.icons.emojiObject,
-                                Category.SYMBOLS => Assets.icons.emojiSymbol,
-                                Category.FLAGS => Assets.icons.emojiFlag,
-                              },
-                              width: svgSize,
-                              height: svgSize,
-                              colorFilter: ColorFilter.mode(
-                                Color.lerp(
-                                  theme.colorScheme.onSurfaceVariant,
-                                  theme.colorScheme.onSurface,
-                                  _getT(index),
-                                )!,
-                                BlendMode.srcIn,
+                          return GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () => _onTap(index),
+                            child: SizedBox.square(
+                              dimension: iconSize,
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  switch (emojiSet.category) {
+                                    Category.RECENT => Assets.icons.emojiResent,
+                                    Category.SMILEYS =>
+                                      Assets.icons.emojiSmiley,
+                                    Category.ANIMALS =>
+                                      Assets.icons.emojiAnimal,
+                                    Category.FOODS => Assets.icons.emojiFood,
+                                    Category.ACTIVITIES =>
+                                      Assets.icons.emojiActivity,
+                                    Category.TRAVEL => Assets.icons.emojiTravel,
+                                    Category.OBJECTS =>
+                                      Assets.icons.emojiObject,
+                                    Category.SYMBOLS =>
+                                      Assets.icons.emojiSymbol,
+                                    Category.FLAGS => Assets.icons.emojiFlag,
+                                  },
+                                  width: svgSize,
+                                  height: svgSize,
+                                  colorFilter: ColorFilter.mode(
+                                    Color.lerp(
+                                      theme.colorScheme.onSurfaceVariant,
+                                      theme.colorScheme.onSurface,
+                                      _getT(index),
+                                    )!,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
-                    }).toList(growable: false),
+                          );
+                        })
+                        .toList(growable: false),
                   ),
                 ),
               ],

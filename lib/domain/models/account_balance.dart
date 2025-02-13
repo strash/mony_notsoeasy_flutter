@@ -30,8 +30,8 @@ extension AccountBalanceModelEx on AccountBalanceModel {
 extension AccountBalanceModelListEx on List<AccountBalanceModel> {
   List<AccountBalanceModel> merge(List<AccountBalanceModel> other) {
     return List<AccountBalanceModel>.from(
-      where((e) => !other.any((i) => e.id == i.id)),
-    )
+        where((e) => !other.any((i) => e.id == i.id)),
+      )
       ..addAll(other)
       ..sort((a, b) => a.created.compareTo(b.created));
   }
@@ -41,7 +41,8 @@ extension AccountBalanceModelListEx on List<AccountBalanceModel> {
     for (final element in this) {
       final name = element.currency.name;
       final item = map[name];
-      map[name] = item?.copyWith(
+      map[name] =
+          item?.copyWith(
             balance: item.balance + element.balance,
             totalAmount: item.totalAmount + element.totalAmount,
           ) ??

@@ -13,9 +13,9 @@ final class DomainCategoryService extends BaseDatabaseService {
     required CategoryDatabaseRepository categoryRepo,
     required CategoryDatabaseFactoryImpl categoryFactory,
     required CategoryBalanceDatabaseFactoryImpl categoryBalanceFactory,
-  })  : _categoryRepo = categoryRepo,
-        _categoryFactory = categoryFactory,
-        _categoryBalanceFactory = categoryBalanceFactory;
+  }) : _categoryRepo = categoryRepo,
+       _categoryFactory = categoryFactory,
+       _categoryBalanceFactory = categoryBalanceFactory;
 
   Future<List<CategoryModel>> search({String? query, required int page}) async {
     final dtos = await _categoryRepo.search(

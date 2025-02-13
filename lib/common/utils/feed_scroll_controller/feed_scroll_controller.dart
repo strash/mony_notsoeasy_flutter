@@ -28,7 +28,8 @@ final class FeedScrollController {
     double offset, {
     required Duration duration,
     required Curve curve,
-  }) get animateTo => controller.animateTo;
+  })
+  get animateTo => controller.animateTo;
 
   StreamSubscription<FeedScrollControllerEvent> addListener(
     void Function(FeedScrollControllerEvent) onData,

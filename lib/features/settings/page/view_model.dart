@@ -65,8 +65,9 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
       // -> navbar
-      _navbarSub =
-          context.viewModel<NavBarViewModel>().subject.listen(_onNavBarEvent);
+      _navbarSub = context.viewModel<NavBarViewModel>().subject.listen(
+        _onNavBarEvent,
+      );
 
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
       final mode = await sharedPrefService.getSettingsThemeMode();

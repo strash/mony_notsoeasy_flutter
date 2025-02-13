@@ -38,7 +38,8 @@ final class CategoryFormViewModel extends ViewModelState<CategoryFormPage> {
 
   void _listener() {
     setProtectedState(() {
-      isSubmitEnabled = titleController.isValid &&
+      isSubmitEnabled =
+          titleController.isValid &&
           titleController.text.trim().isNotEmpty &&
           colorController.value != null &&
           emojiController.text.isNotEmpty;
@@ -101,9 +102,7 @@ final class CategoryFormViewModel extends ViewModelState<CategoryFormPage> {
   Widget build(BuildContext context) {
     return ViewModel<CategoryFormViewModel>(
       viewModel: this,
-      useCases: [
-        () => OnSubmitPressed(),
-      ],
+      useCases: [() => OnSubmitPressed()],
       child: CategoryFormView(keyboardHeight: widget.keyboardHeight),
     );
   }

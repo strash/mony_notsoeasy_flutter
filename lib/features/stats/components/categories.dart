@@ -9,10 +9,7 @@ import "package:mony_app/features/stats/page/view_model.dart";
 class StatsCategoriesComponent extends StatelessWidget {
   final double padding;
 
-  const StatsCategoriesComponent({
-    super.key,
-    required this.padding,
-  });
+  const StatsCategoriesComponent({super.key, required this.padding});
 
   @override
   Widget build(BuildContext context) {

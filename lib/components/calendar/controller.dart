@@ -44,13 +44,12 @@ final class CalendarController extends ChangeNotifier {
     DateTime? value, {
     ScrollController? scrollController,
     ScrollPhysics? physics,
-  })  : _value = value,
-        visibleMonth = (value ?? DateTime.now()).firstDayOfMonth(),
-        scrollController = scrollController ?? ScrollController(),
-        physics = physics ??
-            const PageScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
-            );
+  }) : _value = value,
+       visibleMonth = (value ?? DateTime.now()).firstDayOfMonth(),
+       scrollController = scrollController ?? ScrollController(),
+       physics =
+           physics ??
+           const PageScrollPhysics(parent: AlwaysScrollableScrollPhysics());
 
   void addEventListener(void Function(CalendarEvent event) listener) {
     _subject.stream.listen(listener);
@@ -61,8 +60,9 @@ final class CalendarController extends ChangeNotifier {
     Duration duration = Durations.long1,
     Curve curve = Curves.easeInOutQuad,
   }) async {
-    final diff =
-        visibleMonth.firstDayOfMonth().monthOffset(date.firstDayOfMonth());
+    final diff = visibleMonth.firstDayOfMonth().monthOffset(
+      date.firstDayOfMonth(),
+    );
     ScrollDirection direction = ScrollDirection.idle;
     if (diff > 0) {
       direction = ScrollDirection.reverse;

@@ -35,9 +35,10 @@ final class OnKeyPressed
 
         final parsedAmount = double.parse(trimmedAmount);
         final transactionVO = TransactionVO(
-          amount: viewModel.typeController.value == ETransactionType.expense
-              ? .0 - parsedAmount
-              : parsedAmount,
+          amount:
+              viewModel.typeController.value == ETransactionType.expense
+                  ? .0 - parsedAmount
+                  : parsedAmount,
           date: DateTime(
             viewModel.dateController.value!.year,
             viewModel.dateController.value!.month,

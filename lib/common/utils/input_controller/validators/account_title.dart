@@ -4,7 +4,7 @@ final class AccountTitleValidator implements IInputValidator {
   final List<String> _titles;
 
   AccountTitleValidator({required List<String> titles})
-      : _titles = titles.map((e) => e.toLowerCase()).toList(growable: false);
+    : _titles = titles.map((e) => e.toLowerCase()).toList(growable: false);
 
   @override
   String? call(String? value) {

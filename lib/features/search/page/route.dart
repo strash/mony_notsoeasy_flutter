@@ -4,10 +4,7 @@ final class _Route extends ModalRoute {
   final CapturedThemes capturedThemes;
   final Widget child;
 
-  _Route({
-    required this.capturedThemes,
-    required this.child,
-  });
+  _Route({required this.capturedThemes, required this.child});
 
   @override
   Color? get barrierColor => null;
@@ -29,10 +26,7 @@ final class _Route extends ModalRoute {
       child: child,
       builder: (context, child) {
         return capturedThemes.wrap(
-          Opacity(
-            opacity: animation.value,
-            child: child,
-          ),
+          Opacity(opacity: animation.value, child: child),
         );
       },
     );

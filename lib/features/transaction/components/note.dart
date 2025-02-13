@@ -5,10 +5,7 @@ import "package:mony_app/components/separated/component.dart";
 class TransactionNoteComponent extends StatelessWidget {
   final String note;
 
-  const TransactionNoteComponent({
-    super.key,
-    required this.note,
-  });
+  const TransactionNoteComponent({super.key, required this.note});
 
   @override
   Widget build(BuildContext context) {

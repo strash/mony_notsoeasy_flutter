@@ -11,10 +11,7 @@ import "package:provider/provider.dart";
 final class CategoryPage extends StatefulWidget {
   final CategoryModel category;
 
-  const CategoryPage({
-    super.key,
-    required this.category,
-  });
+  const CategoryPage({super.key, required this.category});
 
   @override
   ViewModelState<CategoryPage> createState() => CategoryViewModel();

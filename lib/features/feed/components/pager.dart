@@ -43,8 +43,9 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
   @override
   void initState() {
     super.initState();
-    _pageSub =
-        _subject.debounceTime(const Duration(seconds: 2)).listen(_onPageEvent);
+    _pageSub = _subject
+        .debounceTime(const Duration(seconds: 2))
+        .listen(_onPageEvent);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _viewModel.pageController.addListener(_pageListener);
     });
@@ -84,8 +85,9 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                   width: 80.0,
                   height: 30.0,
                   child: ColoredBox(
-                    color: theme.colorScheme.surfaceContainer
-                        .withValues(alpha: kTranslucentPanelOpacity),
+                    color: theme.colorScheme.surfaceContainer.withValues(
+                      alpha: kTranslucentPanelOpacity,
+                    ),
                     child: Stack(
                       fit: StackFit.expand,
                       children: [

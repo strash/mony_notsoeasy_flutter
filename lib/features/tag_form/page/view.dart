@@ -10,10 +10,7 @@ import "package:mony_app/features/tag_form/use_case/use_case.dart";
 class TagFormView extends StatelessWidget {
   final double keyboardHeight;
 
-  const TagFormView({
-    super.key,
-    required this.keyboardHeight,
-  });
+  const TagFormView({super.key, required this.keyboardHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +64,10 @@ class TagFormView extends StatelessWidget {
 
                 // -> submit
                 FilledButton(
-                  onPressed: viewModel.isSubmitEnabled
-                      ? () => onSubmitPressed(context)
-                      : null,
+                  onPressed:
+                      viewModel.isSubmitEnabled
+                          ? () => onSubmitPressed(context)
+                          : null,
                   child: const Text("Сохранить"),
                 ),
               ],

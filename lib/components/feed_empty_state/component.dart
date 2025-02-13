@@ -7,10 +7,7 @@ import "package:mony_app/gen/assets.gen.dart";
 class FeedEmptyStateComponent extends StatelessWidget {
   final Color color;
 
-  const FeedEmptyStateComponent({
-    super.key,
-    required this.color,
-  });
+  const FeedEmptyStateComponent({super.key, required this.color});
 
   @override
   Widget build(BuildContext context) {

@@ -69,7 +69,8 @@ final class DomainSharedPreferencesService {
   }
 
   Future<ETransactionType> getSettingsDefaultTransactionType() async {
-    final value = await _repo.getString(_settingsDefaultTransactionType) ??
+    final value =
+        await _repo.getString(_settingsDefaultTransactionType) ??
         ETransactionType.defaultValue.value;
     return ETransactionType.from(value);
   }

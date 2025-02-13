@@ -19,21 +19,24 @@ class TypeSelectComponent extends StatelessWidget {
         return SelectComponent<EAccountType>(
           controller: viewModel.typeController,
           placeholder: const Text("тип счета"),
-          activeEntry: value != null
-              ? Text(
-                  value.description,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                )
-              : null,
+          activeEntry:
+              value != null
+                  ? Text(
+                    value.description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                  : null,
           entryBuilder: (context) {
-            return EAccountType.values.map((e) {
-              return SelectEntryComponent<EAccountType>(
-                value: e,
-                equal: (lhs, rhs) => lhs != null && lhs == rhs,
-                child: Text(e.description),
-              );
-            }).toList(growable: false);
+            return EAccountType.values
+                .map((e) {
+                  return SelectEntryComponent<EAccountType>(
+                    value: e,
+                    equal: (lhs, rhs) => lhs != null && lhs == rhs,
+                    child: Text(e.description),
+                  );
+                })
+                .toList(growable: false);
           },
         );
       },

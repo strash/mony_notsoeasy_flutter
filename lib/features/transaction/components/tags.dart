@@ -18,13 +18,15 @@ class TransactionTagsComponent extends StatelessWidget {
     return Wrap(
       spacing: 6.0,
       runSpacing: 6.0,
-      children: tags.map((e) {
-        return GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => onTap(context, e),
-          child: TagComponent(tag: e),
-        );
-      }).toList(growable: false),
+      children: tags
+          .map((e) {
+            return GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => onTap(context, e),
+              child: TagComponent(tag: e),
+            );
+          })
+          .toList(growable: false),
     );
   }
 }

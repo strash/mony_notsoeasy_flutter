@@ -10,10 +10,7 @@ import "package:mony_app/features/account_form/use_case/use_case.dart";
 class AccountFormView extends StatelessWidget {
   final double keyboardHeight;
 
-  const AccountFormView({
-    super.key,
-    required this.keyboardHeight,
-  });
+  const AccountFormView({super.key, required this.keyboardHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -126,9 +123,10 @@ class AccountFormView extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: FilledButton(
-                    onPressed: viewModel.isSubmitEnabled
-                        ? () => onSubmitPressed(context)
-                        : null,
+                    onPressed:
+                        viewModel.isSubmitEnabled
+                            ? () => onSubmitPressed(context)
+                            : null,
                     child: const Text("Сохранить"),
                   ),
                 ),

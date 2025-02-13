@@ -46,7 +46,6 @@ class AccountsView extends StatelessWidget {
                 ),
               ),
             )
-
           // -> accounts
           else
             SliverPadding(
@@ -54,8 +53,9 @@ class AccountsView extends StatelessWidget {
               sliver: SliverList.separated(
                 findChildIndexCallback: (key) {
                   final id = (key as ValueKey).value;
-                  final index =
-                      viewModel.accounts.indexWhere((e) => e.id == id);
+                  final index = viewModel.accounts.indexWhere(
+                    (e) => e.id == id,
+                  );
                   return index != -1 ? index : null;
                 },
                 separatorBuilder: (context, index) {

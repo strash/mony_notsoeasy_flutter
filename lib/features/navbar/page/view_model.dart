@@ -12,8 +12,7 @@ export "./event.dart";
 enum ENavBarTabItem implements IDescriptable {
   feed,
   stats,
-  settings,
-  ;
+  settings;
 
   static int get length => ENavBarTabItem.values.length;
 
@@ -47,17 +46,21 @@ final class NavBarViewModel extends ViewModelState<NavBarPage> {
 
   ENavBarTabItem currentTab = ENavBarTabItem.defaultValue;
 
-  final _routes = ENavBarTabItem.values.map((e) {
-    return switch (e) {
-      ENavBarTabItem.feed => const FeedPage(),
-      ENavBarTabItem.stats => const StatsPage(),
-      ENavBarTabItem.settings => const SettingsPage(),
-    };
-  }).toList(growable: false);
+  final _routes = ENavBarTabItem.values
+      .map((e) {
+        return switch (e) {
+          ENavBarTabItem.feed => const FeedPage(),
+          ENavBarTabItem.stats => const StatsPage(),
+          ENavBarTabItem.settings => const SettingsPage(),
+        };
+      })
+      .toList(growable: false);
 
-  final _navigatorTabKeys = ENavBarTabItem.values.map((e) {
-    return GlobalKey<NavigatorState>(debugLabel: "Tab $e");
-  }).toList(growable: false);
+  final _navigatorTabKeys = ENavBarTabItem.values
+      .map((e) {
+        return GlobalKey<NavigatorState>(debugLabel: "Tab $e");
+      })
+      .toList(growable: false);
 
   GlobalKey<NavigatorState> getNavigatorTabKey(ENavBarTabItem tab) {
     return _navigatorTabKeys.elementAt(tab.index);

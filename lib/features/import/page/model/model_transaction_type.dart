@@ -31,33 +31,34 @@ final class ImportModelTransactionType extends ImportModel {
   }
 
   List<ImportModelTransactionTypeVO> _mapTypes() {
-    final typeColumn = validation.mappedColumns
-        .where((e) => e.column == EImportColumn.transactionType)
-        .firstOrNull;
+    final typeColumn =
+        validation.mappedColumns.where((e) {
+          return e.column == EImportColumn.transactionType;
+        }).firstOrNull;
     // infer type from the amount sign
     if (typeColumn == null) {
-      return ETransactionType.values.map(
-        (e) {
-          return ImportModelTransactionTypeVO(
-            typeValue: e.name,
-            transactionType: e,
-            entries: validation.mappedEntries.where((entry) {
-              return (e == ETransactionType.expense &&
-                      entry.entries.any(
-                        (m) =>
-                            m.key.column == EImportColumn.amount &&
-                            double.parse(m.value) < .0,
-                      )) ||
-                  (e == ETransactionType.income &&
-                      entry.entries.any(
-                        (m) =>
-                            m.key.column == EImportColumn.amount &&
-                            double.parse(m.value) >= .0,
-                      ));
-            }).toList(growable: false),
-          );
-        },
-      ).toList(growable: false);
+      return ETransactionType.values
+          .map((e) {
+            return ImportModelTransactionTypeVO(
+              typeValue: e.name,
+              transactionType: e,
+              entries: validation.mappedEntries
+                  .where((entry) {
+                    return (e == ETransactionType.expense &&
+                            entry.entries.any((m) {
+                              return m.key.column == EImportColumn.amount &&
+                                  double.parse(m.value) < .0;
+                            })) ||
+                        (e == ETransactionType.income &&
+                            entry.entries.any((m) {
+                              return m.key.column == EImportColumn.amount &&
+                                  double.parse(m.value) >= .0;
+                            }));
+                  })
+                  .toList(growable: false),
+            );
+          })
+          .toList(growable: false);
     } else {
       // we know there is only two or less types
       final Set<String> types = {};
@@ -67,22 +68,25 @@ final class ImportModelTransactionType extends ImportModel {
         if (types.length == 2) break;
       }
       if (types.isEmpty) throw ArgumentError.value(types);
-      final one = validation.mappedEntries
-          .where((e) => e[typeColumn]! == types.elementAt(0));
-      final two = types.length == 2
-          ? validation.mappedEntries
-              .where((e) => e[typeColumn]! == types.elementAt(1))
-          : const <Map<ImportModelColumn, String>>[];
+      final one = validation.mappedEntries.where(
+        (e) => e[typeColumn]! == types.elementAt(0),
+      );
+      final two =
+          types.length == 2
+              ? validation.mappedEntries.where(
+                (e) => e[typeColumn]! == types.elementAt(1),
+              )
+              : const <Map<ImportModelColumn, String>>[];
       const otherType = "__other_transaction_type__";
-      return ETransactionType.values.indexed.map(
-        (e) {
-          return ImportModelTransactionTypeVO(
-            entries: (e.$1 == 0 ? one : two).toList(growable: false),
-            typeValue: types.elementAtOrNull(e.$1) ?? otherType,
-            transactionType: e.$2,
-          );
-        },
-      ).toList(growable: false);
+      return ETransactionType.values.indexed
+          .map((e) {
+            return ImportModelTransactionTypeVO(
+              entries: (e.$1 == 0 ? one : two).toList(growable: false),
+              typeValue: types.elementAtOrNull(e.$1) ?? otherType,
+              transactionType: e.$2,
+            );
+          })
+          .toList(growable: false);
     }
   }
 

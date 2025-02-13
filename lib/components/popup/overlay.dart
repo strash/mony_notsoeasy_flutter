@@ -42,13 +42,11 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: Durations.short3,
-      vsync: this,
-    );
-    _animation = Tween<double>(begin: .0, end: 1.0)
-        .chain(CurveTween(curve: Curves.fastOutSlowIn))
-        .animate(_controller);
+    _controller = AnimationController(duration: Durations.short3, vsync: this);
+    _animation = Tween<double>(
+      begin: .0,
+      end: 1.0,
+    ).chain(CurveTween(curve: Curves.fastOutSlowIn)).animate(_controller);
     _controller.addStatusListener(_animatiosStatusListener);
     _controller.forward();
   }
@@ -68,10 +66,18 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
       animation: _animation,
       builder: (context, child) {
         final value = _animation.value;
-        final sigma =
-            value.remap(.0, 1.0, .0, widget.blurBackground ? 8.0 : .0);
-        final bgAlpha =
-            value.remap(.0, 1.0, .0, widget.showBackground ? .5 : .0);
+        final sigma = value.remap(
+          .0,
+          1.0,
+          .0,
+          widget.blurBackground ? 8.0 : .0,
+        );
+        final bgAlpha = value.remap(
+          .0,
+          1.0,
+          .0,
+          widget.showBackground ? .5 : .0,
+        );
 
         return Stack(
           fit: StackFit.expand,

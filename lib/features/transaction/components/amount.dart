@@ -33,9 +33,10 @@ class TransactionAmountComponent extends StatelessWidget {
             fontSize: 40.0,
             height: 1.1,
             fontWeight: FontWeight.w600,
-            color: transaction.amount.isNegative
-                ? theme.colorScheme.onSurface
-                : theme.colorScheme.secondary,
+            color:
+                transaction.amount.isNegative
+                    ? theme.colorScheme.onSurface
+                    : theme.colorScheme.secondary,
           ),
         ),
       ),

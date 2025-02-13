@@ -41,9 +41,10 @@ class _TransactionFormSymbolButtonComponentState
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: Durations.short2);
-    _animation = Tween<double>(begin: .0, end: 1.0)
-        .chain(CurveTween(curve: Curves.easeInOut))
-        .animate(_controller);
+    _animation = Tween<double>(
+      begin: .0,
+      end: 1.0,
+    ).chain(CurveTween(curve: Curves.easeInOut)).animate(_controller);
     _animation.addStatusListener(_animationStatusListener);
   }
 
@@ -60,12 +61,13 @@ class _TransactionFormSymbolButtonComponentState
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: _isEnabled
-          ? () {
-              widget.onTap(context, widget.button);
-              _controller.forward();
-            }
-          : null,
+      onTap:
+          _isEnabled
+              ? () {
+                widget.onTap(context, widget.button);
+                _controller.forward();
+              }
+              : null,
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
@@ -78,10 +80,12 @@ class _TransactionFormSymbolButtonComponentState
                 curve: Curves.easeInOut,
                 tween: ColorTween(
                   begin: widget.button.color,
-                  end: _isEnabled
-                      ? widget.button.color
-                      : theme.colorScheme.surfaceContainer
-                          .withValues(alpha: .8),
+                  end:
+                      _isEnabled
+                          ? widget.button.color
+                          : theme.colorScheme.surfaceContainer.withValues(
+                            alpha: .8,
+                          ),
                 ),
                 child: Center(
                   child: AnimatedOpacity(
@@ -90,14 +94,14 @@ class _TransactionFormSymbolButtonComponentState
                     curve: Curves.easeInOut,
                     child: switch (widget.button) {
                       final TransactionFormButtonTypeSymbol button => Text(
-                          button.displayedValue,
-                          style: GoogleFonts.golosText(
-                            fontSize: 34.0,
-                            fontWeight: FontWeight.w500,
-                            color: theme.colorScheme.onSurface,
-                            decoration: TextDecoration.none,
-                          ),
+                        button.displayedValue,
+                        style: GoogleFonts.golosText(
+                          fontSize: 34.0,
+                          fontWeight: FontWeight.w500,
+                          color: theme.colorScheme.onSurface,
+                          decoration: TextDecoration.none,
                         ),
+                      ),
                       final TransactionFormButtonTypeAction button =>
                         SvgPicture.asset(
                           button.icon,
@@ -114,10 +118,7 @@ class _TransactionFormSymbolButtonComponentState
                 builder: (context, color, child) {
                   return ClipSmoothRect(
                     radius: const SmoothBorderRadius.all(
-                      SmoothRadius(
-                        cornerRadius: 20.0,
-                        cornerSmoothing: 0.6,
-                      ),
+                      SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 0.6),
                     ),
                     child: ColoredBox(
                       color: color ?? theme.colorScheme.surfaceContainer,

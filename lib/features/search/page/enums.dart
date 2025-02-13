@@ -3,8 +3,7 @@ part of "./view_model.dart";
 enum ESearchPage implements IDescriptable {
   accounts,
   categories,
-  tags,
-  ;
+  tags;
 
   String get icon {
     return switch (this) {
@@ -29,8 +28,7 @@ enum ESearchTab implements IDescriptable {
   transactions,
   accounts,
   categories,
-  tags,
-  ;
+  tags;
 
   static const ESearchTab defaultValue = transactions;
 

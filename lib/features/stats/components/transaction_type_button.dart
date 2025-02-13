@@ -13,19 +13,14 @@ import "package:mony_app/gen/assets.gen.dart";
 class StatsTransactionTypeButtonComponent extends StatelessWidget {
   final ETransactionType type;
 
-  const StatsTransactionTypeButtonComponent({
-    super.key,
-    required this.type,
-  });
+  const StatsTransactionTypeButtonComponent({super.key, required this.type});
 
   String _getCount(String locale, AccountBalanceModel? balance) {
     if (balance == null) return "0";
-    return NumberFormat.decimalPattern(locale).format(
-      switch (type) {
-        ETransactionType.expense => balance.expenseCount,
-        ETransactionType.income => balance.incomeCount,
-      },
-    );
+    return NumberFormat.decimalPattern(locale).format(switch (type) {
+      ETransactionType.expense => balance.expenseCount,
+      ETransactionType.income => balance.incomeCount,
+    });
   }
 
   String _getAmount(
@@ -38,8 +33,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
     return switch (type) {
       ETransactionType.expense => balance.expenseAmount,
       ETransactionType.income => balance.incomeAmount,
-    }
-        .currency(
+    }.currency(
       locale: locale,
       name: account.currency.name,
       symbol: account.currency.symbol,
@@ -80,9 +74,10 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
               color: theme.colorScheme.surfaceContainer,
               shape: SmoothRectangleBorder(
                 side: BorderSide(
-                  color: isActive
-                      ? theme.colorScheme.secondary
-                      : const Color(0x00FFFFFF),
+                  color:
+                      isActive
+                          ? theme.colorScheme.secondary
+                          : const Color(0x00FFFFFF),
                 ),
                 borderRadius: const SmoothBorderRadius.all(
                   SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),

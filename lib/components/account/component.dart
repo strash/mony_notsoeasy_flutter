@@ -36,17 +36,19 @@ class AccountComponent extends StatelessWidget {
           dimension: iconDimension,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              gradient: showColors
-                  ? LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [color2, color],
-                    )
-                  : null,
+              gradient:
+                  showColors
+                      ? LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [color2, color],
+                      )
+                      : null,
               shape: SmoothRectangleBorder(
                 side: BorderSide(
-                  color: theme.colorScheme.outline
-                      .withValues(alpha: showColors ? .0 : 1.0),
+                  color: theme.colorScheme.outline.withValues(
+                    alpha: showColors ? .0 : 1.0,
+                  ),
                 ),
                 borderRadius: const SmoothBorderRadius.all(
                   SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 0.6),
@@ -77,9 +79,10 @@ class AccountComponent extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 2.0, right: 8.0),
                         child: CurrencyTagComponent(
                           code: account.currency.code,
-                          background: showColors
-                              ? color
-                              : theme.colorScheme.onSurfaceVariant,
+                          background:
+                              showColors
+                                  ? color
+                                  : theme.colorScheme.onSurfaceVariant,
                           foreground: theme.colorScheme.surface,
                         ),
                       ),

@@ -19,7 +19,8 @@ final class OnAccountButtonPressed
       throw ArgumentError.value(accountModel);
     }
 
-    final account = value.account ??
+    final account =
+        value.account ??
         AccountVO(
           title: value.originalTitle ?? "",
           type: EAccountType.defaultValue,
@@ -48,20 +49,22 @@ final class OnAccountButtonPressed
           ImportModelAccountVO(account: result, originalTitle: null),
         ];
       } else {
-        final index = accountModel.accounts
-            .indexWhere((e) => e.originalTitle == value.originalTitle);
+        final index = accountModel.accounts.indexWhere(
+          (e) => e.originalTitle == value.originalTitle,
+        );
         if (index == -1) {
           throw RangeError.index(index, accountModel.accounts);
         }
-        accountModel.accounts = List.from(accountModel.accounts)
-          ..removeAt(index)
-          ..insert(
-            index,
-            ImportModelAccountVO(
-              account: result,
-              originalTitle: value.originalTitle,
-            ),
-          );
+        accountModel.accounts =
+            List.from(accountModel.accounts)
+              ..removeAt(index)
+              ..insert(
+                index,
+                ImportModelAccountVO(
+                  account: result,
+                  originalTitle: value.originalTitle,
+                ),
+              );
       }
     });
   }

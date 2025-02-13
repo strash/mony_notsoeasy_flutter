@@ -28,9 +28,7 @@ class TransactionFormTagsGradientComponent extends StatelessWidget {
           size: const Size.fromWidth(24.0),
           child: DecoratedBox(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: _getColors(context),
-              ),
+              gradient: LinearGradient(colors: _getColors(context)),
             ),
           ),
         ),

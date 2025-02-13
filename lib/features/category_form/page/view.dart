@@ -10,10 +10,7 @@ import "package:mony_app/features/features.dart";
 class CategoryFormView extends StatelessWidget {
   final double keyboardHeight;
 
-  const CategoryFormView({
-    super.key,
-    required this.keyboardHeight,
-  });
+  const CategoryFormView({super.key, required this.keyboardHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +48,7 @@ class CategoryFormView extends StatelessWidget {
                     ),
 
                     // -> emoji
-                    EmojiPickerComponent(
-                      controller: viewModel.emojiController,
-                    ),
+                    EmojiPickerComponent(controller: viewModel.emojiController),
 
                     // -> title
                     Expanded(
@@ -86,9 +81,10 @@ class CategoryFormView extends StatelessWidget {
 
                 // -> submit
                 FilledButton(
-                  onPressed: viewModel.isSubmitEnabled
-                      ? () => onSubmitPressed(context)
-                      : null,
+                  onPressed:
+                      viewModel.isSubmitEnabled
+                          ? () => onSubmitPressed(context)
+                          : null,
                   child: const Text("Сохранить"),
                 ),
               ],

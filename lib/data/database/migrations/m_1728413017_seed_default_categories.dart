@@ -55,7 +55,7 @@ INSERT INTO $_categories (
       (
         icon: "😍",
         color: EColorName.americanOrange.name,
-        title: "Забота о себе"
+        title: "Забота о себе",
       ),
       (icon: "🐶", color: EColorName.cafeAuLait.name, title: "Питомцы"),
       (icon: "🏠", color: EColorName.bananaYellow.name, title: "Аренда"),
@@ -65,7 +65,7 @@ INSERT INTO $_categories (
       (
         icon: "🧦",
         color: EColorName.richBrilliantLavender.name,
-        title: "Гардероб"
+        title: "Гардероб",
       ),
       (icon: "🎁", color: EColorName.mauvelous.name, title: "Подарки"),
       (icon: "🪴", color: EColorName.vividMalachite.name, title: "Дом"),

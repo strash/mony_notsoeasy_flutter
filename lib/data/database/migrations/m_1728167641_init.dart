@@ -47,19 +47,19 @@ final class M1728167641Init extends BaseMigration {
     (
       table: _categories,
       columns: [_categoriesTitle, _categoriesTransactionType],
-      unique: true
+      unique: true,
     ),
     (table: _transactions, columns: [_transactionsAccountId], unique: false),
     (table: _transactions, columns: [_transactionssCategoryId], unique: false),
     (
       table: _transactions,
       columns: [_transactionsAccountId, _transactionssCategoryId],
-      unique: false
+      unique: false,
     ),
     (
       table: _transactionTags,
       columns: [_transactionTagsTransactionId, _transactionTagsTagId],
-      unique: true
+      unique: true,
     ),
   ];
 

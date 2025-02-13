@@ -17,18 +17,18 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
     switch (value.event) {
       case EventCategoryCreated() ||
-            EventCategoryUpdated() ||
-            EventCategoryDeleted() ||
-            EventTagCreated() ||
-            EventTagUpdated() ||
-            EventTagDeleted() ||
-            EventTransactionCreated() ||
-            EventTransactionUpdated() ||
-            EventTransactionDeleted() ||
-            EventSettingsThemeModeChanged() ||
-            EventSettingsCentsVisibilityChanged() ||
-            EventSettingsTagsVisibilityChanged() ||
-            EventSettingsDataDeletionRequested():
+          EventCategoryUpdated() ||
+          EventCategoryDeleted() ||
+          EventTagCreated() ||
+          EventTagUpdated() ||
+          EventTagDeleted() ||
+          EventTransactionCreated() ||
+          EventTransactionUpdated() ||
+          EventTransactionDeleted() ||
+          EventSettingsThemeModeChanged() ||
+          EventSettingsCentsVisibilityChanged() ||
+          EventSettingsTagsVisibilityChanged() ||
+          EventSettingsDataDeletionRequested():
         break;
 
       case EventAccountCreated() || EventDataImported():

@@ -80,37 +80,39 @@ class TransactionFormCategoryComponent extends StatelessWidget {
               controller: controller,
               placeholder: const Text("Категория"),
               activeEntryPadding: const EdgeInsets.symmetric(horizontal: 7.0),
-              activeEntry: controller.value != null
-                  ? Builder(
-                      builder: (context) {
-                        return _getCategory(
-                          context,
-                          controller.value!,
-                          viewModel.isColorsVisible,
-                        );
-                      },
-                    )
-                  : null,
+              activeEntry:
+                  controller.value != null
+                      ? Builder(
+                        builder: (context) {
+                          return _getCategory(
+                            context,
+                            controller.value!,
+                            viewModel.isColorsVisible,
+                          );
+                        },
+                      )
+                      : null,
               entryBuilder: (context) {
                 return switch (type) {
-                  ETransactionType.expense => viewModel.categories[type],
-                  ETransactionType.income => viewModel.categories[type],
-                }!
+                      ETransactionType.expense => viewModel.categories[type],
+                      ETransactionType.income => viewModel.categories[type],
+                    }!
                     .map((e) {
-                  return SelectEntryComponent<CategoryModel>(
-                    value: e,
-                    equal: (lhs, rhs) => lhs != null && lhs.id == rhs.id,
-                    child: Builder(
-                      builder: (context) {
-                        return _getCategory(
-                          context,
-                          e,
-                          viewModel.isColorsVisible,
-                        );
-                      },
-                    ),
-                  );
-                }).toList(growable: false);
+                      return SelectEntryComponent<CategoryModel>(
+                        value: e,
+                        equal: (lhs, rhs) => lhs != null && lhs.id == rhs.id,
+                        child: Builder(
+                          builder: (context) {
+                            return _getCategory(
+                              context,
+                              e,
+                              viewModel.isColorsVisible,
+                            );
+                          },
+                        ),
+                      );
+                    })
+                    .toList(growable: false);
               },
             );
           },

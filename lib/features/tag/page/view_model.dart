@@ -12,10 +12,7 @@ import "package:provider/provider.dart";
 final class TagPage extends StatefulWidget {
   final TagModel tag;
 
-  const TagPage({
-    super.key,
-    required this.tag,
-  });
+  const TagPage({super.key, required this.tag});
 
   @override
   ViewModelState<TagPage> createState() => TagViewModel();

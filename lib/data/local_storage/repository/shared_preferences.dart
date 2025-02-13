@@ -29,9 +29,8 @@ abstract base class SharedPreferencesLocalStorageRepository {
 final class _Impl implements SharedPreferencesLocalStorageRepository {
   final SharedPreferencesAsync _pref;
 
-  const _Impl({
-    required SharedPreferencesAsync preferences,
-  }) : _pref = preferences;
+  const _Impl({required SharedPreferencesAsync preferences})
+    : _pref = preferences;
 
   @override
   Future<int?> getInt(String key) async {

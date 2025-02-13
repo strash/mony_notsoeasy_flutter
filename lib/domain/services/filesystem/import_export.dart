@@ -11,8 +11,8 @@ final class DomainImportExportService {
   DomainImportExportService({
     required CsvFilesystemRepository csvFilesystemRepository,
     required MonyFileFilesystemRepository monyFileFilesystemRepository,
-  })  : _csvRepo = csvFilesystemRepository,
-        _monyFileRepo = monyFileFilesystemRepository;
+  }) : _csvRepo = csvFilesystemRepository,
+       _monyFileRepo = monyFileFilesystemRepository;
 
   Future<ImportedCsvVO?> importCSV() async {
     final content = await _csvRepo.read();

@@ -13,10 +13,7 @@ import "package:provider/provider.dart";
 final class TransactionPage extends StatefulWidget {
   final TransactionModel transaction;
 
-  const TransactionPage({
-    super.key,
-    required this.transaction,
-  });
+  const TransactionPage({super.key, required this.transaction});
 
   @override
   ViewModelState<TransactionPage> createState() => TransactionViewModel();

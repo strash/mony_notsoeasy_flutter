@@ -43,8 +43,10 @@ final class _OnTransactionDeleted {
             final balance = await accountSevrice.getBalance(id: id);
             final feed = await Future.wait(
               List.generate(page.scrollPage + 1, (index) {
-                return transactionService
-                    .getMany(page: index, accountIds: [id]);
+                return transactionService.getMany(
+                  page: index,
+                  accountIds: [id],
+                );
               }),
             );
 

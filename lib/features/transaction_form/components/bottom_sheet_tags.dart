@@ -57,17 +57,18 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
                       duration: Durations.medium2,
                       switchInCurve: Curves.easeInOut,
                       switchOutCurve: Curves.easeInOut,
-                      child: tags.value.isEmpty
-                          ? Center(
-                              child: Text(
-                                'Чтобы создать тег, нажми "Готово"',
-                                style: GoogleFonts.golosText(
-                                  fontSize: 15.0,
-                                  color: theme.colorScheme.onSurfaceVariant,
+                      child:
+                          tags.value.isEmpty
+                              ? Center(
+                                child: Text(
+                                  'Чтобы создать тег, нажми "Готово"',
+                                  style: GoogleFonts.golosText(
+                                    fontSize: 15.0,
+                                    color: theme.colorScheme.onSurfaceVariant,
+                                  ),
                                 ),
-                              ),
-                            )
-                          : const SizedBox(),
+                              )
+                              : const SizedBox(),
                     ),
 
                     // -> list of tags

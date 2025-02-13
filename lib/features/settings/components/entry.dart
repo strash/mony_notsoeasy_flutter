@@ -31,9 +31,10 @@ class SettingsEntryComponent extends StatelessWidget {
               DefaultTextStyle(
                 style: GoogleFonts.golosText(
                   fontSize: 16.0,
-                  color: onTap != null
-                      ? theme.colorScheme.onSurface
-                      : theme.colorScheme.onSurfaceVariant,
+                  color:
+                      onTap != null
+                          ? theme.colorScheme.onSurface
+                          : theme.colorScheme.onSurfaceVariant,
                 ),
                 child: title,
               ),

@@ -11,8 +11,10 @@ final class OnSumbitPressed extends UseCase<Future<void>, dynamic> {
     final viewModel = context.viewModel<AccountFormViewModel>();
     final navigator = Navigator.of(context);
 
-    final cleanBalance =
-        viewModel.balanceController.text.trim().replaceAll(",", ".");
+    final cleanBalance = viewModel.balanceController.text.trim().replaceAll(
+      ",",
+      ".",
+    );
     final colorName =
         viewModel.colorController.value?.name ?? EColorName.random().name;
     final type = viewModel.typeController.value ?? EAccountType.defaultValue;

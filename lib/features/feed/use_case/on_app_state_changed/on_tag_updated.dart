@@ -15,17 +15,13 @@ final class _OnTagUpdated {
         // all accounts page
         case final FeedPageStateAllAccounts page:
           return page.copyWith(
-            feed: List<TransactionModel>.from(
-              page.feed.map(_updateTags(tag)),
-            ),
+            feed: List<TransactionModel>.from(page.feed.map(_updateTags(tag))),
           );
 
         // single account page
         case final FeedPageStateSingleAccount page:
           return page.copyWith(
-            feed: List<TransactionModel>.from(
-              page.feed.map(_updateTags(tag)),
-            ),
+            feed: List<TransactionModel>.from(page.feed.map(_updateTags(tag))),
           );
       }
     });

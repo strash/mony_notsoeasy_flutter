@@ -1,8 +1,20 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 
-final _monthLength =
-    List<int>.unmodifiable([31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]);
+final _monthLength = List<int>.unmodifiable([
+  31,
+  28,
+  31,
+  30,
+  31,
+  30,
+  31,
+  31,
+  30,
+  31,
+  30,
+  31,
+]);
 
 extension DateTimeEx on DateTime {
   /// Returns a localized list of weekday names starting from the correct
@@ -90,7 +102,7 @@ extension DateTimeEx on DateTime {
   String description({
     required String Function(DateTime date) dateFormatter,
     String Function(TimeOfDay time, {bool alwaysUse24HourFormat})?
-        timeFormatter,
+    timeFormatter,
   }) {
     final year = this.year;
     final dateFormatted = dateFormatter(this);

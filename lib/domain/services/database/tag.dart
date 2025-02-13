@@ -13,9 +13,9 @@ final class DomainTagService extends BaseDatabaseService {
     required TagDatabaseRepository tagRepo,
     required TagDatabaseFactoryImpl tagFactory,
     required TagBalanceDatabaseFactoryImpl tagBalanceFactory,
-  })  : _tagRepo = tagRepo,
-        _tagFactory = tagFactory,
-        _tagBalanceFactory = tagBalanceFactory;
+  }) : _tagRepo = tagRepo,
+       _tagFactory = tagFactory,
+       _tagBalanceFactory = tagBalanceFactory;
 
   Future<List<TagModel>> search({
     String? query,
@@ -47,10 +47,7 @@ final class DomainTagService extends BaseDatabaseService {
   }
 
   Future<List<TagModel>> getMany({required int page}) async {
-    final dtos = await _tagRepo.getMany(
-      limit: perPage,
-      offset: offset(page),
-    );
+    final dtos = await _tagRepo.getMany(limit: perPage, offset: offset(page));
     return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
   }
 

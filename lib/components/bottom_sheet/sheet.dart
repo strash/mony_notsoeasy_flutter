@@ -5,10 +5,8 @@ import "package:flutter/material.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/components/bottom_sheet/handle.dart";
 
-typedef TBottomSheetBuilder = Widget Function(
-  BuildContext context,
-  double bottom,
-);
+typedef TBottomSheetBuilder =
+    Widget Function(BuildContext context, double bottom);
 
 class BottomSheetComponent extends StatefulWidget {
   final bool showDragHandle;

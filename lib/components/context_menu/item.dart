@@ -54,17 +54,18 @@ class ContextMenuItemComponent extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 10.0),
                         child: SizedBox.square(
                           dimension: 26.0,
-                          child: isActive!
-                              ? SvgPicture.asset(
-                                  Assets.icons.checkmark,
-                                  width: 26.0,
-                                  height: 26.0,
-                                  colorFilter: ColorFilter.mode(
-                                    theme.colorScheme.primary,
-                                    BlendMode.srcIn,
-                                  ),
-                                )
-                              : null,
+                          child:
+                              isActive!
+                                  ? SvgPicture.asset(
+                                    Assets.icons.checkmark,
+                                    width: 26.0,
+                                    height: 26.0,
+                                    colorFilter: ColorFilter.mode(
+                                      theme.colorScheme.primary,
+                                      BlendMode.srcIn,
+                                    ),
+                                  )
+                                  : null,
                         ),
                       ),
 
@@ -78,11 +79,7 @@ class ContextMenuItemComponent extends StatelessWidget {
               ),
 
               // -> icon
-              if (icon != null)
-                SizedBox.square(
-                  dimension: 26.0,
-                  child: icon,
-                ),
+              if (icon != null) SizedBox.square(dimension: 26.0, child: icon),
             ],
           ),
         ),

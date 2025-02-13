@@ -97,9 +97,10 @@ class StartAccountView extends StatelessWidget {
                 children: [
                   // -> button create account
                   FilledButton(
-                    onPressed: !viewModel.isImportInProgress
-                        ? () => onCreateAccountPressed(context)
-                        : null,
+                    onPressed:
+                        !viewModel.isImportInProgress
+                            ? () => onCreateAccountPressed(context)
+                            : null,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -130,9 +131,10 @@ class StartAccountView extends StatelessWidget {
                           style: FilledButton.styleFrom(
                             backgroundColor: theme.colorScheme.tertiary,
                           ),
-                          onPressed: !viewModel.isImportInProgress
-                              ? () => onImportMonyPressed(context)
-                              : null,
+                          onPressed:
+                              !viewModel.isImportInProgress
+                                  ? () => onImportMonyPressed(context)
+                                  : null,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -165,9 +167,10 @@ class StartAccountView extends StatelessWidget {
                           style: FilledButton.styleFrom(
                             backgroundColor: theme.colorScheme.tertiary,
                           ),
-                          onPressed: !viewModel.isImportInProgress
-                              ? () => onImportCsvPressed(context)
-                              : null,
+                          onPressed:
+                              !viewModel.isImportInProgress
+                                  ? () => onImportCsvPressed(context)
+                                  : null,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

@@ -9,8 +9,11 @@ final class _NamedColorPickerValueProvider extends InheritedWidget {
   });
 
   static NamedColorPickerController? maybeOf<T>(BuildContext context) {
-    final p = context
-        .dependOnInheritedWidgetOfExactType<_NamedColorPickerValueProvider>();
+    final p =
+        context
+            .dependOnInheritedWidgetOfExactType<
+              _NamedColorPickerValueProvider
+            >();
     return p?.controller;
   }
 

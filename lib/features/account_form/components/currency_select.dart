@@ -23,13 +23,14 @@ class CurrencySelectComponent extends StatelessWidget {
         return SelectComponent<FiatCurrency>(
           controller: viewModel.currencyController,
           placeholder: const Text("валюта"),
-          activeEntry: value != null
-              ? Text(
-                  value.code,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                )
-              : null,
+          activeEntry:
+              value != null
+                  ? Text(
+                    value.code,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                  : null,
           expand: true,
           entryBuilder: (context) {
             final list = List.of(FiatCurrency.list, growable: false)

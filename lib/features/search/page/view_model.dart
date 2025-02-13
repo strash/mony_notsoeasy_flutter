@@ -46,12 +46,12 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
 
   final tabButtonsScrollController = ScrollController();
 
-  late final _pageTabScrollControllers = ESearchTab.values.map((e) {
-    return FeedScrollController();
-  }).toList(growable: false);
+  late final _pageTabScrollControllers = ESearchTab.values
+      .map((e) => FeedScrollController())
+      .toList(growable: false);
 
   late final List<StreamSubscription<FeedScrollControllerEvent>>
-      _pageTabScrollSubs;
+  _pageTabScrollSubs;
 
   final List<({int scrollPage, bool canLoadMore})> tabPageStates = List.filled(
     ESearchTab.values.length,
