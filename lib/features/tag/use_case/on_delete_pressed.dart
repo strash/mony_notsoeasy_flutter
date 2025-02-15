@@ -17,17 +17,19 @@ final class OnDeletePressed extends UseCase<Future<void>, TagModel> {
     final shouldConfirm = await sharedPrefService.getSettingsConfirmTag();
 
     if (!context.mounted) return;
-    final result =
-        shouldConfirm
-            ? await AlertComponet.show(
-              context,
-              title: const Text("Удаление тега"),
-              description: const Text(
-                "Тег просто будет отвязан от всех транзакций, к которым он "
-                "привязан. Эту проверку можно отключить в настройках.",
-              ),
-            )
-            : EAlertResult.ok;
+    final EAlertResult? result;
+    if (shouldConfirm) {
+      result = await AlertComponet.show(
+        context,
+        title: const Text("Удаление тега"),
+        description: const Text(
+          "Тег просто будет отвязан от всех транзакций, к которым он "
+          "привязан. Эту проверку можно отключить в настройках.",
+        ),
+      );
+    } else {
+      result = EAlertResult.ok;
+    }
 
     if (!context.mounted || result == null) return;
 

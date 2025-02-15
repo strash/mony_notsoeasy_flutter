@@ -1,11 +1,7 @@
-import "dart:ui";
-import "package:figma_squircle_updated/figma_squircle.dart";
+import "dart:io";
+
 import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
-import "package:mony_app/common/common.dart";
-import "package:mony_app/components/components.dart";
 
 enum EAlertResult implements IDescriptable {
   cancel,
@@ -20,130 +16,45 @@ enum EAlertResult implements IDescriptable {
   }
 }
 
-class AlertComponet extends StatelessWidget {
-  final Widget? title;
-  final Widget? description;
-
-  const AlertComponet({super.key, this.title, this.description});
-
+sealed class AlertComponet {
   static Future<EAlertResult?> show(
     BuildContext context, {
     Widget? title,
     Widget? description,
   }) {
-    final navigator = appNavigatorKey.currentState;
-    if (navigator == null) return Future.value();
-    final theme = Theme.of(context);
+    ButtonStyle? style;
+    if (Platform.isIOS) {
+      const transparentColor = Color(0x00FFFFFF);
+      style = TextButton.styleFrom(
+        elevation: .0,
+        splashFactory: NoSplash.splashFactory,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        backgroundColor: transparentColor,
+        overlayColor: transparentColor,
+        surfaceTintColor: transparentColor,
+        shape: LinearBorder.none,
+      );
+    }
 
-    return navigator.push<EAlertResult?>(
-      DialogRoute<EAlertResult>(
-        context: context,
-        builder: (context) {
-          return AlertComponet(title: title, description: description);
-        },
-        barrierColor: theme.colorScheme.scrim.withValues(alpha: 0.4),
-        barrierDismissible: false,
-        themes: InheritedTheme.capture(from: context, to: navigator.context),
-      ),
-    );
-  }
+    return showAdaptiveDialog<EAlertResult?>(
+      context: context,
+      builder: (context) {
+        final navigator = Navigator.of(context);
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final viewSize = MediaQuery.sizeOf(context);
-
-    return Center(
-      child: SizedBox(
-        width: viewSize.width - 50.0,
-        child: ClipSmoothRect(
-          radius: const SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 25.0, cornerSmoothing: 0.6),
-          ),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: kTranslucentPanelBlurSigma,
-              sigmaY: kTranslucentPanelBlurSigma,
-            ),
-            child: ColoredBox(
-              color: theme.colorScheme.surfaceContainer.withValues(
-                alpha: kTranslucentPanelOpacity,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // -> title
-                    if (title != null)
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: DefaultTextStyle(
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.golosText(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w500,
-                            color: theme.colorScheme.onTertiaryContainer,
-                          ),
-                          child: title!,
-                        ),
-                      ),
-
-                    // -> description
-                    if (description != null)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          10.0,
-                          10.0,
-                          10.0,
-                          30.0,
-                        ),
-                        child: DefaultTextStyle(
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.golosText(
-                            fontSize: 15.0,
-                            height: 1.4,
-                            fontWeight: FontWeight.w400,
-                            color: theme.colorScheme.onTertiaryContainer,
-                          ),
-                          child: description!,
-                        ),
-                      ),
-
-                    // -> controls
-                    SeparatedComponent.builder(
-                      direction: Axis.horizontal,
-                      itemCount: EAlertResult.values.length,
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(width: 10.0);
-                      },
-                      itemBuilder: (context, index) {
-                        final item = EAlertResult.values.elementAt(index);
-
-                        return Expanded(
-                          child: FilledButton(
-                            style:
-                                item == EAlertResult.cancel
-                                    ? FilledButton.styleFrom(
-                                      backgroundColor:
-                                          theme.colorScheme.tertiary,
-                                    )
-                                    : null,
-                            onPressed: () {
-                              Navigator.of(context).pop<EAlertResult>(item);
-                            },
-                            child: Text(item.description),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+        return AlertDialog.adaptive(
+          title: title,
+          content: description,
+          actions: EAlertResult.values
+              .map((e) {
+                return TextButton(
+                  style: style,
+                  onPressed: () => navigator.pop<EAlertResult>(e),
+                  child: Text(e.description),
+                );
+              })
+              .toList(growable: false),
+        );
+      },
     );
   }
 }
