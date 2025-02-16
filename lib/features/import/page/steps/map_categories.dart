@@ -23,6 +23,9 @@ class ImportMapCategoriesPage extends StatelessWidget {
     final onCategoryResetPressed = viewModel<OnCategoryResetPressed>();
 
     final locale = Localizations.localeOf(context);
+    final numberOfCategories = categoryModel.numberOfCategoriesDescription(
+      locale.languageCode,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,8 +49,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
               // -> description
               Text(
                 "Я нашел "
-                // ignore: lines_longer_than_80_chars
-                "${categoryModel.numberOfCategoriesDescription(locale.languageCode)}. "
+                "$numberOfCategories. "
                 "Их нужно привязать к предустановленным категориям, "
                 "либо дополнить информацией.",
                 style: GoogleFonts.golosText(

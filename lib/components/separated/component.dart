@@ -22,14 +22,10 @@ class SeparatedComponent extends StatelessWidget {
     this.mainAxisSize = MainAxisSize.max,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.start,
-    required int itemCount,
+    required this.itemCount,
     required this.separatorBuilder,
-    required IndexedWidgetBuilder itemBuilder,
+    required this.itemBuilder,
   }) : _type = _Type.builder,
-       // ignore: prefer_initializing_formals
-       itemCount = itemCount,
-       // ignore: prefer_initializing_formals
-       itemBuilder = itemBuilder,
        children = null;
 
   const SeparatedComponent.list({
@@ -39,10 +35,8 @@ class SeparatedComponent extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     required this.separatorBuilder,
-    required Iterable<Widget> children,
+    required this.children,
   }) : _type = _Type.list,
-       // ignore: prefer_initializing_formals
-       children = children,
        itemCount = null,
        itemBuilder = null;
 
