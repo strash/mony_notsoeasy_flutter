@@ -39,7 +39,8 @@ class NavBarPage extends StatefulWidget {
   ViewModelState<NavBarPage> createState() => NavBarViewModel();
 }
 
-final class NavBarViewModel extends ViewModelState<NavBarPage> {
+final class NavBarViewModel extends ViewModelState<NavBarPage>
+    with WidgetsBindingObserver {
   final subject = BehaviorSubject<NavBarEvent>.seeded(
     NavBarEventTabChanged(ENavBarTabItem.defaultValue),
   );
@@ -82,8 +83,26 @@ final class NavBarViewModel extends ViewModelState<NavBarPage> {
   }
 
   @override
+  Future<bool> didPopRoute() {
+    final navKey = getNavigatorTabKey(currentTab);
+    final state = navKey.currentState;
+    if (state != null && state.canPop()) {
+      state.pop<void>();
+      return Future.value(true);
+    }
+    return Future.value(false);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
     subject.close();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
