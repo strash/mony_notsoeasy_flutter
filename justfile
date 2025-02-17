@@ -23,14 +23,25 @@ run_local:
 	@flutter run --debug \
 		--dart-define=DEV_DB_ON_DEVICE=false \
 		--dart-define-from-file=.env \
-		--dart-define-from-file=.version
+		--dart-define-from-file=.version \
+		--no-pub
 
-run_device:
+run_ios:
 	@just update
 	@flutter run --debug \
 		--dart-define=DEV_DB_ON_DEVICE=true \
 		--dart-define-from-file=.env \
-		--dart-define-from-file=.version
+		--dart-define-from-file=.version \
+		--no-pub
+
+run_android:
+	@just update
+	@flutter run --debug \
+		--dart-define=DEV_DB_ON_DEVICE=true \
+		--dart-define-from-file=.env \
+		--dart-define-from-file=.version \
+		--flavor=prod_android_flavor \
+		--no-pub
 
 release:
 	#@just test
@@ -42,7 +53,8 @@ release:
 		--obfuscate \
 		--dart-define=DEV_DB_ON_DEVICE=false \
 		--dart-define-from-file=.env \
-		--dart-define-from-file=.version
+		--dart-define-from-file=.version \
+		--no-pub
 	@echo "building rustore release"
 	@flutter build appbundle --tree-shake-icons --release --pub \
 		--flavor=prod_rustore_flavor \
@@ -51,7 +63,8 @@ release:
 		--obfuscate \
 		--dart-define=DEV_DB_ON_DEVICE=false \
 		--dart-define-from-file=.env \
-		--dart-define-from-file=.version
+		--dart-define-from-file=.version \
+		--no-pub
 	@echo "building google release and packing debug symbols"
 	@flutter build appbundle --tree-shake-icons --release --pub \
 		--flavor=prod_android_flavor \
@@ -60,7 +73,8 @@ release:
 		--obfuscate \
 		--dart-define=DEV_DB_ON_DEVICE=false \
 		--dart-define-from-file=.env \
-		--dart-define-from-file=.version && \
+		--dart-define-from-file=.version \
+		--no-pub && \
 	cd build/app/intermediates/merged_native_libs/prod_android_flavorRelease/mergeProd_android_flavorReleaseNativeLibs/out/lib && \
 		zip -r symbols.zip ./x86_64 ./arm64-v8a ./armeabi-v7a
 
