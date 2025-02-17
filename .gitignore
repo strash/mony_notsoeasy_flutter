@@ -58,4 +58,6 @@ app.*.map.json
 
 .env
 upload-keystore.jks
+pepk_out.zip
+uploadcert.pem
 temp/
