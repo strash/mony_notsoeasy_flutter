@@ -34,6 +34,16 @@ run_device:
 
 release:
 	#@just test
+	@echo "building apk"
+	@flutter build apk --tree-shake-icons --release --pub \
+		--flavor=prod_android_flavor \
+		--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
+		--split-debug-info=build/app/intermediates/native_debug_symbols \
+		--obfuscate \
+		--dart-define=DEV_DB_ON_DEVICE=false \
+		--dart-define-from-file=.env \
+		--dart-define-from-file=.version
+	@echo "building rustore release"
 	@flutter build appbundle --tree-shake-icons --release --pub \
 		--flavor=prod_rustore_flavor \
 		--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
@@ -42,6 +52,7 @@ release:
 		--dart-define=DEV_DB_ON_DEVICE=false \
 		--dart-define-from-file=.env \
 		--dart-define-from-file=.version
+	@echo "building google release and packing debug symbols"
 	@flutter build appbundle --tree-shake-icons --release --pub \
 		--flavor=prod_android_flavor \
 		--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
