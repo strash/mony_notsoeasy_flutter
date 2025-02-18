@@ -23,7 +23,10 @@ class SettingsEntryComponent extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: 50.0),
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0),
+          padding: EdgeInsets.only(
+            left: 15.0,
+            right: trailing == null ? 15.0 : .0,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

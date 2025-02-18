@@ -120,6 +120,8 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
         () => OnImportDataPressed(),
         () => OnExportDataPressed(),
         () => OnReviewPressed(),
+        () => OnSupportPressed(),
+        () => OnPrivacyPolicyPressed(),
         () => OnDeleteDataPressed(),
       ],
       child: const SettingsView(),

@@ -1,6 +1,7 @@
 import "dart:io";
 
 import "package:flutter/foundation.dart";
+import "package:mony_app/common/constants.dart";
 import "package:mony_app/data/database/migration_service.dart";
 import "package:path/path.dart" as path;
 import "package:sqflite/sqflite.dart";
@@ -24,35 +25,20 @@ class AppDatabase {
     return _db!;
   }
 
-  int get schemaVersion {
-    return int.parse(
-      const String.fromEnvironment("MIGRATE_VERSION", defaultValue: "1"),
-    );
-  }
-
-  String get dbName {
-    return const String.fromEnvironment("DB_NAME", defaultValue: "my.db");
-  }
-
   Future<Database> _openDb() async {
     String dbPath = await getDatabasesPath();
-    const isDbOnDevice = bool.fromEnvironment(
-      "DEV_DB_ON_DEVICE",
-      defaultValue: true,
-    );
-    if (kDebugMode && !isDbOnDevice) {
-      const pathToLocalDB = String.fromEnvironment("DEV_PATH_TO_LOCAL_DB");
-      if (pathToLocalDB.isNotEmpty) {
-        final dir = Directory(pathToLocalDB);
+    if (kDebugMode && !kIsDbOnDevice) {
+      if (kDevPathToLocalDb.isNotEmpty) {
+        final dir = Directory(kDevPathToLocalDb);
         final exists = await dir.exists();
         if (!exists) await dir.create(recursive: true);
         dbPath = dir.path;
       }
     }
-    final pathToDatabase = path.join(dbPath, dbName);
+    final pathToDatabase = path.join(dbPath, kDbName);
     return await openDatabase(
       pathToDatabase,
-      version: schemaVersion,
+      version: kMigrateVersion,
       onConfigure: (db) async {
         await db.execute("PRAGMA foreign_keys = ON");
         await db.rawQuery("PRAGMA journal_mode = WAL");

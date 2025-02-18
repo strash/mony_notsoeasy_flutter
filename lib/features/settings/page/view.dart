@@ -33,7 +33,12 @@ class SettingsView extends StatelessWidget {
 
     final onImportDataPressed = viewModel<OnImportDataPressed>();
     final onExportDataPressed = viewModel<OnExportDataPressed>();
+
     final onReviewPressed = viewModel<OnReviewPressed>();
+    final onSupportPressed = viewModel<OnSupportPressed>();
+
+    final onPrivacyPolicyPressed = viewModel<OnPrivacyPolicyPressed>();
+
     final onDeleteDataPressed = viewModel<OnDeleteDataPressed>();
 
     return Scaffold(
@@ -140,6 +145,7 @@ class SettingsView extends StatelessWidget {
                   ],
                 ),
 
+                // TODO: добавить выбор категории по-умолчанию
                 // -> default transaction type
                 SettingsGroupComponent(
                   footer: const Text(
@@ -230,6 +236,7 @@ class SettingsView extends StatelessWidget {
                 ),
 
                 SettingsGroupComponent(
+                  header: const Text("Импорт и экспорт данных"),
                   children: [
                     // -> import
                     SettingsEntryComponent(
@@ -267,9 +274,10 @@ class SettingsView extends StatelessWidget {
                   ],
                 ),
 
-                // -> request a review
                 SettingsGroupComponent(
+                  header: const Text("Поддержка"),
                   children: [
+                    // -> request a review
                     SettingsEntryComponent(
                       onTap: () => onReviewPressed(context),
                       title: const Text("Оценить приложение"),
@@ -278,11 +286,44 @@ class SettingsView extends StatelessWidget {
                         color: theme.colorScheme.tertiary,
                       ),
                     ),
+
+                    // -> support
+                    SettingsEntryComponent(
+                      onTap: () => onSupportPressed(context),
+                      title: const Text("Написать в поддержку"),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: Assets.icons.envelope,
+                        color: theme.colorScheme.tertiary,
+                      ),
+                    ),
+                  ],
+                ),
+
+                // -> docs
+                SettingsGroupComponent(
+                  header: const Text("Документы"),
+                  children: [
+                    // -> privacy policy
+                    SettingsEntryComponent(
+                      onTap: () => onPrivacyPolicyPressed(context),
+                      title: const Flexible(
+                        child: Text(
+                          "Политика обработки персональных данных",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      trailing: SettingsEntryTrailingIconComponent(
+                        icon: Assets.icons.link,
+                        color: theme.colorScheme.tertiary,
+                      ),
+                    ),
                   ],
                 ),
 
                 // -> delete data
                 SettingsGroupComponent(
+                  header: const Text("Опасная зона"),
                   children: [
                     SettingsEntryComponent(
                       onTap: () => onDeleteDataPressed(context),

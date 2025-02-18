@@ -1,5 +1,6 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/constants.dart";
 import "package:mony_app/domain/services/services.dart";
 import "package:provider/provider.dart";
 
@@ -14,9 +15,9 @@ final class OnExportDataPressed extends UseCase<Future<void>, dynamic> {
 
     final rec = await transactionService.dumpData();
     final Map<String, dynamic> data = {
-      "version": const String.fromEnvironment("MIGRATE_VERSION"),
-      "build_name": const String.fromEnvironment("BUILD_NAME"),
-      "build_number": const String.fromEnvironment("BUILD_NUMBER"),
+      "version": kSupportEmail,
+      "build_name": kBuildName,
+      "build_number": kBuildNumber,
       "name": "mony_app",
       "date": DateTime.now().toUtc().toIso8601String(),
       "accounts": await accountService.dumpData(),

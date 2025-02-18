@@ -1,9 +1,10 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start/start.dart";
-import "package:mony_app/features/start/use_case/on_button_start_pressed.dart";
+import "package:mony_app/features/start/use_case/use_case.dart";
 
 class StartView extends StatelessWidget {
   const StartView({super.key});
@@ -11,26 +12,20 @@ class StartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
+    final baseColor = ex!.from(EColorName.random()).color;
+    final bgColor = Color.lerp(baseColor, theme.colorScheme.surface, .7)!;
+    final fgColor = Color.lerp(baseColor, theme.colorScheme.onSurface, .5)!;
+    final linkColor = Color.lerp(baseColor, theme.colorScheme.primary, .8)!;
+
     final viewModel = context.viewModel<StartViewModel>();
     final onButtonStartPressed = viewModel<OnButtonStartPressed>();
-    final brightness = MediaQuery.platformBrightnessOf(context);
+    final onPrivacyPolicyPressed = viewModel<OnPrivacyPolicyPressed>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              theme.colorScheme.secondary.withValues(
-                alpha: brightness == Brightness.light ? .8 : .4,
-              ),
-              theme.colorScheme.surface.withValues(alpha: .1),
-            ],
-            stops: const [.0, .6],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        decoration: BoxDecoration(color: bgColor),
         child: SafeArea(
           child: Column(
             children: [
@@ -48,29 +43,12 @@ class StartView extends StatelessWidget {
                           aspectRatio: 1.0,
                           child: DecoratedBox(
                             decoration: ShapeDecoration(
-                              color: theme.colorScheme.surfaceContainer
-                                  .withValues(alpha: .2),
-                              shadows: [
-                                BoxShadow(
-                                  color: theme.colorScheme.secondaryContainer
-                                      .withValues(
-                                        alpha:
-                                            brightness == Brightness.light
-                                                ? .6
-                                                : .3,
-                                      ),
-                                  blurRadius: 40.0,
-                                  blurStyle: BlurStyle.outer,
-                                ),
-                              ],
-                              shape: SmoothRectangleBorder(
-                                side: BorderSide(
-                                  color: theme.colorScheme.surface,
-                                ),
-                                borderRadius: const SmoothBorderRadius.all(
+                              color: theme.colorScheme.surface,
+                              shape: const SmoothRectangleBorder(
+                                borderRadius: SmoothBorderRadius.all(
                                   SmoothRadius(
                                     cornerRadius: 35.0,
-                                    cornerSmoothing: 0.6,
+                                    cornerSmoothing: 0.7,
                                   ),
                                 ),
                               ),
@@ -79,27 +57,45 @@ class StartView extends StatelessWidget {
                               alignment: Alignment.topRight,
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                  top: 22.0,
-                                  right: 22.0,
+                                  top: 18.0,
+                                  right: 18.0,
                                 ),
-                                child: Text(
-                                  "😉",
-                                  style: theme.textTheme.displayLarge,
+                                child: SizedBox.square(
+                                  dimension: 60.0,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(100.0),
+                                      ),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          baseColor,
+                                          Color.lerp(
+                                            baseColor,
+                                            theme.colorScheme.onSurface,
+                                            .1,
+                                          )!,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 35.0),
+                      const SizedBox(height: 25.0),
 
                       // -> name
                       Text(
                         "Mony",
                         style: GoogleFonts.golosText(
-                          fontSize: 40.0,
+                          fontSize: 30.0,
                           fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.onSurface,
+                          color: fgColor,
                         ),
                       ),
                       Text(
@@ -107,8 +103,8 @@ class StartView extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: GoogleFonts.golosText(
                           fontSize: 15.0,
-                          fontWeight: FontWeight.w400,
-                          color: theme.colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w500,
+                          color: fgColor.withValues(alpha: .6),
                         ),
                       ),
                     ],
@@ -121,23 +117,43 @@ class StartView extends StatelessWidget {
                 flex: 2,
                 child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            15.0,
-                            .0,
-                            15.0,
-                            40.0,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(15.0, .0, 15.0, 10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FilledButton(
+                          style: FilledButton.styleFrom(
+                            backgroundColor: linkColor,
                           ),
-                          child: FilledButton(
-                            onPressed: () => onButtonStartPressed(context),
-                            child: const Text("Супер, дальше!"),
+                          onPressed: () => onButtonStartPressed(context),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 40.0),
+                            child: Text("Супер, дальше!"),
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 10.0),
+
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () => onPrivacyPolicyPressed(context),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child: Text(
+                              "Политика обработки персональных данных",
+                              style: GoogleFonts.golosText(
+                                fontSize: 14.0,
+                                color: linkColor,
+                                decoration: TextDecoration.underline,
+                                decorationColor: linkColor.withValues(
+                                  alpha: .6,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

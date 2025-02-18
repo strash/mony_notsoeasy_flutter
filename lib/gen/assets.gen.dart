@@ -137,6 +137,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/emoji.travel.svg
   String get emojiTravel => 'assets/icons/emoji.travel.svg';
 
+  /// File path: assets/icons/envelope.svg
+  String get envelope => 'assets/icons/envelope.svg';
+
   /// File path: assets/icons/exclamationmark.circle.fill.svg
   String get exclamationmarkCircleFill =>
       'assets/icons/exclamationmark.circle.fill.svg';
@@ -161,6 +164,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/link.badge.plus.svg
   String get linkBadgePlus => 'assets/icons/link.badge.plus.svg';
+
+  /// File path: assets/icons/link.for.badge.svg
+  String get linkForBadge => 'assets/icons/link.for.badge.svg';
 
   /// File path: assets/icons/link.svg
   String get link => 'assets/icons/link.svg';
@@ -242,6 +248,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/sun.max.fill.svg
   String get sunMaxFill => 'assets/icons/sun.max.fill.svg';
 
+  /// File path: assets/icons/text.document.svg
+  String get textDocument => 'assets/icons/text.document.svg';
+
   /// File path: assets/icons/trash.fill.svg
   String get trashFill => 'assets/icons/trash.fill.svg';
 
@@ -313,6 +322,7 @@ class $AssetsIconsGen {
     emojiSmiley,
     emojiSymbol,
     emojiTravel,
+    envelope,
     exclamationmarkCircleFill,
     exclamationmarkCircle,
     eyeSlash,
@@ -321,6 +331,7 @@ class $AssetsIconsGen {
     handPointUpLeft,
     infoCircle,
     linkBadgePlus,
+    linkForBadge,
     link,
     listBulletBelowRectangle,
     locationSlashFill,
@@ -347,6 +358,7 @@ class $AssetsIconsGen {
     squareAndArrowUp,
     star,
     sunMaxFill,
+    textDocument,
     trashFill,
     trash,
     wSquare,

@@ -42,7 +42,7 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
             child: Stack(
               children: [
                 SvgPicture.asset(
-                  Assets.icons.link,
+                  Assets.icons.linkForBadge,
                   width: 100.0,
                   height: 100.0,
                   colorFilter: ColorFilter.mode(
