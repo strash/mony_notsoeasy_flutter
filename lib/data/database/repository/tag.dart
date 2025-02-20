@@ -117,9 +117,11 @@ LIMIT $limit OFFSET $offset;
       final List<Map<String, Object?>> maps;
       if (transactionId != null) {
         // NOTE: we need to sort here by `created` because of transactions
+        // NOTE: Sqlite on some platforms doesn't support RIGHT JOIN so just
+        // JOIN is fine here
         maps = await db.rawQuery("""
 SELECT t.* FROM transaction_tags AS tt
-RIGHT JOIN $table AS t ON tt.tag_id = t.id
+JOIN $table AS t ON tt.tag_id = t.id
 WHERE ${where?.$1}
 ORDER BY tt.created ASC;
 """, where?.$2);
