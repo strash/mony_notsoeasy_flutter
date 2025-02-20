@@ -7,38 +7,6 @@
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
-class $AssetsFontsGen {
-  const $AssetsFontsGen();
-
-  /// File path: assets/fonts/GolosText-Black.ttf
-  String get golosTextBlack => 'assets/fonts/GolosText-Black.ttf';
-
-  /// File path: assets/fonts/GolosText-Bold.ttf
-  String get golosTextBold => 'assets/fonts/GolosText-Bold.ttf';
-
-  /// File path: assets/fonts/GolosText-ExtraBold.ttf
-  String get golosTextExtraBold => 'assets/fonts/GolosText-ExtraBold.ttf';
-
-  /// File path: assets/fonts/GolosText-Medium.ttf
-  String get golosTextMedium => 'assets/fonts/GolosText-Medium.ttf';
-
-  /// File path: assets/fonts/GolosText-Regular.ttf
-  String get golosTextRegular => 'assets/fonts/GolosText-Regular.ttf';
-
-  /// File path: assets/fonts/GolosText-SemiBold.ttf
-  String get golosTextSemiBold => 'assets/fonts/GolosText-SemiBold.ttf';
-
-  /// List of all assets
-  List<String> get values => [
-    golosTextBlack,
-    golosTextBold,
-    golosTextExtraBold,
-    golosTextMedium,
-    golosTextRegular,
-    golosTextSemiBold,
-  ];
-}
-
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -378,6 +346,5 @@ class $AssetsIconsGen {
 class Assets {
   const Assets._();
 
-  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
 }
