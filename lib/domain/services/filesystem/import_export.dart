@@ -24,16 +24,20 @@ final class DomainImportExportService {
     int lineIndex = 0;
     final columns = <String>[];
     final entries = <Map<String, String>>[];
-    await for (final line in content.where((line) => line.isNotEmpty)) {
+    await for (final line in content.where(
+      (line) => line != null && line.isNotEmpty,
+    )) {
       if (lineIndex == 0) {
-        final entry = converter.convert<String>(line).firstOrNull;
-        if (entry != null) columns.addAll(entry);
+        // headers
+        final entry = converter.convert<String?>(line).firstOrNull;
+        if (entry != null) columns.addAll(entry.map((e) => e ?? "--"));
       } else {
-        final entry = converter.convert<String>(line).firstOrNull;
+        final entry = converter.convert<String?>(line).firstOrNull;
         if (entry != null && columns.length == entry.length) {
           final Map<String, String> map = {};
           for (int index = 0; index < entry.length; index++) {
-            map[columns.elementAt(index)] = entry.elementAt(index);
+            final value = entry.elementAt(index);
+            map[columns.elementAt(index)] = value ?? "";
           }
           entries.add(map);
         }

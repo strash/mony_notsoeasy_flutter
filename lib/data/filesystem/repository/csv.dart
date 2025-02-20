@@ -8,7 +8,7 @@ abstract base class CsvFilesystemRepository {
   const factory CsvFilesystemRepository({required FilePicker filePicker}) =
       _Impl;
 
-  Future<Stream<String>?> read();
+  Future<Stream<String?>?> read();
 }
 
 final class _Impl implements CsvFilesystemRepository {
@@ -19,7 +19,7 @@ final class _Impl implements CsvFilesystemRepository {
   String get fileExtension => "csv";
 
   @override
-  Future<Stream<String>?> read() async {
+  Future<Stream<String?>?> read() async {
     try {
       final result = await filePicker.pickFiles(
         type: FileType.custom,
@@ -31,8 +31,8 @@ final class _Impl implements CsvFilesystemRepository {
       final file = File(platformFile.path!);
       return file
           .openRead()
-          .transform<String>(utf8.decoder)
-          .transform<String>(const LineSplitter());
+          .transform<String?>(utf8.decoder)
+          .transform<String?>(const LineSplitter());
     } catch (e) {
       if (kDebugMode) print(e);
       rethrow;
