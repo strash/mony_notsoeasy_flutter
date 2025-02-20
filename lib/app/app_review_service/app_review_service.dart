@@ -52,18 +52,23 @@ final class AppReviewService {
           (value) {
             if (kDebugMode) print("success review");
           },
-          onError: (err) {
+          onError: (err) async {
             if (kDebugMode) print("onError: $err");
+            await _makeNativeRequest();
           },
         );
       });
     } else {
-      final channel = MethodChannel(_channelName);
-      try {
-        await channel.invokeMethod<String>(_methodName);
-      } catch (e) {
-        if (kDebugMode) print(e);
-      }
+      await _makeNativeRequest();
+    }
+  }
+
+  Future<void> _makeNativeRequest() async {
+    final channel = MethodChannel(_channelName);
+    try {
+      await channel.invokeMethod<String>(_methodName);
+    } catch (e) {
+      if (kDebugMode) print(e);
     }
   }
 }
