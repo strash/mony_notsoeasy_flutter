@@ -43,11 +43,20 @@ run_android:
 		--flavor=prod_android_flavor \
 		--no-pub
 
+run_rustore:
+	@just update
+	@flutter run --debug \
+		--dart-define=DEV_DB_ON_DEVICE=true \
+		--dart-define-from-file=.env \
+		--dart-define-from-file=.version \
+		--flavor=prod_rustore_flavor \
+		--no-pub
+
 release:
 	#@just test
 	@echo "building apk"
 	@flutter build apk --tree-shake-icons --release --pub \
-		--flavor=prod_android_flavor \
+		--flavor=dev_android_flavor \
 		--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
 		--split-debug-info=build/app/intermediates/native_debug_symbols \
 		--obfuscate \
