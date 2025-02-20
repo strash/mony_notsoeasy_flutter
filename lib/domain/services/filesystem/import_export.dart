@@ -30,7 +30,9 @@ final class DomainImportExportService {
       if (lineIndex == 0) {
         // headers
         final entry = converter.convert<String?>(line).firstOrNull;
-        if (entry != null) columns.addAll(entry.map((e) => e ?? "--"));
+        if (entry != null) {
+          columns.addAll(entry.indexed.map((e) => e.$2 ?? "Column_${e.$1}"));
+        }
       } else {
         final entry = converter.convert<String?>(line).firstOrNull;
         if (entry != null && columns.length == entry.length) {
