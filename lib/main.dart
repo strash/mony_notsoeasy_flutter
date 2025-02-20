@@ -1,3 +1,5 @@
+import "dart:io" show Platform;
+
 import "package:file_picker/file_picker.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
@@ -18,6 +20,13 @@ void main() async {
   GoogleFonts.config.allowRuntimeFetching = false;
   if (appFlavor == "prod_rustore_flavor") {
     await RustoreReviewClient.initialize();
+  }
+  if (Platform.isAndroid) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
   }
 
   final appDatabase = AppDatabase.instance();
