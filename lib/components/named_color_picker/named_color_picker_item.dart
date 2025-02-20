@@ -33,28 +33,51 @@ class _ColorGridItem extends StatelessWidget {
         child: TweenAnimationBuilder<Color?>(
           tween: ColorTween(
             begin: transparent,
-            end: isActive ? theme.colorScheme.tertiary : transparent,
+            end: isActive ? theme.colorScheme.tertiaryContainer : transparent,
           ),
           duration: Durations.medium2,
           curve: Curves.easeInOut,
           builder: (context, color, child) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: borderRadius,
-                border: Border.all(
-                  width: isActive ? 2.0 : .0,
-                  color: color ?? theme.colorScheme.tertiary,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: DecoratedBox(
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                // -> color
+                DecoratedBox(
                   decoration: BoxDecoration(
                     borderRadius: borderRadius,
-                    color: namedColor,
+                    border: Border.all(
+                      width: isActive ? 2.0 : .0,
+                      color: color ?? theme.colorScheme.tertiary,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: borderRadius,
+                        color: namedColor,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+
+                // -> icon
+                Center(
+                  child: AnimatedOpacity(
+                    opacity: isActive ? 1.0 : .0,
+                    duration: Durations.short3,
+                    child: SvgPicture.asset(
+                      Assets.icons.checkmarkBold,
+                      width: 26.0,
+                      height: 26.0,
+                      colorFilter: ColorFilter.mode(
+                        theme.colorScheme.surface,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             );
           },
         ),

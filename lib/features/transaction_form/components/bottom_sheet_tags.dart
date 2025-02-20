@@ -178,7 +178,7 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
           ),
 
           // -> bottom offset
-          SizedBox(height: 15.0 + keyboardHeight),
+          SizedBox(height: 40.0 + keyboardHeight),
         ],
       ),
     );

@@ -20,7 +20,7 @@ class _ColorGrid extends StatelessWidget {
 
         // -> colors
         GridView.count(
-          padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, bottom + 20.0),
+          padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, bottom + 40.0),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           crossAxisCount: 6,

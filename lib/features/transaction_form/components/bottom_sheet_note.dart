@@ -30,7 +30,7 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
 
         // -> input
         Padding(
-          padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 15.0 + keyboardHeight),
+          padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 40.0 + keyboardHeight),
           child: TextFormField(
             key: inputController.key,
             focusNode: inputController.focus,
