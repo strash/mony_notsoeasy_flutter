@@ -94,17 +94,17 @@ class StatsAccountSelectComponent extends StatelessWidget {
                                   color:
                                       viewModel.isColorsVisible
                                           ? _getColor(context, e)
-                                          : null,
+                                          : theme.colorScheme.surfaceContainer,
                                   shape: SmoothRectangleBorder(
-                                    side: BorderSide(
-                                      color: theme.colorScheme.outline
-                                          .withValues(
-                                            alpha:
-                                                viewModel.isColorsVisible
-                                                    ? .0
-                                                    : 1.0,
-                                          ),
-                                    ),
+                                    side:
+                                        viewModel.isColorsVisible
+                                            ? BorderSide.none
+                                            : BorderSide(
+                                              color:
+                                                  theme
+                                                      .colorScheme
+                                                      .outlineVariant,
+                                            ),
                                     borderRadius: const SmoothBorderRadius.all(
                                       SmoothRadius(
                                         cornerRadius: 14.0,

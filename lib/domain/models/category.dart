@@ -23,6 +23,9 @@ extension CategoryModelEx on List<CategoryModel> {
         where((e) => !other.any((i) => e.id == i.id)),
       )
       ..addAll(other)
-      ..sort((a, b) => a.title.compareTo(b.title));
+      ..sort((a, b) => a.title.compareTo(b.title))
+      ..sort(
+        (a, b) => a.transactionType.index.compareTo(b.transactionType.index),
+      );
   }
 }

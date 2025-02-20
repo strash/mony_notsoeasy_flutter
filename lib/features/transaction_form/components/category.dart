@@ -26,13 +26,13 @@ class TransactionFormCategoryComponent extends StatelessWidget {
           dimension: 36.0,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              color: isColorsVisible ? color : null,
+              color:
+                  isColorsVisible ? color : theme.colorScheme.surfaceContainer,
               shape: SmoothRectangleBorder(
-                side: BorderSide(
-                  color: theme.colorScheme.outline.withValues(
-                    alpha: isColorsVisible ? .0 : 1.0,
-                  ),
-                ),
+                side:
+                    isColorsVisible
+                        ? BorderSide.none
+                        : BorderSide(color: theme.colorScheme.outlineVariant),
                 borderRadius: const SmoothBorderRadius.all(
                   SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 0.6),
                 ),

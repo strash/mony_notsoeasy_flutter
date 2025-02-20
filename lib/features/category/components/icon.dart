@@ -1,8 +1,11 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/domain/models/category.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
+import "package:mony_app/gen/assets.gen.dart";
 
 class CategoryIconComponent extends StatelessWidget {
   final CategoryModel category;
@@ -31,20 +34,22 @@ class CategoryIconComponent extends StatelessWidget {
             dimension: 100.0,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                gradient:
-                    showColors
-                        ? LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [color2, color],
-                        )
-                        : null,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors:
+                      showColors
+                          ? [color2, color]
+                          : [
+                            theme.colorScheme.surfaceContainerHighest,
+                            theme.colorScheme.surfaceContainer,
+                          ],
+                ),
                 shape: SmoothRectangleBorder(
-                  side: BorderSide(
-                    color: theme.colorScheme.outline.withValues(
-                      alpha: showColors ? .0 : 1.0,
-                    ),
-                  ),
+                  side:
+                      showColors
+                          ? BorderSide.none
+                          : BorderSide(color: theme.colorScheme.outlineVariant),
                   borderRadius: const SmoothBorderRadius.all(
                     SmoothRadius(cornerRadius: 30.0, cornerSmoothing: 0.6),
                   ),
@@ -71,16 +76,43 @@ class CategoryIconComponent extends StatelessWidget {
         const SizedBox(height: 2.0),
 
         // -> subtitle
-        Text(
-          category.transactionType.fullDescription,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.golosText(
-            fontSize: 15.0,
-            fontWeight: FontWeight.w400,
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // -> icon
+            SvgPicture.asset(
+              category.transactionType.icon,
+              width: 16.0,
+              height: 16.0,
+              colorFilter: ColorFilter.mode(switch (category.transactionType) {
+                ETransactionType.expense => theme.colorScheme.error,
+                ETransactionType.income => theme.colorScheme.secondary,
+              }, BlendMode.srcIn),
+            ),
+            const SizedBox(width: 5.0),
+
+            // -> description
+            Text(
+              category.transactionType.fullDescription,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.golosText(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w400,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
         ),
       ],
     );
+  }
+}
+
+extension on ETransactionType {
+  String get icon {
+    return switch (this) {
+      ETransactionType.expense => Assets.icons.arrowDownForwardSemibold,
+      ETransactionType.income => Assets.icons.arrowUpForwardSemibold,
+    };
   }
 }

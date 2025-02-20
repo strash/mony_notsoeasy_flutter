@@ -86,7 +86,7 @@ class SettingsView extends StatelessWidget {
                     // -> color mode
                     SettingsEntryComponent(
                       onTap: () => onColorsToggled(context),
-                      title: const Text("Внений вид"),
+                      title: const Text("Внешний вид"),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 20.0),
                         child: Builder(
@@ -235,6 +235,7 @@ class SettingsView extends StatelessWidget {
                   ],
                 ),
 
+                // TODO: добавить импорт из CSV
                 SettingsGroupComponent(
                   header: const Text("Импорт и экспорт данных"),
                   children: [

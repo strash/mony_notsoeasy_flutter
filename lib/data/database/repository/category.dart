@@ -125,7 +125,7 @@ LIMIT $limit OFFSET $offset;
         table,
         where: where.$1,
         whereArgs: where.$2,
-        orderBy: "title ASC",
+        orderBy: "transaction_type ASC, title ASC",
       );
       return maps.map(CategoryDto.fromJson).toList(growable: false);
     });
@@ -145,7 +145,7 @@ LIMIT $limit OFFSET $offset;
         offset: offset,
         where: transactionType != null ? "transaction_type = ?" : null,
         whereArgs: transactionType != null ? [transactionType] : null,
-        orderBy: "title ASC",
+        orderBy: "transaction_type ASC, title ASC",
       );
       return maps.map(CategoryDto.fromJson).toList(growable: false);
     });

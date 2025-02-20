@@ -31,20 +31,22 @@ class AccountIconComponent extends StatelessWidget {
             dimension: 100.0,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                gradient:
-                    showColors
-                        ? LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [color2, color],
-                        )
-                        : null,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors:
+                      showColors
+                          ? [color2, color]
+                          : [
+                            theme.colorScheme.surfaceContainerHighest,
+                            theme.colorScheme.surfaceContainer,
+                          ],
+                ),
                 shape: SmoothRectangleBorder(
-                  side: BorderSide(
-                    color: theme.colorScheme.outline.withValues(
-                      alpha: showColors ? .0 : 1.0,
-                    ),
-                  ),
+                  side:
+                      showColors
+                          ? BorderSide.none
+                          : BorderSide(color: theme.colorScheme.outlineVariant),
                   borderRadius: const SmoothBorderRadius.all(
                     SmoothRadius(cornerRadius: 40.0, cornerSmoothing: 0.6),
                   ),
