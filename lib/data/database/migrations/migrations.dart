@@ -5,3 +5,4 @@ export "package:mony_app/data/database/migrations/m_1730475693_remove_type_colum
 export "package:mony_app/data/database/migrations/m_1733564630_add_balance_views.dart";
 export "package:mony_app/data/database/migrations/m_1733571197_add_fuzzy_views.dart";
 export "package:mony_app/data/database/migrations/m_1738233399_update_account_balance_view.dart";
+export "package:mony_app/data/database/migrations/m_1740077705_update_category_and_tag_balance_views.dart";
