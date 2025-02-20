@@ -8,9 +8,12 @@ final class OnHorizontalDragEnded extends UseCase<void, DragEndDetails> {
   void call(BuildContext context, [DragEndDetails? details]) {
     if (details == null) throw ArgumentError.notNull();
 
-    final viewSize = MediaQuery.sizeOf(context);
-    if (details.velocity.pixelsPerSecond.dx.abs() > viewSize.width * .4) {
-      final viewModel = context.viewModel<TransactionFormViewModel>();
+    final viewModel = context.viewModel<TransactionFormViewModel>();
+
+    final diff = viewModel.dragStartPosition - details.globalPosition;
+    final canRemove = diff.dx.abs() > MediaQuery.sizeOf(context).width * .2;
+
+    if (canRemove) {
       final value = viewModel.amountNotifier.value;
       if (value.length == 1) {
         viewModel.amountNotifier.value = "0";

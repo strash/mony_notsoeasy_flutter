@@ -18,12 +18,17 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
     final viewModel = context.viewModel<TransactionFormViewModel>();
     final onHintAcceptPressed = viewModel<OnKeyboardHintAccepted>();
     final onKeyPressed = viewModel<OnKeyPressed>();
+    final onDragStarted = viewModel<OnHorizontalDragStarted>();
     final onDragEnded = viewModel<OnHorizontalDragEnded>();
 
     return Stack(
       children: [
         // -> keyboard
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onHorizontalDragStart: (details) {
+            onDragStarted(context, details);
+          },
           onHorizontalDragEnd: (details) {
             onDragEnded(context, details);
           },

@@ -80,6 +80,7 @@ final class TransactionFormViewModel
 
   bool isKeyboardHintAccepted = false;
   String decimalSeparator = ".";
+  Offset dragStartPosition = Offset.zero;
 
   final RegExp regEx = RegExp(r"\d*?[.,]\d{2}$");
   List<List<TransactionFormButtonType>> get buttons {
@@ -230,6 +231,7 @@ final class TransactionFormViewModel
         () => OnNotePressed(),
         () => OnKeyboardHintAccepted(),
         () => OnKeyPressed(),
+        () => OnHorizontalDragStarted(),
         () => OnHorizontalDragEnded(),
       ],
       child: const TransactionFormView(),
