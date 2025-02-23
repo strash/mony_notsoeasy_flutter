@@ -111,18 +111,23 @@ LIMIT $limit OFFSET $offset;
     List<String>? ids,
     String? transactionId,
   }) async {
+    assert(
+      ids == null && transactionId == null ||
+          ids != null && transactionId == null ||
+          ids == null && transactionId != null,
+      "Either ids or transaction must be null or both of them",
+    );
     return resolve(() async {
       final db = await database.db;
       final where = _getWhere(ids: ids, transactionId: transactionId);
       final List<Map<String, Object?>> maps;
       if (transactionId != null) {
         // NOTE: we need to sort here by `created` because of transactions
-        // NOTE: Sqlite on some platforms doesn't support RIGHT JOIN so just
-        // JOIN is fine here
+        // NOTE: Sqlite on some platforms doesn't support RIGHT JOIN
         maps = await db.rawQuery("""
 SELECT t.* FROM transaction_tags AS tt
-JOIN $table AS t ON tt.tag_id = t.id
-WHERE ${where?.$1}
+LEFT JOIN $table AS t ON tt.tag_id = t.id
+${where?.$1 != null ? "WHERE ${where!.$1}" : ""}
 ORDER BY tt.created ASC;
 """, where?.$2);
       } else {
