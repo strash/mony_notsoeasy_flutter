@@ -84,9 +84,9 @@ class FeedView extends StatelessWidget {
                         // -> account
                         SliverPadding(
                           padding: EdgeInsets.only(
-                            left: 20.0,
-                            right: 20.0,
-                            top: viewPadding.top + 70.0,
+                            left: 7.0,
+                            right: 7.0,
+                            top: viewPadding.top + 60.0,
                           ),
                           sliver: SliverToBoxAdapter(
                             child: FeedAccountComponent(
