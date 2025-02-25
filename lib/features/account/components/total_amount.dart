@@ -120,31 +120,41 @@ class AccountTotalAmountComponent extends StatelessWidget {
           },
         ),
 
-        SeparatedComponent.list(
-          separatorBuilder: (context, index) => const SizedBox(height: 10.0),
-          children: [
-            // -> transactions count
-            Text(
-              "$transactionsCountDescription\nс общей стоимостью $amount",
-              style: GoogleFonts.golosText(
-                fontSize: 15.0,
-                fontWeight: FontWeight.w400,
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+        if (balance.totalCount == 0)
+          Text(
+            "Еще не было ни одной транзакции",
+            style: GoogleFonts.golosText(
+              fontSize: 15.0,
+              fontWeight: FontWeight.w400,
+              color: theme.colorScheme.onSurfaceVariant,
             ),
-
-            // -> transactions date range
-            if (dateRange.isNotEmpty)
+          )
+        else
+          SeparatedComponent.list(
+            separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+            children: [
+              // -> transactions count
               Text(
-                dateRange,
+                "$transactionsCountDescription\nс общей стоимостью $amount",
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w400,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
-          ],
-        ),
+
+              // -> transactions date range
+              if (dateRange.isNotEmpty)
+                Text(
+                  dateRange,
+                  style: GoogleFonts.golosText(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w400,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+            ],
+          ),
       ],
     );
   }
