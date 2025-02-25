@@ -31,97 +31,150 @@ class FeedAccountComponent extends StatelessWidget {
 
     final locale = Localizations.localeOf(context);
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => onTap(context, page),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20.0),
-        child: DecoratedBox(
-          decoration: ShapeDecoration(
-            color: theme.colorScheme.surfaceContainerHigh.withValues(alpha: .8),
-            shape: const SmoothRectangleBorder(
-              borderRadius: SmoothBorderRadius.all(
-                SmoothRadius(cornerRadius: 30.0, cornerSmoothing: .6),
-              ),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(15.0, 13.0, 15.0, 15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20.0),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => onTap(context, page),
+        child: LayoutBuilder(
+          builder: (context, constrains) {
+            return Stack(
+              clipBehavior: Clip.none,
               children: [
-                // -> sums
-                switch (page) {
-                  final FeedPageStateAllAccounts page => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: page.balances
-                        .foldByCurrency()
-                        .map((e) {
-                          return FeedAccountAmountComponent(
-                            amount: e.totalSum.currency(
-                              locale: locale.languageCode,
-                              name: e.currency.name,
-                              symbol: e.currency.symbol,
-                              showDecimal: showDecimal,
-                            ),
-                            code: e.currency.code,
-                            showColors: showColors,
-                          );
-                        })
-                        .toList(growable: false),
-                  ),
-                  final FeedPageStateSingleAccount page =>
-                    FeedAccountAmountComponent(
-                      amount: page.balance.totalSum.currency(
-                        locale: locale.languageCode,
-                        name: page.balance.currency.name,
-                        symbol: page.balance.currency.symbol,
-                        showDecimal: showDecimal,
-                      ),
-                      code: page.balance.currency.code,
-                      color: ex?.from(page.account.colorName).color,
-                      showColors: showColors,
-                    ),
-                },
-                const SizedBox(height: 10.0),
-
-                // -> account
-                switch (page) {
-                  FeedPageStateAllAccounts() => Row(
-                    children: [
-                      SvgPicture.asset(
-                        Assets.icons.widgetSmall,
-                        width: 26.0,
-                        height: 26.0,
-                        colorFilter: ColorFilter.mode(
-                          theme.colorScheme.tertiary,
-                          BlendMode.srcIn,
+                // -> stack
+                if (page is FeedPageStateAllAccounts)
+                  Positioned(
+                    left: 15.0,
+                    bottom: -8.0,
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: Color.lerp(
+                          theme.colorScheme.surface,
+                          theme.colorScheme.surfaceContainerHigh,
+                          .5,
                         ),
-                      ),
-                      const SizedBox(width: 5.0),
-                      Flexible(
-                        child: Text(
-                          "Все счета",
-                          textAlign: TextAlign.start,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.golosText(
-                            fontSize: 16.0,
-                            height: 1.2,
-                            fontWeight: FontWeight.w500,
-                            color: theme.colorScheme.tertiary,
+                        shape: const SmoothRectangleBorder(
+                          borderRadius: SmoothBorderRadius.all(
+                            SmoothRadius(
+                              cornerRadius: 20.0,
+                              cornerSmoothing: .6,
+                            ),
                           ),
                         ),
                       ),
-                    ],
+                      child: SizedBox(
+                        width: constrains.maxWidth - 30.0,
+                        height: 50.0,
+                      ),
+                    ),
                   ),
-                  FeedPageStateSingleAccount(:final account) =>
-                    AccountComponent(account: account, showColors: showColors),
-                },
+
+                // -> card
+                DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: theme.colorScheme.surfaceContainerHigh,
+                    shape: const SmoothRectangleBorder(
+                      borderRadius: SmoothBorderRadius.all(
+                        SmoothRadius(cornerRadius: 30.0, cornerSmoothing: .6),
+                      ),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      15.0,
+                      13.0,
+                      15.0,
+                      page is FeedPageStateAllAccounts ? 10.0 : 15.0,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // -> sums
+                        switch (page) {
+                          final FeedPageStateAllAccounts page => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: page.balances
+                                .foldByCurrency(page.accounts)
+                                .map((e) {
+                                  return FeedAccountAmountComponent(
+                                    amount: e.$1.totalSum.currency(
+                                      locale: locale.languageCode,
+                                      name: e.$1.currency.name,
+                                      symbol: e.$1.currency.symbol,
+                                      showDecimal: showDecimal,
+                                    ),
+                                    code: e.$1.currency.code,
+                                    accountColors: e.$2
+                                        .map((a) => ex?.from(a.colorName).color)
+                                        .toList(growable: false),
+                                    showColors: showColors,
+                                    showCurrencyTag: true,
+                                  );
+                                })
+                                .toList(growable: false),
+                          ),
+                          final FeedPageStateSingleAccount page =>
+                            FeedAccountAmountComponent(
+                              amount: page.balance.totalSum.currency(
+                                locale: locale.languageCode,
+                                name: page.balance.currency.name,
+                                symbol: page.balance.currency.symbol,
+                                showDecimal: showDecimal,
+                              ),
+                              code: page.balance.currency.code,
+                              showColors: showColors,
+                              showCurrencyTag: false,
+                            ),
+                        },
+                        const SizedBox(height: 5.0),
+
+                        // -> account
+                        switch (page) {
+                          FeedPageStateAllAccounts() => Padding(
+                            padding: const EdgeInsets.only(left: 6.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.icons.widgetSmall,
+                                  width: 24.0,
+                                  height: 24.0,
+                                  colorFilter: ColorFilter.mode(
+                                    theme.colorScheme.onSurfaceVariant,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                                const SizedBox(width: 5.0),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 1.0),
+                                  child: Text(
+                                    "Все счета",
+                                    style: GoogleFonts.golosText(
+                                      fontSize: 15.0,
+                                      height: 1.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          FeedPageStateSingleAccount(:final account) =>
+                            AccountComponent(
+                              account: account,
+                              showColors: showColors,
+                              showCurrencyTag: true,
+                            ),
+                        },
+                      ],
+                    ),
+                  ),
+                ),
               ],
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import "package:freezed_annotation/freezed_annotation.dart";
+import "package:mony_app/domain/models/account.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 part "account_balance.freezed.dart";
@@ -36,7 +37,9 @@ extension AccountBalanceModelListEx on List<AccountBalanceModel> {
       ..sort((a, b) => a.created.compareTo(b.created));
   }
 
-  List<AccountBalanceModel> foldByCurrency() {
+  List<(AccountBalanceModel, List<AccountModel>)> foldByCurrency(
+    List<AccountModel> accounts,
+  ) {
     final Map<String, AccountBalanceModel> map = {};
     for (final element in this) {
       final name = element.currency.name;
@@ -48,6 +51,13 @@ extension AccountBalanceModelListEx on List<AccountBalanceModel> {
           ) ??
           element;
     }
-    return map.entries.map((e) => e.value).toList(growable: false);
+    return map.entries
+        .map((e) {
+          final accs = accounts.where((a) {
+            return a.currency.code == e.value.currency.code;
+          });
+          return (e.value, accs.toList(growable: false));
+        })
+        .toList(growable: false);
   }
 }

@@ -8,7 +8,7 @@ final class _OnAccountCreated {
     FeedViewModel viewModel,
     EventAccountCreated event,
   ) async {
-    final accountSevrice = context.read<DomainAccountService>();
+    final accountService = context.read<DomainAccountService>();
     final transactionService = context.read<DomainTransactionService>();
 
     final account = event.value;
@@ -18,8 +18,11 @@ final class _OnAccountCreated {
       viewModel.pages.map((e) async {
         switch (e) {
           case final FeedPageStateAllAccounts page:
-            final balances = await accountSevrice.getBalances();
-            return Future.value(page.copyWith(balances: balances));
+            final accounts = await accountService.getAll();
+            final balances = await accountService.getBalances();
+            return Future.value(
+              page.copyWith(accounts: accounts, balances: balances),
+            );
           case FeedPageStateSingleAccount():
             return Future.value(e);
         }
@@ -27,7 +30,7 @@ final class _OnAccountCreated {
     );
 
     // create new account page
-    final balance = await accountSevrice.getBalance(id: account.id);
+    final balance = await accountService.getBalance(id: account.id);
     if (balance != null) {
       viewModel.addPageScroll(viewModel.pages.length);
       pages.add(
@@ -51,8 +54,8 @@ final class _OnAccountCreated {
         scrollPage: 1,
         canLoadMore: feed.isNotEmpty,
         feed: feed,
-        accounts: await accountSevrice.getAll(),
-        balances: await accountSevrice.getBalances(),
+        accounts: await accountService.getAll(),
+        balances: await accountService.getBalances(),
       );
       pages.insert(allPagesIdx, page);
     }
