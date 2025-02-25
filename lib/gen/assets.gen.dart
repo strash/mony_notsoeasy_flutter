@@ -13,6 +13,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/a.circle.svg
   String get aCircle => 'assets/icons/a.circle.svg';
 
+  /// File path: assets/icons/arrow.down.backward.svg
+  String get arrowDownBackward => 'assets/icons/arrow.down.backward.svg';
+
+  /// File path: assets/icons/arrow.down.circle.dotted.svg
+  String get arrowDownCircleDotted =>
+      'assets/icons/arrow.down.circle.dotted.svg';
+
   /// File path: assets/icons/arrow.down.forward.bold.svg
   String get arrowDownForwardBold => 'assets/icons/arrow.down.forward.bold.svg';
 
@@ -23,8 +30,18 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow.down.forward.svg
   String get arrowDownForward => 'assets/icons/arrow.down.forward.svg';
 
+  /// File path: assets/icons/arrow.down.left.arrow.up.right.svg
+  String get arrowDownLeftArrowUpRight =>
+      'assets/icons/arrow.down.left.arrow.up.right.svg';
+
   /// File path: assets/icons/arrow.down.square.svg
   String get arrowDownSquare => 'assets/icons/arrow.down.square.svg';
+
+  /// File path: assets/icons/arrow.down.to.line.svg
+  String get arrowDownToLine => 'assets/icons/arrow.down.to.line.svg';
+
+  /// File path: assets/icons/arrow.left.arrow.right.svg
+  String get arrowLeftArrowRight => 'assets/icons/arrow.left.arrow.right.svg';
 
   /// File path: assets/icons/arrow.up.arrow.down.square.svg
   String get arrowUpArrowDownSquare =>
@@ -107,6 +124,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/envelope.svg
   String get envelope => 'assets/icons/envelope.svg';
+
+  /// File path: assets/icons/equal.svg
+  String get equal => 'assets/icons/equal.svg';
 
   /// File path: assets/icons/exclamationmark.circle.fill.svg
   String get exclamationmarkCircleFill =>
@@ -261,10 +281,15 @@ class $AssetsIconsGen {
   /// List of all assets
   List<String> get values => [
     aCircle,
+    arrowDownBackward,
+    arrowDownCircleDotted,
     arrowDownForwardBold,
     arrowDownForwardSemibold,
     arrowDownForward,
+    arrowDownLeftArrowUpRight,
     arrowDownSquare,
+    arrowDownToLine,
+    arrowLeftArrowRight,
     arrowUpArrowDownSquare,
     arrowUpForwardBold,
     arrowUpForwardSemibold,
@@ -291,6 +316,7 @@ class $AssetsIconsGen {
     emojiSymbol,
     emojiTravel,
     envelope,
+    equal,
     exclamationmarkCircleFill,
     exclamationmarkCircle,
     eyeSlash,
