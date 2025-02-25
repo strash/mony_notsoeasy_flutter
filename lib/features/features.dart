@@ -1,6 +1,7 @@
 export "./account/account.dart";
 export "./account_form/account_form.dart";
 export "./accounts/accounts.dart";
+export "./balance_exchange_form/balance_exchange_form.dart";
 export "./categories/categories.dart";
 export "./category/category.dart";
 export "./category_form/category_form.dart";
