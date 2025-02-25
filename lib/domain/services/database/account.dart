@@ -107,7 +107,7 @@ final class DomainAccountService extends BaseDatabaseService {
     await _accountRepo.purge();
   }
 
-  Future<List<Map<String, dynamic>>> dumpData() async {
+  Future<List<Map<String, dynamic>>> dumpData() {
     return _accountRepo.dump();
   }
 }

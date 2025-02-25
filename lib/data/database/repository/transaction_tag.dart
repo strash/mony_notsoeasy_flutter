@@ -29,9 +29,7 @@ final class _Impl
   const _Impl({required this.database});
 
   @override
-  Future<List<TransactionTagDto>> getAll({
-    required String transactionId,
-  }) async {
+  Future<List<TransactionTagDto>> getAll({required String transactionId}) {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
@@ -45,7 +43,7 @@ final class _Impl
   }
 
   @override
-  Future<TransactionTagDto?> getOne({required String id}) async {
+  Future<TransactionTagDto?> getOne({required String id}) {
     return resolve(() async {
       final db = await database.db;
       final map = await db.query(table, where: "id = ?", whereArgs: [id]);
@@ -55,7 +53,7 @@ final class _Impl
   }
 
   @override
-  Future<void> create({required TransactionTagDto dto}) async {
+  Future<void> create({required TransactionTagDto dto}) {
     return resolve(() async {
       final db = await database.db;
       await db.insert(
@@ -67,7 +65,7 @@ final class _Impl
   }
 
   @override
-  Future<void> delete({required String id}) async {
+  Future<void> delete({required String id}) {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table, where: "id = ?", whereArgs: [id]);
@@ -75,7 +73,7 @@ final class _Impl
   }
 
   @override
-  Future<void> purge() async {
+  Future<void> purge() {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table);
@@ -83,7 +81,7 @@ final class _Impl
   }
 
   @override
-  Future<List<Map<String, dynamic>>> dump() async {
+  Future<List<Map<String, dynamic>>> dump() {
     return resolve(() async {
       final db = await database.db;
       return db.rawQuery("SELECT * FROM $table;");

@@ -72,7 +72,7 @@ final class _Impl
     String? query,
     required int limit,
     required int offset,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final List<String?> args = [];
@@ -93,7 +93,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<int> count() async {
+  Future<int> count() {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.rawQuery("SELECT COUNT(*) AS count FROM $table;");
@@ -107,7 +107,7 @@ LIMIT $limit OFFSET $offset;
     List<String>? accountIds,
     List<String>? categoryIds,
     List<String>? tagIds,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final where = _getWhere(accountIds, categoryIds, tagIds);
@@ -129,7 +129,7 @@ ORDER BY tr.date DESC;
     List<String>? accountIds,
     List<String>? categoryIds,
     List<String>? tagIds,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final where = _getWhere(accountIds, categoryIds, tagIds);
@@ -152,7 +152,7 @@ OFFSET $offset;
     required String to,
     required String accountId,
     required String transactionType,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       String where = "";
@@ -177,7 +177,7 @@ ORDER BY tr.date DESC;
   }
 
   @override
-  Future<TransactionDto?> getOne({required String id}) async {
+  Future<TransactionDto?> getOne({required String id}) {
     return resolve(() async {
       final db = await database.db;
       final map = await db.query(table, where: "id = ?", whereArgs: [id]);
@@ -187,7 +187,7 @@ ORDER BY tr.date DESC;
   }
 
   @override
-  Future<void> create({required TransactionDto dto}) async {
+  Future<void> create({required TransactionDto dto}) {
     return resolve(() async {
       final db = await database.db;
       await db.insert(
@@ -199,7 +199,7 @@ ORDER BY tr.date DESC;
   }
 
   @override
-  Future<void> update({required TransactionDto dto}) async {
+  Future<void> update({required TransactionDto dto}) {
     return resolve(() async {
       final db = await database.db;
       await db.update(
@@ -213,7 +213,7 @@ ORDER BY tr.date DESC;
   }
 
   @override
-  Future<void> delete({required String id}) async {
+  Future<void> delete({required String id}) {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table, where: "id = ?", whereArgs: [id]);
@@ -221,7 +221,7 @@ ORDER BY tr.date DESC;
   }
 
   @override
-  Future<void> purge() async {
+  Future<void> purge() {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table);
@@ -229,7 +229,7 @@ ORDER BY tr.date DESC;
   }
 
   @override
-  Future<List<Map<String, dynamic>>> dump() async {
+  Future<List<Map<String, dynamic>>> dump() {
     return resolve(() async {
       final db = await database.db;
       return db.rawQuery("SELECT * FROM $table;");

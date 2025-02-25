@@ -48,7 +48,7 @@ final class _Impl
     required int limit,
     required int offset,
     List<String> excludeIds = const [],
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final List<String?> q = [];
@@ -83,7 +83,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<int> count() async {
+  Future<int> count() {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.rawQuery("SELECT COUNT(*) AS count FROM $table;");
@@ -93,7 +93,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<TagBalanceDto?> getBalance({required String id}) async {
+  Future<TagBalanceDto?> getBalance({required String id}) {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
@@ -107,10 +107,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<List<TagDto>> getAll({
-    List<String>? ids,
-    String? transactionId,
-  }) async {
+  Future<List<TagDto>> getAll({List<String>? ids, String? transactionId}) {
     assert(
       ids == null && transactionId == null ||
           ids != null && transactionId == null ||
@@ -142,10 +139,7 @@ ORDER BY tt.created ASC;
   }
 
   @override
-  Future<List<TagDto>> getMany({
-    required int limit,
-    required int offset,
-  }) async {
+  Future<List<TagDto>> getMany({required int limit, required int offset}) {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
@@ -159,7 +153,7 @@ ORDER BY tt.created ASC;
   }
 
   @override
-  Future<TagDto?> getOne({String? id, String? title}) async {
+  Future<TagDto?> getOne({String? id, String? title}) {
     assert(id != null || title != null);
     return resolve(() async {
       final db = await database.db;
@@ -179,7 +173,7 @@ ORDER BY tt.created ASC;
   }
 
   @override
-  Future<void> create({required TagDto dto}) async {
+  Future<void> create({required TagDto dto}) {
     return resolve(() async {
       final db = await database.db;
       await db.insert(
@@ -191,7 +185,7 @@ ORDER BY tt.created ASC;
   }
 
   @override
-  Future<void> update({required TagDto dto}) async {
+  Future<void> update({required TagDto dto}) {
     return resolve(() async {
       final db = await database.db;
       await db.update(
@@ -205,7 +199,7 @@ ORDER BY tt.created ASC;
   }
 
   @override
-  Future<void> delete({required String id}) async {
+  Future<void> delete({required String id}) {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table, where: "id = ?", whereArgs: [id]);
@@ -213,7 +207,7 @@ ORDER BY tt.created ASC;
   }
 
   @override
-  Future<void> purge() async {
+  Future<void> purge() {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table);
@@ -221,7 +215,7 @@ ORDER BY tt.created ASC;
   }
 
   @override
-  Future<List<Map<String, dynamic>>> dump() async {
+  Future<List<Map<String, dynamic>>> dump() {
     return resolve(() async {
       final db = await database.db;
       return db.rawQuery("SELECT * FROM $table;");

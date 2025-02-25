@@ -36,10 +36,10 @@ extension BuildContextEx on BuildContext {
       route = PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 200),
         reverseTransitionDuration: const Duration(milliseconds: 200),
-        transitionsBuilder: (context, animation, __, child) {
+        transitionsBuilder: (context, animation, _, child) {
           return FadeTransition(opacity: animation, child: child);
         },
-        pageBuilder: (context, _, __) => page,
+        pageBuilder: (context, _, _) => page,
       );
     } else {
       route = MaterialPageRoute(builder: (context) => page);

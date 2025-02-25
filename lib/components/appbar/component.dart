@@ -94,7 +94,7 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool __) {
+  Widget build(BuildContext context, double shrinkOffset, bool _) {
     final t = shrinkOffset.remap(.0, maxExtent * .15, .0, 1.0);
 
     return _AppBar(

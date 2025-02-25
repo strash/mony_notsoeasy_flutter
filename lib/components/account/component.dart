@@ -28,8 +28,8 @@ class AccountComponent extends StatelessWidget {
 
     return SeparatedComponent.list(
       direction: Axis.horizontal,
-      separatorBuilder: (context, index) => const SizedBox(width: 10.0),
       crossAxisAlignment: CrossAxisAlignment.center,
+      separatorBuilder: (context, index) => const SizedBox(width: 10.0),
       children: [
         // -> icon
         SizedBox.square(

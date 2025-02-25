@@ -63,7 +63,7 @@ final class _Impl
     String? query,
     required int limit,
     required int offset,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final List<String?> args = [];
@@ -90,7 +90,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<int> count() async {
+  Future<int> count() {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.rawQuery("SELECT COUNT(*) AS count FROM $table;");
@@ -100,7 +100,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<CategoryBalanceDto?> getBalance({required String id}) async {
+  Future<CategoryBalanceDto?> getBalance({required String id}) {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
@@ -117,7 +117,7 @@ LIMIT $limit OFFSET $offset;
   Future<List<CategoryDto>> getAll({
     String? transactionType,
     List<String>? ids,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final where = _getWhere(transactionType, ids);
@@ -136,7 +136,7 @@ LIMIT $limit OFFSET $offset;
     required int limit,
     required int offset,
     String? transactionType,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
@@ -152,7 +152,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<CategoryDto?> getOne({required String id}) async {
+  Future<CategoryDto?> getOne({required String id}) {
     return resolve(() async {
       final db = await database.db;
       final map = await db.query(table, where: "id = ?", whereArgs: [id]);
@@ -162,7 +162,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<void> create({required CategoryDto dto}) async {
+  Future<void> create({required CategoryDto dto}) {
     return resolve(() async {
       final db = await database.db;
       await db.insert(
@@ -174,7 +174,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<void> update({required CategoryDto dto}) async {
+  Future<void> update({required CategoryDto dto}) {
     return resolve(() async {
       final db = await database.db;
       await db.update(
@@ -188,7 +188,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<void> delete({required String id}) async {
+  Future<void> delete({required String id}) {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table, where: "id = ?", whereArgs: [id]);
@@ -196,7 +196,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<void> purge() async {
+  Future<void> purge() {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table);
@@ -210,7 +210,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<List<Map<String, dynamic>>> dump() async {
+  Future<List<Map<String, dynamic>>> dump() {
     return resolve(() async {
       final db = await database.db;
       return db.rawQuery("SELECT * FROM $table;");

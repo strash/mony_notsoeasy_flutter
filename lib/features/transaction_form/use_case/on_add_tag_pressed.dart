@@ -47,7 +47,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     if (controller.isReady) controller.jumpTo(.0);
   }
 
-  Future<List<TagModel>> _fetchData() async {
+  Future<List<TagModel>> _fetchData() {
     final context = _context;
     if (context == null || !context.mounted) return Future.value([]);
     final viewModel = context.viewModel<TransactionFormViewModel>();

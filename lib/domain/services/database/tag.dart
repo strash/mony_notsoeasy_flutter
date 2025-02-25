@@ -78,7 +78,7 @@ final class DomainTagService extends BaseDatabaseService {
     await _tagRepo.purge();
   }
 
-  Future<List<Map<String, dynamic>>> dumpData() async {
+  Future<List<Map<String, dynamic>>> dumpData() {
     return _tagRepo.dump();
   }
 }

@@ -59,7 +59,7 @@ final class _Impl
     String? query,
     required int limit,
     required int offset,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final List<String?> args = [];
@@ -86,7 +86,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<int> count() async {
+  Future<int> count() {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.rawQuery("SELECT COUNT(*) AS count FROM $table;");
@@ -96,7 +96,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<List<AccountBalanceDto>> getBalances() async {
+  Future<List<AccountBalanceDto>> getBalances() {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(balancesView);
@@ -105,7 +105,7 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<AccountBalanceDto?> getBalance({required String id}) async {
+  Future<AccountBalanceDto?> getBalance({required String id}) {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
@@ -123,7 +123,7 @@ LIMIT $limit OFFSET $offset;
     required String id,
     required String from,
     required String to,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.rawQuery(
@@ -167,7 +167,7 @@ WHERE id = ?1;
   }
 
   @override
-  Future<List<AccountDto>> getAll({String? type, List<String>? ids}) async {
+  Future<List<AccountDto>> getAll({String? type, List<String>? ids}) {
     return resolve(() async {
       final db = await database.db;
       final where = _getWhere(type, ids);
@@ -186,7 +186,7 @@ WHERE id = ?1;
     String? type,
     required int limit,
     required int offset,
-  }) async {
+  }) {
     return resolve(() async {
       final db = await database.db;
       final maps = await db.query(
@@ -202,7 +202,7 @@ WHERE id = ?1;
   }
 
   @override
-  Future<AccountDto?> getOne({required String id}) async {
+  Future<AccountDto?> getOne({required String id}) {
     return resolve(() async {
       final db = await database.db;
       final map = await db.query(table, where: "id = ?", whereArgs: [id]);
@@ -212,7 +212,7 @@ WHERE id = ?1;
   }
 
   @override
-  Future<void> create({required AccountDto dto}) async {
+  Future<void> create({required AccountDto dto}) {
     return resolve(() async {
       final db = await database.db;
       await db.insert(
@@ -224,7 +224,7 @@ WHERE id = ?1;
   }
 
   @override
-  Future<void> update({required AccountDto dto}) async {
+  Future<void> update({required AccountDto dto}) {
     return resolve(() async {
       final db = await database.db;
       await db.update(
@@ -238,7 +238,7 @@ WHERE id = ?1;
   }
 
   @override
-  Future<void> delete({required String id}) async {
+  Future<void> delete({required String id}) {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table, where: "id = ?", whereArgs: [id]);
@@ -246,7 +246,7 @@ WHERE id = ?1;
   }
 
   @override
-  Future<void> purge() async {
+  Future<void> purge() {
     return resolve(() async {
       final db = await database.db;
       await db.delete(table);
@@ -254,7 +254,7 @@ WHERE id = ?1;
   }
 
   @override
-  Future<List<Map<String, dynamic>>> dump() async {
+  Future<List<Map<String, dynamic>>> dump() {
     return resolve(() async {
       final db = await database.db;
       return db.rawQuery("SELECT * FROM $table;");

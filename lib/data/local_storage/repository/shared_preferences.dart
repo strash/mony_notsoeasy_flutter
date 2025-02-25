@@ -33,29 +33,19 @@ final class _Impl implements SharedPreferencesLocalStorageRepository {
     : _pref = preferences;
 
   @override
-  Future<int?> getInt(String key) async {
-    return _pref.getInt(key);
-  }
+  Future<int?> getInt(String key) => _pref.getInt(key);
 
   @override
-  Future<double?> getDouble(String key) {
-    return _pref.getDouble(key);
-  }
+  Future<double?> getDouble(String key) => _pref.getDouble(key);
 
   @override
-  Future<String?> getString(String key) {
-    return _pref.getString(key);
-  }
+  Future<String?> getString(String key) => _pref.getString(key);
 
   @override
-  Future<bool?> getBool(String key) {
-    return _pref.getBool(key);
-  }
+  Future<bool?> getBool(String key) => _pref.getBool(key);
 
   @override
-  Future<List<String>?> getStrings(String key) {
-    return _pref.getStringList(key);
-  }
+  Future<List<String>?> getStrings(String key) => _pref.getStringList(key);
 
   @override
   Future<void> setInt(String key, int value) async {
