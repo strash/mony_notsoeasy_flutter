@@ -1,4 +1,5 @@
 export "./account/component.dart";
+export "./account_select/component.dart";
 export "./alert/component.dart";
 export "./appbar/component.dart";
 export "./appbar_button/component.dart";

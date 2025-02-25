@@ -46,17 +46,23 @@ class TransactionFormView extends StatelessWidget {
               const SizedBox(height: 20.0),
 
               // -> account and category
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Flex(
                   direction: Axis.horizontal,
                   children: [
                     // -> account
-                    Flexible(child: TransactionFormAccountComponent()),
-                    SizedBox(width: 10.0),
+                    Flexible(
+                      child: AccountSelectComponent(
+                        controller: viewModel.accountController,
+                        accounts: viewModel.accounts,
+                        isColorsVisible: viewModel.isColorsVisible,
+                      ),
+                    ),
+                    const SizedBox(width: 10.0),
 
                     // -> category
-                    Flexible(child: TransactionFormCategoryComponent()),
+                    const Flexible(child: TransactionFormCategoryComponent()),
                   ],
                 ),
               ),

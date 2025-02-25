@@ -1,13 +1,20 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
-import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/account.dart";
-import "package:mony_app/features/transaction_form/page/view_model.dart";
 
-class TransactionFormAccountComponent extends StatelessWidget {
-  const TransactionFormAccountComponent({super.key});
+class AccountSelectComponent extends StatelessWidget {
+  final SelectController<AccountModel?> controller;
+  final List<AccountModel> accounts;
+  final bool isColorsVisible;
+
+  const AccountSelectComponent({
+    super.key,
+    required this.controller,
+    required this.accounts,
+    required this.isColorsVisible,
+  });
 
   Color _getColor(BuildContext context, AccountModel account) {
     final theme = Theme.of(context);
@@ -18,15 +25,14 @@ class TransactionFormAccountComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewModel = context.viewModel<TransactionFormViewModel>();
 
     return ListenableBuilder(
-      listenable: viewModel.accountController,
+      listenable: controller,
       builder: (context, child) {
-        final account = viewModel.accountController.value;
+        final account = controller.value;
 
         return SelectComponent<AccountModel>(
-          controller: viewModel.accountController,
+          controller: controller,
           placeholder: const Text("Счет"),
           activeEntry:
               account == null
@@ -45,7 +51,7 @@ class TransactionFormAccountComponent extends StatelessWidget {
                             child: CurrencyTagComponent(
                               code: account.currency.code,
                               background:
-                                  viewModel.isColorsVisible
+                                  isColorsVisible
                                       ? _getColor(context, account)
                                       : theme.colorScheme.onSurfaceVariant,
                               foreground: theme.colorScheme.surface,
@@ -62,7 +68,7 @@ class TransactionFormAccountComponent extends StatelessWidget {
                                 context,
                               ).style.copyWith(
                                 color:
-                                    viewModel.isColorsVisible
+                                    isColorsVisible
                                         ? _getColor(context, account)
                                         : theme.colorScheme.onSurface,
                               ),
@@ -73,7 +79,7 @@ class TransactionFormAccountComponent extends StatelessWidget {
                     },
                   ),
           entryBuilder: (context) {
-            return viewModel.accounts
+            return accounts
                 .map((e) {
                   return SelectEntryComponent<AccountModel>(
                     value: e,
@@ -91,12 +97,12 @@ class TransactionFormAccountComponent extends StatelessWidget {
                               child: DecoratedBox(
                                 decoration: ShapeDecoration(
                                   color:
-                                      viewModel.isColorsVisible
+                                      isColorsVisible
                                           ? _getColor(context, e)
                                           : theme.colorScheme.surfaceContainer,
                                   shape: SmoothRectangleBorder(
                                     side:
-                                        viewModel.isColorsVisible
+                                        isColorsVisible
                                             ? BorderSide.none
                                             : BorderSide(
                                               color:
@@ -141,7 +147,7 @@ class TransactionFormAccountComponent extends StatelessWidget {
                                         child: CurrencyTagComponent(
                                           code: e.currency.code,
                                           background:
-                                              viewModel.isColorsVisible
+                                              isColorsVisible
                                                   ? _getColor(context, e)
                                                   : theme
                                                       .colorScheme
@@ -159,7 +165,7 @@ class TransactionFormAccountComponent extends StatelessWidget {
                                           style: style.copyWith(
                                             fontWeight: FontWeight.w600,
                                             color:
-                                                viewModel.isColorsVisible
+                                                isColorsVisible
                                                     ? _getColor(context, e)
                                                     : theme
                                                         .colorScheme
