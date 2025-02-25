@@ -145,7 +145,6 @@ class SettingsView extends StatelessWidget {
                   ],
                 ),
 
-                // TODO: добавить выбор категории по-умолчанию
                 // -> default transaction type
                 SettingsGroupComponent(
                   footer: const Text(

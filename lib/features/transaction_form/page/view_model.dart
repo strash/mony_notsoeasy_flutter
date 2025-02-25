@@ -30,6 +30,8 @@ final class TransactionFormPage extends StatefulWidget {
       TransactionFormViewModel();
 }
 
+// TODO: устанавливать категорию последней транзакции (по выбранному счету?),
+// при создании новой транзакции
 final class TransactionFormViewModel
     extends ViewModelState<TransactionFormPage> {
   bool isColorsVisible = true;

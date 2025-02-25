@@ -68,7 +68,7 @@ class TransactionFormAmountComponent extends StatelessWidget {
                       fontSize: 50.0,
                       color: theme.colorScheme.onSurface,
                       height: 1.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w400,
                       decoration: TextDecoration.none,
                     ),
                   );
