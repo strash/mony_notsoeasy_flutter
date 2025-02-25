@@ -5,11 +5,15 @@ import "package:mony_app/components/currency_tag/component.dart";
 class FeedAccountAmountComponent extends StatelessWidget {
   final String amount;
   final String code;
+  final Color? color;
+  final bool showColors;
 
   const FeedAccountAmountComponent({
     super.key,
     required this.amount,
     required this.code,
+    this.color,
+    required this.showColors,
   });
 
   @override
@@ -38,7 +42,11 @@ class FeedAccountAmountComponent extends StatelessWidget {
         // -> currency code
         Padding(
           padding: const EdgeInsets.only(left: 3.0, top: 8.0),
-          child: CurrencyTagComponent(code: code),
+          child: CurrencyTagComponent(
+            code: code,
+            background: showColors ? color : theme.colorScheme.onSurfaceVariant,
+            foreground: color != null ? theme.colorScheme.surface : null,
+          ),
         ),
       ],
     );

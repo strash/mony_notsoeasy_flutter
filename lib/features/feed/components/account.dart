@@ -24,6 +24,7 @@ class FeedAccountComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final ex = theme.extension<ColorExtension>();
 
     final locale = Localizations.localeOf(context);
 
@@ -49,6 +50,7 @@ class FeedAccountComponent extends StatelessWidget {
                         showDecimal: showDecimal,
                       ),
                       code: e.currency.code,
+                      showColors: showColors,
                     );
                   })
                   .toList(growable: false),
@@ -61,6 +63,8 @@ class FeedAccountComponent extends StatelessWidget {
                 showDecimal: showDecimal,
               ),
               code: page.balance.currency.code,
+              color: ex?.from(page.account.colorName).color,
+              showColors: showColors,
             ),
           },
           const SizedBox(height: 10.0),
