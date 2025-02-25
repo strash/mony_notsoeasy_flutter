@@ -17,8 +17,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     final accountService = context.read<DomainAccountService>();
 
     switch (event) {
-      case EventAccountCreated() ||
-          EventCategoryCreated() ||
+      case EventCategoryCreated() ||
           EventCategoryUpdated() ||
           EventTagCreated() ||
           EventTagUpdated() ||
@@ -28,6 +27,12 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           EventSettingsTagsVisibilityChanged() ||
           EventSettingsDataDeletionRequested():
         break;
+
+      case EventAccountCreated():
+        final count = await accountService.count();
+        viewModel.setProtectedState(() {
+          viewModel.accountsCount = count;
+        });
 
       case EventAccountUpdated(value: final account):
         if (viewModel.account.id != account.id) return;
@@ -39,8 +44,14 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         viewModel.setProtectedState(() => viewModel.balance = balance);
 
       case EventAccountDeleted(value: final account):
-        if (viewModel.account.id != account.id) return;
-        context.close();
+        if (viewModel.account.id != account.id) {
+          final count = await accountService.count();
+          viewModel.setProtectedState(() {
+            viewModel.accountsCount = count;
+          });
+        } else {
+          context.close();
+        }
 
       case EventCategoryDeleted() ||
           EventTransactionCreated() ||

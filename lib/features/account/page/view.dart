@@ -35,14 +35,21 @@ class AccountView extends StatelessWidget {
         slivers: [
           // -> appbar
           AppBarComponent(
-            trailing: Row(
+            trailing: SeparatedComponent.list(
+              direction: Axis.horizontal,
+              mainAxisSize: MainAxisSize.min,
+              separatorBuilder: (context, index) {
+                return const SizedBox(width: 4.0);
+              },
               children: [
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
                   onTap: () => onEditPressed(context, account),
                 ),
-                const SizedBox(width: 4.0),
+
+                // -> button balance exchange
+                const AccountBalanceExchangeMenuComponent(),
 
                 // -> button delete
                 AppBarButtonComponent(

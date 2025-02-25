@@ -6,14 +6,19 @@ import "package:provider/provider.dart";
 
 final class OnInit extends UseCase<Future<void>, AccountViewModel> {
   @override
-  Future<void> call(BuildContext context, [AccountViewModel? value]) async {
-    if (value == null) throw ArgumentError.notNull();
+  Future<void> call(BuildContext context, [AccountViewModel? viewModel]) async {
+    if (viewModel == null) throw ArgumentError.notNull();
 
-    final account = value.account;
+    final account = viewModel.account;
     final accountService = context.read<DomainAccountService>();
 
     final balances = await accountService.getBalance(id: account.id);
     if (balances == null) return;
-    value.setProtectedState(() => value.balance = balances);
+
+    final count = await accountService.count();
+    viewModel.setProtectedState(() {
+      viewModel.balance = balances;
+      viewModel.accountsCount = count;
+    });
   }
 }

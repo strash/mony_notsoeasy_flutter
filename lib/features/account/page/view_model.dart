@@ -22,6 +22,7 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
   late final StreamSubscription<Event> _appSub;
 
   late AccountModel account = widget.account;
+  int accountsCount = 1;
 
   AccountBalanceModel? balance;
 
@@ -59,7 +60,11 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
   Widget build(BuildContext context) {
     return ViewModel<AccountViewModel>(
       viewModel: this,
-      useCases: [() => OnEditPressed(), () => OnDeletePressed()],
+      useCases: [
+        () => OnEditPressed(),
+        () => OnBalanceExchangeMenuSelected(),
+        () => OnDeletePressed(),
+      ],
       child: const AccountView(),
     );
   }

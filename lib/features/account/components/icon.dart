@@ -48,7 +48,7 @@ class AccountIconComponent extends StatelessWidget {
                           ? BorderSide.none
                           : BorderSide(color: theme.colorScheme.outlineVariant),
                   borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 40.0, cornerSmoothing: 0.6),
+                    SmoothRadius(cornerRadius: 40.0, cornerSmoothing: 1.0),
                   ),
                 ),
               ),
