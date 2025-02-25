@@ -6,6 +6,7 @@ class ContextMenuComponent extends StatefulWidget {
   final double offset;
   final bool showBackground;
   final bool blurBackground;
+  final bool isActive;
   final WidgetBuilder buttonBuilder;
   final Widget Function(BuildContext context, VoidCallback dismiss)
   itemsBuilder;
@@ -15,6 +16,7 @@ class ContextMenuComponent extends StatefulWidget {
     this.offset = 8.0,
     this.showBackground = true,
     this.blurBackground = true,
+    this.isActive = true,
     required this.buttonBuilder,
     required this.itemsBuilder,
   });
@@ -28,7 +30,7 @@ class _ContextMenuComponentState extends State<ContextMenuComponent> {
 
   Rect _proxyRect = Rect.zero;
   // NOTE: initial height must be very big
-  late Rect _menuRect = Rect.fromLTWH(.0, .0, _width, 1000000);
+  late Rect _menuRect = Rect.fromLTWH(.0, .0, _width, 1_000_000.0);
   Alignment _alignment = Alignment.topRight;
 
   double get _width => MediaQuery.sizeOf(context).width * 0.72;
@@ -90,10 +92,14 @@ class _ContextMenuComponentState extends State<ContextMenuComponent> {
       builder: (context, isOpened, activate) {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: isOpened ? null : activate,
-          child: Opacity(
-            opacity: isOpened ? .0 : 1.0,
-            child: widget.buttonBuilder(context),
+          onTap: isOpened || !widget.isActive ? null : activate,
+          child: AnimatedOpacity(
+            duration: Durations.short4,
+            opacity: widget.isActive ? 1.0 : .3,
+            child: Opacity(
+              opacity: isOpened ? .0 : 1.0,
+              child: widget.buttonBuilder(context),
+            ),
           ),
         );
       },
