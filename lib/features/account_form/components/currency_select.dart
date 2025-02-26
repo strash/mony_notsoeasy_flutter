@@ -15,62 +15,56 @@ class CurrencySelectComponent extends StatelessWidget {
     final viewModel = context.viewModel<AccountFormViewModel>();
     final currencyDescription = viewModel<OnCurrencyDescriptionRequested>();
 
-    return ListenableBuilder(
-      listenable: viewModel.currencyController,
-      builder: (context, child) {
-        final value = viewModel.currencyController.value;
+    return SelectComponent<FiatCurrency>(
+      controller: viewModel.currencyController,
+      placeholder: const Text("валюта"),
+      activeEntry: (controller) {
+        return controller.value != null
+            ? Text(
+              controller.value?.code ?? "",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            )
+            : null;
+      },
+      expand: true,
+      entryBuilder: (context) {
+        final list = List.of(FiatCurrency.list, growable: false)
+          ..sort((a, b) => a.code.compareTo(b.code));
 
-        return SelectComponent<FiatCurrency>(
-          controller: viewModel.currencyController,
-          placeholder: const Text("валюта"),
-          activeEntry:
-              value != null
-                  ? Text(
-                    value.code,
+        return List.generate(list.length, (index) {
+          final item = list.elementAt(index);
+          final desc = currencyDescription(context, item);
+
+          return SelectEntryComponent<FiatCurrency>(
+            value: item,
+            equal: (lhs, rhs) => lhs != null && lhs.name == rhs.name,
+            child: Row(
+              children: [
+                // -> code
+                SizedBox(
+                  width: 48.0,
+                  child: Text(
+                    item.code,
+                    style: GoogleFonts.golosText(
+                      fontWeight: FontWeight.w500,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ),
+
+                // -> name
+                Flexible(
+                  child: Text(
+                    desc,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                  )
-                  : null,
-          expand: true,
-          entryBuilder: (context) {
-            final list = List.of(FiatCurrency.list, growable: false)
-              ..sort((a, b) => a.code.compareTo(b.code));
-
-            return List.generate(list.length, (index) {
-              final item = list.elementAt(index);
-              final desc = currencyDescription(context, item);
-
-              return SelectEntryComponent<FiatCurrency>(
-                value: item,
-                equal: (lhs, rhs) => lhs != null && lhs.name == rhs.name,
-                child: Row(
-                  children: [
-                    // -> code
-                    SizedBox(
-                      width: 48.0,
-                      child: Text(
-                        item.code,
-                        style: GoogleFonts.golosText(
-                          fontWeight: FontWeight.w500,
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ),
-
-                    // -> name
-                    Flexible(
-                      child: Text(
-                        desc,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              );
-            });
-          },
-        );
+              ],
+            ),
+          );
+        });
       },
     );
   }

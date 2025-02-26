@@ -13,7 +13,7 @@ class SelectComponent<T> extends StatefulWidget {
   final SelectController<T?> controller;
   final EdgeInsets? activeEntryPadding;
   final Widget? placeholder;
-  final Widget? activeEntry;
+  final Widget? Function(SelectController<T?> controller) activeEntry;
   final bool expand;
   final List<SelectEntryComponent<T>> Function(BuildContext context)
   entryBuilder;
@@ -23,7 +23,7 @@ class SelectComponent<T> extends StatefulWidget {
     required this.controller,
     this.activeEntryPadding,
     this.placeholder,
-    this.activeEntry,
+    required this.activeEntry,
     this.expand = false,
     required this.entryBuilder,
   });
@@ -61,10 +61,6 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    String placeholderText = "";
-    if (widget.placeholder != null && widget.placeholder is Text) {
-      placeholderText = (widget.placeholder! as Text).data ?? "";
-    }
     final accent = theme.colorScheme.secondary;
 
     return GestureDetector(
@@ -72,68 +68,73 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
       onTap: () => _onTap(context),
       child: SizedBox.fromSize(
         size: const Size.fromHeight(48.0),
-        child: TweenAnimationBuilder<Color?>(
-          duration: Durations.short2,
-          tween: ColorTween(
-            begin: accent.withValues(alpha: 0.0),
-            end: accent.withValues(alpha: _isActive ? 1.0 : 0.0),
-          ),
-          builder: (context, color, child) {
-            return DecoratedBox(
-              decoration: ShapeDecoration(
-                color: theme.colorScheme.surfaceContainer,
-                shape: SmoothRectangleBorder(
-                  side: BorderSide(color: color!),
-                  borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
+        child: _SelectValueProvider(
+          notifier: widget.controller,
+          child: TweenAnimationBuilder<Color?>(
+            duration: Durations.short2,
+            tween: ColorTween(
+              begin: accent.withValues(alpha: 0.0),
+              end: accent.withValues(alpha: _isActive ? 1.0 : 0.0),
+            ),
+            builder: (context, color, child) {
+              final controller = _SelectValueProvider.of<T>(context);
+              final entry = widget.activeEntry(controller);
+
+              return DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: theme.colorScheme.surfaceContainer,
+                  shape: SmoothRectangleBorder(
+                    side: BorderSide(color: color!),
+                    borderRadius: const SmoothBorderRadius.all(
+                      SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
+                    ),
                   ),
                 ),
-              ),
-              child: Padding(
-                padding:
-                    (widget.activeEntryPadding != null &&
-                            widget.activeEntry != null)
-                        ? widget.activeEntryPadding!
-                        : const EdgeInsets.only(left: 15.0, right: 7.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // -> placeholder
-                    Flexible(
-                      child:
-                          widget.activeEntry == null
-                              ? Text(
-                                placeholderText,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.golosText(
-                                  fontSize: 16.0,
-                                  color: theme.colorScheme.onSurfaceVariant
-                                      .withValues(alpha: .6),
+                child: Padding(
+                  padding:
+                      (widget.activeEntryPadding != null && entry != null)
+                          ? widget.activeEntryPadding!
+                          : const EdgeInsets.only(left: 15.0, right: 7.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // -> placeholder
+                      Flexible(
+                        child:
+                            entry == null
+                                ? DefaultTextStyle(
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.golosText(
+                                    fontSize: 16.0,
+                                    color: theme.colorScheme.onSurfaceVariant
+                                        .withValues(alpha: .6),
+                                  ),
+                                  child: widget.placeholder ?? const Text(""),
+                                )
+                                : DefaultTextStyle(
+                                  style: GoogleFonts.golosText(
+                                    fontSize: 16.0,
+                                    color: theme.colorScheme.onSurface,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  child: entry,
                                 ),
-                              )
-                              : DefaultTextStyle(
-                                style: GoogleFonts.golosText(
-                                  fontSize: 16.0,
-                                  color: theme.colorScheme.onSurface,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                child: widget.activeEntry!,
-                              ),
-                    ),
+                      ),
 
-                    // -> icon
-                    SvgPicture.asset(
-                      Assets.icons.chevronUpChevronDown,
-                      width: 24.0,
-                      height: 24.0,
-                      colorFilter: ColorFilter.mode(accent, BlendMode.srcIn),
-                    ),
-                  ],
+                      // -> icon
+                      SvgPicture.asset(
+                        Assets.icons.chevronUpChevronDown,
+                        width: 24.0,
+                        height: 24.0,
+                        colorFilter: ColorFilter.mode(accent, BlendMode.srcIn),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

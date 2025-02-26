@@ -68,53 +68,48 @@ class TransactionFormCategoryComponent extends StatelessWidget {
       listenable: viewModel.typeController,
       builder: (context, child) {
         final type = viewModel.typeController.value;
-        final controller = switch (type) {
-          ETransactionType.expense => viewModel.expenseCategoryController,
-          ETransactionType.income => viewModel.incomeCategoryController,
-        };
 
-        return ListenableBuilder(
-          listenable: controller,
-          builder: (context, child) {
-            return SelectComponent<CategoryModel>(
-              controller: controller,
-              placeholder: const Text("Категория"),
-              activeEntryPadding: const EdgeInsets.symmetric(horizontal: 7.0),
-              activeEntry:
-                  controller.value != null
-                      ? Builder(
-                        builder: (context) {
-                          return _getCategory(
-                            context,
-                            controller.value!,
-                            viewModel.isColorsVisible,
-                          );
-                        },
-                      )
-                      : null,
-              entryBuilder: (context) {
-                return switch (type) {
-                      ETransactionType.expense => viewModel.categories[type],
-                      ETransactionType.income => viewModel.categories[type],
-                    }!
-                    .map((e) {
-                      return SelectEntryComponent<CategoryModel>(
-                        value: e,
-                        equal: (lhs, rhs) => lhs != null && lhs.id == rhs.id,
-                        child: Builder(
-                          builder: (context) {
-                            return _getCategory(
-                              context,
-                              e,
-                              viewModel.isColorsVisible,
-                            );
-                          },
-                        ),
-                      );
-                    })
-                    .toList(growable: false);
-              },
-            );
+        return SelectComponent<CategoryModel>(
+          controller: switch (type) {
+            ETransactionType.expense => viewModel.expenseCategoryController,
+            ETransactionType.income => viewModel.incomeCategoryController,
+          },
+          placeholder: const Text("Категория"),
+          activeEntryPadding: const EdgeInsets.symmetric(horizontal: 7.0),
+          activeEntry: (controller) {
+            return controller.value != null
+                ? Builder(
+                  builder: (context) {
+                    return _getCategory(
+                      context,
+                      controller.value!,
+                      viewModel.isColorsVisible,
+                    );
+                  },
+                )
+                : null;
+          },
+          entryBuilder: (context) {
+            return switch (type) {
+                  ETransactionType.expense => viewModel.categories[type],
+                  ETransactionType.income => viewModel.categories[type],
+                }!
+                .map((e) {
+                  return SelectEntryComponent<CategoryModel>(
+                    value: e,
+                    equal: (lhs, rhs) => lhs != null && lhs.id == rhs.id,
+                    child: Builder(
+                      builder: (context) {
+                        return _getCategory(
+                          context,
+                          e,
+                          viewModel.isColorsVisible,
+                        );
+                      },
+                    ),
+                  );
+                })
+                .toList(growable: false);
           },
         );
       },

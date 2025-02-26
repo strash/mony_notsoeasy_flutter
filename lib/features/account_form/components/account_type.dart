@@ -11,34 +11,28 @@ class TypeSelectComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.viewModel<AccountFormViewModel>();
 
-    return ListenableBuilder(
-      listenable: viewModel.typeController,
-      builder: (context, child) {
-        final value = viewModel.typeController.value;
-
-        return SelectComponent<EAccountType>(
-          controller: viewModel.typeController,
-          placeholder: const Text("тип счета"),
-          activeEntry:
-              value != null
-                  ? Text(
-                    value.description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                  : null,
-          entryBuilder: (context) {
-            return EAccountType.values
-                .map((e) {
-                  return SelectEntryComponent<EAccountType>(
-                    value: e,
-                    equal: (lhs, rhs) => lhs != null && lhs == rhs,
-                    child: Text(e.description),
-                  );
-                })
-                .toList(growable: false);
-          },
-        );
+    return SelectComponent<EAccountType>(
+      controller: viewModel.typeController,
+      placeholder: const Text("тип счета"),
+      activeEntry: (controller) {
+        return controller.value != null
+            ? Text(
+              controller.value?.description ?? "",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            )
+            : null;
+      },
+      entryBuilder: (context) {
+        return EAccountType.values
+            .map((e) {
+              return SelectEntryComponent<EAccountType>(
+                value: e,
+                equal: (lhs, rhs) => lhs != null && lhs == rhs,
+                child: Text(e.description),
+              );
+            })
+            .toList(growable: false);
       },
     );
   }

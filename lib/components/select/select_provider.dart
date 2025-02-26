@@ -4,13 +4,13 @@ final class _SelectValueProvider<T>
     extends InheritedNotifier<SelectController<T?>> {
   const _SelectValueProvider({required super.child, required super.notifier});
 
-  static T? maybeOf<T>(BuildContext context) {
+  static SelectController<T?>? maybeOf<T>(BuildContext context) {
     final p =
         context.dependOnInheritedWidgetOfExactType<_SelectValueProvider<T>>();
-    return p?.notifier!.value;
+    return p?.notifier!;
   }
 
-  static T? of<T>(BuildContext context) {
+  static SelectController<T?> of<T>(BuildContext context) {
     final result = maybeOf<T>(context);
     if (result == null) throw ArgumentError.value(context);
     return result;

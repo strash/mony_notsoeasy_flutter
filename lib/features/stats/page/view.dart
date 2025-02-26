@@ -40,9 +40,15 @@ class StatsView extends StatelessWidget {
           ),
 
           // -> account select
-          const SliverPadding(
-            padding: EdgeInsets.only(left: 15.0, top: 10.0, right: 15.0),
-            sliver: SliverToBoxAdapter(child: StatsAccountSelectComponent()),
+          SliverPadding(
+            padding: const EdgeInsets.only(left: 15.0, top: 10.0, right: 15.0),
+            sliver: SliverToBoxAdapter(
+              child: AccountSelectComponent(
+                controller: viewModel.accountController,
+                accounts: viewModel.accounts,
+                isColorsVisible: viewModel.isColorsVisible,
+              ),
+            ),
           ),
 
           // -> total amount

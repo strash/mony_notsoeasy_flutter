@@ -28,7 +28,7 @@ class SelectEntryComponent<T> extends StatelessWidget {
           child: Row(
             children: [
               // -> check icon
-              if (equal(_SelectValueProvider.of<T>(context), value))
+              if (equal(_SelectValueProvider.of<T>(context).value, value))
                 SvgPicture.asset(
                   Assets.icons.checkmark,
                   width: 20.0,
