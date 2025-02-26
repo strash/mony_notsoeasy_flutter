@@ -9,6 +9,6 @@ final class OnAccountPressed extends UseCase<void, AccountModel> {
   void call(BuildContext context, [AccountModel? value]) {
     if (value == null) throw ArgumentError.notNull();
 
-    context.go(AccountPage(account: value));
+    context.go<void>(AccountPage(account: value));
   }
 }

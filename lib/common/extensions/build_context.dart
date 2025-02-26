@@ -9,13 +9,12 @@ extension BuildContextEx on BuildContext {
 
   void close() {
     final route = ModalRoute.of<void>(this);
+    if (route == null) return;
     final navigator = Navigator.of(this);
-    if (route != null) {
-      if (route.isCurrent) {
-        navigator.pop<void>();
-      } else {
-        navigator.removeRoute(route);
-      }
+    if (route.isCurrent) {
+      navigator.pop<void>();
+    } else {
+      navigator.removeRoute(route);
     }
   }
 

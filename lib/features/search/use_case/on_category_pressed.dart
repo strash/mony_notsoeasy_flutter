@@ -9,6 +9,6 @@ final class OnCategoryPressed extends UseCase<void, CategoryModel> {
   void call(BuildContext context, [CategoryModel? value]) {
     if (value == null) throw ArgumentError.notNull();
 
-    context.go(CategoryPage(category: value));
+    context.go<void>(CategoryPage(category: value));
   }
 }

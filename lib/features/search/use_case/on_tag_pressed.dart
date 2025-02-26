@@ -9,6 +9,6 @@ final class OnTagPressed extends UseCase<void, TagModel> {
   void call(BuildContext context, [TagModel? value]) {
     if (value == null) throw ArgumentError.notNull();
 
-    context.go(TagPage(tag: value));
+    context.go<void>(TagPage(tag: value));
   }
 }
