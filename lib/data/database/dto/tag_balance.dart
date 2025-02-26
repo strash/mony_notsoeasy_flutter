@@ -4,7 +4,7 @@ part "tag_balance.freezed.dart";
 part "tag_balance.g.dart";
 
 @freezed
-class TagBalanceDto with _$TagBalanceDto {
+abstract class TagBalanceDto with _$TagBalanceDto {
   const factory TagBalanceDto({
     required String id,
     required String created,

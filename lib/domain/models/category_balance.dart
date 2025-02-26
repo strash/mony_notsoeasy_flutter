@@ -4,7 +4,7 @@ import "package:sealed_currencies/sealed_currencies.dart";
 part "category_balance.freezed.dart";
 
 @freezed
-class CategoryBalanceModel with _$CategoryBalanceModel {
+abstract class CategoryBalanceModel with _$CategoryBalanceModel {
   const factory CategoryBalanceModel({
     required String id,
     required DateTime created,

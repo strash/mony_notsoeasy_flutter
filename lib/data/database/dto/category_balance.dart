@@ -4,7 +4,7 @@ part "category_balance.freezed.dart";
 part "category_balance.g.dart";
 
 @freezed
-class CategoryBalanceDto with _$CategoryBalanceDto {
+abstract class CategoryBalanceDto with _$CategoryBalanceDto {
   const factory CategoryBalanceDto({
     required String id,
     required String created,

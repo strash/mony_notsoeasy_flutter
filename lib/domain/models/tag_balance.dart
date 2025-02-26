@@ -4,7 +4,7 @@ import "package:sealed_currencies/sealed_currencies.dart";
 part "tag_balance.freezed.dart";
 
 @freezed
-class TagBalanceModel with _$TagBalanceModel {
+abstract class TagBalanceModel with _$TagBalanceModel {
   const factory TagBalanceModel({
     required String id,
     required DateTime created,

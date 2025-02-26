@@ -25,14 +25,7 @@ class _ColorGrid extends StatelessWidget {
           shrinkWrap: true,
           crossAxisCount: 6,
           children: EColorName.values
-              .map((e) {
-                return ListenableBuilder(
-                  listenable: _NamedColorPickerValueProvider.of(context),
-                  builder: (context, child) {
-                    return _ColorGridItem(colorName: e);
-                  },
-                );
-              })
+              .map((e) => _ColorGridItem(colorName: e))
               .toList(growable: false),
         ),
       ],

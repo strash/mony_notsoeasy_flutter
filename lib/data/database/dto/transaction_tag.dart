@@ -4,7 +4,7 @@ part "transaction_tag.freezed.dart";
 part "transaction_tag.g.dart";
 
 @freezed
-class TransactionTagDto with _$TransactionTagDto {
+abstract class TransactionTagDto with _$TransactionTagDto {
   const factory TransactionTagDto({
     required String id,
     required String created,

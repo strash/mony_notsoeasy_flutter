@@ -5,7 +5,7 @@ import "package:mony_app/domain/models/transaction_type_enum.dart";
 part "category.freezed.dart";
 
 @freezed
-class CategoryModel with _$CategoryModel {
+abstract class CategoryModel with _$CategoryModel {
   const factory CategoryModel({
     required String id,
     required DateTime created,

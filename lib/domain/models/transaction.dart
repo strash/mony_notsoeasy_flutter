@@ -7,7 +7,7 @@ import "package:sealed_currencies/sealed_currencies.dart";
 part "transaction.freezed.dart";
 
 @freezed
-class TransactionModel with _$TransactionModel {
+abstract class TransactionModel with _$TransactionModel {
   const factory TransactionModel({
     required String id,
     required DateTime created,

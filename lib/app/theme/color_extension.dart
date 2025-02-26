@@ -33,7 +33,7 @@ enum EColorName {
 }
 
 @freezed
-class ColorWithName with _$ColorWithName {
+abstract class ColorWithName with _$ColorWithName {
   const factory ColorWithName({
     required Color color,
     required EColorName name,

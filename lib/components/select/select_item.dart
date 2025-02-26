@@ -17,7 +17,6 @@ class SelectEntryComponent<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final provider = _SelectValueProvider.of<T>(context);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -26,42 +25,36 @@ class SelectEntryComponent<T> extends StatelessWidget {
         opacity: enabled ? 1.0 : 0.4,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-          child: ListenableBuilder(
-            listenable: provider,
-            child: Flexible(
-              child: DefaultTextStyle(
-                style: GoogleFonts.golosText(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w400,
-                  color: theme.colorScheme.onSurface,
+          child: Row(
+            children: [
+              // -> check icon
+              if (equal(_SelectValueProvider.of<T>(context), value))
+                SvgPicture.asset(
+                  Assets.icons.checkmark,
+                  width: 20.0,
+                  height: 20.0,
+                  colorFilter: ColorFilter.mode(
+                    theme.colorScheme.secondary,
+                    BlendMode.srcIn,
+                  ),
+                )
+              else
+                const SizedBox.square(dimension: 20.0),
+
+              const SizedBox(width: 15.0),
+
+              // -> child
+              Flexible(
+                child: DefaultTextStyle(
+                  style: GoogleFonts.golosText(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  child: child,
                 ),
-                child: child,
               ),
-            ),
-            builder: (context, listenableChild) {
-              return Row(
-                children: [
-                  // -> check icon
-                  if (equal(provider.value, value))
-                    SvgPicture.asset(
-                      Assets.icons.checkmark,
-                      width: 20.0,
-                      height: 20.0,
-                      colorFilter: ColorFilter.mode(
-                        theme.colorScheme.secondary,
-                        BlendMode.srcIn,
-                      ),
-                    )
-                  else
-                    const SizedBox.square(dimension: 20.0),
-
-                  const SizedBox(width: 15.0),
-
-                  // -> child
-                  listenableChild!,
-                ],
-              );
-            },
+            ],
           ),
         ),
       ),

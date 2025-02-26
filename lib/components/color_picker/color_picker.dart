@@ -29,7 +29,7 @@ class _ColorPickerComponentState extends State<ColorPickerComponent> {
       context,
       builder: (context, bottom) {
         return _ColorPickerValueProvider(
-          controller: widget.controller,
+          notifier: widget.controller,
           child: _ColorGrid(bottom),
         );
       },

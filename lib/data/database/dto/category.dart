@@ -4,7 +4,7 @@ part "category.freezed.dart";
 part "category.g.dart";
 
 @freezed
-class CategoryDto with _$CategoryDto {
+abstract class CategoryDto with _$CategoryDto {
   const factory CategoryDto({
     required String id,
     required String created,

@@ -4,7 +4,7 @@ part "account.freezed.dart";
 part "account.g.dart";
 
 @freezed
-class AccountDto with _$AccountDto {
+abstract class AccountDto with _$AccountDto {
   const factory AccountDto({
     required String id,
     required String created,

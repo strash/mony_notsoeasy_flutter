@@ -5,7 +5,7 @@ import "package:sealed_currencies/sealed_currencies.dart";
 part "account_balance.freezed.dart";
 
 @freezed
-class AccountBalanceModel with _$AccountBalanceModel {
+abstract class AccountBalanceModel with _$AccountBalanceModel {
   const factory AccountBalanceModel({
     required String id,
     required DateTime created,

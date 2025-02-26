@@ -47,7 +47,7 @@ enum EAccountType implements IDescriptable {
 // TODO: перевод с одного счета на другой, что по-сути меняет изначальные суммы
 // на счетах без создания транзакций и/или просто смена аккаунта
 @freezed
-class AccountModel with _$AccountModel {
+abstract class AccountModel with _$AccountModel {
   const factory AccountModel({
     required String id,
     required DateTime created,

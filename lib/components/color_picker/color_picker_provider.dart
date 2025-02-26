@@ -1,17 +1,16 @@
 part of "./color_picker.dart";
 
-final class _ColorPickerValueProvider extends InheritedWidget {
-  final ColorPickerController controller;
-
+final class _ColorPickerValueProvider
+    extends InheritedNotifier<ColorPickerController> {
   const _ColorPickerValueProvider({
     required super.child,
-    required this.controller,
+    required super.notifier,
   });
 
   static ColorPickerController? maybeOf<T>(BuildContext context) {
     final p =
         context.dependOnInheritedWidgetOfExactType<_ColorPickerValueProvider>();
-    return p?.controller;
+    return p?.notifier!;
   }
 
   static ColorPickerController of(BuildContext context) {
@@ -22,6 +21,6 @@ final class _ColorPickerValueProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(_ColorPickerValueProvider oldWidget) {
-    return controller.value != oldWidget.controller.value;
+    return notifier!.value != oldWidget.notifier!.value;
   }
 }

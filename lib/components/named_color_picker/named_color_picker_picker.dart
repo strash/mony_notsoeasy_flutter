@@ -11,7 +11,7 @@ class NamedColorPickerComponent extends StatelessWidget {
       showDragHandle: false,
       builder: (context, bottom) {
         return _NamedColorPickerValueProvider(
-          controller: controller,
+          notifier: controller,
           child: _ColorGrid(bottom: bottom),
         );
       },

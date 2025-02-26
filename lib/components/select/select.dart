@@ -42,7 +42,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
       context,
       builder: (context, bottom) {
         return _SelectValueProvider<T>(
-          controller: widget.controller,
+          notifier: widget.controller,
           child: ListView.builder(
             shrinkWrap: true,
             padding: EdgeInsets.only(bottom: 40.0 + bottom),
