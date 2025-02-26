@@ -12,10 +12,9 @@ class BalanceExchangeFormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final viewModel = context.viewModel<BalanceExchangeFormViewModel>();
     final action = viewModel.action;
+    final placeholder = action.placeholder;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -34,28 +33,45 @@ class BalanceExchangeFormView extends StatelessWidget {
             child: SeparatedComponent.list(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               separatorBuilder: (context, index) {
-                return const SizedBox(height: 10.0);
+                return const SizedBox(height: 20.0);
               },
               children: [
-                // -> active account and account select
-                switch (action) {
-                  EBalanceExchangeMenuItem.receive =>
-                    const BalanceExchangeFormReceiveOrderComponent(),
-                  EBalanceExchangeMenuItem.send =>
-                    const BalanceExchangeFormSendOrderComponent(),
-                },
+                // -> form elements
+                SeparatedComponent.list(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 10.0);
+                  },
+                  children: switch (action) {
+                    EBalanceExchangeMenuItem.receive => [
+                      const BalanceExchangeFormAccountSelectComponent(),
+                      BalanceExchangeFormAmountComponent(
+                        placeholder: placeholder,
+                      ),
+                      const BalanceExchangeFormCoefficientComponent(),
+                      const BalanceExchangeFormIconComponent(),
+                      const BalanceExchangeFormAccountComponent(),
+                    ],
+                    EBalanceExchangeMenuItem.send => [
+                      const BalanceExchangeFormAccountComponent(),
+                      BalanceExchangeFormAmountComponent(
+                        placeholder: placeholder,
+                      ),
+                      const BalanceExchangeFormCoefficientComponent(),
+                      const BalanceExchangeFormIconComponent(),
+                      const BalanceExchangeFormAccountSelectComponent(),
+                    ],
+                  },
+                ),
 
                 // -> submit
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: FilledButton(
-                    onPressed:
-                        viewModel.isSubmitEnabled
-                            ? () =>
-                                {} //onSubmitPressed(context)
-                            : null,
-                    child: Text(action.submit),
-                  ),
+                FilledButton(
+                  onPressed:
+                      viewModel.isSubmitEnabled
+                          ? () =>
+                              {} //onSubmitPressed(context)
+                          : null,
+                  child: Text(action.submit),
                 ),
               ],
             ),
@@ -73,6 +89,13 @@ extension on EBalanceExchangeMenuItem {
     return switch (this) {
       EBalanceExchangeMenuItem.receive => "Пополнение",
       EBalanceExchangeMenuItem.send => "Перевод",
+    };
+  }
+
+  String get placeholder {
+    return switch (this) {
+      EBalanceExchangeMenuItem.receive => "Сумма для пополнения",
+      EBalanceExchangeMenuItem.send => "Сумма для перевода",
     };
   }
 

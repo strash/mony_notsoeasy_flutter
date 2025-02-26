@@ -14,10 +14,13 @@ final class OnInit extends UseCase<Future<void>, BalanceExchangeFormViewModel> {
 
     final accountService = context.read<DomainAccountService>();
     final accounts = await accountService.getAll();
+    final balances = await accountService.getBalances();
+
     viewModel.setProtectedState(() {
       viewModel.accounts = accounts
-          .where((e) => e.id != viewModel.account.id)
+          .where((e) => e.id != viewModel.activeAccount.id)
           .toList(growable: false);
+      viewModel.balances = balances;
       viewModel.accountController.value = viewModel.accounts.firstOrNull;
     });
   }
