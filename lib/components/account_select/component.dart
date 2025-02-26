@@ -1,187 +1,58 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:mony_app/app/app.dart";
-import "package:mony_app/components/components.dart";
+import "package:mony_app/app/theme/theme.dart" show ColorExtension;
+import "package:mony_app/components/currency_tag/component.dart";
+import "package:mony_app/components/select/select.dart";
+import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/domain/models/account.dart";
+
+part "./active_entry.dart";
+part "./entry.dart";
+
+abstract class IAccountSelectActiveEntryComponent extends StatelessWidget {
+  final SelectController<AccountModel?> controller;
+  final bool isColorsVisible;
+
+  const IAccountSelectActiveEntryComponent({
+    required this.controller,
+    required this.isColorsVisible,
+  });
+}
 
 class AccountSelectComponent extends StatelessWidget {
   final SelectController<AccountModel?> controller;
   final List<AccountModel> accounts;
   final bool isColorsVisible;
+  final IAccountSelectActiveEntryComponent? activeEntry;
 
   const AccountSelectComponent({
     super.key,
     required this.controller,
     required this.accounts,
     required this.isColorsVisible,
+    this.activeEntry,
   });
-
-  Color _getColor(BuildContext context, AccountModel account) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
-    return ex?.from(account.colorName).color ?? theme.colorScheme.primary;
-  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return SelectComponent<AccountModel>(
       controller: controller,
       placeholder: const Text("Счет"),
       activeEntry: (controller) {
-        return controller.value == null
-            // -> title and currency symbol/code
-            ? null
-            : Builder(
-              builder: (context) {
-                return Row(
-                  children: [
-                    // -> currency tag
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2.0, right: 6.0),
-                      child: CurrencyTagComponent(
-                        code: controller.value!.currency.code,
-                        background:
-                            isColorsVisible
-                                ? _getColor(context, controller.value!)
-                                : theme.colorScheme.onSurfaceVariant,
-                        foreground: theme.colorScheme.surface,
-                      ),
-                    ),
-
-                    // -> title
-                    Flexible(
-                      child: Text(
-                        controller.value!.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: DefaultTextStyle.of(context).style.copyWith(
-                          color:
-                              isColorsVisible
-                                  ? _getColor(context, controller.value!)
-                                  : theme.colorScheme.onSurface,
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
+        return activeEntry ??
+            _AccountSelectActiveEntryComponent(
+              controller: controller,
+              isColorsVisible: isColorsVisible,
             );
       },
       entryBuilder: (context) {
         return accounts
             .map((e) {
-              return SelectEntryComponent<AccountModel>(
-                value: e,
-                equal: (lhs, rhs) => lhs != null && lhs.id == rhs.id,
-                child: Builder(
-                  builder: (context) {
-                    final style = DefaultTextStyle.of(context).style;
-
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // -> icon
-                        SizedBox.square(
-                          dimension: 36.0,
-                          child: DecoratedBox(
-                            decoration: ShapeDecoration(
-                              color:
-                                  isColorsVisible
-                                      ? _getColor(context, e)
-                                      : theme.colorScheme.surfaceContainer,
-                              shape: SmoothRectangleBorder(
-                                side:
-                                    isColorsVisible
-                                        ? BorderSide.none
-                                        : BorderSide(
-                                          color:
-                                              theme.colorScheme.outlineVariant,
-                                        ),
-                                borderRadius: const SmoothBorderRadius.all(
-                                  SmoothRadius(
-                                    cornerRadius: 14.0,
-                                    cornerSmoothing: 0.6,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                e.type.icon,
-                                style: theme.textTheme.headlineSmall?.copyWith(
-                                  height: .0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 7.0),
-
-                        Flexible(
-                          child: SeparatedComponent.list(
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(height: 1.0);
-                            },
-                            children: [
-                              // -> title and currency symbol/code
-                              Row(
-                                children: [
-                                  // -> currency tag
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 2.0,
-                                      right: 5.0,
-                                    ),
-                                    child: CurrencyTagComponent(
-                                      code: e.currency.code,
-                                      background:
-                                          isColorsVisible
-                                              ? _getColor(context, e)
-                                              : theme
-                                                  .colorScheme
-                                                  .onSurfaceVariant,
-                                      foreground: theme.colorScheme.surface,
-                                    ),
-                                  ),
-
-                                  // -> title
-                                  Flexible(
-                                    child: Text(
-                                      e.title,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: style.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        color:
-                                            isColorsVisible
-                                                ? _getColor(context, e)
-                                                : theme.colorScheme.onSurface,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              // -> account type
-                              Text(
-                                e.type.description,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: style.copyWith(
-                                  fontSize: 14.0,
-                                  color: theme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              );
+              return _AccountSelectEntryComponent(
+                    account: e,
+                    isColorsVisible: isColorsVisible,
+                  ).build(context)
+                  as SelectEntryComponent<AccountModel>;
             })
             .toList(growable: false);
       },
