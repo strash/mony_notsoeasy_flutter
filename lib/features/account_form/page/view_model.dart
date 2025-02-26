@@ -5,7 +5,6 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account_form/page/view.dart";
 import "package:mony_app/features/account_form/use_case/use_case.dart";
-import "package:provider/provider.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 final class AccountFormPage extends StatefulWidget {
@@ -37,9 +36,17 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
 
   bool isSubmitEnabled = false;
 
-  final Map<EAccountType, List<String>> _titles = {
+  final Map<EAccountType, List<String>> titles = {
     for (final value in EAccountType.values) value: const [],
   };
+
+  AccountVariant? get account {
+    return widget.account;
+  }
+
+  Map<EAccountType, List<String>> get additionalUsedTitles {
+    return widget.additionalUsedTitles;
+  }
 
   void _listener() {
     setProtectedState(() {
@@ -58,41 +65,10 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
     });
   }
 
-  Future<void> _fetchData() async {
-    final service = context.read<DomainAccountService>();
-    final data = await Future.wait(
-      EAccountType.values.map((e) => service.getAll(type: e)),
-    );
-    // set balance to total sum
-    if (widget.account case AccountVariantModel(:final model)) {
-      final balance = await service.getBalance(id: model.id);
-      if (balance != null) {
-        balanceController.text = balance.totalSum.roundToFraction(2).toString();
-      }
-    }
-    for (final list in data) {
-      if (list.isEmpty) continue;
-      // exclude model from list
-      if (widget.account case AccountVariantModel(:final model)) {
-        _titles[list.first.type] = List<String>.from(
-          list.where((e) => e.id != model.id).map((e) => e.title),
-        );
-      } else {
-        _titles[list.first.type] = List<String>.from(list.map((e) => e.title));
-      }
-    }
-    // append additional user titles
-    for (final element in widget.additionalUsedTitles.entries) {
-      _titles[element.key] = List<String>.from(_titles[element.key]!)
-        ..addAll(element.value);
-    }
-    _updateTitleController();
-  }
-
-  void _updateTitleController() {
+  void updateTitleController() {
     titleController.removeValidator<AccountTitleValidator>();
     titleController.addValidator(
-      AccountTitleValidator(titles: _titles[typeController.value]!),
+      AccountTitleValidator(titles: titles[typeController.value]!),
     );
     _listener();
   }
@@ -120,12 +96,12 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
     titleController.addListener(_listener);
     colorController.addListener(_listener);
     typeController.addListener(_listener);
-    typeController.addListener(_updateTitleController);
+    typeController.addListener(updateTitleController);
     currencyController.addListener(_listener);
     balanceController.addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
       _listener();
-      _fetchData();
+      OnInit().call(context, this);
     });
   }
 
@@ -134,7 +110,7 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
     titleController.removeListener(_listener);
     colorController.removeListener(_listener);
     typeController.removeListener(_listener);
-    typeController.removeListener(_updateTitleController);
+    typeController.removeListener(updateTitleController);
     currencyController.removeListener(_listener);
     balanceController.removeListener(_listener);
 
