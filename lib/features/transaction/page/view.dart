@@ -77,12 +77,15 @@ class TransactionView extends StatelessWidget {
                       // -> account
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                        onTap:
-                            () =>
-                                onAccountPressed(context, transaction.account),
+                        onTap: () {
+                          onAccountPressed(context, transaction.account);
+                        },
                         child: AccountComponent(
                           account: transaction.account,
+                          balance: viewModel.balance,
+                          showCurrencyTag: true,
                           showColors: viewModel.isColorsVisible,
+                          showCents: viewModel.isCentsVisible,
                         ),
                       ),
 

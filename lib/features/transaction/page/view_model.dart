@@ -4,6 +4,7 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/transaction/page/view.dart";
@@ -23,7 +24,9 @@ final class TransactionViewModel extends ViewModelState<TransactionPage> {
   late final StreamSubscription<Event> _appSub;
 
   late TransactionModel transaction = widget.transaction;
+  AccountBalanceModel? balance;
 
+  bool isCentsVisible = true;
   bool isColorsVisible = true;
 
   void _onAppEvent(Event event) {
@@ -38,11 +41,16 @@ final class TransactionViewModel extends ViewModelState<TransactionPage> {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final cents = await sharedPrefService.isSettingsCentsVisible();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       setProtectedState(() {
+        isCentsVisible = cents;
         isColorsVisible = colors;
       });
     });
+
+    if (!mounted) return;
+    OnInit().call(context, this);
   }
 
   @override
