@@ -34,14 +34,24 @@ final class BalanceExchangeFormViewModel
 
   bool isSubmitEnabled = false;
 
-  late final accountController = SelectController<AccountModel?>(null);
-  final amountController = InputController(validators: [AmountValidator()]);
+  final _validator = AmountValidator();
+  final accountController = SelectController<AccountModel?>(null);
+  late final amountController = InputController(validators: [_validator]);
+  late final coefficientController = InputController(validators: [_validator]);
 
   List<AccountModel> accounts = [];
   List<AccountBalanceModel> balances = [];
 
+  EBalanceExchangeMenuItem get action {
+    return widget.action;
+  }
+
   AccountModel get activeAccount {
     return widget.account;
+  }
+
+  bool get isSameCurrency {
+    return activeBalance?.currency == selectedBalance?.currency;
   }
 
   AccountBalanceModel? get selectedBalance {
@@ -66,16 +76,29 @@ final class BalanceExchangeFormViewModel
     return balance;
   }
 
-  EBalanceExchangeMenuItem get action {
-    return widget.action;
-  }
-
   void _listener() {
     setProtectedState(() {
       final amountTrim = amountController.text.trim();
-      final amountIsValid = amountTrim.isNotEmpty && amountController.isValid;
+      final amount = (double.tryParse(amountTrim) ?? .0).abs();
+      final amountIsValid =
+          amountTrim.isNotEmpty && amountController.isValid && amount > .0;
 
-      isSubmitEnabled = accountController.value != null && amountIsValid;
+      final isSameCurrency = this.isSameCurrency;
+      if (isSameCurrency) {
+        isSubmitEnabled = accountController.value != null && amountIsValid;
+      } else {
+        final coefficientTrim = coefficientController.text.trim();
+        final coefficient = (double.tryParse(coefficientTrim) ?? .0).abs();
+        final coefficientIsValid =
+            coefficientTrim.isNotEmpty &&
+            coefficientController.isValid &&
+            coefficient > .0;
+
+        isSubmitEnabled =
+            accountController.value != null &&
+            amountIsValid &&
+            coefficientIsValid;
+      }
     });
   }
 
@@ -84,6 +107,8 @@ final class BalanceExchangeFormViewModel
     super.initState();
     accountController.addListener(_listener);
     amountController.addListener(_listener);
+    coefficientController.addListener(_listener);
+
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
       final cents = await sharedPrefService.isSettingsCentsVisible();
@@ -104,6 +129,8 @@ final class BalanceExchangeFormViewModel
     amountController.removeListener(_listener);
     accountController.dispose();
     amountController.dispose();
+    coefficientController.removeListener(_listener);
+    coefficientController.dispose();
     super.dispose();
   }
 

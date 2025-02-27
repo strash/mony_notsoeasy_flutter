@@ -15,6 +15,7 @@ class BalanceExchangeFormView extends StatelessWidget {
     final viewModel = context.viewModel<BalanceExchangeFormViewModel>();
     final action = viewModel.action;
     final placeholder = action.placeholder;
+    final isSameCurrency = viewModel.isSameCurrency;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -27,6 +28,7 @@ class BalanceExchangeFormView extends StatelessWidget {
           showDragHandle: true,
         ),
 
+        // -> form
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
           child: Form(
@@ -49,19 +51,17 @@ class BalanceExchangeFormView extends StatelessWidget {
                       BalanceExchangeFormAmountComponent(
                         placeholder: placeholder,
                       ),
-                      const BalanceExchangeFormCoefficientComponent(),
-                      const BalanceExchangeFormIconComponent(),
-                      const BalanceExchangeFormAccountComponent(),
+                      if (!isSameCurrency)
+                        const BalanceExchangeFormCoefficientComponent(),
                     ],
 
                     // -> send
                     EBalanceExchangeMenuItem.send => [
-                      const BalanceExchangeFormAccountComponent(),
                       BalanceExchangeFormAmountComponent(
                         placeholder: placeholder,
                       ),
-                      const BalanceExchangeFormCoefficientComponent(),
-                      const BalanceExchangeFormIconComponent(),
+                      if (!isSameCurrency)
+                        const BalanceExchangeFormCoefficientComponent(),
                       const BalanceExchangeFormAccountSelectComponent(),
                     ],
                   },
@@ -90,8 +90,8 @@ class BalanceExchangeFormView extends StatelessWidget {
 extension on EBalanceExchangeMenuItem {
   String get title {
     return switch (this) {
-      EBalanceExchangeMenuItem.receive => "Пополнение",
-      EBalanceExchangeMenuItem.send => "Перевод",
+      EBalanceExchangeMenuItem.receive => "Пополнение с",
+      EBalanceExchangeMenuItem.send => "Перевод на",
     };
   }
 
