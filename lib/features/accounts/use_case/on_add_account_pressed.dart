@@ -10,7 +10,7 @@ import "package:provider/provider.dart";
 
 final class OnAddAccountPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final accountService = context.read<DomainAccountService>();
     final appService = context.viewModel<AppEventService>();
 

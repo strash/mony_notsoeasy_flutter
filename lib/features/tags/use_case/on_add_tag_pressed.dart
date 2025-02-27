@@ -9,7 +9,7 @@ import "package:provider/provider.dart";
 
 final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final tagService = context.read<DomainTagService>();
     final appService = context.viewModel<AppEventService>();
 

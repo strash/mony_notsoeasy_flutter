@@ -7,7 +7,7 @@ import "package:provider/provider.dart";
 
 final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     const int wait = 3;
     final start = DateTime.now();
 

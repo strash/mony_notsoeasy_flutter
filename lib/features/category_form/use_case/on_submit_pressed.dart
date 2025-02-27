@@ -6,7 +6,7 @@ import "package:mony_app/features/category_form/page/view_model.dart";
 
 final class OnSubmitPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final viewModel = context.viewModel<CategoryFormViewModel>();
     final transactionType = viewModel.transactionType;
     final vo = CategoryVO(

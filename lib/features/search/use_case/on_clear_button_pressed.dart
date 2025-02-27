@@ -5,7 +5,7 @@ import "package:mony_app/features/search/page/view_model.dart";
 
 final class OnClearButtonPressed extends UseCase<void, dynamic> {
   @override
-  void call(BuildContext context, [dynamic _]) {
+  void call(BuildContext context, [_]) {
     final viewModel = context.viewModel<SearchViewModel>();
 
     viewModel.input.text = "";

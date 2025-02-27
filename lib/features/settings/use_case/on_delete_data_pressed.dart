@@ -7,7 +7,7 @@ import "package:provider/provider.dart";
 
 final class OnDeleteDataPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final result = await AlertComponet.show(
       context,
       title: const Text("Удаление данных"),

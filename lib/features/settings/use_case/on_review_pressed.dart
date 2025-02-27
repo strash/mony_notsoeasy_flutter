@@ -5,7 +5,7 @@ import "package:provider/provider.dart";
 
 final class OnReviewPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final reviewService = context.read<AppReviewService>();
 
     await reviewService.requestImmediateReview();

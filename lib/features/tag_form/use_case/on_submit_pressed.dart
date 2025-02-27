@@ -6,7 +6,7 @@ import "package:mony_app/features/tag_form/tag_form.dart";
 
 final class OnSubmitPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final viewModel = context.viewModel<TagFormViewModel>();
     final vo = TagVO(title: viewModel.titleController.text.trim());
     if (context.mounted) Navigator.of(context).pop<TagVO>(vo);

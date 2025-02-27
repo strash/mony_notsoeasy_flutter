@@ -7,7 +7,7 @@ import "package:mony_app/features/transaction_form/transaction_form.dart";
 
 final class OnDatePressed extends UseCase<void, dynamic> {
   @override
-  void call(BuildContext context, [dynamic _]) {
+  void call(BuildContext context, [_]) {
     final viewModel = context.viewModel<TransactionFormViewModel>();
     viewModel.dateController.visibleMonth =
         (viewModel.dateController.value ?? DateTime.now()).firstDayOfMonth();

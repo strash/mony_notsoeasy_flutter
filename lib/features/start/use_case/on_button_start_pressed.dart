@@ -5,7 +5,7 @@ import "package:mony_app/features/features.dart";
 
 final class OnButtonStartPressed extends UseCase<void, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     context.go<void>(const StartAccountPage(), noTransition: true);
   }
 }

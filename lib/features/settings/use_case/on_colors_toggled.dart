@@ -7,7 +7,7 @@ import "package:provider/provider.dart";
 
 final class OnColorsToggled extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final sharedPrefService = context.read<DomainSharedPreferencesService>();
     final appService = context.viewModel<AppEventService>();
 

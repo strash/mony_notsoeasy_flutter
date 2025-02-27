@@ -8,7 +8,7 @@ import "package:provider/provider.dart";
 
 final class OnImportDataPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final viewModel = context.viewModel<SettingsViewModel>();
 
     viewModel.setProtectedState(() {

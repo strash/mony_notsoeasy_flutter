@@ -9,7 +9,7 @@ import "package:provider/provider.dart";
 
 final class OnShowAccountFormPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final result = await BottomSheetComponent.show<AccountVO?>(
       context,
       showDragHandle: false,

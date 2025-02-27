@@ -13,7 +13,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
   bool _canLoadMore = true;
 
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     _context = context;
 
     final viewModel = context.viewModel<TransactionFormViewModel>();

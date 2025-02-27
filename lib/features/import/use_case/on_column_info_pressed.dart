@@ -7,7 +7,7 @@ import "package:mony_app/features/import/import.dart";
 
 final class OnColumnInfoPressed extends UseCase<void, dynamic> {
   @override
-  void call(BuildContext context, [dynamic _]) {
+  void call(BuildContext context, [_]) {
     final viewModel = context.viewModel<ImportViewModel>();
     final currentColumn = viewModel.currentStep;
     if (currentColumn is! ImportModelColumn) {

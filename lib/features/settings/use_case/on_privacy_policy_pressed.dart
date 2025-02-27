@@ -5,7 +5,7 @@ import "package:url_launcher/url_launcher.dart";
 
 final class OnPrivacyPolicyPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final url = Uri.https(kPrivacyPolicyHost, kPrivacyPolicyPath);
     if (await canLaunchUrl(url)) {
       await launchUrl(url);

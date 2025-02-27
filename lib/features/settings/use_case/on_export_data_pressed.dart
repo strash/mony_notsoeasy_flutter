@@ -6,7 +6,7 @@ import "package:provider/provider.dart";
 
 final class OnExportDataPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final accountService = context.read<DomainAccountService>();
     final categoryService = context.read<DomainCategoryService>();
     final tagService = context.read<DomainTagService>();

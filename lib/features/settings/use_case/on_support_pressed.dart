@@ -7,7 +7,7 @@ import "package:url_launcher/url_launcher.dart";
 
 final class OnSupportPressed extends UseCase<Future<void>, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final os = Platform.isAndroid ? "Android" : "iOS";
     final subject = Uri.encodeComponent("Пишу из приложения Mony");
     final body = Uri.encodeComponent("""

@@ -7,7 +7,7 @@ import "package:provider/provider.dart";
 
 final class OnSelectFilePressed extends UseCase<void, dynamic> {
   @override
-  Future<void> call(BuildContext context, [dynamic _]) async {
+  Future<void> call(BuildContext context, [_]) async {
     final viewModel = context.viewModel<ImportViewModel>();
     final subject = viewModel.subject;
     try {

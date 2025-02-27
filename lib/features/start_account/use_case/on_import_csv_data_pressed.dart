@@ -5,7 +5,7 @@ import "package:mony_app/features/features.dart";
 
 final class OnImportCsvDataPressed extends UseCase<void, dynamic> {
   @override
-  void call(BuildContext context, [dynamic _]) {
+  void call(BuildContext context, [_]) {
     context.go<void>(const ImportPage());
   }
 }

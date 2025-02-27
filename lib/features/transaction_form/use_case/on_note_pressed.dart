@@ -7,7 +7,7 @@ import "package:mony_app/features/transaction_form/components/components.dart";
 
 final class OnNotePressed extends UseCase<void, dynamic> {
   @override
-  void call(BuildContext context, [dynamic _]) {
+  void call(BuildContext context, [_]) {
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
     BottomSheetComponent.show<void>(
