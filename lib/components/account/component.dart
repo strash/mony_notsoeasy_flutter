@@ -2,19 +2,24 @@ import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
+import "package:mony_app/common/extensions/double.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/domain/models/account.dart";
+import "package:mony_app/domain/models/models.dart";
 
 class AccountComponent extends StatelessWidget {
   final AccountModel account;
+  final AccountBalanceModel? balance;
   final bool showCurrencyTag;
   final bool showColors;
+  final bool showCents;
 
   const AccountComponent({
     super.key,
     required this.account,
+    this.balance,
     this.showCurrencyTag = false,
     required this.showColors,
+    this.showCents = true,
   });
 
   @override
@@ -26,9 +31,11 @@ class AccountComponent extends StatelessWidget {
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
     const iconDimension = 50.0;
 
+    final locale = Localizations.localeOf(context);
+    final balance = this.balance;
+
     return SeparatedComponent.list(
       direction: Axis.horizontal,
-      crossAxisAlignment: CrossAxisAlignment.center,
       separatorBuilder: (context, index) => const SizedBox(width: 10.0),
       children: [
         // -> icon
@@ -67,56 +74,85 @@ class AccountComponent extends StatelessWidget {
         ),
 
         Flexible(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // -> title
-              Flexible(
-                child: Row(
-                  children: [
-                    // -> currency tag
-                    if (showCurrencyTag)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2.0, right: 8.0),
-                        child: CurrencyTagComponent(
-                          code: account.currency.code,
-                          background:
-                              showColors
-                                  ? color
-                                  : theme.colorScheme.onSurfaceVariant,
-                          foreground: theme.colorScheme.surface,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 2.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // -> title
+                Flexible(
+                  child: Row(
+                    children: [
+                      // -> currency tag
+                      if (showCurrencyTag)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 2.0, right: 8.0),
+                          child: CurrencyTagComponent(
+                            code: account.currency.code,
+                            background:
+                                showColors
+                                    ? color
+                                    : theme.colorScheme.onSurfaceVariant,
+                            foreground: theme.colorScheme.surface,
+                          ),
+                        ),
+
+                      // -> title
+                      Flexible(
+                        child: Text(
+                          account.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.golosText(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600,
+                            color:
+                                showColors
+                                    ? color
+                                    : theme.colorScheme.onSurface,
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
 
-                    // -> title
-                    Flexible(
-                      child: Text(
-                        account.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.golosText(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w600,
-                          color:
-                              showColors ? color : theme.colorScheme.onSurface,
-                        ),
+                // -> type
+                Flexible(
+                  child: Text(
+                    account.type.description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.golosText(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w400,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ),
+
+                // -> balance
+                if (balance != null)
+                  Flexible(
+                    child: Text(
+                      balance.totalSum.currency(
+                        locale: locale.languageCode,
+                        name: balance.currency.name,
+                        symbol: balance.currency.symbol,
+                        showDecimal: showCents,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.golosText(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
-                  ],
-                ),
-              ),
-
-              // -> type
-              Text(
-                account.type.description,
-                style: GoogleFonts.golosText(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w400,
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
+                  ),
+              ],
+            ),
           ),
         ),
       ],
