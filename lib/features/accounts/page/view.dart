@@ -20,6 +20,7 @@ class AccountsView extends StatelessWidget {
     final isEmpty = viewModel.accounts.isEmpty;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         controller: viewModel.controller,
         physics: const BouncingScrollPhysics(

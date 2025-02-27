@@ -22,6 +22,7 @@ class CategoriesView extends StatelessWidget {
     final isEmpty = viewModel.categories.isEmpty;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         controller: viewModel.controller,
         physics: const BouncingScrollPhysics(

@@ -23,6 +23,9 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
       builder: (context, bottom) {
         return SingleChildScrollView(
           padding: EdgeInsets.only(bottom: bottom + 40.0),
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: viewSize.height * 0.4),
             child: Column(

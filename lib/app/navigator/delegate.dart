@@ -58,6 +58,7 @@ final class NavigatorDelegate extends RouterDelegate<Object>
           future: _hasAccounts(),
           builder: (context, fSnapshot) {
             Widget child = const Scaffold(
+              resizeToAvoidBottomInset: false,
               body: Center(child: CircularProgressIndicator.adaptive()),
             );
             if (fSnapshot.hasData) {

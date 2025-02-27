@@ -20,6 +20,9 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
 
     return SingleChildScrollView(
       padding: EdgeInsets.fromLTRB(15.0, .0, 15.0, 40.0 + bottom),
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
       child: Wrap(
         spacing: 8.0,
         runSpacing: 8.0,

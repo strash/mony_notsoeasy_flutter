@@ -23,6 +23,7 @@ class TagsView extends StatelessWidget {
     final isEmpty = viewModel.tags.isEmpty;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         controller: viewModel.controller,
         physics: const BouncingScrollPhysics(

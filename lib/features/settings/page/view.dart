@@ -42,6 +42,7 @@ class SettingsView extends StatelessWidget {
     final onDeleteDataPressed = viewModel<OnDeleteDataPressed>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: CustomScrollView(
         controller: viewModel.scrollController,
         physics: const BouncingScrollPhysics(
