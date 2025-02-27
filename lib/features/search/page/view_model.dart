@@ -64,6 +64,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
 
   List<TransactionModel> transactions = const [];
   List<AccountModel> accounts = const [];
+  List<AccountBalanceModel> balances = const [];
   List<CategoryModel> categories = const [];
   List<TagModel> tags = const [];
 

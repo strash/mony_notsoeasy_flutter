@@ -35,12 +35,16 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
       case ESearchTab.accounts:
         final service = context.read<DomainAccountService>();
         final data = await service.search(query: query, page: scrollPage + 1);
+        final balances = await Future.wait(
+          data.map((e) => service.getBalance(id: e.id)),
+        );
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[activeTab.index] = (
             scrollPage: scrollPage + 1,
             canLoadMore: data.isNotEmpty,
           );
           viewModel.accounts.merge(data);
+          viewModel.balances.merge(balances.nonNulls.toList());
         });
 
       case ESearchTab.categories:

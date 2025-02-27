@@ -25,12 +25,16 @@ final class OnInputChanged extends UseCase<Future<void>, _TValue> {
 
     final transactions = await transactionService.search(query: query, page: 0);
     final accounts = await accountService.search(query: query, page: 0);
+    final balances = await Future.wait(
+      accounts.map((e) => accountService.getBalance(id: e.id)),
+    );
     final categories = await categoryService.search(query: query, page: 0);
     final tags = await tagService.search(query: query, page: 0);
 
     viewModel.setProtectedState(() {
       viewModel.transactions = transactions;
       viewModel.accounts = accounts;
+      viewModel.balances = balances.nonNulls.toList();
       viewModel.categories = categories;
       viewModel.tags = tags;
     });

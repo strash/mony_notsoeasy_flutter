@@ -39,14 +39,18 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             return accountService.search(query: query, page: index);
           }),
         );
+        viewModel.accounts = accounts.fold([], (prev, curr) {
+          return prev..addAll(curr);
+        });
+        final balances = await Future.wait(
+          viewModel.accounts.map((e) => accountService.getBalance(id: e.id)),
+        );
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: scrollPage,
             canLoadMore: accounts.lastOrNull?.isNotEmpty ?? false,
           );
-          viewModel.accounts = accounts.fold([], (prev, curr) {
-            return prev..addAll(curr);
-          });
+          viewModel.balances = balances.nonNulls.toList();
           viewModel.counts = counts;
         });
 
@@ -62,14 +66,18 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           accounts.add(await accountService.search(query: query, page: page++));
         } while (page <= scrollPage &&
             (accounts.lastOrNull?.isNotEmpty ?? false));
+        viewModel.accounts = accounts.fold([], (prev, curr) {
+          return prev..addAll(curr);
+        });
+        final balances = await Future.wait(
+          viewModel.accounts.map((e) => accountService.getBalance(id: e.id)),
+        );
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: page,
             canLoadMore: accounts.lastOrNull?.isNotEmpty ?? false,
           );
-          viewModel.accounts = accounts.fold([], (prev, curr) {
-            return prev..addAll(curr);
-          });
+          viewModel.balances = balances.nonNulls.toList();
           viewModel.counts = counts;
         });
 
@@ -109,6 +117,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
         } while (page <= scrollPage &&
             (categories.lastOrNull?.isNotEmpty ?? false));
+        final balances = await Future.wait(
+          viewModel.balances.map((e) => accountService.getBalance(id: e.id)),
+        );
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: page,
@@ -117,6 +128,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.categories = categories.fold([], (prev, curr) {
             return prev..addAll(curr);
           });
+          viewModel.balances = balances.nonNulls.toList();
           viewModel.counts = counts;
         });
 
@@ -171,6 +183,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             return transactionService.search(query: query, page: index);
           }),
         );
+        final balances = await Future.wait(
+          viewModel.balances.map((e) => accountService.getBalance(id: e.id)),
+        );
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: scrollPage,
@@ -179,6 +194,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.transactions = transactions.fold([], (prev, curr) {
             return prev..addAll(curr);
           });
+          viewModel.balances = balances.nonNulls.toList();
           viewModel.counts = counts;
         });
 
@@ -195,11 +211,15 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
         } while (page <= scrollPage &&
             (transactions.lastOrNull?.isNotEmpty ?? false));
+        final balances = await Future.wait(
+          viewModel.balances.map((e) => accountService.getBalance(id: e.id)),
+        );
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: page,
             canLoadMore: transactions.lastOrNull?.isNotEmpty ?? false,
           );
+          viewModel.balances = balances.nonNulls.toList();
           viewModel.transactions = transactions.fold([], (prev, curr) {
             return prev..addAll(curr);
           });
@@ -232,11 +252,17 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
                   return accountService.search(query: query, page: index);
                 }),
               );
+              viewModel.accounts = data.cast<List<AccountModel>>().fold(
+                [],
+                (prev, curr) => prev..addAll(curr),
+              );
+              final balances = await Future.wait(
+                viewModel.accounts.map(
+                  (e) => accountService.getBalance(id: e.id),
+                ),
+              );
               viewModel.setProtectedState(() {
-                viewModel.accounts = data.cast<List<AccountModel>>().fold(
-                  [],
-                  (prev, curr) => prev..addAll(curr),
-                );
+                viewModel.balances = balances.nonNulls.toList();
               });
             case ESearchTab.categories:
               data = await Future.wait<List<CategoryModel>>(
