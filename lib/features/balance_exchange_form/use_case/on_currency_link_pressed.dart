@@ -14,7 +14,9 @@ final class OnCurrencyLinkPressed extends UseCase<Future<void>, dynamic> {
     if (leftCurrency == null || rightCurrency == null) return;
 
     // https://duckduckgo.com/?q=1+rub+to+eur
-    final query = "1 ${leftCurrency.code} to ${rightCurrency.code}";
+    final amount =
+        double.tryParse(viewModel.amountController.text.trim()) ?? .0;
+    final query = "$amount ${leftCurrency.code} to ${rightCurrency.code}";
     final url = Uri.https("duckduckgo.com", "", {"q": query});
     if (await canLaunchUrl(url)) {
       await launchUrl(url);

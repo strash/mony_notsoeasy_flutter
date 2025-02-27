@@ -34,6 +34,8 @@ class BalanceExchangeFormCoefficientComponent extends StatelessWidget {
 
     final onLinkPressed = viewModel<OnCurrencyLinkPressed>();
 
+    // TODO: переделать в конвертированную сумму равную изначальной сумме.
+    // соответственно у каждого поля показывать только тег валюты без 1Р = ...
     return Row(
       children: [
         // -> base

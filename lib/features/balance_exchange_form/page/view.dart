@@ -4,6 +4,7 @@ import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/balance_exchange_form/components/components.dart";
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart";
+import "package:mony_app/features/balance_exchange_form/use_case/on_submit_pressed.dart";
 
 class BalanceExchangeFormView extends StatelessWidget {
   final double keyboardHeight;
@@ -16,6 +17,8 @@ class BalanceExchangeFormView extends StatelessWidget {
     final action = viewModel.action;
     final placeholder = action.placeholder;
     final isSameCurrency = viewModel.isSameCurrency;
+
+    final onSubmitPressed = viewModel<OnSubmitPressed>();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -71,8 +74,7 @@ class BalanceExchangeFormView extends StatelessWidget {
                 FilledButton(
                   onPressed:
                       viewModel.isSubmitEnabled
-                          ? () =>
-                              {} //onSubmitPressed(context)
+                          ? () => onSubmitPressed(context)
                           : null,
                   child: Text(action.submit),
                 ),

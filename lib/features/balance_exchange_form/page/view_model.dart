@@ -166,7 +166,7 @@ final class BalanceExchangeFormViewModel
   Widget build(BuildContext context) {
     return ViewModel(
       viewModel: this,
-      useCases: [() => OnCurrencyLinkPressed()],
+      useCases: [() => OnCurrencyLinkPressed(), () => OnSubmitPressed()],
       child: BalanceExchangeFormView(keyboardHeight: widget.keyboardHeight),
     );
   }
