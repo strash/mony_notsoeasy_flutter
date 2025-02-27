@@ -13,7 +13,7 @@ abstract base class AccountDatabaseRepository {
 
   Future<int> count();
 
-  Future<List<AccountBalanceDto>> getBalances();
+  Future<List<AccountBalanceDto>> getBalances({int? limit, int? offset});
 
   Future<AccountBalanceDto?> getBalance({required String id});
 
@@ -96,10 +96,19 @@ LIMIT $limit OFFSET $offset;
   }
 
   @override
-  Future<List<AccountBalanceDto>> getBalances() {
+  Future<List<AccountBalanceDto>> getBalances({int? limit, int? offset}) {
+    assert(
+      limit == null && offset == null || limit != null && offset != null,
+      "Limit and offset are both must be null or not null",
+    );
     return resolve(() async {
       final db = await database.db;
-      final maps = await db.query(balancesView);
+      final maps = await db.query(
+        balancesView,
+        limit: limit,
+        offset: offset,
+        orderBy: "created ASC",
+      );
       return maps.map(AccountBalanceDto.fromJson).toList(growable: false);
     });
   }

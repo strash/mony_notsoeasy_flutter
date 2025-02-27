@@ -32,8 +32,11 @@ final class DomainAccountService extends BaseDatabaseService {
     return await _accountRepo.count();
   }
 
-  Future<List<AccountBalanceModel>> getBalances() async {
-    final dtos = await _accountRepo.getBalances();
+  Future<List<AccountBalanceModel>> getBalances({int? page}) async {
+    final dtos = await _accountRepo.getBalances(
+      limit: page != null ? perPage : null,
+      offset: page != null ? offset(page) : null,
+    );
     return dtos
         .map<AccountBalanceModel>(_accountBalanceFactory.toModel)
         .toList(growable: false);
