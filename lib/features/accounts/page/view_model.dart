@@ -22,9 +22,11 @@ final class AccountsViewModel extends ViewModelState<AccountsPage> {
   late final StreamSubscription<FeedScrollControllerEvent> _scrollSub;
 
   List<AccountModel> accounts = const [];
+  List<AccountBalanceModel> balances = const [];
   int scrollPage = 0;
   bool canLoadMore = true;
 
+  bool isCentsVisible = true;
   bool isColorsVisible = true;
 
   final _scrollController = FeedScrollController();
@@ -48,8 +50,10 @@ final class AccountsViewModel extends ViewModelState<AccountsPage> {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
       final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final cents = await sharedPrefService.isSettingsCentsVisible();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       setProtectedState(() {
+        isCentsVisible = cents;
         isColorsVisible = colors;
       });
 

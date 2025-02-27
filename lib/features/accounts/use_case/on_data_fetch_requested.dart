@@ -17,11 +17,15 @@ final class OnDataFetchRequested
     final accountService = context.read<DomainAccountService>();
 
     final accounts = await accountService.getMany(page: viewModel.scrollPage);
+    final balances = await accountService.getBalances(
+      page: viewModel.scrollPage,
+    );
 
     viewModel.setProtectedState(() {
       viewModel.scrollPage += 1;
       viewModel.canLoadMore = accounts.isNotEmpty;
       viewModel.accounts = viewModel.accounts.merge(accounts);
+      viewModel.balances = viewModel.balances.merge(balances);
     });
   }
 }

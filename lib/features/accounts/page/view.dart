@@ -64,6 +64,7 @@ class AccountsView extends StatelessWidget {
                 itemCount: viewModel.accounts.length,
                 itemBuilder: (context, index) {
                   final item = viewModel.accounts.elementAt(index);
+                  final balance = viewModel.balances.elementAtOrNull(index);
 
                   return GestureDetector(
                     key: ValueKey<String>(item.id),
@@ -73,8 +74,10 @@ class AccountsView extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: AccountComponent(
                         account: item,
+                        balance: balance,
                         showCurrencyTag: true,
                         showColors: viewModel.isColorsVisible,
+                        showCents: viewModel.isCentsVisible,
                       ),
                     ),
                   );

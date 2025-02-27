@@ -18,15 +18,10 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     switch (value.event) {
       case EventCategoryCreated() ||
           EventCategoryUpdated() ||
-          EventCategoryDeleted() ||
           EventTagCreated() ||
           EventTagUpdated() ||
           EventTagDeleted() ||
-          EventTransactionCreated() ||
-          EventTransactionUpdated() ||
-          EventTransactionDeleted() ||
           EventSettingsThemeModeChanged() ||
-          EventSettingsCentsVisibilityChanged() ||
           EventSettingsTagsVisibilityChanged() ||
           EventSettingsDataDeletionRequested():
         break;
@@ -37,28 +32,43 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             return accountService.getMany(page: index);
           }),
         );
+        final balances = await Future.wait<List<AccountBalanceModel>>(
+          List.generate(viewModel.scrollPage + 1, (index) {
+            return accountService.getBalances(page: index);
+          }),
+        );
         viewModel.setProtectedState(() {
           viewModel.canLoadMore = accounts.lastOrNull?.isNotEmpty ?? false;
           viewModel.accounts = accounts.fold([], (prev, curr) {
             return prev..addAll(curr);
           });
+          viewModel.balances = balances.fold([], (prev, curr) {
+            return prev..addAll(curr);
+          });
         });
 
       case EventAccountUpdated(value: final account):
+        final balance = await accountService.getBalance(id: account.id);
         viewModel.setProtectedState(() {
           viewModel.accounts = List<AccountModel>.from(
-            viewModel.accounts.map((e) {
-              return e.id == account.id ? account.copyWith() : e;
-            }),
+            viewModel.accounts.map(
+              (e) => e.id == account.id ? account.copyWith() : e,
+            ),
+          );
+          viewModel.balances = List<AccountBalanceModel>.from(
+            viewModel.balances.map((e) => e.id == balance?.id ? balance : e),
           );
         });
 
       case EventAccountDeleted():
         if (viewModel.accounts.length == 1) return;
         final List<List<AccountModel>> accounts = [];
+        final List<List<AccountBalanceModel>> balances = [];
         int scrollPage = 0;
         do {
-          accounts.add(await accountService.getMany(page: scrollPage++));
+          accounts.add(await accountService.getMany(page: scrollPage));
+          balances.add(await accountService.getBalances(page: scrollPage));
+          ++scrollPage;
         } while (scrollPage <= viewModel.scrollPage &&
             (accounts.lastOrNull?.isNotEmpty ?? false));
         viewModel.setProtectedState(() {
@@ -67,6 +77,43 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.accounts = accounts.fold([], (prev, curr) {
             return prev..addAll(curr);
           });
+          viewModel.balances = balances.fold([], (prev, curr) {
+            return prev..addAll(curr);
+          });
+        });
+
+      case EventCategoryDeleted():
+        final balances = await Future.wait<List<AccountBalanceModel>>(
+          List.generate(viewModel.scrollPage + 1, (index) {
+            return accountService.getBalances(page: index);
+          }),
+        );
+        viewModel.setProtectedState(() {
+          viewModel.balances = balances.fold([], (prev, curr) {
+            return prev..addAll(curr);
+          });
+        });
+
+      case EventTransactionCreated(value: final transaction) ||
+          EventTransactionUpdated(value: final transaction) ||
+          EventTransactionDeleted(value: final transaction):
+        final id =
+            viewModel.balances
+                .where((e) => e.id == transaction.account.id)
+                .firstOrNull
+                ?.id;
+        if (id == null) return;
+        final balance = await accountService.getBalance(id: id);
+        if (balance == null) return;
+        viewModel.setProtectedState(() {
+          viewModel.balances = List.from(
+            viewModel.balances.map((e) => e.id == balance.id ? balance : e),
+          );
+        });
+
+      case EventSettingsCentsVisibilityChanged(:final value):
+        viewModel.setProtectedState(() {
+          viewModel.isCentsVisible = value;
         });
 
       case EventSettingsColorsVisibilityChanged(:final value):
