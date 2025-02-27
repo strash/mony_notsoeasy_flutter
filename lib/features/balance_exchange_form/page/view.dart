@@ -43,6 +43,7 @@ class BalanceExchangeFormView extends StatelessWidget {
                     return const SizedBox(height: 10.0);
                   },
                   children: switch (action) {
+                    // -> receive
                     EBalanceExchangeMenuItem.receive => [
                       const BalanceExchangeFormAccountSelectComponent(),
                       BalanceExchangeFormAmountComponent(
@@ -52,6 +53,8 @@ class BalanceExchangeFormView extends StatelessWidget {
                       const BalanceExchangeFormIconComponent(),
                       const BalanceExchangeFormAccountComponent(),
                     ],
+
+                    // -> send
                     EBalanceExchangeMenuItem.send => [
                       const BalanceExchangeFormAccountComponent(),
                       BalanceExchangeFormAmountComponent(
