@@ -76,6 +76,34 @@ final class BalanceExchangeFormViewModel
     return balance;
   }
 
+  AccountModel? get leftAccount {
+    return switch (action) {
+      EBalanceExchangeMenuItem.receive => accountController.value,
+      EBalanceExchangeMenuItem.send => activeAccount,
+    };
+  }
+
+  AccountModel? get rightAccount {
+    return switch (action) {
+      EBalanceExchangeMenuItem.receive => activeAccount,
+      EBalanceExchangeMenuItem.send => accountController.value,
+    };
+  }
+
+  AccountBalanceModel? get leftBalance {
+    return switch (action) {
+      EBalanceExchangeMenuItem.receive => selectedBalance,
+      EBalanceExchangeMenuItem.send => activeBalance,
+    };
+  }
+
+  AccountBalanceModel? get rightBalance {
+    return switch (action) {
+      EBalanceExchangeMenuItem.receive => activeBalance,
+      EBalanceExchangeMenuItem.send => selectedBalance,
+    };
+  }
+
   void _listener() {
     setProtectedState(() {
       final amountTrim = amountController.text.trim();
@@ -138,6 +166,7 @@ final class BalanceExchangeFormViewModel
   Widget build(BuildContext context) {
     return ViewModel(
       viewModel: this,
+      useCases: [() => OnCurrencyLinkPressed()],
       child: BalanceExchangeFormView(keyboardHeight: widget.keyboardHeight),
     );
   }

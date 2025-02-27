@@ -7,40 +7,12 @@ import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/common/extensions/double.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/account.dart";
-import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart";
+import "package:mony_app/features/balance_exchange_form/use_case/on_currency_link_pressed.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class BalanceExchangeFormCoefficientComponent extends StatelessWidget {
   const BalanceExchangeFormCoefficientComponent({super.key});
-
-  AccountModel? leftAccount(BalanceExchangeFormViewModel viewModel) {
-    return switch (viewModel.action) {
-      EBalanceExchangeMenuItem.receive => viewModel.accountController.value,
-      EBalanceExchangeMenuItem.send => viewModel.activeAccount,
-    };
-  }
-
-  AccountModel? rightAccount(BalanceExchangeFormViewModel viewModel) {
-    return switch (viewModel.action) {
-      EBalanceExchangeMenuItem.receive => viewModel.activeAccount,
-      EBalanceExchangeMenuItem.send => viewModel.accountController.value,
-    };
-  }
-
-  AccountBalanceModel? leftBalance(BalanceExchangeFormViewModel viewModel) {
-    return switch (viewModel.action) {
-      EBalanceExchangeMenuItem.receive => viewModel.selectedBalance,
-      EBalanceExchangeMenuItem.send => viewModel.activeBalance,
-    };
-  }
-
-  AccountBalanceModel? rightBalance(BalanceExchangeFormViewModel viewModel) {
-    return switch (viewModel.action) {
-      EBalanceExchangeMenuItem.receive => viewModel.activeBalance,
-      EBalanceExchangeMenuItem.send => viewModel.selectedBalance,
-    };
-  }
 
   Color color(BuildContext context, AccountModel? account) {
     final theme = Theme.of(context);
@@ -54,69 +26,96 @@ class BalanceExchangeFormCoefficientComponent extends StatelessWidget {
     final theme = Theme.of(context);
 
     final viewModel = context.viewModel<BalanceExchangeFormViewModel>();
-    final left = leftBalance(viewModel);
-    final right = rightBalance(viewModel);
+    final left = viewModel.leftBalance;
+    final right = viewModel.rightBalance;
 
     final locale = Localizations.localeOf(context);
     final showColors = viewModel.isColorsVisible;
 
-    return SeparatedComponent.list(
-      direction: Axis.horizontal,
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      separatorBuilder: (context, index) => const SizedBox(width: 8.0),
+    final onLinkPressed = viewModel<OnCurrencyLinkPressed>();
+
+    return Row(
       children: [
         // -> base
-        if (left != null)
-          // -> currency tag
-          CurrencyTagComponent(
-            code: left.currency.code,
-            background:
-                showColors
-                    ? color(context, leftAccount(viewModel))
-                    : theme.colorScheme.onSurfaceVariant,
-            foreground: theme.colorScheme.surface,
-          ),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => onLinkPressed(context),
+          child: Column(
+            children: [
+              SeparatedComponent.list(
+                direction: Axis.horizontal,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                separatorBuilder:
+                    (context, index) => const SizedBox(width: 6.0),
+                children: [
+                  // -> currency tag
+                  if (left != null)
+                    CurrencyTagComponent(
+                      code: left.currency.code,
+                      background:
+                          showColors
+                              ? color(context, viewModel.leftAccount)
+                              : theme.colorScheme.onSurfaceVariant,
+                      foreground: theme.colorScheme.surface,
+                    ),
 
-        // -> unit
-        if (left != null)
-          Text(
-            1.0.currency(
-              name: left.currency.name,
-              symbol: left.currency.symbol,
-              locale: locale.languageCode,
-              showDecimal: false,
-            ),
-            textAlign: TextAlign.end,
-            style: GoogleFonts.golosText(
-              fontSize: 30.0,
-              height: 1.0,
-              fontWeight: FontWeight.w400,
-              color: theme.colorScheme.tertiary,
-            ),
-          ),
+                  // -> unit
+                  if (left != null)
+                    Text(
+                      1.0.currency(
+                        name: left.currency.name,
+                        symbol: left.currency.symbol,
+                        locale: locale.languageCode,
+                        showDecimal: false,
+                      ),
+                      style: GoogleFonts.golosText(
+                        fontSize: 28.0,
+                        height: 1.0,
+                        fontWeight: FontWeight.w400,
+                        color: theme.colorScheme.tertiary,
+                      ),
+                    ),
 
-        // -> icon equal
-        SvgPicture.asset(
-          Assets.icons.equal,
-          width: 36.0,
-          height: 36.0,
-          colorFilter: ColorFilter.mode(
-            theme.colorScheme.tertiary,
-            BlendMode.srcIn,
+                  // -> icon equal
+                  SvgPicture.asset(
+                    Assets.icons.equal,
+                    width: 32.0,
+                    height: 32.0,
+                    colorFilter: ColorFilter.mode(
+                      theme.colorScheme.tertiary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+
+                  // -> currency tag
+                  if (right != null)
+                    CurrencyTagComponent(
+                      code: right.currency.code,
+                      background:
+                          showColors
+                              ? color(context, viewModel.rightAccount)
+                              : theme.colorScheme.onSurfaceVariant,
+                      foreground: theme.colorScheme.surface,
+                    ),
+                ],
+              ),
+              Text(
+                "Посмотреть курс",
+                style: GoogleFonts.golosText(
+                  fontSize: 13.0,
+                  height: 1.0,
+                  fontWeight: FontWeight.w500,
+                  color: theme.colorScheme.tertiary,
+                  decoration: TextDecoration.underline,
+                  decorationStyle: TextDecorationStyle.solid,
+                  decorationColor: theme.colorScheme.tertiary,
+                  decorationThickness: 1.5,
+                ),
+              ),
+            ],
           ),
         ),
-
-        // -> currency tag
-        if (right != null)
-          CurrencyTagComponent(
-            code: right.currency.code,
-            background:
-                showColors
-                    ? color(context, rightAccount(viewModel))
-                    : theme.colorScheme.onSurfaceVariant,
-            foreground: theme.colorScheme.surface,
-          ),
+        const SizedBox(width: 10.0),
 
         // -> input
         Flexible(
