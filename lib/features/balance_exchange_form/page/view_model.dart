@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
 import "package:mony_app/components/select/select.dart";
@@ -32,6 +33,7 @@ final class BalanceExchangeFormViewModel
   bool isCentsVisible = true;
   bool isColorsVisible = true;
 
+  bool isConvertEnabled = false;
   bool isSubmitEnabled = false;
 
   final _validator = AmountValidator();
@@ -41,6 +43,13 @@ final class BalanceExchangeFormViewModel
 
   List<AccountModel> accounts = [];
   List<AccountBalanceModel> balances = [];
+
+  Color color(AccountModel? account) {
+    final theme = Theme.of(context);
+    if (account == null) return theme.colorScheme.onSurface;
+    final ex = theme.extension<ColorExtension>();
+    return ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
+  }
 
   EBalanceExchangeMenuItem get action {
     return widget.action;
@@ -113,6 +122,7 @@ final class BalanceExchangeFormViewModel
 
       final isSameCurrency = this.isSameCurrency;
       if (isSameCurrency) {
+        isConvertEnabled = false;
         isSubmitEnabled = accountController.value != null && amountIsValid;
       } else {
         final coefficientTrim = coefficientController.text.trim();
@@ -122,6 +132,7 @@ final class BalanceExchangeFormViewModel
             coefficientController.isValid &&
             coefficient > .0;
 
+        isConvertEnabled = amountIsValid;
         isSubmitEnabled =
             accountController.value != null &&
             amountIsValid &&

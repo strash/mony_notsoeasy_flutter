@@ -171,7 +171,7 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
             ),
             scrollPadding: EdgeInsets.zero,
             decoration: const InputDecoration(
-              hintText: "Ищи теги или создавай новые",
+              hintText: "ищи теги или создавай новые",
               counterText: "",
             ),
             onFieldSubmitted: (_) => onSubmitPressed(context),

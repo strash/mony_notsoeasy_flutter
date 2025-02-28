@@ -104,6 +104,7 @@ WidgetStateTextStyle _underInputStyle(ColorScheme scheme) {
     return GoogleFonts.golosText(
       color: color,
       fontSize: 13.0,
+      height: 1.2,
       fontWeight: FontWeight.w400,
     );
   });

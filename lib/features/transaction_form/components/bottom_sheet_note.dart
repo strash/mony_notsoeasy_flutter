@@ -50,10 +50,9 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
             ),
             scrollPadding: EdgeInsets.zero,
             decoration: const InputDecoration(
-              hintText: "Детали, чтобы не забыть...",
+              hintText: "детали, чтобы не забыть...",
               counterText: "",
             ),
-            // onFieldSubmitted: (_) => onSubmitPressed(context),
           ),
         ),
       ],
