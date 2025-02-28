@@ -111,8 +111,8 @@ class CategoryIconComponent extends StatelessWidget {
 extension on ETransactionType {
   String get icon {
     return switch (this) {
-      ETransactionType.expense => Assets.icons.arrowDownForwardSemibold,
-      ETransactionType.income => Assets.icons.arrowUpForwardSemibold,
+      ETransactionType.expense => Assets.icons.arrowUpForwardSemibold,
+      ETransactionType.income => Assets.icons.arrowDownForwardSemibold,
     };
   }
 }
