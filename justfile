@@ -55,7 +55,8 @@ run_rustore:
 release:
 	#@just test
 	@echo "building apk"
-	@flutter build apk --tree-shake-icons --release --pub \
+	@ANDROID_HOME=$HOME/Library/Android/sdk \
+	flutter build apk --tree-shake-icons --release --pub \
 		--flavor=dev_android_flavor \
 		--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
 		--split-debug-info=build/app/intermediates/native_debug_symbols \
@@ -65,7 +66,8 @@ release:
 		--dart-define-from-file=.version \
 		--no-pub
 	@echo "building rustore release"
-	@flutter build appbundle --tree-shake-icons --release --pub \
+	@ANDROID_HOME=$HOME/Library/Android/sdk \
+	flutter build appbundle --tree-shake-icons --release --pub \
 		--flavor=prod_rustore_flavor \
 		--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
 		--split-debug-info=build/app/intermediates/native_debug_symbols \
@@ -75,7 +77,8 @@ release:
 		--dart-define-from-file=.version \
 		--no-pub
 	@echo "building google release and packing debug symbols"
-	@flutter build appbundle --tree-shake-icons --release --pub \
+	@ANDROID_HOME=$HOME/Library/Android/sdk \
+	flutter build appbundle --tree-shake-icons --release --pub \
 		--flavor=prod_android_flavor \
 		--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
 		--split-debug-info=build/app/intermediates/native_debug_symbols \
