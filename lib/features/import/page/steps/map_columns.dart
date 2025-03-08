@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -55,7 +56,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                   const SizedBox(width: 10.0),
 
                   // -> title
-                  Text(
+                  NumericText(
                     'Колонка "${currentMappedColumn.column.title}"',
                     style: GoogleFonts.golosText(
                       fontSize: 20.0,
@@ -79,7 +80,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
               const SizedBox(height: 15.0),
 
               // -> description
-              Text(
+              NumericText(
                 "Выбери подходящую колонку,\n"
                 "значение в которой подходит\n"
                 'к колонке "${currentMappedColumn.column.title}".',
@@ -121,7 +122,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                           color: theme.colorScheme.secondary,
                         ),
                       ),
-                      Text(
+                      NumericText(
                         "$count из "
                         "$numberOfEntriesDescription",
                         style: GoogleFonts.golosText(

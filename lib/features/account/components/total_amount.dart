@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
@@ -78,7 +79,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
                       const SizedBox(width: 5.0),
 
                       // -> type description and count
-                      Text(
+                      NumericText(
                         "${item.description} (${formatter.format(switch (item) {
                           ETransactionType.expense => balance.expenseCount,
                           ETransactionType.income => balance.incomeCount,
@@ -94,9 +95,9 @@ class AccountTotalAmountComponent extends StatelessWidget {
                   ),
 
                   // -> amount
-                  const SizedBox(height: 4.0),
+                  const SizedBox(height: 7.0),
                   FittedBox(
-                    child: Text(
+                    child: NumericText(
                       switch (item) {
                         ETransactionType.expense => balance.expenseAmount,
                         ETransactionType.income => balance.incomeAmount,
@@ -134,7 +135,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 10.0),
             children: [
               // -> transactions count
-              Text(
+              NumericText(
                 "$transactionsCountDescription\nс общей стоимостью $amount",
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
@@ -145,7 +146,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
 
               // -> transactions date range
               if (dateRange.isNotEmpty)
-                Text(
+                NumericText(
                   dateRange,
                   style: GoogleFonts.golosText(
                     fontSize: 15.0,

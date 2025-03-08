@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 
@@ -23,7 +24,7 @@ class FeedItemTimeComponent extends StatelessWidget {
       locale.languageCode,
     );
 
-    return Text(
+    return NumericText(
       formatter.format(date),
       maxLines: 1,
       style: GoogleFonts.golosText(

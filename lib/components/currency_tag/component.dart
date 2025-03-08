@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 
 class CurrencyTagComponent extends StatelessWidget {
@@ -29,7 +30,7 @@ class CurrencyTagComponent extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(4.0, 2.0, 4.0, 3.0),
-        child: Text(
+        child: NumericText(
           code,
           style: GoogleFonts.golosText(
             fontSize: 10.0,

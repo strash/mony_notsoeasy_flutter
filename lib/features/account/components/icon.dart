@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/domain/domain.dart";
@@ -64,7 +65,7 @@ class AccountIconComponent extends StatelessWidget {
         const SizedBox(height: 10.0),
 
         // -> title
-        Text(
+        NumericText(
           account.title,
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
@@ -76,7 +77,7 @@ class AccountIconComponent extends StatelessWidget {
         const SizedBox(height: 2.0),
 
         // -> type
-        Text(
+        NumericText(
           account.type.description,
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(

@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -47,37 +48,33 @@ class StatsDateRangeComponent extends StatelessWidget {
                       dates.$2.subtract(const Duration(days: 1)),
                     ).transactionsDateRangeDescription(locale.languageCode);
 
-                    return AnimatedSwitcher(
-                      duration: Durations.short3,
-                      child: Row(
-                        key: Key(dateRangeDescription),
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 1.0),
-                            child: Text(
-                              dateRangeDescription,
-                              style: GoogleFonts.golosText(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w500,
-                                color: theme.colorScheme.onSurface,
-                              ),
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 1.0),
+                          child: NumericText(
+                            dateRangeDescription,
+                            style: GoogleFonts.golosText(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w500,
+                              color: theme.colorScheme.onSurface,
                             ),
                           ),
-                          const SizedBox(width: 6.0),
+                        ),
+                        const SizedBox(width: 6.0),
 
-                          // -> icon
-                          SvgPicture.asset(
-                            Assets.icons.calendar,
-                            width: 20.0,
-                            height: 20.0,
-                            colorFilter: ColorFilter.mode(
-                              theme.colorScheme.secondary,
-                              BlendMode.srcIn,
-                            ),
+                        // -> icon
+                        SvgPicture.asset(
+                          Assets.icons.calendar,
+                          width: 20.0,
+                          height: 20.0,
+                          colorFilter: ColorFilter.mode(
+                            theme.colorScheme.secondary,
+                            BlendMode.srcIn,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     );
                   },
                 ),

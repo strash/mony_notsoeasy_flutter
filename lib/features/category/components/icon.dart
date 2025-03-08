@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
@@ -64,7 +65,7 @@ class CategoryIconComponent extends StatelessWidget {
         const SizedBox(height: 10.0),
 
         // -> title
-        Text(
+        NumericText(
           category.title,
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(

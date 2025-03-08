@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/int.dart";
 import "package:mony_app/components/currency_tag/component.dart";
@@ -40,8 +41,9 @@ class FeedAccountAmountComponent extends StatelessWidget {
           // -> amount
           Flexible(
             child: FittedBox(
-              child: Text(
+              child: NumericText(
                 amount,
+                duration: Durations.medium1,
                 textAlign: TextAlign.start,
                 style: GoogleFonts.golosText(
                   fontSize: 40.0,
@@ -100,7 +102,7 @@ class FeedAccountAmountComponent extends StatelessWidget {
                       )
                     else
                       // -> accounts count
-                      Text(
+                      NumericText(
                         _accountsCount,
                         style: GoogleFonts.golosText(
                           fontSize: 12.0,

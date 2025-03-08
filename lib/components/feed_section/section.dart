@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -35,7 +36,7 @@ class FeedSectionComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         // -> date
-        Text(
+        NumericText(
           formattedDate,
           style: GoogleFonts.golosText(
             fontSize: 16.0,
@@ -50,7 +51,7 @@ class FeedSectionComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             separatorBuilder: (context, index) => const SizedBox(height: 2.0),
             children: section.total.entries.map(
-              (e) => Text(
+              (e) => NumericText(
                 e.value.currency(
                   locale: locale.languageCode,
                   name: e.key.name,

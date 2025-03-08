@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/double.dart";
@@ -100,7 +101,7 @@ class AccountComponent extends StatelessWidget {
 
                       // -> title
                       Flexible(
-                        child: Text(
+                        child: NumericText(
                           account.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -120,7 +121,7 @@ class AccountComponent extends StatelessWidget {
 
                 // -> type
                 Flexible(
-                  child: Text(
+                  child: NumericText(
                     account.type.description,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -135,7 +136,7 @@ class AccountComponent extends StatelessWidget {
                 // -> balance
                 if (balance != null)
                   Flexible(
-                    child: Text(
+                    child: NumericText(
                       balance.totalSum.currency(
                         locale: locale.languageCode,
                         name: balance.currency.name,

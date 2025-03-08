@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -89,7 +90,7 @@ class FeedItemComponent extends StatelessWidget {
                 children: [
                   // -> category
                   Flexible(
-                    child: Text(
+                    child: NumericText(
                       transaction.category.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -106,7 +107,7 @@ class FeedItemComponent extends StatelessWidget {
                   const SizedBox(width: 10.0),
 
                   // -> amount
-                  Text(
+                  NumericText(
                     transaction.amount.currency(
                       locale: locale.languageCode,
                       name: transaction.account.currency.name,
@@ -144,7 +145,7 @@ class FeedItemComponent extends StatelessWidget {
                       Flexible(
                         child:
                             transaction.note.isNotEmpty
-                                ? Text(
+                                ? NumericText(
                                   transaction.note,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,

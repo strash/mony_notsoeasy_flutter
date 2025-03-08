@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 
 class AccountSettedItemComponent extends StatelessWidget {
@@ -30,7 +32,7 @@ class AccountSettedItemComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // -> title
-                Text(
+                NumericText(
                   account.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -40,17 +42,27 @@ class AccountSettedItemComponent extends StatelessWidget {
                     color: color,
                   ),
                 ),
+                const SizedBox(height: 3.0),
 
-                // -> account type
-                Text(
-                  "${account.currencyCode} • ${account.type.description}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.golosText(
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.w500,
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
+                Row(
+                  children: [
+                    // -> currency tag
+                    CurrencyTagComponent(code: account.currencyCode),
+
+                    // -> account type
+                    Flexible(
+                      child: NumericText(
+                        " • ${account.type.description}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.golosText(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -58,7 +70,7 @@ class AccountSettedItemComponent extends StatelessWidget {
           const SizedBox(width: 20.0),
 
           // -> balance with currency
-          Text(
+          NumericText(
             formatter.format(account.balance),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

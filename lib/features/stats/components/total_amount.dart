@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -56,44 +57,35 @@ class StatsTotalAmountComponent extends StatelessWidget {
         return ConstrainedBox(
           constraints: constraints,
           child: SeparatedComponent.list(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
-            separatorBuilder: (context, index) => const SizedBox(height: 6.0),
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 6.0);
+            },
             children: [
               // -> amount
-              AnimatedSwitcher(
-                duration: Durations.short3,
-                child: FittedBox(
-                  key: Key("stats_total_amount_$amount"),
-                  child: AnimatedSwitcher(
-                    duration: Durations.short3,
-                    child: Text(
-                      amount,
-                      style: GoogleFonts.golosText(
-                        fontSize: 28.0,
-                        height: 1.0,
-                        fontWeight: FontWeight.w500,
-                        color: theme.colorScheme.onSurface,
-                      ),
-                    ),
+              FittedBox(
+                child: NumericText(
+                  amount,
+                  style: GoogleFonts.golosText(
+                    fontSize: 28.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w500,
+                    color: theme.colorScheme.onSurface,
                   ),
                 ),
               ),
 
               // -> count
-              AnimatedSwitcher(
-                duration: Durations.short3,
-                child: SizedBox(
-                  key: Key("stats_total_amount_$count"),
-                  width: double.infinity,
-                  child: Text(
-                    count,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.golosText(
-                      fontSize: 14.0,
-                      height: 1.0,
-                      fontWeight: FontWeight.w500,
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
+              Flexible(
+                child: NumericText(
+                  count,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.golosText(
+                    fontSize: 14.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w500,
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),

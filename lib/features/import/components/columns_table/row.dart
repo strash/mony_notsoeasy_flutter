@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/import/components/components.dart";
@@ -58,7 +59,7 @@ class EntryListRowComponent extends StatelessWidget {
 
                   // -> value
                   Flexible(
-                    child: Text(
+                    child: NumericText(
                       entry.value,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

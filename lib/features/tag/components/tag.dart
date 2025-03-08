@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/domain/models/tag.dart";
 
@@ -32,7 +33,7 @@ class TagTagComponent extends StatelessWidget {
                 horizontal: 15.0,
                 vertical: 10.0,
               ),
-              child: Text(
+              child: NumericText(
                 "#${tag.title}",
                 style: GoogleFonts.golosText(
                   fontSize: 18.0,

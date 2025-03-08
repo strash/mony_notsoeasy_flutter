@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -44,7 +45,7 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
                       viewModel.timeController,
                     ]),
                     builder: (context, child) {
-                      return Text(
+                      return NumericText(
                         viewModel.dateTimeDescription,
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,

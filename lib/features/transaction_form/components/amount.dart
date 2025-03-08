@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -62,7 +63,7 @@ class TransactionFormAmountComponent extends StatelessWidget {
               ListenableBuilder(
                 listenable: viewModel.amountNotifier,
                 builder: (context, child) {
-                  return Text(
+                  return NumericText(
                     viewModel.amountDescription(locale.languageCode),
                     style: GoogleFonts.golosText(
                       fontSize: 50.0,

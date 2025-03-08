@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
@@ -56,12 +57,14 @@ class AccountCurrencyComponent extends StatelessWidget {
                 foreground: theme.colorScheme.surface,
               ),
             ),
-            Text(
-              balance.currency.name,
-              style: GoogleFonts.golosText(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w500,
-                color: theme.colorScheme.onSurface,
+            Flexible(
+              child: NumericText(
+                balance.currency.name,
+                style: GoogleFonts.golosText(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
             ),
           ],

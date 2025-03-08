@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/separated/component.dart";
@@ -43,7 +44,7 @@ class CategoryTotalAmountComponent extends StatelessWidget {
                 .entries
                 .elementAt(index);
 
-            return Text(
+            return NumericText(
               totalAmount.currency(
                 locale: locale.languageCode,
                 name: currency.name,
@@ -63,7 +64,7 @@ class CategoryTotalAmountComponent extends StatelessWidget {
           separatorBuilder: (context, index) => const SizedBox(height: 3.0),
           children: [
             // -> transactions count
-            Text(
+            NumericText(
               balance.transactionsCount.transactionsCountDescription(
                 locale.languageCode,
               ),
@@ -75,7 +76,7 @@ class CategoryTotalAmountComponent extends StatelessWidget {
             ),
 
             // -> transactions date range
-            Text(
+            NumericText(
               (
                 balance.firstTransactionDate,
                 balance.lastTransactionDate,

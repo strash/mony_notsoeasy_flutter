@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction.dart";
@@ -21,7 +22,7 @@ class TransactionAmountComponent extends StatelessWidget {
 
     return Center(
       child: FittedBox(
-        child: Text(
+        child: NumericText(
           transaction.amount.currency(
             locale: locale.languageCode,
             name: transaction.account.currency.name,

@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
@@ -58,7 +59,6 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
       viewModel.isCentsVisible,
     );
     final count = _getCount(locale.languageCode, balance);
-    final key = "stats_transaction_type_buttons_${count}_$amount";
 
     final onTypeSelected = viewModel<OnTransactionTypeSelected>();
 
@@ -66,50 +66,49 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => onTypeSelected(context, type),
-        child: AnimatedSwitcher(
-          duration: Durations.short3,
-          child: DecoratedBox(
-            key: Key(key),
-            decoration: ShapeDecoration(
-              color: theme.colorScheme.surfaceContainer,
-              shape: SmoothRectangleBorder(
-                side: BorderSide(
-                  color:
-                      isActive
-                          ? theme.colorScheme.secondary
-                          : const Color(0x00FFFFFF),
-                ),
-                borderRadius: const SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
-                ),
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+            color: theme.colorScheme.surfaceContainer,
+            shape: SmoothRectangleBorder(
+              side: BorderSide(
+                color:
+                    isActive
+                        ? theme.colorScheme.secondary
+                        : const Color(0x00FFFFFF),
+              ),
+              borderRadius: const SmoothBorderRadius.all(
+                SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 10.0),
-              child: SeparatedComponent.list(
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 4.0);
-                },
-                children: [
-                  SeparatedComponent.list(
-                    direction: Axis.horizontal,
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(width: 5.0);
-                    },
-                    children: [
-                      // -> icon
-                      SvgPicture.asset(
-                        type.icon,
-                        width: 16.0,
-                        height: 16.0,
-                        colorFilter: ColorFilter.mode(
-                          type.getColor(context),
-                          BlendMode.srcIn,
-                        ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 10.0),
+            child: SeparatedComponent.list(
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 4.0);
+              },
+              children: [
+                SeparatedComponent.list(
+                  direction: Axis.horizontal,
+                  mainAxisSize: MainAxisSize.min,
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(width: 5.0);
+                  },
+                  children: [
+                    // -> icon
+                    SvgPicture.asset(
+                      type.icon,
+                      width: 16.0,
+                      height: 16.0,
+                      colorFilter: ColorFilter.mode(
+                        type.getColor(context),
+                        BlendMode.srcIn,
                       ),
+                    ),
 
-                      // -> type description and count
-                      Text(
+                    // -> type description and count
+                    Flexible(
+                      child: NumericText(
                         "${type.description} ($count)",
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
@@ -118,23 +117,23 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
 
-                  // -> total amount
-                  FittedBox(
-                    child: Text(
-                      amount,
-                      style: GoogleFonts.golosText(
-                        fontSize: 18.0,
-                        height: 1.0,
-                        fontWeight: FontWeight.w500,
-                        color: theme.colorScheme.onSurface,
-                      ),
+                // -> total amount
+                FittedBox(
+                  child: NumericText(
+                    amount,
+                    style: GoogleFonts.golosText(
+                      fontSize: 18.0,
+                      height: 1.0,
+                      fontWeight: FontWeight.w500,
+                      color: theme.colorScheme.onSurface,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
@@ -34,7 +35,7 @@ class AccountTotalSumComponent extends StatelessWidget {
         ),
 
         // -> sum
-        Text(
+        NumericText(
           balance.totalSum.currency(
             locale: locale.languageCode,
             name: balance.currency.name,

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 
@@ -21,7 +22,7 @@ class TransactionDateComponent extends StatelessWidget {
     final formattedDate = dateFormatter.format(date);
 
     return Center(
-      child: Text(
+      child: NumericText(
         formattedDate,
         textAlign: TextAlign.center,
         style: GoogleFonts.golosText(
