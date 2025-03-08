@@ -4,6 +4,8 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/transaction_form/components/components.dart";
+import "package:mony_app/features/transaction_form/use_case/on_info_pressed.dart";
+import "package:mony_app/gen/assets.gen.dart";
 
 class TransactionFormView extends StatelessWidget {
   const TransactionFormView({super.key});
@@ -12,6 +14,7 @@ class TransactionFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final viewModel = context.viewModel<TransactionFormViewModel>();
+    final onInfoPressed = viewModel<OnInfoPressed>();
 
     return Column(
       children: [
@@ -30,6 +33,10 @@ class TransactionFormView extends StatelessWidget {
                 useSliver: false,
                 showBackground: false,
                 showDragHandle: true,
+                leading: AppBarButtonComponent(
+                  icon: Assets.icons.infoCircle,
+                  onTap: () => onInfoPressed(context),
+                ),
                 // -> type
               ),
               const Spacer(),

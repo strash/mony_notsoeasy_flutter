@@ -227,6 +227,7 @@ final class TransactionFormViewModel
     return ViewModel<TransactionFormViewModel>(
       viewModel: this,
       useCases: [
+        () => OnInfoPressed(),
         () => OnDatePressed(),
         () => OnAddTagPressed(),
         () => OnRemoveTagPressed(),
