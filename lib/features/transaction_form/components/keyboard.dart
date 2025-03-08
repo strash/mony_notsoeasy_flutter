@@ -68,7 +68,6 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
                           child: ValueListenableBuilder(
                             valueListenable: viewModel.amountNotifier,
                             builder: (context, value, child) {
-                              // TODO: анимировать нажатие при onTapDown
                               return TransactionFormSymbolButtonComponent(
                                 button: button,
                                 value: value,

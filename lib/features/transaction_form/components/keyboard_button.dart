@@ -31,7 +31,7 @@ class _TransactionFormSymbolButtonComponentState
 
   bool get _isEnabled => widget.button.isEnabled(widget.value);
 
-  void _animationStatusListener(AnimationStatus status) {
+  void _statusListener(AnimationStatus status) {
     if (mounted && status == AnimationStatus.completed) {
       _controller.reverse();
     }
@@ -45,12 +45,12 @@ class _TransactionFormSymbolButtonComponentState
       begin: .0,
       end: 1.0,
     ).chain(CurveTween(curve: Curves.easeInOut)).animate(_controller);
-    _animation.addStatusListener(_animationStatusListener);
+    _animation.addStatusListener(_statusListener);
   }
 
   @override
   void dispose() {
-    _animation.removeStatusListener(_animationStatusListener);
+    _animation.removeStatusListener(_statusListener);
     _controller.dispose();
     super.dispose();
   }
@@ -61,13 +61,8 @@ class _TransactionFormSymbolButtonComponentState
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap:
-          _isEnabled
-              ? () {
-                widget.onTap(context, widget.button);
-                _controller.forward();
-              }
-              : null,
+      onTapDown: _isEnabled ? (_) => _controller.forward() : null,
+      onTap: _isEnabled ? () => widget.onTap(context, widget.button) : null,
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
