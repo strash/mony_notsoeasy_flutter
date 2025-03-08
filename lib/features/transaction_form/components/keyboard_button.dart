@@ -79,7 +79,7 @@ class _TransactionFormSymbolButtonComponentState
                       _isEnabled
                           ? widget.button.color
                           : theme.colorScheme.surfaceContainer.withValues(
-                            alpha: .8,
+                            alpha: .5,
                           ),
                 ),
                 child: Center(
@@ -88,6 +88,7 @@ class _TransactionFormSymbolButtonComponentState
                     duration: Durations.short4,
                     curve: Curves.easeInOut,
                     child: switch (widget.button) {
+                      // -> symbol
                       final TransactionFormButtonTypeSymbol button => Text(
                         button.displayedValue,
                         style: GoogleFonts.golosText(
@@ -97,13 +98,17 @@ class _TransactionFormSymbolButtonComponentState
                           decoration: TextDecoration.none,
                         ),
                       ),
+
+                      // -> icon
                       final TransactionFormButtonTypeAction button =>
                         SvgPicture.asset(
                           button.icon,
                           width: 36.0,
                           height: 36.0,
                           colorFilter: ColorFilter.mode(
-                            theme.colorScheme.surface,
+                            _isEnabled
+                                ? theme.colorScheme.surface
+                                : theme.colorScheme.onSurfaceVariant,
                             BlendMode.srcIn,
                           ),
                         ),

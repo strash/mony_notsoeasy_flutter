@@ -92,11 +92,9 @@ class TransactionView extends StatelessWidget {
                       // -> category
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                        onTap:
-                            () => onCategoryPressed(
-                              context,
-                              transaction.category,
-                            ),
+                        onTap: () {
+                          onCategoryPressed(context, transaction.category);
+                        },
                         child: CategoryComponent(
                           category: transaction.category,
                           showColors: viewModel.isColorsVisible,
