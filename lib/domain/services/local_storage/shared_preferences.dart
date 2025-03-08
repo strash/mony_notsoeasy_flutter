@@ -27,6 +27,11 @@ final class DomainSharedPreferencesService {
     return await _repo.getBool(_newTransactionKeyboardHintKey) ?? false;
   }
 
+  Future<void> setNewTransactionKeyboardHint(bool value) async {
+    await _repo.setBool(_newTransactionKeyboardHintKey, value);
+  }
+
+  @Deprecated("Use [setNewTransactionKeyboardHint] instead")
   Future<bool> acceptNewTransactionKeyboardHint() async {
     await _repo.setBool(_newTransactionKeyboardHintKey, true);
     return true;
