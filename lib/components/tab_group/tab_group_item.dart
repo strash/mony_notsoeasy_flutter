@@ -8,14 +8,14 @@ class TabGroupEntryComponent<T extends IDescriptable> extends StatefulWidget {
   final void Function(T newValue) onTap;
 
   static const EdgeInsets padding = EdgeInsets.symmetric(
-    horizontal: 14.0,
-    vertical: 4.0,
+    horizontal: 18.0,
+    vertical: 5.0,
   );
 
   static TextStyle style(BuildContext context) {
     return GoogleFonts.golosText(
       textStyle: Theme.of(context).textTheme.bodyMedium,
-      fontSize: 14.0,
+      fontSize: 15.0,
       fontWeight: FontWeight.w500,
       decoration: TextDecoration.none,
     );

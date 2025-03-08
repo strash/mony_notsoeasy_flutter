@@ -65,6 +65,8 @@ class _TabGroupComponentState<T extends IDescriptable>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isLight =
+        MediaQuery.platformBrightnessOf(context) == Brightness.light;
 
     return ClipSmoothRect(
       radius: const SmoothBorderRadius.all(
@@ -74,7 +76,10 @@ class _TabGroupComponentState<T extends IDescriptable>
         children: [
           // -> bg
           ColoredBox(
-            color: theme.colorScheme.surfaceContainer,
+            color:
+                isLight
+                    ? theme.colorScheme.surfaceContainer
+                    : theme.colorScheme.surfaceContainerLowest,
             child: Padding(
               padding: _padding,
               child: SizedBox.fromSize(
@@ -90,7 +95,10 @@ class _TabGroupComponentState<T extends IDescriptable>
             listenable: _rectNotifier,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: theme.colorScheme.surface,
+                color:
+                    isLight
+                        ? theme.colorScheme.surface
+                        : theme.colorScheme.surfaceContainerHighest,
                 shadows: [
                   BoxShadow(
                     color: theme.colorScheme.shadow.withValues(alpha: .15),
