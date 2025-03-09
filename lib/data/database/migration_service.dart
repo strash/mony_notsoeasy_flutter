@@ -14,6 +14,7 @@ final class MigrationService {
     M1733571197AddFuzzyViews(),
     M1738233399UpdateAccountBalanceView(),
     M1740077705UpdateCategoryAndTagBalanceViews(),
+    M1741531352FixBuiltInCategoryTitle(),
   ];
 
   Iterable<BaseMigration> getFor(int from, int to) {
