@@ -1,5 +1,6 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/use_case/use_case.dart";
@@ -61,8 +62,19 @@ class _TransactionFormSymbolButtonComponentState
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTapDown: _isEnabled ? (_) => _controller.forward() : null,
-      onTap: _isEnabled ? () => widget.onTap(context, widget.button) : null,
+      onTapDown:
+          _isEnabled
+              ? (_) {
+                HapticFeedback.mediumImpact();
+                _controller.forward();
+              }
+              : null,
+      onTap:
+          _isEnabled
+              ? () {
+                widget.onTap(context, widget.button);
+              }
+              : null,
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
