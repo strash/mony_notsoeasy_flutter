@@ -7,33 +7,38 @@ import io.flutter.plugin.common.MethodChannel
 
 
 class MainActivity: FlutterActivity() {
-    private val channelName = "strash.mony/review"
+	private val channelName = "strash.mony/review"
 
-    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        super.configureFlutterEngine(flutterEngine)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channelName).setMethodCallHandler {
-                call, result ->
-            if (call.method == "requestReview") {
-                requestReview(result)
-            } else {
-                result.notImplemented()
-            }
-        }
-    }
+	override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+		super.configureFlutterEngine(flutterEngine)
+		MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channelName).setMethodCallHandler {
+			call, result ->
+				if (call.method == "requestReview") {
+					requestReview(result)
+				} else {
+					result.notImplemented()
+				}
+			}
+		}
 
-    private fun requestReview(result: MethodChannel.Result): Unit {
-        val manager = ReviewManagerFactory.create(context)
-        val request = manager.requestReviewFlow()
-        request.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val reviewInfo = task.result
-                val flow = manager.launchReviewFlow(activity, reviewInfo)
-                flow.addOnCompleteListener { _ -> }
-                result.success(null)
-            } else {
-                result.error("SOME_SHIT", "Some shit happened", null)
-            }
-        }
-    }
+	private fun requestReview(result: MethodChannel.Result) {
+		val manager = ReviewManagerFactory.create(this)
+		val request = manager.requestReviewFlow()
+		request.addOnCompleteListener { task ->
+			if (task.isSuccessful) {
+				val reviewInfo = task.result
+				val flow = manager.launchReviewFlow(this, reviewInfo)
+				flow.addOnCompleteListener { reviewTask ->
+					if (reviewTask.isSuccessful) {
+						result.success(null)
+					} else {
+						result.error("REVIEW_FLOW_ERROR", "Failed to launch review flow", null)
+					}
+				}
+			} else {
+				result.error("REQUEST_FLOW_ERROR", "Failed to request review flow", null)
+			}
+		}
+	}
 }
 
