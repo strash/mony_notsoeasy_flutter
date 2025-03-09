@@ -25,32 +25,53 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
         type: await categoryService.getAll(transactionType: type),
     };
 
-    if (transaction == null) {
-      if (viewModel.account == null) {
-        final lastTransactions = await transactionService.getMany(page: 0);
-        final hasAccount = lastTransactions.firstOrNull != null;
+    switch (transaction == null) {
+      case true:
+        if (viewModel.account == null) {
+          final recentExpence = await transactionService.findRecentOneBy(
+            transactionType: ETransactionType.expense,
+          );
+          final recentIncome = await transactionService.findRecentOneBy(
+            transactionType: ETransactionType.income,
+          );
+          final recentAccount = recentExpence?.account ?? recentIncome?.account;
+          viewModel.accountController.value =
+              recentAccount?.copyWith() ?? accounts.firstOrNull?.copyWith();
+          viewModel.expenseCategoryController.value =
+              recentExpence?.category.copyWith();
+          viewModel.incomeCategoryController.value =
+              recentIncome?.category.copyWith();
+        } else {
+          viewModel.accountController.value = viewModel.account!.copyWith();
+          final recentExpence = await transactionService.findRecentOneBy(
+            accountId: viewModel.account?.id,
+            transactionType: ETransactionType.expense,
+          );
+          final recentIncome = await transactionService.findRecentOneBy(
+            accountId: viewModel.account?.id,
+            transactionType: ETransactionType.income,
+          );
+          viewModel.expenseCategoryController.value =
+              recentExpence?.category.copyWith();
+          viewModel.incomeCategoryController.value =
+              recentIncome?.category.copyWith();
+        }
+
+      case false:
         viewModel.accountController.value =
-            hasAccount
-                ? lastTransactions.first.account.copyWith()
-                : accounts.firstOrNull?.copyWith();
-      } else {
-        viewModel.accountController.value = viewModel.account!.copyWith();
-      }
-    } else {
-      viewModel.accountController.value =
-          viewModel.account?.copyWith() ?? viewModel.transaction?.account;
-      viewModel.setProtectedState(() {
-        viewModel.attachedTags = transaction.tags
+            viewModel.account?.copyWith() ?? viewModel.transaction?.account;
+        viewModel.attachedTags = transaction!.tags
             .map((e) => TransactionTagVariantModel(e))
             .toList(growable: false);
-      });
-      // NOTE: wait before controller is attached
-      WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-        if (!context.mounted || !viewModel.tagScrollController.isReady) return;
-        // to trigger scroll gradient
-        viewModel.tagScrollController.jumpTo(1.0);
-        viewModel.tagScrollController.jumpTo(.0);
-      });
+        // NOTE: wait before controller is attached
+        WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+          if (!context.mounted || !viewModel.tagScrollController.isReady) {
+            return;
+          }
+          // to trigger scroll gradient
+          viewModel.tagScrollController.jumpTo(1.0);
+          viewModel.tagScrollController.jumpTo(.0);
+        });
     }
 
     viewModel.setProtectedState(() {

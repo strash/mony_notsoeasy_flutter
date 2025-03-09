@@ -44,7 +44,7 @@ final class DomainTransactionService extends BaseDatabaseService {
       limit: perPage,
       offset: offset(page),
     );
-    return _loadDeps(dtos: dtos);
+    return _composeTransactions(dtos: dtos);
   }
 
   Future<int> count() async {
@@ -61,7 +61,7 @@ final class DomainTransactionService extends BaseDatabaseService {
       categoryIds: categoryIds,
       tagIds: tagIds,
     );
-    return _loadDeps(dtos: dtos);
+    return _composeTransactions(dtos: dtos);
   }
 
   Future<List<TransactionModel>> getMany({
@@ -77,7 +77,7 @@ final class DomainTransactionService extends BaseDatabaseService {
       categoryIds: categoryIds,
       tagIds: tagIds,
     );
-    return _loadDeps(dtos: dtos);
+    return _composeTransactions(dtos: dtos);
   }
 
   Future<List<TransactionModel>> getRange({
@@ -92,25 +92,25 @@ final class DomainTransactionService extends BaseDatabaseService {
       accountId: accountId,
       transactionType: transactionType.value,
     );
-    return _loadDeps(dtos: dtos);
+    return _composeTransactions(dtos: dtos);
   }
 
   Future<TransactionModel?> getOne({required String id}) async {
     final dto = await _transactionRepo.getOne(id: id);
     if (dto == null) return null;
-    final accountDto = await _accountRepo.getOne(id: dto.accountId);
-    if (accountDto == null) return null;
-    final categoryDto = await _categoryRepo.getOne(id: dto.categoryId);
-    if (categoryDto == null) return null;
-    final tagDtos = await _tagRepo.getAll(transactionId: id);
-    final model =
-        _transactionFactory.toModel(dto)
-          ..addAccount(account: _accountFactory.toModel(accountDto))
-          ..addCategory(category: _categoryFactory.toModel(categoryDto))
-          ..addTags(
-            tags: tagDtos.map(_tagFactory.toModel).toList(growable: false),
-          );
-    return model.build();
+    return _composeTransaction(dto: dto);
+  }
+
+  Future<TransactionModel?> findRecentOneBy({
+    String? accountId,
+    ETransactionType? transactionType,
+  }) async {
+    final dto = await _transactionRepo.findRecentOneBy(
+      accountId: accountId,
+      transactionType: transactionType?.value,
+    );
+    if (dto == null) return null;
+    return await _composeTransaction(dto: dto);
   }
 
   Future<TransactionModel?> create({
@@ -129,8 +129,9 @@ final class DomainTransactionService extends BaseDatabaseService {
       categoryId: vo.categoryId,
     );
     final accountDto = await _accountRepo.getOne(id: dto.accountId);
+    if (accountDto == null) return null;
     final categoryDto = await _categoryRepo.getOne(id: dto.categoryId);
-    if (accountDto == null || categoryDto == null) return null;
+    if (categoryDto == null) return null;
     // create transaction
     await _transactionRepo.create(dto: dto);
     // create/gather tags
@@ -202,8 +203,9 @@ final class DomainTransactionService extends BaseDatabaseService {
       categoryId: vo.categoryId,
     );
     final accountDto = await _accountRepo.getOne(id: dto.accountId);
+    if (accountDto == null) return null;
     final categoryDto = await _categoryRepo.getOne(id: dto.categoryId);
-    if (accountDto == null || categoryDto == null) return null;
+    if (categoryDto == null) return null;
     // delete old transaction tags
     final oldTransactionTagDtos = await _transactionTagRepo.getAll(
       transactionId: transaction.id,
@@ -275,7 +277,25 @@ final class DomainTransactionService extends BaseDatabaseService {
     );
   }
 
-  Future<List<TransactionModel>> _loadDeps({
+  Future<TransactionModel?> _composeTransaction({
+    required TransactionDto dto,
+  }) async {
+    final accountDto = await _accountRepo.getOne(id: dto.accountId);
+    if (accountDto == null) return null;
+    final categoryDto = await _categoryRepo.getOne(id: dto.categoryId);
+    if (categoryDto == null) return null;
+    final tagDtos = await _tagRepo.getAll(transactionId: dto.id);
+    final model =
+        _transactionFactory.toModel(dto)
+          ..addAccount(account: _accountFactory.toModel(accountDto))
+          ..addCategory(category: _categoryFactory.toModel(categoryDto))
+          ..addTags(
+            tags: tagDtos.map(_tagFactory.toModel).toList(growable: false),
+          );
+    return model.build();
+  }
+
+  Future<List<TransactionModel>> _composeTransactions({
     required List<TransactionDto> dtos,
   }) async {
     final Set<String> uniqueAccountIds = {};

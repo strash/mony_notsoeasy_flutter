@@ -47,6 +47,11 @@ abstract base class TransactionDatabaseRepository {
 
   Future<TransactionDto?> getOne({required String id});
 
+  Future<TransactionDto?> findRecentOneBy({
+    String? accountId,
+    String? transactionType,
+  });
+
   Future<void> create({required TransactionDto dto});
 
   Future<void> update({required TransactionDto dto});
@@ -183,6 +188,39 @@ ORDER BY tr.date DESC;
       final map = await db.query(table, where: "id = ?", whereArgs: [id]);
       if (map.isEmpty) return null;
       return TransactionDto.fromJson(map.first);
+    });
+  }
+
+  @override
+  Future<TransactionDto?> findRecentOneBy({
+    String? accountId,
+    String? transactionType,
+  }) {
+    return resolve(() async {
+      final db = await database.db;
+      String where = "";
+      final List<Object?> args = [];
+      switch ((accountId, transactionType)) {
+        case (final String a, final String t):
+          where = "WHERE tr.account_id = ? AND c.transaction_type = ?";
+          args.add(a);
+          args.add(t);
+        case (final String a, _):
+          where = "WHERE tr.account_id = ?";
+          args.add(a);
+        case (_, final String t):
+          where = "WHERE c.transaction_type = ?";
+          args.add(t);
+      }
+      final maps = await db.rawQuery("""
+SELECT tr.* FROM $table AS tr
+LEFT JOIN categories AS c ON tr.category_id = c.id
+$where
+ORDER BY tr.date DESC
+LIMIT 1;
+""", args);
+      if (maps.isEmpty) return null;
+      return TransactionDto.fromJson(maps.first);
     });
   }
 

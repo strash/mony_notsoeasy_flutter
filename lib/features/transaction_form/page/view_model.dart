@@ -30,7 +30,6 @@ final class TransactionFormPage extends StatefulWidget {
       TransactionFormViewModel();
 }
 
-// TODO: устанавливать категорию последней транзакции (по выбранному счету?),
 // при создании новой транзакции
 final class TransactionFormViewModel
     extends ViewModelState<TransactionFormPage> {
@@ -80,11 +79,12 @@ final class TransactionFormViewModel
   final displayedTags = ValueNotifier<List<TagModel>>([]);
   List<TransactionTagVariant> attachedTags = const [];
 
-  bool isKeyboardHintAccepted = false;
+  bool isKeyboardHintAccepted = true;
   String decimalSeparator = ".";
   Offset dragStartPosition = Offset.zero;
 
   final RegExp regEx = RegExp(r"\d*?[.,]\d{2}$");
+
   List<List<TransactionFormButtonType>> get buttons {
     return List<List<TransactionFormButtonType>>.generate(3, (rowIndex) {
       return List<TransactionFormButtonType>.generate(3, (colIndex) {

@@ -98,7 +98,7 @@ class _TabGroupComponentState<T extends IDescriptable>
                 color:
                     isLight
                         ? theme.colorScheme.surface
-                        : theme.colorScheme.surfaceContainerHighest,
+                        : theme.colorScheme.surfaceContainer,
                 shadows: [
                   BoxShadow(
                     color: theme.colorScheme.shadow.withValues(alpha: .15),
