@@ -1,3 +1,4 @@
+import "package:flutter/services.dart";
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -20,6 +21,7 @@ final class OnHorizontalDragEnded extends UseCase<void, DragEndDetails> {
       } else {
         viewModel.amountNotifier.value = value.substring(0, value.length - 1);
       }
+      HapticFeedback.lightImpact();
     }
   }
 }
