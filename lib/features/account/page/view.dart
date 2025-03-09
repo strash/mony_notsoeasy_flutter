@@ -48,9 +48,6 @@ class AccountView extends StatelessWidget {
                   onTap: () => onEditPressed(context, account),
                 ),
 
-                // -> button balance exchange
-                const AccountBalanceExchangeMenuComponent(),
-
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
@@ -73,6 +70,9 @@ class AccountView extends StatelessWidget {
                     showColors: viewModel.isColorsVisible,
                   ),
                   const SizedBox(height: 40.0),
+
+                  // -> buttons balance exchange
+                  const AccountBalanceExchangeMenuComponent(),
 
                   // -> amount
                   if (balance != null)
