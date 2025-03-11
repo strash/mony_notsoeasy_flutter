@@ -295,10 +295,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_numeric_text
-      sha256: "4720d4e0a9a43e8e3e880dd8d8c898d8b4f56a5c4871dd042e860276bbf950cc"
+      sha256: "38d1c977d4049c4e1516e2b9c94f11be5bb220c6c438fa2fc38f198920f8e6cf"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "1.3.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:

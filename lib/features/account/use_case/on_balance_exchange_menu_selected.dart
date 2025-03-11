@@ -40,6 +40,8 @@ final class OnBalanceExchangeMenuSelected
     final right = await accountService.update(model: result.$2);
 
     appService.notify(EventAccountUpdated(left));
+    // NOTE: a hacky little delay between notifications
+    await Future.delayed(const Duration(milliseconds: 50));
     appService.notify(EventAccountUpdated(right));
   }
 }

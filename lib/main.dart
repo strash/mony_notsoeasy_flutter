@@ -13,6 +13,9 @@ import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 // TODO: добавить вибрации тут и там при тапе
+// TODO: бюджеты
+// TODO: вход по отпечатку
+// TODO: локализация
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
