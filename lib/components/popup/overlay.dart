@@ -1,6 +1,7 @@
 import "dart:ui";
 
 import "package:flutter/material.dart";
+import "package:mony_app/common/common.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/popup/button.dart";
 
@@ -28,32 +29,26 @@ class PopupOverlayComponent extends StatefulWidget {
 
 class _PopupOverlayComponentState extends State<PopupOverlayComponent>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _animation;
+  late final AnimationController _controller =
+      AnimationController(duration: Durations.short3, vsync: this)
+        ..addStatusListener(_statusListener)
+        ..forward();
 
-  void _animatiosStatusListener(AnimationStatus status) {
-    if (status == AnimationStatus.dismissed) widget.onTapOutside();
+  void _statusListener(AnimationStatus status) {
+    if (status == AnimationStatus.dismissed) {
+      widget.onTapOutside();
+    }
   }
 
   void _onTapOutside() {
-    if (_controller.status != AnimationStatus.reverse) _controller.reverse();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(duration: Durations.short3, vsync: this);
-    _animation = Tween<double>(
-      begin: .0,
-      end: 1.0,
-    ).chain(CurveTween(curve: Curves.fastOutSlowIn)).animate(_controller);
-    _controller.addStatusListener(_animatiosStatusListener);
-    _controller.forward();
+    if (_controller.status != AnimationStatus.reverse) {
+      _controller.reverse();
+    }
   }
 
   @override
   void dispose() {
-    _controller.removeStatusListener(_animatiosStatusListener);
+    _controller.removeStatusListener(_statusListener);
     _controller.dispose();
     super.dispose();
   }
@@ -63,21 +58,13 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
     final theme = Theme.of(context);
 
     return AnimatedBuilder(
-      animation: _animation,
+      animation: _controller,
       builder: (context, child) {
-        final value = _animation.value;
-        final sigma = value.remap(
-          .0,
-          1.0,
-          .0,
-          widget.blurBackground ? 8.0 : .0,
-        );
-        final bgAlpha = value.remap(
-          .0,
-          1.0,
-          .0,
-          widget.showBackground ? .5 : .0,
-        );
+        final t = Curves.easeInOutSine.transform(_controller.value);
+        final sigma = widget.blurBackground ? 8.0 : .0;
+        final alpha = widget.showBackground ? .3 : .0;
+        final remappedSigma = t.remap(.0, 1.0, .0, sigma);
+        final remappedAlpha = t.remap(.0, 1.0, .0, alpha);
 
         return Stack(
           fit: StackFit.expand,
@@ -87,35 +74,32 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
               behavior: HitTestBehavior.opaque,
               onTap: _onTapOutside,
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
+                filter: ImageFilter.blur(
+                  sigmaX: remappedSigma,
+                  sigmaY: remappedSigma,
+                ),
                 child: ColoredBox(
-                  color: theme.colorScheme.scrim.withValues(alpha: bgAlpha),
+                  color: theme.colorScheme.scrim.withValues(
+                    alpha: remappedAlpha,
+                  ),
                 ),
               ),
             ),
 
             // -> proxy
-            Builder(
-              builder: (context) {
-                return widget.proxyBuilder(
-                  context,
-                  value,
-                  widget.initialRect,
-                  _onTapOutside,
-                );
-              },
+            widget.proxyBuilder(
+              context,
+              _controller.value,
+              widget.initialRect,
+              _onTapOutside,
             ),
 
             // -> popup
-            Builder(
-              builder: (context) {
-                return widget.popupBuilder(
-                  context,
-                  value,
-                  widget.initialRect,
-                  _onTapOutside,
-                );
-              },
+            widget.popupBuilder(
+              context,
+              _controller.value,
+              widget.initialRect,
+              _onTapOutside,
             ),
           ],
         );

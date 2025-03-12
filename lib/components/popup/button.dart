@@ -5,8 +5,6 @@ import "package:mony_app/components/components.dart";
 typedef TPopupButtonBuilder =
     Widget Function(BuildContext context, bool isOpened, VoidCallback activate);
 
-typedef TPopupBuilder = TPopupButtonProxyBuilder;
-
 typedef TPopupButtonProxyBuilder =
     Widget Function(
       BuildContext context,
@@ -14,6 +12,8 @@ typedef TPopupButtonProxyBuilder =
       Rect proxyRect,
       VoidCallback dismiss,
     );
+
+typedef TPopupBuilder = TPopupButtonProxyBuilder;
 
 class PopupButtonComponent extends StatefulWidget {
   final TPopupButtonBuilder builder;
@@ -64,22 +64,30 @@ class _PopupButtonComponentState extends State<PopupButtonComponent> {
     );
 
     if (!mounted) return;
+    final rootOverlay = Overlay.of(context, rootOverlay: true);
+    final captured = InheritedTheme.capture(
+      from: context,
+      to: rootOverlay.context,
+    );
+
     setState(() {
       _entry = OverlayEntry(
         builder: (context) {
-          return PopupOverlayComponent(
-            onTapOutside: _removeEntry,
-            initialRect: position.toRect(overlay.paintBounds),
-            proxyBuilder: widget.proxyBuilder,
-            popupBuilder: widget.popupBuilder,
-            showBackground: widget.showBackground,
-            blurBackground: widget.blurBackground,
+          return captured.wrap(
+            PopupOverlayComponent(
+              onTapOutside: _removeEntry,
+              initialRect: position.toRect(overlay.paintBounds),
+              proxyBuilder: widget.proxyBuilder,
+              popupBuilder: widget.popupBuilder,
+              showBackground: widget.showBackground,
+              blurBackground: widget.blurBackground,
+            ),
           );
         },
       );
     });
     if (_entry != null) {
-      Overlay.of(context, rootOverlay: true).insert(_entry!);
+      rootOverlay.insert(_entry!);
     }
   }
 
