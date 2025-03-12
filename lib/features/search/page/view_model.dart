@@ -148,6 +148,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
         () => OnTabButtonPressed(),
         () => OnPagePressed(),
         () => OnTransactionPressed(),
+        () => OnTransactionContextMenuSelected(),
         () => OnAccountPressed(),
         () => OnCategoryPressed(),
         () => OnTagPressed(),

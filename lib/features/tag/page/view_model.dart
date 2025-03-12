@@ -86,6 +86,7 @@ final class TagViewModel extends ViewModelState<TagPage> {
         () => OnEditPressed(),
         () => OnDeletePressed(),
         () => OnTransactionPressed(),
+        () => OnTransactionContextMenuSelected(),
       ],
       child: const TagView(),
     );

@@ -2,12 +2,9 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/category.dart";
 import "package:mony_app/features/category/components/components.dart";
 import "package:mony_app/features/category/use_case/use_case.dart";
-import "package:mony_app/features/feed/page/state.dart";
-import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class CategoryView extends StatelessWidget {
@@ -17,15 +14,15 @@ class CategoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-    final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<CategoryViewModel>();
     final keyPrefix = "category_${viewModel.prefix}";
     final category = viewModel.category;
     final balance = viewModel.balance;
-    final feed = viewModel.feed.toFeed();
 
     final onTransactionPressed = viewModel<OnTransactionPressed>();
+    final onTransactionMenuSelected =
+        viewModel<OnTransactionContextMenuSelected>();
     final onEditPressed = viewModel<OnEditPressed>();
     final onDeletePressed = viewModel<OnDeletePressed>();
 
@@ -85,69 +82,20 @@ class CategoryView extends StatelessWidget {
             ),
           ),
 
-          // -> empty state
-          if (feed.isEmpty)
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: bottomOffset),
-                child: FeedEmptyStateComponent(
-                  color:
-                      viewModel.isColorsVisible
-                          ? (ex?.from(category.colorName).color ??
-                              theme.colorScheme.onSurface)
-                          : theme.colorScheme.onSurface,
-                ),
-              ),
-            )
           // -> feed
-          else
-            SliverList.separated(
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 25.0);
-              },
-              itemCount: feed.length,
-              findChildIndexCallback: (key) {
-                final id = (key as ValueKey<String>).value;
-                final index = feed.indexWhere((e) {
-                  return id == feed.key(e, keyPrefix).value;
-                });
-                return index != -1 ? index : null;
-              },
-              itemBuilder: (context, index) {
-                final item = feed.elementAt(index);
-                final key = feed.key(item, keyPrefix);
-
-                return switch (item) {
-                  FeedItemSection() => Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, .0),
-                    child: FeedSectionComponent(
-                      key: key,
-                      section: item,
-                      showDecimal: viewModel.isCentsVisible,
-                    ),
-                  ),
-                  FeedItemTransaction() => GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap:
-                        () => onTransactionPressed(context, item.transaction),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: FeedItemComponent(
-                        key: key,
-                        transaction: item.transaction,
-                        showDecimal: viewModel.isCentsVisible,
-                        showColors: viewModel.isColorsVisible,
-                        showTags: viewModel.isTagsVisible,
-                      ),
-                    ),
-                  ),
-                };
-              },
-            ),
-
-          // -> bottom offset
-          SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
+          TransactionListComponent(
+            transactions: viewModel.feed,
+            keyPrefix: keyPrefix,
+            isCentsVisible: viewModel.isCentsVisible,
+            isColorsVisible: viewModel.isColorsVisible,
+            isTagsVisible: viewModel.isTagsVisible,
+            showFullDate: false,
+            emptyStateColor:
+                ex?.from(category.colorName).color ??
+                theme.colorScheme.onSurface,
+            onTransactionPressed: onTransactionPressed,
+            onTransactionMenuSelected: onTransactionMenuSelected,
+          ),
         ],
       ),
     );

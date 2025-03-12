@@ -22,6 +22,8 @@ class SearchTabPageComponent extends StatelessWidget {
 
     final viewModel = context.viewModel<SearchViewModel>();
     final onTransactionPressed = viewModel<OnTransactionPressed>();
+    final onTransactionMenuSelected =
+        viewModel<OnTransactionContextMenuSelected>();
     final onAccountPressed = viewModel<OnAccountPressed>();
     final onCategoryPressed = viewModel<OnCategoryPressed>();
     final onTagPressed = viewModel<OnTagPressed>();
@@ -47,9 +49,7 @@ class SearchTabPageComponent extends StatelessWidget {
             hasScrollBody: false,
             child: Padding(
               padding: EdgeInsets.only(bottom: topOffset),
-              child: FeedEmptyStateComponent(
-                color: theme.colorScheme.onSurface,
-              ),
+              child: EmptyStateComponent(color: theme.colorScheme.onSurface),
             ),
           )
         // -> content
@@ -65,26 +65,20 @@ class SearchTabPageComponent extends StatelessWidget {
                 return index != -1 ? index : null;
               },
               separatorBuilder: (context, index) {
-                return const SizedBox(height: 25.0);
+                return const SizedBox(height: 10.0);
               },
               itemCount: viewModel.transactions.length,
               itemBuilder: (context, index) {
                 final item = viewModel.transactions.elementAt(index);
 
-                return GestureDetector(
-                  key: ValueKey<String>(item.id),
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => onTransactionPressed(context, item),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: FeedItemComponent(
-                      transaction: item,
-                      showFullDate: true,
-                      showDecimal: viewModel.isCentsVisible,
-                      showColors: viewModel.isColorsVisible,
-                      showTags: viewModel.isTagsVisible,
-                    ),
-                  ),
+                return TransactionWithContextMenuComponent(
+                  transaction: item,
+                  isCentsVisible: viewModel.isCentsVisible,
+                  isColorsVisible: viewModel.isColorsVisible,
+                  isTagsVisible: viewModel.isTagsVisible,
+                  showFullDate: true,
+                  onTap: onTransactionPressed,
+                  onMenuSelected: onTransactionMenuSelected,
                 );
               },
             ),

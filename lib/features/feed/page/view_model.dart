@@ -156,6 +156,7 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
         () => OnAccountPressed(),
         () => OnPageChanged(),
         () => OnTransactionPressed(),
+        () => OnTransactionContextMenuSelected(),
       ],
       child: const FeedView(),
     );

@@ -176,6 +176,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
         () => OnDatePressed(),
         () => OnTransactionTypeSelected(),
         () => OnTransactionPressed(),
+        () => OnTransactionContextMenuSelected(),
       ],
       child: const StatsView(),
     );

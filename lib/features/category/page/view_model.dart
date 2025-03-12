@@ -83,6 +83,7 @@ final class CategoryViewModel extends ViewModelState<CategoryPage> {
       viewModel: this,
       useCases: [
         () => OnTransactionPressed(),
+        () => OnTransactionContextMenuSelected(),
         () => OnEditPressed(),
         () => OnDeletePressed(),
       ],
