@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/category/component.dart";
-import "package:mony_app/components/feed_empty_state/component.dart";
+import "package:mony_app/components/empty_state/component.dart";
 import "package:mony_app/features/categories/categories.dart";
 import "package:mony_app/features/categories/components/add_button.dart";
 import "package:mony_app/features/categories/use_case/use_case.dart";
@@ -41,9 +41,7 @@ class CategoriesView extends StatelessWidget {
               hasScrollBody: false,
               child: Padding(
                 padding: EdgeInsets.only(bottom: bottomOffset),
-                child: FeedEmptyStateComponent(
-                  color: theme.colorScheme.onSurface,
-                ),
+                child: EmptyStateComponent(color: theme.colorScheme.onSurface),
               ),
             )
           // -> categories

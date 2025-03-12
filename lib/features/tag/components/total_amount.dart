@@ -28,8 +28,9 @@ class TagTotalAmountComponent extends StatelessWidget {
         Text(
           "Сумма транзакций",
           style: GoogleFonts.golosText(
-            fontSize: 16.0,
+            fontSize: 18.0,
             fontWeight: FontWeight.w500,
+            height: 1.4,
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
@@ -54,6 +55,7 @@ class TagTotalAmountComponent extends StatelessWidget {
               style: GoogleFonts.golosText(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
+                height: 1.4,
                 color: theme.colorScheme.onSurface,
               ),
             );
@@ -69,8 +71,9 @@ class TagTotalAmountComponent extends StatelessWidget {
                 locale.languageCode,
               ),
               style: GoogleFonts.golosText(
-                fontSize: 15.0,
+                fontSize: 16.0,
                 fontWeight: FontWeight.w400,
+                height: 1.4,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
@@ -82,8 +85,9 @@ class TagTotalAmountComponent extends StatelessWidget {
                 balance.lastTransactionDate,
               ).transactionsDateRangeDescription(locale.languageCode),
               style: GoogleFonts.golosText(
-                fontSize: 15.0,
+                fontSize: 16.0,
                 fontWeight: FontWeight.w400,
+                height: 1.4,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),

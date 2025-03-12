@@ -44,7 +44,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
         Text(
           "Сумма транзакций",
           style: GoogleFonts.golosText(
-            fontSize: 16.0,
+            fontSize: 18.0,
             fontWeight: FontWeight.w500,
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -85,9 +85,9 @@ class AccountTotalAmountComponent extends StatelessWidget {
                           ETransactionType.income => balance.incomeCount,
                         })})",
                         style: GoogleFonts.golosText(
-                          fontSize: 14.0,
-                          height: 1.0,
+                          fontSize: 15.0,
                           fontWeight: FontWeight.w500,
+                          height: 1.4,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
@@ -109,8 +109,8 @@ class AccountTotalAmountComponent extends StatelessWidget {
                       ),
                       style: GoogleFonts.golosText(
                         fontSize: 18.0,
-                        height: 1.0,
                         fontWeight: FontWeight.w500,
+                        height: 1.4,
                         color: theme.colorScheme.onSurface,
                       ),
                     ),
@@ -125,8 +125,9 @@ class AccountTotalAmountComponent extends StatelessWidget {
           Text(
             "Еще не было ни одной транзакции",
             style: GoogleFonts.golosText(
-              fontSize: 15.0,
+              fontSize: 16.0,
               fontWeight: FontWeight.w400,
+              height: 1.4,
               color: theme.colorScheme.onSurfaceVariant,
             ),
           )
@@ -138,8 +139,9 @@ class AccountTotalAmountComponent extends StatelessWidget {
               NumericText(
                 "$transactionsCountDescription\nс общей стоимостью $amount",
                 style: GoogleFonts.golosText(
-                  fontSize: 15.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.w400,
+                  height: 1.4,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
@@ -149,8 +151,9 @@ class AccountTotalAmountComponent extends StatelessWidget {
                 NumericText(
                   dateRange,
                   style: GoogleFonts.golosText(
-                    fontSize: 15.0,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.w400,
+                    height: 1.4,
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),

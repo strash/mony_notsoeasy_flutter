@@ -11,33 +11,42 @@ class StatsTemporalViewMenuComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final currContext = context;
 
     final viewModel = context.viewModel<StatsViewModel>();
     final onTemporalButtonPressed = viewModel<OnTemporalButtonPressed>();
 
+    // if it's needs to be disabled
+    const isActive = true;
+
     return ContextMenuComponent(
       showBackground: false,
       blurBackground: false,
-      buttonBuilder: (context) {
-        return SizedBox.square(
-          dimension: AppBarComponent.height,
-          child: Center(
-            child: SvgPicture.asset(
-              viewModel.activeTemporalView.icon,
-              width: 28.0,
-              height: 28.0,
-              colorFilter: ColorFilter.mode(
-                theme.colorScheme.primary,
-                BlendMode.srcIn,
-              ),
+      buttonBuilder: (context, isOpened, activate) {
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: isOpened || !isActive ? null : activate,
+          child: AnimatedOpacity(
+            duration: Durations.short4,
+            // ignore: dead_code
+            opacity: isActive ? 1.0 : .3,
+            child: Opacity(
+              opacity: isOpened ? .0 : 1.0,
+              child: _Button(viewModel.activeTemporalView.icon),
             ),
           ),
         );
       },
-      itemsBuilder: (context, dismiss) {
+      buttonProxyBuilder: (context, anim, dismiss) {
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: dismiss,
+          child: _Button(viewModel.activeTemporalView.icon),
+        );
+      },
+      popupBuilder: (context, anim, dismiss) {
+        final theme = Theme.of(context);
+
         return SeparatedComponent.builder(
           mainAxisSize: MainAxisSize.min,
           separatorBuilder: (context, index) {
@@ -65,6 +74,32 @@ class StatsTemporalViewMenuComponent extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+class _Button extends StatelessWidget {
+  final String icon;
+
+  const _Button(this.icon);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return SizedBox.square(
+      dimension: AppBarComponent.height,
+      child: Center(
+        child: SvgPicture.asset(
+          icon,
+          width: 28.0,
+          height: 28.0,
+          colorFilter: ColorFilter.mode(
+            theme.colorScheme.primary,
+            BlendMode.srcIn,
+          ),
+        ),
+      ),
     );
   }
 }

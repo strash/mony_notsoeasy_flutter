@@ -42,9 +42,7 @@ class AccountsView extends StatelessWidget {
               hasScrollBody: false,
               child: Padding(
                 padding: EdgeInsets.only(bottom: bottomOffset),
-                child: FeedEmptyStateComponent(
-                  color: theme.colorScheme.onSurface,
-                ),
+                child: EmptyStateComponent(color: theme.colorScheme.onSurface),
               ),
             )
           // -> accounts

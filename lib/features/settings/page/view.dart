@@ -98,6 +98,7 @@ class SettingsView extends StatelessWidget {
                               style: DefaultTextStyle.of(
                                 context,
                               ).style.copyWith(
+                                height: 1.4,
                                 color:
                                     viewModel.isColorsVisible
                                         ? theme.colorScheme.secondary

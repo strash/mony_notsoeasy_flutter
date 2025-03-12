@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/appbar_button/component.dart";
-import "package:mony_app/components/feed_empty_state/component.dart";
+import "package:mony_app/components/empty_state/component.dart";
 import "package:mony_app/components/tag/component.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/tags/tags.dart";
@@ -45,9 +45,7 @@ class TagsView extends StatelessWidget {
               hasScrollBody: false,
               child: Padding(
                 padding: EdgeInsets.only(bottom: bottomOffset),
-                child: FeedEmptyStateComponent(
-                  color: theme.colorScheme.onSurface,
-                ),
+                child: EmptyStateComponent(color: theme.colorScheme.onSurface),
               ),
             )
           // -> tags

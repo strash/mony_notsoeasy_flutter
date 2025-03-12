@@ -142,15 +142,17 @@ class _AppBarState extends State<_AppBar> {
   double get minExtent =>
       widget.viewPadding.top + AppBarComponent.height + handleExtent;
 
-  final _leadingSizeNotifier = ValueNotifier<Size>(Size.zero);
-  final _trailingSizeNotifier = ValueNotifier<Size>(Size.zero);
-
   double _leadingMinWidth = .0;
   double _trailingMinWidth = .0;
 
+  late final _leadingSizeController =
+      SizeNotifierController()..addListener(_sizeListener);
+  late final _trailingSizeController =
+      SizeNotifierController()..addListener(_sizeListener);
+
   void _sizeListener() {
-    final leading = _leadingSizeNotifier.value.width;
-    final trailing = _trailingSizeNotifier.value.width;
+    final leading = _leadingSizeController.size.width;
+    final trailing = _trailingSizeController.size.width;
     if (!mounted) return;
     setState(() {
       _leadingMinWidth = .0;
@@ -173,18 +175,13 @@ class _AppBarState extends State<_AppBar> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _leadingSizeNotifier.addListener(_sizeListener);
-    _trailingSizeNotifier.addListener(_sizeListener);
-  }
-
-  @override
   void dispose() {
-    _leadingSizeNotifier.removeListener(_sizeListener);
-    _trailingSizeNotifier.removeListener(_sizeListener);
-    _leadingSizeNotifier.dispose();
-    _trailingSizeNotifier.dispose();
+    _leadingSizeController.isDisposed = true;
+    _trailingSizeController.isDisposed = true;
+    _leadingSizeController.removeListener(_sizeListener);
+    _trailingSizeController.removeListener(_sizeListener);
+    _leadingSizeController.dispose();
+    _trailingSizeController.dispose();
     super.dispose();
   }
 
@@ -205,8 +202,8 @@ class _AppBarState extends State<_AppBar> {
           Row(
             children: [
               // -> leading
-              _SizeNotificator(
-                notifier: _leadingSizeNotifier,
+              SizeNotifierComponent(
+                controller: _leadingSizeController,
                 child:
                     (widget.leading == null &&
                             widget.showDragHandle == false &&
@@ -241,8 +238,8 @@ class _AppBarState extends State<_AppBar> {
               SizedBox(width: _trailingMinWidth),
 
               // -> trailing
-              _SizeNotificator(
-                notifier: _trailingSizeNotifier,
+              SizeNotifierComponent(
+                controller: _trailingSizeController,
                 child:
                     (widget.trailing == null &&
                             widget.showDragHandle &&
@@ -285,22 +282,5 @@ class _AppBarState extends State<_AppBar> {
         child,
       ],
     );
-  }
-}
-
-class _SizeNotificator extends StatelessWidget {
-  final ValueNotifier<Size> notifier;
-  final Widget child;
-
-  const _SizeNotificator({required this.notifier, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      final box = context.findRenderObject() as RenderBox?;
-      if (box == null) return;
-      notifier.value = box.size;
-    });
-    return child;
   }
 }

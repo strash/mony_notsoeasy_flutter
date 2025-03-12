@@ -86,14 +86,15 @@ class TimeComponent extends StatelessWidget {
       },
       popupBuilder: (context, anim, proxyRect, _) {
         final theme = Theme.of(context);
+        final t = Curves.easeInOutSine.transform(anim);
 
         return Positioned.fromRect(
           rect: _popupRect(context, proxyRect),
           child: Transform.scale(
-            scale: anim.remap(.0, 1.0, .4, 1.0),
+            scale: t.remap(.0, 1.0, .4, 1.0),
             alignment: _alignment(context, proxyRect),
             child: Opacity(
-              opacity: anim,
+              opacity: t,
               child: PopupContainerComoponent(
                 builder: (context) {
                   return Stack(

@@ -88,18 +88,15 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                 return const SizedBox(height: 4.0);
               },
               children: [
-                SeparatedComponent.list(
-                  direction: Axis.horizontal,
+                Row(
                   mainAxisSize: MainAxisSize.min,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(width: 5.0);
-                  },
+                  spacing: 5.0,
                   children: [
                     // -> icon
                     SvgPicture.asset(
                       type.icon,
-                      width: 16.0,
-                      height: 16.0,
+                      width: 18.0,
+                      height: 18.0,
                       colorFilter: ColorFilter.mode(
                         type.getColor(context),
                         BlendMode.srcIn,
@@ -111,8 +108,8 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                       child: NumericText(
                         "${type.description} ($count)",
                         style: GoogleFonts.golosText(
-                          fontSize: 14.0,
-                          height: 1.0,
+                          fontSize: 15.0,
+                          height: 1.4,
                           fontWeight: FontWeight.w500,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
@@ -127,7 +124,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                     amount,
                     style: GoogleFonts.golosText(
                       fontSize: 18.0,
-                      height: 1.0,
+                      height: 1.4,
                       fontWeight: FontWeight.w500,
                       color: theme.colorScheme.onSurface,
                     ),

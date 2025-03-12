@@ -39,10 +39,11 @@ class AccountSettedItemComponent extends StatelessWidget {
                   style: GoogleFonts.golosText(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
+                    height: 1.4,
                     color: color,
                   ),
                 ),
-                const SizedBox(height: 3.0),
+                const SizedBox(height: 5.0),
 
                 Row(
                   children: [
@@ -56,8 +57,9 @@ class AccountSettedItemComponent extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.golosText(
-                          fontSize: 13.0,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.w500,
+                          height: 1.4,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
@@ -76,7 +78,7 @@ class AccountSettedItemComponent extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.golosText(
               fontSize: 16.0,
-              height: 1.0,
+              height: 1.4,
               fontWeight: FontWeight.w500,
               color:
                   account.balance >= 0.0

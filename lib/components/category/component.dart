@@ -69,6 +69,7 @@ class CategoryComponent extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 4.0,
             children: [
               // -> title
               Flexible(
@@ -79,6 +80,7 @@ class CategoryComponent extends StatelessWidget {
                   style: GoogleFonts.golosText(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
+                    height: 1.4,
                     color: showColors ? color : theme.colorScheme.onSurface,
                   ),
                 ),
@@ -105,8 +107,9 @@ class CategoryComponent extends StatelessWidget {
                     child: NumericText(
                       category.transactionType.fullDescription,
                       style: GoogleFonts.golosText(
-                        fontSize: 14.0,
+                        fontSize: 15.0,
                         fontWeight: FontWeight.w400,
+                        height: 1.4,
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),

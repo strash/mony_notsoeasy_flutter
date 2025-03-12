@@ -32,7 +32,7 @@ class TransactionAmountComponent extends StatelessWidget {
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
             fontSize: 40.0,
-            height: 1.1,
+            height: 1.4,
             fontWeight: FontWeight.w600,
             color:
                 transaction.amount.isNegative

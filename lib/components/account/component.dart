@@ -75,85 +75,84 @@ class AccountComponent extends StatelessWidget {
         ),
 
         Flexible(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 2.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // -> title
-                Flexible(
-                  child: Row(
-                    children: [
-                      // -> currency tag
-                      if (showCurrencyTag)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 2.0, right: 8.0),
-                          child: CurrencyTagComponent(
-                            code: account.currency.code,
-                            background:
-                                showColors
-                                    ? color
-                                    : theme.colorScheme.onSurfaceVariant,
-                            foreground: theme.colorScheme.surface,
-                          ),
-                        ),
-
-                      // -> title
-                      Flexible(
-                        child: NumericText(
-                          account.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.golosText(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w600,
-                            color:
-                                showColors
-                                    ? color
-                                    : theme.colorScheme.onSurface,
-                          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 4.0,
+            children: [
+              // -> title
+              Flexible(
+                child: Row(
+                  children: [
+                    // -> currency tag
+                    if (showCurrencyTag)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 1.0, right: 8.0),
+                        child: CurrencyTagComponent(
+                          code: account.currency.code,
+                          background:
+                              showColors
+                                  ? color
+                                  : theme.colorScheme.onSurfaceVariant,
+                          foreground: theme.colorScheme.surface,
                         ),
                       ),
-                    ],
+
+                    // -> title
+                    Flexible(
+                      child: NumericText(
+                        account.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.golosText(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w600,
+                          height: 1.4,
+                          color:
+                              showColors ? color : theme.colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // -> type
+              Flexible(
+                child: NumericText(
+                  account.type.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.golosText(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w400,
+                    height: 1.4,
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
+              ),
 
-                // -> type
+              // -> balance
+              if (balance != null)
                 Flexible(
                   child: NumericText(
-                    account.type.description,
+                    balance.totalSum.currency(
+                      locale: locale.languageCode,
+                      name: balance.currency.name,
+                      symbol: balance.currency.symbol,
+                      showDecimal: showCents,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.golosText(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      height: 1.4,
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ),
-
-                // -> balance
-                if (balance != null)
-                  Flexible(
-                    child: NumericText(
-                      balance.totalSum.currency(
-                        locale: locale.languageCode,
-                        name: balance.currency.name,
-                        symbol: balance.currency.symbol,
-                        showDecimal: showCents,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.golosText(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
+            ],
           ),
         ),
       ],

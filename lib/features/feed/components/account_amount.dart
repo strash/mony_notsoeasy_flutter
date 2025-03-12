@@ -47,7 +47,7 @@ class FeedAccountAmountComponent extends StatelessWidget {
                 textAlign: TextAlign.start,
                 style: GoogleFonts.golosText(
                   fontSize: 40.0,
-                  height: 1.1,
+                  height: 1.2,
                   fontWeight: FontWeight.w500,
                   color: theme.colorScheme.onSurface,
                 ),
@@ -58,7 +58,7 @@ class FeedAccountAmountComponent extends StatelessWidget {
           // -> currency code
           if (showCurrencyTag)
             Padding(
-              padding: const EdgeInsets.only(left: 3.0),
+              padding: const EdgeInsets.only(left: 8.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,

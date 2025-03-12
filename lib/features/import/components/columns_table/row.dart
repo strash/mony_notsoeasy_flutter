@@ -49,7 +49,7 @@ class EntryListRowComponent extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.golosText(
                         fontSize: 16.0,
-                        height: 1.3,
+                        height: 1.4,
                         fontWeight: FontWeight.w600,
                         color: theme.colorScheme.onSurface,
                       ),
@@ -65,7 +65,7 @@ class EntryListRowComponent extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.golosText(
                         fontSize: 16.0,
-                        height: 1.3,
+                        height: 1.4,
                         color: theme.colorScheme.onSurface,
                       ),
                     ),
@@ -115,7 +115,7 @@ class EntryListRowComponent extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.golosText(
                                 fontSize: 15.0,
-                                height: 1.3,
+                                height: 1.4,
                                 fontWeight: FontWeight.w600,
                                 color: theme.colorScheme.onSecondary,
                               ),

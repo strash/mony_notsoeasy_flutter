@@ -23,12 +23,13 @@ class TagComponent extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: NumericText(
           "#${tag.title}",
           style: GoogleFonts.golosText(
             fontSize: 16.0,
             fontWeight: FontWeight.w500,
+            height: 1.4,
             color: theme.colorScheme.onTertiaryContainer,
           ),
         ),

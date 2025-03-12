@@ -1,9 +1,11 @@
+import "dart:math" show pi;
 import "dart:ui";
 
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/constants.dart";
+import "package:mony_app/common/extensions/double.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -15,50 +17,43 @@ class FeedAddButtonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // if it's needs to be disabled
+    const isActive = true;
+
     return Positioned(
       top: MediaQuery.viewPaddingOf(context).top,
       right: 8.0,
       child: ContextMenuComponent(
         showBackground: false,
         blurBackground: false,
-        buttonBuilder: (context) {
-          final theme = Theme.of(context);
-
-          return SizedBox.square(
-            dimension: AppBarComponent.height,
-            child: Center(
-              child: SizedBox.square(
-                dimension: 30.0,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: kTranslucentPanelBlurSigma,
-                      sigmaY: kTranslucentPanelBlurSigma,
-                    ),
-                    child: ColoredBox(
-                      color: theme.colorScheme.surfaceContainer.withValues(
-                        alpha: .5,
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          Assets.icons.plusSemibold,
-                          width: 20.0,
-                          height: 20.0,
-                          colorFilter: ColorFilter.mode(
-                            theme.colorScheme.onSurface,
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+        buttonBuilder: (context, isOpened, activate) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: isOpened || !isActive ? null : activate,
+            child: AnimatedOpacity(
+              duration: Durations.short4,
+              // ignore: dead_code
+              opacity: isActive ? 1.0 : .3,
+              child: Opacity(
+                opacity: isOpened ? .0 : 1.0,
+                child: const _Button(),
               ),
             ),
           );
         },
-        itemsBuilder: (context, dismiss) {
+        buttonProxyBuilder: (context, anim, dismiss) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: dismiss,
+            child: Transform.rotate(
+              angle: Curves.easeInOutSine
+                  .transform(anim)
+                  .remap(.0, 1.0, .0, pi * .25),
+              child: const _Button(),
+            ),
+          );
+        },
+        popupBuilder: (context, anim, dismiss) {
           final theme = Theme.of(context);
 
           return SeparatedComponent.builder(
@@ -93,6 +88,47 @@ class FeedAddButtonComponent extends StatelessWidget {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+class _Button extends StatelessWidget {
+  const _Button();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return SizedBox.square(
+      dimension: AppBarComponent.height,
+      child: Center(
+        child: SizedBox.square(
+          dimension: 30.0,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: kTranslucentPanelBlurSigma,
+                sigmaY: kTranslucentPanelBlurSigma,
+              ),
+              child: ColoredBox(
+                color: theme.colorScheme.surfaceContainer.withValues(alpha: .5),
+                child: Center(
+                  child: SvgPicture.asset(
+                    Assets.icons.plusSemibold,
+                    width: 20.0,
+                    height: 20.0,
+                    colorFilter: ColorFilter.mode(
+                      theme.colorScheme.onSurface,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -61,6 +61,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                     style: GoogleFonts.golosText(
                       fontSize: 20.0,
                       color: theme.colorScheme.onSurface,
+                      height: 1.4,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -72,6 +73,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                       style: GoogleFonts.golosText(
                         fontSize: 20.0,
                         color: theme.colorScheme.error,
+                        height: 1.4,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -86,7 +88,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                 'к колонке "${currentMappedColumn.column.title}".',
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
-                  height: 1.3,
+                  height: 1.4,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
@@ -100,7 +102,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: EntryListComponent(event: event),
         ),
-        const SizedBox(height: 5.0),
+        const SizedBox(height: 10.0),
 
         // button rotate entries
         Padding(
@@ -114,11 +116,13 @@ class ImportMapColumnsComponent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
+                    spacing: 3.0,
                     children: [
                       Text(
                         "Следующая запись",
                         style: GoogleFonts.golosText(
-                          fontSize: 14.0,
+                          fontSize: 16.0,
+                          height: 1.4,
                           color: theme.colorScheme.secondary,
                         ),
                       ),
@@ -126,7 +130,8 @@ class ImportMapColumnsComponent extends StatelessWidget {
                         "$count из "
                         "$numberOfEntriesDescription",
                         style: GoogleFonts.golosText(
-                          fontSize: 12.0,
+                          fontSize: 14.0,
+                          height: 1.4,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),

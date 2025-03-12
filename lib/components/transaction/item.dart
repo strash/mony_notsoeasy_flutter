@@ -4,17 +4,17 @@ import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/feed_item/component.dart";
+import "package:mony_app/components/transaction/component.dart";
 import "package:mony_app/domain/models/transaction.dart";
 
-class FeedItemComponent extends StatelessWidget {
+class TransactionComponent extends StatelessWidget {
   final TransactionModel transaction;
   final bool showFullDate;
   final bool showDecimal;
   final bool showColors;
   final bool showTags;
 
-  const FeedItemComponent({
+  const TransactionComponent({
     super.key,
     required this.transaction,
     this.showFullDate = false,
@@ -97,6 +97,8 @@ class FeedItemComponent extends StatelessWidget {
                       style: GoogleFonts.golosText(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
+                        height: 1.4,
+                        decoration: TextDecoration.none,
                         color:
                             showColors
                                 ? categoryColor
@@ -107,20 +109,25 @@ class FeedItemComponent extends StatelessWidget {
                   const SizedBox(width: 10.0),
 
                   // -> amount
-                  NumericText(
-                    transaction.amount.currency(
-                      locale: locale.languageCode,
-                      name: transaction.account.currency.name,
-                      symbol: transaction.account.currency.symbol,
-                      showDecimal: showDecimal,
-                    ),
-                    style: GoogleFonts.golosText(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w600,
-                      color:
-                          transaction.amount.isNegative
-                              ? theme.colorScheme.onSurface
-                              : theme.colorScheme.secondary,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5.0),
+                    child: NumericText(
+                      transaction.amount.currency(
+                        locale: locale.languageCode,
+                        name: transaction.account.currency.name,
+                        symbol: transaction.account.currency.symbol,
+                        showDecimal: showDecimal,
+                      ),
+                      style: GoogleFonts.golosText(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        height: 1.4,
+                        decoration: TextDecoration.none,
+                        color:
+                            transaction.amount.isNegative
+                                ? theme.colorScheme.onSurface
+                                : theme.colorScheme.secondary,
+                      ),
                     ),
                   ),
                 ],
@@ -131,9 +138,10 @@ class FeedItemComponent extends StatelessWidget {
               Flexible(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // -> time
-                    FeedItemTimeComponent(
+                    TransactionTimeComponent(
                       date: transaction.date,
                       showFullDate: showFullDate,
                     ),
@@ -145,17 +153,24 @@ class FeedItemComponent extends StatelessWidget {
                       Flexible(
                         child:
                             transaction.note.isNotEmpty
-                                ? NumericText(
-                                  transaction.note,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.golosText(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: theme.colorScheme.onSurfaceVariant,
+                                ? Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: NumericText(
+                                    transaction.note,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.golosText(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.4,
+                                      decoration: TextDecoration.none,
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 )
-                                : FeedItemTagsComponent(tags: transaction.tags),
+                                : TransactionTagsComponent(
+                                  tags: transaction.tags,
+                                ),
                       ),
                   ],
                 ),
@@ -166,8 +181,8 @@ class FeedItemComponent extends StatelessWidget {
                   showTags &&
                   transaction.note.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsets.only(top: 7.0),
-                  child: FeedItemTagsComponent(tags: transaction.tags),
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: TransactionTagsComponent(tags: transaction.tags),
                 ),
             ],
           ),

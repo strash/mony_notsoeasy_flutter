@@ -38,6 +38,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
+                  height: 1.4,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -48,7 +49,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                 description,
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
-                  height: 1.3,
+                  height: 1.4,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
@@ -64,6 +65,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
             valueListenable: validation.results,
             builder: (context, results, child) {
               return Column(
+                spacing: 10.0,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: results
                     .map((e) {
@@ -80,8 +82,8 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                                   e.ok != null
                                       ? Assets.icons.checkmarkCircleFill
                                       : Assets.icons.exclamationmarkCircleFill,
-                                  width: 20.0,
-                                  height: 20.0,
+                                  width: 24.0,
+                                  height: 24.0,
                                   colorFilter: ColorFilter.mode(
                                     e.ok != null
                                         ? theme.colorScheme.secondary
@@ -100,8 +102,9 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                                     child: Text(
                                       e.ok != null ? e.ok! : e.error!,
                                       style: GoogleFonts.golosText(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.4,
                                         color:
                                             e.ok != null
                                                 ? theme.colorScheme.onSurface

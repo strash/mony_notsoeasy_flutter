@@ -58,11 +58,12 @@ class StatsDateRangeComponent extends StatelessWidget {
                             style: GoogleFonts.golosText(
                               fontSize: 14.0,
                               fontWeight: FontWeight.w500,
+                              height: 1.4,
                               color: theme.colorScheme.onSurface,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 6.0),
+                        const SizedBox(width: 10.0),
 
                         // -> icon
                         SvgPicture.asset(

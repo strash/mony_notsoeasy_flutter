@@ -3,7 +3,6 @@ import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
 
@@ -56,12 +55,8 @@ class StatsTotalAmountComponent extends StatelessWidget {
       builder: (context, constraints) {
         return ConstrainedBox(
           constraints: constraints,
-          child: SeparatedComponent.list(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            separatorBuilder: (context, index) {
-              return const SizedBox(height: 6.0);
-            },
             children: [
               // -> amount
               FittedBox(
@@ -69,7 +64,7 @@ class StatsTotalAmountComponent extends StatelessWidget {
                   amount,
                   style: GoogleFonts.golosText(
                     fontSize: 28.0,
-                    height: 1.0,
+                    height: 1.4,
                     fontWeight: FontWeight.w500,
                     color: theme.colorScheme.onSurface,
                   ),
@@ -83,7 +78,7 @@ class StatsTotalAmountComponent extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.golosText(
                     fontSize: 14.0,
-                    height: 1.0,
+                    height: 1.4,
                     fontWeight: FontWeight.w500,
                     color: theme.colorScheme.onSurfaceVariant,
                   ),

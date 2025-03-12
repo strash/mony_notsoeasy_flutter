@@ -28,8 +28,9 @@ class AccountTotalSumComponent extends StatelessWidget {
         Text(
           "Баланс",
           style: GoogleFonts.golosText(
-            fontSize: 16.0,
+            fontSize: 18.0,
             fontWeight: FontWeight.w500,
+            height: 1.4,
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
@@ -45,6 +46,7 @@ class AccountTotalSumComponent extends StatelessWidget {
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
+            height: 1.4,
             color: theme.colorScheme.onSurface,
           ),
         ),
