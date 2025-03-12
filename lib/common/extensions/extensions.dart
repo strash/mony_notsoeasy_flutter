@@ -4,6 +4,7 @@ export "./datetime.dart";
 export "./double.dart";
 export "./int.dart";
 export "./list.dart";
+export "./offset.dart";
 export "./page_controller.dart";
 export "./scroll_controller.dart";
 export "./size.dart";

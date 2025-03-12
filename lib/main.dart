@@ -16,6 +16,7 @@ import "package:shared_preferences/shared_preferences.dart";
 // TODO: бюджеты
 // TODO: вход по отпечатку
 // TODO: локализация
+// TODO: контекстное меню для айтемов в списках
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
