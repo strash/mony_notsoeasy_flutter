@@ -23,7 +23,7 @@ class SearchTabPageComponent extends StatelessWidget {
     final viewModel = context.viewModel<SearchViewModel>();
     final onTransactionPressed = viewModel<OnTransactionPressed>();
     final onTransactionMenuSelected =
-        viewModel<OnTransactionContextMenuSelected>();
+        viewModel<OnTransactionWithContextMenuSelectedUseCase>();
     final onAccountPressed = viewModel<OnAccountPressed>();
     final onCategoryPressed = viewModel<OnCategoryPressed>();
     final onTagPressed = viewModel<OnTagPressed>();

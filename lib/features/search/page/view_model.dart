@@ -6,6 +6,7 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_controller.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
+import "package:mony_app/components/transaction_with_context_menu/use_case.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/search/page/view.dart";
@@ -148,7 +149,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
         () => OnTabButtonPressed(),
         () => OnPagePressed(),
         () => OnTransactionPressed(),
-        () => OnTransactionContextMenuSelected(),
+        () => OnTransactionWithContextMenuSelectedUseCase(),
         () => OnAccountPressed(),
         () => OnCategoryPressed(),
         () => OnTagPressed(),

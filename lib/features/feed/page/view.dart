@@ -39,7 +39,7 @@ class FeedView extends StatelessWidget {
     final onPageChanged = viewModel<OnPageChanged>();
     final onTransactionPressed = viewModel<OnTransactionPressed>();
     final onTransactionMenuSelected =
-        viewModel<OnTransactionContextMenuSelected>();
+        viewModel<OnTransactionWithContextMenuSelectedUseCase>();
 
     final scrollControllers = viewModel.scrollControllers;
     final pageController = viewModel.pageController;

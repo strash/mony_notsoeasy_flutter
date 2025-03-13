@@ -9,8 +9,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-typedef TTransactionContextMenuValue =
-    ({ETransactionContextMenuItem menu, TransactionModel transaction});
+export "./use_case.dart";
 
 enum ETransactionContextMenuItem implements IDescriptable {
   edit,

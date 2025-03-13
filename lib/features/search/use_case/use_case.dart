@@ -8,5 +8,4 @@ export "./on_page_pressed.dart";
 export "./on_page_tab_scrolled.dart";
 export "./on_tab_button_pressed.dart";
 export "./on_tag_pressed.dart";
-export "./on_transaction_context_menu_selected.dart";
 export "./on_transaction_pressed.dart";

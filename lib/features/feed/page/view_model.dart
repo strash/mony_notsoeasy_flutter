@@ -3,6 +3,7 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/transaction_with_context_menu/use_case.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/feed.dart";
 import "package:mony_app/features/feed/page/view.dart";
@@ -156,7 +157,7 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
         () => OnAccountPressed(),
         () => OnPageChanged(),
         () => OnTransactionPressed(),
-        () => OnTransactionContextMenuSelected(),
+        () => OnTransactionWithContextMenuSelectedUseCase(),
       ],
       child: const FeedView(),
     );

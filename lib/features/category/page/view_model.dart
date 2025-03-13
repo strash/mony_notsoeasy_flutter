@@ -3,6 +3,7 @@ import "dart:async";
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/transaction_with_context_menu/use_case.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/page/view.dart";
 import "package:mony_app/features/category/use_case/use_case.dart";
@@ -83,7 +84,7 @@ final class CategoryViewModel extends ViewModelState<CategoryPage> {
       viewModel: this,
       useCases: [
         () => OnTransactionPressed(),
-        () => OnTransactionContextMenuSelected(),
+        () => OnTransactionWithContextMenuSelectedUseCase(),
         () => OnEditPressed(),
         () => OnDeletePressed(),
       ],

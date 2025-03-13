@@ -19,7 +19,7 @@ class StatsView extends StatelessWidget {
 
     final onTransactionPressed = viewModel<OnTransactionPressed>();
     final onTransactionMenuSelected =
-        viewModel<OnTransactionContextMenuSelected>();
+        viewModel<OnTransactionWithContextMenuSelectedUseCase>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

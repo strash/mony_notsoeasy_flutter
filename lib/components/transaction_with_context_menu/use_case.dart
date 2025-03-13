@@ -6,13 +6,17 @@ import "package:mony_app/components/alert/component.dart";
 import "package:mony_app/components/bottom_sheet/sheet.dart";
 import "package:mony_app/components/transaction_with_context_menu/component.dart";
 import "package:mony_app/domain/models/tag.dart";
+import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/services/database/transaction.dart";
 import "package:mony_app/domain/services/database/vo/transaction_tag.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/transaction_form/page/view_model.dart";
 import "package:provider/provider.dart";
 
-final class OnTransactionContextMenuSelected
+typedef TTransactionContextMenuValue =
+    ({ETransactionContextMenuItem menu, TransactionModel transaction});
+
+final class OnTransactionWithContextMenuSelectedUseCase
     extends UseCase<Future<void>, TTransactionContextMenuValue> {
   @override
   Future<void> call(
