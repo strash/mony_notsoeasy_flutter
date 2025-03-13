@@ -74,7 +74,6 @@ class AccountsView extends StatelessWidget {
                       child: AccountComponent(
                         account: item,
                         balance: balance,
-                        showCurrencyTag: true,
                         showColors: viewModel.isColorsVisible,
                         showCents: viewModel.isCentsVisible,
                       ),

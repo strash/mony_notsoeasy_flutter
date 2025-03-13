@@ -82,13 +82,12 @@ class ImportMapColumnsComponent extends StatelessWidget {
               const SizedBox(height: 15.0),
 
               // -> description
-              NumericText(
+              Text(
                 "Выбери подходящую колонку,\n"
                 "значение в которой подходит\n"
                 'к колонке "${currentMappedColumn.column.title}".',
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
-                  height: 1.4,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
@@ -122,16 +121,14 @@ class ImportMapColumnsComponent extends StatelessWidget {
                         "Следующая запись",
                         style: GoogleFonts.golosText(
                           fontSize: 16.0,
-                          height: 1.4,
                           color: theme.colorScheme.secondary,
                         ),
                       ),
-                      NumericText(
+                      Text(
                         "$count из "
                         "$numberOfEntriesDescription",
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
-                          height: 1.4,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),

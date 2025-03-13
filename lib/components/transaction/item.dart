@@ -90,7 +90,7 @@ class TransactionComponent extends StatelessWidget {
                 children: [
                   // -> category
                   Flexible(
-                    child: NumericText(
+                    child: Text(
                       transaction.category.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -98,7 +98,6 @@ class TransactionComponent extends StatelessWidget {
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
                         height: 1.4,
-                        decoration: TextDecoration.none,
                         color:
                             showColors
                                 ? categoryColor
@@ -122,7 +121,6 @@ class TransactionComponent extends StatelessWidget {
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
                         height: 1.4,
-                        decoration: TextDecoration.none,
                         color:
                             transaction.amount.isNegative
                                 ? theme.colorScheme.onSurface
@@ -155,7 +153,7 @@ class TransactionComponent extends StatelessWidget {
                             transaction.note.isNotEmpty
                                 ? Padding(
                                   padding: const EdgeInsets.only(right: 5.0),
-                                  child: NumericText(
+                                  child: Text(
                                     transaction.note,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -163,7 +161,6 @@ class TransactionComponent extends StatelessWidget {
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
                                       height: 1.4,
-                                      decoration: TextDecoration.none,
                                       color: theme.colorScheme.onSurfaceVariant,
                                     ),
                                   ),

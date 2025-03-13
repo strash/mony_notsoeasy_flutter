@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/navbar/page/view.dart";
@@ -93,12 +92,11 @@ class SettingsView extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 20.0),
                         child: Builder(
                           builder: (context) {
-                            return NumericText(
+                            return Text(
                               viewModel.isColorsVisible ? "Веселый" : "Скучный",
                               style: DefaultTextStyle.of(
                                 context,
                               ).style.copyWith(
-                                height: 1.4,
                                 color:
                                     viewModel.isColorsVisible
                                         ? theme.colorScheme.secondary
@@ -162,7 +160,7 @@ class SettingsView extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 20.0),
                         child: Builder(
                           builder: (context) {
-                            return NumericText(
+                            return Text(
                               viewModel.defaultTransactionType.description,
                               style: DefaultTextStyle.of(context).style
                                   .copyWith(color: theme.colorScheme.secondary),

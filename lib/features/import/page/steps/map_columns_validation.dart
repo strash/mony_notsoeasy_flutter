@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
@@ -45,11 +44,10 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
               const SizedBox(height: 15.0),
 
               // -> description
-              NumericText(
+              Text(
                 description,
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
-                  height: 1.4,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),

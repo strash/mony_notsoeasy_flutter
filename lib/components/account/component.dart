@@ -10,7 +10,6 @@ import "package:mony_app/domain/models/models.dart";
 class AccountComponent extends StatelessWidget {
   final AccountModel account;
   final AccountBalanceModel? balance;
-  final bool showCurrencyTag;
   final bool showColors;
   final bool showCents;
 
@@ -18,7 +17,6 @@ class AccountComponent extends StatelessWidget {
     super.key,
     required this.account,
     this.balance,
-    this.showCurrencyTag = false,
     required this.showColors,
     this.showCents = true,
   });
@@ -78,36 +76,34 @@ class AccountComponent extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 4.0,
+            spacing: 3.0,
             children: [
               // -> title
               Flexible(
                 child: Row(
                   children: [
                     // -> currency tag
-                    if (showCurrencyTag)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 1.0, right: 8.0),
-                        child: CurrencyTagComponent(
-                          code: account.currency.code,
-                          background:
-                              showColors
-                                  ? color
-                                  : theme.colorScheme.onSurfaceVariant,
-                          foreground: theme.colorScheme.surface,
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 1.0, right: 8.0),
+                      child: CurrencyTagComponent(
+                        code: account.currency.code,
+                        background:
+                            showColors
+                                ? color
+                                : theme.colorScheme.onSurfaceVariant,
+                        foreground: theme.colorScheme.surface,
                       ),
+                    ),
 
                     // -> title
                     Flexible(
-                      child: NumericText(
+                      child: Text(
                         account.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.golosText(
                           fontSize: 18.0,
                           fontWeight: FontWeight.w600,
-                          height: 1.4,
                           color:
                               showColors ? color : theme.colorScheme.onSurface,
                         ),
@@ -119,14 +115,13 @@ class AccountComponent extends StatelessWidget {
 
               // -> type
               Flexible(
-                child: NumericText(
+                child: Text(
                   account.type.description,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
-                    height: 1.4,
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -146,7 +141,7 @@ class AccountComponent extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.golosText(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       height: 1.4,
                       color: theme.colorScheme.onSurfaceVariant,
                     ),

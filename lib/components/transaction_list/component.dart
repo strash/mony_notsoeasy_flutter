@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/components/empty_state/component.dart";
-import "package:mony_app/components/section/section.dart";
+import "package:mony_app/components/transaction_section/component.dart";
 import "package:mony_app/components/transaction_with_context_menu/component.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/features/feed/page/state.dart";
@@ -75,7 +75,7 @@ class TransactionListComponent extends StatelessWidget {
           return switch (item) {
             FeedItemSection() => Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 10.0),
-              child: SectionComponent(
+              child: TransactionSectionComponent(
                 key: key,
                 section: item,
                 showDecimal: isCentsVisible,

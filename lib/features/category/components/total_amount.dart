@@ -30,7 +30,6 @@ class CategoryTotalAmountComponent extends StatelessWidget {
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w500,
-            height: 1.4,
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
@@ -66,20 +65,19 @@ class CategoryTotalAmountComponent extends StatelessWidget {
           separatorBuilder: (context, index) => const SizedBox(height: 3.0),
           children: [
             // -> transactions count
-            NumericText(
+            Text(
               balance.transactionsCount.transactionsCountDescription(
                 locale.languageCode,
               ),
               style: GoogleFonts.golosText(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w400,
-                height: 1.4,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),
 
             // -> transactions date range
-            NumericText(
+            Text(
               (
                 balance.firstTransactionDate,
                 balance.lastTransactionDate,
@@ -87,7 +85,6 @@ class CategoryTotalAmountComponent extends StatelessWidget {
               style: GoogleFonts.golosText(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w400,
-                height: 1.4,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),

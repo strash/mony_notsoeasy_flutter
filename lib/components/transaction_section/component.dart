@@ -7,11 +7,11 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/features/feed/page/state.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
 
-class SectionComponent extends StatelessWidget {
+class TransactionSectionComponent extends StatelessWidget {
   final FeedItemSection section;
   final bool showDecimal;
 
-  const SectionComponent({
+  const TransactionSectionComponent({
     super.key,
     required this.section,
     required this.showDecimal,
@@ -38,7 +38,7 @@ class SectionComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         // -> date
-        NumericText(
+        Text(
           formattedDate,
           style: GoogleFonts.golosText(
             fontSize: 16.0,

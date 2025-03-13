@@ -87,7 +87,6 @@ class TransactionView extends StatelessWidget {
                         child: AccountComponent(
                           account: transaction.account,
                           balance: viewModel.balance,
-                          showCurrencyTag: true,
                           showColors: viewModel.isColorsVisible,
                           showCents: viewModel.isCentsVisible,
                         ),

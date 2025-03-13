@@ -32,14 +32,13 @@ class AccountSettedItemComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // -> title
-                NumericText(
+                Text(
                   account.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
-                    height: 1.4,
                     color: color,
                   ),
                 ),
@@ -52,14 +51,13 @@ class AccountSettedItemComponent extends StatelessWidget {
 
                     // -> account type
                     Flexible(
-                      child: NumericText(
+                      child: Text(
                         " • ${account.type.description}",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w500,
-                          height: 1.4,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),

@@ -1,6 +1,5 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
@@ -69,18 +68,17 @@ class CategoryComponent extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 4.0,
+            spacing: 3.0,
             children: [
               // -> title
               Flexible(
-                child: NumericText(
+                child: Text(
                   category.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
-                    height: 1.4,
                     color: showColors ? color : theme.colorScheme.onSurface,
                   ),
                 ),
@@ -104,12 +102,11 @@ class CategoryComponent extends StatelessWidget {
 
                   // -> description
                   Flexible(
-                    child: NumericText(
+                    child: Text(
                       category.transactionType.fullDescription,
                       style: GoogleFonts.golosText(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
-                        height: 1.4,
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),

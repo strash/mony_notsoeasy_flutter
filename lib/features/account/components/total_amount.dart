@@ -79,7 +79,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
                       const SizedBox(width: 5.0),
 
                       // -> type description and count
-                      NumericText(
+                      Text(
                         "${item.description} (${formatter.format(switch (item) {
                           ETransactionType.expense => balance.expenseCount,
                           ETransactionType.income => balance.incomeCount,
@@ -87,7 +87,6 @@ class AccountTotalAmountComponent extends StatelessWidget {
                         style: GoogleFonts.golosText(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w500,
-                          height: 1.4,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
@@ -136,24 +135,22 @@ class AccountTotalAmountComponent extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 10.0),
             children: [
               // -> transactions count
-              NumericText(
+              Text(
                 "$transactionsCountDescription\nс общей стоимостью $amount",
                 style: GoogleFonts.golosText(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w400,
-                  height: 1.4,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
 
               // -> transactions date range
               if (dateRange.isNotEmpty)
-                NumericText(
+                Text(
                   dateRange,
                   style: GoogleFonts.golosText(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
-                    height: 1.4,
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),

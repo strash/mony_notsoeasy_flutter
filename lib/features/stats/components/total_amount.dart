@@ -73,12 +73,11 @@ class StatsTotalAmountComponent extends StatelessWidget {
 
               // -> count
               Flexible(
-                child: NumericText(
+                child: Text(
                   count,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.golosText(
                     fontSize: 14.0,
-                    height: 1.4,
                     fontWeight: FontWeight.w500,
                     color: theme.colorScheme.onSurfaceVariant,
                   ),

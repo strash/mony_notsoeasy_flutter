@@ -105,11 +105,10 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
 
                     // -> type description and count
                     Flexible(
-                      child: NumericText(
+                      child: Text(
                         "${type.description} ($count)",
                         style: GoogleFonts.golosText(
                           fontSize: 15.0,
-                          height: 1.4,
                           fontWeight: FontWeight.w500,
                           color: theme.colorScheme.onSurfaceVariant,
                         ),

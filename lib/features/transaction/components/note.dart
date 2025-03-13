@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/separated/component.dart";
 
@@ -27,7 +26,7 @@ class TransactionNoteComponent extends StatelessWidget {
         ),
 
         // -> the note
-        NumericText(
+        Text(
           note,
           style: GoogleFonts.golosText(
             fontSize: 18.0,

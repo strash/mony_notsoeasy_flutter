@@ -102,7 +102,7 @@ class FeedAccountAmountComponent extends StatelessWidget {
                       )
                     else
                       // -> accounts count
-                      NumericText(
+                      Text(
                         _accountsCount,
                         style: GoogleFonts.golosText(
                           fontSize: 12.0,

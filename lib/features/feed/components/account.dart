@@ -165,7 +165,6 @@ class FeedAccountComponent extends StatelessWidget {
                             AccountComponent(
                               account: account,
                               showColors: showColors,
-                              showCurrencyTag: true,
                             ),
                         },
                       ],

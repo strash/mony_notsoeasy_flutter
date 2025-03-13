@@ -1,6 +1,5 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
@@ -65,13 +64,12 @@ class CategoryIconComponent extends StatelessWidget {
         const SizedBox(height: 10.0),
 
         // -> title
-        NumericText(
+        Text(
           category.title,
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
-            height: 1.4,
             color: showColors ? color : theme.colorScheme.onSurface,
           ),
         ),
@@ -99,8 +97,7 @@ class CategoryIconComponent extends StatelessWidget {
               textAlign: TextAlign.center,
               style: GoogleFonts.golosText(
                 fontSize: 16.0,
-                fontWeight: FontWeight.w400,
-                height: 1.4,
+                fontWeight: FontWeight.w500,
                 color: theme.colorScheme.onSurfaceVariant,
               ),
             ),

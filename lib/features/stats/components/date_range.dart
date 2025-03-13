@@ -1,6 +1,5 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
-import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -53,17 +52,16 @@ class StatsDateRangeComponent extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 1.0),
-                          child: NumericText(
+                          child: Text(
                             dateRangeDescription,
                             style: GoogleFonts.golosText(
                               fontSize: 14.0,
                               fontWeight: FontWeight.w500,
-                              height: 1.4,
                               color: theme.colorScheme.onSurface,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 10.0),
+                        const SizedBox(width: 6.0),
 
                         // -> icon
                         SvgPicture.asset(
