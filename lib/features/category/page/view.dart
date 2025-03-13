@@ -20,9 +20,10 @@ class CategoryView extends StatelessWidget {
     final category = viewModel.category;
     final balance = viewModel.balance;
 
-    final onTransactionPressed = viewModel<OnTransactionPressed>();
+    final onTransactionPressed =
+        viewModel<OnTransactionWithContextMenuPressed>();
     final onTransactionMenuSelected =
-        viewModel<OnTransactionWithContextMenuSelectedUseCase>();
+        viewModel<OnTransactionWithContextMenuSelected>();
     final onEditPressed = viewModel<OnEditPressed>();
     final onDeletePressed = viewModel<OnDeletePressed>();
 

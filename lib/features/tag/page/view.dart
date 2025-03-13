@@ -20,9 +20,10 @@ class TagView extends StatelessWidget {
 
     final onEditPressed = viewModel<OnEditPressed>();
     final onDeletePressed = viewModel<OnDeletePressed>();
-    final onTransactionPressed = viewModel<OnTransactionPressed>();
+    final onTransactionPressed =
+        viewModel<OnTransactionWithContextMenuPressed>();
     final onTransactionMenuSelected =
-        viewModel<OnTransactionWithContextMenuSelectedUseCase>();
+        viewModel<OnTransactionWithContextMenuSelected>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

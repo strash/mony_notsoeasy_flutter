@@ -16,7 +16,7 @@ import "package:provider/provider.dart";
 typedef TTransactionContextMenuValue =
     ({ETransactionContextMenuItem menu, TransactionModel transaction});
 
-final class OnTransactionWithContextMenuSelectedUseCase
+final class OnTransactionWithContextMenuSelected
     extends UseCase<Future<void>, TTransactionContextMenuValue> {
   @override
   Future<void> call(

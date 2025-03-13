@@ -10,15 +10,15 @@ import "package:mony_app/domain/models/models.dart";
 class AccountComponent extends StatelessWidget {
   final AccountModel account;
   final AccountBalanceModel? balance;
+  final bool showDecimal;
   final bool showColors;
-  final bool showCents;
 
   const AccountComponent({
     super.key,
     required this.account,
     this.balance,
+    this.showDecimal = true,
     required this.showColors,
-    this.showCents = true,
   });
 
   @override
@@ -135,7 +135,7 @@ class AccountComponent extends StatelessWidget {
                       locale: locale.languageCode,
                       name: balance.currency.name,
                       symbol: balance.currency.symbol,
-                      showDecimal: showCents,
+                      showDecimal: showDecimal,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

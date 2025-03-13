@@ -4,7 +4,6 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/features/stats/components/components.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
-import "package:mony_app/features/stats/use_case/use_case.dart";
 
 class StatsView extends StatelessWidget {
   const StatsView({super.key});
@@ -17,9 +16,10 @@ class StatsView extends StatelessWidget {
     final transactions = viewModel.transactions;
     const keyPrefix = "stats_feed";
 
-    final onTransactionPressed = viewModel<OnTransactionPressed>();
+    final onTransactionPressed =
+        viewModel<OnTransactionWithContextMenuPressed>();
     final onTransactionMenuSelected =
-        viewModel<OnTransactionWithContextMenuSelectedUseCase>();
+        viewModel<OnTransactionWithContextMenuSelected>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

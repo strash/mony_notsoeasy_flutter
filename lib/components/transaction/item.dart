@@ -178,7 +178,7 @@ class TransactionComponent extends StatelessWidget {
                   showTags &&
                   transaction.note.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
+                  padding: const EdgeInsets.only(top: 5.0),
                   child: TransactionTagsComponent(tags: transaction.tags),
                 ),
             ],

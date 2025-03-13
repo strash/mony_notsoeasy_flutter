@@ -6,7 +6,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/calendar/component.dart";
 import "package:mony_app/components/charts/component.dart";
 import "package:mony_app/components/select/select.dart";
-import "package:mony_app/components/transaction_with_context_menu/use_case.dart";
+import "package:mony_app/components/transaction_with_context_menu/component.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/navbar/navbar.dart";
@@ -176,8 +176,8 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
         () => OnTemporalButtonPressed(),
         () => OnDatePressed(),
         () => OnTransactionTypeSelected(),
-        () => OnTransactionPressed(),
-        () => OnTransactionWithContextMenuSelectedUseCase(),
+        () => OnTransactionWithContextMenuPressed(),
+        () => OnTransactionWithContextMenuSelected(),
       ],
       child: const StatsView(),
     );

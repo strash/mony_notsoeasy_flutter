@@ -9,7 +9,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-export "./use_case.dart";
+export "./use_case/use_case.dart";
 
 enum ETransactionContextMenuItem implements IDescriptable {
   edit,

@@ -21,9 +21,10 @@ class SearchTabPageComponent extends StatelessWidget {
     final theme = Theme.of(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
-    final onTransactionPressed = viewModel<OnTransactionPressed>();
+    final onTransactionPressed =
+        viewModel<OnTransactionWithContextMenuPressed>();
     final onTransactionMenuSelected =
-        viewModel<OnTransactionWithContextMenuSelectedUseCase>();
+        viewModel<OnTransactionWithContextMenuSelected>();
     final onAccountPressed = viewModel<OnAccountPressed>();
     final onCategoryPressed = viewModel<OnCategoryPressed>();
     final onTagPressed = viewModel<OnTagPressed>();
@@ -108,7 +109,7 @@ class SearchTabPageComponent extends StatelessWidget {
                       account: item,
                       balance: balance,
                       showColors: viewModel.isColorsVisible,
-                      showCents: viewModel.isCentsVisible,
+                      showDecimal: viewModel.isCentsVisible,
                     ),
                   ),
                 );

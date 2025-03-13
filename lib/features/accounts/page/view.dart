@@ -75,7 +75,7 @@ class AccountsView extends StatelessWidget {
                         account: item,
                         balance: balance,
                         showColors: viewModel.isColorsVisible,
-                        showCents: viewModel.isCentsVisible,
+                        showDecimal: viewModel.isCentsVisible,
                       ),
                     ),
                   );

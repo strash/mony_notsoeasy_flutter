@@ -4,6 +4,7 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
@@ -64,8 +65,7 @@ final class TransactionViewModel extends ViewModelState<TransactionPage> {
     return ViewModel<TransactionViewModel>(
       viewModel: this,
       useCases: [
-        () => OnEditTransactionPressed(),
-        () => OnDeleteTransactionPressed(),
+        () => OnTransactionWithContextMenuSelected(),
         () => OnAccountPressed(),
         () => OnCategoryPressed(),
         () => OnTagPressed(),

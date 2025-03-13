@@ -5,6 +5,7 @@ import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/appbar_button/component.dart";
 import "package:mony_app/components/category/component.dart";
 import "package:mony_app/components/separated/component.dart";
+import "package:mony_app/components/transaction_with_context_menu/component.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/transaction/components/components.dart";
 import "package:mony_app/features/transaction/transaction.dart";
@@ -21,8 +22,8 @@ class TransactionView extends StatelessWidget {
     final viewModel = context.viewModel<TransactionViewModel>();
     final transaction = viewModel.transaction;
 
-    final onEditPressed = viewModel<OnEditTransactionPressed>();
-    final onDeletePressed = viewModel<OnDeleteTransactionPressed>();
+    final onEditPressed = viewModel<OnTransactionWithContextMenuSelected>();
+    final onDeletePressed = viewModel<OnTransactionWithContextMenuSelected>();
     final onAccountPressed = viewModel<OnAccountPressed>();
     final onCategoryPressed = viewModel<OnCategoryPressed>();
     final onTagPressed = viewModel<OnTagPressed>();
@@ -41,14 +42,26 @@ class TransactionView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
-                  onTap: () => onEditPressed(context, transaction),
+                  onTap: () {
+                    final value = (
+                      menu: ETransactionContextMenuItem.edit,
+                      transaction: transaction,
+                    );
+                    onEditPressed(context, value);
+                  },
                 ),
                 const SizedBox(width: 4.0),
 
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
-                  onTap: () => onDeletePressed(context, transaction),
+                  onTap: () {
+                    final value = (
+                      menu: ETransactionContextMenuItem.delete,
+                      transaction: transaction,
+                    );
+                    onDeletePressed(context, value);
+                  },
                 ),
               ],
             ),
@@ -88,7 +101,7 @@ class TransactionView extends StatelessWidget {
                           account: transaction.account,
                           balance: viewModel.balance,
                           showColors: viewModel.isColorsVisible,
-                          showCents: viewModel.isCentsVisible,
+                          showDecimal: viewModel.isCentsVisible,
                         ),
                       ),
 
