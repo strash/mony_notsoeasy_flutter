@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_controller.dart";
+import "package:mony_app/components/account_with_context_menu/use_case/on_context_menu_selected.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/accounts/page/view.dart";
@@ -74,7 +75,11 @@ final class AccountsViewModel extends ViewModelState<AccountsPage> {
   Widget build(BuildContext context) {
     return ViewModel<AccountsViewModel>(
       viewModel: this,
-      useCases: [() => OnAddAccountPressed(), () => OnAccountPressed()],
+      useCases: [
+        () => OnAddAccountPressed(),
+        () => OnAccountPressed(),
+        () => OnAccountWithContextMenuSelected(),
+      ],
       child: const AccountsView(),
     );
   }

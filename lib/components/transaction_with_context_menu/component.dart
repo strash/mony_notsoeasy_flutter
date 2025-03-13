@@ -180,9 +180,9 @@ class _TransactionWithContextMenuComponentState
                 ),
               ),
               onTap: () {
-                dismiss();
                 final value = (menu: item, transaction: widget.transaction);
                 widget.onMenuSelected(context, value);
+                dismiss();
               },
             );
           },

@@ -36,43 +36,39 @@ class TransactionComponent extends StatelessWidget {
     final color = Color.lerp(categoryColor, const Color(0xFFFFFFFF), .3)!;
     const iconDimension = 50.0;
 
+    final colors = [
+      theme.colorScheme.surfaceContainerHighest,
+      theme.colorScheme.surfaceContainer,
+    ];
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // -> icon
-        Padding(
-          padding: const EdgeInsets.only(top: 1.0),
-          child: SizedBox.square(
-            dimension: iconDimension,
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors:
-                      showColors
-                          ? [color, categoryColor]
-                          : [
-                            theme.colorScheme.surfaceContainerHighest,
-                            theme.colorScheme.surfaceContainer,
-                          ],
-                ),
-                shape: SmoothRectangleBorder(
-                  side:
-                      showColors
-                          ? BorderSide.none
-                          : BorderSide(color: theme.colorScheme.outlineVariant),
-                  borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
-                  ),
+        SizedBox.square(
+          dimension: iconDimension,
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: showColors ? [color, categoryColor] : colors,
+              ),
+              shape: SmoothRectangleBorder(
+                side:
+                    showColors
+                        ? BorderSide.none
+                        : BorderSide(color: theme.colorScheme.outlineVariant),
+                borderRadius: const SmoothBorderRadius.all(
+                  SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
                 ),
               ),
-              child: Center(
-                child: Text(
-                  transaction.category.icon,
-                  style: theme.textTheme.headlineMedium,
-                ),
+            ),
+            child: Center(
+              child: Text(
+                transaction.category.icon,
+                style: theme.textTheme.headlineMedium,
               ),
             ),
           ),
@@ -83,6 +79,7 @@ class TransactionComponent extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 3.0,
             children: [
               // -> top row
               Row(
@@ -130,7 +127,6 @@ class TransactionComponent extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 2.0),
 
               // -> middle row
               Flexible(
@@ -177,10 +173,7 @@ class TransactionComponent extends StatelessWidget {
               if (transaction.tags.isNotEmpty &&
                   showTags &&
                   transaction.note.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(top: 5.0),
-                  child: TransactionTagsComponent(tags: transaction.tags),
-                ),
+                TransactionTagsComponent(tags: transaction.tags),
             ],
           ),
         ),

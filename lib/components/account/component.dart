@@ -33,9 +33,14 @@ class AccountComponent extends StatelessWidget {
     final locale = Localizations.localeOf(context);
     final balance = this.balance;
 
-    return SeparatedComponent.list(
-      direction: Axis.horizontal,
-      separatorBuilder: (context, index) => const SizedBox(width: 10.0),
+    final colors = [
+      theme.colorScheme.surfaceContainerHighest,
+      theme.colorScheme.surfaceContainer,
+    ];
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // -> icon
         SizedBox.square(
@@ -45,13 +50,7 @@ class AccountComponent extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors:
-                    showColors
-                        ? [color2, color]
-                        : [
-                          theme.colorScheme.surfaceContainerHighest,
-                          theme.colorScheme.surfaceContainer,
-                        ],
+                colors: showColors ? [color2, color] : colors,
               ),
               shape: SmoothRectangleBorder(
                 side:
@@ -71,6 +70,7 @@ class AccountComponent extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(width: 10.0),
 
         Flexible(
           child: Column(
@@ -79,38 +79,36 @@ class AccountComponent extends StatelessWidget {
             spacing: 3.0,
             children: [
               // -> title
-              Flexible(
-                child: Row(
-                  children: [
-                    // -> currency tag
-                    Padding(
-                      padding: const EdgeInsets.only(top: 1.0, right: 8.0),
-                      child: CurrencyTagComponent(
-                        code: account.currency.code,
-                        background:
-                            showColors
-                                ? color
-                                : theme.colorScheme.onSurfaceVariant,
-                        foreground: theme.colorScheme.surface,
-                      ),
+              Row(
+                children: [
+                  // -> currency tag
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1.0, right: 8.0),
+                    child: CurrencyTagComponent(
+                      code: account.currency.code,
+                      background:
+                          showColors
+                              ? color
+                              : theme.colorScheme.onSurfaceVariant,
+                      foreground: theme.colorScheme.surface,
                     ),
+                  ),
 
-                    // -> title
-                    Flexible(
-                      child: Text(
-                        account.title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.golosText(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w600,
-                          color:
-                              showColors ? color : theme.colorScheme.onSurface,
-                        ),
+                  // -> title
+                  Flexible(
+                    child: Text(
+                      account.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.golosText(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        height: 1.4,
+                        color: showColors ? color : theme.colorScheme.onSurface,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
 
               // -> type
@@ -122,6 +120,7 @@ class AccountComponent extends StatelessWidget {
                   style: GoogleFonts.golosText(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
+                    height: 1.4,
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -129,22 +128,18 @@ class AccountComponent extends StatelessWidget {
 
               // -> balance
               if (balance != null)
-                Flexible(
-                  child: NumericText(
-                    balance.totalSum.currency(
-                      locale: locale.languageCode,
-                      name: balance.currency.name,
-                      symbol: balance.currency.symbol,
-                      showDecimal: showDecimal,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.golosText(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w600,
-                      height: 1.4,
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
+                NumericText(
+                  balance.totalSum.currency(
+                    locale: locale.languageCode,
+                    name: balance.currency.name,
+                    symbol: balance.currency.symbol,
+                    showDecimal: showDecimal,
+                  ),
+                  style: GoogleFonts.golosText(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w600,
+                    height: 1.4,
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
             ],

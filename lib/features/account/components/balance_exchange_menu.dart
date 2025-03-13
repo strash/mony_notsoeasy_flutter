@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/account_with_context_menu/component.dart";
 import "package:mony_app/features/account/page/view_model.dart";
-import "package:mony_app/features/account/use_case/on_balance_exchange_menu_selected.dart";
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart"
     show EBalanceExchangeMenuItem;
 import "package:mony_app/gen/assets.gen.dart";
@@ -16,7 +16,7 @@ class AccountBalanceExchangeMenuComponent extends StatelessWidget {
 
     final viewModel = context.viewModel<AccountViewModel>();
     final isActive = viewModel.accountsCount > 1;
-    final onSendSelected = viewModel<OnBalanceExchangeMenuSelected>();
+    final onMenuSelected = viewModel<OnAccountWithContextMenuSelected>();
 
     if (!isActive) return const SizedBox();
 
@@ -26,11 +26,16 @@ class AccountBalanceExchangeMenuComponent extends StatelessWidget {
         spacing: 10.0,
         children: EBalanceExchangeMenuItem.values
             .map((e) {
+              final menu =
+                  e == EBalanceExchangeMenuItem.receive
+                      ? EAccountContextMenuItem.receive
+                      : EAccountContextMenuItem.send;
+
               return Expanded(
                 child: FilledButton(
                   onPressed: () {
-                    final value = (item: e, account: viewModel.account);
-                    onSendSelected(context, value);
+                    final value = (menu: menu, account: viewModel.account);
+                    onMenuSelected(context, value);
                   },
                   child: Row(
                     spacing: 8.0,

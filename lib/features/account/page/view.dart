@@ -1,9 +1,11 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/components.dart";
+import "package:mony_app/components/account_with_context_menu/component.dart";
+import "package:mony_app/components/appbar/component.dart";
+import "package:mony_app/components/appbar_button/component.dart";
+import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/account/components/components.dart";
-import "package:mony_app/features/account/use_case/use_case.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -20,8 +22,8 @@ class AccountView extends StatelessWidget {
     final viewModel = context.viewModel<AccountViewModel>();
     final account = viewModel.account;
     final balance = viewModel.balance;
-    final onEditPressed = viewModel<OnEditPressed>();
-    final onDeletePressed = viewModel<OnDeletePressed>();
+    final onEditPressed = viewModel<OnAccountWithContextMenuSelected>();
+    final onDeletePressed = viewModel<OnAccountWithContextMenuSelected>();
 
     final color =
         ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
@@ -45,13 +47,25 @@ class AccountView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
-                  onTap: () => onEditPressed(context, account),
+                  onTap: () {
+                    final value = (
+                      menu: EAccountContextMenuItem.edit,
+                      account: account,
+                    );
+                    onEditPressed(context, value);
+                  },
                 ),
 
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
-                  onTap: () => onDeletePressed(context, account),
+                  onTap: () {
+                    final value = (
+                      menu: EAccountContextMenuItem.delete,
+                      account: account,
+                    );
+                    onDeletePressed(context, value);
+                  },
                 ),
               ],
             ),

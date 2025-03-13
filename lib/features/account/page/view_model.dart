@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/account_with_context_menu/use_case/use_case.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account/page/view.dart";
 import "package:mony_app/features/account/use_case/use_case.dart";
@@ -60,11 +61,7 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
   Widget build(BuildContext context) {
     return ViewModel<AccountViewModel>(
       viewModel: this,
-      useCases: [
-        () => OnEditPressed(),
-        () => OnBalanceExchangeMenuSelected(),
-        () => OnDeletePressed(),
-      ],
+      useCases: [() => OnAccountWithContextMenuSelected()],
       child: const AccountView(),
     );
   }
