@@ -19,6 +19,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
       case EventAccountCreated() ||
           EventAccountUpdated() ||
           EventAccountDeleted() ||
+          EventAccountBalanceExchanged() ||
           EventTagCreated() ||
           EventTagUpdated() ||
           EventTagDeleted() ||

@@ -82,6 +82,32 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           });
         });
 
+      case EventAccountBalanceExchanged(value: final accounts):
+        final balance1 = await accountService.getBalance(id: accounts.$1.id);
+        final balance2 = await accountService.getBalance(id: accounts.$2.id);
+        viewModel.setProtectedState(() {
+          viewModel.accounts = List<AccountModel>.from(
+            viewModel.accounts.map((e) {
+              if (e.id == accounts.$1.id) {
+                return accounts.$1.copyWith();
+              } else if (e.id == accounts.$2.id) {
+                return accounts.$2.copyWith();
+              }
+              return e;
+            }),
+          );
+          viewModel.balances = List<AccountBalanceModel>.from(
+            viewModel.balances.map((e) {
+              if (e.id == balance1?.id) {
+                return balance1;
+              } else if (e.id == balance2?.id) {
+                return balance2;
+              }
+              return e;
+            }),
+          );
+        });
+
       case EventCategoryDeleted():
         final balances = await Future.wait<List<AccountBalanceModel>>(
           List.generate(viewModel.scrollPage + 1, (index) {

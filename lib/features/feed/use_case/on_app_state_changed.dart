@@ -7,6 +7,7 @@ import "package:mony_app/features/feed/feed.dart";
 import "package:mony_app/features/feed/use_case/on_init.dart";
 import "package:provider/provider.dart";
 
+part "./on_app_state_changed/on_account_balance_exchanged.dart";
 part "./on_app_state_changed/on_account_created.dart";
 part "./on_app_state_changed/on_account_deleted.dart";
 part "./on_app_state_changed/on_account_updated.dart";
@@ -46,6 +47,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
       case EventAccountDeleted():
         const _OnAccountDeleted().call(context, viewModel, event);
+
+      case EventAccountBalanceExchanged():
+        const _OnAccountBalanceExchanged().call(context, viewModel, event);
 
       case EventCategoryUpdated():
         const _OnCategoryUpdated().call(context, viewModel, event);

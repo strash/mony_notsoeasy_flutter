@@ -81,6 +81,43 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.counts = counts;
         });
 
+      case EventAccountBalanceExchanged(value: final accounts):
+        final (left, right) = accounts;
+        final leftBalance = await accountService.getBalance(id: left.id);
+        final rightBalance = await accountService.getBalance(id: right.id);
+        viewModel.setProtectedState(() {
+          viewModel.accounts = List<AccountModel>.from(
+            viewModel.accounts.map((e) {
+              if (e.id == left.id) {
+                return left.copyWith();
+              } else if (e.id == right.id) {
+                return right.copyWith();
+              }
+              return e;
+            }),
+          );
+          viewModel.balances = List<AccountBalanceModel>.from(
+            viewModel.balances.map((e) {
+              if (e.id == leftBalance?.id) {
+                return leftBalance;
+              } else if (e.id == rightBalance?.id) {
+                return rightBalance;
+              }
+              return e;
+            }),
+          );
+          viewModel.transactions = List<TransactionModel>.from(
+            viewModel.transactions.map((e) {
+              if (e.account.id == left.id) {
+                return e.copyWith(account: left.copyWith());
+              } else if (e.account.id == right.id) {
+                return e.copyWith(account: right.copyWith());
+              }
+              return e;
+            }),
+          );
+        });
+
       case EventCategoryCreated():
         final counts = await _updateCounts(context);
         final tabIndex = ESearchTab.categories.index;

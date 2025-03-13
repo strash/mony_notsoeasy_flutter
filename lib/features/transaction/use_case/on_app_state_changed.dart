@@ -2,6 +2,7 @@ import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/domain/services/database/account.dart";
 import "package:mony_app/domain/services/database/transaction.dart";
@@ -35,6 +36,22 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         viewModel.setProtectedState(() {
           viewModel.transaction = viewModel.transaction.copyWith(
             account: account.copyWith(),
+          );
+          viewModel.balance = balance;
+        });
+
+      case EventAccountBalanceExchanged(value: final accounts):
+        AccountModel? account;
+        if (viewModel.transaction.account.id == accounts.$1.id) {
+          account = accounts.$1;
+        } else if (viewModel.transaction.account.id == accounts.$2.id) {
+          account = accounts.$2;
+        }
+        if (account == null) return;
+        final balance = await accountService.getBalance(id: account.id);
+        viewModel.setProtectedState(() {
+          viewModel.transaction = viewModel.transaction.copyWith(
+            account: account!.copyWith(),
           );
           viewModel.balance = balance;
         });

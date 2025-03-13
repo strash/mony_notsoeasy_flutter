@@ -57,10 +57,7 @@ final class OnAccountWithContextMenuSelected
         if (result == null) return;
         final left = await accountService.update(model: result.$1);
         final right = await accountService.update(model: result.$2);
-        appService.notify(EventAccountUpdated(left));
-        // NOTE: a hacky little delay between notifications
-        await Future.delayed(const Duration(milliseconds: 50));
-        appService.notify(EventAccountUpdated(right));
+        appService.notify(EventAccountBalanceExchanged((left, right)));
 
       // -> edit
       case EAccountContextMenuItem.edit:

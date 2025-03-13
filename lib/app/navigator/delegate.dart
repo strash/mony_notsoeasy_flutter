@@ -37,6 +37,7 @@ final class NavigatorDelegate extends RouterDelegate<Object>
             return true;
 
           case EventAccountUpdated() ||
+              EventAccountBalanceExchanged() ||
               EventCategoryCreated() ||
               EventCategoryUpdated() ||
               EventCategoryDeleted() ||

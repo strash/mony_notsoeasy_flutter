@@ -55,12 +55,25 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
         } while (scrollPage <= viewModel.scrollPage &&
             (feed.lastOrNull?.isNotEmpty ?? false));
-
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
           viewModel.scrollPage = scrollPage;
           viewModel.canLoadMore = feed.lastOrNull?.isNotEmpty ?? false;
           viewModel.feed = feed.fold([], (prev, curr) => prev..addAll(curr));
+        });
+
+      case EventAccountBalanceExchanged(value: final accounts):
+        viewModel.setProtectedState(() {
+          viewModel.feed = List<TransactionModel>.from(
+            viewModel.feed.map((e) {
+              if (e.account.id == accounts.$1.id) {
+                return e.copyWith(account: accounts.$1.copyWith());
+              } else if (e.account.id == accounts.$2.id) {
+                return e.copyWith(account: accounts.$2.copyWith());
+              }
+              return e;
+            }),
+          );
         });
 
       case EventCategoryUpdated(value: final category):

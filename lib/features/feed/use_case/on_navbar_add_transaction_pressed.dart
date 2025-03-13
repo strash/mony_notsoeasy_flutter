@@ -39,6 +39,7 @@ final class OnNavbarAddTransactionPressed
     );
     if (model == null) return;
 
+    // TODO: общий ивент создания транзакции и тегов. проверить другие места
     appService.notify(EventTransactionCreated(model));
 
     void action(TransactionTagVariantVO value) {

@@ -21,6 +21,11 @@ final class EventAccountDeleted extends Event {
   EventAccountDeleted(this.value);
 }
 
+final class EventAccountBalanceExchanged extends Event {
+  final (AccountModel, AccountModel) value;
+  EventAccountBalanceExchanged(this.value);
+}
+
 // -> category
 
 final class EventCategoryCreated extends Event {

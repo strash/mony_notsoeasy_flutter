@@ -51,6 +51,34 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.accounts = viewModel.accounts.merge([account]);
         });
 
+      case EventAccountBalanceExchanged(value: final accounts):
+        AccountModel? account;
+        if (viewModel.accountController.value?.id == accounts.$1.id) {
+          account = accounts.$1;
+        } else if (viewModel.accountController.value?.id == accounts.$2.id) {
+          account = accounts.$2;
+        }
+        if (account != null) {
+          viewModel.accountController.value = account;
+          final balance = await accountService.getBalanceForDateRange(
+            id: account.id,
+            from: from,
+            to: to,
+          );
+          viewModel.balance = balance;
+          viewModel.transactions = List<TransactionModel>.from(
+            viewModel.transactions.map((e) {
+              return e.copyWith(account: account!.copyWith());
+            }),
+          );
+        }
+        viewModel.setProtectedState(() {
+          viewModel.accounts = viewModel.accounts.merge([
+            accounts.$1,
+            accounts.$2,
+          ]);
+        });
+
       case EventAccountDeleted(value: final account):
         if (viewModel.accounts.length == 1) return;
         viewModel.accounts = List.from(
