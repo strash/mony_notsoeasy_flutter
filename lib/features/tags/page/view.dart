@@ -12,6 +12,8 @@ import "package:mony_app/gen/assets.gen.dart";
 class TagsView extends StatelessWidget {
   const TagsView({super.key});
 
+  String get _keyPrefix => "tags";
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -55,7 +57,9 @@ class TagsView extends StatelessWidget {
               sliver: SliverList.separated(
                 findChildIndexCallback: (key) {
                   final id = (key as ValueKey).value;
-                  final index = viewModel.tags.indexWhere((e) => e.id == id);
+                  final index = viewModel.tags.indexWhere((e) {
+                    return "${_keyPrefix}_${e.id}" == id;
+                  });
                   return index != -1 ? index : null;
                 },
                 separatorBuilder: (context, index) {
@@ -66,7 +70,7 @@ class TagsView extends StatelessWidget {
                   final item = viewModel.tags.elementAt(index);
 
                   return GestureDetector(
-                    key: ValueKey<String>(item.id),
+                    key: ValueKey<String>("${_keyPrefix}_${item.id}"),
                     behavior: HitTestBehavior.opaque,
                     onTap: () => onTagPressed(context, item),
                     child: Padding(

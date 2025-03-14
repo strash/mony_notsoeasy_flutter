@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
-import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/domain/models/category.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -27,10 +26,14 @@ class CategoryComponent extends StatelessWidget {
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
     const iconDimension = 50.0;
 
-    return SeparatedComponent.list(
-      direction: Axis.horizontal,
-      separatorBuilder: (context, index) => const SizedBox(width: 10.0),
-      crossAxisAlignment: CrossAxisAlignment.center,
+    final colors = [
+      theme.colorScheme.surfaceContainerHighest,
+      theme.colorScheme.surfaceContainer,
+    ];
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // -> icon
         SizedBox.square(
@@ -40,13 +43,7 @@ class CategoryComponent extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors:
-                    showColors
-                        ? [color2, color]
-                        : [
-                          theme.colorScheme.surfaceContainerHighest,
-                          theme.colorScheme.surfaceContainer,
-                        ],
+                colors: showColors ? [color2, color] : colors,
               ),
               shape: SmoothRectangleBorder(
                 side:
@@ -63,6 +60,7 @@ class CategoryComponent extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(width: 10.0),
 
         Flexible(
           child: Column(
@@ -79,6 +77,7 @@ class CategoryComponent extends StatelessWidget {
                   style: GoogleFonts.golosText(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
+                    height: 1.4,
                     color: showColors ? color : theme.colorScheme.onSurface,
                   ),
                 ),
@@ -107,6 +106,7 @@ class CategoryComponent extends StatelessWidget {
                       style: GoogleFonts.golosText(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
+                        height: 1.4,
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),

@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/category_with_context_menu/component.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
@@ -33,6 +34,8 @@ class SearchTabPageComponent extends StatelessWidget {
     final onAccountPressed = viewModel<OnAccountPressed>();
     final onAccountMenuSelected = viewModel<OnAccountWithContextMenuSelected>();
     final onCategoryPressed = viewModel<OnCategoryPressed>();
+    final onCategoryMenuSelected =
+        viewModel<OnCategoryWithContextMenuSelected>();
     final onTagPressed = viewModel<OnTagPressed>();
 
     final isEmpty = switch (tab) {
@@ -66,15 +69,14 @@ class SearchTabPageComponent extends StatelessWidget {
             // -> transactions
             ESearchTab.transactions => SliverList.separated(
               findChildIndexCallback: (key) {
-                final id =
-                    "${_keyPrefixTransaction}_${(key as ValueKey).value}";
+                final id = (key as ValueKey).value;
                 final index = viewModel.transactions.indexWhere((e) {
                   return "${_keyPrefixTransaction}_${e.id}" == id;
                 });
                 return index != -1 ? index : null;
               },
               separatorBuilder: (context, index) {
-                return const SizedBox(height: 10.0);
+                return const SizedBox(height: 5.0);
               },
               itemCount: viewModel.transactions.length,
               itemBuilder: (context, index) {
@@ -96,14 +98,14 @@ class SearchTabPageComponent extends StatelessWidget {
             // -> accounts
             ESearchTab.accounts => SliverList.separated(
               findChildIndexCallback: (key) {
-                final id = "${_keyPrefixAccount}_${(key as ValueKey).value}";
+                final id = (key as ValueKey).value;
                 final index = viewModel.accounts.indexWhere((e) {
                   return "${_keyPrefixAccount}_${e.id}" == id;
                 });
                 return index != -1 ? index : null;
               },
               separatorBuilder: (context, index) {
-                return const SizedBox(height: 10.0);
+                return const SizedBox(height: 5.0);
               },
               itemCount: viewModel.accounts.length,
               itemBuilder: (context, index) {
@@ -125,30 +127,25 @@ class SearchTabPageComponent extends StatelessWidget {
             // -> categories
             ESearchTab.categories => SliverList.separated(
               findChildIndexCallback: (key) {
-                final id = "${_keyPrefixCategory}_${(key as ValueKey).value}";
+                final id = (key as ValueKey).value;
                 final index = viewModel.categories.indexWhere((e) {
                   return "${_keyPrefixCategory}_${e.id}" == id;
                 });
                 return index != -1 ? index : null;
               },
               separatorBuilder: (context, index) {
-                return const SizedBox(height: 25.0);
+                return const SizedBox(height: 5.0);
               },
               itemCount: viewModel.categories.length,
               itemBuilder: (context, index) {
                 final item = viewModel.categories.elementAt(index);
 
-                return GestureDetector(
+                return CategoryWithContextMenuComponent(
                   key: ValueKey<String>("${_keyPrefixCategory}_${item.id}"),
-                  onTap: () => onCategoryPressed.call(context, item),
-                  behavior: HitTestBehavior.opaque,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: CategoryComponent(
-                      category: item,
-                      showColors: viewModel.isColorsVisible,
-                    ),
-                  ),
+                  category: item,
+                  isColorsVisible: viewModel.isColorsVisible,
+                  onTap: onCategoryPressed,
+                  onMenuSelected: onCategoryMenuSelected,
                 );
               },
             ),
@@ -156,7 +153,7 @@ class SearchTabPageComponent extends StatelessWidget {
             // -> tags
             ESearchTab.tags => SliverList.separated(
               findChildIndexCallback: (key) {
-                final id = "${_keyPrefixTag}_${(key as ValueKey).value}";
+                final id = (key as ValueKey).value;
                 final index = viewModel.tags.indexWhere((e) {
                   return "${_keyPrefixTag}_${e.id}" == id;
                 });

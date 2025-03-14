@@ -1,10 +1,10 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
+import "package:mony_app/components/category_with_context_menu/component.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/category/category.dart";
 import "package:mony_app/features/category/components/components.dart";
-import "package:mony_app/features/category/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class CategoryView extends StatelessWidget {
@@ -20,12 +20,12 @@ class CategoryView extends StatelessWidget {
     final category = viewModel.category;
     final balance = viewModel.balance;
 
+    final onCategoryMenuSelected =
+        viewModel<OnCategoryWithContextMenuSelected>();
     final onTransactionPressed =
         viewModel<OnTransactionWithContextMenuPressed>();
     final onTransactionMenuSelected =
         viewModel<OnTransactionWithContextMenuSelected>();
-    final onEditPressed = viewModel<OnEditPressed>();
-    final onDeletePressed = viewModel<OnDeletePressed>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -42,14 +42,26 @@ class CategoryView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
-                  onTap: () => onEditPressed(context, category),
+                  onTap: () {
+                    final value = (
+                      menu: ECategoryContextMenuItem.edit,
+                      category: category,
+                    );
+                    onCategoryMenuSelected(context, value);
+                  },
                 ),
                 const SizedBox(width: 4.0),
 
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
-                  onTap: () => onDeletePressed(context, category),
+                  onTap: () {
+                    final value = (
+                      menu: ECategoryContextMenuItem.delete,
+                      category: category,
+                    );
+                    onCategoryMenuSelected(context, value);
+                  },
                 ),
               ],
             ),

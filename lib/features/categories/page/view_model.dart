@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_controller.dart";
+import "package:mony_app/components/category_with_context_menu/use_case/use_case.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/categories/page/view.dart";
@@ -70,7 +71,11 @@ final class CategoriesViewModel extends ViewModelState<CategoriesPage> {
   Widget build(BuildContext context) {
     return ViewModel<CategoriesViewModel>(
       viewModel: this,
-      useCases: [() => OnMenuAddPressed(), () => OnCategoryPressed()],
+      useCases: [
+        () => OnMenuAddPressed(),
+        () => OnCategoryPressed(),
+        () => OnCategoryWithContextMenuSelected(),
+      ],
       child: const CategoriesView(),
     );
   }

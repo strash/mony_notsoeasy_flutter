@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/appbar/component.dart";
-import "package:mony_app/components/category/component.dart";
+import "package:mony_app/components/category_with_context_menu/component.dart";
 import "package:mony_app/components/empty_state/component.dart";
 import "package:mony_app/features/categories/categories.dart";
 import "package:mony_app/features/categories/components/add_button.dart";
@@ -11,6 +11,8 @@ import "package:mony_app/features/navbar/page/view.dart";
 class CategoriesView extends StatelessWidget {
   const CategoriesView({super.key});
 
+  String get _keyPrefix => "categories";
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -19,6 +21,8 @@ class CategoriesView extends StatelessWidget {
     final viewModel = context.viewModel<CategoriesViewModel>();
     final onAddButtonPressed = viewModel<OnMenuAddPressed>();
     final onCategoryPressed = viewModel<OnCategoryPressed>();
+    final onMenuSelected = viewModel<OnCategoryWithContextMenuSelected>();
+
     final isEmpty = viewModel.categories.isEmpty;
 
     return Scaffold(
@@ -51,29 +55,24 @@ class CategoriesView extends StatelessWidget {
               sliver: SliverList.separated(
                 findChildIndexCallback: (key) {
                   final id = (key as ValueKey).value;
-                  final index = viewModel.categories.indexWhere(
-                    (e) => e.id == id,
-                  );
+                  final index = viewModel.categories.indexWhere((e) {
+                    return "${_keyPrefix}_${e.id}" == id;
+                  });
                   return index != -1 ? index : null;
                 },
                 separatorBuilder: (context, index) {
-                  return const SizedBox(height: 25.0);
+                  return const SizedBox(height: 5.0);
                 },
                 itemCount: viewModel.categories.length,
                 itemBuilder: (context, index) {
                   final item = viewModel.categories.elementAt(index);
 
-                  return GestureDetector(
-                    key: ValueKey<String>(item.id),
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => onCategoryPressed(context, item),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: CategoryComponent(
-                        category: item,
-                        showColors: viewModel.isColorsVisible,
-                      ),
-                    ),
+                  return CategoryWithContextMenuComponent(
+                    key: ValueKey<String>("${_keyPrefix}_${item.id}"),
+                    category: item,
+                    isColorsVisible: viewModel.isColorsVisible,
+                    onTap: onCategoryPressed,
+                    onMenuSelected: onMenuSelected,
                   );
                 },
               ),

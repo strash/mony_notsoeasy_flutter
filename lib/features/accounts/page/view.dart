@@ -58,7 +58,7 @@ class AccountsView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20.0),
               sliver: SliverList.separated(
                 findChildIndexCallback: (key) {
-                  final id = "${_keyPrefix}_${(key as ValueKey).value}";
+                  final id = (key as ValueKey).value;
                   final index = viewModel.accounts.indexWhere((e) {
                     return "${_keyPrefix}_${e.id}" == id;
                   });

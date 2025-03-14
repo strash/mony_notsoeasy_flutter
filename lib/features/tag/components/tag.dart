@@ -14,31 +14,35 @@ class TagTagComponent extends StatelessWidget {
 
     return Center(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 20.0),
 
           // -> tag
-          DecoratedBox(
-            decoration: ShapeDecoration(
-              color: theme.colorScheme.surfaceContainerHigh,
-              shape: const SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 0.6),
+          Flexible(
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                color: theme.colorScheme.surfaceContainerHigh,
+                shape: const SmoothRectangleBorder(
+                  borderRadius: SmoothBorderRadius.all(
+                    SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 0.6),
+                  ),
                 ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 25.0,
-                vertical: 15.0,
-              ),
-              child: Text(
-                "#${tag.title}",
-                style: GoogleFonts.golosText(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
-                  height: 1.0,
-                  color: theme.colorScheme.onTertiaryContainer,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25.0,
+                  vertical: 15.0,
+                ),
+                child: Text(
+                  "#${tag.title}",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.golosText(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                    height: 1.2,
+                    color: theme.colorScheme.onTertiaryContainer,
+                  ),
                 ),
               ),
             ),
