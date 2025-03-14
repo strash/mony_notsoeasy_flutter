@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_controller.dart";
+import "package:mony_app/components/tag_with_context_menu/use_case/use_case.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/features/tags/page/view.dart";
 import "package:mony_app/features/tags/use_case/use_case.dart";
@@ -58,7 +59,11 @@ final class TagsViewModel extends ViewModelState<TagsPage> {
   Widget build(BuildContext context) {
     return ViewModel<TagsViewModel>(
       viewModel: this,
-      useCases: [() => OnAddTagPressed(), () => OnTagPressed()],
+      useCases: [
+        () => OnAddTagPressed(),
+        () => OnTagPressed(),
+        () => OnTagWithContextMenuSelected(),
+      ],
       child: const TagsView(),
     );
   }

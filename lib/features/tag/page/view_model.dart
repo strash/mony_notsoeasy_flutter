@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 import "package:mony_app/common/common.dart";
+import "package:mony_app/components/tag_with_context_menu/use_case/use_case.dart";
 import "package:mony_app/components/transaction_with_context_menu/component.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/tag/page/view.dart";
@@ -84,8 +85,7 @@ final class TagViewModel extends ViewModelState<TagPage> {
     return ViewModel(
       viewModel: this,
       useCases: [
-        () => OnEditPressed(),
-        () => OnDeletePressed(),
+        () => OnTagWithContextMenuSelected(),
         () => OnTransactionWithContextMenuPressed(),
         () => OnTransactionWithContextMenuSelected(),
       ],

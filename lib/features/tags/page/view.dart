@@ -3,7 +3,7 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/components/appbar_button/component.dart";
 import "package:mony_app/components/empty_state/component.dart";
-import "package:mony_app/components/tag/component.dart";
+import "package:mony_app/components/tag_with_context_menu/component.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/tags/tags.dart";
 import "package:mony_app/features/tags/use_case/use_case.dart";
@@ -22,6 +22,8 @@ class TagsView extends StatelessWidget {
     final viewModel = context.viewModel<TagsViewModel>();
     final onAddTagPressed = viewModel<OnAddTagPressed>();
     final onTagPressed = viewModel<OnTagPressed>();
+    final onMenuSelected = viewModel<OnTagWithContextMenuSelected>();
+
     final isEmpty = viewModel.tags.isEmpty;
 
     return Scaffold(
@@ -63,22 +65,17 @@ class TagsView extends StatelessWidget {
                   return index != -1 ? index : null;
                 },
                 separatorBuilder: (context, index) {
-                  return const SizedBox(height: 25.0);
+                  return const SizedBox(height: 5.0);
                 },
                 itemCount: viewModel.tags.length,
                 itemBuilder: (context, index) {
                   final item = viewModel.tags.elementAt(index);
 
-                  return GestureDetector(
+                  return TagWithContextMenuComponent(
                     key: ValueKey<String>("${_keyPrefix}_${item.id}"),
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () => onTagPressed(context, item),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        children: [Flexible(child: TagComponent(tag: item))],
-                      ),
-                    ),
+                    tag: item,
+                    onTap: onTagPressed,
+                    onMenuSelected: onMenuSelected,
                   );
                 },
               ),

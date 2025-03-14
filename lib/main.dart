@@ -16,11 +16,9 @@ import "package:shared_preferences/shared_preferences.dart";
 // TODO: бюджеты
 // TODO: вход по отпечатку
 // TODO: локализация
-// TODO: контекстное меню для айтемов в списках
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // GoogleFonts.config.allowRuntimeFetching = false;
   if (appFlavor == "prod_rustore_flavor") {
     await RustoreReviewClient.initialize();
   }

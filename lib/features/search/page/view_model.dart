@@ -8,6 +8,7 @@ import "package:mony_app/common/utils/feed_scroll_controller/feed_scroll_control
 import "package:mony_app/common/utils/input_controller/controller.dart";
 import "package:mony_app/components/account_with_context_menu/use_case/use_case.dart";
 import "package:mony_app/components/category_with_context_menu/use_case/use_case.dart";
+import "package:mony_app/components/tag_with_context_menu/use_case/use_case.dart";
 import "package:mony_app/components/transaction_with_context_menu/component.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/services.dart";
@@ -157,6 +158,7 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
         () => OnCategoryPressed(),
         () => OnCategoryWithContextMenuSelected(),
         () => OnTagPressed(),
+        () => OnTagWithContextMenuSelected(),
       ],
       child: const SearchView(),
     );

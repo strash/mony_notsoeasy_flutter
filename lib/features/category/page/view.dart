@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/extensions.dart";
-import "package:mony_app/components/category_with_context_menu/component.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/category/category.dart";
 import "package:mony_app/features/category/components/components.dart";

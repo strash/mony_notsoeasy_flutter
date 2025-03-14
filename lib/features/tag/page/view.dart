@@ -3,7 +3,6 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/tag/components/components.dart";
 import "package:mony_app/features/tag/page/view_model.dart";
-import "package:mony_app/features/tag/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
 class TagView extends StatelessWidget {
@@ -18,8 +17,7 @@ class TagView extends StatelessWidget {
     final tag = viewModel.tag;
     final balance = viewModel.balance;
 
-    final onEditPressed = viewModel<OnEditPressed>();
-    final onDeletePressed = viewModel<OnDeletePressed>();
+    final onTagMenuSelected = viewModel<OnTagWithContextMenuSelected>();
     final onTransactionPressed =
         viewModel<OnTransactionWithContextMenuPressed>();
     final onTransactionMenuSelected =
@@ -40,14 +38,20 @@ class TagView extends StatelessWidget {
                 // -> button edit
                 AppBarButtonComponent(
                   icon: Assets.icons.pencilBold,
-                  onTap: () => onEditPressed(context, tag),
+                  onTap: () {
+                    final value = (menu: ETagContextMenuItem.edit, tag: tag);
+                    onTagMenuSelected(context, value);
+                  },
                 ),
                 const SizedBox(width: 4.0),
 
                 // -> button delete
                 AppBarButtonComponent(
                   icon: Assets.icons.trashFill,
-                  onTap: () => onDeletePressed(context, tag),
+                  onTap: () {
+                    final value = (menu: ETagContextMenuItem.delete, tag: tag);
+                    onTagMenuSelected(context, value);
+                  },
                 ),
               ],
             ),
