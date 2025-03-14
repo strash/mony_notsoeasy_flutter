@@ -75,6 +75,7 @@ class AccountsView extends StatelessWidget {
                   return AccountWithContextMenuComponent(
                     key: ValueKey<String>("${_keyPrefix}_${item.id}"),
                     account: item,
+                    accountCount: viewModel.accounts.length,
                     balance: balance,
                     isCentsVisible: viewModel.isCentsVisible,
                     isColorsVisible: viewModel.isColorsVisible,

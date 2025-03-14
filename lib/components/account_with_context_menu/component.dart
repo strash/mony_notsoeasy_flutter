@@ -43,6 +43,7 @@ enum EAccountContextMenuItem implements IDescriptable {
 }
 
 class AccountWithContextMenuComponent extends StatefulWidget {
+  final int accountCount;
   final AccountModel account;
   final AccountBalanceModel? balance;
   final bool isCentsVisible;
@@ -52,6 +53,7 @@ class AccountWithContextMenuComponent extends StatefulWidget {
 
   const AccountWithContextMenuComponent({
     super.key,
+    required this.accountCount,
     required this.account,
     this.balance,
     required this.isCentsVisible,
@@ -79,6 +81,30 @@ class _AccountWithContextMenuComponentState
     HapticFeedback.heavyImpact();
     activate();
     _controller.reset();
+  }
+
+  Widget _getMenuItem(EAccountContextMenuItem item, VoidCallback dismiss) {
+    return Builder(
+      builder: (context) {
+        final theme = Theme.of(context);
+
+        return ContextMenuItemComponent(
+          label: Text(item.description),
+          icon: SvgPicture.asset(
+            item.icon,
+            colorFilter: ColorFilter.mode(
+              theme.colorScheme.onSurface,
+              BlendMode.srcIn,
+            ),
+          ),
+          onTap: () {
+            final value = (menu: item, account: widget.account);
+            widget.onMenuSelected(context, value);
+            dismiss();
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -168,34 +194,21 @@ class _AccountWithContextMenuComponentState
         );
       },
       popupBuilder: (context, anim, status, dismiss) {
-        final theme = Theme.of(context);
+        final hasAccounts = widget.accountCount > 1;
 
-        return SeparatedComponent.builder(
+        return SeparatedComponent.list(
           mainAxisSize: MainAxisSize.min,
           separatorBuilder: (context, index) {
             return const ContextMenuSeparatorComponent(isBig: false);
           },
-          itemCount: EAccountContextMenuItem.values.length,
-          itemBuilder: (context, index) {
-            final item = EAccountContextMenuItem.values.elementAt(index);
-
-            // TODO: если счет всего один, то не отображать пункты перевода
-            return ContextMenuItemComponent(
-              label: Text(item.description),
-              icon: SvgPicture.asset(
-                item.icon,
-                colorFilter: ColorFilter.mode(
-                  theme.colorScheme.onSurface,
-                  BlendMode.srcIn,
-                ),
-              ),
-              onTap: () {
-                final value = (menu: item, account: widget.account);
-                widget.onMenuSelected(context, value);
-                dismiss();
-              },
-            );
-          },
+          children: [
+            if (hasAccounts)
+              _getMenuItem(EAccountContextMenuItem.receive, dismiss),
+            if (hasAccounts)
+              _getMenuItem(EAccountContextMenuItem.send, dismiss),
+            _getMenuItem(EAccountContextMenuItem.edit, dismiss),
+            _getMenuItem(EAccountContextMenuItem.delete, dismiss),
+          ],
         );
       },
     );

@@ -115,6 +115,7 @@ class SearchTabPageComponent extends StatelessWidget {
                 return AccountWithContextMenuComponent(
                   key: ValueKey<String>("${_keyPrefixAccount}_${item.id}"),
                   account: item,
+                  accountCount: viewModel.accounts.length,
                   balance: balance,
                   isCentsVisible: viewModel.isCentsVisible,
                   isColorsVisible: viewModel.isColorsVisible,
