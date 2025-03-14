@@ -1,6 +1,7 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:provider/provider.dart";
@@ -55,6 +56,13 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         });
 
       case EventAccountUpdated() || EventAccountDeleted():
+        final close = context.close;
+        final count = await accountService.count();
+        if (event is EventAccountDeleted && count == 0) {
+          close();
+          return;
+        }
+        if (!context.mounted) return;
         final counts = await _updateCounts(context);
         final List<List<AccountModel>> accounts = [];
         int page = 0;

@@ -1,5 +1,6 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/database/account.dart";
 import "package:mony_app/features/accounts/page/view_model.dart";
@@ -61,7 +62,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         });
 
       case EventAccountDeleted():
-        if (viewModel.accounts.length == 1) return;
+        // NOTE: the length here is not updated yet hence "1"
+        if (viewModel.accounts.length == 1) context.close();
         final List<List<AccountModel>> accounts = [];
         final List<List<AccountBalanceModel>> balances = [];
         int scrollPage = 0;
