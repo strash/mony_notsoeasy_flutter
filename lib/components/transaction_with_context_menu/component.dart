@@ -124,14 +124,16 @@ class _TransactionWithContextMenuComponentState
           ),
         );
       },
-      buttonProxyBuilder: (context, anim, dismiss) {
+      buttonProxyBuilder: (context, anim, status, dismiss) {
         final theme = Theme.of(context);
+        final t = Curves.easeInQuad.transform(anim);
+        final scale = t.remap(.0, 1.0, 1.0, _scale);
 
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: dismiss,
           child: Transform.scale(
-            scale: _scale,
+            scale: status == AnimationStatus.reverse ? scale : _scale,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: DecoratedBox(
@@ -158,7 +160,7 @@ class _TransactionWithContextMenuComponentState
           ),
         );
       },
-      popupBuilder: (context, anim, dismiss) {
+      popupBuilder: (context, anim, status, dismiss) {
         final theme = Theme.of(context);
 
         return SeparatedComponent.builder(

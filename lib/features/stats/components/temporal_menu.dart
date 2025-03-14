@@ -37,14 +37,14 @@ class StatsTemporalViewMenuComponent extends StatelessWidget {
           ),
         );
       },
-      buttonProxyBuilder: (context, anim, dismiss) {
+      buttonProxyBuilder: (context, anim, status, dismiss) {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: dismiss,
           child: _Button(viewModel.activeTemporalView.icon),
         );
       },
-      popupBuilder: (context, anim, dismiss) {
+      popupBuilder: (context, anim, status, dismiss) {
         final theme = Theme.of(context);
 
         return SeparatedComponent.builder(

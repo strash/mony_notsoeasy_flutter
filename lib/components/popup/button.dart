@@ -9,6 +9,7 @@ typedef TPopupButtonProxyBuilder =
     Widget Function(
       BuildContext context,
       double animation,
+      AnimationStatus status,
       Rect proxyRect,
       VoidCallback dismiss,
     );

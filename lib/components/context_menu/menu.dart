@@ -7,6 +7,7 @@ typedef TContextMenuProxyBuilder =
     Widget Function(
       BuildContext context,
       double animation,
+      AnimationStatus status,
       VoidCallback dismiss,
     );
 
@@ -128,19 +129,20 @@ class _ContextMenuComponentState extends State<ContextMenuComponent> {
       builder: (context, isOpened, activate) {
         return widget.buttonBuilder(context, isOpened, activate);
       },
-      proxyBuilder: (context, anim, proxyRect, dismiss) {
+      proxyBuilder: (context, anim, status, proxyRect, dismiss) {
         final t = Curves.easeInOut.transform(anim);
         final offset = Offset(.0, t.remap(.0, 1.0, .0, _yOffset));
 
         return Positioned.fromRect(
           rect: proxyRect.shift(offset),
-          child: widget.buttonProxyBuilder(context, anim, dismiss),
+          child: widget.buttonProxyBuilder(context, anim, status, dismiss),
         );
       },
-      popupBuilder: (context, anim, proxyRect, dismiss) {
+      popupBuilder: (context, anim, status, proxyRect, dismiss) {
         _proxyRect = proxyRect;
         final t = Curves.easeInOutSine.transform(anim);
         final offset = Offset(.0, t.remap(.0, 1.0, .0, _yOffset));
+        final scale = t.remap(.0, 1.0, .4, 1.0);
 
         return Positioned.fromRect(
           rect: _menuRect.shift(offset),
@@ -149,13 +151,18 @@ class _ContextMenuComponentState extends State<ContextMenuComponent> {
               width: _width,
               controller: _sizeController,
               child: Transform.scale(
-                scale: t.remap(.0, 1.0, .4, 1.0),
+                scale: scale,
                 alignment: _alignment,
                 child: Opacity(
                   opacity: t,
                   child: PopupContainerComoponent(
                     builder: (context) {
-                      return widget.popupBuilder(context, anim, dismiss);
+                      return widget.popupBuilder(
+                        context,
+                        anim,
+                        status,
+                        dismiss,
+                      );
                     },
                   ),
                 ),

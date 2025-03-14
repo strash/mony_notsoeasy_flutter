@@ -90,6 +90,7 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
             widget.proxyBuilder(
               context,
               _controller.value,
+              _controller.status,
               widget.initialRect,
               _onTapOutside,
             ),
@@ -98,6 +99,7 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
             widget.popupBuilder(
               context,
               _controller.value,
+              _controller.status,
               widget.initialRect,
               _onTapOutside,
             ),

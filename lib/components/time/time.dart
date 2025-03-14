@@ -67,7 +67,7 @@ class TimeComponent extends StatelessWidget {
           ),
         );
       },
-      proxyBuilder: (context, _, proxyRect, dismiss) {
+      proxyBuilder: (context, anim, status, proxyRect, dismiss) {
         return Positioned.fromRect(
           rect: proxyRect,
           child: ListenableBuilder(
@@ -84,7 +84,7 @@ class TimeComponent extends StatelessWidget {
           ),
         );
       },
-      popupBuilder: (context, anim, proxyRect, _) {
+      popupBuilder: (context, anim, status, proxyRect, _) {
         final theme = Theme.of(context);
         final t = Curves.easeInOutSine.transform(anim);
 
