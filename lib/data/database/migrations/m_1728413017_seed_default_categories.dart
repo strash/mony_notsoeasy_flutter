@@ -1,10 +1,22 @@
+import "dart:ui";
+
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/data/database/migration_service.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:sqflite/sqflite.dart";
 
-typedef _CategoryValueObject = ({String icon, String color, String title});
+typedef _TI18n = ({String en, String ru});
+typedef _TCategoryVO = ({String icon, String color, _TI18n title});
+
+extension on _TCategoryVO {
+  String tr(Locale? locale) {
+    return switch (locale?.languageCode.toLowerCase()) {
+      "ru" => title.ru,
+      "en" || null || _ => title.en,
+    };
+  }
+}
 
 final class M1728413017SeedDefaultCategories extends BaseMigration {
   final _categories = "categories";
@@ -47,35 +59,77 @@ INSERT INTO $_categories (
 
   @override
   Future<void> up(Database db) async {
+    final locale = PlatformDispatcher.instance.locales.firstOrNull;
     final batch = db.batch();
+
     // expense categories
-    final expenseCategories = <_CategoryValueObject>[
-      (icon: "🛒", color: EColorName.maximumBluePurple.name, title: "Продукты"),
-      (icon: "🍔", color: EColorName.philippineYellow.name, title: "Еда"),
+    final expenseCategories = <_TCategoryVO>[
+      (
+        icon: "🛒",
+        color: EColorName.maximumBluePurple.name,
+        title: (en: "Groceries", ru: "Продукты"),
+      ),
+      (
+        icon: "🍔",
+        color: EColorName.philippineYellow.name,
+        title: (en: "Food", ru: "Еда"),
+      ),
       (
         icon: "😍",
         color: EColorName.americanOrange.name,
-        title: "Забота о себе",
+        title: (en: "Self Care", ru: "Забота о себе"),
       ),
-      (icon: "🐶", color: EColorName.cafeAuLait.name, title: "Питомцы"),
-      (icon: "🏠", color: EColorName.bananaYellow.name, title: "Аренда"),
-      (icon: "🚑", color: EColorName.inchworm.name, title: "Здоровье"),
-      (icon: "🚖", color: EColorName.corn.name, title: "Транспорт"),
-      (icon: "🔄", color: EColorName.babyBlue.name, title: "Подписки"),
+      (
+        icon: "🐶",
+        color: EColorName.cafeAuLait.name,
+        title: (en: "Pets", ru: "Питомцы"),
+      ),
+      (
+        icon: "🏠",
+        color: EColorName.bananaYellow.name,
+        title: (en: "Rent", ru: "Аренда"),
+      ),
+      (
+        icon: "🚑",
+        color: EColorName.inchworm.name,
+        title: (en: "Healthcare", ru: "Здоровье"),
+      ),
+      (
+        icon: "🚖",
+        color: EColorName.corn.name,
+        title: (en: "Transport", ru: "Транспорт"),
+      ),
+      (
+        icon: "🔄",
+        color: EColorName.babyBlue.name,
+        title: (en: "Subscriptions", ru: "Подписки"),
+      ),
       (
         icon: "🧦",
         color: EColorName.richBrilliantLavender.name,
-        title: "Гардероб",
+        title: (en: "Fashion", ru: "Гардероб"),
       ),
-      (icon: "🎁", color: EColorName.mauvelous.name, title: "Подарки"),
-      (icon: "🪴", color: EColorName.vividMalachite.name, title: "Дом"),
-      (icon: "💻", color: EColorName.cadet.name, title: "Девайсы"),
+      (
+        icon: "🎁",
+        color: EColorName.mauvelous.name,
+        title: (en: "Gifts", ru: "Подарки"),
+      ),
+      (
+        icon: "🪴",
+        color: EColorName.vividMalachite.name,
+        title: (en: "Home", ru: "Дом"),
+      ),
+      (
+        icon: "💻",
+        color: EColorName.cadet.name,
+        title: (en: "Electronics", ru: "Девайсы"),
+      ),
     ];
     for (final category in expenseCategories) {
       batch.execute(
         _getInsertQuery(
           icon: category.icon,
-          title: category.title,
+          title: category.tr(locale),
           colorName: category.color,
           transactionType: ETransactionType.expense.value,
         ),
@@ -83,20 +137,48 @@ INSERT INTO $_categories (
     }
 
     // income categories
-    final incomeCategories = <_CategoryValueObject>[
-      (icon: "🤑", color: EColorName.vividMalachite.name, title: "Зарплата"),
-      (icon: "💼", color: EColorName.azure.name, title: "Фриланс"),
-      (icon: "🧧", color: EColorName.mauvelous.name, title: "Подарки"),
-      (icon: "💹", color: EColorName.bananaYellow.name, title: "Инверстиции"),
-      (icon: "🪙", color: EColorName.inchworm.name, title: "Чаевые"),
-      (icon: "💸", color: EColorName.cafeAuLait.name, title: "Займ"),
-      (icon: "🧾", color: EColorName.majorelleBlue.name, title: "Продажи"),
+    final incomeCategories = <_TCategoryVO>[
+      (
+        icon: "🤑",
+        color: EColorName.vividMalachite.name,
+        title: (en: "Paycheck", ru: "Зарплата"),
+      ),
+      (
+        icon: "💼",
+        color: EColorName.azure.name,
+        title: (en: "Freelance", ru: "Фриланс"),
+      ),
+      (
+        icon: "🧧",
+        color: EColorName.mauvelous.name,
+        title: (en: "Gifts", ru: "Подарки"),
+      ),
+      (
+        icon: "💹",
+        color: EColorName.bananaYellow.name,
+        title: (en: "Investments", ru: "Инвестиции"),
+      ),
+      (
+        icon: "🪙",
+        color: EColorName.inchworm.name,
+        title: (en: "Tips", ru: "Чаевые"),
+      ),
+      (
+        icon: "💸",
+        color: EColorName.cafeAuLait.name,
+        title: (en: "Loan", ru: "Займ"),
+      ),
+      (
+        icon: "🧾",
+        color: EColorName.majorelleBlue.name,
+        title: (en: "Sales", ru: "Продажи"),
+      ),
     ];
     for (final category in incomeCategories) {
       batch.execute(
         _getInsertQuery(
           icon: category.icon,
-          title: category.title,
+          title: category.tr(locale),
           colorName: category.color,
           transactionType: ETransactionType.income.value,
         ),

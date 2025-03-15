@@ -19,7 +19,7 @@ import "package:shared_preferences/shared_preferences.dart";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (appFlavor == "prod_rustore_flavor") {
+  if (appFlavor == "prod_rustore_flavor" || appFlavor == "dev_rustore_flavor") {
     await RustoreReviewClient.initialize();
   }
   if (Platform.isAndroid) {

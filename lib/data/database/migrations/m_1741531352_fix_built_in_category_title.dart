@@ -3,6 +3,7 @@ import "package:sqflite/sqflite.dart";
 
 final class M1741531352FixBuiltInCategoryTitle extends BaseMigration {
   final _categories = "categories";
+
   @override
   Future<void> up(Database db) async {
     await db.execute(
