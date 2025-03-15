@@ -40,7 +40,7 @@ run_android:
 		--dart-define=DEV_DB_ON_DEVICE=true \
 		--dart-define-from-file=.env \
 		--dart-define-from-file=.version \
-		--flavor=prod_android_flavor \
+		--flavor=dev_android_flavor \
 		--no-pub
 
 run_rustore:
@@ -49,7 +49,7 @@ run_rustore:
 		--dart-define=DEV_DB_ON_DEVICE=true \
 		--dart-define-from-file=.env \
 		--dart-define-from-file=.version \
-		--flavor=prod_rustore_flavor \
+		--flavor=dev_rustore_flavor \
 		--no-pub
 
 release:

@@ -62,7 +62,12 @@ android {
 	productFlavors {
 		dev_android_flavor {
 			dimension 'default'
-			resValue 'string', 'app_name', 'Mony Dev'
+			resValue 'string', 'app_name', 'Mony Dev Android'
+			applicationIdSuffix '.dev'
+		}
+		dev_rustore_flavor {
+			dimension 'default'
+			resValue 'string', 'app_name', 'Mony Dev Rustore'
 			applicationIdSuffix '.dev'
 		}
 		prod_android_flavor {
