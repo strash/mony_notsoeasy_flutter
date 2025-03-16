@@ -9,6 +9,7 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/data/data.dart";
 import "package:mony_app/data/database/migrations/m_1728413017_seed_default_categories.dart";
 import "package:mony_app/domain/domain.dart";
+import "package:mony_app/i18n/strings.g.dart";
 import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
@@ -18,6 +19,7 @@ import "package:shared_preferences/shared_preferences.dart";
 // TODO: локализация
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  LocaleSettings.useDeviceLocale();
 
   if (appFlavor == "prod_rustore_flavor" || appFlavor == "dev_rustore_flavor") {
     await RustoreReviewClient.initialize();
@@ -49,92 +51,94 @@ void main() async {
   );
 
   runApp(
-    AppEventServiceBuilder(
-      child: MultiProvider(
-        providers: [
-          // -> import/export service
-          Provider<DomainImportExportService>(
-            create: (context) {
-              return DomainImportExportService(
-                csvFilesystemRepository: CsvFilesystemRepository(
-                  filePicker: FilePicker.platform,
-                ),
-                monyFileFilesystemRepository: MonyFileFilesystemRepository(
-                  filePicker: FilePicker.platform,
-                ),
-              );
-            },
-          ),
+    TranslationProvider(
+      child: AppEventServiceBuilder(
+        child: MultiProvider(
+          providers: [
+            // -> import/export service
+            Provider<DomainImportExportService>(
+              create: (context) {
+                return DomainImportExportService(
+                  csvFilesystemRepository: CsvFilesystemRepository(
+                    filePicker: FilePicker.platform,
+                  ),
+                  monyFileFilesystemRepository: MonyFileFilesystemRepository(
+                    filePicker: FilePicker.platform,
+                  ),
+                );
+              },
+            ),
 
-          // -> shared preferences service
-          Provider<DomainSharedPreferencesService>(
-            create: (context) {
-              return DomainSharedPreferencesService(
-                sharedPrefencesRepository: sharedPrefRepo,
-              );
-            },
-          ),
+            // -> shared preferences service
+            Provider<DomainSharedPreferencesService>(
+              create: (context) {
+                return DomainSharedPreferencesService(
+                  sharedPrefencesRepository: sharedPrefRepo,
+                );
+              },
+            ),
 
-          // -> app review service
-          Provider<AppReviewService>(
-            create: (context) {
-              return AppReviewService(
-                sharedPreferencesRepository: sharedPrefRepo,
-              );
-            },
-          ),
+            // -> app review service
+            Provider<AppReviewService>(
+              create: (context) {
+                return AppReviewService(
+                  sharedPreferencesRepository: sharedPrefRepo,
+                );
+              },
+            ),
 
-          // -> account service
-          Provider<DomainAccountService>(
-            create: (context) {
-              return DomainAccountService(
-                accountRepo: accountRepo,
-                accountFactory: AccountDatabaseFactoryImpl(),
-                accountBalanceFactory: AccountBalanceDatabaseFactoryImpl(),
-              );
-            },
-          ),
+            // -> account service
+            Provider<DomainAccountService>(
+              create: (context) {
+                return DomainAccountService(
+                  accountRepo: accountRepo,
+                  accountFactory: AccountDatabaseFactoryImpl(),
+                  accountBalanceFactory: AccountBalanceDatabaseFactoryImpl(),
+                );
+              },
+            ),
 
-          // -> category service
-          Provider<DomainCategoryService>(
-            create: (context) {
-              return DomainCategoryService(
-                categoryRepo: categoryRepo,
-                categoryFactory: CategoryDatabaseFactoryImpl(),
-                categoryBalanceFactory: CategoryBalanceDatabaseFactoryImpl(),
-              );
-            },
-          ),
+            // -> category service
+            Provider<DomainCategoryService>(
+              create: (context) {
+                return DomainCategoryService(
+                  categoryRepo: categoryRepo,
+                  categoryFactory: CategoryDatabaseFactoryImpl(),
+                  categoryBalanceFactory: CategoryBalanceDatabaseFactoryImpl(),
+                );
+              },
+            ),
 
-          // -> tag service
-          Provider<DomainTagService>(
-            create: (context) {
-              return DomainTagService(
-                tagRepo: tagRepo,
-                tagFactory: TagDatabaseFactoryImpl(),
-                tagBalanceFactory: TagBalanceDatabaseFactoryImpl(),
-              );
-            },
-          ),
+            // -> tag service
+            Provider<DomainTagService>(
+              create: (context) {
+                return DomainTagService(
+                  tagRepo: tagRepo,
+                  tagFactory: TagDatabaseFactoryImpl(),
+                  tagBalanceFactory: TagBalanceDatabaseFactoryImpl(),
+                );
+              },
+            ),
 
-          // -> transaction service
-          Provider<DomainTransactionService>(
-            create: (context) {
-              return DomainTransactionService(
-                transactionRepo: transactionRepo,
-                transactionTagRepo: transactionTagRepo,
-                tagRepo: tagRepo,
-                accountRepo: accountRepo,
-                categoryRepo: categoryRepo,
-                transactionFactory: TransactionDatabaseFactoryImpl(),
-                tagFactory: TagDatabaseFactoryImpl(),
-                accountFactory: AccountDatabaseFactoryImpl(),
-                categoryFactory: CategoryDatabaseFactoryImpl(),
-              );
-            },
-          ),
-        ],
-        child: const MonyApp(),
+            // -> transaction service
+            Provider<DomainTransactionService>(
+              create: (context) {
+                return DomainTransactionService(
+                  transactionRepo: transactionRepo,
+                  transactionTagRepo: transactionTagRepo,
+                  tagRepo: tagRepo,
+                  accountRepo: accountRepo,
+                  categoryRepo: categoryRepo,
+                  transactionFactory: TransactionDatabaseFactoryImpl(),
+                  tagFactory: TagDatabaseFactoryImpl(),
+                  accountFactory: AccountDatabaseFactoryImpl(),
+                  categoryFactory: CategoryDatabaseFactoryImpl(),
+                );
+              },
+            ),
+          ],
+          child: const MonyApp(),
+        ),
       ),
     ),
   );

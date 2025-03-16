@@ -27,6 +27,8 @@ dependencies:
   rxdart: any
   sealed_currencies: any
   shared_preferences: any
+  slang: any
+  slang_flutter: any
   smooth_page_indicator: any
   sqflite: any
   url_launcher: any

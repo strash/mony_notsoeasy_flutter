@@ -10,7 +10,11 @@ icons:
 	@echo " 1. open Android Studio\n 2. File > Open... > \"android\"\n 3. use \"res\" folder"
 
 build:
-	@dart run build_runner build
+	@dart run build_runner build && \
+	dart run slang
+
+watch:
+	@dart run slang watch
 
 migrate name:
 	@bash migrate.sh \
@@ -54,6 +58,7 @@ run_rustore:
 
 release:
 	#@just test
+	@just build
 	@echo "building apk"
 	@ANDROID_HOME=$HOME/Library/Android/sdk \
 	flutter build apk --tree-shake-icons --release --pub \

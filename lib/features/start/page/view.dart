@@ -5,6 +5,7 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/start/start.dart";
 import "package:mony_app/features/start/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class StartView extends StatelessWidget {
   const StartView({super.key});
@@ -99,7 +100,7 @@ class StartView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "помнит куда деньги девались",
+                        context.t.features.start.subtitle,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.golosText(
                           fontSize: 15.0,

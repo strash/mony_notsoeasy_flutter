@@ -44,6 +44,7 @@ class AccountCurrencyComponent extends StatelessWidget {
             foreground: theme.colorScheme.surface,
           ),
         ),
+
         Flexible(
           child: Text.rich(
             TextSpan(
