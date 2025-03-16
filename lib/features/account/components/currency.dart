@@ -22,69 +22,51 @@ class AccountCurrencyComponent extends StatelessWidget {
     final theme = Theme.of(context);
 
     return SeparatedComponent.list(
-      separatorBuilder: (context, index) => const SizedBox(height: 10.0),
-      children: [
-        // -> title
-        Text(
-          "Валюта",
+      direction: Axis.horizontal,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      separatorBuilder: (context, index) {
+        return Text(
+          " • ",
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w500,
             height: 1.4,
             color: theme.colorScheme.onSurfaceVariant,
           ),
+        );
+      },
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 2.0),
+          child: CurrencyTagComponent(
+            code: balance.currency.code,
+            background: showColors ? color : theme.colorScheme.onSurfaceVariant,
+            foreground: theme.colorScheme.surface,
+          ),
         ),
-
-        // -> currency
-        SeparatedComponent.list(
-          direction: Axis.horizontal,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          separatorBuilder: (context, index) {
-            return Text(
-              " • ",
-              style: GoogleFonts.golosText(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w500,
-                height: 1.4,
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            );
-          },
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 2.0),
-              child: CurrencyTagComponent(
-                code: balance.currency.code,
-                background:
-                    showColors ? color : theme.colorScheme.onSurfaceVariant,
-                foreground: theme.colorScheme.surface,
-              ),
-            ),
-            Flexible(
-              child: Text.rich(
+        Flexible(
+          child: Text.rich(
+            TextSpan(
+              text: currencyDescription.$2,
+              children: [
                 TextSpan(
-                  text: currencyDescription.$2,
-                  children: [
-                    TextSpan(
-                      text: " ${currencyDescription.$1}",
-                      style: GoogleFonts.golosText(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w500,
-                        height: 1.4,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
+                  text: " ${currencyDescription.$1}",
+                  style: GoogleFonts.golosText(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                    height: 1.4,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
-                style: GoogleFonts.golosText(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w500,
-                  height: 1.4,
-                  color: theme.colorScheme.onSurface,
-                ),
-              ),
+              ],
             ),
-          ],
+            style: GoogleFonts.golosText(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+              height: 1.4,
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
         ),
       ],
     );
