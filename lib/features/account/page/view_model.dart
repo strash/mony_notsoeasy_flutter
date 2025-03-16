@@ -9,6 +9,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account/page/view.dart";
 import "package:mony_app/features/account/use_case/use_case.dart";
 import "package:provider/provider.dart";
+import "package:sealed_currencies/sealed_currencies.dart";
 
 final class AccountPage extends StatefulWidget {
   final AccountModel account;
@@ -28,6 +29,18 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
   AccountBalanceModel? balance;
 
   bool isColorsVisible = true;
+
+  (String, String) currencyDescription(FiatCurrency? currency) {
+    if (currency == null) return ("", "");
+    final locale = Localizations.localeOf(context);
+    final lang = NaturalLanguage.maybeFromCodeShort(locale.countryCode);
+    final symbol = currency.symbol ?? "";
+    if (lang != null) {
+      final base = BasicLocale(lang);
+      return (symbol, currency.maybeTranslation(base)?.toString() ?? "");
+    }
+    return (symbol, currency.name);
+  }
 
   void _onAppEvent(Event event) {
     if (!mounted) return;

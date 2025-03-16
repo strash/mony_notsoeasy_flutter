@@ -110,6 +110,9 @@ class AccountView extends StatelessWidget {
                         // -> currency
                         AccountCurrencyComponent(
                           balance: balance,
+                          currencyDescription: viewModel.currencyDescription(
+                            balance.currency,
+                          ),
                           color: color,
                           showColors: viewModel.isColorsVisible,
                         ),

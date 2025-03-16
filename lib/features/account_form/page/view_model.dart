@@ -48,6 +48,24 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
     return widget.additionalUsedTitles;
   }
 
+  List<FiatCurrency> get currencies {
+    return List.of(FiatCurrency.list.nonNulls, growable: false)
+      ..sort((a, b) => a.code.compareTo(b.code));
+  }
+
+  Iterable<(String, String)> get currencyDescriptions {
+    return currencies.map((currency) {
+      final locale = Localizations.localeOf(context);
+      final lang = NaturalLanguage.maybeFromCodeShort(locale.countryCode);
+      final symbol = currency.symbol ?? "";
+      if (lang != null) {
+        final base = BasicLocale(lang);
+        return (symbol, currency.maybeTranslation(base)?.toString() ?? "");
+      }
+      return (symbol, currency.name);
+    });
+  }
+
   void _listener() {
     setProtectedState(() {
       final balanseTrim = balanceController.text.trim();
@@ -127,10 +145,7 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
   Widget build(BuildContext context) {
     return ViewModel<AccountFormViewModel>(
       viewModel: this,
-      useCases: [
-        () => OnSumbitPressed(),
-        () => OnCurrencyDescriptionRequested(),
-      ],
+      useCases: [() => OnSumbitPressed()],
       child: AccountFormView(keyboardHeight: widget.keyboardHeight),
     );
   }

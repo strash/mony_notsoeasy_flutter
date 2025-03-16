@@ -3,7 +3,6 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/select/component.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
-import "package:mony_app/features/account_form/use_case/use_case.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 class CurrencySelectComponent extends StatelessWidget {
@@ -13,7 +12,8 @@ class CurrencySelectComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<AccountFormViewModel>();
-    final currencyDescription = viewModel<OnCurrencyDescriptionRequested>();
+    final currencies = viewModel.currencies;
+    final descriptions = viewModel.currencyDescriptions;
 
     return SelectComponent<FiatCurrency>(
       controller: viewModel.currencyController,
@@ -29,12 +29,9 @@ class CurrencySelectComponent extends StatelessWidget {
       },
       expand: true,
       entryBuilder: (context) {
-        final list = List.of(FiatCurrency.list, growable: false)
-          ..sort((a, b) => a.code.compareTo(b.code));
-
-        return List.generate(list.length, (index) {
-          final item = list.elementAt(index);
-          final desc = currencyDescription(context, item);
+        return List.generate(currencies.length, (index) {
+          final item = currencies.elementAt(index);
+          final desc = descriptions.elementAt(index);
 
           return SelectEntryComponent<FiatCurrency>(
             value: item,
@@ -55,8 +52,19 @@ class CurrencySelectComponent extends StatelessWidget {
 
                 // -> name
                 Flexible(
-                  child: Text(
-                    desc,
+                  child: Text.rich(
+                    TextSpan(
+                      text: desc.$2,
+                      children: [
+                        TextSpan(
+                          text: " ${desc.$1}",
+                          style: GoogleFonts.golosText(
+                            fontWeight: FontWeight.w500,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
