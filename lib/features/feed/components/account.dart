@@ -9,6 +9,7 @@ import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/features/feed/components/components.dart";
 import "package:mony_app/features/feed/feed.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class FeedAccountComponent extends StatelessWidget {
   final FeedPageState page;
@@ -149,7 +150,7 @@ class FeedAccountComponent extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 1.0),
                                   child: Text(
-                                    "Все счета",
+                                    context.t.features.feed.account.title_all,
                                     style: GoogleFonts.golosText(
                                       fontSize: 15.0,
                                       height: 1.0,

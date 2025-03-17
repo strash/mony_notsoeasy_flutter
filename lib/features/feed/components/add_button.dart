@@ -9,6 +9,7 @@ import "package:mony_app/common/extensions/double.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class FeedAddButtonComponent extends StatelessWidget {
   final UseCase<Future<void>, EFeedMenuItem> onTap;
@@ -72,7 +73,9 @@ class FeedAddButtonComponent extends StatelessWidget {
               final item = EFeedMenuItem.values.elementAt(index);
 
               return ContextMenuItemComponent(
-                label: Text(item.description),
+                label: Text(
+                  context.t.features.feed.add_menu_item(context: item),
+                ),
                 icon: SvgPicture.asset(
                   item.icon,
                   colorFilter: ColorFilter.mode(
@@ -135,15 +138,6 @@ class _Button extends StatelessWidget {
 }
 
 extension on EFeedMenuItem {
-  String get description {
-    return switch (this) {
-      EFeedMenuItem.addAccount => "Счет",
-      EFeedMenuItem.addExpenseCategory => "Категория расходов",
-      EFeedMenuItem.addIncomeCategory => "Категория доходов",
-      EFeedMenuItem.addTag => "Тег",
-    };
-  }
-
   String get icon {
     return switch (this) {
       EFeedMenuItem.addAccount => Assets.icons.widgetSmall,

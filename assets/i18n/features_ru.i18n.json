@@ -53,17 +53,46 @@
 			"title": "Сумма всех транзакций"
 		}
 	},
+	"category_form": {
+		"title_input_placeholder": "название категории",
+		"button_save": "Сохранить"
+	},
+	"feed": {
+		"account": {
+			"title_all": "Все счета",
+			"account_count": {
+				"one": "${n: decimalPattern} счет",
+				"two": "${n: decimalPattern} счета",
+				"few": "${n: decimalPattern} счета",
+				"other": "${n: decimalPattern} счетов"
+			}
+		},
+		"button_search": "поиск",
+		"add_menu_item(context=EFeedMenuItem)": {
+			"addAccount": "Счет",
+			"addExpenseCategory": "Категория расходов",
+			"addIncomeCategory": "Категория доходов",
+			"addTag": "Тег"
+		}
+	},
 	"stats": {
 		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
 	},
+	"settings": {
+		"language(context=ESettingsLanguage)": {
+			"system": "Системный",
+			"english": "English",
+			"russian": "Русский"
+		}
+	},
 	"start": {
-		"subtitle": "помнит куда деньги девались.",
+		"subtitle": "помнит куда деньги подевались.",
 		"button_next": "Супер, дальше!",
 		"privacy_policy": "Политика обработки персональных данных"
 	},
 	"start_account": {
 		"title": "Счет",
-		"description": "Для начала нужно завести счет, в который можно добавлять новые транзакции. Позже будет возможность создать другие счета. Этот счет никак не связан с реальным банковским счетом.\n\nМожно либо создать новый счет, либо импортировать свои данные из \"export_mony.json\" файла или из CSV файла из других приложений.",
+		"description": "Для начала вам нужно создать аккаунт, в который вы сможете добавлять новые транзакции. Позже будет возможность создавать другие аккаунты. Имейте в виду, что этот аккаунт не связан с реальным банковским счетом.\n\nВы можете либо создать новый аккаунт, либо импортировать свои данные из файла \"export_mony.json\" или из CSV-файла из других приложений.",
 		"button_create": "Создать счет",
 		"button_import_mony": "Mony",
 		"button_import_csv": "CSV"

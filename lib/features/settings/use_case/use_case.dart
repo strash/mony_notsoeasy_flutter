@@ -8,6 +8,7 @@ export "./on_confirm_transaction_toggled.dart";
 export "./on_delete_data_pressed.dart";
 export "./on_export_data_pressed.dart";
 export "./on_import_data_pressed.dart";
+export "./on_language_changed.dart";
 export "./on_navbar_add_transaction_pressed.dart";
 export "./on_privacy_policy_pressed.dart";
 export "./on_review_pressed.dart";

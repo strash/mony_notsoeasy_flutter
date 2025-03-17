@@ -8,8 +8,8 @@ enum ETransactionType {
 
   static ETransactionType get defaultValue => expense;
 
-  static ETransactionType from(String type) {
-    return values.where((e) => e.value == type).firstOrNull ?? defaultValue;
+  static ETransactionType from(String value) {
+    return values.where((e) => e.value == value).firstOrNull ?? defaultValue;
   }
 
   ETransactionType get toggle {

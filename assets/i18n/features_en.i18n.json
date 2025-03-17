@@ -53,8 +53,35 @@
 			"title": "Total amount of all transactions"
 		}
 	},
+	"category_form": {
+		"title_input_placeholder": "category name",
+		"button_save": "Save"
+	},
+	"feed": {
+		"account": {
+			"title_all": "All accounts",
+			"account_count": {
+				"one": "${n: decimalPattern} account",
+				"other": "${n: decimalPattern} accounts"
+			}
+		},
+		"button_search": "search",
+		"add_menu_item(context=EFeedMenuItem)": {
+			"addAccount": "Account",
+			"addExpenseCategory": "Expense Category",
+			"addIncomeCategory": "Income Category",
+			"addTag": "Tag"
+		}
+	},
 	"stats": {
 		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
+	},
+	"settings": {
+		"language(context=ESettingsLanguage)": {
+			"system": "System",
+			"english": "English",
+			"russian": "Русский"
+		}
 	},
 	"start": {
 		"subtitle": "remembers where the money went.",
@@ -63,7 +90,7 @@
 	},
 	"start_account": {
 		"title": "Account",
-		"description": "First, you need to create an account where you can add new transactions. Later, there will be an option to create other accounts. This account is not linked to a real bank account.\n\nYou can either create a new account or import your data from the \"export_mony.json\" file or from a CSV file from other apps.",
+		"description": "To start, you'll need to create an account where you can add new transactions. Later, there'll be an option to create other accounts. Just a heads up, this account isn't linked to a real bank account.\n\nYou can either create a new account or import your data from the 'export_mony.json' file or from a CSV file from other apps.",
 		"button_create": "Create Account",
 		"button_import_mony": "Mony",
 		"button_import_csv": "CSV"

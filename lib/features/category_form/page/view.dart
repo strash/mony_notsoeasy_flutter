@@ -74,8 +74,13 @@ class CategoryFormView extends StatelessWidget {
                           fontSize: 16.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        decoration: const InputDecoration(
-                          hintText: "название категории",
+                        decoration: InputDecoration(
+                          hintText:
+                              context
+                                  .t
+                                  .features
+                                  .category_form
+                                  .title_input_placeholder,
                           counterText: "",
                         ),
                       ),
@@ -90,7 +95,7 @@ class CategoryFormView extends StatelessWidget {
                       viewModel.isSubmitEnabled
                           ? () => onSubmitPressed(context)
                           : null,
-                  child: const Text("Сохранить"),
+                  child: Text(context.t.features.category_form.button_save),
                 ),
               ],
             ),

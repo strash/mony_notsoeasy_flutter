@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import "package:mony_app/data/local_storage/repository/shared_preferences.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
+import "package:mony_app/features/settings/page/view_model.dart"
+    show ESettingsLanguage;
 
 final class DomainSharedPreferencesService {
   final SharedPreferencesLocalStorageRepository _repo;
@@ -16,6 +18,7 @@ final class DomainSharedPreferencesService {
   final _settingsConfirmAccount = "settings_confirm_account";
   final _settingsConfirmCategory = "settings_confirm_category";
   final _settingsConfirmTag = "settings_confirm_tag";
+  final _settingsLanguage = "settings_language";
 
   DomainSharedPreferencesService({
     required SharedPreferencesLocalStorageRepository sharedPrefencesRepository,
@@ -114,5 +117,16 @@ final class DomainSharedPreferencesService {
 
   Future<void> setSettingsConfirmTag(bool value) async {
     await _repo.setBool(_settingsConfirmTag, value);
+  }
+
+  Future<ESettingsLanguage> getSettingsLanguage() async {
+    final value =
+        await _repo.getString(_settingsLanguage) ??
+        ESettingsLanguage.defaultValue.value;
+    return ESettingsLanguage.from(value);
+  }
+
+  Future<void> setSettingsLanguage(ESettingsLanguage value) async {
+    await _repo.setString(_settingsLanguage, value.value);
   }
 }

@@ -9,6 +9,26 @@ import "package:mony_app/features/settings/page/view.dart";
 import "package:mony_app/features/settings/use_case/use_case.dart";
 import "package:provider/provider.dart";
 
+enum ESettingsLanguage {
+  system(value: "system"),
+  english(value: "english"),
+  russian(value: "russian");
+
+  final String value;
+
+  const ESettingsLanguage({required this.value});
+
+  static ESettingsLanguage get defaultValue => system;
+
+  static ESettingsLanguage from(String value) {
+    return values.where((e) => e.value == value).firstOrNull ?? defaultValue;
+  }
+
+  ESettingsLanguage get rotate {
+    return values.elementAt((index + 1).wrapi(0, values.length));
+  }
+}
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -31,6 +51,7 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
   bool confirmAccount = true;
   bool confirmCategory = true;
   bool confirmTag = true;
+  ESettingsLanguage language = ESettingsLanguage.defaultValue;
 
   bool isImportInProgress = false;
 
@@ -81,6 +102,7 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
       final confAccount = await sharedPrefService.getSettingsConfirmAccount();
       final confCategory = await sharedPrefService.getSettingsConfirmCategory();
       final confTag = await sharedPrefService.getSettingsConfirmTag();
+      final lang = await sharedPrefService.getSettingsLanguage();
       setProtectedState(() {
         themeMode = mode;
         isColorsVisible = colors;
@@ -91,6 +113,7 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
         confirmAccount = confAccount;
         confirmCategory = confCategory;
         confirmTag = confTag;
+        language = lang;
       });
     });
   }
@@ -121,6 +144,7 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
         () => OnExportDataPressed(),
         () => OnReviewPressed(),
         () => OnSupportPressed(),
+        () => OnLanguageChanged(),
         () => OnPrivacyPolicyPressed(),
         () => OnDeleteDataPressed(),
       ],

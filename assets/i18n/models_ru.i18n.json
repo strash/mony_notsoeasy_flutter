@@ -10,8 +10,8 @@
 	},
 	"transaction": {
 		"type_description(context=ETransactionType)": {
-			"expense": "Expense",
-			"income": "Income"
+			"expense": "Расход",
+			"income": "Доход"
 		},
 		"type_full_description(context=ETransactionType)": {
 			"expense": "Категория расходов",

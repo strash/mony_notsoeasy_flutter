@@ -10,6 +10,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
 import "package:mony_app/features/feed/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 import "package:rxdart/rxdart.dart";
 import "package:smooth_page_indicator/smooth_page_indicator.dart";
 
@@ -82,7 +83,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                   sigmaY: kTranslucentPanelBlurSigma,
                 ),
                 child: SizedBox(
-                  width: 80.0,
+                  width: 84.0,
                   height: 30.0,
                   child: ColoredBox(
                     color: theme.colorScheme.surfaceContainer.withValues(
@@ -137,7 +138,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
 
                               // -> text
                               Text(
-                                "поиск",
+                                context.t.features.feed.button_search,
                                 style: GoogleFonts.golosText(
                                   fontSize: 13.0,
                                   fontWeight: FontWeight.w500,

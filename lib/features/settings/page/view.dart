@@ -38,6 +38,8 @@ class SettingsView extends StatelessWidget {
     final onReviewPressed = viewModel<OnReviewPressed>();
     final onSupportPressed = viewModel<OnSupportPressed>();
 
+    final onLanguageChanged = viewModel<OnLanguageChanged>();
+
     final onPrivacyPolicyPressed = viewModel<OnPrivacyPolicyPressed>();
 
     final onDeleteDataPressed = viewModel<OnDeleteDataPressed>();
@@ -298,6 +300,36 @@ class SettingsView extends StatelessWidget {
                       trailing: SettingsEntryTrailingIconComponent(
                         icon: Assets.icons.envelope,
                         color: theme.colorScheme.tertiary,
+                      ),
+                    ),
+                  ],
+                ),
+
+                // -> language
+                SettingsGroupComponent(
+                  children: [
+                    SettingsEntryComponent(
+                      onTap: () => onLanguageChanged(context),
+                      title: const Flexible(
+                        child: Text(
+                          "Язык",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      trailing: Builder(
+                        builder: (context) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Text(
+                              context.t.features.settings.language(
+                                context: viewModel.language,
+                              ),
+                              style: DefaultTextStyle.of(context).style
+                                  .copyWith(color: theme.colorScheme.secondary),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],

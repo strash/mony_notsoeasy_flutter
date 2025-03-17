@@ -5,6 +5,7 @@ import "package:flutter_localizations/flutter_localizations.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
+import "package:mony_app/i18n/strings.g.dart";
 import "package:provider/provider.dart";
 import "package:rxdart/transformers.dart";
 
@@ -68,7 +69,8 @@ class _MonyAppState extends State<MonyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [Locale("en", "EN"), Locale("ru", "RU")],
+      locale: TranslationProvider.of(context).flutterLocale,
+      supportedLocales: AppLocaleUtils.supportedLocales,
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         return NavigatorWrapper(
