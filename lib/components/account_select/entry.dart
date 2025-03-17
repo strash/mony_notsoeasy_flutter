@@ -101,7 +101,9 @@ class _AccountSelectEntryComponent extends StatelessWidget {
 
                     // -> account type
                     Text(
-                      account.type.description,
+                      context.t.models.account.type_description(
+                        context: account.type,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: style.copyWith(

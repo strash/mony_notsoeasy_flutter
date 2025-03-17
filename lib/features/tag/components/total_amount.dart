@@ -4,6 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/domain/models/tag_balance.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TagTotalAmountComponent extends StatelessWidget {
   final TagBalanceModel balance;
@@ -66,8 +67,8 @@ class TagTotalAmountComponent extends StatelessWidget {
           children: [
             // -> transactions count
             Text(
-              balance.transactionsCount.transactionsCountDescription(
-                locale.languageCode,
+              context.t.models.transaction.transactions_count_description(
+                n: balance.transactionsCount,
               ),
               style: GoogleFonts.golosText(
                 fontSize: 16.0,

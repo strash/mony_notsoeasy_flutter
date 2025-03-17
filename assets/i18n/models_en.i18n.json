@@ -1,0 +1,25 @@
+{
+	"account": {
+		"type_description(context=EAccountType)": {
+			"debit": "Debit Account",
+			"credit": "Credit Account",
+			"cash": "Cash",
+			"savings": "Deposit, savings account",
+			"investment": "Investment Account"
+		}
+	},
+	"transaction": {
+		"type_description(context=ETransactionType)": {
+			"expense": "Expense",
+			"income": "Income"
+		},
+		"type_full_description(context=ETransactionType)": {
+			"expense": "Expense Category",
+			"income": "Income Category"
+		},
+		"transactions_count_description": {
+			"one": "${n: decimalPattern} transaction in total",
+			"other": "${n: decimalPattern} transactions in total"
+		}
+	}
+}

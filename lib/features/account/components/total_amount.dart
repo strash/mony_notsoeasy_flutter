@@ -2,11 +2,11 @@ import "package:flutter/material.dart";
 import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:intl/intl.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class AccountTotalAmountComponent extends StatelessWidget {
   final AccountBalanceModel balance;
@@ -27,9 +27,8 @@ class AccountTotalAmountComponent extends StatelessWidget {
       balance.firstTransactionDate,
       balance.lastTransactionDate,
     ).transactionsDateRangeDescription(locale.languageCode);
-    final formatter = NumberFormat.decimalPattern(locale.languageCode);
-    final transactionsCountDescription = balance.totalCount
-        .transactionsCountDescription(locale.languageCode);
+    final transactionsCountDescription = context.t.models.transaction
+        .transactions_count_description(n: balance.totalCount);
     final amount = balance.totalAmount.currency(
       locale: locale.languageCode,
       name: balance.currency.name,
@@ -42,7 +41,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
       children: [
         // -> title
         Text(
-          "Сумма транзакций",
+          context.t.features.account.total_amount.title,
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w500,
@@ -59,6 +58,10 @@ class AccountTotalAmountComponent extends StatelessWidget {
           itemCount: ETransactionType.values.length,
           itemBuilder: (context, index) {
             final item = ETransactionType.values.elementAt(index);
+            final count = switch (item) {
+              ETransactionType.expense => balance.expenseCount,
+              ETransactionType.income => balance.incomeCount,
+            };
 
             return Expanded(
               child: Column(
@@ -80,10 +83,11 @@ class AccountTotalAmountComponent extends StatelessWidget {
 
                       // -> type description and count
                       Text(
-                        "${item.description} (${formatter.format(switch (item) {
-                          ETransactionType.expense => balance.expenseCount,
-                          ETransactionType.income => balance.incomeCount,
-                        })})",
+                        context.t.features.account.total_amount
+                            .transaction_type_count(
+                              context: item,
+                              count: count,
+                            ),
                         style: GoogleFonts.golosText(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w500,
@@ -120,42 +124,32 @@ class AccountTotalAmountComponent extends StatelessWidget {
           },
         ),
 
-        if (balance.totalCount == 0)
-          Text(
-            "Еще не было ни одной транзакции",
-            style: GoogleFonts.golosText(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w400,
-              height: 1.4,
-              color: theme.colorScheme.onSurfaceVariant,
+        SeparatedComponent.list(
+          separatorBuilder: (context, index) => const SizedBox(height: 10.0),
+          children: [
+            // -> transactions count
+            Text(
+              "$transactionsCountDescription\n"
+              "${context.t.features.account.total_amount.total_amount} $amount",
+              style: GoogleFonts.golosText(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w400,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
             ),
-          )
-        else
-          SeparatedComponent.list(
-            separatorBuilder: (context, index) => const SizedBox(height: 10.0),
-            children: [
-              // -> transactions count
+
+            // -> transactions date range
+            if (dateRange.isNotEmpty)
               Text(
-                "$transactionsCountDescription\nс общей стоимостью $amount",
+                dateRange,
                 style: GoogleFonts.golosText(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w400,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
-
-              // -> transactions date range
-              if (dateRange.isNotEmpty)
-                Text(
-                  dateRange,
-                  style: GoogleFonts.golosText(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-            ],
-          ),
+          ],
+        ),
       ],
     );
   }

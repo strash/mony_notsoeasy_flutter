@@ -7,6 +7,7 @@ import "package:mony_app/features/categories/categories.dart";
 import "package:mony_app/features/categories/components/add_button.dart";
 import "package:mony_app/features/categories/use_case/use_case.dart";
 import "package:mony_app/features/navbar/page/view.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class CategoriesView extends StatelessWidget {
   const CategoriesView({super.key});
@@ -35,7 +36,7 @@ class CategoriesView extends StatelessWidget {
         slivers: [
           // -> app bar
           AppBarComponent(
-            title: const Text("Категории"),
+            title: Text(context.t.features.categories.title),
             trailing: CategoriesAddButtonComponent(onTap: onAddButtonPressed),
           ),
 

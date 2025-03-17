@@ -5,6 +5,7 @@ import "package:intl/intl.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class AccountSettedItemComponent extends StatelessWidget {
   final AccountVO account;
@@ -22,6 +23,10 @@ class AccountSettedItemComponent extends StatelessWidget {
     final color =
         ex?.from(EColorName.from(account.colorName)).color ??
         theme.colorScheme.onSurface;
+
+    final accountTypeDescription = context.t.models.account.type_description(
+      context: account.type,
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -52,7 +57,7 @@ class AccountSettedItemComponent extends StatelessWidget {
                     // -> account type
                     Flexible(
                       child: Text(
-                        " • ${account.type.description}",
+                        " • $accountTypeDescription",
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.golosText(

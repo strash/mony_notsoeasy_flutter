@@ -8,6 +8,7 @@ import "package:mony_app/features/accounts/page/view_model.dart";
 import "package:mony_app/features/accounts/use_case/use_case.dart";
 import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class AccountsView extends StatelessWidget {
   const AccountsView({super.key});
@@ -36,7 +37,7 @@ class AccountsView extends StatelessWidget {
         slivers: [
           // -> appbar
           AppBarComponent(
-            title: const Text("Счета"),
+            title: Text(context.t.features.accounts.title),
             trailing: AppBarButtonComponent(
               icon: Assets.icons.plus,
               onTap: () => onAddAccountPressed(context),

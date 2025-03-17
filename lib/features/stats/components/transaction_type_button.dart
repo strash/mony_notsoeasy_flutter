@@ -3,25 +3,25 @@ import "package:flutter/material.dart";
 import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
 import "package:mony_app/features/stats/use_case/on_transaction_type_selected.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class StatsTransactionTypeButtonComponent extends StatelessWidget {
   final ETransactionType type;
 
   const StatsTransactionTypeButtonComponent({super.key, required this.type});
 
-  String _getCount(String locale, AccountBalanceModel? balance) {
-    if (balance == null) return "0";
-    return NumberFormat.decimalPattern(locale).format(switch (type) {
+  int _getCount(AccountBalanceModel? balance) {
+    if (balance == null) return 0;
+    return switch (type) {
       ETransactionType.expense => balance.expenseCount,
       ETransactionType.income => balance.incomeCount,
-    });
+    };
   }
 
   String _getAmount(
@@ -58,7 +58,6 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
       balance,
       viewModel.isCentsVisible,
     );
-    final count = _getCount(locale.languageCode, balance);
 
     final onTypeSelected = viewModel<OnTransactionTypeSelected>();
 
@@ -106,7 +105,10 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                     // -> type description and count
                     Flexible(
                       child: Text(
-                        "${type.description} ($count)",
+                        context.t.features.stats.transaction_type_count(
+                          count: _getCount(balance),
+                          context: type,
+                        ),
                         style: GoogleFonts.golosText(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w500,

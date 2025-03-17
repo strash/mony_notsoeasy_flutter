@@ -1,5 +1,71 @@
 {
+	"account": {
+		"menu_item_description(context=EBalanceExchangeMenuItem)": {
+			"receive": "Receive",
+			"send": "Send"
+		},
+		"total_sum": {
+			"title": "Balance"
+		},
+		"total_amount": {
+			"title": "Total amount of all transactions",
+			"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})",
+			"total_amount": "with a total amount of"
+		}
+	},
+	"account_form": {
+		"title": "Account",
+		"title_input_placeholder": "account name",
+		"balance_input_placeholder": "current balance",
+		"button_save": "Save"
+	},
+	"accounts": {
+		"title": "Accounts"
+	},
+	"balance_exchange_form": {
+		"title(context=EBalanceExchangeMenuItem)": {
+			"receive": "Receive",
+			"send": "Send"
+		},
+		"account_select_description(context=EBalanceExchangeMenuItem)": {
+			"receive": "The account we are receiving from",
+			"send": "The account we are sending to"
+		},
+		"amount_input_placeholder(context=EBalanceExchangeMenuItem)": {
+			"receive": "amount to receive",
+			"send": "amount to send"
+		},
+		"converted_amount_input_placeholder": "amount after conversion",
+		"converted_amount_input_description(context=EBalanceExchangeMenuItem)": {
+			"receive": "Click on \"=\" to convert the receive amount",
+			"send": "Click on \"=\" to convert the send amount"
+		},
+		"button_submit(context=EBalanceExchangeMenuItem)": {
+			"receive": "Receive",
+			"send": "Send"
+		}
+	},
+	"categories": {
+		"title": "Categories"
+	},
+	"category": {
+		"total_amount": {
+			"title": "Total amount of all transactions"
+		}
+	},
+	"stats": {
+		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
+	},
 	"start": {
-		"subtitle": "ololo yaya"
+		"subtitle": "remembers where the money went.",
+		"button_next": "Let's go!",
+		"privacy_policy": "Privacy Policy"
+	},
+	"start_account": {
+		"title": "Account",
+		"description": "First, you need to create an account where you can add new transactions. Later, there will be an option to create other accounts. This account is not linked to a real bank account.\n\nYou can either create a new account or import your data from the \"export_mony.json\" file or from a CSV file from other apps.",
+		"button_create": "Create Account",
+		"button_import_mony": "Mony",
+		"button_import_csv": "CSV"
 	}
 }

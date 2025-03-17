@@ -1,0 +1,27 @@
+{
+	"account": {
+		"type_description(context=EAccountType)": {
+			"debit": "Дебетовый счет",
+			"credit": "Кредитный счет",
+			"cash": "Наличные",
+			"savings": "Вклад, накопительный счет",
+			"investment": "Инвестиционный счет"
+		}
+	},
+	"transaction": {
+		"type_description(context=ETransactionType)": {
+			"expense": "Expense",
+			"income": "Income"
+		},
+		"type_full_description(context=ETransactionType)": {
+			"expense": "Категория расходов",
+			"income": "Категория доходов"
+		},
+		"transactions_count_description": {
+			"one": "${n: decimalPattern} транзакция за все время",
+			"two": "${n: decimalPattern} транзакции за все время",
+			"few": "${n: decimalPattern} транзакции за все время",
+			"other": "${n: decimalPattern} транзакций за все время"
+		}
+	}
+}

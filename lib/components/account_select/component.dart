@@ -5,6 +5,7 @@ import "package:mony_app/components/currency_tag/component.dart";
 import "package:mony_app/components/select/select.dart";
 import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/domain/models/account.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 part "./active_entry.dart";
 part "./entry.dart";

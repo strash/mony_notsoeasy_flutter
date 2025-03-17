@@ -6,6 +6,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/features/account_form/account_form.dart";
 import "package:mony_app/features/account_form/components/components.dart";
 import "package:mony_app/features/account_form/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class AccountFormView extends StatelessWidget {
   final double keyboardHeight;
@@ -22,8 +23,8 @@ class AccountFormView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         // -> appbar
-        const AppBarComponent(
-          title: Text("Счет"),
+        AppBarComponent(
+          title: Text(context.t.features.account_form.title),
           useSliver: false,
           showBackground: false,
           showDragHandle: true,
@@ -68,8 +69,13 @@ class AccountFormView extends StatelessWidget {
                           fontSize: 16.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        decoration: const InputDecoration(
-                          hintText: "название счета",
+                        decoration: InputDecoration(
+                          hintText:
+                              context
+                                  .t
+                                  .features
+                                  .account_form
+                                  .title_input_placeholder,
                           counterText: "",
                         ),
                       ),
@@ -112,8 +118,13 @@ class AccountFormView extends StatelessWidget {
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
                   ),
-                  decoration: const InputDecoration(
-                    hintText: "текущий баланс",
+                  decoration: InputDecoration(
+                    hintText:
+                        context
+                            .t
+                            .features
+                            .account_form
+                            .balance_input_placeholder,
                     counterText: "",
                   ),
                   onFieldSubmitted: viewModel.balanceController.validator,
@@ -127,7 +138,7 @@ class AccountFormView extends StatelessWidget {
                         viewModel.isSubmitEnabled
                             ? () => onSubmitPressed(context)
                             : null,
-                    child: const Text("Сохранить"),
+                    child: Text(context.t.features.account_form.button_save),
                   ),
                 ),
               ],

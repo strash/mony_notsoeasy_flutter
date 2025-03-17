@@ -6,6 +6,7 @@ import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/double.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/models.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class AccountComponent extends StatelessWidget {
   final AccountModel account;
@@ -114,7 +115,9 @@ class AccountComponent extends StatelessWidget {
               // -> type
               Flexible(
                 child: Text(
-                  account.type.description,
+                  context.t.models.account.type_description(
+                    context: account.type,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(

@@ -5,3 +5,14 @@ output_directory: lib/i18n
 namespaces: true
 obfuscation:
   enabled: true
+imports:
+  - 'package:mony_app/domain/models/account.dart'
+  - 'package:mony_app/domain/models/transaction_type_enum.dart'
+  - 'package:mony_app/features/balance_exchange_form/page/view_model.dart'
+contexts:
+  EAccountType:
+    generate_enum: false
+  ETransactionType:
+    generate_enum: false
+  EBalanceExchangeMenuItem:
+    generate_enum: false

@@ -6,6 +6,7 @@ import "package:mony_app/features/features.dart";
 import "package:mony_app/features/transaction_form/components/components.dart";
 import "package:mony_app/features/transaction_form/use_case/on_info_pressed.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TransactionFormView extends StatelessWidget {
   const TransactionFormView({super.key});
@@ -27,6 +28,11 @@ class TransactionFormView extends StatelessWidget {
                 title: Center(
                   child: TabGroupComponent(
                     values: ETransactionType.values,
+                    description: (value) {
+                      return context.t.models.transaction.type_description(
+                        context: value,
+                      );
+                    },
                     controller: viewModel.typeController,
                   ),
                 ),

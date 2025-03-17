@@ -6,6 +6,7 @@ import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/start_account/start_account.dart";
 import "package:mony_app/features/start_account/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class StartAccountView extends StatelessWidget {
   const StartAccountView({super.key});
@@ -59,7 +60,7 @@ class StartAccountView extends StatelessWidget {
                 children: [
                   // -> title
                   Text(
-                    "Счет",
+                    context.t.features.start_account.title,
                     style: GoogleFonts.golosText(
                       fontSize: 20.0,
                       color: theme.colorScheme.onSurface,
@@ -70,11 +71,7 @@ class StartAccountView extends StatelessWidget {
 
                   // -> description
                   Text(
-                    "Для начала нужно завести счет, в который можно "
-                    "добавлять новые транзакции. Позже будет возможность "
-                    "создать другие счета.\n\nСейчас можно либо создать "
-                    "новый счет, либо импортировать свои данные из "
-                    "export_mony.json файла или из CSV файла.",
+                    context.t.features.start_account.description,
                     style: GoogleFonts.golosText(
                       fontSize: 15.0,
                       height: 1.3,
@@ -104,7 +101,7 @@ class StartAccountView extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Создать счет"),
+                        Text(context.t.features.start_account.button_create),
                         const SizedBox(width: 8.0),
                         SvgPicture.asset(
                           Assets.icons.plus,
@@ -139,7 +136,11 @@ class StartAccountView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Mony",
+                                context
+                                    .t
+                                    .features
+                                    .start_account
+                                    .button_import_mony,
                                 style: GoogleFonts.golosText(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w600,
@@ -175,7 +176,11 @@ class StartAccountView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "CSV",
+                                context
+                                    .t
+                                    .features
+                                    .start_account
+                                    .button_import_csv,
                                 style: GoogleFonts.golosText(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w600,

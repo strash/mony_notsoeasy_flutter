@@ -1,20 +1,23 @@
 import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 
 part "./tab_group_controller.dart";
 part "./tab_group_item.dart";
 
-class TabGroupComponent<T extends IDescriptable> extends StatefulWidget {
+typedef TTabGroupEntryDescription<T> = String Function(T value);
+
+class TabGroupComponent<T> extends StatefulWidget {
   final List<T> values;
+  final TTabGroupEntryDescription<T> description;
   final TabGroupController<T> controller;
   final void Function(T value)? onSelected;
 
   const TabGroupComponent({
     super.key,
     required this.values,
+    required this.description,
     required this.controller,
     this.onSelected,
   });
@@ -23,8 +26,7 @@ class TabGroupComponent<T extends IDescriptable> extends StatefulWidget {
   State<TabGroupComponent> createState() => _TabGroupComponentState<T>();
 }
 
-class _TabGroupComponentState<T extends IDescriptable>
-    extends State<TabGroupComponent<T>> {
+class _TabGroupComponentState<T> extends State<TabGroupComponent<T>> {
   final _rectNotifier = ValueNotifier<RelativeRect?>(null);
 
   final _padding = const EdgeInsets.all(3.0);
@@ -34,7 +36,7 @@ class _TabGroupComponentState<T extends IDescriptable>
   Size _getSize(T value) {
     const padding = TabGroupEntryComponent.padding;
     final style = TabGroupEntryComponent.style(context);
-    final span = TextSpan(text: value.description, style: style);
+    final span = TextSpan(text: widget.description(value), style: style);
     final painter = TextPainter(text: span, textDirection: TextDirection.ltr);
     painter.layout();
     final size = painter.size;
@@ -144,8 +146,9 @@ class _TabGroupComponentState<T extends IDescriptable>
                         final isActive = value == widget.controller.value;
 
                         return TabGroupEntryComponent<T>(
-                          key: Key("${value.name}_$isActive"),
+                          key: Key("${value}_$isActive"),
                           value: value,
+                          description: widget.description,
                           isActive: isActive,
                           rectNotifier: _rectNotifier,
                           parent: _getBox,

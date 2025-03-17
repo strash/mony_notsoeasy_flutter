@@ -1,5 +1,71 @@
 {
+	"account": {
+		"menu_item_description(context=EBalanceExchangeMenuItem)": {
+			"receive": "Пополнить",
+			"send": "Перевести"
+		},
+		"total_sum": {
+			"title": "Баланс"
+		},
+		"total_amount": {
+			"title": "Сумма всех транзакций",
+			"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})",
+			"total_amount": "с общей стоимостью"
+		}
+	},
+	"account_form": {
+		"title": "Счет",
+		"title_input_placeholder": "название счета",
+		"balance_input_placeholder": "текущий баланс",
+		"button_save": "Сохранить"
+	},
+	"accounts": {
+		"title": "Счета"
+	},
+	"balance_exchange_form": {
+		"title(context=EBalanceExchangeMenuItem)": {
+			"receive": "Пополнение",
+			"send": "Перевод"
+		},
+		"account_select_description(context=EBalanceExchangeMenuItem)": {
+			"receive": "Счет, с которого пополняем",
+			"send": "Счет, на который переводим"
+		},
+		"amount_input_placeholder(context=EBalanceExchangeMenuItem)": {
+			"receive": "сумма для пополнения",
+			"send": "сумма для перевода"
+		},
+		"converted_amount_input_placeholder": "сумма после конвертации",
+		"converted_amount_input_description(context=EBalanceExchangeMenuItem)": {
+			"receive": "Нажми на \"=\", чтобы конвертировать сумму пополнения",
+			"send": "Нажми на \"=\", чтобы конвертировать сумму перевода"
+		},
+		"button_submit(context=EBalanceExchangeMenuItem)": {
+			"receive": "Пополнить",
+			"send": "Перевести"
+		}
+	},
+	"categories": {
+		"title": "Категории"
+	},
+	"category": {
+		"total_amount": {
+			"title": "Сумма всех транзакций"
+		}
+	},
+	"stats": {
+		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
+	},
 	"start": {
-		"subtitle": "помнит куда деньги девались"
+		"subtitle": "помнит куда деньги девались.",
+		"button_next": "Супер, дальше!",
+		"privacy_policy": "Политика обработки персональных данных"
+	},
+	"start_account": {
+		"title": "Счет",
+		"description": "Для начала нужно завести счет, в который можно добавлять новые транзакции. Позже будет возможность создать другие счета. Этот счет никак не связан с реальным банковским счетом.\n\nМожно либо создать новый счет, либо импортировать свои данные из \"export_mony.json\" файла или из CSV файла из других приложений.",
+		"button_create": "Создать счет",
+		"button_import_mony": "Mony",
+		"button_import_csv": "CSV"
 	}
 }

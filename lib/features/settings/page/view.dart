@@ -6,6 +6,7 @@ import "package:mony_app/features/settings/components/components.dart";
 import "package:mony_app/features/settings/page/view_model.dart";
 import "package:mony_app/features/settings/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -161,7 +162,9 @@ class SettingsView extends StatelessWidget {
                         child: Builder(
                           builder: (context) {
                             return Text(
-                              viewModel.defaultTransactionType.description,
+                              context.t.models.transaction.type_description(
+                                context: viewModel.defaultTransactionType,
+                              ),
                               style: DefaultTextStyle.of(context).style
                                   .copyWith(color: theme.colorScheme.secondary),
                             );

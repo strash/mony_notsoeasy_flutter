@@ -9,6 +9,7 @@ import "package:mony_app/features/balance_exchange_form/components/helper_text.d
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart";
 import "package:mony_app/features/balance_exchange_form/use_case/on_currency_link_pressed.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
   const BalanceExchangeFormConvertedAmountComponent({super.key});
@@ -51,10 +52,21 @@ class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
                 decoration: InputDecoration(
-                  hintText: "сумма после конвертации",
+                  hintText:
+                      context
+                          .t
+                          .features
+                          .balance_exchange_form
+                          .converted_amount_input_placeholder,
                   counterText: "",
-                  helper: BalanceExchangeFormHelperTextComponent(
-                    text: viewModel.action.helperText,
+                  helper: Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0),
+                    child: BalanceExchangeFormHelperTextComponent(
+                      text: context.t.features.balance_exchange_form
+                          .converted_amount_input_description(
+                            context: viewModel.action,
+                          ),
+                    ),
                   ),
                 ),
                 onFieldSubmitted: viewModel.coefficientController.validator,
@@ -106,16 +118,5 @@ class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-extension on EBalanceExchangeMenuItem {
-  String get helperText {
-    return switch (this) {
-      EBalanceExchangeMenuItem.receive =>
-        'Нажми на "=", чтобы конвертировать сумму пополнения.',
-      EBalanceExchangeMenuItem.send =>
-        'Нажми на "=", чтобы конвертировать сумму перевода.',
-    };
   }
 }

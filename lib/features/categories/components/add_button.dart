@@ -5,11 +5,12 @@ import "package:flutter_svg/svg.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/double.dart";
 import "package:mony_app/components/components.dart";
-import "package:mony_app/features/categories/page/enum.dart";
+import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class CategoriesAddButtonComponent extends StatelessWidget {
-  final UseCase<Future<void>, ECategoriesMenuItem> onTap;
+  final UseCase<Future<void>, ETransactionType> onTap;
 
   const CategoriesAddButtonComponent({super.key, required this.onTap});
 
@@ -53,15 +54,19 @@ class CategoriesAddButtonComponent extends StatelessWidget {
 
         return SeparatedComponent.builder(
           mainAxisSize: MainAxisSize.min,
-          itemCount: ECategoriesMenuItem.values.length,
+          itemCount: ETransactionType.values.length,
           separatorBuilder: (context, index) {
             return const ContextMenuSeparatorComponent(isBig: false);
           },
           itemBuilder: (context, index) {
-            final item = ECategoriesMenuItem.values.elementAt(index);
+            final item = ETransactionType.values.elementAt(index);
 
             return ContextMenuItemComponent(
-              label: Text(item.description),
+              label: Text(
+                context.t.models.transaction.type_full_description(
+                  context: item,
+                ),
+              ),
               icon: SvgPicture.asset(
                 item.icon,
                 colorFilter: ColorFilter.mode(
@@ -102,5 +107,14 @@ class _Button extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+extension on ETransactionType {
+  String get icon {
+    return switch (this) {
+      ETransactionType.expense => Assets.icons.arrowUpForward,
+      ETransactionType.income => Assets.icons.arrowDownForward,
+    };
   }
 }

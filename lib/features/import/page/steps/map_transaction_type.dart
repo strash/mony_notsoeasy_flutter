@@ -5,6 +5,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/components/components.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class ImportMapTransactionTypePage extends StatelessWidget {
   final ImportEvent? event;
@@ -62,6 +63,11 @@ class ImportMapTransactionTypePage extends StatelessWidget {
         Center(
           child: TabGroupComponent(
             values: ETransactionType.values,
+            description: (value) {
+              return context.t.models.transaction.type_description(
+                context: value,
+              );
+            },
             controller: viewModel.transactionTypeController,
           ),
         ),

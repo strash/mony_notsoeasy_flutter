@@ -6,6 +6,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/features/category_form/use_case/use_case.dart";
 import "package:mony_app/features/features.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class CategoryFormView extends StatelessWidget {
   final double keyboardHeight;
@@ -23,7 +24,11 @@ class CategoryFormView extends StatelessWidget {
       children: [
         // -> appbar
         AppBarComponent(
-          title: Text(viewModel.transactionType.fullDescription),
+          title: Text(
+            context.t.models.transaction.type_full_description(
+              context: viewModel.transactionType,
+            ),
+          ),
           showBackground: false,
           showDragHandle: true,
           useSliver: false,

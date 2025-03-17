@@ -2,7 +2,8 @@ import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
-import "package:mony_app/domain/domain.dart";
+import "package:mony_app/domain/models/account.dart" show AccountModel;
+import "package:mony_app/i18n/strings.g.dart";
 
 class AccountIconComponent extends StatelessWidget {
   final AccountModel account;
@@ -77,7 +78,7 @@ class AccountIconComponent extends StatelessWidget {
 
         // -> type
         Text(
-          account.type.description,
+          context.t.models.account.type_description(context: account.type),
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
             fontSize: 16.0,

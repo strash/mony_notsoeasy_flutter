@@ -4,6 +4,7 @@ import "package:mony_app/components/account_select/component.dart";
 import "package:mony_app/features/balance_exchange_form/components/account_select_active_entry.dart";
 import "package:mony_app/features/balance_exchange_form/components/helper_text.dart";
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class BalanceExchangeFormAccountSelectComponent extends StatelessWidget {
   const BalanceExchangeFormAccountSelectComponent({super.key});
@@ -26,21 +27,13 @@ class BalanceExchangeFormAccountSelectComponent extends StatelessWidget {
         ),
 
         Padding(
-          padding: const EdgeInsets.fromLTRB(15.0, 4.0, 15.0, .0),
+          padding: const EdgeInsets.fromLTRB(15.0, 4.0, 15.0, 5.0),
           child: BalanceExchangeFormHelperTextComponent(
-            text: viewModel.action.helperText,
+            text: context.t.features.balance_exchange_form
+                .account_select_description(context: viewModel.action),
           ),
         ),
       ],
     );
-  }
-}
-
-extension on EBalanceExchangeMenuItem {
-  String get helperText {
-    return switch (this) {
-      EBalanceExchangeMenuItem.receive => "Счет, с которого пополняем",
-      EBalanceExchangeMenuItem.send => "Счет, на который переводим",
-    };
   }
 }

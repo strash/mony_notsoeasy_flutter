@@ -6,6 +6,7 @@ import "package:mony_app/features/account/page/view_model.dart";
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart"
     show EBalanceExchangeMenuItem;
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class AccountBalanceExchangeMenuComponent extends StatelessWidget {
   const AccountBalanceExchangeMenuComponent({super.key});
@@ -42,7 +43,11 @@ class AccountBalanceExchangeMenuComponent extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // -> title
-                      Text(e.description),
+                      Text(
+                        context.t.features.account.menu_item_description(
+                          context: e,
+                        ),
+                      ),
 
                       // -> icon
                       SvgPicture.asset(
@@ -70,13 +75,6 @@ extension on EBalanceExchangeMenuItem {
     return switch (this) {
       EBalanceExchangeMenuItem.receive => Assets.icons.arrowDownBackward,
       EBalanceExchangeMenuItem.send => Assets.icons.arrowUpForward,
-    };
-  }
-
-  String get description {
-    return switch (this) {
-      EBalanceExchangeMenuItem.receive => "Пополнить",
-      EBalanceExchangeMenuItem.send => "Перевести",
     };
   }
 }

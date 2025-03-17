@@ -128,9 +128,11 @@ class StartView extends StatelessWidget {
                             backgroundColor: linkColor,
                           ),
                           onPressed: () => onButtonStartPressed(context),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40.0),
-                            child: Text("Супер, дальше!"),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 40.0,
+                            ),
+                            child: Text(context.t.features.start.button_next),
                           ),
                         ),
                         const SizedBox(height: 10.0),
@@ -141,7 +143,7 @@ class StartView extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Text(
-                              "Политика обработки персональных данных",
+                              context.t.features.start.privacy_policy,
                               style: GoogleFonts.golosText(
                                 fontSize: 14.0,
                                 color: linkColor,

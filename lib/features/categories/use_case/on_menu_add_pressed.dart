@@ -6,25 +6,14 @@ import "package:mony_app/components/bottom_sheet/sheet.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/domain/services/database/category.dart";
 import "package:mony_app/domain/services/database/vo/category.dart";
-import "package:mony_app/features/categories/page/enum.dart";
 import "package:mony_app/features/category_form/page/view_model.dart";
 import "package:provider/provider.dart";
 
-final class OnMenuAddPressed
-    extends UseCase<Future<void>, ECategoriesMenuItem> {
+final class OnMenuAddPressed extends UseCase<Future<void>, ETransactionType> {
   @override
-  Future<void> call(BuildContext context, [ECategoriesMenuItem? value]) async {
+  Future<void> call(BuildContext context, [ETransactionType? value]) async {
     if (value == null) throw ArgumentError.notNull();
 
-    switch (value) {
-      case ECategoriesMenuItem.addExpenseCategory:
-        _addCategory(context, ETransactionType.expense);
-      case ECategoriesMenuItem.addIncomeCategory:
-        _addCategory(context, ETransactionType.income);
-    }
-  }
-
-  Future<void> _addCategory(BuildContext context, ETransactionType type) async {
     final categoryService = context.read<DomainCategoryService>();
     final appService = context.viewModel<AppEventService>();
 
@@ -35,7 +24,7 @@ final class OnMenuAddPressed
         return CategoryFormPage(
           keyboardHeight: bottom,
           category: null,
-          transactionType: type,
+          transactionType: value,
           additionalUsedTitles: const [],
         );
       },

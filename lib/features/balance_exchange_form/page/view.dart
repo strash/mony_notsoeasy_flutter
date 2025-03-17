@@ -5,6 +5,7 @@ import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/balance_exchange_form/components/components.dart";
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart";
 import "package:mony_app/features/balance_exchange_form/use_case/on_submit_pressed.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class BalanceExchangeFormView extends StatelessWidget {
   final double keyboardHeight;
@@ -24,7 +25,9 @@ class BalanceExchangeFormView extends StatelessWidget {
       children: [
         // -> appbar
         AppBarComponent(
-          title: Text(action.title),
+          title: Text(
+            context.t.features.balance_exchange_form.title(context: action),
+          ),
           useSliver: false,
           showBackground: false,
           showDragHandle: true,
@@ -71,7 +74,11 @@ class BalanceExchangeFormView extends StatelessWidget {
                       viewModel.isSubmitEnabled
                           ? () => onSubmitPressed(context)
                           : null,
-                  child: Text(action.submit),
+                  child: Text(
+                    context.t.features.balance_exchange_form.button_submit(
+                      context: action,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -81,21 +88,5 @@ class BalanceExchangeFormView extends StatelessWidget {
         SizedBox(height: 40.0 + keyboardHeight),
       ],
     );
-  }
-}
-
-extension on EBalanceExchangeMenuItem {
-  String get title {
-    return switch (this) {
-      EBalanceExchangeMenuItem.receive => "Пополнение",
-      EBalanceExchangeMenuItem.send => "Перевод",
-    };
-  }
-
-  String get submit {
-    return switch (this) {
-      EBalanceExchangeMenuItem.receive => "Пополнить",
-      EBalanceExchangeMenuItem.send => "Перевести",
-    };
   }
 }

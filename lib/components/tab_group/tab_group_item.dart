@@ -1,7 +1,8 @@
 part of "./tab_group.dart";
 
-class TabGroupEntryComponent<T extends IDescriptable> extends StatefulWidget {
+class TabGroupEntryComponent<T> extends StatefulWidget {
   final T value;
+  final TTabGroupEntryDescription<T> description;
   final bool isActive;
   final ValueNotifier<RelativeRect?> rectNotifier;
   final RenderBox? Function() parent;
@@ -24,6 +25,7 @@ class TabGroupEntryComponent<T extends IDescriptable> extends StatefulWidget {
   const TabGroupEntryComponent({
     super.key,
     required this.value,
+    required this.description,
     required this.isActive,
     required this.rectNotifier,
     required this.parent,
@@ -35,8 +37,7 @@ class TabGroupEntryComponent<T extends IDescriptable> extends StatefulWidget {
       _TabGroupEntryComponentState<T>();
 }
 
-class _TabGroupEntryComponentState<T extends IDescriptable>
-    extends State<TabGroupEntryComponent<T>> {
+class _TabGroupEntryComponentState<T> extends State<TabGroupEntryComponent<T>> {
   @override
   void initState() {
     super.initState();
@@ -85,7 +86,7 @@ class _TabGroupEntryComponentState<T extends IDescriptable>
           ),
           builder: (context, color, child) {
             return Text(
-              widget.value.description,
+              widget.description(widget.value),
               style: TabGroupEntryComponent.style(
                 context,
               ).copyWith(color: color),

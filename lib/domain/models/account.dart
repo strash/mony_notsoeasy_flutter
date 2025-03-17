@@ -4,7 +4,7 @@ import "package:sealed_currencies/sealed_currencies.dart";
 
 part "account.freezed.dart";
 
-enum EAccountType implements IDescriptable {
+enum EAccountType {
   debit(value: "debit"),
   credit(value: "credit"),
   cash(value: "cash"),
@@ -20,17 +20,6 @@ enum EAccountType implements IDescriptable {
   static EAccountType from(String type) {
     return EAccountType.values.where((e) => e.value == type).firstOrNull ??
         defaultValue;
-  }
-
-  @override
-  String get description {
-    return switch (this) {
-      EAccountType.debit => "Дебетовый счет",
-      EAccountType.credit => "Кредитный счет",
-      EAccountType.cash => "Наличные",
-      EAccountType.savings => "Вклад, накопительный счет",
-      EAccountType.investment => "Инвестиционный счет",
-    };
   }
 
   String get icon {

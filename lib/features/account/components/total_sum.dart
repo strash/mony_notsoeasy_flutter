@@ -4,6 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class AccountTotalSumComponent extends StatelessWidget {
   final AccountBalanceModel balance;
@@ -26,7 +27,7 @@ class AccountTotalSumComponent extends StatelessWidget {
       children: [
         // -> title
         Text(
-          "Баланс",
+          context.t.features.account.total_sum.title,
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w500,

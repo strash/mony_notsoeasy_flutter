@@ -3,6 +3,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/select/component.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TypeSelectComponent extends StatelessWidget {
   const TypeSelectComponent({super.key});
@@ -17,7 +18,9 @@ class TypeSelectComponent extends StatelessWidget {
       activeEntry: (controller) {
         return controller.value != null
             ? Text(
-              controller.value?.description ?? "",
+              context.t.models.account.type_description(
+                context: controller.value ?? EAccountType.defaultValue,
+              ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             )
@@ -29,7 +32,9 @@ class TypeSelectComponent extends StatelessWidget {
               return SelectEntryComponent<EAccountType>(
                 value: e,
                 equal: (lhs, rhs) => lhs != null && lhs == rhs,
-                child: Text(e.description),
+                child: Text(
+                  context.t.models.account.type_description(context: e),
+                ),
               );
             })
             .toList(growable: false);

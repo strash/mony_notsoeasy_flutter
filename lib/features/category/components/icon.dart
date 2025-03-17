@@ -6,6 +6,7 @@ import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/domain/models/category.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class CategoryIconComponent extends StatelessWidget {
   final CategoryModel category;
@@ -24,6 +25,10 @@ class CategoryIconComponent extends StatelessWidget {
     final color =
         ex?.from(category.colorName).color ?? theme.colorScheme.onSurface;
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
+    final colors = [
+      theme.colorScheme.surfaceContainerHighest,
+      theme.colorScheme.surfaceContainer,
+    ];
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -37,13 +42,7 @@ class CategoryIconComponent extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors:
-                      showColors
-                          ? [color2, color]
-                          : [
-                            theme.colorScheme.surfaceContainerHighest,
-                            theme.colorScheme.surfaceContainer,
-                          ],
+                  colors: showColors ? [color2, color] : colors,
                 ),
                 shape: SmoothRectangleBorder(
                   side:
@@ -93,7 +92,9 @@ class CategoryIconComponent extends StatelessWidget {
 
             // -> description
             Text(
-              category.transactionType.fullDescription,
+              context.t.models.transaction.type_full_description(
+                context: category.transactionType,
+              ),
               textAlign: TextAlign.center,
               style: GoogleFonts.golosText(
                 fontSize: 16.0,

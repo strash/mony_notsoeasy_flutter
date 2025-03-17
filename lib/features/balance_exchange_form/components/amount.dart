@@ -5,6 +5,7 @@ import "package:mony_app/common/constants.dart" show kMaxAmountLength;
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/currency_tag/component.dart";
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class BalanceExchangeFormAmountComponent extends StatelessWidget {
   const BalanceExchangeFormAmountComponent({super.key});
@@ -36,7 +37,8 @@ class BalanceExchangeFormAmountComponent extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
           decoration: InputDecoration(
-            hintText: viewModel.action.placeholder,
+            hintText: context.t.features.balance_exchange_form
+                .amount_input_placeholder(context: viewModel.action),
             counterText: "",
           ),
           onFieldSubmitted: viewModel.amountController.validator,
@@ -59,14 +61,5 @@ class BalanceExchangeFormAmountComponent extends StatelessWidget {
           ),
       ],
     );
-  }
-}
-
-extension on EBalanceExchangeMenuItem {
-  String get placeholder {
-    return switch (this) {
-      EBalanceExchangeMenuItem.receive => "сумма для пополнения",
-      EBalanceExchangeMenuItem.send => "сумма для перевода",
-    };
   }
 }

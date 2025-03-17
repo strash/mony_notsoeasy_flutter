@@ -6,6 +6,7 @@ import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/domain/models/category.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class CategoryComponent extends StatelessWidget {
   final CategoryModel category;
@@ -102,7 +103,9 @@ class CategoryComponent extends StatelessWidget {
                   // -> description
                   Flexible(
                     child: Text(
-                      category.transactionType.fullDescription,
+                      context.t.models.transaction.type_full_description(
+                        context: category.transactionType,
+                      ),
                       style: GoogleFonts.golosText(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
