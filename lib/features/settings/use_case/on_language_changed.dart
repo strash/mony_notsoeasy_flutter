@@ -3,7 +3,6 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/settings/page/view_model.dart";
-import "package:mony_app/i18n/strings.g.dart";
 import "package:provider/provider.dart";
 
 final class OnLanguageChanged extends UseCase<Future<void>, dynamic> {
@@ -13,16 +12,8 @@ final class OnLanguageChanged extends UseCase<Future<void>, dynamic> {
     final sharedPrefService = context.read<DomainSharedPreferencesService>();
 
     final value = viewModel.language.rotate;
+    await value.setLocale();
     await sharedPrefService.setSettingsLanguage(value);
-
-    switch (value) {
-      case ESettingsLanguage.system:
-        await LocaleSettings.useDeviceLocale();
-      case ESettingsLanguage.english:
-        await LocaleSettings.setLocale(AppLocale.en);
-      case ESettingsLanguage.russian:
-        await LocaleSettings.setLocale(AppLocale.ru);
-    }
 
     viewModel.setProtectedState(() {
       viewModel.language = value;

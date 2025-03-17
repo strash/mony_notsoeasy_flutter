@@ -7,6 +7,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/navbar/navbar.dart";
 import "package:mony_app/features/settings/page/view.dart";
 import "package:mony_app/features/settings/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart" show AppLocale, LocaleSettings;
 import "package:provider/provider.dart";
 
 enum ESettingsLanguage {
@@ -26,6 +27,17 @@ enum ESettingsLanguage {
 
   ESettingsLanguage get rotate {
     return values.elementAt((index + 1).wrapi(0, values.length));
+  }
+
+  Future<void> setLocale() async {
+    switch (this) {
+      case ESettingsLanguage.system:
+        await LocaleSettings.useDeviceLocale();
+      case ESettingsLanguage.english:
+        await LocaleSettings.setLocale(AppLocale.en);
+      case ESettingsLanguage.russian:
+        await LocaleSettings.setLocale(AppLocale.ru);
+    }
   }
 }
 

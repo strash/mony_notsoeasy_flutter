@@ -9,8 +9,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/data/data.dart";
 import "package:mony_app/data/database/migrations/m_1728413017_seed_default_categories.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:mony_app/features/settings/page/view_model.dart"
-    show ESettingsLanguage;
 import "package:mony_app/i18n/strings.g.dart";
 import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
@@ -53,15 +51,7 @@ void main() async {
   final sharedPrefsService = DomainSharedPreferencesService(
     sharedPrefencesRepository: sharedPrefRepo,
   );
-
-  switch (await sharedPrefsService.getSettingsLanguage()) {
-    case ESettingsLanguage.system:
-      await LocaleSettings.useDeviceLocale();
-    case ESettingsLanguage.english:
-      await LocaleSettings.setLocale(AppLocale.en);
-    case ESettingsLanguage.russian:
-      await LocaleSettings.setLocale(AppLocale.ru);
-  }
+  (await sharedPrefsService.getSettingsLanguage()).setLocale();
 
   runApp(
     TranslationProvider(
