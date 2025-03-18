@@ -75,43 +75,6 @@
 			"addTag": "Тег"
 		}
 	},
-	"stats": {
-		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
-	},
-	"settings": {
-		"language(context=ESettingsLanguage)": {
-			"system": "Системный",
-			"english": "English",
-			"russian": "Русский"
-		}
-	},
-	"search": {
-		"input_placeholder": "поиск",
-		"page_title(context=ESearchPage)": {
-			"accounts": "Счета",
-			"categories": "Категории",
-			"tags": "Теги"
-		},
-		"page_count": "${n: decimalPattern}",
-		"tab_title(context=ESearchTab)": {
-			"transactions": "Транзакция",
-			"accounts": "Счета",
-			"categories": "Категории",
-			"tags": "Теги"
-		}
-	},
-	"start": {
-		"subtitle": "помнит куда деньги подевались.",
-		"button_next": "Супер, дальше!",
-		"privacy_policy": "Политика обработки персональных данных"
-	},
-	"start_account": {
-		"title": "Счет",
-		"description": "Для начала вам нужно создать аккаунт, в который вы сможете добавлять новые транзакции. Позже будет возможность создавать другие аккаунты. Имейте в виду, что этот аккаунт не связан с реальным банковским счетом.\n\nВы можете либо создать новый аккаунт, либо импортировать свои данные из файла \"export_mony.json\" или из CSV файла из других приложений.",
-		"button_create": "Создать счет",
-		"button_import_mony": "Mony",
-		"button_import_csv": "CSV"
-	},
 	"import": {
 		"button_next": "Дальше",
 		"load_csv": {
@@ -185,5 +148,98 @@
 			"title": "Наконец-то!",
 			"description": "Операция не должна занять много времени. Через пару мгновений я импортирую все данные и перекину тебя на главный экран. Не закрывай экран пока происходит перенос данных!"
 		}
+	},
+	"search": {
+		"input_placeholder": "поиск",
+		"page_title(context=ESearchPage)": {
+			"accounts": "Счета",
+			"categories": "Категории",
+			"tags": "Теги"
+		},
+		"page_count": "${n: decimalPattern}",
+		"tab_title(context=ESearchTab)": {
+			"transactions": "Транзакция",
+			"accounts": "Счета",
+			"categories": "Категории",
+			"tags": "Теги"
+		}
+	},
+	"settings": {
+		"title": "Настройки",
+		"theme": {
+			"title": "Тема"
+		},
+		"color_mode": {
+			"title": "Внешний вид",
+			"value": {
+				"on": "Веселый",
+				"off": "Скучный"
+			},
+			"footer": "Влияет на счета, категории и транзакции."
+		},
+		"cents_visibility": {
+			"title": "Отображать копейки"
+		},
+		"tags_visibility": {
+			"title": "Отображать теги в ленте"
+		},
+		"default_transaction_type": {
+			"title": "Тип транзакции по-умолчанию",
+			"footer": "При создании новой транзакции этот тип будет выбран по-умолчанию."
+		},
+		"deletion_confirmation": {
+			"header": "Подтверждение удаления",
+			"transaction": "Транзакций",
+			"account": "Счетов",
+			"category": "Категорий",
+			"tag": "Тегов"
+		},
+		"import_export": {
+			"header": "Импорт и экспорт файл Mony",
+			"import_title": "Импорт",
+			"export_title": "Экспорт"
+		},
+		"support": {
+			"header": "Поддержка",
+			"review_title": "Оценить приложение",
+			"support_title": "Написать в поддержку",
+			"email_subject": "Пишу из приложения Mony",
+			"email_body_hint": "Важная информация. Не удаляй"
+		},
+		"language": {
+			"title": "Язык",
+			"value(context=ESettingsLanguage)": {
+				"system": "Системный",
+				"english": "English",
+				"russian": "Русский"
+			}
+		},
+		"docs": {
+			"header": "Документы",
+			"title": "Политика обработки данных"
+		},
+		"danger_zone": {
+			"header": "Опасная зона",
+			"title": "Удалить все данные",
+			"alert": {
+				"title": "Удаление всех данных",
+				"description": "Это навсегда. Перед удалением стоит экспортировать свои данные."
+			}
+		}
+	},
+	"start": {
+		"subtitle": "помнит куда деньги подевались.",
+		"button_next": "Супер, дальше!",
+		"privacy_policy": "Политика обработки персональных данных"
+	},
+	"start_account": {
+		"title": "Счет",
+		"description": "Для начала вам нужно создать аккаунт, в который вы сможете добавлять новые транзакции. Позже будет возможность создавать другие аккаунты. Имейте в виду, что этот аккаунт не связан с реальным банковским счетом.\n\nВы можете либо создать новый аккаунт, либо импортировать свои данные из файла \"export_mony.json\" или из CSV файла из других приложений.",
+		"button_create": "Создать счет",
+		"button_import_mony": "Mony",
+		"button_import_csv": "CSV"
+	},
+	"stats": {
+		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
 	}
 }

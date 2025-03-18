@@ -10,7 +10,7 @@ final class OnLanguageChanged extends UseCase<Future<void>, dynamic> {
     final viewModel = context.viewModel<SettingsViewModel>();
     final sharedPrefService = context.service<DomainSharedPreferencesService>();
 
-    final value = viewModel.language.rotate;
+    final value = viewModel.language.rotated;
     await value.setLocale();
     await sharedPrefService.setSettingsLanguage(value);
 

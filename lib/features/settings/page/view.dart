@@ -17,32 +17,7 @@ class SettingsView extends StatelessWidget {
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<SettingsViewModel>();
-
-    final onThemeModePressed = viewModel<OnThemeModePressed>();
-    final onColorsToggled = viewModel<OnColorsToggled>();
-
-    final onCentsToggled = viewModel<OnCentsToggled>();
-    final onTagsToggled = viewModel<OnTagsToggled>();
-
-    final onTransactionToggled = viewModel<OnTransactionTypeToggled>();
-
-    final onConfirmTransactionToggled =
-        viewModel<OnConfirmTransactionToggled>();
-    final onConfirmAccountToggled = viewModel<OnConfirmAccountToggled>();
-    final onConfirmCategoryToggled = viewModel<OnConfirmCategoryToggled>();
-    final onConfirmTagToggled = viewModel<OnConfirmTagToggled>();
-
-    final onImportDataPressed = viewModel<OnImportDataPressed>();
-    final onExportDataPressed = viewModel<OnExportDataPressed>();
-
-    final onReviewPressed = viewModel<OnReviewPressed>();
-    final onSupportPressed = viewModel<OnSupportPressed>();
-
-    final onLanguageChanged = viewModel<OnLanguageChanged>();
-
-    final onPrivacyPolicyPressed = viewModel<OnPrivacyPolicyPressed>();
-
-    final onDeleteDataPressed = viewModel<OnDeleteDataPressed>();
+    final tr = context.t.features.settings;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -53,8 +28,8 @@ class SettingsView extends StatelessWidget {
         ),
         slivers: [
           // -> app bar
-          const AppBarComponent(
-            title: Text("Настройки"),
+          AppBarComponent(
+            title: Text(tr.title),
             automaticallyImplyLeading: false,
           ),
 
@@ -69,14 +44,12 @@ class SettingsView extends StatelessWidget {
               },
               children: [
                 SettingsGroupComponent(
-                  footer: const Text(
-                    "Влияет на счета, категории и транзакции.",
-                  ),
+                  footer: Text(tr.color_mode.footer),
                   children: [
                     // -> theme mode
                     SettingsEntryComponent(
-                      onTap: () => onThemeModePressed(context),
-                      title: const Text("Тема"),
+                      onTap: () => viewModel<OnThemeModePressed>()(context),
+                      title: Text(tr.theme.title),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon: switch (viewModel.themeMode) {
                           ThemeMode.system => Assets.icons.aCircle,
@@ -89,14 +62,16 @@ class SettingsView extends StatelessWidget {
 
                     // -> color mode
                     SettingsEntryComponent(
-                      onTap: () => onColorsToggled(context),
-                      title: const Text("Внешний вид"),
+                      onTap: () => viewModel<OnColorsToggled>()(context),
+                      title: Text(tr.color_mode.title),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 20.0),
                         child: Builder(
                           builder: (context) {
                             return Text(
-                              viewModel.isColorsVisible ? "Веселый" : "Скучный",
+                              viewModel.isColorsVisible
+                                  ? tr.color_mode.value.on
+                                  : tr.color_mode.value.off,
                               style: DefaultTextStyle.of(
                                 context,
                               ).style.copyWith(
@@ -117,8 +92,8 @@ class SettingsView extends StatelessWidget {
                   children: [
                     // -> cents
                     SettingsEntryComponent(
-                      onTap: () => onCentsToggled(context),
-                      title: const Text("Отображать копейки"),
+                      onTap: () => viewModel<OnCentsToggled>()(context),
+                      title: Text(tr.cents_visibility.title),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon:
                             viewModel.isCentsVisible
@@ -133,8 +108,8 @@ class SettingsView extends StatelessWidget {
 
                     // tags in feed
                     SettingsEntryComponent(
-                      onTap: () => onTagsToggled(context),
-                      title: const Text("Отображать теги в ленте"),
+                      onTap: () => viewModel<OnTagsToggled>()(context),
+                      title: Text(tr.tags_visibility.title),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon:
                             viewModel.isTagsVisible
@@ -151,14 +126,13 @@ class SettingsView extends StatelessWidget {
 
                 // -> default transaction type
                 SettingsGroupComponent(
-                  footer: const Text(
-                    "При создании новой транзакции этот "
-                    "тип будет выбран по-умолчанию.",
-                  ),
+                  footer: Text(tr.default_transaction_type.footer),
                   children: [
                     SettingsEntryComponent(
-                      onTap: () => onTransactionToggled(context),
-                      title: const Text("Тип транзакции"),
+                      onTap: () {
+                        viewModel<OnTransactionTypeToggled>()(context);
+                      },
+                      title: Text(tr.default_transaction_type.title),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 20.0),
                         child: Builder(
@@ -179,11 +153,13 @@ class SettingsView extends StatelessWidget {
 
                 // -> deletion confirmations
                 SettingsGroupComponent(
-                  header: const Text("Подтверждение удаления"),
+                  header: Text(tr.deletion_confirmation.header),
                   children: [
                     SettingsEntryComponent(
-                      onTap: () => onConfirmTransactionToggled(context),
-                      title: const Text("Транзакций"),
+                      onTap: () {
+                        viewModel<OnConfirmTransactionToggled>()(context);
+                      },
+                      title: Text(tr.deletion_confirmation.transaction),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon:
                             viewModel.confirmTransaction
@@ -196,8 +172,10 @@ class SettingsView extends StatelessWidget {
                       ),
                     ),
                     SettingsEntryComponent(
-                      onTap: () => onConfirmAccountToggled(context),
-                      title: const Text("Счетов"),
+                      onTap: () {
+                        viewModel<OnConfirmAccountToggled>()(context);
+                      },
+                      title: Text(tr.deletion_confirmation.account),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon:
                             viewModel.confirmAccount
@@ -210,8 +188,10 @@ class SettingsView extends StatelessWidget {
                       ),
                     ),
                     SettingsEntryComponent(
-                      onTap: () => onConfirmCategoryToggled(context),
-                      title: const Text("Категорий"),
+                      onTap: () {
+                        viewModel<OnConfirmCategoryToggled>()(context);
+                      },
+                      title: Text(tr.deletion_confirmation.category),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon:
                             viewModel.confirmCategory
@@ -224,8 +204,8 @@ class SettingsView extends StatelessWidget {
                       ),
                     ),
                     SettingsEntryComponent(
-                      onTap: () => onConfirmTagToggled(context),
-                      title: const Text("Тегов"),
+                      onTap: () => viewModel<OnConfirmTagToggled>()(context),
+                      title: Text(tr.deletion_confirmation.tag),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon:
                             viewModel.confirmTag
@@ -242,15 +222,15 @@ class SettingsView extends StatelessWidget {
 
                 // TODO: добавить импорт из CSV
                 SettingsGroupComponent(
-                  header: const Text("Импорт и экспорт данных"),
+                  header: Text(tr.import_export.header),
                   children: [
                     // -> import
                     SettingsEntryComponent(
                       onTap:
                           !viewModel.isImportInProgress
-                              ? () => onImportDataPressed(context)
+                              ? () => viewModel<OnImportDataPressed>()(context)
                               : null,
-                      title: const Text("Импорт"),
+                      title: Text(tr.import_export.import_title),
                       trailing:
                           viewModel.isImportInProgress
                               ? const Padding(
@@ -270,8 +250,8 @@ class SettingsView extends StatelessWidget {
 
                     // -> export
                     SettingsEntryComponent(
-                      onTap: () => onExportDataPressed(context),
-                      title: const Text("Экспорт"),
+                      onTap: () => viewModel<OnExportDataPressed>()(context),
+                      title: Text(tr.import_export.export_title),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon: Assets.icons.squareAndArrowUp,
                         color: theme.colorScheme.tertiary,
@@ -281,12 +261,12 @@ class SettingsView extends StatelessWidget {
                 ),
 
                 SettingsGroupComponent(
-                  header: const Text("Поддержка"),
+                  header: Text(tr.support.header),
                   children: [
                     // -> request a review
                     SettingsEntryComponent(
-                      onTap: () => onReviewPressed(context),
-                      title: const Text("Оценить приложение"),
+                      onTap: () => viewModel<OnReviewPressed>()(context),
+                      title: Text(tr.support.review_title),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon: Assets.icons.star,
                         color: theme.colorScheme.tertiary,
@@ -295,8 +275,8 @@ class SettingsView extends StatelessWidget {
 
                     // -> support
                     SettingsEntryComponent(
-                      onTap: () => onSupportPressed(context),
-                      title: const Text("Написать в поддержку"),
+                      onTap: () => viewModel<OnSupportPressed>()(context),
+                      title: Text(tr.support.support_title),
                       trailing: SettingsEntryTrailingIconComponent(
                         icon: Assets.icons.envelope,
                         color: theme.colorScheme.tertiary,
@@ -309,22 +289,14 @@ class SettingsView extends StatelessWidget {
                 SettingsGroupComponent(
                   children: [
                     SettingsEntryComponent(
-                      onTap: () => onLanguageChanged(context),
-                      title: const Flexible(
-                        child: Text(
-                          "Язык",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
+                      onTap: () => viewModel<OnLanguageChanged>()(context),
+                      title: Text(tr.language.title),
                       trailing: Builder(
                         builder: (context) {
                           return Padding(
                             padding: const EdgeInsets.only(right: 20.0),
                             child: Text(
-                              context.t.features.settings.language(
-                                context: viewModel.language,
-                              ),
+                              tr.language.value(context: viewModel.language),
                               style: DefaultTextStyle.of(context).style
                                   .copyWith(color: theme.colorScheme.secondary),
                             ),
@@ -337,14 +309,14 @@ class SettingsView extends StatelessWidget {
 
                 // -> docs
                 SettingsGroupComponent(
-                  header: const Text("Документы"),
+                  header: Text(tr.docs.header),
                   children: [
                     // -> privacy policy
                     SettingsEntryComponent(
-                      onTap: () => onPrivacyPolicyPressed(context),
-                      title: const Flexible(
+                      onTap: () => viewModel<OnPrivacyPolicyPressed>()(context),
+                      title: Flexible(
                         child: Text(
-                          "Политика обработки персональных данных",
+                          tr.docs.title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -359,18 +331,23 @@ class SettingsView extends StatelessWidget {
 
                 // -> delete data
                 SettingsGroupComponent(
-                  header: const Text("Опасная зона"),
+                  header: Text(tr.danger_zone.header),
+                  background: theme.colorScheme.errorContainer,
                   children: [
                     SettingsEntryComponent(
-                      onTap: () => onDeleteDataPressed(context),
+                      onTap: () => viewModel<OnDeleteDataPressed>()(context),
                       title: Flexible(
                         child: Builder(
                           builder: (context) {
                             return Center(
                               child: Text(
-                                "Удалить все данные",
-                                style: DefaultTextStyle.of(context).style
-                                    .copyWith(color: theme.colorScheme.error),
+                                tr.danger_zone.title,
+                                style: DefaultTextStyle.of(
+                                  context,
+                                ).style.copyWith(
+                                  color: theme.colorScheme.onErrorContainer,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             );
                           },

@@ -73,43 +73,6 @@
 			"addTag": "Tag"
 		}
 	},
-	"search": {
-		"input_placeholder": "search",
-		"page_title(context=ESearchPage)": {
-			"accounts": "Accounts",
-			"categories": "Categories",
-			"tags": "Tags"
-		},
-		"page_count": "${n: decimalPattern}",
-		"tab_title(context=ESearchTab)": {
-			"transactions": "Transactions",
-			"accounts": "Accounts",
-			"categories": "Categories",
-			"tags": "Tags"
-		}
-	},
-	"stats": {
-		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
-	},
-	"settings": {
-		"language(context=ESettingsLanguage)": {
-			"system": "System",
-			"english": "English",
-			"russian": "Русский"
-		}
-	},
-	"start": {
-		"subtitle": "remembers where the money went.",
-		"button_next": "Let's go!",
-		"privacy_policy": "Privacy Policy"
-	},
-	"start_account": {
-		"title": "Account",
-		"description": "To start, you'll need to create an account where you can add new transactions. Later, there'll be an option to create other accounts. Just a heads up, this account isn't linked to a real bank account.\n\nYou can either create a new account or import your data from the 'export_mony.json' file or from a CSV file from other apps.",
-		"button_create": "Create Account",
-		"button_import_mony": "Mony",
-		"button_import_csv": "CSV"
-	},
 	"import": {
 		"button_next": "Next",
 		"load_csv": {
@@ -179,5 +142,98 @@
 			"title": "Almost there!",
 			"description": "The operation should be quick. In a jiffy, I'll import all the data and send you to the main screen. Just don't close the screen while the data transfer is happening!"
 		}
+	},
+	"search": {
+		"input_placeholder": "search",
+		"page_title(context=ESearchPage)": {
+			"accounts": "Accounts",
+			"categories": "Categories",
+			"tags": "Tags"
+		},
+		"page_count": "${n: decimalPattern}",
+		"tab_title(context=ESearchTab)": {
+			"transactions": "Transactions",
+			"accounts": "Accounts",
+			"categories": "Categories",
+			"tags": "Tags"
+		}
+	},
+	"settings": {
+		"title": "Settings",
+		"theme": {
+			"title": "Theme"
+		},
+		"color_mode": {
+			"title": "Appearance",
+			"value": {
+				"on": "Pretty",
+				"off": "Boring"
+			},
+			"footer": "It affects accounts, categories, and transactions."
+		},
+		"cents_visibility": {
+			"title": "Display cents"
+		},
+		"tags_visibility": {
+			"title": "Display tags in the feed"
+		},
+		"default_transaction_type": {
+			"title": "Default Transaction Type",
+			"footer": "This transaction type will be selected when creating a new transaction."
+		},
+		"deletion_confirmation": {
+			"header": "Confirmation of deletion",
+			"transaction": "Transactions",
+			"account": "Accounts",
+			"category": "Categories",
+			"tag": "Tags"
+		},
+		"import_export": {
+			"header": "Import and export Mony file",
+			"import_title": "Import",
+			"export_title": "Export"
+		},
+		"support": {
+			"header": "Support",
+			"review_title": "Rate the app",
+			"support_title": "Contact support",
+			"email_subject": "I'm writing from the Mony app",
+			"email_body_hint": "Important Info. Don't remove"
+		},
+		"language": {
+			"title": "Language",
+			"value(context=ESettingsLanguage)": {
+				"system": "System",
+				"english": "English",
+				"russian": "Русский"
+			}
+		},
+		"docs": {
+			"header": "Documents",
+			"title": "Privacy Policy"
+		},
+		"danger_zone": {
+			"header": "Danger Zone",
+			"title": "Delete All Data",
+			"alert": {
+				"title": "Delete All Data",
+				"description": "It's forever. Export the data before deleting."
+			}
+		}
+	},
+	"start": {
+		"subtitle": "remembers where the money went.",
+		"button_next": "Let's go!",
+		"privacy_policy": "Privacy Policy"
+	},
+	"start_account": {
+		"title": "Account",
+		"description": "To start, you'll need to create an account where you can add new transactions. Later, there'll be an option to create other accounts. Just a heads up, this account isn't linked to a real bank account.\n\nYou can either create a new account or import your data from the 'export_mony.json' file or from a CSV file from other apps.",
+		"button_create": "Create Account",
+		"button_import_mony": "Mony",
+		"button_import_csv": "CSV"
+	},
+	"stats": {
+		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
 	}
 }

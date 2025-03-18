@@ -3,17 +3,17 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/alert/component.dart";
 import "package:mony_app/domain/domain.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 final class OnDeleteDataPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [_]) async {
+    final tr = context.t.features.settings.danger_zone.alert;
+
     final result = await AlertComponet.show(
       context,
-      title: const Text("Удаление данных"),
-      description: const Text(
-        "Точно удалить? Восстановить данные после удаления будет не возможно. "
-        "Перед удалением стоит экспортировать данные.",
-      ),
+      title: Text(tr.title),
+      description: Text(tr.description),
     );
 
     if (!context.mounted || result == null) return;

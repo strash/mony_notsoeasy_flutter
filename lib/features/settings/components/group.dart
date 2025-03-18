@@ -5,14 +5,16 @@ import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/settings/components/entry.dart";
 
 class SettingsGroupComponent extends StatelessWidget {
-  final List<SettingsEntryComponent> children;
   final Widget? header;
   final Widget? footer;
+  final Color? background;
+  final List<SettingsEntryComponent> children;
 
   const SettingsGroupComponent({
     super.key,
     this.header,
     this.footer,
+    this.background,
     required this.children,
   });
 
@@ -42,7 +44,7 @@ class SettingsGroupComponent extends StatelessWidget {
           // -> container
           DecoratedBox(
             decoration: ShapeDecoration(
-              color: theme.colorScheme.surfaceContainer,
+              color: background ?? theme.colorScheme.surfaceContainer,
               shape: const SmoothRectangleBorder(
                 borderRadius: SmoothBorderRadius.all(
                   SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),

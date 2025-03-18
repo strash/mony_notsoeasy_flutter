@@ -24,7 +24,7 @@ enum ESettingsLanguage {
     return values.where((e) => e.value == value).firstOrNull ?? defaultValue;
   }
 
-  ESettingsLanguage get rotate {
+  ESettingsLanguage get rotated {
     return values.elementAt((index + 1).wrapi(0, values.length));
   }
 
