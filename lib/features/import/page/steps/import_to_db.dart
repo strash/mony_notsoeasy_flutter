@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/features/import/import.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class ImportImportToDbPage extends StatelessWidget {
   final ImportEvent event;
@@ -21,7 +22,7 @@ class ImportImportToDbPage extends StatelessWidget {
             children: [
               // -> title
               Text(
-                "Наконец-то!",
+                context.t.features.import.import_to_db.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
@@ -32,9 +33,7 @@ class ImportImportToDbPage extends StatelessWidget {
 
               // -> description
               Text(
-                "Операция не должна занять много времени. Через пару мгновений "
-                "я импортирую все данные и перекину тебя на главный экран. "
-                "Не закрывай экран пока происходит перенос данных!",
+                context.t.features.import.import_to_db.description,
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   height: 1.3,

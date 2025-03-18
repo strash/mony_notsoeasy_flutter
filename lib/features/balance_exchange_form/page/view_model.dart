@@ -8,6 +8,7 @@ import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/balance_exchange_form/page/view.dart";
 import "package:mony_app/features/balance_exchange_form/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 enum EBalanceExchangeMenuItem { receive, send }
 
@@ -36,10 +37,9 @@ final class BalanceExchangeFormViewModel
   bool isConvertEnabled = false;
   bool isSubmitEnabled = false;
 
-  final _validator = AmountValidator();
   final accountController = SelectController<AccountModel?>(null);
-  late final amountController = InputController(validators: [_validator]);
-  late final coefficientController = InputController(validators: [_validator]);
+  final amountController = InputController();
+  final coefficientController = InputController();
 
   List<AccountModel> accounts = [];
   List<AccountBalanceModel> balances = [];
@@ -149,6 +149,9 @@ final class BalanceExchangeFormViewModel
     coefficientController.addListener(_listener);
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
+      final validator = AmountValidator(translations: context.t);
+      amountController.addValidator(validator);
+      coefficientController.addValidator(validator);
       final sharedPrefService =
           context.service<DomainSharedPreferencesService>();
       final cents = await sharedPrefService.isSettingsCentsVisible();

@@ -31,20 +31,21 @@ final class ImportModelColumnValidation extends ImportModel {
     return columns.where((e) => e.columnKey != null).toList(growable: false);
   }
 
-  Future<void> validate() async {
+  Future<void> validate(BuildContext context) async {
     final csv = csvModel.csv;
     if (csv == null) throw ArgumentError.notNull();
     for (final column in mappedColumns) {
       await Future.delayed(const Duration(milliseconds: 100));
+      if (!context.mounted) continue;
       final entryKey = column.columnKey!;
       final validator = switch (column.column) {
-        EImportColumn.account => AccountValidator(),
-        EImportColumn.amount => AmountValidator(),
-        EImportColumn.transactionType => TransactionTypeValidator(),
-        EImportColumn.date => DateValidator(),
-        EImportColumn.category => CategoryValidator(),
-        EImportColumn.tag => TagValidator(),
-        EImportColumn.note => NoteValidator(),
+        EImportColumn.account => AccountValidator(context.t),
+        EImportColumn.amount => AmountValidator(context.t),
+        EImportColumn.transactionType => TransactionTypeValidator(context.t),
+        EImportColumn.date => DateValidator(context.t),
+        EImportColumn.category => CategoryValidator(context.t),
+        EImportColumn.tag => TagValidator(context.t),
+        EImportColumn.note => NoteValidator(context.t),
       };
       final result = validator.validate(csv.entries, entryKey);
       results.value = List<ValidationResult>.from(results.value)..add(result);

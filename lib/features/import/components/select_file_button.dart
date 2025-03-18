@@ -4,6 +4,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class SelectFileButtonComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -24,7 +25,7 @@ class SelectFileButtonComponent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text("Выбрать файл"),
+          Text(context.t.features.import.load_csv.button_upload),
           const SizedBox(width: 8.0),
           SvgPicture.asset(
             Assets.icons.documentBadgeArrowDownFill,

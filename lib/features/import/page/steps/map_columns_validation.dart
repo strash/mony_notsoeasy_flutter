@@ -4,6 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/import/import.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class ImportMapColumnsValidationComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -16,11 +17,12 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
     final viewModel = context.viewModel<ImportViewModel>();
     final validation = viewModel.currentStep;
     if (validation is! ImportModelColumnValidation) return const SizedBox();
-    String description = "Один момент, проверяются данные.";
+    final tr = context.t.features.import.map_columns_validation;
+    String description = tr.description_validation;
     if (event is ImportEventErrorMappingColumns) {
-      description = "Найдены ошибки.";
+      description = tr.description_error;
     } else if (event is ImportEventMappingColumnsValidated) {
-      description = "Все ок! Можно продолжать.";
+      description = tr.description_validated;
     }
 
     return Column(
@@ -33,7 +35,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
             children: [
               // -> title
               Text(
-                "Валидация",
+                tr.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
                   color: theme.colorScheme.onSurface,

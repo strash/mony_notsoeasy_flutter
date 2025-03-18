@@ -36,19 +36,6 @@ final class ImportModelCategory extends ImportModel {
     };
   }
 
-  String numberOfCategoriesDescription(String locale) {
-    final count = mappedCategories.value.entries.fold<int>(0, (prev, curr) {
-      return prev + curr.value.length;
-    });
-    final formatter = NumberFormat.decimalPattern(locale);
-    final formatted = formatter.format(count);
-    return switch (count.wordCaseHint) {
-      EWordCaseHint.nominative => "$formatted категория",
-      EWordCaseHint.genitive => "$formatted категории",
-      EWordCaseHint.accusative => "$formatted категорий",
-    };
-  }
-
   List<String> getTitles(ImportModelCategoryVariantVO category) {
     for (final MapEntry(key: type, value: list)
         in mappedCategories.value.entries) {

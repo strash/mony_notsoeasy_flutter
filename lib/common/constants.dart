@@ -1,4 +1,3 @@
-// .env
 import "dart:ui";
 
 const kDbName = String.fromEnvironment("DB_NAME", defaultValue: "my.db");

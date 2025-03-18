@@ -12,7 +12,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     final viewModel = context.viewModel<ImportViewModel>();
     switch (event) {
       case ImportEventMappingColumns():
-        _onMappingColumns(viewModel);
+        _onMappingColumns(context, viewModel);
       case ImportEventMappingColumnsValidated():
         _onColumnsValidated(viewModel);
       case ImportEventMapAccounts():
@@ -34,7 +34,10 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
     }
   }
 
-  Future<void> _onMappingColumns(ImportViewModel viewModel) async {
+  Future<void> _onMappingColumns(
+    BuildContext context,
+    ImportViewModel viewModel,
+  ) async {
     if (viewModel.currentStep is! ImportModelColumn) return;
     final currentColumn = viewModel.currentStep as ImportModelColumn;
     final subject = viewModel.subject;
@@ -54,7 +57,7 @@ final class OnForwardPressed extends UseCase<Future<void>, ImportEvent?> {
       viewModel.setProtectedState(() {
         viewModel.currentStep = validation;
       });
-      await validation.validate();
+      await validation.validate(context);
       if (validation.isReady()) {
         subject.add(ImportEventMappingColumnsValidated());
       } else {

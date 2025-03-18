@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/features/import/components/components.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class EntryListHeaderComponent extends StatelessWidget {
   const EntryListHeaderComponent({super.key});
@@ -20,7 +21,7 @@ class EntryListHeaderComponent extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  "Колонки",
+                  context.t.features.import.map_columns.column.title_column,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(
@@ -44,7 +45,7 @@ class EntryListHeaderComponent extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  "Значения",
+                  context.t.features.import.map_columns.column.value_column,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.golosText(

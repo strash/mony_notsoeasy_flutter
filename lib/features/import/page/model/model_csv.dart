@@ -11,17 +11,6 @@ final class ImportModelCsv extends ImportModel {
     return csv.entries.length;
   }
 
-  String numberOfEntriesDescription(String locale) {
-    final count = numberOfEntries;
-    final formatter = NumberFormat.decimalPattern(locale);
-    final formatted = formatter.format(count);
-    return switch (count.wordCaseHint) {
-      EWordCaseHint.nominative => "$formatted запись",
-      EWordCaseHint.genitive => "$formatted записи",
-      EWordCaseHint.accusative => "$formatted записей",
-    };
-  }
-
   @override
   bool isReady() {
     return csv != null && csv!.entries.isNotEmpty;

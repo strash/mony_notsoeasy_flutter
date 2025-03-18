@@ -94,5 +94,75 @@
 		"button_create": "Create Account",
 		"button_import_mony": "Mony",
 		"button_import_csv": "CSV"
+	},
+	"import": {
+		"button_next": "Next",
+		"load_csv": {
+			"title": "Upload CSV",
+			"description": "Let's get started with uploading your CSV file. First, pick a file that has at least three columns: 'amount', 'date' and 'category' of the transaction. The names of these columns can be different, no worries!\n\nJust a heads up, the 'amount' column should not have any currency symbols. Also, there should be a decimal point before the cents, not a comma. After that, we'll take care of the rest!",
+			"error_message": "I couldn't read the file. It might be broken or empty. Can you try uploading a different file?",
+			"button_upload": "Select CSV file"
+		},
+		"map_columns": {
+			"title": "The '@:models.import.column_title' column",
+			"description": "Choose the column that matches\nthe '@:models.import.column_title' column.",
+			"column": {
+				"title_column": "Columns",
+				"value_column": "Values"
+			},
+			"button_rotate_entries": {
+				"title": "Next record",
+				"description": {
+					"one": "${count: decimalPattern} out of ${n: decimalPattern} record",
+					"other": "${count: decimalPattern} out of ${n: decimalPattern} records"
+				}
+			}
+		},
+		"map_columns_validation": {
+			"title": "Validation",
+			"description_validation": "Just checking the data.",
+			"description_error": "Oops, found a few errors.",
+			"description_validated": "All good now! You can keep going.",
+			"error_message": {
+				"missing_value": "the required value is missing",
+				"unknown_value": "the value was not recognized",
+				"only_two_options": "there should only be two options available"
+			}
+		},
+		"map_accounts": {
+			"title": "Accounts",
+			"description_new": "You'll need to create an account to manage all your transactions. You can create more accounts later if needed.",
+			"description_bind": {
+				"one": "I found $n account that needs some info added. It'll be a quick task.",
+				"other": "I found $n accounts that need some info added. It'll be a quick task."
+			},
+			"account_placeholder": "Account"
+		},
+		"map_transaction_type": {
+			"title": "Transaction Types",
+			"description": "Are the transactions in this table expenses?",
+			"tab_expense": "Yes, it's @:models.transaction.type_description",
+			"tab_income": "No, it's @:models.transaction.type_description"
+		},
+		"map_categories": {
+			"title": "Categories",
+			"description": {
+				"one": "I found $n category that needs to be linked to the predefined categories or supplemented with information.",
+				"other": "I found $n categories that need to be linked to the predefined categories or supplemented with information."
+			},
+			"category_section_title": "@:models.transaction.type_full_description: ${count: decimalPattern}/${n: decimalPattern}",
+			"action_sheet": {
+				"title": "Category Linking",
+				"description": "When you link a category to one of the predefined ones, all transactions under the original category will be moved to the predefined category.\n\nFor instance, if you had a category called 'Store Purchases' and you picked the predefined category 'Groceries,' after the import, the category will be named 'Groceries.'\n\nIf you don't want to link it, you can keep the original category, but you'll need to add some extra info.",
+				"menu_item(context=EImportCategoryMenuAction)": {
+					"link": "Link",
+					"create": "Supplement"
+				}
+			}
+		},
+		"import_to_db": {
+			"title": "Almost there!",
+			"description": "The operation should be quick. In a jiffy, I'll import all the data and send you to the main screen. Just don't close the screen while the data transfer is happening!"
+		}
 	}
 }

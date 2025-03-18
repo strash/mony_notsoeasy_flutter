@@ -26,15 +26,17 @@ class ImportView extends StatelessWidget {
               CustomScrollView(
                 slivers: [
                   // -> appbar
-                  TweenAnimationBuilder<int>(
-                    duration: Durations.long4,
-                    tween: IntTween(
-                      begin: 0,
-                      end: viewModel.progressPercentage,
+                  AppBarComponent(
+                    title: TweenAnimationBuilder<int>(
+                      duration: Durations.long4,
+                      tween: IntTween(
+                        begin: 0,
+                        end: viewModel.progressPercentage,
+                      ),
+                      builder: (context, progress, child) {
+                        return Text("$progress%");
+                      },
                     ),
-                    builder: (context, progress, child) {
-                      return AppBarComponent(title: Text("$progress%"));
-                    },
                   ),
 
                   // -> content

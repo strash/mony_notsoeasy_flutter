@@ -1,20 +1,11 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:mony_app/app/app.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
-enum EImportCategoryMenuAction implements IDescriptable {
-  link,
-  create;
-
-  @override
-  String get description => switch (this) {
-    EImportCategoryMenuAction.link => "Привязать",
-    EImportCategoryMenuAction.create => "Дополнить",
-  };
-}
+enum EImportCategoryMenuAction { link, create }
 
 class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
   const ImportCategoryActionBottomSheetComponent({super.key});
@@ -66,7 +57,7 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
 
           // -> title
           Text(
-            "Привязка категорий",
+            context.t.features.import.map_categories.action_sheet.title,
             style: GoogleFonts.golosText(
               fontSize: 20.0,
               color: theme.colorScheme.onSurface,
@@ -77,14 +68,7 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
 
           // -> description
           Text(
-            "При привязке категории к одной из предустановленных, "
-            "все транзакции, связанные с оригинальной категорией будут "
-            "привязаны к предустановленной. Например, если у тебя была "
-            'категория "Покупки из магазина", ты выберешь предустановленную '
-            'категорию "Продукты", то после импорта категория будет '
-            'называться "Продукты".\n\nЕсли не хочешь привязывать, можно '
-            "оставить оригинальную категорию, но тогда ее нужно будет "
-            "дополнить некоторыми данными.",
+            context.t.features.import.map_categories.action_sheet.description,
             style: GoogleFonts.golosText(
               fontSize: 15.0,
               height: 1.3,
@@ -100,10 +84,14 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(width: 10.0),
             itemBuilder: (context, index) {
               final item = EImportCategoryMenuAction.values.elementAt(index);
+
               return Expanded(
                 child: FilledButton(
                   onPressed: () => _pop(context, item),
-                  child: Text(item.description),
+                  child: Text(
+                    context.t.features.import.map_categories.action_sheet
+                        .menu_item(context: item),
+                  ),
                 ),
               );
             },

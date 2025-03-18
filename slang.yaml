@@ -11,6 +11,8 @@ imports:
   - 'package:mony_app/features/balance_exchange_form/page/view_model.dart'
   - 'package:mony_app/features/feed/page/view_model.dart'
   - 'package:mony_app/features/settings/page/view_model.dart'
+  - 'package:mony_app/features/import/page/model/enum.dart'
+  - 'package:mony_app/features/import/components/category/action_sheet.dart'
 contexts:
   EAccountType:
     generate_enum: false
@@ -21,4 +23,8 @@ contexts:
   EFeedMenuItem:
     generate_enum: false
   ESettingsLanguage:
+    generate_enum: false
+  EImportColumn:
+    generate_enum: false
+  EImportCategoryMenuAction:
     generate_enum: false

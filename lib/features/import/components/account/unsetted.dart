@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class AccountUnsettedItemComponent extends StatelessWidget {
   final String? title;
@@ -21,7 +22,9 @@ class AccountUnsettedItemComponent extends StatelessWidget {
           // -> title
           Flexible(
             child: Text(
-              (title != null && title.isNotEmpty) ? title : "Счет",
+              (title != null && title.isNotEmpty)
+                  ? title
+                  : context.t.features.import.map_accounts.account_placeholder,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.golosText(

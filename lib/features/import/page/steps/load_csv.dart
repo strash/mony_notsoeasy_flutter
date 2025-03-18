@@ -3,6 +3,7 @@ import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/features/import/import.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class ImportLoadCsvComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -23,7 +24,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
             children: [
               // -> title
               Text(
-                "Загрузка CSV",
+                context.t.features.import.load_csv.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
@@ -34,11 +35,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
 
               // -> description
               Text(
-                "Начни с выбора CSV файла, в котором есть как минимум три "
-                'колонки: "сумма", "дата" и "категория" транзакции. Они могут '
-                "называться иначе, это не страшно.\n\nУбедись, что в значениях "
-                'колонки "сумма" нет символов валюты. И перед копейками не '
-                "запятая, а точка. А дальше разберемся!",
+                context.t.features.import.load_csv.description,
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   height: 1.3,
@@ -70,8 +67,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
                 const SizedBox(width: 8.0),
                 Flexible(
                   child: Text(
-                    "Не получилось прочитать файл. Либо он испорчен, либо "
-                    "пуст. Попробуй загрузить другой файл.",
+                    context.t.features.import.load_csv.error_message,
                     style: GoogleFonts.golosText(
                       fontSize: 15.0,
                       height: 1.3,

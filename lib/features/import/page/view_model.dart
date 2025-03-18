@@ -66,11 +66,10 @@ final class ImportViewModel extends ViewModelState<ImportPage> {
 
   void _transactionTypeListener() {
     final typeModel = currentStep;
-    if (typeModel is! ImportModelTransactionType) {
-      throw ArgumentError.value(typeModel);
+    if (typeModel is ImportModelTransactionType) {
+      final value = transactionTypeController.value;
+      typeModel.remap(typeModel.largest.typeValue, value);
     }
-    final value = transactionTypeController.value;
-    typeModel.remap(typeModel.largest.typeValue, value);
   }
 
   Map<ETransactionType, List<CategoryModel>> categoryModels = {

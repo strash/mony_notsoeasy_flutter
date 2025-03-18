@@ -46,7 +46,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
   final int _lines = 6;
 
   List<_Month> _generate() {
-    final start = _controller.visibleMonth.offsetMonth(-1);
+    final start = _controller.visibleMonth.shiftMonth(-1);
     return List<_Month>.generate(3, (index) {
       return _Month(
         controller: _controller,

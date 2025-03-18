@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -7,6 +6,7 @@ import "package:mony_app/features/import/components/components.dart";
 import "package:mony_app/features/import/import.dart";
 import "package:mony_app/features/import/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class ImportMapColumnsComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -16,16 +16,14 @@ class ImportMapColumnsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final locale = Localizations.localeOf(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final csvModel = viewModel.steps.whereType<ImportModelCsv>().firstOrNull;
     if (csvModel == null) throw ArgumentError.value(csvModel);
+
     final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
     final onInfoPressed = viewModel<OnColumnInfoPressed>();
     final numberOfEntries = csvModel.numberOfEntries;
-    final numberOfEntriesDescription = csvModel.numberOfEntriesDescription(
-      locale.languageCode,
-    );
+
     final currentMappedColumn = viewModel.currentStep as ImportModelColumn;
     final count = numberOfEntries > 0 ? viewModel.currentEntryIndex + 1 : 0;
 
@@ -56,8 +54,10 @@ class ImportMapColumnsComponent extends StatelessWidget {
                   const SizedBox(width: 10.0),
 
                   // -> title
-                  NumericText(
-                    'Колонка "${currentMappedColumn.column.title}"',
+                  Text(
+                    context.t.features.import.map_columns.title(
+                      context: currentMappedColumn.column,
+                    ),
                     style: GoogleFonts.golosText(
                       fontSize: 20.0,
                       color: theme.colorScheme.onSurface,
@@ -83,9 +83,9 @@ class ImportMapColumnsComponent extends StatelessWidget {
 
               // -> description
               Text(
-                "Выбери подходящую колонку,\n"
-                "значение в которой подходит\n"
-                'к колонке "${currentMappedColumn.column.title}".',
+                context.t.features.import.map_columns.description(
+                  context: currentMappedColumn.column,
+                ),
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   color: theme.colorScheme.onSurfaceVariant,
@@ -118,15 +118,26 @@ class ImportMapColumnsComponent extends StatelessWidget {
                     spacing: 3.0,
                     children: [
                       Text(
-                        "Следующая запись",
+                        context
+                            .t
+                            .features
+                            .import
+                            .map_columns
+                            .button_rotate_entries
+                            .title,
                         style: GoogleFonts.golosText(
                           fontSize: 16.0,
                           color: theme.colorScheme.secondary,
                         ),
                       ),
                       Text(
-                        "$count из "
-                        "$numberOfEntriesDescription",
+                        context
+                            .t
+                            .features
+                            .import
+                            .map_columns
+                            .button_rotate_entries
+                            .description(count: count, n: numberOfEntries),
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
                           color: theme.colorScheme.onSurfaceVariant,

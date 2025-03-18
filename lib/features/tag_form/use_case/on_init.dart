@@ -5,12 +5,14 @@ import "package:mony_app/common/utils/input_controller/validators/tag_title.dart
 import "package:mony_app/domain/services/database/tag.dart";
 import "package:mony_app/domain/services/database/vo/tag.dart";
 import "package:mony_app/features/tag_form/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 final class OnInit extends UseCase<Future<void>, TagFormViewModel> {
   @override
   Future<void> call(BuildContext context, [TagFormViewModel? viewModel]) async {
     if (viewModel == null) throw ArgumentError.notNull();
 
+    final tr = context.t;
     final tagService = context.service<DomainTagService>();
     final data = await tagService.getAll();
 
@@ -22,6 +24,8 @@ final class OnInit extends UseCase<Future<void>, TagFormViewModel> {
       titles.addAll(data.map((e) => e.title));
     }
     titles.addAll(viewModel.additionalUsedTitles);
-    viewModel.titleController.addValidator(TagTitleValidator(titles: titles));
+    viewModel.titleController.addValidator(
+      TagTitleValidator(titles: titles, translations: tr),
+    );
   }
 }

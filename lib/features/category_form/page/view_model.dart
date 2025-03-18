@@ -6,6 +6,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category_form/page/view.dart";
 import "package:mony_app/features/category_form/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 final class CategoryFormPage extends StatefulWidget {
   final double keyboardHeight;
@@ -48,6 +49,7 @@ final class CategoryFormViewModel extends ViewModelState<CategoryFormPage> {
 
   Future<void> _fetchData() async {
     final service = context.service<DomainCategoryService>();
+    final tr = context.t;
     final data = await service.getAll(transactionType: widget.transactionType);
     if (widget.category case CategoryVariantModel(:final model)) {
       _titles.addAll(data.where((e) => e.id != model.id).map((e) => e.title));
@@ -55,7 +57,9 @@ final class CategoryFormViewModel extends ViewModelState<CategoryFormPage> {
       _titles.addAll(data.map((e) => e.title));
     }
     _titles.addAll(widget.additionalUsedTitles);
-    titleController.addValidator(CategoryTitleValidator(titles: _titles));
+    titleController.addValidator(
+      CategoryTitleValidator(titles: _titles, translations: tr),
+    );
   }
 
   @override

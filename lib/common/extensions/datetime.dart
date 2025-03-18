@@ -161,7 +161,7 @@ extension DateTimeEx on DateTime {
   /// ```
   DateTime firstDayOfMonth([int offset = 0]) {
     if (offset == 0) return DateTime(year, month);
-    final offsettedMonth = offsetMonth(offset);
+    final offsettedMonth = shiftMonth(offset);
     return DateTime(offsettedMonth.year, offsettedMonth.month);
   }
 
@@ -185,7 +185,7 @@ extension DateTimeEx on DateTime {
   /// // will print '2000-04-10 00:00:00.000'
   /// print(someDate.offsetMonth(1));
   /// ```
-  DateTime offsetMonth(int offset) {
+  DateTime shiftMonth(int offset) {
     final mo = month + offset;
     final nextMonth = mo.wrapi(DateTime.january, DateTime.december + 1);
     final yearOffset = ((mo - 1) / DateTime.monthsPerYear).floor();

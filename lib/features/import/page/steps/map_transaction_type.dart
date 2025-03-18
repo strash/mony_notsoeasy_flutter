@@ -29,7 +29,7 @@ class ImportMapTransactionTypePage extends StatelessWidget {
             children: [
               // -> title
               Text(
-                "Типы транзакций",
+                context.t.features.import.map_transaction_type.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
@@ -40,7 +40,7 @@ class ImportMapTransactionTypePage extends StatelessWidget {
 
               // -> description
               Text(
-                "Являются ли транзакции в этой таблице расходами?",
+                context.t.features.import.map_transaction_type.description,
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   height: 1.3,
@@ -64,9 +64,12 @@ class ImportMapTransactionTypePage extends StatelessWidget {
           child: TabGroupComponent(
             values: ETransactionType.values,
             description: (value) {
-              return context.t.models.transaction.type_description(
-                context: value,
-              );
+              final tr = context.t.features.import.map_transaction_type;
+
+              return switch (value) {
+                ETransactionType.expense => tr.tab_expense(context: value),
+                ETransactionType.income => tr.tab_income(context: value),
+              };
             },
             controller: viewModel.transactionTypeController,
           ),

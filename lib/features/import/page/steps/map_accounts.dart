@@ -6,6 +6,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/features/import/components/components.dart";
 import "package:mony_app/features/import/import.dart";
 import "package:mony_app/features/import/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class ImportMapAccountsComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -18,17 +19,11 @@ class ImportMapAccountsComponent extends StatelessWidget {
     final viewModel = context.viewModel<ImportViewModel>();
     final onAccountPressed = viewModel<OnAccountButtonPressed>();
     final accountModel = viewModel.currentStep;
-    final locale = Localizations.localeOf(context);
+    final tr = context.t.features.import.map_accounts;
     if (accountModel is! ImportModelAccount) return const SizedBox();
-    String description =
-        "Нужно создать счет. К нему будут привязаны все транзакции. "
-        "Позже можно будет создать другие счета.";
+    String description = tr.description_new;
     if (accountModel.isFromData) {
-      description =
-          "Я нашел "
-          "${accountModel.numberOfAccountsDescription(locale.languageCode)}. "
-          "${accountModel.accounts.length == 1 ? "Его" : "Их"} "
-          "нужно дополнить информацией. Это быстро.";
+      description = tr.description_bind(n: accountModel.accounts.length);
     }
 
     return Column(
@@ -41,7 +36,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
             children: [
               // -> title
               Text(
-                "Счета",
+                tr.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
                   color: theme.colorScheme.onSurface,

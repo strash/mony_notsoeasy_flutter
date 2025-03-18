@@ -7,17 +7,6 @@ final class ImportModelAccount extends ImportModel {
     return accounts.every((e) => e.originalTitle != null);
   }
 
-  String numberOfAccountsDescription(String locale) {
-    final count = accounts.length;
-    final formatter = NumberFormat.decimalPattern(locale);
-    final formatted = formatter.format(count);
-    return switch (count.wordCaseHint) {
-      EWordCaseHint.nominative => "$formatted счет",
-      EWordCaseHint.genitive => "$formatted счета",
-      EWordCaseHint.accusative => "$formatted счетов",
-    };
-  }
-
   Map<EAccountType, List<String>> getTitles(ImportModelAccountVO except) {
     final Map<EAccountType, List<String>> titles = {};
     if (isFromData) {

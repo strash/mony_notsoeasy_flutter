@@ -1,5 +1,4 @@
-import "package:flutter/foundation.dart";
-import "package:intl/intl.dart";
+import "package:flutter/cupertino.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/models/category.dart";
@@ -9,6 +8,7 @@ import "package:mony_app/domain/services/database/vo/category.dart";
 import "package:mony_app/domain/services/database/vo/imported_csv.dart";
 import "package:mony_app/features/import/page/model/enum.dart";
 import "package:mony_app/features/import/validator/validator.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 part "./model_account.dart";
 part "./model_category.dart";

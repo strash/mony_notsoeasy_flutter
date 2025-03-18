@@ -5,6 +5,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account_form/page/view.dart";
 import "package:mony_app/features/account_form/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 final class AccountFormPage extends StatefulWidget {
@@ -32,7 +33,7 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
   final currencyController = SelectController<FiatCurrency?>(
     FiatCurrency.fromCode(kDefaultCurrencyCode),
   );
-  final balanceController = InputController(validators: [AmountValidator()]);
+  final balanceController = InputController();
 
   bool isSubmitEnabled = false;
 
@@ -86,7 +87,10 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
   void updateTitleController() {
     titleController.removeValidator<AccountTitleValidator>();
     titleController.addValidator(
-      AccountTitleValidator(titles: titles[typeController.value]!),
+      AccountTitleValidator(
+        titles: titles[typeController.value]!,
+        translations: context.t,
+      ),
     );
     _listener();
   }
@@ -118,6 +122,7 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
     currencyController.addListener(_listener);
     balanceController.addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+      balanceController.addValidator(AmountValidator(translations: context.t));
       _listener();
       OnInit().call(context, this);
     });

@@ -50,7 +50,7 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
       case EChartTemporalView.year:
         final list = date.monthsOfYear();
         from = list.first;
-        to = list.last.offsetMonth(1);
+        to = list.last.shiftMonth(1);
       case EChartTemporalView.month:
         final list = date.daysOfMonth();
         from = list.first;

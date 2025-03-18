@@ -5,6 +5,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/components/category/category_section.dart";
 import "package:mony_app/features/import/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class ImportMapCategoriesPage extends StatelessWidget {
   final ImportEvent? event;
@@ -22,9 +23,9 @@ class ImportMapCategoriesPage extends StatelessWidget {
     final onCategoryPressed = viewModel<OnCategoryButtonPressed>();
     final onCategoryResetPressed = viewModel<OnCategoryResetPressed>();
 
-    final locale = Localizations.localeOf(context);
-    final numberOfCategories = categoryModel.numberOfCategoriesDescription(
-      locale.languageCode,
+    final count = categoryModel.mappedCategories.value.entries.fold<int>(
+      0,
+      (prev, curr) => prev + curr.value.length,
     );
 
     return Column(
@@ -37,7 +38,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
             children: [
               // -> title
               Text(
-                "Категории",
+                context.t.features.import.map_categories.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
                   color: theme.colorScheme.onSurface,
@@ -48,10 +49,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
 
               // -> description
               Text(
-                "Я нашел "
-                "$numberOfCategories. "
-                "Их нужно привязать к предустановленным категориям, "
-                "либо дополнить информацией.",
+                context.t.features.import.map_categories.description(n: count),
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   height: 1.3,

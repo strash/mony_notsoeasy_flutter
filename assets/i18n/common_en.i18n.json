@@ -1,0 +1,8 @@
+{
+	"validator_message": {
+		"account": "An account with this name and type already exists",
+		"amount": "Allowed format: 123.45 or -0,12",
+		"category": "A category with this name and type already exists",
+		"tag": "A tag with this name already exists"
+	}
+}

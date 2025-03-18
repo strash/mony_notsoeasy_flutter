@@ -21,5 +21,25 @@
 			"one": "${n: decimalPattern} transaction in total",
 			"other": "${n: decimalPattern} transactions in total"
 		}
+	},
+	"import": {
+		"column_title(context=EImportColumn)": {
+			"amount": "Amount",
+			"date": "Date",
+			"category": "Category",
+			"transactionType": "Transaction Type",
+			"account": "Account",
+			"tag": "Tag",
+			"note": "Note"
+		},
+		"column_description(context=EImportColumn)": {
+			"amount": "This column is for the amount of the transaction. It should only have numbers, a decimal point, and the signs +/-. No commas or currency symbols are allowed. This column is required!",
+			"date": "This column is super important and needs a date in one of these formats:\n\n - 2012-02-27\n - 2012-02-27 13:27:00\n - 2012-02-27 13:27:00.123456789z\n - 2012-02-27 13:27:00,123456789z\n - 20120227 13:27:00\n - 20120227T132700\n - 20120227\n - +20120227\n - 2012-02-27T14Z\n - 2012-02-27T14+00:00\n - -123450101 00:00:00 Z\n - 2002-02-27T14:00:00-0500\n - 2002-02-27T19:00:00Z\n - 2002-02-27 14:00:00 +0000",
+			"category": "This column is for plain text, usually just a single word. It's a must-have for each transaction. Each transaction can only have one category. Expenses and incomes should have different categories. And don't forget, no commas allowed!",
+			"transactionType": "This column can only have two values: expense or income. They can be named differently, but they'll always be one of those two. This column is optional, so you can skip it if you want. If you do, the system will try to figure out the type of transaction from the amount. If the amount has a minus sign, it means it's an expense.",
+			"account": "This column is optional and can be skipped. You can always create a new account later. Just remember to include the name of the account to which the transaction is linked.",
+			"tag": "This column is for plain text, usually just a single word. Sometimes it's empty because it's optional. A tag is like a subcategory. Don't put commas in the text.",
+			"note": "This column can hold plain text that describes the transaction in a free-form manner. However, commas are not allowed in the text."
+		}
 	}
 }

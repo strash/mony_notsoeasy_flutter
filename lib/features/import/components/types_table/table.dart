@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/features/import/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TypesTableComponent extends StatelessWidget {
   final ImportModelTransactionTypeVO transactionsByType;
@@ -106,7 +107,9 @@ class TypesTableComponent extends StatelessWidget {
                       filteredMappedEntries.first.length,
                     ),
                     child: Text(
-                      e.$2.key.column.title,
+                      context.t.models.import.column_title(
+                        context: e.$2.key.column,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign:

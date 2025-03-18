@@ -62,13 +62,9 @@ class _BottomSheetComponentState extends State<BottomSheetComponent>
 
   @override
   void didChangeMetrics() {
-    if (mounted) {
-      setState(() {
-        _bottomOffset = max(
-          MediaQuery.viewInsetsOf(context).bottom,
-          MediaQuery.viewPaddingOf(context).bottom,
-        );
-      });
+    final offset = MediaQuery.viewInsetsOf(context).bottom;
+    if (mounted && _bottomOffset != offset) {
+      setState(() => _bottomOffset = offset);
     }
     super.didChangeMetrics();
   }
@@ -89,29 +85,34 @@ class _BottomSheetComponentState extends State<BottomSheetComponent>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: theme.colorScheme.surface,
-        shape: const SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 0.6),
-          ),
-        ),
+    return ClipSmoothRect(
+      radius: const SmoothBorderRadius.all(
+        SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 0.6),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // -> handle
-          if (widget.showDragHandle)
-            Padding(
-              padding: EdgeInsets.only(bottom: widget.largeHandle ? 20.0 : .0),
-              child: const BottomSheetHandleComponent(),
-            ),
+      child: ColoredBox(
+        color: theme.colorScheme.surface,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // -> handle
+            if (widget.showDragHandle)
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: widget.largeHandle ? 20.0 : .0,
+                ),
+                child: const BottomSheetHandleComponent(),
+              ),
 
-          // -> content
-          Flexible(child: widget.builder(context, _bottomOffset)),
-        ],
+            // -> content
+            Flexible(
+              child: widget.builder(
+                context,
+                max(_bottomOffset, MediaQuery.viewPaddingOf(context).bottom),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

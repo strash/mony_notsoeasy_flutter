@@ -6,6 +6,7 @@ import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/features/import/components/components.dart";
 import "package:mony_app/features/import/page/view_model.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class ImportCategorySectionComponent extends StatelessWidget {
   final ETransactionType transactionType;
@@ -24,10 +25,6 @@ class ImportCategorySectionComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final title = switch (transactionType) {
-      ETransactionType.expense => "расходов",
-      ETransactionType.income => "доходов",
-    };
     final count = categories.fold<int>(0, (prev, e) {
       return prev + (e is ImportModelCategoryVariantEmpty ? 0 : 1);
     });
@@ -56,7 +53,11 @@ class ImportCategorySectionComponent extends StatelessWidget {
 
               // -> title
               Text(
-                "Категории $title $count/${categories.length}",
+                context.t.features.import.map_categories.category_section_title(
+                  context: transactionType,
+                  count: count,
+                  n: categories.length,
+                ),
                 style: GoogleFonts.golosText(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w600,

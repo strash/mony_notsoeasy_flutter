@@ -6,6 +6,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/import/components/components.dart";
 import "package:mony_app/features/import/import.dart";
 import "package:mony_app/features/import/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class EntryListRowComponent extends StatelessWidget {
   final MapEntry<String, String> entry;
@@ -108,9 +109,12 @@ class EntryListRowComponent extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              column?.column.title ??
-                                  activeColumn?.column.title ??
-                                  "",
+                              context.t.models.import.column_title(
+                                context:
+                                    column?.column ??
+                                    activeColumn?.column ??
+                                    EImportColumn.defaultValue,
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.golosText(

@@ -4,6 +4,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/import/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class NavigationButtonsComponent extends StatelessWidget {
   final ImportEvent? event;
@@ -56,7 +57,7 @@ class NavigationButtonsComponent extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Дальше"),
+                Text(context.t.features.import.button_next),
                 const SizedBox(width: 8.0),
                 SvgPicture.asset(
                   Assets.icons.chevronForward,
