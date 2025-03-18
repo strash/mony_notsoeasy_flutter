@@ -1,10 +1,15 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app.dart";
+import "package:mony_app/app/service_locator/service_locator.dart";
 import "package:mony_app/app/view_model/view_model.dart";
 
 extension BuildContextEx on BuildContext {
   T viewModel<T extends ViewModelState<StatefulWidget>>() {
     return ViewModel.of<T>(this);
+  }
+
+  T service<T>() {
+    return ServiceLocator.of<T>(this);
   }
 
   void close() {
