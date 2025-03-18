@@ -8,7 +8,6 @@ import "package:mony_app/domain/services/database/transaction.dart";
 import "package:mony_app/domain/services/database/vo/transaction_tag.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
 import "package:mony_app/features/transaction_form/transaction_form.dart";
-import "package:provider/provider.dart";
 
 final class OnNavbarAddTransactionPressed
     extends UseCase<Future<void>, StatsViewModel> {
@@ -16,7 +15,7 @@ final class OnNavbarAddTransactionPressed
   Future<void> call(BuildContext context, [StatsViewModel? viewModel]) async {
     if (viewModel == null) throw ArgumentError.notNull();
 
-    final transactionService = context.read<DomainTransactionService>();
+    final transactionService = context.service<DomainTransactionService>();
     final appService = context.viewModel<AppEventService>();
 
     final result = await BottomSheetComponent.show<TransactionFormVO?>(

@@ -6,7 +6,6 @@ import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/services/database/database.dart";
 import "package:mony_app/features/tag/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef _TValue = ({TagViewModel viewModel, Event event});
 
@@ -16,8 +15,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     if (value == null) throw ArgumentError.notNull();
 
     final (:viewModel, :event) = value;
-    final tagService = context.read<DomainTagService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final tagService = context.service<DomainTagService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     switch (event) {
       case EventAccountCreated() ||

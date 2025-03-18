@@ -10,7 +10,6 @@ import "package:mony_app/data/data.dart";
 import "package:mony_app/data/database/migrations/m_1728413017_seed_default_categories.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/i18n/strings.g.dart";
-import "package:provider/provider.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 // TODO: добавить вибрации тут и там при тапе
@@ -31,115 +30,86 @@ void main() async {
     ]);
   }
 
-  final appDatabase = AppDatabase.instance();
-  await appDatabase.db;
-
-  final accountRepo = AccountDatabaseRepository(database: appDatabase);
-  final categoryRepo = CategoryDatabaseRepository(
-    database: appDatabase,
-    defaultCategoryMigration: M1728413017SeedDefaultCategories(),
-  );
-  final tagRepo = TagDatabaseRepository(database: appDatabase);
-  final transactionRepo = TransactionDatabaseRepository(database: appDatabase);
-  final transactionTagRepo = TransactionTagDatabaseRepository(
-    database: appDatabase,
-  );
-
-  final sharedPrefRepo = SharedPreferencesLocalStorageRepository(
-    preferences: SharedPreferencesAsync(),
-  );
-  final sharedPrefsService = DomainSharedPreferencesService(
-    sharedPrefencesRepository: sharedPrefRepo,
-  );
-  (await sharedPrefsService.getSettingsLanguage()).setLocale();
+  await AppDatabase.instance().db;
 
   runApp(
-    TranslationProvider(
-      child: AppEventServiceBuilder(
-        child: MultiProvider(
-          providers: [
-            // -> import/export service
-            Provider<DomainImportExportService>(
-              create: (context) {
-                return DomainImportExportService(
-                  csvFilesystemRepository: CsvFilesystemRepository(
-                    filePicker: FilePicker.platform,
-                  ),
-                  monyFileFilesystemRepository: MonyFileFilesystemRepository(
-                    filePicker: FilePicker.platform,
-                  ),
-                );
-              },
+    AppEventServiceBuilder(
+      child: ServiceLocator(
+        services: [
+          // -> import/export service
+          () => DomainImportExportService(
+            csvFilesystemRepository: CsvFilesystemRepository(
+              filePicker: FilePicker.platform,
             ),
+            monyFileFilesystemRepository: MonyFileFilesystemRepository(
+              filePicker: FilePicker.platform,
+            ),
+          ),
 
-            // -> shared preferences service
-            Provider<DomainSharedPreferencesService>(
-              create: (context) {
-                return sharedPrefsService;
-              },
+          // -> shared preferences service
+          () => DomainSharedPreferencesService(
+            sharedPrefencesRepository: SharedPreferencesLocalStorageRepository(
+              preferences: SharedPreferencesAsync(),
             ),
+          ),
 
-            // -> app review service
-            Provider<AppReviewService>(
-              create: (context) {
-                return AppReviewService(
-                  sharedPreferencesRepository: sharedPrefRepo,
-                );
-              },
-            ),
+          // -> app review service
+          () => AppReviewService(
+            sharedPreferencesRepository:
+                SharedPreferencesLocalStorageRepository(
+                  preferences: SharedPreferencesAsync(),
+                ),
+          ),
 
-            // -> account service
-            Provider<DomainAccountService>(
-              create: (context) {
-                return DomainAccountService(
-                  accountRepo: accountRepo,
-                  accountFactory: AccountDatabaseFactoryImpl(),
-                  accountBalanceFactory: AccountBalanceDatabaseFactoryImpl(),
-                );
-              },
+          // -> account service
+          () => DomainAccountService(
+            accountRepo: AccountDatabaseRepository(
+              database: AppDatabase.instance(),
             ),
+            accountFactory: AccountDatabaseFactoryImpl(),
+            accountBalanceFactory: AccountBalanceDatabaseFactoryImpl(),
+          ),
 
-            // -> category service
-            Provider<DomainCategoryService>(
-              create: (context) {
-                return DomainCategoryService(
-                  categoryRepo: categoryRepo,
-                  categoryFactory: CategoryDatabaseFactoryImpl(),
-                  categoryBalanceFactory: CategoryBalanceDatabaseFactoryImpl(),
-                );
-              },
+          // -> category service
+          () => DomainCategoryService(
+            categoryRepo: CategoryDatabaseRepository(
+              database: AppDatabase.instance(),
+              defaultCategoryMigration: M1728413017SeedDefaultCategories(),
             ),
+            categoryFactory: CategoryDatabaseFactoryImpl(),
+            categoryBalanceFactory: CategoryBalanceDatabaseFactoryImpl(),
+          ),
 
-            // -> tag service
-            Provider<DomainTagService>(
-              create: (context) {
-                return DomainTagService(
-                  tagRepo: tagRepo,
-                  tagFactory: TagDatabaseFactoryImpl(),
-                  tagBalanceFactory: TagBalanceDatabaseFactoryImpl(),
-                );
-              },
-            ),
+          // -> tag service
+          () => DomainTagService(
+            tagRepo: TagDatabaseRepository(database: AppDatabase.instance()),
+            tagFactory: TagDatabaseFactoryImpl(),
+            tagBalanceFactory: TagBalanceDatabaseFactoryImpl(),
+          ),
 
-            // -> transaction service
-            Provider<DomainTransactionService>(
-              create: (context) {
-                return DomainTransactionService(
-                  transactionRepo: transactionRepo,
-                  transactionTagRepo: transactionTagRepo,
-                  tagRepo: tagRepo,
-                  accountRepo: accountRepo,
-                  categoryRepo: categoryRepo,
-                  transactionFactory: TransactionDatabaseFactoryImpl(),
-                  tagFactory: TagDatabaseFactoryImpl(),
-                  accountFactory: AccountDatabaseFactoryImpl(),
-                  categoryFactory: CategoryDatabaseFactoryImpl(),
-                );
-              },
+          // -> transaction service
+          () => DomainTransactionService(
+            transactionRepo: TransactionDatabaseRepository(
+              database: AppDatabase.instance(),
             ),
-          ],
-          child: const MonyApp(),
-        ),
+            transactionTagRepo: TransactionTagDatabaseRepository(
+              database: AppDatabase.instance(),
+            ),
+            tagRepo: TagDatabaseRepository(database: AppDatabase.instance()),
+            accountRepo: AccountDatabaseRepository(
+              database: AppDatabase.instance(),
+            ),
+            categoryRepo: CategoryDatabaseRepository(
+              database: AppDatabase.instance(),
+              defaultCategoryMigration: M1728413017SeedDefaultCategories(),
+            ),
+            transactionFactory: TransactionDatabaseFactoryImpl(),
+            tagFactory: TagDatabaseFactoryImpl(),
+            accountFactory: AccountDatabaseFactoryImpl(),
+            categoryFactory: CategoryDatabaseFactoryImpl(),
+          ),
+        ],
+        child: TranslationProvider(child: const MonyApp()),
       ),
     ),
   );

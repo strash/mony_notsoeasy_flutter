@@ -8,8 +8,8 @@ final class _OnCategoryDeleted {
     FeedViewModel viewModel,
     EventCategoryDeleted event,
   ) async {
-    final accountSevrice = context.read<DomainAccountService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountSevrice = context.service<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     final pages = await Future.wait(
       viewModel.pages.map((e) async {

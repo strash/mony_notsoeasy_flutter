@@ -3,7 +3,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/import/import.dart";
-import "package:provider/provider.dart";
 
 final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
   @override
@@ -13,10 +12,10 @@ final class OnDoneMapping extends UseCase<Future<void>, dynamic> {
 
     final navigator = Navigator.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final accountService = context.read<DomainAccountService>();
-    final categoryService = context.read<DomainCategoryService>();
-    final tagService = context.read<DomainTagService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
+    final categoryService = context.service<DomainCategoryService>();
+    final tagService = context.service<DomainTagService>();
+    final transactionService = context.service<DomainTransactionService>();
     final appService = context.viewModel<AppEventService>();
 
     final csvModel = ArgumentError.checkNotNull(viewModel.csv);

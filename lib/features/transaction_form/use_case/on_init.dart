@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/common/extensions/scroll_controller.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/transaction_form/page/view_model.dart";
-import "package:provider/provider.dart";
 
-final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
+final class OnInit extends UseCase<Future<void>, TransactionFormViewModel> {
   @override
   Future<void> call(
     BuildContext context, [
@@ -13,9 +13,9 @@ final class OnInitData extends UseCase<Future<void>, TransactionFormViewModel> {
   ]) async {
     if (viewModel == null) throw ArgumentError.notNull();
 
-    final accountService = context.read<DomainAccountService>();
-    final categoryService = context.read<DomainCategoryService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
+    final categoryService = context.service<DomainCategoryService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     final transaction = viewModel.transaction;
     final accounts = await accountService.getAll();

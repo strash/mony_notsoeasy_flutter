@@ -8,7 +8,7 @@ final class _OnAccountBalanceExchanged {
     FeedViewModel viewModel,
     EventAccountBalanceExchanged event,
   ) async {
-    final accountSevrice = context.read<DomainAccountService>();
+    final accountSevrice = context.service<DomainAccountService>();
 
     final (left, right) = event.value;
 

@@ -8,8 +8,8 @@ final class _OnAccountCreated {
     FeedViewModel viewModel,
     EventAccountCreated event,
   ) async {
-    final accountService = context.read<DomainAccountService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     final account = event.value;
 

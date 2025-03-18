@@ -9,7 +9,6 @@ import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/categories/page/view.dart";
 import "package:mony_app/features/categories/use_case/use_case.dart";
-import "package:provider/provider.dart";
 
 final class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -48,7 +47,8 @@ final class CategoriesViewModel extends ViewModelState<CategoriesPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       setProtectedState(() {
         isColorsVisible = colors;

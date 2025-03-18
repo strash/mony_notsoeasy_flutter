@@ -1,9 +1,9 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/domain/services/database/database.dart";
 import "package:mony_app/features/tags/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef _TValue = ({Event event, TagsViewModel viewModel});
 
@@ -13,7 +13,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     if (value == null) throw ArgumentError.notNull();
 
     final (:viewModel, :event) = value;
-    final tagService = context.read<DomainTagService>();
+    final tagService = context.service<DomainTagService>();
 
     switch (event) {
       case EventAccountCreated() ||

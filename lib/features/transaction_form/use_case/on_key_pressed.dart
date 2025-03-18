@@ -4,7 +4,6 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/transaction_form/components/keyboard_button_type.dart";
-import "package:provider/provider.dart";
 
 final class OnKeyPressed
     extends UseCase<Future<void>, TransactionFormButtonType> {
@@ -16,7 +15,7 @@ final class OnKeyPressed
     if (button == null) throw ArgumentError.notNull();
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
-    final reviewService = context.read<AppReviewService>();
+    final reviewService = context.service<AppReviewService>();
     final navigator = Navigator.of(context);
 
     final trimmedAmount = viewModel.amountNotifier.value.trim();

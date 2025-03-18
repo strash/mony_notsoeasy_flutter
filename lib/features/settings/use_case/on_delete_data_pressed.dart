@@ -3,7 +3,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/alert/component.dart";
 import "package:mony_app/domain/domain.dart";
-import "package:provider/provider.dart";
 
 final class OnDeleteDataPressed extends UseCase<Future<void>, dynamic> {
   @override
@@ -23,10 +22,10 @@ final class OnDeleteDataPressed extends UseCase<Future<void>, dynamic> {
       case EAlertResult.cancel:
         return;
       case EAlertResult.ok:
-        final accountService = context.read<DomainAccountService>();
-        final categoryService = context.read<DomainCategoryService>();
-        final tagService = context.read<DomainTagService>();
-        final transactionService = context.read<DomainTransactionService>();
+        final accountService = context.service<DomainAccountService>();
+        final categoryService = context.service<DomainCategoryService>();
+        final tagService = context.service<DomainTagService>();
+        final transactionService = context.service<DomainTransactionService>();
         final appService = context.viewModel<AppEventService>();
 
         await transactionService.purgeData();

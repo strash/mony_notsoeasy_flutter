@@ -1,9 +1,9 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/models/category.dart";
 import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/categories/categories.dart";
-import "package:provider/provider.dart";
 
 final class OnDataFetchRequested
     extends UseCase<Future<void>, CategoriesViewModel> {
@@ -15,7 +15,7 @@ final class OnDataFetchRequested
     if (viewModel == null) throw ArgumentError.notNull();
     if (!viewModel.canLoadMore) return;
 
-    final categoryService = context.read<DomainCategoryService>();
+    final categoryService = context.service<DomainCategoryService>();
 
     final categories = await categoryService.getMany(
       page: viewModel.scrollPage,

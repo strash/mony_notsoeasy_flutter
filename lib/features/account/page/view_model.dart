@@ -8,7 +8,6 @@ import "package:mony_app/components/account_with_context_menu/use_case/use_case.
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account/page/view.dart";
 import "package:mony_app/features/account/use_case/use_case.dart";
-import "package:provider/provider.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 final class AccountPage extends StatefulWidget {
@@ -53,7 +52,8 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       setProtectedState(() {
         isColorsVisible = colors;

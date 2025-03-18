@@ -1,16 +1,16 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/feed/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnInit extends UseCase<Future<void>, FeedViewModel> {
   @override
   Future<void> call(BuildContext context, [FeedViewModel? viewModel]) async {
     if (viewModel == null) throw ArgumentError.notNull();
 
-    final accountService = context.read<DomainAccountService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     final List<FeedPageState> pages = [];
     final accounts = await accountService.getAll();

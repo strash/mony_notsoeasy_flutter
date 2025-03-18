@@ -13,7 +13,6 @@ import "package:mony_app/domain/services/database/vo/account.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart";
-import "package:provider/provider.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 typedef TAccountContextMenuValue =
@@ -29,9 +28,9 @@ final class OnAccountWithContextMenuSelected
     if (value == null) throw ArgumentError.notNull();
 
     final (:menu, :account) = value;
-    final accountService = context.read<DomainAccountService>();
+    final accountService = context.service<DomainAccountService>();
     final appService = context.viewModel<AppEventService>();
-    final sharedPrefService = context.read<DomainSharedPreferencesService>();
+    final sharedPrefService = context.service<DomainSharedPreferencesService>();
 
     switch (menu) {
       // -> exchange

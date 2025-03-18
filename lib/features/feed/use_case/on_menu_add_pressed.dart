@@ -7,7 +7,6 @@ import "package:mony_app/features/account_form/account_form.dart";
 import "package:mony_app/features/category_form/category_form.dart";
 import "package:mony_app/features/feed/feed.dart";
 import "package:mony_app/features/tag_form/tag_form.dart";
-import "package:provider/provider.dart";
 
 final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
   @override
@@ -27,7 +26,7 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
   }
 
   Future<void> _addAccount(BuildContext context) async {
-    final accountService = context.read<DomainAccountService>();
+    final accountService = context.service<DomainAccountService>();
     final appService = context.viewModel<AppEventService>();
 
     final result = await BottomSheetComponent.show<AccountVO?>(
@@ -49,7 +48,7 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
   }
 
   Future<void> _addCategory(BuildContext context, ETransactionType type) async {
-    final categoryService = context.read<DomainCategoryService>();
+    final categoryService = context.service<DomainCategoryService>();
     final appService = context.viewModel<AppEventService>();
 
     final result = await BottomSheetComponent.show<CategoryVO?>(
@@ -73,7 +72,7 @@ final class OnMenuAddPressed extends UseCase<Future<void>, EFeedMenuItem> {
   }
 
   Future<void> _addTag(BuildContext context) async {
-    final tagService = context.read<DomainTagService>();
+    final tagService = context.service<DomainTagService>();
     final appService = context.viewModel<AppEventService>();
 
     final result = await BottomSheetComponent.show<TagVO>(

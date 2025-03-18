@@ -3,7 +3,6 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/services/filesystem/import_export.dart";
 import "package:mony_app/features/features.dart";
-import "package:provider/provider.dart";
 
 final class OnSelectFilePressed extends UseCase<void, dynamic> {
   @override
@@ -12,7 +11,7 @@ final class OnSelectFilePressed extends UseCase<void, dynamic> {
     final subject = viewModel.subject;
     try {
       subject.add(ImportEventLoadingCsv());
-      final service = context.read<DomainImportExportService>();
+      final service = context.service<DomainImportExportService>();
       final csv = await service.importCSV();
       if (!context.mounted) return;
       final step = ImportModelCsv(csv: csv);

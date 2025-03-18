@@ -4,7 +4,6 @@ import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/database/account.dart";
 import "package:mony_app/features/accounts/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef _TValue = ({Event event, AccountsViewModel viewModel});
 
@@ -14,7 +13,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     if (value == null) throw ArgumentError.notNull();
 
     final (:viewModel, :event) = value;
-    final accountService = context.read<DomainAccountService>();
+    final accountService = context.service<DomainAccountService>();
 
     switch (value.event) {
       case EventCategoryCreated() ||

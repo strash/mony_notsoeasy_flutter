@@ -4,7 +4,6 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/features.dart";
-import "package:provider/provider.dart";
 
 final class OnImportDataPressed extends UseCase<Future<void>, dynamic> {
   @override
@@ -15,7 +14,7 @@ final class OnImportDataPressed extends UseCase<Future<void>, dynamic> {
       viewModel.isImportInProgress = true;
     });
 
-    final importExportService = context.read<DomainImportExportService>();
+    final importExportService = context.service<DomainImportExportService>();
     final data = await importExportService.importMONY();
 
     if (data == null ||
@@ -30,10 +29,10 @@ final class OnImportDataPressed extends UseCase<Future<void>, dynamic> {
       return;
     }
 
-    final accountService = context.read<DomainAccountService>();
-    final categoryService = context.read<DomainCategoryService>();
-    final tagService = context.read<DomainTagService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
+    final categoryService = context.service<DomainCategoryService>();
+    final tagService = context.service<DomainTagService>();
+    final transactionService = context.service<DomainTransactionService>();
     final appService = context.viewModel<AppEventService>();
 
     final accounts = _getValue(key: "accounts", map: data);

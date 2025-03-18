@@ -8,7 +8,6 @@ import "package:mony_app/components/transaction_with_context_menu/component.dart
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/page/view.dart";
 import "package:mony_app/features/category/use_case/use_case.dart";
-import "package:provider/provider.dart";
 
 final class CategoryPage extends StatefulWidget {
   final CategoryModel category;
@@ -56,7 +55,8 @@ final class CategoryViewModel extends ViewModelState<CategoryPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       final cents = await sharedPrefService.isSettingsCentsVisible();
       final tags = await sharedPrefService.isSettingsTagsVisible();

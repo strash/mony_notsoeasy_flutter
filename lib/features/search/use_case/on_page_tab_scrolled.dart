@@ -1,8 +1,8 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/search/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef _TValue = (String query, SearchViewModel viewModel);
 
@@ -22,7 +22,7 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
 
     switch (activeTab) {
       case ESearchTab.transactions:
-        final service = context.read<DomainTransactionService>();
+        final service = context.service<DomainTransactionService>();
         final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[activeTab.index] = (
@@ -33,7 +33,7 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
         });
 
       case ESearchTab.accounts:
-        final service = context.read<DomainAccountService>();
+        final service = context.service<DomainAccountService>();
         final data = await service.search(query: query, page: scrollPage + 1);
         final balances = await Future.wait(
           data.map((e) => service.getBalance(id: e.id)),
@@ -48,7 +48,7 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
         });
 
       case ESearchTab.categories:
-        final service = context.read<DomainCategoryService>();
+        final service = context.service<DomainCategoryService>();
         final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[activeTab.index] = (
@@ -59,7 +59,7 @@ final class OnPageTabScrolled extends UseCase<Future<void>, _TValue> {
         });
 
       case ESearchTab.tags:
-        final service = context.read<DomainTagService>();
+        final service = context.service<DomainTagService>();
         final data = await service.search(query: query, page: scrollPage + 1);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[activeTab.index] = (

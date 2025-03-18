@@ -8,7 +8,6 @@ import "package:mony_app/features/navbar/navbar.dart";
 import "package:mony_app/features/settings/page/view.dart";
 import "package:mony_app/features/settings/use_case/use_case.dart";
 import "package:mony_app/i18n/strings.g.dart" show AppLocale, LocaleSettings;
-import "package:provider/provider.dart";
 
 enum ESettingsLanguage {
   system(value: "system"),
@@ -102,7 +101,8 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
         _onNavBarEvent,
       );
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final mode = await sharedPrefService.getSettingsThemeMode();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       final cents = await sharedPrefService.isSettingsCentsVisible();
@@ -115,6 +115,7 @@ final class SettingsViewModel extends ViewModelState<SettingsPage> {
       final confCategory = await sharedPrefService.getSettingsConfirmCategory();
       final confTag = await sharedPrefService.getSettingsConfirmTag();
       final lang = await sharedPrefService.getSettingsLanguage();
+      await lang.setLocale();
       setProtectedState(() {
         themeMode = mode;
         isColorsVisible = colors;

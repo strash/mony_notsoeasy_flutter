@@ -23,7 +23,6 @@ dependencies:
   intl: any
   json_annotation: any
   path: any
-  provider: any
   rxdart: any
   sealed_currencies: any
   shared_preferences: any

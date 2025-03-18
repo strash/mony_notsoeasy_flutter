@@ -1,8 +1,8 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/features.dart";
-import "package:provider/provider.dart";
 
 final class OnInit extends UseCase<Future<void>, AccountViewModel> {
   @override
@@ -10,7 +10,7 @@ final class OnInit extends UseCase<Future<void>, AccountViewModel> {
     if (viewModel == null) throw ArgumentError.notNull();
 
     final account = viewModel.account;
-    final accountService = context.read<DomainAccountService>();
+    final accountService = context.service<DomainAccountService>();
 
     final balances = await accountService.getBalance(id: account.id);
     if (balances == null) return;

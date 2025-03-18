@@ -1,8 +1,8 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/tags/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnDataFetchRequested extends UseCase<Future<void>, TagsViewModel> {
   @override
@@ -10,7 +10,7 @@ final class OnDataFetchRequested extends UseCase<Future<void>, TagsViewModel> {
     if (viewModel == null) throw ArgumentError.notNull();
     if (!viewModel.canLoadMore) return;
 
-    final tagsService = context.read<DomainTagService>();
+    final tagsService = context.service<DomainTagService>();
 
     final tags = await tagsService.getMany(page: viewModel.scrollPage);
 

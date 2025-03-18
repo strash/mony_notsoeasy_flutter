@@ -10,7 +10,6 @@ import "package:mony_app/features/transaction_form/components/keyboard_button_ty
 import "package:mony_app/features/transaction_form/page/view.dart";
 import "package:mony_app/features/transaction_form/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
-import "package:provider/provider.dart";
 
 final class TransactionFormVO {
   final TransactionVO transactionVO;
@@ -181,7 +180,8 @@ final class TransactionFormViewModel
       final formatter = NumberFormat.decimalPattern(locale.languageCode);
       decimalSeparator = formatter.symbols.DECIMAL_SEP;
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final hint =
           await sharedPrefService.isNewTransactionKeyboardHintAccepted();
       final colors = await sharedPrefService.isSettingsColorsVisible();
@@ -194,7 +194,7 @@ final class TransactionFormViewModel
       });
 
       if (!mounted) return;
-      OnInitData().call(context, this);
+      OnInit().call(context, this);
     });
   }
 

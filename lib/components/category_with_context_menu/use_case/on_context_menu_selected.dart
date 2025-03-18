@@ -11,7 +11,6 @@ import "package:mony_app/domain/services/database/category.dart";
 import "package:mony_app/domain/services/database/vo/category.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/category_form/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef TCategoryContextMenuValue =
     ({ECategoryContextMenuItem menu, CategoryModel category});
@@ -26,9 +25,9 @@ final class OnCategoryWithContextMenuSelected
     if (value == null) throw ArgumentError.notNull();
 
     final (:menu, :category) = value;
-    final categoryService = context.read<DomainCategoryService>();
+    final categoryService = context.service<DomainCategoryService>();
     final appService = context.viewModel<AppEventService>();
-    final sharedPrefService = context.read<DomainSharedPreferencesService>();
+    final sharedPrefService = context.service<DomainSharedPreferencesService>();
     final shouldConfirm = await sharedPrefService.getSettingsConfirmCategory();
 
     switch (menu) {

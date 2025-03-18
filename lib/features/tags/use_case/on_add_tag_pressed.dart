@@ -5,12 +5,11 @@ import "package:mony_app/components/bottom_sheet/sheet.dart";
 import "package:mony_app/domain/services/database/tag.dart";
 import "package:mony_app/domain/services/database/vo/tag.dart";
 import "package:mony_app/features/tag_form/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [_]) async {
-    final tagService = context.read<DomainTagService>();
+    final tagService = context.service<DomainTagService>();
     final appService = context.viewModel<AppEventService>();
 
     final result = await BottomSheetComponent.show<TagVO>(

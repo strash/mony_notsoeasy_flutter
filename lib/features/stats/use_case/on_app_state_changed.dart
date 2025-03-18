@@ -1,12 +1,12 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/event_service/event_service.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
 import "package:mony_app/features/stats/use_case/on_init.dart";
-import "package:provider/provider.dart";
 
 typedef _TValue = ({StatsViewModel viewModel, Event event});
 
@@ -17,8 +17,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
     final (:viewModel, :event) = value;
     final (from, to) = viewModel.exclusiveDateRange;
-    final accountService = context.read<DomainAccountService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     switch (event) {
       case EventCategoryCreated() ||

@@ -15,7 +15,6 @@ import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/search/page/view.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
-import "package:provider/provider.dart";
 
 part "./enums.dart";
 part "./route.dart";
@@ -106,7 +105,8 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       final cents = await sharedPrefService.isSettingsCentsVisible();
       final tags = await sharedPrefService.isSettingsTagsVisible();

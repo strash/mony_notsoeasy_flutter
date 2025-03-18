@@ -1,13 +1,13 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/app/view_model/view_model.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
 import "package:mony_app/components/select/select.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/balance_exchange_form/page/view.dart";
 import "package:mony_app/features/balance_exchange_form/use_case/use_case.dart";
-import "package:provider/provider.dart";
 
 enum EBalanceExchangeMenuItem { receive, send }
 
@@ -149,7 +149,8 @@ final class BalanceExchangeFormViewModel
     coefficientController.addListener(_listener);
 
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final cents = await sharedPrefService.isSettingsCentsVisible();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       setProtectedState(() {

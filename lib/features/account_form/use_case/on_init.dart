@@ -1,12 +1,12 @@
 import "package:flutter/widgets.dart" show BuildContext;
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/common/extensions/double.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/domain/services/database/account.dart";
 import "package:mony_app/domain/services/database/vo/account.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnInit extends UseCase<Future<void>, AccountFormViewModel> {
   @override
@@ -16,7 +16,7 @@ final class OnInit extends UseCase<Future<void>, AccountFormViewModel> {
   ]) async {
     if (viewModel == null) throw ArgumentError.notNull();
 
-    final service = context.read<DomainAccountService>();
+    final service = context.service<DomainAccountService>();
     final data = await Future.wait(
       EAccountType.values.map((e) => service.getAll(type: e)),
     );

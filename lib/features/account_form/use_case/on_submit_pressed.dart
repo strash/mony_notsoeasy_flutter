@@ -3,7 +3,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnSumbitPressed extends UseCase<Future<void>, dynamic> {
   @override
@@ -24,7 +23,7 @@ final class OnSumbitPressed extends UseCase<Future<void>, dynamic> {
     double balance = double.tryParse(cleanBalance) ?? 0.0;
 
     if (viewModel.widget.account case AccountVariantModel(:final model)) {
-      final service = context.read<DomainAccountService>();
+      final service = context.service<DomainAccountService>();
       final accBalance = await service.getBalance(id: model.id);
       if (accBalance != null) {
         balance = (balance - accBalance.totalAmount).roundToFraction(2);

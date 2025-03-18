@@ -1,8 +1,8 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/services/database/database.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnDateChanged extends UseCase<Future<void>, StatsViewModel> {
   @override
@@ -10,8 +10,8 @@ final class OnDateChanged extends UseCase<Future<void>, StatsViewModel> {
     if (viewModel == null) throw ArgumentError.notNull();
     if (viewModel.accountController.value == null) return;
 
-    final transactionService = context.read<DomainTransactionService>();
-    final accountService = context.read<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
 
     final (from, to) = viewModel.exclusiveDateRange;
 

@@ -11,7 +11,6 @@ import "package:mony_app/domain/services/database/transaction.dart";
 import "package:mony_app/domain/services/database/vo/transaction_tag.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/transaction_form/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef TTransactionContextMenuValue =
     ({ETransactionContextMenuItem menu, TransactionModel transaction});
@@ -26,9 +25,9 @@ final class OnTransactionWithContextMenuSelected
     if (value == null) throw ArgumentError.notNull();
 
     final (:menu, :transaction) = value;
-    final transactionService = context.read<DomainTransactionService>();
+    final transactionService = context.service<DomainTransactionService>();
     final appService = context.viewModel<AppEventService>();
-    final sharedPrefService = context.read<DomainSharedPreferencesService>();
+    final sharedPrefService = context.service<DomainSharedPreferencesService>();
     final shouldConfirm =
         await sharedPrefService.getSettingsConfirmTransaction();
 

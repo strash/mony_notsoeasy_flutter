@@ -8,8 +8,8 @@ final class _OnTransactionUpdated {
     FeedViewModel viewModel,
     EventTransactionUpdated event,
   ) async {
-    final accountSevrice = context.read<DomainAccountService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountSevrice = context.service<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     final transaction = event.value;
 

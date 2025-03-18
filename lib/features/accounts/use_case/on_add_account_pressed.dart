@@ -6,12 +6,11 @@ import "package:mony_app/components/bottom_sheet/sheet.dart";
 import "package:mony_app/domain/services/database/account.dart";
 import "package:mony_app/domain/services/database/vo/account.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnAddAccountPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [_]) async {
-    final accountService = context.read<DomainAccountService>();
+    final accountService = context.service<DomainAccountService>();
     final appService = context.viewModel<AppEventService>();
 
     final result = await BottomSheetComponent.show<AccountVO?>(

@@ -4,7 +4,6 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/domain/services/database/database.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnTransactionTypeSelected
     extends UseCase<Future<void>, ETransactionType> {
@@ -15,8 +14,8 @@ final class OnTransactionTypeSelected
     final viewModel = context.viewModel<StatsViewModel>();
     if (viewModel.accountController.value == null) return;
 
-    final transactionService = context.read<DomainTransactionService>();
-    final accountService = context.read<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
 
     final (from, to) = viewModel.exclusiveDateRange;
 

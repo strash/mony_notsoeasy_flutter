@@ -9,7 +9,6 @@ import "package:mony_app/features/feed/feed.dart";
 import "package:mony_app/features/feed/page/view.dart";
 import "package:mony_app/features/feed/use_case/use_case.dart";
 import "package:mony_app/features/navbar/navbar.dart";
-import "package:provider/provider.dart";
 
 export "./state.dart";
 
@@ -122,7 +121,8 @@ final class FeedViewModel extends ViewModelState<FeedPage> {
         _onNavBarEvent,
       );
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       final cents = await sharedPrefService.isSettingsCentsVisible();
       final tags = await sharedPrefService.isSettingsTagsVisible();

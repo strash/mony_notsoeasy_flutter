@@ -7,7 +7,6 @@ import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/domain/services/database/account.dart";
 import "package:mony_app/domain/services/database/transaction.dart";
 import "package:mony_app/features/transaction/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef _TValue = ({TransactionViewModel viewModel, Event event});
 
@@ -18,8 +17,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
     final (:viewModel, :event) = value;
 
-    final transactionService = context.read<DomainTransactionService>();
-    final accountService = context.read<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
 
     switch (event) {
       case EventAccountCreated() ||

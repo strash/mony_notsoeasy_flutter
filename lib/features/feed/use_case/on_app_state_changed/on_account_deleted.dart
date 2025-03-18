@@ -12,8 +12,8 @@ final class _OnAccountDeleted {
     // only page that was deleted
     if (viewModel.pages.length == 1) return;
 
-    final accountSevrice = context.read<DomainAccountService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountSevrice = context.service<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     final account = event.value;
 

@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/common/utils/input_controller/controller.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category_form/page/view.dart";
 import "package:mony_app/features/category_form/use_case/use_case.dart";
-import "package:provider/provider.dart";
 
 final class CategoryFormPage extends StatefulWidget {
   final double keyboardHeight;
@@ -47,7 +47,7 @@ final class CategoryFormViewModel extends ViewModelState<CategoryFormPage> {
   }
 
   Future<void> _fetchData() async {
-    final service = context.read<DomainCategoryService>();
+    final service = context.service<DomainCategoryService>();
     final data = await service.getAll(transactionType: widget.transactionType);
     if (widget.category case CategoryVariantModel(:final model)) {
       _titles.addAll(data.where((e) => e.id != model.id).map((e) => e.title));

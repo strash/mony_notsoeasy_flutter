@@ -11,7 +11,6 @@ import "package:mony_app/domain/services/database/tag.dart";
 import "package:mony_app/domain/services/database/vo/tag.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/tag_form/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef TTagContextMenuValue = ({ETagContextMenuItem menu, TagModel tag});
 
@@ -22,9 +21,9 @@ final class OnTagWithContextMenuSelected
     if (value == null) throw ArgumentError.notNull();
 
     final (:menu, :tag) = value;
-    final tagService = context.read<DomainTagService>();
+    final tagService = context.service<DomainTagService>();
     final appService = context.viewModel<AppEventService>();
-    final sharedPrefService = context.read<DomainSharedPreferencesService>();
+    final sharedPrefService = context.service<DomainSharedPreferencesService>();
     final shouldConfirm = await sharedPrefService.getSettingsConfirmTag();
 
     switch (menu) {

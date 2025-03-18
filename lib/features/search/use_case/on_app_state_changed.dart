@@ -4,7 +4,6 @@ import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/search/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef _TValue = ({Event event, SearchViewModel viewModel});
 
@@ -15,10 +14,10 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
 
     final (:viewModel, :event) = value;
 
-    final accountService = context.read<DomainAccountService>();
-    final categoryService = context.read<DomainCategoryService>();
-    final tagService = context.read<DomainTagService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
+    final categoryService = context.service<DomainCategoryService>();
+    final tagService = context.service<DomainTagService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     final query = viewModel.input.text.trim();
 
@@ -361,9 +360,9 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
   }
 
   Future<Map<ESearchPage, int>> _updateCounts(BuildContext context) async {
-    final accountService = context.read<DomainAccountService>();
-    final categoryService = context.read<DomainCategoryService>();
-    final tagService = context.read<DomainTagService>();
+    final accountService = context.service<DomainAccountService>();
+    final categoryService = context.service<DomainCategoryService>();
+    final tagService = context.service<DomainTagService>();
     return {
       for (final page in ESearchPage.values)
         page: await switch (page) {

@@ -5,7 +5,6 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/account_form/account_form.dart";
-import "package:provider/provider.dart";
 
 final class OnShowAccountFormPressed extends UseCase<Future<void>, dynamic> {
   @override
@@ -22,7 +21,7 @@ final class OnShowAccountFormPressed extends UseCase<Future<void>, dynamic> {
       },
     );
     if (result == null || !context.mounted) return;
-    final accountService = context.read<DomainAccountService>();
+    final accountService = context.service<DomainAccountService>();
     final eventService = context.viewModel<AppEventService>();
     final account = await accountService.create(vo: result);
     if (context.mounted) {

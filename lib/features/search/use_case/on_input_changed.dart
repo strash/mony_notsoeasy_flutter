@@ -1,8 +1,8 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/use_case/use_case.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/search/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef _TValue = (String query, SearchViewModel viewModel);
 
@@ -13,10 +13,10 @@ final class OnInputChanged extends UseCase<Future<void>, _TValue> {
 
     final (query, viewModel) = value;
 
-    final transactionService = context.read<DomainTransactionService>();
-    final accountService = context.read<DomainAccountService>();
-    final categoryService = context.read<DomainCategoryService>();
-    final tagService = context.read<DomainTagService>();
+    final transactionService = context.service<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
+    final categoryService = context.service<DomainCategoryService>();
+    final tagService = context.service<DomainTagService>();
 
     // reset pages
     for (int i = 0; i < viewModel.tabPageStates.length; i++) {

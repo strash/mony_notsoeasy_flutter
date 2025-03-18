@@ -8,7 +8,7 @@ final class _OnAccountUpdated {
     FeedViewModel viewModel,
     EventAccountUpdated event,
   ) async {
-    final accountSevrice = context.read<DomainAccountService>();
+    final accountSevrice = context.service<DomainAccountService>();
 
     final account = event.value;
     final id = account.id;

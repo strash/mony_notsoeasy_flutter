@@ -10,7 +10,6 @@ import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/transaction/page/view.dart";
 import "package:mony_app/features/transaction/use_case/use_case.dart";
-import "package:provider/provider.dart";
 
 final class TransactionPage extends StatefulWidget {
   final TransactionModel transaction;
@@ -41,17 +40,18 @@ final class TransactionViewModel extends ViewModelState<TransactionPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final cents = await sharedPrefService.isSettingsCentsVisible();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       setProtectedState(() {
         isCentsVisible = cents;
         isColorsVisible = colors;
       });
-    });
 
-    if (!mounted) return;
-    OnInit().call(context, this);
+      if (!mounted) return;
+      OnInit().call(context, this);
+    });
   }
 
   @override

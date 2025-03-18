@@ -6,7 +6,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/i18n/strings.g.dart";
-import "package:provider/provider.dart";
 import "package:rxdart/transformers.dart";
 
 final appNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "app_key");
@@ -37,7 +36,8 @@ class _MonyAppState extends State<MonyApp> {
           .stream
           .whereType<EventSettingsThemeModeChanged>()
           .listen(_onThemeModeChanged);
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final m = await sharedPrefService.getSettingsThemeMode();
       if (!mounted) return;
       setState(() => mode = m);
@@ -53,7 +53,7 @@ class _MonyAppState extends State<MonyApp> {
   @override
   Widget build(BuildContext context) {
     final eventService = context.viewModel<AppEventService>();
-    final accountService = context.read<DomainAccountService>();
+    final accountService = context.service<DomainAccountService>();
 
     return MaterialApp.router(
       title: "Mony App",

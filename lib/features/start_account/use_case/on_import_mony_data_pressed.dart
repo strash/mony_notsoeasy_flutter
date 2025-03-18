@@ -3,7 +3,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/services/services.dart";
 import "package:mony_app/features/start_account/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnImportMonyDataPressed extends UseCase<Future<void>, dynamic> {
   @override
@@ -14,7 +13,7 @@ final class OnImportMonyDataPressed extends UseCase<Future<void>, dynamic> {
       viewModel.isImportInProgress = true;
     });
 
-    final importExportService = context.read<DomainImportExportService>();
+    final importExportService = context.service<DomainImportExportService>();
     final data = await importExportService.importMONY();
 
     if (data == null ||
@@ -29,10 +28,10 @@ final class OnImportMonyDataPressed extends UseCase<Future<void>, dynamic> {
       return;
     }
 
-    final accountService = context.read<DomainAccountService>();
-    final categoryService = context.read<DomainCategoryService>();
-    final tagService = context.read<DomainTagService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
+    final categoryService = context.service<DomainCategoryService>();
+    final tagService = context.service<DomainTagService>();
+    final transactionService = context.service<DomainTransactionService>();
     final appService = context.viewModel<AppEventService>();
 
     final accounts = _getValue(key: "accounts", map: data);

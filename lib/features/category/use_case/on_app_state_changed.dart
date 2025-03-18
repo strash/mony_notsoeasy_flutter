@@ -3,7 +3,6 @@ import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/category/page/view_model.dart";
-import "package:provider/provider.dart";
 
 typedef _TValue = ({CategoryViewModel viewModel, Event event});
 
@@ -13,8 +12,8 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
     if (value == null) throw ArgumentError.notNull();
 
     final (:viewModel, :event) = value;
-    final categoryService = context.read<DomainCategoryService>();
-    final transactionService = context.read<DomainTransactionService>();
+    final categoryService = context.service<DomainCategoryService>();
+    final transactionService = context.service<DomainTransactionService>();
 
     switch (event) {
       // NOTE: when a tag is created it doesn't mean that it attached to a

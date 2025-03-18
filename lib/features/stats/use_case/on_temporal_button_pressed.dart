@@ -4,7 +4,6 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/charts/component.dart";
 import "package:mony_app/domain/services/database/database.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnTemporalButtonPressed
     extends UseCase<Future<void>, EChartTemporalView> {
@@ -17,8 +16,8 @@ final class OnTemporalButtonPressed
         viewModel.activeTemporalView == value) {
       return;
     }
-    final transactionService = context.read<DomainTransactionService>();
-    final accountService = context.read<DomainAccountService>();
+    final transactionService = context.service<DomainTransactionService>();
+    final accountService = context.service<DomainAccountService>();
 
     viewModel.activeTemporalView = value;
     final (from, to) = viewModel.exclusiveDateRange;

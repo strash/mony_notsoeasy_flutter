@@ -5,7 +5,6 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/transaction_form/components/bottom_sheet_tags.dart";
 import "package:mony_app/features/transaction_form/page/view_model.dart";
-import "package:provider/provider.dart";
 
 final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
   late BuildContext? _context;
@@ -51,7 +50,7 @@ final class OnAddTagPressed extends UseCase<Future<void>, dynamic> {
     final context = _context;
     if (context == null || !context.mounted) return Future.value([]);
     final viewModel = context.viewModel<TransactionFormViewModel>();
-    final tagService = context.read<DomainTagService>();
+    final tagService = context.service<DomainTagService>();
     return tagService.search(
       query: viewModel.tagInput.text.trim(),
       page: _page++,

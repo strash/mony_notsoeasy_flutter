@@ -12,7 +12,6 @@ import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/navbar/navbar.dart";
 import "package:mony_app/features/stats/page/view.dart";
 import "package:mony_app/features/stats/use_case/use_case.dart";
-import "package:provider/provider.dart";
 
 final class StatsPage extends StatefulWidget {
   const StatsPage({super.key});
@@ -137,7 +136,8 @@ final class StatsViewModel extends ViewModelState<StatsPage> {
       accountController.addListener(_onAccountSelected);
       dateController.addListener(_onDateChanged);
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       final cents = await sharedPrefService.isSettingsCentsVisible();
       final tags = await sharedPrefService.isSettingsTagsVisible();

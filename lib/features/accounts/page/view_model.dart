@@ -9,7 +9,6 @@ import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/accounts/page/view.dart";
 import "package:mony_app/features/accounts/use_case/use_case.dart";
-import "package:provider/provider.dart";
 
 final class AccountsPage extends StatefulWidget {
   const AccountsPage({super.key});
@@ -50,7 +49,8 @@ final class AccountsViewModel extends ViewModelState<AccountsPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final cents = await sharedPrefService.isSettingsCentsVisible();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       setProtectedState(() {

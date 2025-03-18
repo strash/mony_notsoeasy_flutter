@@ -1,8 +1,8 @@
 import "package:flutter/widgets.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/build_context.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/accounts/accounts.dart";
-import "package:provider/provider.dart";
 
 final class OnDataFetchRequested
     extends UseCase<Future<void>, AccountsViewModel> {
@@ -14,7 +14,7 @@ final class OnDataFetchRequested
     if (viewModel == null) throw ArgumentError.notNull();
     if (!viewModel.canLoadMore) return;
 
-    final accountService = context.read<DomainAccountService>();
+    final accountService = context.service<DomainAccountService>();
 
     final accounts = await accountService.getMany(page: viewModel.scrollPage);
     final balances = await accountService.getBalances(

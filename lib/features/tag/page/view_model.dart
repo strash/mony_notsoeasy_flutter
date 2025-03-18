@@ -9,7 +9,6 @@ import "package:mony_app/components/transaction_with_context_menu/component.dart
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/tag/page/view.dart";
 import "package:mony_app/features/tag/use_case/use_case.dart";
-import "package:provider/provider.dart";
 
 final class TagPage extends StatefulWidget {
   final TagModel tag;
@@ -57,7 +56,8 @@ final class TagViewModel extends ViewModelState<TagPage> {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) async {
       _appSub = context.viewModel<AppEventService>().listen(_onAppEvent);
 
-      final sharedPrefService = context.read<DomainSharedPreferencesService>();
+      final sharedPrefService =
+          context.service<DomainSharedPreferencesService>();
       final colors = await sharedPrefService.isSettingsColorsVisible();
       final cents = await sharedPrefService.isSettingsCentsVisible();
       final tags = await sharedPrefService.isSettingsTagsVisible();
