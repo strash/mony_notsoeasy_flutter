@@ -41,7 +41,7 @@ class BottomSheetComponent extends StatefulWidget {
         },
         useSafeArea: true,
         isScrollControlled: true,
-        modalBarrierColor: theme.colorScheme.scrim.withValues(alpha: 0.3),
+        modalBarrierColor: theme.colorScheme.scrim.withValues(alpha: 0.4),
         backgroundColor: Colors.transparent,
         showDragHandle: false,
         capturedThemes: InheritedTheme.capture(
@@ -58,12 +58,19 @@ class BottomSheetComponent extends StatefulWidget {
 
 class _BottomSheetComponentState extends State<BottomSheetComponent>
     with WidgetsBindingObserver {
-  final keyboardNotifier = ValueNotifier<double>(.0);
+  double _bottomOffset = .0;
 
   @override
   void didChangeMetrics() {
+    if (mounted) {
+      setState(() {
+        _bottomOffset = max(
+          MediaQuery.viewInsetsOf(context).bottom,
+          MediaQuery.viewPaddingOf(context).bottom,
+        );
+      });
+    }
     super.didChangeMetrics();
-    keyboardNotifier.value = MediaQuery.of(context).viewInsets.bottom;
   }
 
   @override
@@ -75,50 +82,37 @@ class _BottomSheetComponentState extends State<BottomSheetComponent>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    keyboardNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const radius = SmoothRadius(cornerRadius: 26.0, cornerSmoothing: 0.6);
 
-    return ValueListenableBuilder<double>(
-      valueListenable: keyboardNotifier,
-      builder: (context, bottom, child) {
-        return Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: ShapeDecoration(
-            color: theme.colorScheme.surface,
-            shape: const SmoothRectangleBorder(
-              borderRadius: SmoothBorderRadius.all(radius),
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        color: theme.colorScheme.surface,
+        shape: const SmoothRectangleBorder(
+          borderRadius: SmoothBorderRadius.all(
+            SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 0.6),
+          ),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // -> handle
+          if (widget.showDragHandle)
+            Padding(
+              padding: EdgeInsets.only(bottom: widget.largeHandle ? 20.0 : .0),
+              child: const BottomSheetHandleComponent(),
             ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // -> handle
-              if (widget.showDragHandle)
-                Padding(
-                  padding: EdgeInsets.only(
-                    bottom: widget.largeHandle ? 20.0 : .0,
-                  ),
-                  child: const BottomSheetHandleComponent(),
-                ),
 
-              // -> content
-              Flexible(
-                child: widget.builder(
-                  context,
-                  max(bottom, MediaQuery.viewPaddingOf(context).bottom),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+          // -> content
+          Flexible(child: widget.builder(context, _bottomOffset)),
+        ],
+      ),
     );
   }
 }
