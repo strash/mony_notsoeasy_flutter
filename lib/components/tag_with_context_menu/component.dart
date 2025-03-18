@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart" show HapticFeedback;
 import "package:flutter_svg/svg.dart";
-import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/double.dart";
 import "package:mony_app/components/context_menu/item.dart";
@@ -16,7 +15,7 @@ import "package:mony_app/gen/assets.gen.dart";
 
 export "./use_case/use_case.dart";
 
-enum ETagContextMenuItem implements IDescriptable {
+enum ETagContextMenuItem {
   edit,
   delete;
 

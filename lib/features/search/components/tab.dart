@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/features/search/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class SearchTabComponent extends StatelessWidget {
   final ESearchTab tab;
@@ -59,7 +60,7 @@ class SearchTabComponent extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(12.0, .0, 12.0, 1.0),
                 child: Text(
-                  tab.description,
+                  context.t.features.search.tab_title(context: tab),
                   style: GoogleFonts.golosText(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w500,

@@ -2,7 +2,6 @@ import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart" show HapticFeedback;
 import "package:flutter_svg/svg.dart";
-import "package:mony_app/app/descriptable/descriptable.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/double.dart";
 import "package:mony_app/components/category/component.dart";
@@ -17,7 +16,7 @@ import "package:mony_app/gen/assets.gen.dart";
 
 export "./use_case/use_case.dart";
 
-enum ECategoryContextMenuItem implements IDescriptable {
+enum ECategoryContextMenuItem {
   edit,
   delete;
 

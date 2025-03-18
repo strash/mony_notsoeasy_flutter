@@ -73,6 +73,21 @@
 			"addTag": "Tag"
 		}
 	},
+	"search": {
+		"input_placeholder": "search",
+		"page_title(context=ESearchPage)": {
+			"accounts": "Accounts",
+			"categories": "Categories",
+			"tags": "Tags"
+		},
+		"page_count": "${n: decimalPattern}",
+		"tab_title(context=ESearchTab)": {
+			"transactions": "Transactions",
+			"accounts": "Accounts",
+			"categories": "Categories",
+			"tags": "Tags"
+		}
+	},
 	"stats": {
 		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
 	},

@@ -5,16 +5,6 @@ import "package:mony_app/features/navbar/page/view_model.dart";
 import "package:mony_app/features/navbar/use_case/on_tab_change_requested.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
-extension on ENavBarTabItem {
-  String get icon {
-    return switch (this) {
-      ENavBarTabItem.feed => Assets.icons.walletPassFill,
-      ENavBarTabItem.stats => Assets.icons.chartBarFill,
-      ENavBarTabItem.settings => Assets.icons.gearshapeFill,
-    };
-  }
-}
-
 class NavBarTabComponent extends StatelessWidget {
   final int index;
 
@@ -55,5 +45,15 @@ class NavBarTabComponent extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+extension on ENavBarTabItem {
+  String get icon {
+    return switch (this) {
+      ENavBarTabItem.feed => Assets.icons.walletPassFill,
+      ENavBarTabItem.stats => Assets.icons.chartBarFill,
+      ENavBarTabItem.settings => Assets.icons.gearshapeFill,
+    };
   }
 }

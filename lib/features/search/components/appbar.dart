@@ -14,6 +14,7 @@ import "package:mony_app/features/search/components/components.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class SearchAppBarComponent extends StatelessWidget {
   static const double _tabSectionHeight = 35.0;
@@ -152,7 +153,12 @@ class SearchAppBarComponent extends StatelessWidget {
                                   contentPadding: const EdgeInsets.symmetric(
                                     vertical: 9.0,
                                   ),
-                                  hintText: "поиск",
+                                  hintText:
+                                      context
+                                          .t
+                                          .features
+                                          .search
+                                          .input_placeholder,
                                   counterText: "",
                                   filled: true,
                                   fillColor: fillColor,

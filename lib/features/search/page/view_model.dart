@@ -12,11 +12,12 @@ import "package:mony_app/components/tag_with_context_menu/use_case/use_case.dart
 import "package:mony_app/components/transaction_with_context_menu/component.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/domain/services/services.dart";
+import "package:mony_app/features/search/page/enums.dart";
 import "package:mony_app/features/search/page/view.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
-import "package:mony_app/gen/assets.gen.dart";
 
-part "./enums.dart";
+export "./enums.dart";
+
 part "./route.dart";
 
 final class SearchPage extends StatefulWidget {

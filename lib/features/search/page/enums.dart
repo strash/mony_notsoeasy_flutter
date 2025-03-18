@@ -1,6 +1,6 @@
-part of "./view_model.dart";
+import "package:mony_app/gen/assets.gen.dart";
 
-enum ESearchPage implements IDescriptable {
+enum ESearchPage {
   accounts,
   categories,
   tags;
@@ -12,18 +12,9 @@ enum ESearchPage implements IDescriptable {
       ESearchPage.tags => Assets.icons.number,
     };
   }
-
-  @override
-  String get description {
-    return switch (this) {
-      ESearchPage.accounts => "Счета",
-      ESearchPage.categories => "Категории",
-      ESearchPage.tags => "Теги",
-    };
-  }
 }
 
-enum ESearchTab implements IDescriptable {
+enum ESearchTab {
   // top,
   transactions,
   accounts,
@@ -31,15 +22,4 @@ enum ESearchTab implements IDescriptable {
   tags;
 
   static const ESearchTab defaultValue = transactions;
-
-  @override
-  String get description {
-    return switch (this) {
-      // top => "Топ",
-      transactions => "Транзакции",
-      accounts => "Счета",
-      categories => "Категории",
-      tags => "Теги",
-    };
-  }
 }

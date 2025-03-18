@@ -1,5 +1,4 @@
 export "./app_review_service/app_review_service.dart";
-export "./descriptable/descriptable.dart";
 export "./event_service/event_service.dart";
 export "./navigator/navigator.dart";
 export "./service_locator/service_locator.dart";

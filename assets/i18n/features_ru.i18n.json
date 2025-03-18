@@ -85,6 +85,21 @@
 			"russian": "Русский"
 		}
 	},
+	"search": {
+		"input_placeholder": "поиск",
+		"page_title(context=ESearchPage)": {
+			"accounts": "Счета",
+			"categories": "Категории",
+			"tags": "Теги"
+		},
+		"page_count": "${n: decimalPattern}",
+		"tab_title(context=ESearchTab)": {
+			"transactions": "Транзакция",
+			"accounts": "Счета",
+			"categories": "Категории",
+			"tags": "Теги"
+		}
+	},
 	"start": {
 		"subtitle": "помнит куда деньги подевались.",
 		"button_next": "Супер, дальше!",

@@ -4,6 +4,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:mony_app/features/search/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class SearchPageButtonComponent extends StatelessWidget {
   final ESearchPage page;
@@ -15,7 +16,6 @@ class SearchPageButtonComponent extends StatelessWidget {
     final theme = Theme.of(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
-    final count = "${viewModel.counts[page]}";
     final onPagePressed = viewModel<OnPagePressed>();
 
     return GestureDetector(
@@ -27,6 +27,7 @@ class SearchPageButtonComponent extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
         child: Row(
           children: [
+            const SizedBox(width: 5.0),
             // -> icon
             SvgPicture.asset(
               page.icon,
@@ -37,11 +38,11 @@ class SearchPageButtonComponent extends StatelessWidget {
                 BlendMode.srcIn,
               ),
             ),
-            const SizedBox(width: 10.0),
+            const SizedBox(width: 15.0),
 
             // -> description
             Text(
-              page.description,
+              context.t.features.search.page_title(context: page),
               style: GoogleFonts.golosText(
                 fontSize: 18.0,
                 color: theme.colorScheme.onSurface,
@@ -53,9 +54,11 @@ class SearchPageButtonComponent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 10.0),
               child: Text(
-                count,
+                context.t.features.search.page_count(
+                  n: viewModel.counts[page] ?? 0,
+                ),
                 style: GoogleFonts.golosText(
-                  fontSize: 15.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),

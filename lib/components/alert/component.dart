@@ -1,9 +1,8 @@
 import "dart:io";
 
 import "package:flutter/material.dart";
-import "package:mony_app/app/app.dart";
 
-enum EAlertResult implements IDescriptable {
+enum EAlertResult {
   cancel,
   ok;
 
