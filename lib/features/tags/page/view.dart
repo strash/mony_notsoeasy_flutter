@@ -8,6 +8,7 @@ import "package:mony_app/features/navbar/page/view.dart";
 import "package:mony_app/features/tags/tags.dart";
 import "package:mony_app/features/tags/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TagsView extends StatelessWidget {
   const TagsView({super.key});
@@ -32,7 +33,7 @@ class TagsView extends StatelessWidget {
         slivers: [
           // -> appbar
           AppBarComponent(
-            title: const Text("Теги"),
+            title: Text(context.t.features.tags.title),
             trailing: AppBarButtonComponent(
               icon: Assets.icons.plus,
               onTap: () => viewModel<OnAddTagPressed>()(context),

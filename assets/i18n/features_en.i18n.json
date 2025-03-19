@@ -252,5 +252,8 @@
 		"title": "Tag",
 		"input_placeholder": "tag name",
 		"button_save": "Save"
+	},
+	"tags": {
+		"title": "Tags"
 	}
 }

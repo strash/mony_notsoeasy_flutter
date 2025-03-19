@@ -260,5 +260,8 @@
 		"title": "Тег",
 		"input_placeholder": "название тега",
 		"button_save": "Сохранить"
+	},
+	"tags": {
+		"title": "Теги"
 	}
 }
