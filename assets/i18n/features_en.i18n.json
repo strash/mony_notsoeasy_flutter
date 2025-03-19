@@ -241,5 +241,11 @@
 			"other": "${n: decimalPattern} transactions"
 		},
 		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
+	},
+	"tag": {
+		"title": "Tag",
+		"total_amount": {
+			"title": "Total amount"
+		}
 	}
 }

@@ -27,7 +27,7 @@ class TagTotalAmountComponent extends StatelessWidget {
       children: [
         // -> title
         Text(
-          "Сумма транзакций",
+          context.t.features.tag.total_amount.title,
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w500,

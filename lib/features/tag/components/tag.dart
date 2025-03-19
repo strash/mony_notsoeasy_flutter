@@ -2,6 +2,7 @@ import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/domain/models/tag.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TagTagComponent extends StatelessWidget {
   final TagModel tag;
@@ -51,7 +52,7 @@ class TagTagComponent extends StatelessWidget {
 
           // -> subtitle
           Text(
-            "Тег",
+            context.t.features.tag.title,
             textAlign: TextAlign.center,
             style: GoogleFonts.golosText(
               fontSize: 16.0,
