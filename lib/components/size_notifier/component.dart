@@ -16,9 +16,9 @@ class SizeNotifierComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      final a = context.findRenderObject() as RenderBox?;
-      if (a != null && !controller.isDisposed) {
-        controller.size = a.size;
+      final rb = context.findRenderObject() as RenderBox?;
+      if (rb != null && !controller.isDisposed) {
+        controller.size = rb.size;
       }
     });
 

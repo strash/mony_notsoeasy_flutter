@@ -3,6 +3,7 @@ import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class EmptyStateComponent extends StatelessWidget {
   final Color color;
@@ -31,7 +32,7 @@ class EmptyStateComponent extends StatelessWidget {
 
         // -> description
         Text(
-          "Тут ничего нет.\nНачни записывать траты!",
+          context.t.components.empty_state.description,
           textAlign: TextAlign.center,
           style: GoogleFonts.golosText(
             fontSize: 16.0,

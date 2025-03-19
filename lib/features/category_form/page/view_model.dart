@@ -28,7 +28,7 @@ final class CategoryFormPage extends StatefulWidget {
 
 final class CategoryFormViewModel extends ViewModelState<CategoryFormPage> {
   final titleController = InputController();
-  final colorController = NamedColorPickerController(EColorName.random());
+  final colorController = ColorPickerController(EColorName.random());
   final emojiController = InputController();
 
   bool isSubmitEnabled = false;

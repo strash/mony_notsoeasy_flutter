@@ -54,11 +54,11 @@ class _TabGroupEntryComponentState<T> extends State<TabGroupEntryComponent<T>> {
 
   void _notifyRect() {
     if (!context.mounted) return;
-    final box = context.findRenderObject() as RenderBox?;
-    final parentBox = widget.parent();
-    if (box != null && box.hasSize && parentBox != null && parentBox.hasSize) {
-      final rect = _getRect(box);
-      final parentRect = _getRect(parentBox);
+    final rb = context.findRenderObject() as RenderBox?;
+    final parentRb = widget.parent();
+    if (rb != null && rb.hasSize && parentRb != null && parentRb.hasSize) {
+      final rect = _getRect(rb);
+      final parentRect = _getRect(parentRb);
       widget.rectNotifier.value = RelativeRect.fromRect(rect, parentRect);
     }
   }

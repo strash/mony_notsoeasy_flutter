@@ -48,12 +48,12 @@ class _TabGroupComponentState<T> extends State<TabGroupComponent<T>> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp) {
-      final box = _getBox();
-      if (box == null) return;
+      final rb = _getBox();
+      if (rb == null) return;
       final size = _getSize(widget.controller.value);
       _rectNotifier.value = RelativeRect.fromSize(
         Rect.fromLTWH(_padding.left, _padding.top, size.width, size.height),
-        box.size,
+        rb.size,
       );
     });
   }

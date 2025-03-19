@@ -26,7 +26,7 @@ final class AccountFormPage extends StatefulWidget {
 
 final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
   final titleController = InputController();
-  final colorController = NamedColorPickerController(EColorName.random());
+  final colorController = ColorPickerController(EColorName.random());
   final typeController = SelectController<EAccountType?>(
     EAccountType.defaultValue,
   );

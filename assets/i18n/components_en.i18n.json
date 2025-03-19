@@ -36,5 +36,14 @@
 			"month": "For a month",
 			"week": "For a week"
 		}
+	},
+	"color_picker": {
+		"title": "Color"
+	},
+	"emoji_picker": {
+		"title": "Emoji"
+	},
+	"empty_state": {
+		"description": "There's nothing here.\nStart recording your expenses!"
 	}
 }

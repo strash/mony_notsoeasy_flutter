@@ -8,6 +8,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/common/utils/utils.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 part "./category_view.dart";
 
@@ -48,8 +49,8 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
           mainAxisSize: MainAxisSize.min,
           children: [
             // -> appbar
-            const AppBarComponent(
-              title: Text("Эмодзи"),
+            AppBarComponent(
+              title: Text(context.t.components.emoji_picker.title),
               useSliver: false,
               showDragHandle: true,
               showBackground: false,
@@ -78,7 +79,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
                   indicatorColor: theme.colorScheme.primary,
                   iconColor: theme.colorScheme.primaryContainer,
                   iconColorSelected: theme.colorScheme.primary,
-                  dividerColor: const Color(0x00000000),
+                  dividerColor: const Color(0x00FFFFFF),
                   backspaceColor: theme.colorScheme.primary,
                 ),
                 bottomActionBarConfig: const BottomActionBarConfig(
@@ -124,7 +125,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
                 shape: SmoothRectangleBorder(
                   side: BorderSide(color: color!),
                   borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
+                    SmoothRadius(cornerRadius: 16.0, cornerSmoothing: 0.6),
                   ),
                 ),
               ),

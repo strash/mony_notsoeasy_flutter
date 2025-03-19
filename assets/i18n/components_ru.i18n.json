@@ -36,5 +36,14 @@
 			"month": "За месяц",
 			"week": "За неделю"
 		}
+	},
+	"color_picker": {
+		"title": "Цвет"
+	},
+	"emoji_picker": {
+		"title": "Эмодзи"
+	},
+	"empty_state": {
+		"description": "Тут ничего нет.\nНачни записывать траты!"
 	}
 }

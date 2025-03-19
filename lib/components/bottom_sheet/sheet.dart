@@ -26,7 +26,7 @@ class BottomSheetComponent extends StatefulWidget {
     bool largeHandle = true,
     required TBottomSheetBuilder builder,
   }) {
-    final navigator = appNavigatorKey.currentState;
+    final navigator = kAppNavigatorKey.currentState;
     if (navigator == null) return Future.value();
     final theme = Theme.of(context);
 

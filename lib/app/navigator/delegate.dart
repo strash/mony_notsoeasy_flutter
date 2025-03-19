@@ -20,7 +20,7 @@ final class NavigatorDelegate extends RouterDelegate<Object>
   }
 
   @override
-  GlobalKey<NavigatorState>? get navigatorKey => appNavigatorKey;
+  GlobalKey<NavigatorState>? get navigatorKey => kAppNavigatorKey;
 
   @override
   Future<void> setNewRoutePath(Object? configuration) async {}

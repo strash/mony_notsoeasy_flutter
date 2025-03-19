@@ -1,16 +1,16 @@
 part of "component.dart";
 
-class NamedColorPickerComponent extends StatelessWidget {
-  final NamedColorPickerController controller;
+class ColorPickerComponent extends StatelessWidget {
+  final ColorPickerController controller;
 
-  const NamedColorPickerComponent({super.key, required this.controller});
+  const ColorPickerComponent({super.key, required this.controller});
 
   void _onTap(BuildContext context) {
     BottomSheetComponent.show<EColorName?>(
       context,
       showDragHandle: false,
       builder: (context, bottom) {
-        return _NamedColorPickerValueProvider(
+        return _ColorPickerValueProvider(
           notifier: controller,
           child: _ColorGrid(bottom: bottom),
         );
@@ -55,7 +55,7 @@ class NamedColorPickerComponent extends StatelessWidget {
                         ),
                       ),
                       borderRadius: const SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
+                        SmoothRadius(cornerRadius: 16.0, cornerSmoothing: 0.6),
                       ),
                     ),
                   ),

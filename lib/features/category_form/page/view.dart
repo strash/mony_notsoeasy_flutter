@@ -47,9 +47,7 @@ class CategoryFormView extends StatelessWidget {
                   },
                   children: [
                     // -> color picker
-                    NamedColorPickerComponent(
-                      controller: viewModel.colorController,
-                    ),
+                    ColorPickerComponent(controller: viewModel.colorController),
 
                     // -> emoji
                     EmojiPickerComponent(controller: viewModel.emojiController),

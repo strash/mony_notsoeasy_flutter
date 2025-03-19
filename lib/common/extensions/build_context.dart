@@ -30,7 +30,7 @@ extension BuildContextEx on BuildContext {
   }) {
     final NavigatorState navigator;
     if (rootNavigator) {
-      navigator = appNavigatorKey.currentState!;
+      navigator = kAppNavigatorKey.currentState!;
     } else {
       navigator = Navigator.of(this);
     }

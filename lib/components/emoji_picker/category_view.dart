@@ -68,7 +68,7 @@ final class _CategoryViewState extends State<_CategoryView> {
     final config = widget.config;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final locale = Localizations.localeOf(context);
@@ -87,10 +87,15 @@ final class _CategoryViewState extends State<_CategoryView> {
                   child: SizedBox.square(
                     dimension: iconSize,
                     child: DecoratedBox(
-                      decoration: BoxDecoration(
+                      decoration: ShapeDecoration(
                         color: theme.colorScheme.surfaceContainer,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(25.0),
+                        shape: const SmoothRectangleBorder(
+                          borderRadius: SmoothBorderRadius.all(
+                            SmoothRadius(
+                              cornerRadius: 16.0,
+                              cornerSmoothing: .6,
+                            ),
+                          ),
                         ),
                       ),
                     ),

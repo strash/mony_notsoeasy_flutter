@@ -7,7 +7,7 @@ final class _SelectValueProvider<T>
   static SelectController<T?>? maybeOf<T>(BuildContext context) {
     final p =
         context.dependOnInheritedWidgetOfExactType<_SelectValueProvider<T>>();
-    return p?.notifier!;
+    return p?.notifier;
   }
 
   static SelectController<T?> of<T>(BuildContext context) {
@@ -18,6 +18,6 @@ final class _SelectValueProvider<T>
 
   @override
   bool updateShouldNotify(_SelectValueProvider<T> oldWidget) {
-    return notifier!.value != oldWidget.notifier!.value;
+    return notifier?.value != oldWidget.notifier?.value;
   }
 }

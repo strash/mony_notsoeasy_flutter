@@ -11,8 +11,8 @@ class _ColorGrid extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         // -> appbar
-        const AppBarComponent(
-          title: Text("Цвет"),
+        AppBarComponent(
+          title: Text(context.t.components.color_picker.title),
           useSliver: false,
           showBackground: false,
           showDragHandle: true,

@@ -45,9 +45,7 @@ class AccountFormView extends StatelessWidget {
                   },
                   children: [
                     // -> color picker
-                    NamedColorPickerComponent(
-                      controller: viewModel.colorController,
-                    ),
+                    ColorPickerComponent(controller: viewModel.colorController),
 
                     // -> title
                     Expanded(

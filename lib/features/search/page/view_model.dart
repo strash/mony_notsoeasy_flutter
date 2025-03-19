@@ -24,7 +24,7 @@ final class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
   static void show(BuildContext context) {
-    final navigator = appNavigatorKey.currentState;
+    final navigator = kAppNavigatorKey.currentState;
     if (navigator == null) return;
     navigator.push<void>(
       _Route(

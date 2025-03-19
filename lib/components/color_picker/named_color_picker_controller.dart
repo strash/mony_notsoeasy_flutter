@@ -1,9 +1,7 @@
 part of "component.dart";
 
-final class NamedColorPickerController extends ChangeNotifier {
+final class ColorPickerController extends ChangeNotifier {
   EColorName? _value;
-
-  NamedColorPickerController(EColorName? color) : _value = color;
 
   EColorName? get value => _value;
 
@@ -11,4 +9,6 @@ final class NamedColorPickerController extends ChangeNotifier {
     _value = newValue;
     notifyListeners();
   }
+
+  ColorPickerController(EColorName? color) : _value = color;
 }

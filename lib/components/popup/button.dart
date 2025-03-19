@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
+import "package:mony_app/app.dart";
 import "package:mony_app/components/components.dart";
 
 typedef TPopupButtonBuilder =
@@ -45,39 +46,37 @@ class _PopupButtonComponentState extends State<PopupButtonComponent> {
 
     final button = context.findRenderObject() as RenderBox?;
     final overlay =
-        Navigator.of(context).overlay?.context.findRenderObject() as RenderBox?;
+        kAppNavigatorKey.currentState?.overlay ??
+        Overlay.of(context, rootOverlay: true);
+    final overlayRb = overlay.context.findRenderObject() as RenderBox?;
     if (button == null ||
         !button.hasSize ||
-        overlay == null ||
-        !overlay.hasSize) {
+        overlayRb == null ||
+        !overlayRb.hasSize) {
       return;
     }
 
     final position = RelativeRect.fromRect(
       Rect.fromPoints(
-        button.localToGlobal(Offset.zero, ancestor: overlay),
+        button.localToGlobal(Offset.zero, ancestor: overlayRb),
         button.localToGlobal(
           button.size.bottomRight(Offset.zero),
-          ancestor: overlay,
+          ancestor: overlayRb,
         ),
       ),
-      Offset.zero & overlay.size,
+      Offset.zero & overlayRb.size,
     );
 
     if (!mounted) return;
-    final rootOverlay = Overlay.of(context, rootOverlay: true);
-    final captured = InheritedTheme.capture(
-      from: context,
-      to: rootOverlay.context,
-    );
 
+    final captured = InheritedTheme.capture(from: context, to: overlay.context);
     setState(() {
       _entry = OverlayEntry(
         builder: (context) {
           return captured.wrap(
             PopupOverlayComponent(
               onTapOutside: _removeEntry,
-              initialRect: position.toRect(overlay.paintBounds),
+              initialRect: position.toRect(overlayRb.paintBounds),
               proxyBuilder: widget.proxyBuilder,
               popupBuilder: widget.popupBuilder,
               showBackground: widget.showBackground,
@@ -88,7 +87,7 @@ class _PopupButtonComponentState extends State<PopupButtonComponent> {
       );
     });
     if (_entry != null) {
-      rootOverlay.insert(_entry!);
+      overlay.insert(_entry!);
     }
   }
 

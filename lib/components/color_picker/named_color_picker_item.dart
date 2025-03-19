@@ -5,8 +5,8 @@ class _ColorGridItem extends StatelessWidget {
 
   const _ColorGridItem({required this.colorName});
 
-  NamedColorPickerController _controller(BuildContext context) {
-    return _NamedColorPickerValueProvider.of(context);
+  ColorPickerController _controller(BuildContext context) {
+    return _ColorPickerValueProvider.of(context);
   }
 
   void _onTap(BuildContext context) {

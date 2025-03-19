@@ -16,7 +16,6 @@ export "./context_menu/component.dart";
 export "./currency_tag/component.dart";
 export "./emoji_picker/component.dart";
 export "./empty_state/component.dart";
-export "./named_color_picker/component.dart";
 export "./popup/component.dart";
 export "./select/component.dart";
 export "./separated/component.dart";

@@ -8,7 +8,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/i18n/strings.g.dart";
 import "package:rxdart/transformers.dart";
 
-final appNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "app_key");
+final kAppNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "app_key");
 
 class MonyApp extends StatefulWidget {
   const MonyApp({super.key});
@@ -74,7 +74,7 @@ class _MonyAppState extends State<MonyApp> {
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         return NavigatorWrapper(
-          navigatorKey: appNavigatorKey,
+          navigatorKey: kAppNavigatorKey,
           onGenerateRoute: (settings) {
             return MaterialPageRoute(
               builder: (context) => child ?? const SizedBox(),
