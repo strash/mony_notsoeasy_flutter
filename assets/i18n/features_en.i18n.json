@@ -255,5 +255,8 @@
 	},
 	"tags": {
 		"title": "Tags"
+	},
+	"transaction": {
+		"note_title": "Note"
 	}
 }

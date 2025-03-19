@@ -263,5 +263,8 @@
 	},
 	"tags": {
 		"title": "Теги"
+	},
+	"transaction": {
+		"note_title": "Заметка"
 	}
 }
