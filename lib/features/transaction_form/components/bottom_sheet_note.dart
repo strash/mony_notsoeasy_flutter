@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/components/appbar/component.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
   final InputController inputController;
@@ -21,8 +22,8 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         // -> appbar
-        const AppBarComponent(
-          title: Text("Заметка"),
+        AppBarComponent(
+          title: Text(context.t.features.transaction_form.note_form.title),
           showBackground: false,
           showDragHandle: true,
           useSliver: false,
@@ -49,8 +50,14 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
             scrollPadding: EdgeInsets.zero,
-            decoration: const InputDecoration(
-              hintText: "детали, чтобы не забыть...",
+            decoration: InputDecoration(
+              hintText:
+                  context
+                      .t
+                      .features
+                      .transaction_form
+                      .note_form
+                      .input_placeholder,
               counterText: "",
             ),
           ),

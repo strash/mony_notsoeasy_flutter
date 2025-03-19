@@ -258,5 +258,22 @@
 	},
 	"transaction": {
 		"note_title": "Note"
+	},
+	"transaction_form": {
+		"calendar_today": "Today",
+		"category_select_placeholder": "Category",
+		"tag_button_placeholder": "add tags...",
+		"tag_form": {
+			"title": "Tags",
+			"not_found": "To create a new tag, tap 'Done'",
+			"input_placeholder": "search for tags or create new ones"
+		},
+		"note_button_placeholder": "add a note...",
+		"note_form": {
+			"title": "Note",
+			"input_placeholder": "write down some details..."
+		},
+		"keyboard_hint": "To delete a number,\nswipe left or right\non the keyboard.",
+		"keyboard_hint_button": "OK"
 	}
 }

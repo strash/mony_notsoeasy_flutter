@@ -266,5 +266,22 @@
 	},
 	"transaction": {
 		"note_title": "Заметка"
+	},
+	"transaction_form": {
+		"calendar_today": "Сегодня",
+		"category_select_placeholder": "Категория",
+		"tag_button_placeholder": "добавь теги...",
+		"tag_form": {
+			"title": "Теги",
+			"not_found": "Чтобы создать новый тег, нажми \"Готово\"",
+			"input_placeholder": "ищи теги или создавай новые"
+		},
+		"note_button_placeholder": "добавь заметку...",
+		"note_form": {
+			"title": "Заметка",
+			"input_placeholder": "запиши детали, чтобы не забыть..."
+		},
+		"keyboard_hint": "Чтобы удалить цифру,\nсвайпай влево или враво\nпо клавиатуре.",
+		"keyboard_hint_button": "OK"
 	}
 }

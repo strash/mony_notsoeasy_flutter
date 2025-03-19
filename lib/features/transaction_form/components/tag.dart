@@ -11,23 +11,26 @@ class TransactionFormTagComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-        color: theme.colorScheme.surfaceContainerHigh,
-        shape: const SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 0.6),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: theme.colorScheme.surfaceContainerHigh,
+          shape: const SmoothRectangleBorder(
+            borderRadius: SmoothBorderRadius.all(
+              SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 0.6),
+            ),
           ),
         ),
-      ),
-      child: DefaultTextStyle(
-        style: GoogleFonts.golosText(
-          fontSize: 16.0,
-          height: 1.0,
-          fontWeight: FontWeight.w500,
-          color: theme.colorScheme.onTertiaryContainer,
+        child: DefaultTextStyle(
+          style: GoogleFonts.golosText(
+            fontSize: 16.0,
+            height: 1.0,
+            fontWeight: FontWeight.w500,
+            color: theme.colorScheme.onTertiaryContainer,
+          ),
+          child: builder(context),
         ),
-        child: builder(context),
       ),
     );
   }

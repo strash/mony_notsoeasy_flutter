@@ -5,6 +5,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/calendar/component.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/components/time/component.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TransactionFormBottomSheetCalendarComponent extends StatefulWidget {
   final double bottom;
@@ -121,7 +122,9 @@ class _TransactionFormBottomSheetCalendarComponentState
                                 ? theme.colorScheme.onSurfaceVariant
                                 : theme.colorScheme.secondary,
                       ),
-                      child: const Text("Сегодня"),
+                      child: Text(
+                        context.t.features.transaction_form.calendar_today,
+                      ),
                     ),
                   ),
                 ],

@@ -24,6 +24,7 @@ const double kTranslucentPanelOpacity = .5;
 const double kTranslucentPanelBlurSigma = 25.0;
 
 const kAmountPattern = r"^[-+]?(?:0|^[-+]?[1-9]\d*?)(?:[.,]\d{0,2})?$";
+const kNewTransactionAmountPattern = r"\d*?[.,]\d{2}$";
 
 final kDefaultCurrencyCode =
     PlatformDispatcher.instance.locales.firstOrNull?.languageCode

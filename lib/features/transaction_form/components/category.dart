@@ -5,6 +5,7 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/domain.dart";
 import "package:mony_app/features/transaction_form/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TransactionFormCategoryComponent extends StatelessWidget {
   const TransactionFormCategoryComponent({super.key});
@@ -74,7 +75,9 @@ class TransactionFormCategoryComponent extends StatelessWidget {
             ETransactionType.expense => viewModel.expenseCategoryController,
             ETransactionType.income => viewModel.incomeCategoryController,
           },
-          placeholder: const Text("Категория"),
+          placeholder: Text(
+            context.t.features.transaction_form.category_select_placeholder,
+          ),
           activeEntryPadding: const EdgeInsets.symmetric(horizontal: 7.0),
           activeEntry: (controller) {
             return controller.value != null

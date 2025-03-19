@@ -82,7 +82,7 @@ final class TransactionFormViewModel
   String decimalSeparator = ".";
   Offset dragStartPosition = Offset.zero;
 
-  final RegExp regEx = RegExp(r"\d*?[.,]\d{2}$");
+  final RegExp regEx = RegExp(kNewTransactionAmountPattern);
 
   List<List<TransactionFormButtonType>> get buttons {
     return List<List<TransactionFormButtonType>>.generate(3, (rowIndex) {

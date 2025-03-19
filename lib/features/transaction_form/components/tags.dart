@@ -8,6 +8,7 @@ import "package:mony_app/features/transaction_form/components/tags_gradient.dart
 import "package:mony_app/features/transaction_form/page/view_model.dart";
 import "package:mony_app/features/transaction_form/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TransactionFormTagsComponent extends StatelessWidget {
   const TransactionFormTagsComponent({super.key});
@@ -15,7 +16,7 @@ class TransactionFormTagsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const height = 34.0;
+    const height = 40.0;
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
     final controller = viewModel.tagScrollController;
@@ -58,9 +59,13 @@ class TransactionFormTagsComponent extends StatelessWidget {
                     key: Key("tags_${viewModel.attachedTags.isEmpty}"),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Добавь теги...",
+                      context
+                          .t
+                          .features
+                          .transaction_form
+                          .tag_button_placeholder,
                       style: GoogleFonts.golosText(
-                        fontSize: 15.0,
+                        fontSize: 17.0,
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
@@ -95,7 +100,7 @@ class TransactionFormTagsComponent extends StatelessWidget {
                             builder: (context) {
                               return Padding(
                                 padding: const EdgeInsets.only(
-                                  left: 12.0,
+                                  left: 14.0,
                                   right: 8.0,
                                 ),
                                 child: Row(

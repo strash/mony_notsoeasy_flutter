@@ -6,6 +6,7 @@ import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/features/transaction_form/components/tag.dart";
 import "package:mony_app/features/transaction_form/components/tags_gradient.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
   final InputController inputController;
@@ -35,8 +36,8 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const AppBarComponent(
-            title: Text("Теги"),
+          AppBarComponent(
+            title: Text(context.t.features.transaction_form.tag_form.title),
             showBackground: false,
             showDragHandle: true,
             useSliver: false,
@@ -45,7 +46,7 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
 
           // -> suggestions
           SizedBox(
-            height: 34.0,
+            height: 40.0,
             width: viewSize.width - 30.0,
             child: ValueListenableBuilder(
               valueListenable: tags,
@@ -61,9 +62,14 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
                           tags.value.isEmpty
                               ? Center(
                                 child: Text(
-                                  'Чтобы создать тег, нажми "Готово"',
+                                  context
+                                      .t
+                                      .features
+                                      .transaction_form
+                                      .tag_form
+                                      .not_found,
                                   style: GoogleFonts.golosText(
-                                    fontSize: 15.0,
+                                    fontSize: 16.0,
                                     color: theme.colorScheme.onSurfaceVariant,
                                   ),
                                 ),
@@ -92,7 +98,8 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
                             builder: (context) {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0,
+                                  horizontal: 14.0,
+                                  vertical: 8.0,
                                 ),
                                 child: Center(child: Text(item.title)),
                               );
@@ -170,8 +177,14 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
             scrollPadding: EdgeInsets.zero,
-            decoration: const InputDecoration(
-              hintText: "ищи теги или создавай новые",
+            decoration: InputDecoration(
+              hintText:
+                  context
+                      .t
+                      .features
+                      .transaction_form
+                      .tag_form
+                      .input_placeholder,
               counterText: "",
             ),
             onFieldSubmitted: (_) => onSubmitPressed(context),

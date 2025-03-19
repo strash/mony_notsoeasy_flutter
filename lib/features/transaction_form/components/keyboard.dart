@@ -10,6 +10,7 @@ import "package:mony_app/features/transaction_form/components/keyboard_button.da
 import "package:mony_app/features/transaction_form/transaction_form.dart";
 import "package:mony_app/features/transaction_form/use_case/use_case.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TransactionFormKeyboadrComponent extends StatelessWidget {
   const TransactionFormKeyboadrComponent({super.key});
@@ -112,9 +113,7 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
 
                           // -> info
                           Text(
-                            "Чтобы удалить цифру,\n"
-                            "свайпай влево или враво\n"
-                            "по клавиатуре.",
+                            context.t.features.transaction_form.keyboard_hint,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.golosText(
                               fontSize: 16.0,
@@ -128,9 +127,17 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
                             onPressed: () {
                               viewModel<OnKeyboardHintAccepted>()(context);
                             },
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30.0),
-                              child: Text("OK"),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 30.0,
+                              ),
+                              child: Text(
+                                context
+                                    .t
+                                    .features
+                                    .transaction_form
+                                    .keyboard_hint_button,
+                              ),
                             ),
                           ),
                         ],

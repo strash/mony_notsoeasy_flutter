@@ -5,6 +5,7 @@ import "package:mony_app/common/common.dart";
 import "package:mony_app/features/features.dart";
 import "package:mony_app/features/transaction_form/use_case/on_note_pressed.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TransactionFormNoteComponent extends StatelessWidget {
   const TransactionFormNoteComponent({super.key});
@@ -12,7 +13,7 @@ class TransactionFormNoteComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const height = 36.0;
+    const height = 40.0;
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
     return GestureDetector(
@@ -51,14 +52,20 @@ class TransactionFormNoteComponent extends StatelessWidget {
                       duration: Durations.short4,
                       curve: Curves.easeInOut,
                       style: GoogleFonts.golosText(
-                        fontSize: 16.0,
+                        fontSize: 17.0,
                         color:
                             note.isNotEmpty
                                 ? theme.colorScheme.onSurface
                                 : theme.colorScheme.onSurfaceVariant,
                       ),
                       child: Text(
-                        note.isNotEmpty ? note : "Добавь заметку...",
+                        note.isNotEmpty
+                            ? note
+                            : context
+                                .t
+                                .features
+                                .transaction_form
+                                .note_button_placeholder,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
