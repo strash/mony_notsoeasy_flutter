@@ -4,6 +4,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/features/stats/components/components.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class StatsView extends StatelessWidget {
   const StatsView({super.key});
@@ -25,11 +26,11 @@ class StatsView extends StatelessWidget {
         ),
         slivers: [
           // -> app bar
-          const AppBarComponent(
-            title: Text("Статистика"),
+          AppBarComponent(
+            title: Text(context.t.features.stats.title),
             automaticallyImplyLeading: false,
             // -> temporal type
-            trailing: StatsTemporalViewMenuComponent(),
+            trailing: const StatsTemporalViewMenuComponent(),
           ),
 
           // -> account select

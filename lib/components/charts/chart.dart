@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "package:intl/intl.dart" as intl;
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/charts/config.dart";
+import "package:mony_app/components/charts/enums.dart";
 import "package:mony_app/components/charts/mark.dart";
 
 part "./painter.dart";

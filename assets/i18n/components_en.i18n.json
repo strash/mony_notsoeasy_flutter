@@ -1,0 +1,9 @@
+{
+	"charts": {
+		"temporal(context=EChartTemporalView)": {
+			"year": "For a year",
+			"month": "For a month",
+			"week": "For a week"
+		}
+	}
+}

@@ -3,6 +3,7 @@ import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/calendar/component.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class StatsBottomSheetCalendarComponent extends StatefulWidget {
   final double bottom;
@@ -118,7 +119,7 @@ class _StatsBottomSheetCalendarComponentState
                                 ? theme.colorScheme.onSurfaceVariant
                                 : theme.colorScheme.secondary,
                       ),
-                      child: const Text("Сегодня"),
+                      child: Text(context.t.features.stats.calendar_today),
                     ),
                   ),
                 ],

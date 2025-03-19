@@ -234,6 +234,12 @@
 		"button_import_csv": "CSV"
 	},
 	"stats": {
+		"title": "Statistics",
+		"calendar_today": "Today",
+		"transactions_count": {
+			"one": "${n: decimalPattern} transaction",
+			"other": "${n: decimalPattern} transactions"
+		},
 		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
 	}
 }

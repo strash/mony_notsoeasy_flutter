@@ -1,23 +1,13 @@
 import "package:flutter/material.dart";
 import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:intl/intl.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class StatsTotalAmountComponent extends StatelessWidget {
   const StatsTotalAmountComponent({super.key});
-
-  String _getCount(String locale, int count) {
-    final formatter = NumberFormat.decimalPattern(locale);
-    final formatted = formatter.format(count);
-    return switch (count.wordCaseHint) {
-      EWordCaseHint.nominative => "$formatted транзакция",
-      EWordCaseHint.genitive => "$formatted транзакции",
-      EWordCaseHint.accusative => "$formatted транзакций",
-    };
-  }
 
   String _getAmount(
     String locale,
@@ -43,13 +33,6 @@ class StatsTotalAmountComponent extends StatelessWidget {
     final viewModel = context.viewModel<StatsViewModel>();
     final account = viewModel.accountController.value;
     final balance = viewModel.balance;
-    final amount = _getAmount(
-      locale.languageCode,
-      account,
-      balance,
-      viewModel.isCentsVisible,
-    );
-    final count = _getCount(locale.languageCode, balance?.totalCount ?? 0);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -61,7 +44,12 @@ class StatsTotalAmountComponent extends StatelessWidget {
               // -> amount
               FittedBox(
                 child: NumericText(
-                  amount,
+                  _getAmount(
+                    locale.languageCode,
+                    account,
+                    balance,
+                    viewModel.isCentsVisible,
+                  ),
                   style: GoogleFonts.golosText(
                     fontSize: 28.0,
                     height: 1.4,
@@ -74,7 +62,9 @@ class StatsTotalAmountComponent extends StatelessWidget {
               // -> count
               Flexible(
                 child: Text(
-                  count,
+                  context.t.features.stats.transactions_count(
+                    n: balance?.totalCount ?? 0,
+                  ),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.golosText(
                     fontSize: 14.0,

@@ -5,6 +5,7 @@ import "package:mony_app/components/components.dart";
 import "package:mony_app/features/stats/page/view_model.dart";
 import "package:mony_app/features/stats/use_case/on_temporal_button_pressed.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class StatsTemporalViewMenuComponent extends StatelessWidget {
   const StatsTemporalViewMenuComponent({super.key});
@@ -55,7 +56,7 @@ class StatsTemporalViewMenuComponent extends StatelessWidget {
             final item = EChartTemporalView.values.elementAt(index);
 
             return ContextMenuItemComponent(
-              label: Text(item.description),
+              label: Text(context.t.components.charts.temporal(context: item)),
               icon: SvgPicture.asset(
                 item.icon,
                 colorFilter: ColorFilter.mode(
@@ -103,14 +104,6 @@ class _Button extends StatelessWidget {
 }
 
 extension on EChartTemporalView {
-  String get description {
-    return switch (this) {
-      EChartTemporalView.year => "За год",
-      EChartTemporalView.month => "За месяц",
-      EChartTemporalView.week => "За неделю",
-    };
-  }
-
   String get icon {
     return switch (this) {
       EChartTemporalView.year => Assets.icons.ySquare,

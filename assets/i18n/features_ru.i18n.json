@@ -240,6 +240,14 @@
 		"button_import_csv": "CSV"
 	},
 	"stats": {
+		"title": "Статистика",
+		"calendar_today": "Сегодня",
+		"transactions_count": {
+			"one": "${n: decimalPattern} транзакция",
+			"two": "${n: decimalPattern} транзакции",
+			"few": "${n: decimalPattern} транзакции",
+			"other": "${n: decimalPattern} транзакций"
+		},
 		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
 	}
 }

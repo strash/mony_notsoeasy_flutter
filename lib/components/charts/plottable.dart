@@ -1,18 +1,5 @@
 part of "./chart.dart";
 
-enum EChartTemporalView {
-  /// To show a list of months in a year
-  year,
-
-  /// To show a list of days in a month
-  month,
-
-  /// To show a list of days in a week
-  week;
-
-  static const EChartTemporalView defaultValue = month;
-}
-
 abstract base class ChartPlottableValue<T extends Object> {
   /// Just a meta information which won't be visualized.
   String get label;

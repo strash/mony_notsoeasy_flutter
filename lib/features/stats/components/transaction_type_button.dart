@@ -46,18 +46,9 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final locale = Localizations.localeOf(context);
-
     final viewModel = context.viewModel<StatsViewModel>();
     final account = viewModel.accountController.value;
-    final balance = viewModel.balance;
     final isActive = viewModel.activeTransactionType == type;
-    final amount = _getAmount(
-      locale.languageCode,
-      account,
-      balance,
-      viewModel.isCentsVisible,
-    );
 
     return Expanded(
       child: GestureDetector(
@@ -81,9 +72,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 10.0),
             child: SeparatedComponent.list(
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 4.0);
-              },
+              separatorBuilder: (context, index) => const SizedBox(height: 4.0),
               children: [
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -104,7 +93,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                     Flexible(
                       child: Text(
                         context.t.features.stats.transaction_type_count(
-                          count: _getCount(balance),
+                          count: _getCount(viewModel.balance),
                           context: type,
                         ),
                         style: GoogleFonts.golosText(
@@ -120,7 +109,12 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                 // -> total amount
                 FittedBox(
                   child: NumericText(
-                    amount,
+                    _getAmount(
+                      Localizations.localeOf(context).languageCode,
+                      account,
+                      viewModel.balance,
+                      viewModel.isCentsVisible,
+                    ),
                     style: GoogleFonts.golosText(
                       fontSize: 18.0,
                       height: 1.4,
@@ -148,7 +142,6 @@ extension on ETransactionType {
 
   Color getColor(BuildContext context) {
     final theme = Theme.of(context);
-
     return switch (this) {
       ETransactionType.expense => theme.colorScheme.error,
       ETransactionType.income => theme.colorScheme.secondary,
