@@ -247,5 +247,10 @@
 		"total_amount": {
 			"title": "Total amount"
 		}
+	},
+	"tag_form": {
+		"title": "Tag",
+		"input_placeholder": "tag name",
+		"button_save": "Save"
 	}
 }

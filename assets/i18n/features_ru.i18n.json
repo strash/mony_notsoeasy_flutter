@@ -251,9 +251,14 @@
 		"transaction_type_count": "@:models.transaction.type_description (${count: decimalPattern})"
 	},
 	"tag": {
-		"title": "Tag",
+		"title": "Тег",
 		"total_amount": {
 			"title": "Сумма транзакций"
 		}
+	},
+	"tag_form": {
+		"title": "Тег",
+		"input_placeholder": "название тега",
+		"button_save": "Сохранить"
 	}
 }

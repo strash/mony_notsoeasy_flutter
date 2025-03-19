@@ -6,6 +6,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/appbar/component.dart";
 import "package:mony_app/features/tag_form/tag_form.dart";
 import "package:mony_app/features/tag_form/use_case/use_case.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 class TagFormView extends StatelessWidget {
   final double keyboardHeight;
@@ -22,8 +23,8 @@ class TagFormView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         // -> appbar
-        const AppBarComponent(
-          title: Text("Тег"),
+        AppBarComponent(
+          title: Text(context.t.features.tag_form.title),
           useSliver: false,
           showBackground: false,
           showDragHandle: true,
@@ -53,8 +54,8 @@ class TagFormView extends StatelessWidget {
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
                   ),
-                  decoration: const InputDecoration(
-                    hintText: "название тега",
+                  decoration: InputDecoration(
+                    hintText: context.t.features.tag_form.input_placeholder,
                     counterText: "",
                   ),
                 ),
@@ -67,7 +68,7 @@ class TagFormView extends StatelessWidget {
                       viewModel.isSubmitEnabled
                           ? () => viewModel<OnSubmitPressed>()(context)
                           : null,
-                  child: const Text("Сохранить"),
+                  child: Text(context.t.features.tag_form.button_save),
                 ),
               ],
             ),
