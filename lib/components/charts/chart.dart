@@ -182,9 +182,3 @@ final class ChartComponent extends StatelessWidget {
     );
   }
 }
-
-extension on DateTime {
-  bool isSameMonthAs(DateTime other) {
-    return year == other.year && month == other.month;
-  }
-}

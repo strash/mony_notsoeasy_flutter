@@ -1,4 +1,35 @@
 {
+	"account_select": {
+		"placeholder": "Account"
+	},
+	"account_with_context_menu": {
+		"menu_item(context=EAccountContextMenuItem)": {
+			"receive": "Receive",
+			"send": "Send",
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"delete_alert": {
+			"title": "Account Deletion",
+			"description": "All transactions associated with this account will be deleted along with the account. This check can be disabled in the settings."
+		}
+	},
+	"alert": {
+		"button(context=EAlertResult)": {
+			"ok": "Ok",
+			"cancel": "Cancel"
+		}
+	},
+	"category_with_context_menu": {
+		"menu_item(context=ECategoryContextMenuItem)": {
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"delete_alert": {
+			"title": "Category Deletion",
+			"description": "All transactions associated with this category will be deleted along with the category. This check can be disabled in the settings."
+		}
+	},
 	"charts": {
 		"temporal(context=EChartTemporalView)": {
 			"year": "For a year",

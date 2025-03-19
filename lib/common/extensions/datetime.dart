@@ -85,6 +85,10 @@ extension DateTimeEx on DateTime {
     return day == other.day && month == other.month && year == other.year;
   }
 
+  bool isSameMonthAs(DateTime other) {
+    return year == other.year && month == other.month;
+  }
+
   /// Returns a formatted date string.
   ///
   /// The `dateFormatter` and `timeFormatter` can be obtained from

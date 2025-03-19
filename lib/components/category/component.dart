@@ -25,12 +25,11 @@ class CategoryComponent extends StatelessWidget {
     final color =
         ex?.from(category.colorName).color ?? theme.colorScheme.onSurface;
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
-    const iconDimension = 50.0;
-
     final colors = [
       theme.colorScheme.surfaceContainerHighest,
       theme.colorScheme.surfaceContainer,
     ];
+    const iconDimension = 50.0;
 
     return Row(
       mainAxisSize: MainAxisSize.min,

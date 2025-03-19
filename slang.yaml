@@ -14,6 +14,9 @@ imports:
   - 'package:mony_app/features/search/page/enums.dart'
   - 'package:mony_app/features/import/page/model/enum.dart'
   - 'package:mony_app/features/import/components/category/action_sheet.dart'
+  - 'package:mony_app/components/account_with_context_menu/component.dart'
+  - 'package:mony_app/components/alert/component.dart'
+  - 'package:mony_app/components/category_with_context_menu/component.dart'
   - 'package:mony_app/components/charts/enums.dart'
 contexts:
   EAccountType:
@@ -35,4 +38,10 @@ contexts:
   EImportCategoryMenuAction:
     generate_enum: false
   EChartTemporalView:
+    generate_enum: false
+  EAccountContextMenuItem:
+    generate_enum: false
+  EAlertResult:
+    generate_enum: false
+  ECategoryContextMenuItem:
     generate_enum: false

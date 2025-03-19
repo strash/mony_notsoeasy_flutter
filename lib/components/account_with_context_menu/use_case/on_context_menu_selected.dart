@@ -13,6 +13,7 @@ import "package:mony_app/domain/services/database/vo/account.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/account_form/page/view_model.dart";
 import "package:mony_app/features/balance_exchange_form/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 import "package:sealed_currencies/sealed_currencies.dart";
 
 typedef TAccountContextMenuValue =
@@ -31,6 +32,7 @@ final class OnAccountWithContextMenuSelected
     final accountService = context.service<DomainAccountService>();
     final appService = context.viewModel<AppEventService>();
     final sharedPrefService = context.service<DomainSharedPreferencesService>();
+    final tr = context.t.components.account_with_context_menu;
 
     switch (menu) {
       // -> exchange
@@ -93,11 +95,8 @@ final class OnAccountWithContextMenuSelected
           result = await AlertComponet.show(
             // ignore: use_build_context_synchronously
             context,
-            title: const Text("Удаление счета"),
-            description: const Text(
-              "Вместе со счетом будут удалены все транзакции, связанные с "
-              "этим счетом. Эту проверку можно отключить в настройках.",
-            ),
+            title: Text(tr.delete_alert.title),
+            description: Text(tr.delete_alert.description),
           );
         } else {
           result = EAlertResult.ok;

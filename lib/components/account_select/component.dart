@@ -38,7 +38,7 @@ class AccountSelectComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SelectComponent<AccountModel>(
       controller: controller,
-      placeholder: const Text("Счет"),
+      placeholder: Text(context.t.components.account_select.placeholder),
       activeEntry: (controller) {
         return activeEntry ??
             _AccountSelectActiveEntryComponent(

@@ -1,4 +1,35 @@
 {
+	"account_select": {
+		"placeholder": "Счет"
+	},
+	"account_with_context_menu": {
+		"menu_item(context=EAccountContextMenuItem)": {
+			"receive": "Пополнить",
+			"send": "Перевести",
+			"edit": "Редактировать",
+			"delete": "Удалить"
+		},
+		"delete_alert": {
+			"title": "Удаление счета",
+			"description": "Вместе со счетом будут удалены все транзакции, связанные с этим счетом. Эту проверку можно отключить в настройках."
+		}
+	},
+	"alert": {
+		"button(context=EAlertResult)": {
+			"ok": "Ок",
+			"cancel": "Отмена"
+		}
+	},
+	"category_with_context_menu": {
+		"menu_item(context=ECategoryContextMenuItem)": {
+			"edit": "Редактировать",
+			"delete": "Удалить"
+		},
+		"delete_alert": {
+			"title": "Удаление категории",
+			"description": "Вместе с категорией будут удалены все транзакции, связанные с этой категорией. Эту проверку можно отключить в настройках."
+		}
+	},
 	"charts": {
 		"temporal(context=EChartTemporalView)": {
 			"year": "За год",

@@ -10,3 +10,5 @@ enum EChartTemporalView {
 
   static const EChartTemporalView defaultValue = month;
 }
+
+enum EChartMark { bar }

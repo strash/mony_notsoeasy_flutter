@@ -59,7 +59,7 @@ class AccountComponent extends StatelessWidget {
                         ? BorderSide.none
                         : BorderSide(color: theme.colorScheme.outlineVariant),
                 borderRadius: const SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 0.6),
+                  SmoothRadius(cornerRadius: 23.0, cornerSmoothing: 0.6),
                 ),
               ),
             ),

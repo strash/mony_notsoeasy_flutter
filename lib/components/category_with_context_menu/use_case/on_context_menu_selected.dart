@@ -11,6 +11,7 @@ import "package:mony_app/domain/services/database/category.dart";
 import "package:mony_app/domain/services/database/vo/category.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/category_form/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 typedef TCategoryContextMenuValue =
     ({ECategoryContextMenuItem menu, CategoryModel category});
@@ -28,6 +29,7 @@ final class OnCategoryWithContextMenuSelected
     final categoryService = context.service<DomainCategoryService>();
     final appService = context.viewModel<AppEventService>();
     final sharedPrefService = context.service<DomainSharedPreferencesService>();
+    final tr = context.t.components.category_with_context_menu;
     final shouldConfirm = await sharedPrefService.getSettingsConfirmCategory();
 
     switch (menu) {
@@ -64,11 +66,8 @@ final class OnCategoryWithContextMenuSelected
           result = await AlertComponet.show(
             // ignore: use_build_context_synchronously
             context,
-            title: const Text("Удаление категории"),
-            description: const Text(
-              "Вместе с категорией будут удалены все транзакции, связанные с "
-              "этой категорией. Эту проверку можно отключить в настройках.",
-            ),
+            title: Text(tr.delete_alert.title),
+            description: Text(tr.delete_alert.description),
           );
         } else {
           result = EAlertResult.ok;

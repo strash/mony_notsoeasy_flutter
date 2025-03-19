@@ -1,6 +1,5 @@
 import "package:mony_app/components/charts/chart.dart";
-
-enum EChartMark { bar }
+import "package:mony_app/components/charts/enums.dart" show EChartMark;
 
 abstract base class ChartMarkComponent {
   EChartMark get type;

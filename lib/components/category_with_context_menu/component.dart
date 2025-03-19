@@ -13,6 +13,7 @@ import "package:mony_app/components/context_menu/separator.dart";
 import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/domain/models/category.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 export "./use_case/use_case.dart";
 
@@ -24,14 +25,6 @@ enum ECategoryContextMenuItem {
     return switch (this) {
       ECategoryContextMenuItem.edit => Assets.icons.pencil,
       ECategoryContextMenuItem.delete => Assets.icons.trashFill,
-    };
-  }
-
-  @override
-  String get description {
-    return switch (this) {
-      ECategoryContextMenuItem.edit => "Редактировать",
-      ECategoryContextMenuItem.delete => "Удалить",
     };
   }
 }
@@ -166,7 +159,11 @@ class _CategoryWithContextMenuComponentState
             final item = ECategoryContextMenuItem.values.elementAt(index);
 
             return ContextMenuItemComponent(
-              label: Text(item.description),
+              label: Text(
+                context.t.components.category_with_context_menu.menu_item(
+                  context: item,
+                ),
+              ),
               icon: SvgPicture.asset(
                 item.icon,
                 colorFilter: ColorFilter.mode(

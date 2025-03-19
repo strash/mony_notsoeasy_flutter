@@ -1,19 +1,9 @@
 import "dart:io";
 
 import "package:flutter/material.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
-enum EAlertResult {
-  cancel,
-  ok;
-
-  @override
-  String get description {
-    return switch (this) {
-      EAlertResult.ok => "Ок",
-      EAlertResult.cancel => "Отмена",
-    };
-  }
-}
+enum EAlertResult { cancel, ok }
 
 sealed class AlertComponet {
   static Future<EAlertResult?> show(
@@ -48,7 +38,7 @@ sealed class AlertComponet {
                 return TextButton(
                   style: style,
                   onPressed: () => navigator.pop<EAlertResult>(e),
-                  child: Text(e.description),
+                  child: Text(context.t.components.alert.button(context: e)),
                 );
               })
               .toList(growable: false),

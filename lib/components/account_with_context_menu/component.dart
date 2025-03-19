@@ -12,6 +12,7 @@ import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/domain/models/account.dart";
 import "package:mony_app/domain/models/account_balance.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 export "./use_case/use_case.dart";
 
@@ -27,16 +28,6 @@ enum EAccountContextMenuItem {
       EAccountContextMenuItem.send => Assets.icons.arrowUpForward,
       EAccountContextMenuItem.edit => Assets.icons.pencil,
       EAccountContextMenuItem.delete => Assets.icons.trashFill,
-    };
-  }
-
-  @override
-  String get description {
-    return switch (this) {
-      EAccountContextMenuItem.receive => "Пополнить",
-      EAccountContextMenuItem.send => "Перевести",
-      EAccountContextMenuItem.edit => "Редактировать",
-      EAccountContextMenuItem.delete => "Удалить",
     };
   }
 }
@@ -88,7 +79,11 @@ class _AccountWithContextMenuComponentState
         final theme = Theme.of(context);
 
         return ContextMenuItemComponent(
-          label: Text(item.description),
+          label: Text(
+            context.t.components.account_with_context_menu.menu_item(
+              context: item,
+            ),
+          ),
           icon: SvgPicture.asset(
             item.icon,
             colorFilter: ColorFilter.mode(
