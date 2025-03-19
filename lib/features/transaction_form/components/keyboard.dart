@@ -19,10 +19,6 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
     final theme = Theme.of(context);
     const gap = 6.0;
     final viewModel = context.viewModel<TransactionFormViewModel>();
-    final onHintAcceptPressed = viewModel<OnKeyboardHintAccepted>();
-    final onKeyPressed = viewModel<OnKeyPressed>();
-    final onDragStarted = viewModel<OnHorizontalDragStarted>();
-    final onDragEnded = viewModel<OnHorizontalDragEnded>();
 
     return Stack(
       children: [
@@ -34,10 +30,10 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onHorizontalDragStart: (details) {
-              onDragStarted(context, details);
+              viewModel<OnHorizontalDragStarted>()(context, details);
             },
             onHorizontalDragEnd: (details) {
-              onDragEnded(context, details);
+              viewModel<OnHorizontalDragEnded>()(context, details);
             },
             child: ListenableBuilder(
               listenable: Listenable.merge([
@@ -71,7 +67,7 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
                               return TransactionFormSymbolButtonComponent(
                                 button: button,
                                 value: value,
-                                onTap: onKeyPressed,
+                                onTap: viewModel<OnKeyPressed>(),
                               );
                             },
                           ),
@@ -129,7 +125,9 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
 
                           // -> button ok
                           FilledButton(
-                            onPressed: () => onHintAcceptPressed(context),
+                            onPressed: () {
+                              viewModel<OnKeyboardHintAccepted>()(context);
+                            },
                             child: const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 30.0),
                               child: Text("OK"),

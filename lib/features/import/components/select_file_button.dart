@@ -15,12 +15,11 @@ class SelectFileButtonComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final onSelectFilePressed = viewModel<OnSelectFilePressed>();
 
     return FilledButton(
       onPressed:
           event is ImportEventInitial
-              ? () => onSelectFilePressed(context)
+              ? () => viewModel<OnSelectFilePressed>()(context)
               : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

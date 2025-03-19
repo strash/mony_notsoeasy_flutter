@@ -9,9 +9,9 @@ abstract base class ViewModelState<B extends StatefulWidget> extends State<B> {
   }
 
   Type call<Type extends UseCase>() {
-    final useCase = _useCases.whereType<Type Function()>().firstOrNull;
-    if (useCase == null) throw ArgumentError.value(context);
-    return useCase();
+    final closure = _useCases.whereType<Type Function()>().firstOrNull;
+    if (closure == null) throw ArgumentError.value(context);
+    return closure();
   }
 }
 

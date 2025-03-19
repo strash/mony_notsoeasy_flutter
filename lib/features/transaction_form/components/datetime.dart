@@ -14,11 +14,10 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<TransactionFormViewModel>();
-    final onDatePressed = viewModel<OnDatePressed>();
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => onDatePressed(context),
+      onTap: () => viewModel<OnDatePressed>()(context),
       child: SizedBox(
         height: 34.0,
         child: DecoratedBox(

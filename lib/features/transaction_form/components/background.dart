@@ -24,7 +24,6 @@ class TransactionFormBackgroundComponent extends StatelessWidget {
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
     const stops = [.0, .4];
-
     const begin = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,

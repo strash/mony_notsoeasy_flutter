@@ -23,7 +23,6 @@ class EntryListRowComponent extends StatelessWidget {
             .where((e) => e.columnKey == entry.key)
             .firstOrNull;
     final activeColumn = viewModel.currentColumn;
-    final onColumnSelected = viewModel<OnColumnSelected>();
 
     return ConstrainedBox(
       constraints: const BoxConstraints(maxHeight: 34.0),
@@ -32,7 +31,7 @@ class EntryListRowComponent extends StatelessWidget {
         onTap: () {
           final event = this.event;
           if (event == null) return;
-          onColumnSelected(context, entry.key);
+          viewModel<OnColumnSelected>()(context, entry.key);
         },
         child: Stack(
           fit: StackFit.expand,

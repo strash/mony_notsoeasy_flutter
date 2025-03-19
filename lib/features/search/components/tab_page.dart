@@ -26,18 +26,6 @@ class SearchTabPageComponent extends StatelessWidget {
     final theme = Theme.of(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
-    final onTransactionPressed =
-        viewModel<OnTransactionWithContextMenuPressed>();
-    final onTransactionMenuSelected =
-        viewModel<OnTransactionWithContextMenuSelected>();
-    final onAccountPressed = viewModel<OnAccountPressed>();
-    final onAccountMenuSelected = viewModel<OnAccountWithContextMenuSelected>();
-    final onCategoryPressed = viewModel<OnCategoryPressed>();
-    final onCategoryMenuSelected =
-        viewModel<OnCategoryWithContextMenuSelected>();
-    final onTagPressed = viewModel<OnTagPressed>();
-    final onTagMenuSelected = viewModel<OnTagWithContextMenuSelected>();
-
     final isEmpty = switch (tab) {
       ESearchTab.transactions => viewModel.transactions.isEmpty,
       ESearchTab.accounts => viewModel.accounts.isEmpty,
@@ -89,8 +77,9 @@ class SearchTabPageComponent extends StatelessWidget {
                   isColorsVisible: viewModel.isColorsVisible,
                   isTagsVisible: viewModel.isTagsVisible,
                   showFullDate: true,
-                  onTap: onTransactionPressed,
-                  onMenuSelected: onTransactionMenuSelected,
+                  onTap: viewModel<OnTransactionWithContextMenuPressed>(),
+                  onMenuSelected:
+                      viewModel<OnTransactionWithContextMenuSelected>(),
                 );
               },
             ),
@@ -119,8 +108,8 @@ class SearchTabPageComponent extends StatelessWidget {
                   balance: balance,
                   isCentsVisible: viewModel.isCentsVisible,
                   isColorsVisible: viewModel.isColorsVisible,
-                  onTap: onAccountPressed,
-                  onMenuSelected: onAccountMenuSelected,
+                  onTap: viewModel<OnAccountPressed>(),
+                  onMenuSelected: viewModel<OnAccountWithContextMenuSelected>(),
                 );
               },
             ),
@@ -145,8 +134,9 @@ class SearchTabPageComponent extends StatelessWidget {
                   key: ValueKey<String>("${_keyPrefixCategory}_${item.id}"),
                   category: item,
                   isColorsVisible: viewModel.isColorsVisible,
-                  onTap: onCategoryPressed,
-                  onMenuSelected: onCategoryMenuSelected,
+                  onTap: viewModel<OnCategoryPressed>(),
+                  onMenuSelected:
+                      viewModel<OnCategoryWithContextMenuSelected>(),
                 );
               },
             ),
@@ -170,8 +160,8 @@ class SearchTabPageComponent extends StatelessWidget {
                 return TagWithContextMenuComponent(
                   key: ValueKey<String>("${_keyPrefixTag}_${item.id}"),
                   tag: item,
-                  onTap: onTagPressed,
-                  onMenuSelected: onTagMenuSelected,
+                  onTap: viewModel<OnTagPressed>(),
+                  onMenuSelected: viewModel<OnTagWithContextMenuSelected>(),
                 );
               },
             ),

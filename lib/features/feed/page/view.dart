@@ -34,14 +34,6 @@ class FeedView extends StatelessWidget {
 
     final viewModel = context.viewModel<FeedViewModel>();
     final pages = viewModel.pages;
-    final onMenuAddPressed = viewModel<OnMenuAddPressed>();
-    final onAccountPressed = viewModel<OnAccountPressed>();
-    final onPageChanged = viewModel<OnPageChanged>();
-    final onTransactionPressed =
-        viewModel<OnTransactionWithContextMenuPressed>();
-    final onTransactionMenuSelected =
-        viewModel<OnTransactionWithContextMenuSelected>();
-
     final scrollControllers = viewModel.scrollControllers;
     final pageController = viewModel.pageController;
 
@@ -58,7 +50,9 @@ class FeedView extends StatelessWidget {
                 parent: PageScrollPhysics(),
               ),
             ),
-            onPageChanged: (index) => onPageChanged(context, index),
+            onPageChanged: (index) {
+              viewModel<OnPageChanged>()(context, index);
+            },
             findChildIndexCallback: (key) {
               final id = (key as ValueKey<String>).value;
               final idx = pages.indexWhere((e) => id == _pageKey(e).value);
@@ -86,7 +80,7 @@ class FeedView extends StatelessWidget {
                     sliver: SliverToBoxAdapter(
                       child: FeedAccountComponent(
                         page: page,
-                        onTap: onAccountPressed,
+                        onTap: viewModel<OnAccountPressed>(),
                         showDecimal: viewModel.isCentsVisible,
                         showColors: viewModel.isColorsVisible,
                       ),
@@ -102,8 +96,10 @@ class FeedView extends StatelessWidget {
                     isTagsVisible: viewModel.isTagsVisible,
                     showFullDate: false,
                     emptyStateColor: _emptyStateColor(context, page),
-                    onTransactionPressed: onTransactionPressed,
-                    onTransactionMenuSelected: onTransactionMenuSelected,
+                    onTransactionPressed:
+                        viewModel<OnTransactionWithContextMenuPressed>(),
+                    onTransactionMenuSelected:
+                        viewModel<OnTransactionWithContextMenuSelected>(),
                   ),
                 ],
               );
@@ -114,7 +110,7 @@ class FeedView extends StatelessWidget {
           const FeedPagerComponent(),
 
           // -> button add account/category/tag
-          FeedAddButtonComponent(onTap: onMenuAddPressed),
+          FeedAddButtonComponent(onTap: viewModel<OnMenuAddPressed>()),
         ],
       ),
     );

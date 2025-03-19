@@ -18,8 +18,6 @@ class BalanceExchangeFormView extends StatelessWidget {
     final action = viewModel.action;
     final isSameCurrency = viewModel.isSameCurrency;
 
-    final onSubmitPressed = viewModel<OnSubmitPressed>();
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -72,7 +70,7 @@ class BalanceExchangeFormView extends StatelessWidget {
                 FilledButton(
                   onPressed:
                       viewModel.isSubmitEnabled
-                          ? () => onSubmitPressed(context)
+                          ? () => viewModel<OnSubmitPressed>()(context)
                           : null,
                   child: Text(
                     context.t.features.balance_exchange_form.button_submit(

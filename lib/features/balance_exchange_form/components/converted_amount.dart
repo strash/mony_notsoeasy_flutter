@@ -23,8 +23,6 @@ class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
     final isColorsVisible = viewModel.isColorsVisible;
     final isConvertEnabled = viewModel.isConvertEnabled;
 
-    final onLinkPressed = viewModel<OnCurrencyLinkPressed>();
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,7 +94,10 @@ class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
         // -> button go convert somewhere
         GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: isConvertEnabled ? () => onLinkPressed(context) : null,
+          onTap:
+              isConvertEnabled
+                  ? () => viewModel<OnCurrencyLinkPressed>()(context)
+                  : null,
           child: AnimatedOpacity(
             opacity: isConvertEnabled ? 1.0 : .3,
             duration: Durations.short3,

@@ -18,10 +18,12 @@ class StartView extends StatelessWidget {
     final bgColor = Color.lerp(baseColor, theme.colorScheme.surface, .7)!;
     final fgColor = Color.lerp(baseColor, theme.colorScheme.onSurface, .5)!;
     final linkColor = Color.lerp(baseColor, theme.colorScheme.primary, .8)!;
+    final colors = [
+      baseColor,
+      Color.lerp(baseColor, theme.colorScheme.onSurface, .1)!,
+    ];
 
     final viewModel = context.viewModel<StartViewModel>();
-    final onButtonStartPressed = viewModel<OnButtonStartPressed>();
-    final onPrivacyPolicyPressed = viewModel<OnPrivacyPolicyPressed>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -71,14 +73,7 @@ class StartView extends StatelessWidget {
                                       gradient: LinearGradient(
                                         begin: Alignment.topCenter,
                                         end: Alignment.bottomCenter,
-                                        colors: [
-                                          baseColor,
-                                          Color.lerp(
-                                            baseColor,
-                                            theme.colorScheme.onSurface,
-                                            .1,
-                                          )!,
-                                        ],
+                                        colors: colors,
                                       ),
                                     ),
                                   ),
@@ -127,7 +122,9 @@ class StartView extends StatelessWidget {
                           style: FilledButton.styleFrom(
                             backgroundColor: linkColor,
                           ),
-                          onPressed: () => onButtonStartPressed(context),
+                          onPressed: () {
+                            viewModel<OnButtonStartPressed>()(context);
+                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 40.0,
@@ -139,7 +136,9 @@ class StartView extends StatelessWidget {
 
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          onTap: () => onPrivacyPolicyPressed(context),
+                          onTap: () {
+                            viewModel<OnPrivacyPolicyPressed>()(context);
+                          },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Text(

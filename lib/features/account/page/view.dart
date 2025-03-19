@@ -22,8 +22,6 @@ class AccountView extends StatelessWidget {
     final viewModel = context.viewModel<AccountViewModel>();
     final account = viewModel.account;
     final balance = viewModel.balance;
-    final onEditPressed = viewModel<OnAccountWithContextMenuSelected>();
-    final onDeletePressed = viewModel<OnAccountWithContextMenuSelected>();
 
     final color =
         ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
@@ -52,7 +50,10 @@ class AccountView extends StatelessWidget {
                       menu: EAccountContextMenuItem.edit,
                       account: account,
                     );
-                    onEditPressed(context, value);
+                    viewModel<OnAccountWithContextMenuSelected>()(
+                      context,
+                      value,
+                    );
                   },
                 ),
 
@@ -64,7 +65,10 @@ class AccountView extends StatelessWidget {
                       menu: EAccountContextMenuItem.delete,
                       account: account,
                     );
-                    onDeletePressed(context, value);
+                    viewModel<OnAccountWithContextMenuSelected>()(
+                      context,
+                      value,
+                    );
                   },
                 ),
               ],

@@ -13,18 +13,15 @@ class StatsDateRangeComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     final locale = Localizations.localeOf(context);
-
     final viewModel = context.viewModel<StatsViewModel>();
-    final onDatePressed = viewModel<OnDatePressed>();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: () => onDatePressed(context),
+          onTap: () => viewModel<OnDatePressed>()(context),
           child: SizedBox(
             height: 34.0,
             child: DecoratedBox(

@@ -15,8 +15,6 @@ class NavigationButtonsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final onBackwardPressed = viewModel<OnBackwardPressed>();
-    final onForwardPressed = viewModel<OnForwardPressed>();
     final backEnabled =
         event is! ImportEventInitial &&
         event is! ImportEventLoadingCsv &&
@@ -32,7 +30,9 @@ class NavigationButtonsComponent extends StatelessWidget {
             foregroundColor: theme.colorScheme.onTertiary,
           ),
           onPressed:
-              backEnabled ? () => onBackwardPressed(context, event) : null,
+              backEnabled
+                  ? () => viewModel<OnBackwardPressed>()(context, event)
+                  : null,
           child: IgnorePointer(
             child: SvgPicture.asset(
               Assets.icons.chevronBackward,
@@ -52,7 +52,7 @@ class NavigationButtonsComponent extends StatelessWidget {
           child: FilledButton(
             onPressed:
                 viewModel.currentStep.isReady()
-                    ? () => onForwardPressed(context, event)
+                    ? () => viewModel<OnForwardPressed>()(context, event)
                     : null,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

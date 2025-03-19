@@ -14,11 +14,10 @@ class NavBarButtonPlusComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<NavBarViewModel>();
-    final onAddTransactionPressed = viewModel<OnAddTransactionPressed>();
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => onAddTransactionPressed(context),
+      onTap: () => viewModel<OnAddTransactionPressed>()(context),
       child: SizedBox(
         width: NavBarView.kTabHeight * 1.618033,
         child: DecoratedBox(

@@ -20,9 +20,6 @@ class ImportMapCategoriesPage extends StatelessWidget {
     if (categoryModel is! ImportModelCategory) {
       throw ArgumentError.value(categoryModel);
     }
-    final onCategoryPressed = viewModel<OnCategoryButtonPressed>();
-    final onCategoryResetPressed = viewModel<OnCategoryResetPressed>();
-
     final count = categoryModel.mappedCategories.value.entries.fold<int>(
       0,
       (prev, curr) => prev + curr.value.length,
@@ -85,8 +82,8 @@ class ImportMapCategoriesPage extends StatelessWidget {
                           b.originalTitle.toLowerCase(),
                         );
                       }),
-                  onTap: onCategoryPressed,
-                  onReset: onCategoryResetPressed,
+                  onTap: viewModel<OnCategoryButtonPressed>(),
+                  onReset: viewModel<OnCategoryResetPressed>(),
                 );
               },
             );

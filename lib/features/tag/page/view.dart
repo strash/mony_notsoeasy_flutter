@@ -17,12 +17,6 @@ class TagView extends StatelessWidget {
     final tag = viewModel.tag;
     final balance = viewModel.balance;
 
-    final onTagMenuSelected = viewModel<OnTagWithContextMenuSelected>();
-    final onTransactionPressed =
-        viewModel<OnTransactionWithContextMenuPressed>();
-    final onTransactionMenuSelected =
-        viewModel<OnTransactionWithContextMenuSelected>();
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomScrollView(
@@ -40,7 +34,7 @@ class TagView extends StatelessWidget {
                   icon: Assets.icons.pencilBold,
                   onTap: () {
                     final value = (menu: ETagContextMenuItem.edit, tag: tag);
-                    onTagMenuSelected(context, value);
+                    viewModel<OnTagWithContextMenuSelected>()(context, value);
                   },
                 ),
                 const SizedBox(width: 4.0),
@@ -50,7 +44,7 @@ class TagView extends StatelessWidget {
                   icon: Assets.icons.trashFill,
                   onTap: () {
                     final value = (menu: ETagContextMenuItem.delete, tag: tag);
-                    onTagMenuSelected(context, value);
+                    viewModel<OnTagWithContextMenuSelected>()(context, value);
                   },
                 ),
               ],
@@ -91,8 +85,10 @@ class TagView extends StatelessWidget {
             isTagsVisible: viewModel.isTagsVisible,
             showFullDate: false,
             emptyStateColor: theme.colorScheme.onSurfaceVariant,
-            onTransactionPressed: onTransactionPressed,
-            onTransactionMenuSelected: onTransactionMenuSelected,
+            onTransactionPressed:
+                viewModel<OnTransactionWithContextMenuPressed>(),
+            onTransactionMenuSelected:
+                viewModel<OnTransactionWithContextMenuSelected>(),
           ),
         ],
       ),

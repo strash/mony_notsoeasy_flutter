@@ -19,13 +19,6 @@ class CategoryView extends StatelessWidget {
     final category = viewModel.category;
     final balance = viewModel.balance;
 
-    final onCategoryMenuSelected =
-        viewModel<OnCategoryWithContextMenuSelected>();
-    final onTransactionPressed =
-        viewModel<OnTransactionWithContextMenuPressed>();
-    final onTransactionMenuSelected =
-        viewModel<OnTransactionWithContextMenuSelected>();
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomScrollView(
@@ -46,7 +39,10 @@ class CategoryView extends StatelessWidget {
                       menu: ECategoryContextMenuItem.edit,
                       category: category,
                     );
-                    onCategoryMenuSelected(context, value);
+                    viewModel<OnCategoryWithContextMenuSelected>()(
+                      context,
+                      value,
+                    );
                   },
                 ),
                 const SizedBox(width: 4.0),
@@ -59,7 +55,10 @@ class CategoryView extends StatelessWidget {
                       menu: ECategoryContextMenuItem.delete,
                       category: category,
                     );
-                    onCategoryMenuSelected(context, value);
+                    viewModel<OnCategoryWithContextMenuSelected>()(
+                      context,
+                      value,
+                    );
                   },
                 ),
               ],
@@ -105,8 +104,10 @@ class CategoryView extends StatelessWidget {
             emptyStateColor:
                 ex?.from(category.colorName).color ??
                 theme.colorScheme.onSurface,
-            onTransactionPressed: onTransactionPressed,
-            onTransactionMenuSelected: onTransactionMenuSelected,
+            onTransactionPressed:
+                viewModel<OnTransactionWithContextMenuPressed>(),
+            onTransactionMenuSelected:
+                viewModel<OnTransactionWithContextMenuSelected>(),
           ),
         ],
       ),

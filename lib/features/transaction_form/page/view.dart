@@ -15,7 +15,6 @@ class TransactionFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final viewModel = context.viewModel<TransactionFormViewModel>();
-    final onInfoPressed = viewModel<OnInfoPressed>();
 
     return Column(
       children: [
@@ -41,7 +40,7 @@ class TransactionFormView extends StatelessWidget {
                 showDragHandle: true,
                 leading: AppBarButtonComponent(
                   icon: Assets.icons.infoCircle,
-                  onTap: () => onInfoPressed(context),
+                  onTap: () => viewModel<OnInfoPressed>()(context),
                 ),
                 // -> type
               ),

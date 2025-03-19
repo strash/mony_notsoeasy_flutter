@@ -14,12 +14,11 @@ class NavBarTabComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<NavBarViewModel>();
-    final onTabChanged = viewModel<OnTabChangeRequested>();
     final tab = ENavBarTabItem.from(index);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => onTabChanged(context, tab),
+      onTap: () => viewModel<OnTabChangeRequested>()(context, tab),
       child: TweenAnimationBuilder<Color?>(
         duration: Durations.short3,
         curve: Curves.easeInOutQuad,

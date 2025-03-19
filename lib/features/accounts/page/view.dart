@@ -21,10 +21,6 @@ class AccountsView extends StatelessWidget {
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<AccountsViewModel>();
-    final onAddAccountPressed = viewModel<OnAddAccountPressed>();
-    final onAccountPressed = viewModel<OnAccountPressed>();
-    final onAccountMenuSelected = viewModel<OnAccountWithContextMenuSelected>();
-
     final isEmpty = viewModel.accounts.isEmpty;
 
     return Scaffold(
@@ -40,7 +36,7 @@ class AccountsView extends StatelessWidget {
             title: Text(context.t.features.accounts.title),
             trailing: AppBarButtonComponent(
               icon: Assets.icons.plus,
-              onTap: () => onAddAccountPressed(context),
+              onTap: () => viewModel<OnAddAccountPressed>()(context),
             ),
           ),
 
@@ -80,8 +76,9 @@ class AccountsView extends StatelessWidget {
                     balance: balance,
                     isCentsVisible: viewModel.isCentsVisible,
                     isColorsVisible: viewModel.isColorsVisible,
-                    onTap: onAccountPressed,
-                    onMenuSelected: onAccountMenuSelected,
+                    onTap: viewModel<OnAccountPressed>(),
+                    onMenuSelected:
+                        viewModel<OnAccountWithContextMenuSelected>(),
                   );
                 },
               ),

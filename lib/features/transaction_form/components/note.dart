@@ -13,13 +13,11 @@ class TransactionFormNoteComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     const height = 36.0;
-
     final viewModel = context.viewModel<TransactionFormViewModel>();
-    final onNotePressed = viewModel<OnNotePressed>();
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => onNotePressed(context),
+      onTap: () => viewModel<OnNotePressed>()(context),
       child: SizedBox(
         height: height,
         child: Row(

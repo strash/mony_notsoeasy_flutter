@@ -17,7 +17,6 @@ class ImportMapAccountsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
-    final onAccountPressed = viewModel<OnAccountButtonPressed>();
     final accountModel = viewModel.currentStep;
     final tr = context.t.features.import.map_accounts;
     if (accountModel is! ImportModelAccount) return const SizedBox();
@@ -72,7 +71,9 @@ class ImportMapAccountsComponent extends StatelessWidget {
 
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () => onAccountPressed(context, accountEntry),
+                onTap: () {
+                  viewModel<OnAccountButtonPressed>()(context, accountEntry);
+                },
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: theme.colorScheme.surfaceContainer.withValues(

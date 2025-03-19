@@ -17,11 +17,10 @@ class StatsChartComponent extends StatelessWidget {
 
     final viewModel = context.viewModel<StatsViewModel>();
     final transactions = viewModel.transactions;
+    if (transactions.isEmpty) return const SizedBox();
 
     // NOTE: we don't want "1,23 тыс." instead "1.23K" so don't pass a locale
     final formatter = NumberFormat.compact();
-
-    if (transactions.isEmpty) return const SizedBox();
 
     return AspectRatio(
       aspectRatio: 1.5,

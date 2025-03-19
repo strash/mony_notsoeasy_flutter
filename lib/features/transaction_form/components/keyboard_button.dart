@@ -62,17 +62,12 @@ class _TransactionFormSymbolButtonComponentState
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
+      onTap: _isEnabled ? () => widget.onTap(context, widget.button) : null,
       onTapDown:
           _isEnabled
               ? (_) {
                 HapticFeedback.mediumImpact();
                 _controller.forward();
-              }
-              : null,
-      onTap:
-          _isEnabled
-              ? () {
-                widget.onTap(context, widget.button);
               }
               : null,
       child: AnimatedBuilder(

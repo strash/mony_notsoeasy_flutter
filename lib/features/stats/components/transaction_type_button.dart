@@ -59,12 +59,10 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
       viewModel.isCentsVisible,
     );
 
-    final onTypeSelected = viewModel<OnTransactionTypeSelected>();
-
     return Expanded(
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => onTypeSelected(context, type),
+        onTap: () => viewModel<OnTransactionTypeSelected>()(context, type),
         child: DecoratedBox(
           decoration: ShapeDecoration(
             color: theme.colorScheme.surfaceContainer,

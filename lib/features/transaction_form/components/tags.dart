@@ -19,12 +19,10 @@ class TransactionFormTagsComponent extends StatelessWidget {
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
     final controller = viewModel.tagScrollController;
-    final onAddTagPressed = viewModel<OnAddTagPressed>();
-    final onRemoveTagPressed = viewModel<OnRemoveTagPressed>();
 
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () => onAddTagPressed(context),
+      onTap: () => viewModel<OnAddTagPressed>()(context),
       child: SizedBox(
         height: height,
         child: Row(
@@ -32,7 +30,7 @@ class TransactionFormTagsComponent extends StatelessWidget {
           children: [
             // -> button add
             GestureDetector(
-              onTap: () => onAddTagPressed(context),
+              onTap: () => viewModel<OnAddTagPressed>()(context),
               child: SizedBox(
                 width: 46.0,
                 child: Center(
@@ -109,9 +107,12 @@ class TransactionFormTagsComponent extends StatelessWidget {
                                     // -> button remove
                                     GestureDetector(
                                       behavior: HitTestBehavior.opaque,
-                                      onTap:
-                                          () =>
-                                              onRemoveTagPressed(context, item),
+                                      onTap: () {
+                                        viewModel<OnRemoveTagPressed>()(
+                                          context,
+                                          item,
+                                        );
+                                      },
                                       child: SvgPicture.asset(
                                         Assets.icons.xmarkSemibold,
                                         width: 16.0,

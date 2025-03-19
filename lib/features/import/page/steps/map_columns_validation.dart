@@ -14,9 +14,11 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     final viewModel = context.viewModel<ImportViewModel>();
     final validation = viewModel.currentStep;
     if (validation is! ImportModelColumnValidation) return const SizedBox();
+
     final tr = context.t.features.import.map_columns_validation;
     String description = tr.description_validation;
     if (event is ImportEventErrorMappingColumns) {

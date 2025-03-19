@@ -22,12 +22,6 @@ class TransactionView extends StatelessWidget {
     final viewModel = context.viewModel<TransactionViewModel>();
     final transaction = viewModel.transaction;
 
-    final onEditPressed = viewModel<OnTransactionWithContextMenuSelected>();
-    final onDeletePressed = viewModel<OnTransactionWithContextMenuSelected>();
-    final onAccountPressed = viewModel<OnAccountPressed>();
-    final onCategoryPressed = viewModel<OnCategoryPressed>();
-    final onTagPressed = viewModel<OnTagPressed>();
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomScrollView(
@@ -47,7 +41,10 @@ class TransactionView extends StatelessWidget {
                       menu: ETransactionContextMenuItem.edit,
                       transaction: transaction,
                     );
-                    onEditPressed(context, value);
+                    viewModel<OnTransactionWithContextMenuSelected>()(
+                      context,
+                      value,
+                    );
                   },
                 ),
                 const SizedBox(width: 4.0),
@@ -60,7 +57,10 @@ class TransactionView extends StatelessWidget {
                       menu: ETransactionContextMenuItem.delete,
                       transaction: transaction,
                     );
-                    onDeletePressed(context, value);
+                    viewModel<OnTransactionWithContextMenuSelected>()(
+                      context,
+                      value,
+                    );
                   },
                 ),
               ],
@@ -95,7 +95,10 @@ class TransactionView extends StatelessWidget {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          onAccountPressed(context, transaction.account);
+                          viewModel<OnAccountPressed>()(
+                            context,
+                            transaction.account,
+                          );
                         },
                         child: AccountComponent(
                           account: transaction.account,
@@ -109,7 +112,10 @@ class TransactionView extends StatelessWidget {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          onCategoryPressed(context, transaction.category);
+                          viewModel<OnCategoryPressed>()(
+                            context,
+                            transaction.category,
+                          );
                         },
                         child: CategoryComponent(
                           category: transaction.category,
@@ -120,7 +126,7 @@ class TransactionView extends StatelessWidget {
                       // -> tags
                       TransactionTagsComponent(
                         tags: transaction.tags,
-                        onTap: onTagPressed,
+                        onTap: viewModel<OnTagPressed>(),
                       ),
 
                       // -> note

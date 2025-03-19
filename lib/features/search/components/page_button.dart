@@ -16,13 +16,10 @@ class SearchPageButtonComponent extends StatelessWidget {
     final theme = Theme.of(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
-    final onPagePressed = viewModel<OnPagePressed>();
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () {
-        onPagePressed(context, page);
-      },
+      onTap: () => viewModel<OnPagePressed>()(context, page),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
         child: Row(

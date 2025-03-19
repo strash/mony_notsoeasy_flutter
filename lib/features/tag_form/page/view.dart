@@ -17,7 +17,6 @@ class TagFormView extends StatelessWidget {
     final theme = Theme.of(context);
 
     final viewModel = context.viewModel<TagFormViewModel>();
-    final onSubmitPressed = viewModel<OnSubmitPressed>();
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -66,7 +65,7 @@ class TagFormView extends StatelessWidget {
                 FilledButton(
                   onPressed:
                       viewModel.isSubmitEnabled
-                          ? () => onSubmitPressed(context)
+                          ? () => viewModel<OnSubmitPressed>()(context)
                           : null,
                   child: const Text("Сохранить"),
                 ),

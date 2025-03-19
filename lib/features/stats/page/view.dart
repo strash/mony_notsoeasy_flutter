@@ -16,11 +16,6 @@ class StatsView extends StatelessWidget {
     final transactions = viewModel.transactions;
     const keyPrefix = "stats_feed";
 
-    final onTransactionPressed =
-        viewModel<OnTransactionWithContextMenuPressed>();
-    final onTransactionMenuSelected =
-        viewModel<OnTransactionWithContextMenuSelected>();
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: CustomScrollView(
@@ -106,8 +101,10 @@ class StatsView extends StatelessWidget {
               isTagsVisible: viewModel.isTagsVisible,
               showFullDate: false,
               emptyStateColor: theme.colorScheme.onSurfaceVariant,
-              onTransactionPressed: onTransactionPressed,
-              onTransactionMenuSelected: onTransactionMenuSelected,
+              onTransactionPressed:
+                  viewModel<OnTransactionWithContextMenuPressed>(),
+              onTransactionMenuSelected:
+                  viewModel<OnTransactionWithContextMenuSelected>(),
             ),
           ),
         ],

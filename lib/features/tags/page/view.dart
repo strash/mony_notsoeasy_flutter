@@ -20,10 +20,6 @@ class TagsView extends StatelessWidget {
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<TagsViewModel>();
-    final onAddTagPressed = viewModel<OnAddTagPressed>();
-    final onTagPressed = viewModel<OnTagPressed>();
-    final onMenuSelected = viewModel<OnTagWithContextMenuSelected>();
-
     final isEmpty = viewModel.tags.isEmpty;
 
     return Scaffold(
@@ -39,7 +35,7 @@ class TagsView extends StatelessWidget {
             title: const Text("Теги"),
             trailing: AppBarButtonComponent(
               icon: Assets.icons.plus,
-              onTap: () => onAddTagPressed(context),
+              onTap: () => viewModel<OnAddTagPressed>()(context),
             ),
           ),
 
@@ -74,8 +70,8 @@ class TagsView extends StatelessWidget {
                   return TagWithContextMenuComponent(
                     key: ValueKey<String>("${_keyPrefix}_${item.id}"),
                     tag: item,
-                    onTap: onTagPressed,
-                    onMenuSelected: onMenuSelected,
+                    onTap: viewModel<OnTagPressed>(),
+                    onMenuSelected: viewModel<OnTagWithContextMenuSelected>(),
                   );
                 },
               ),

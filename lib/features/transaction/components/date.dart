@@ -18,11 +18,10 @@ class TransactionDateComponent extends StatelessWidget {
           : "EEE, dd MMMM, HH:mm",
       locale.languageCode,
     );
-    final formattedDate = dateFormatter.format(date);
 
     return Center(
       child: Text(
-        formattedDate,
+        dateFormatter.format(date),
         textAlign: TextAlign.center,
         style: GoogleFonts.golosText(
           fontSize: 16.0,

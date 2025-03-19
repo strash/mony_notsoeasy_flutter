@@ -17,7 +17,6 @@ class AccountBalanceExchangeMenuComponent extends StatelessWidget {
 
     final viewModel = context.viewModel<AccountViewModel>();
     final isActive = viewModel.accountsCount > 1;
-    final onMenuSelected = viewModel<OnAccountWithContextMenuSelected>();
 
     if (!isActive) return const SizedBox();
 
@@ -36,7 +35,10 @@ class AccountBalanceExchangeMenuComponent extends StatelessWidget {
                 child: FilledButton(
                   onPressed: () {
                     final value = (menu: menu, account: viewModel.account);
-                    onMenuSelected(context, value);
+                    viewModel<OnAccountWithContextMenuSelected>()(
+                      context,
+                      value,
+                    );
                   },
                   child: Row(
                     spacing: 8.0,

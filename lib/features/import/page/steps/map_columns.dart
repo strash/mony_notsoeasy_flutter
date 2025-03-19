@@ -16,14 +16,12 @@ class ImportMapColumnsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     final viewModel = context.viewModel<ImportViewModel>();
     final csvModel = viewModel.steps.whereType<ImportModelCsv>().firstOrNull;
     if (csvModel == null) throw ArgumentError.value(csvModel);
 
-    final onRotateEntryPressed = viewModel<OnRotateEntryPressed>();
-    final onInfoPressed = viewModel<OnColumnInfoPressed>();
     final numberOfEntries = csvModel.numberOfEntries;
-
     final currentMappedColumn = viewModel.currentStep as ImportModelColumn;
     final count = numberOfEntries > 0 ? viewModel.currentEntryIndex + 1 : 0;
 
@@ -40,7 +38,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
                   // -> icon info
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: () => onInfoPressed(context),
+                    onTap: () => viewModel<OnColumnInfoPressed>()(context),
                     child: SvgPicture.asset(
                       Assets.icons.infoCircle,
                       width: 25.0,
@@ -108,7 +106,7 @@ class ImportMapColumnsComponent extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: () => onRotateEntryPressed(context),
+            onTap: () => viewModel<OnRotateEntryPressed>()(context),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Row(

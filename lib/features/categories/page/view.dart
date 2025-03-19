@@ -20,10 +20,6 @@ class CategoriesView extends StatelessWidget {
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<CategoriesViewModel>();
-    final onAddButtonPressed = viewModel<OnMenuAddPressed>();
-    final onCategoryPressed = viewModel<OnCategoryPressed>();
-    final onMenuSelected = viewModel<OnCategoryWithContextMenuSelected>();
-
     final isEmpty = viewModel.categories.isEmpty;
 
     return Scaffold(
@@ -37,7 +33,9 @@ class CategoriesView extends StatelessWidget {
           // -> app bar
           AppBarComponent(
             title: Text(context.t.features.categories.title),
-            trailing: CategoriesAddButtonComponent(onTap: onAddButtonPressed),
+            trailing: CategoriesAddButtonComponent(
+              onTap: viewModel<OnMenuAddPressed>(),
+            ),
           ),
 
           // -> empty state
@@ -72,8 +70,9 @@ class CategoriesView extends StatelessWidget {
                     key: ValueKey<String>("${_keyPrefix}_${item.id}"),
                     category: item,
                     isColorsVisible: viewModel.isColorsVisible,
-                    onTap: onCategoryPressed,
-                    onMenuSelected: onMenuSelected,
+                    onTap: viewModel<OnCategoryPressed>(),
+                    onMenuSelected:
+                        viewModel<OnCategoryWithContextMenuSelected>(),
                   );
                 },
               ),

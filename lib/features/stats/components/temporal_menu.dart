@@ -12,9 +12,7 @@ class StatsTemporalViewMenuComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currContext = context;
-
     final viewModel = context.viewModel<StatsViewModel>();
-    final onTemporalButtonPressed = viewModel<OnTemporalButtonPressed>();
 
     // if it's needs to be disabled
     const isActive = true;
@@ -67,7 +65,7 @@ class StatsTemporalViewMenuComponent extends StatelessWidget {
               ),
               isActive: viewModel.activeTemporalView == item,
               onTap: () {
-                onTemporalButtonPressed(currContext, item);
+                viewModel<OnTemporalButtonPressed>()(currContext, item);
                 dismiss();
               },
             );

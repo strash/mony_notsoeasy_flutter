@@ -14,9 +14,7 @@ class SearchTabsComponent extends StatelessWidget {
     final viewSize = MediaQuery.sizeOf(context);
     final stop = 24.0.remap(.0, viewSize.width, .0, 1.0);
     const padding = EdgeInsets.symmetric(horizontal: 10.0);
-
     final viewModel = context.viewModel<SearchViewModel>();
-    final onTabPressed = viewModel<OnTabButtonPressed>();
 
     return SizedBox(
       height: height,
@@ -43,7 +41,7 @@ class SearchTabsComponent extends StatelessWidget {
                 tab: item,
                 isActive: isActive,
                 padding: padding,
-                onTap: onTabPressed,
+                onTap: viewModel<OnTabButtonPressed>(),
               );
             },
           ),

@@ -27,6 +27,7 @@ class ImportCategoryItemComponent extends StatelessWidget {
     final Color text = theme.colorScheme.onSurface;
     final String? icon;
     final String title;
+
     switch (category) {
       case ImportModelCategoryVariantModel(model: final model):
         final color =

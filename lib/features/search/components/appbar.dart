@@ -32,11 +32,9 @@ class SearchAppBarComponent extends StatelessWidget {
 
     final viewModel = context.viewModel<SearchViewModel>();
     final controller = viewModel.input;
-    final onClearPressed = viewModel<OnClearButtonPressed>();
 
     final smoothInputBorder = SmoothInputBorder(const Color(0x00FFFFFF));
     const fillColor = Color(0x00FFFFFF);
-
     const sigma = kTranslucentPanelBlurSigma;
 
     return ClipRect(
@@ -130,8 +128,11 @@ class SearchAppBarComponent extends StatelessWidget {
                                       controller.text.trim().isNotEmpty
                                           ? GestureDetector(
                                             behavior: HitTestBehavior.opaque,
-                                            onTap:
-                                                () => onClearPressed(context),
+                                            onTap: () {
+                                              viewModel<OnClearButtonPressed>()(
+                                                context,
+                                              );
+                                            },
                                             child: SizedBox.square(
                                               dimension: 24.0,
                                               child: Center(

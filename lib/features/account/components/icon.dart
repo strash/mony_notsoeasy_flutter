@@ -22,6 +22,10 @@ class AccountIconComponent extends StatelessWidget {
     final color =
         ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
+    final colors = [
+      theme.colorScheme.surfaceContainerHighest,
+      theme.colorScheme.surfaceContainer,
+    ];
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -35,13 +39,7 @@ class AccountIconComponent extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors:
-                      showColors
-                          ? [color2, color]
-                          : [
-                            theme.colorScheme.surfaceContainerHighest,
-                            theme.colorScheme.surfaceContainer,
-                          ],
+                  colors: showColors ? [color2, color] : colors,
                 ),
                 shape: SmoothRectangleBorder(
                   side:
