@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -26,11 +25,9 @@ class StatsDateRangeComponent extends StatelessWidget {
             height: 34.0,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                shape: SmoothRectangleBorder(
-                  side: BorderSide(color: theme.colorScheme.outlineVariant),
-                  borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 0.6),
-                  ),
+                shape: Smooth.border(
+                  14.0,
+                  BorderSide(color: theme.colorScheme.outlineVariant),
                 ),
               ),
               child: Padding(

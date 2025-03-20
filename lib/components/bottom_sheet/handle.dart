@@ -1,5 +1,5 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 
 class BottomSheetHandleComponent extends StatelessWidget {
   static const double height = 20.0;
@@ -28,11 +28,7 @@ class BottomSheetHandleComponent extends StatelessWidget {
                 color: theme.colorScheme.onSurfaceVariant.withValues(
                   alpha: 0.5,
                 ),
-                shape: const SmoothRectangleBorder(
-                  borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 2.0, cornerSmoothing: 0.6),
-                  ),
-                ),
+                shape: Smooth.border(2.0),
               ),
             ),
           ),

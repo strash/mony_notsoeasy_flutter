@@ -1,9 +1,9 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart" show HapticFeedback;
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/app/use_case/use_case.dart";
 import "package:mony_app/common/extensions/double.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 import "package:mony_app/components/category/component.dart";
 import "package:mony_app/components/category_with_context_menu/use_case/on_context_menu_selected.dart"
     show TCategoryContextMenuValue;
@@ -128,11 +128,7 @@ class _CategoryWithContextMenuComponentState
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: theme.colorScheme.surface,
-                  shape: const SmoothRectangleBorder(
-                    borderRadius: SmoothBorderRadius.all(
-                      SmoothRadius(cornerRadius: 23.0, cornerSmoothing: .6),
-                    ),
-                  ),
+                  shape: Smooth.border(23.0),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),

@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -106,14 +105,7 @@ class TimeComponent extends StatelessWidget {
                               decoration: ShapeDecoration(
                                 color: theme.colorScheme.tertiaryContainer
                                     .withValues(alpha: .5),
-                                shape: const SmoothRectangleBorder(
-                                  borderRadius: SmoothBorderRadius.all(
-                                    SmoothRadius(
-                                      cornerRadius: 10.0,
-                                      cornerSmoothing: 0.6,
-                                    ),
-                                  ),
-                                ),
+                                shape: Smooth.border(10.0),
                               ),
                             ),
                           ),
@@ -195,11 +187,7 @@ class _Proxy extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: theme.colorScheme.surfaceContainer,
-          shape: const SmoothRectangleBorder(
-            borderRadius: SmoothBorderRadius.all(
-              SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 0.6),
-            ),
-          ),
+          shape: Smooth.border(14.0),
         ),
         child: Center(
           child: Text(

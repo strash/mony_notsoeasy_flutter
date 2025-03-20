@@ -1,6 +1,6 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 
 class TransactionFormTagComponent extends StatelessWidget {
   final WidgetBuilder builder;
@@ -16,11 +16,7 @@ class TransactionFormTagComponent extends StatelessWidget {
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: theme.colorScheme.surfaceContainerHigh,
-          shape: const SmoothRectangleBorder(
-            borderRadius: SmoothBorderRadius.all(
-              SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 0.6),
-            ),
-          ),
+          shape: Smooth.border(12.0),
         ),
         child: DefaultTextStyle(
           style: GoogleFonts.golosText(

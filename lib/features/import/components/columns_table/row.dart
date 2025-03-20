@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -129,14 +128,7 @@ class EntryListRowComponent extends StatelessWidget {
                           return DecoratedBox(
                             decoration: ShapeDecoration(
                               color: color,
-                              shape: const SmoothRectangleBorder(
-                                borderRadius: SmoothBorderRadius.all(
-                                  SmoothRadius(
-                                    cornerRadius: 10.0,
-                                    cornerSmoothing: 0.6,
-                                  ),
-                                ),
-                              ),
+                              shape: Smooth.border(10.0),
                             ),
                             child: child,
                           );

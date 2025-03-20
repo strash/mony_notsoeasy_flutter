@@ -1,7 +1,6 @@
 import "dart:math";
 
 import "package:emoji_picker_flutter/emoji_picker_flutter.dart";
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -122,12 +121,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
             return DecoratedBox(
               decoration: ShapeDecoration(
                 color: theme.colorScheme.surfaceContainer,
-                shape: SmoothRectangleBorder(
-                  side: BorderSide(color: color!),
-                  borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 16.0, cornerSmoothing: 0.6),
-                  ),
-                ),
+                shape: Smooth.border(16.0, BorderSide(color: color!)),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(6.0),

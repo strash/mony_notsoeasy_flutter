@@ -1,6 +1,6 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 import "package:mony_app/domain/models/tag.dart";
 
 class TagComponent extends StatelessWidget {
@@ -15,11 +15,7 @@ class TagComponent extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: theme.colorScheme.surfaceContainerHigh,
-        shape: const SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 12.0, cornerSmoothing: 0.6),
-          ),
-        ),
+        shape: Smooth.border(12.0),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),

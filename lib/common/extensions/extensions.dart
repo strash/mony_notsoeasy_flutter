@@ -2,6 +2,7 @@ export "./build_context.dart";
 export "./date_range.dart";
 export "./datetime.dart";
 export "./double.dart";
+export "./figma_squircle.dart";
 export "./int.dart";
 export "./list.dart";
 export "./offset.dart";

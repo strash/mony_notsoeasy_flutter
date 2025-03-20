@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -48,11 +47,7 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
                   true => theme.colorScheme.secondary,
                   false => isNow ? theme.colorScheme.tertiaryContainer : null,
                 },
-                shape: const SmoothRectangleBorder(
-                  borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 18.0, cornerSmoothing: 0.6),
-                  ),
-                ),
+                shape: Smooth.border(18.0),
               ),
               child: Center(
                 child: Text(

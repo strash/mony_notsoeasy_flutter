@@ -1,7 +1,7 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/gen/assets.gen.dart";
 
@@ -83,12 +83,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
               return DecoratedBox(
                 decoration: ShapeDecoration(
                   color: theme.colorScheme.surfaceContainer,
-                  shape: SmoothRectangleBorder(
-                    side: BorderSide(color: color!),
-                    borderRadius: const SmoothBorderRadius.all(
-                      SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
-                    ),
-                  ),
+                  shape: Smooth.border(15.0, BorderSide(color: color!)),
                 ),
                 child: Padding(
                   padding:

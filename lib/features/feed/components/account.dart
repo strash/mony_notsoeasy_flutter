@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -54,14 +53,7 @@ class FeedAccountComponent extends StatelessWidget {
                           theme.colorScheme.surfaceContainerHigh,
                           .5,
                         ),
-                        shape: const SmoothRectangleBorder(
-                          borderRadius: SmoothBorderRadius.all(
-                            SmoothRadius(
-                              cornerRadius: 20.0,
-                              cornerSmoothing: .6,
-                            ),
-                          ),
-                        ),
+                        shape: Smooth.border(20.0),
                       ),
                       child: SizedBox(
                         width: constrains.maxWidth - 30.0,
@@ -74,11 +66,7 @@ class FeedAccountComponent extends StatelessWidget {
                 DecoratedBox(
                   decoration: ShapeDecoration(
                     color: theme.colorScheme.surfaceContainerHigh,
-                    shape: const SmoothRectangleBorder(
-                      borderRadius: SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 30.0, cornerSmoothing: .6),
-                      ),
-                    ),
+                    shape: Smooth.border(30.0),
                   ),
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(

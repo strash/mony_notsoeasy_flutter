@@ -48,14 +48,12 @@ class ColorPickerComponent extends StatelessWidget {
                 return DecoratedBox(
                   decoration: ShapeDecoration(
                     color: color,
-                    shape: SmoothRectangleBorder(
-                      side: BorderSide(
+                    shape: Smooth.border(
+                      16.0,
+                      BorderSide(
                         color: theme.colorScheme.onSurface.withValues(
                           alpha: 0.1,
                         ),
-                      ),
-                      borderRadius: const SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 16.0, cornerSmoothing: 0.6),
                       ),
                     ),
                   ),

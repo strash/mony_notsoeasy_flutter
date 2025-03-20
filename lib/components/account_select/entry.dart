@@ -35,16 +35,11 @@ class _AccountSelectEntryComponent extends StatelessWidget {
                         isColorsVisible
                             ? color
                             : theme.colorScheme.surfaceContainer,
-                    shape: SmoothRectangleBorder(
-                      side:
-                          isColorsVisible
-                              ? BorderSide.none
-                              : BorderSide(
-                                color: theme.colorScheme.outlineVariant,
-                              ),
-                      borderRadius: const SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 0.6),
-                      ),
+                    shape: Smooth.border(
+                      14.0,
+                      isColorsVisible
+                          ? BorderSide.none
+                          : BorderSide(color: theme.colorScheme.outlineVariant),
                     ),
                   ),
                   child: Center(

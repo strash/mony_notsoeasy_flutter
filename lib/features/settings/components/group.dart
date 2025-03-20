@@ -1,6 +1,6 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 import "package:mony_app/components/separated/component.dart";
 import "package:mony_app/features/settings/components/entry.dart";
 
@@ -45,11 +45,7 @@ class SettingsGroupComponent extends StatelessWidget {
           DecoratedBox(
             decoration: ShapeDecoration(
               color: background ?? theme.colorScheme.surfaceContainer,
-              shape: const SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
-                ),
-              ),
+              shape: Smooth.border(15.0),
             ),
             child: SeparatedComponent.list(
               mainAxisSize: MainAxisSize.min,

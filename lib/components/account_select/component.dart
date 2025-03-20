@@ -1,6 +1,6 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:mony_app/app/theme/theme.dart" show ColorExtension;
+import "package:mony_app/common/extensions/figma_squircle.dart";
 import "package:mony_app/components/currency_tag/component.dart";
 import "package:mony_app/components/select/select.dart";
 import "package:mony_app/components/separated/component.dart";

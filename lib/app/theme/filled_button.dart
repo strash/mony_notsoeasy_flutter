@@ -6,11 +6,7 @@ final _filledButtonThemeData = FilledButtonThemeData(
     enableFeedback: true,
     padding: const EdgeInsets.symmetric(horizontal: 20.0),
     splashFactory: NoSplash.splashFactory,
-    shape: const SmoothRectangleBorder(
-      borderRadius: SmoothBorderRadius.all(
-        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
-      ),
-    ),
+    shape: Smooth.border(15.0),
     minimumSize: const Size.square(48.0),
     textStyle: GoogleFonts.golosText(
       fontSize: 16.0,

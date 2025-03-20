@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -53,14 +52,11 @@ class TransactionComponent extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: showColors ? [color, categoryColor] : colors,
               ),
-              shape: SmoothRectangleBorder(
-                side:
-                    showColors
-                        ? BorderSide.none
-                        : BorderSide(color: theme.colorScheme.outlineVariant),
-                borderRadius: const SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
-                ),
+              shape: Smooth.border(
+                15.0,
+                showColors
+                    ? BorderSide.none
+                    : BorderSide(color: theme.colorScheme.outlineVariant),
               ),
             ),
             child: Center(

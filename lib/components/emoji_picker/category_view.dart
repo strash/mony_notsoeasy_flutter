@@ -89,14 +89,7 @@ final class _CategoryViewState extends State<_CategoryView> {
                     child: DecoratedBox(
                       decoration: ShapeDecoration(
                         color: theme.colorScheme.surfaceContainer,
-                        shape: const SmoothRectangleBorder(
-                          borderRadius: SmoothBorderRadius.all(
-                            SmoothRadius(
-                              cornerRadius: 16.0,
-                              cornerSmoothing: .6,
-                            ),
-                          ),
-                        ),
+                        shape: Smooth.border(16.0),
                       ),
                     ),
                   ),

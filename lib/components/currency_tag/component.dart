@@ -1,6 +1,6 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 
 class CurrencyTagComponent extends StatelessWidget {
   final String code;
@@ -21,11 +21,7 @@ class CurrencyTagComponent extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: background ?? theme.colorScheme.tertiaryContainer,
-        shape: const SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 5.0, cornerSmoothing: 0.6),
-          ),
-        ),
+        shape: Smooth.border(5.0),
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(4.0, 2.0, 4.0, 3.0),

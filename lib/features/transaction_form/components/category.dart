@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/common.dart";
@@ -29,14 +28,11 @@ class TransactionFormCategoryComponent extends StatelessWidget {
             decoration: ShapeDecoration(
               color:
                   isColorsVisible ? color : theme.colorScheme.surfaceContainer,
-              shape: SmoothRectangleBorder(
-                side:
-                    isColorsVisible
-                        ? BorderSide.none
-                        : BorderSide(color: theme.colorScheme.outlineVariant),
-                borderRadius: const SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 0.6),
-                ),
+              shape: Smooth.border(
+                10.0,
+                isColorsVisible
+                    ? BorderSide.none
+                    : BorderSide(color: theme.colorScheme.outlineVariant),
               ),
             ),
             child: Center(

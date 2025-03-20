@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/features/import/components/components.dart";
@@ -25,11 +24,7 @@ class EntryListComponent extends StatelessWidget {
     return DecoratedBox(
       decoration: ShapeDecoration(
         color: theme.colorScheme.surfaceContainer,
-        shape: const SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius.all(
-            SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 0.6),
-          ),
-        ),
+        shape: Smooth.border(20.0),
       ),
       child: Padding(
         padding: const EdgeInsets.only(top: 6.0, bottom: 10.0),

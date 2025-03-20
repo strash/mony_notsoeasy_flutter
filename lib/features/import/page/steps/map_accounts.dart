@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/common/common.dart";
@@ -79,11 +78,9 @@ class ImportMapAccountsComponent extends StatelessWidget {
                     color: theme.colorScheme.surfaceContainer.withValues(
                       alpha: 0.5,
                     ),
-                    shape: SmoothRectangleBorder(
-                      side: BorderSide(color: theme.colorScheme.outlineVariant),
-                      borderRadius: const SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
-                      ),
+                    shape: Smooth.border(
+                      15.0,
+                      BorderSide(color: theme.colorScheme.outlineVariant),
                     ),
                   ),
                   child:

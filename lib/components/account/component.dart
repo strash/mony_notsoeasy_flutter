@@ -1,9 +1,9 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
 import "package:mony_app/common/extensions/double.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/models.dart";
 import "package:mony_app/i18n/strings.g.dart";
@@ -53,14 +53,11 @@ class AccountComponent extends StatelessWidget {
                 end: Alignment.bottomCenter,
                 colors: showColors ? [color2, color] : colors,
               ),
-              shape: SmoothRectangleBorder(
-                side:
-                    showColors
-                        ? BorderSide.none
-                        : BorderSide(color: theme.colorScheme.outlineVariant),
-                borderRadius: const SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 23.0, cornerSmoothing: 0.6),
-                ),
+              shape: Smooth.border(
+                23.0,
+                showColors
+                    ? BorderSide.none
+                    : BorderSide(color: theme.colorScheme.outlineVariant),
               ),
             ),
             child: Center(

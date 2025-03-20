@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_numeric_text/flutter_numeric_text.dart";
 import "package:flutter_svg/svg.dart";
@@ -57,15 +56,13 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
         child: DecoratedBox(
           decoration: ShapeDecoration(
             color: theme.colorScheme.surfaceContainer,
-            shape: SmoothRectangleBorder(
-              side: BorderSide(
+            shape: Smooth.border(
+              15.0,
+              BorderSide(
                 color:
                     isActive
                         ? theme.colorScheme.secondary
                         : const Color(0x00FFFFFF),
-              ),
-              borderRadius: const SmoothBorderRadius.all(
-                SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
               ),
             ),
           ),

@@ -1,6 +1,5 @@
 import "dart:math";
 
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:intl/intl.dart";
@@ -91,14 +90,7 @@ class StatsCategoriesLegendComponent extends StatelessWidget {
                     child: DecoratedBox(
                       decoration: ShapeDecoration(
                         color: color,
-                        shape: const SmoothRectangleBorder(
-                          borderRadius: SmoothBorderRadius.all(
-                            SmoothRadius(
-                              cornerRadius: 5.0,
-                              cornerSmoothing: 0.6,
-                            ),
-                          ),
-                        ),
+                        shape: Smooth.border(5.0),
                       ),
                     ),
                   ),

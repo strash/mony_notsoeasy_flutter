@@ -109,11 +109,7 @@ class _TabGroupComponentState<T> extends State<TabGroupComponent<T>> {
                     offset: const Offset(.0, 2.0),
                   ),
                 ],
-                shape: const SmoothRectangleBorder(
-                  borderRadius: SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 11.0, cornerSmoothing: 0.6),
-                  ),
-                ),
+                shape: Smooth.border(11.0),
               ),
             ),
             builder: (context, child) {

@@ -1,8 +1,8 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/theme/theme.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 import "package:mony_app/domain/models/category.dart";
 import "package:mony_app/domain/models/transaction_type_enum.dart";
 import "package:mony_app/gen/assets.gen.dart";
@@ -44,14 +44,11 @@ class CategoryIconComponent extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: showColors ? [color2, color] : colors,
                 ),
-                shape: SmoothRectangleBorder(
-                  side:
-                      showColors
-                          ? BorderSide.none
-                          : BorderSide(color: theme.colorScheme.outlineVariant),
-                  borderRadius: const SmoothBorderRadius.all(
-                    SmoothRadius(cornerRadius: 30.0, cornerSmoothing: 0.6),
-                  ),
+                shape: Smooth.border(
+                  30.0,
+                  showColors
+                      ? BorderSide.none
+                      : BorderSide(color: theme.colorScheme.outlineVariant),
                 ),
               ),
               child: Center(

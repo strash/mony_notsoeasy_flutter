@@ -1,7 +1,7 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 import "package:mony_app/features/search/page/view_model.dart";
 import "package:mony_app/i18n/strings.g.dart";
 
@@ -50,11 +50,7 @@ class SearchTabComponent extends StatelessWidget {
               color: theme.colorScheme.onSurfaceVariant.withValues(
                 alpha: value,
               ),
-              shape: const SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius.all(
-                  SmoothRadius(cornerRadius: 13.0, cornerSmoothing: 0.6),
-                ),
-              ),
+              shape: Smooth.border(13.0),
             ),
             child: Center(
               child: Padding(

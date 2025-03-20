@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_svg/svg.dart";
@@ -131,11 +130,7 @@ class _TransactionWithContextMenuComponentState
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: theme.colorScheme.surface,
-                  shape: const SmoothRectangleBorder(
-                    borderRadius: SmoothBorderRadius.all(
-                      SmoothRadius(cornerRadius: 23.0, cornerSmoothing: .6),
-                    ),
-                  ),
+                  shape: Smooth.border(23.0),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),

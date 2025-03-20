@@ -1,7 +1,7 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:mony_app/app/app.dart";
+import "package:mony_app/common/extensions/figma_squircle.dart";
 import "package:mony_app/domain/domain.dart";
 
 class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
@@ -38,12 +38,7 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color: color.withValues(alpha: .25),
-                    shape: SmoothRectangleBorder(
-                      side: BorderSide(color: color),
-                      borderRadius: const SmoothBorderRadius.all(
-                        SmoothRadius(cornerRadius: 10.0, cornerSmoothing: 0.6),
-                      ),
-                    ),
+                    shape: Smooth.border(10.0, BorderSide(color: color)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0, right: 15.0),
