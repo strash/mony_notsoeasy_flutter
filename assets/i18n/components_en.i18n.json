@@ -45,5 +45,25 @@
 	},
 	"empty_state": {
 		"description": "There's nothing here.\nStart recording your expenses!"
+	},
+	"tag_with_context_menu": {
+		"menu_item(context=ETagContextMenuItem)": {
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"delete_alert": {
+			"title": "Tag Deletion",
+			"description": "After deletion, the tag will be unlinked from all transactions it was associated with. This check can be disabled in the settings."
+		}
+	},
+	"transaction_with_context_menu": {
+		"menu_item(context=ETransactionContextMenuItem)": {
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"delete_alert": {
+			"title": "Transaction Deletion",
+			"description": "This check can be disabled in the settings."
+		}
 	}
 }

@@ -45,5 +45,25 @@
 	},
 	"empty_state": {
 		"description": "Тут ничего нет.\nНачни записывать траты!"
+	},
+	"tag_with_context_menu": {
+		"menu_item(context=ETagContextMenuItem)": {
+			"edit": "Редактировать",
+			"delete": "Удалить"
+		},
+		"delete_alert": {
+			"title": "Удаление тега",
+			"description": "После удаления тег будет отвязан от всех транзакций, к которым он был привязан. Эту проверку можно отключить в настройках."
+		}
+	},
+	"transaction_with_context_menu": {
+		"menu_item(context=ETransactionContextMenuItem)": {
+			"edit": "Редактировать",
+			"delete": "Удалить"
+		},
+		"delete_alert": {
+			"title": "Удаление транзакции",
+			"description": "Эту проверку можно отключить в настройках."
+		}
 	}
 }

@@ -18,6 +18,8 @@ imports:
   - 'package:mony_app/components/alert/component.dart'
   - 'package:mony_app/components/category_with_context_menu/component.dart'
   - 'package:mony_app/components/charts/enums.dart'
+  - 'package:mony_app/components/tag_with_context_menu/component.dart'
+  - 'package:mony_app/components/transaction_with_context_menu/component.dart'
 contexts:
   EAccountType:
     generate_enum: false
@@ -44,4 +46,8 @@ contexts:
   EAlertResult:
     generate_enum: false
   ECategoryContextMenuItem:
+    generate_enum: false
+  ETagContextMenuItem:
+    generate_enum: false
+  ETransactionContextMenuItem:
     generate_enum: false

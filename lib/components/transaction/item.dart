@@ -27,19 +27,17 @@ class TransactionComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final ex = theme.extension<ColorExtension>();
-
-    final locale = Localizations.localeOf(context);
-
     final categoryColor =
         ex?.from(transaction.category.colorName).color ??
         theme.colorScheme.surfaceContainer;
     final color = Color.lerp(categoryColor, const Color(0xFFFFFFFF), .3)!;
-    const iconDimension = 50.0;
-
     final colors = [
       theme.colorScheme.surfaceContainerHighest,
       theme.colorScheme.surfaceContainer,
     ];
+    const iconDimension = 50.0;
+
+    final locale = Localizations.localeOf(context);
 
     return Row(
       mainAxisSize: MainAxisSize.min,

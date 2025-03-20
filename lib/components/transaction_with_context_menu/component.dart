@@ -7,6 +7,7 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/components.dart";
 import "package:mony_app/domain/models/transaction.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 export "./use_case/use_case.dart";
 
@@ -18,14 +19,6 @@ enum ETransactionContextMenuItem {
     return switch (this) {
       ETransactionContextMenuItem.edit => Assets.icons.pencil,
       ETransactionContextMenuItem.delete => Assets.icons.trashFill,
-    };
-  }
-
-  @override
-  String get description {
-    return switch (this) {
-      ETransactionContextMenuItem.edit => "Редактировать",
-      ETransactionContextMenuItem.delete => "Удалить",
     };
   }
 }
@@ -172,7 +165,11 @@ class _TransactionWithContextMenuComponentState
             final item = ETransactionContextMenuItem.values.elementAt(index);
 
             return ContextMenuItemComponent(
-              label: Text(item.description),
+              label: Text(
+                context.t.components.transaction_with_context_menu.menu_item(
+                  context: item,
+                ),
+              ),
               icon: SvgPicture.asset(
                 item.icon,
                 colorFilter: ColorFilter.mode(

@@ -11,6 +11,7 @@ import "package:mony_app/domain/services/database/tag.dart";
 import "package:mony_app/domain/services/database/vo/tag.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/tag_form/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 typedef TTagContextMenuValue = ({ETagContextMenuItem menu, TagModel tag});
 
@@ -24,6 +25,7 @@ final class OnTagWithContextMenuSelected
     final tagService = context.service<DomainTagService>();
     final appService = context.viewModel<AppEventService>();
     final sharedPrefService = context.service<DomainSharedPreferencesService>();
+    final tr = context.t.components.tag_with_context_menu;
     final shouldConfirm = await sharedPrefService.getSettingsConfirmTag();
 
     switch (menu) {
@@ -53,11 +55,8 @@ final class OnTagWithContextMenuSelected
           result = await AlertComponet.show(
             // ignore: use_build_context_synchronously
             context,
-            title: const Text("Удаление тега"),
-            description: const Text(
-              "Тег просто будет отвязан от всех транзакций, к которым он "
-              "привязан. Эту проверку можно отключить в настройках.",
-            ),
+            title: Text(tr.delete_alert.title),
+            description: Text(tr.delete_alert.description),
           );
         } else {
           result = EAlertResult.ok;

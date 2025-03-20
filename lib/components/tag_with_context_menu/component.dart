@@ -12,6 +12,7 @@ import "package:mony_app/components/tag_with_context_menu/use_case/on_context_me
     show TTagContextMenuValue;
 import "package:mony_app/domain/models/tag.dart";
 import "package:mony_app/gen/assets.gen.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 export "./use_case/use_case.dart";
 
@@ -23,14 +24,6 @@ enum ETagContextMenuItem {
     return switch (this) {
       ETagContextMenuItem.edit => Assets.icons.pencil,
       ETagContextMenuItem.delete => Assets.icons.trashFill,
-    };
-  }
-
-  @override
-  String get description {
-    return switch (this) {
-      ETagContextMenuItem.edit => "Редактировать",
-      ETagContextMenuItem.delete => "Удалить",
     };
   }
 }
@@ -154,7 +147,11 @@ class _TagWithContextMenuComponentState
             final item = ETagContextMenuItem.values.elementAt(index);
 
             return ContextMenuItemComponent(
-              label: Text(item.description),
+              label: Text(
+                context.t.components.tag_with_context_menu.menu_item(
+                  context: item,
+                ),
+              ),
               icon: SvgPicture.asset(
                 item.icon,
                 colorFilter: ColorFilter.mode(

@@ -11,6 +11,7 @@ import "package:mony_app/domain/services/database/transaction.dart";
 import "package:mony_app/domain/services/database/vo/transaction_tag.dart";
 import "package:mony_app/domain/services/local_storage/shared_preferences.dart";
 import "package:mony_app/features/transaction_form/page/view_model.dart";
+import "package:mony_app/i18n/strings.g.dart";
 
 typedef TTransactionContextMenuValue =
     ({ETransactionContextMenuItem menu, TransactionModel transaction});
@@ -28,6 +29,7 @@ final class OnTransactionWithContextMenuSelected
     final transactionService = context.service<DomainTransactionService>();
     final appService = context.viewModel<AppEventService>();
     final sharedPrefService = context.service<DomainSharedPreferencesService>();
+    final tr = context.t.components.transaction_with_context_menu;
     final shouldConfirm =
         await sharedPrefService.getSettingsConfirmTransaction();
 
@@ -69,10 +71,8 @@ final class OnTransactionWithContextMenuSelected
         if (shouldConfirm) {
           result = await AlertComponet.show(
             context,
-            title: const Text("Удаление транзакции"),
-            description: const Text(
-              "Эту проверку можно отключить в настройках.",
-            ),
+            title: Text(tr.delete_alert.title),
+            description: Text(tr.delete_alert.description),
           );
         } else {
           result = EAlertResult.ok;

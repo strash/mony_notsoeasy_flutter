@@ -5,7 +5,6 @@ import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/popup/button.dart";
 import "package:mony_app/components/popup/popup_container.dart";
 import "package:mony_app/components/time/component.dart";
-import "package:mony_app/components/time/time_proxy.dart";
 
 class TimeComponent extends StatelessWidget {
   final TimeController controller;
@@ -61,9 +60,7 @@ class TimeComponent extends StatelessWidget {
           onTap: isOpened ? null : activate,
           child: Opacity(
             opacity: isOpened ? .0 : 1.0,
-            child: TimeProxyComponent(
-              time: controller.formattedValue(locale.languageCode),
-            ),
+            child: _Proxy(time: controller.formattedValue(locale.languageCode)),
           ),
         );
       },
@@ -76,7 +73,7 @@ class TimeComponent extends StatelessWidget {
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: dismiss,
-                child: TimeProxyComponent(
+                child: _Proxy(
                   time: controller.formattedValue(locale.languageCode),
                 ),
               );
@@ -179,6 +176,45 @@ class TimeComponent extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _Proxy extends StatelessWidget {
+  final String time;
+
+  const _Proxy({required this.time});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return SizedBox(
+      width: 90.0,
+      height: 46.0,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          color: theme.colorScheme.surfaceContainer,
+          shape: const SmoothRectangleBorder(
+            borderRadius: SmoothBorderRadius.all(
+              SmoothRadius(cornerRadius: 14.0, cornerSmoothing: 0.6),
+            ),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            time,
+            style: GoogleFonts.golosText(
+              textStyle: theme.textTheme.bodyMedium,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+              decoration: TextDecoration.none,
+              color: theme.colorScheme.onSurface,
+              fontFeatures: [const FontFeature.tabularFigures()],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
