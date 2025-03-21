@@ -168,7 +168,12 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         );
         viewModel.setProtectedState(() {
           viewModel.balance = balance;
-          viewModel.transactions = viewModel.transactions.merge([transaction]);
+          if (transaction.category.transactionType ==
+              viewModel.activeTransactionType) {
+            viewModel.transactions = viewModel.transactions.merge([
+              transaction.copyWith(),
+            ]);
+          }
         });
         viewModel.resetCategoryScrollController();
 
