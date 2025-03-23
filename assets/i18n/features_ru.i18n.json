@@ -158,7 +158,7 @@
 		},
 		"page_count": "${n: decimalPattern}",
 		"tab_title(context=ESearchTab)": {
-			"transactions": "Транзакция",
+			"transactions": "Транзакции",
 			"accounts": "Счета",
 			"categories": "Категории",
 			"tags": "Теги"
