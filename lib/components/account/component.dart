@@ -140,6 +140,7 @@ class AccountComponent extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     height: 1.4,
                     color: theme.colorScheme.onSurfaceVariant,
+                    textStyle: theme.textTheme.bodyMedium,
                   ),
                 ),
             ],

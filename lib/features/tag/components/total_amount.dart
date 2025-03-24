@@ -57,6 +57,7 @@ class TagTotalAmountComponent extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 height: 1.4,
                 color: theme.colorScheme.onSurface,
+                textStyle: theme.textTheme.bodyMedium,
               ),
             );
           },

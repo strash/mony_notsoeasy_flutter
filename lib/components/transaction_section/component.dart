@@ -70,6 +70,7 @@ class TransactionSectionComponent extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     height: 1.4,
                     color: theme.colorScheme.onSurfaceVariant,
+                    textStyle: theme.textTheme.bodyMedium,
                   ),
                 ),
               ),

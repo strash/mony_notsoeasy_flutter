@@ -66,6 +66,7 @@ class EntryListRowComponent extends StatelessWidget {
                         fontSize: 16.0,
                         height: 1.4,
                         color: theme.colorScheme.onSurface,
+                        textStyle: theme.textTheme.bodyMedium,
                       ),
                     ),
                   ),

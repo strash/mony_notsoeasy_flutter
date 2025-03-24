@@ -57,19 +57,19 @@ run_rustore:
 		--no-pub
 
 release:
-	#@just test
+	# @just test
 	@just build
-	@echo "building apk"
-	@ANDROID_HOME=$HOME/Library/Android/sdk \
-	flutter build apk --tree-shake-icons --release --pub \
-		--flavor=dev_android_flavor \
-		--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
-		--split-debug-info=build/app/intermediates/native_debug_symbols \
-		--obfuscate \
-		--dart-define=DEV_DB_ON_DEVICE=false \
-		--dart-define-from-file=.env \
-		--dart-define-from-file=.version \
-		--no-pub
+	# @echo "building apk"
+	# @ANDROID_HOME=$HOME/Library/Android/sdk \
+	# flutter build apk --tree-shake-icons --release --pub \
+	# 	--flavor=dev_android_flavor \
+	# 	--build-name=$BUILD_NAME --build-number=$BUILD_NUMBER \
+	# 	--split-debug-info=build/app/intermediates/native_debug_symbols \
+	# 	--obfuscate \
+	# 	--dart-define=DEV_DB_ON_DEVICE=false \
+	# 	--dart-define-from-file=.env \
+	# 	--dart-define-from-file=.version \
+	# 	--no-pub
 	@echo "building rustore release"
 	@ANDROID_HOME=$HOME/Library/Android/sdk \
 	flutter build appbundle --tree-shake-icons --release --pub \

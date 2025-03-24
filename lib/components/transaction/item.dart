@@ -116,6 +116,7 @@ class TransactionComponent extends StatelessWidget {
                             transaction.amount.isNegative
                                 ? theme.colorScheme.onSurface
                                 : theme.colorScheme.secondary,
+                        textStyle: theme.textTheme.bodyMedium,
                       ),
                     ),
                   ),

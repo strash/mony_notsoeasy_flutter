@@ -55,6 +55,7 @@ class StatsTotalAmountComponent extends StatelessWidget {
                     height: 1.4,
                     fontWeight: FontWeight.w500,
                     color: theme.colorScheme.onSurface,
+                    textStyle: theme.textTheme.bodyMedium,
                   ),
                 ),
               ),

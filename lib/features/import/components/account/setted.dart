@@ -87,6 +87,7 @@ class AccountSettedItemComponent extends StatelessWidget {
                   account.balance >= 0.0
                       ? theme.colorScheme.secondary
                       : theme.colorScheme.error,
+              textStyle: theme.textTheme.bodyMedium,
             ),
           ),
         ],

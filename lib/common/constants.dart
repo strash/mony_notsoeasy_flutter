@@ -1,5 +1,6 @@
 import "dart:ui";
 
+// .env
 const kDbName = String.fromEnvironment("DB_NAME", defaultValue: "my.db");
 const kDevPathToLocalDb = String.fromEnvironment("DEV_PATH_TO_LOCAL_DB");
 const kSupportEmail = String.fromEnvironment("SUPPORT_EMAIL");
@@ -9,7 +10,7 @@ const kPrivacyPolicyPath = String.fromEnvironment(
   defaultValue: "/privacy_policy",
 );
 
-// dynamic env
+// dynamic env var
 const kIsDbOnDevice = bool.fromEnvironment(
   "DEV_DB_ON_DEVICE",
   defaultValue: true,
@@ -20,6 +21,7 @@ const kBuildName = String.fromEnvironment("BUILD_NAME");
 const kBuildNumber = String.fromEnvironment("BUILD_NUMBER");
 const kMigrateVersion = int.fromEnvironment("MIGRATE_VERSION", defaultValue: 1);
 
+// other
 const double kTranslucentPanelOpacity = .5;
 const double kTranslucentPanelBlurSigma = 25.0;
 

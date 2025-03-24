@@ -115,6 +115,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         height: 1.4,
                         color: theme.colorScheme.onSurface,
+                        textStyle: theme.textTheme.bodyMedium,
                       ),
                     ),
                   ),
