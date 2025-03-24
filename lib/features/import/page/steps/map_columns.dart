@@ -52,15 +52,17 @@ class ImportMapColumnsComponent extends StatelessWidget {
                   const SizedBox(width: 10.0),
 
                   // -> title
-                  Text(
-                    context.t.features.import.map_columns.title(
-                      context: currentMappedColumn.column,
-                    ),
-                    style: GoogleFonts.golosText(
-                      fontSize: 20.0,
-                      color: theme.colorScheme.onSurface,
-                      height: 1.4,
-                      fontWeight: FontWeight.w500,
+                  Flexible(
+                    child: Text(
+                      context.t.features.import.map_columns.title(
+                        context: currentMappedColumn.column,
+                      ),
+                      style: GoogleFonts.golosText(
+                        fontSize: 20.0,
+                        color: theme.colorScheme.onSurface,
+                        height: 1.4,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
 

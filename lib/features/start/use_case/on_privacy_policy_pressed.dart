@@ -7,7 +7,7 @@ final class OnPrivacyPolicyPressed extends UseCase<Future<void>, dynamic> {
   @override
   Future<void> call(BuildContext context, [_]) async {
     final url = Uri.https(kPrivacyPolicyHost, kPrivacyPolicyPath);
-    if (await canLaunchUrl(url)) {
+    if (await canLaunchUrl(url) && context.mounted) {
       await launchUrl(url, mode: LaunchMode.inAppWebView);
     }
   }
