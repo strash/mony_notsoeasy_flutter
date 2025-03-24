@@ -19,7 +19,7 @@ final class OnCurrencyLinkPressed extends UseCase<Future<void>, dynamic> {
     final query = "$amount ${leftCurrency.code} to ${rightCurrency.code}";
     final url = Uri.https("duckduckgo.com", "", {"q": query});
     if (await canLaunchUrl(url)) {
-      await launchUrl(url);
+      await launchUrl(url, mode: LaunchMode.inAppWebView);
     }
   }
 }
