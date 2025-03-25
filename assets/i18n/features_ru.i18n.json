@@ -204,7 +204,11 @@
 			"review_title": "Оценить приложение",
 			"support_title": "Написать в поддержку",
 			"email_subject": "Пишу из приложения Mony",
-			"email_body_hint": "Важная информация. Не удаляй"
+			"email_body_hint": "Важная информация. Не удаляй",
+			"stores_bottom_sheet(context=EReviewStoreItem)": {
+				"google": "В Google Play Store",
+				"rustore": "В RuStore"
+			}
 		},
 		"language": {
 			"title": "Язык",

@@ -11,6 +11,7 @@ imports:
   - 'package:mony_app/features/balance_exchange_form/page/view_model.dart'
   - 'package:mony_app/features/feed/page/view_model.dart'
   - 'package:mony_app/features/settings/page/view_model.dart'
+  - 'package:mony_app/features/settings/components/stores_bottom_sheet.dart'
   - 'package:mony_app/features/search/page/enums.dart'
   - 'package:mony_app/features/import/page/model/enum.dart'
   - 'package:mony_app/features/import/components/category/action_sheet.dart'
@@ -28,6 +29,8 @@ contexts:
   EBalanceExchangeMenuItem:
     generate_enum: false
   EFeedMenuItem:
+    generate_enum: false
+  EReviewStoreItem:
     generate_enum: false
   ESettingsLanguage:
     generate_enum: false

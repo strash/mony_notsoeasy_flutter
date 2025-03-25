@@ -144,6 +144,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/gearshape.fill.svg
   String get gearshapeFill => 'assets/icons/gearshape.fill.svg';
 
+  /// File path: assets/icons/google.play.svg
+  String get googlePlay => 'assets/icons/google.play.svg';
+
   /// File path: assets/icons/hand.point.up.left.svg
   String get handPointUpLeft => 'assets/icons/hand.point.up.left.svg';
 
@@ -220,6 +223,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/repeat.svg
   String get repeat => 'assets/icons/repeat.svg';
+
+  /// File path: assets/icons/rustore.svg
+  String get rustore => 'assets/icons/rustore.svg';
 
   /// File path: assets/icons/sparkles.svg
   String get sparkles => 'assets/icons/sparkles.svg';
@@ -322,6 +328,7 @@ class $AssetsIconsGen {
     eyeSlash,
     eye,
     gearshapeFill,
+    googlePlay,
     handPointUpLeft,
     infoCircle,
     linkBadgePlus,
@@ -347,6 +354,7 @@ class $AssetsIconsGen {
     repeatCircleFill,
     repeatCircle,
     repeat,
+    rustore,
     sparkles,
     squareAndArrowDown,
     squareAndArrowUp,

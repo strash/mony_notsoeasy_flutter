@@ -198,7 +198,11 @@
 			"review_title": "Rate the app",
 			"support_title": "Contact support",
 			"email_subject": "I'm writing from the Mony app",
-			"email_body_hint": "Important Info. Don't remove"
+			"email_body_hint": "Important Info. Don't remove",
+			"stores_bottom_sheet(context=EReviewStoreItem)": {
+				"google": "In Google Play Store",
+				"rustore": "In RuStore"
+			}
 		},
 		"language": {
 			"title": "Language",
