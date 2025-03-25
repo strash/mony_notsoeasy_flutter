@@ -75,7 +75,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
           child: IgnorePointer(
             child: ClipSmoothRect(
               radius: const SmoothBorderRadius.all(
-                SmoothRadius(cornerRadius: 15.0, cornerSmoothing: 0.6),
+                SmoothRadius(cornerRadius: 16.0, cornerSmoothing: 0.6),
               ),
               child: BackdropFilter(
                 filter: ImageFilter.blur(
@@ -83,8 +83,8 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                   sigmaY: kTranslucentPanelBlurSigma,
                 ),
                 child: SizedBox(
-                  width: 84.0,
-                  height: 30.0,
+                  width: 95.0,
+                  height: 34.0,
                   child: ColoredBox(
                     color: theme.colorScheme.surfaceContainer.withValues(
                       alpha: kTranslucentPanelOpacity,
@@ -103,12 +103,12 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                                 controller: _viewModel.pageController,
                                 count: _viewModel.pages.length,
                                 effect: ScrollingDotsEffect(
-                                  dotWidth: 7.0,
-                                  dotHeight: 7.0,
+                                  dotWidth: 8.0,
+                                  dotHeight: 8.0,
                                   dotColor: theme.colorScheme.tertiaryContainer,
                                   activeDotColor: theme.colorScheme.primary,
                                   activeDotScale: 1.0,
-                                  spacing: 5.0,
+                                  spacing: 6.0,
                                   strokeWidth: .0,
                                 ),
                               ),
@@ -127,8 +127,8 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                               // -> icon
                               SvgPicture.asset(
                                 Assets.icons.magnifyingglass,
-                                width: 14.0,
-                                height: 14.0,
+                                width: 15.0,
+                                height: 15.0,
                                 colorFilter: ColorFilter.mode(
                                   theme.colorScheme.tertiary,
                                   BlendMode.srcIn,
@@ -140,8 +140,9 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                               Text(
                                 context.t.features.feed.button_search,
                                 style: GoogleFonts.golosText(
-                                  fontSize: 13.0,
+                                  fontSize: 14.0,
                                   fontWeight: FontWeight.w500,
+                                  height: 1.0,
                                   color: theme.colorScheme.tertiary,
                                 ),
                               ),

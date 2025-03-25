@@ -28,15 +28,16 @@ class SearchView extends StatelessWidget {
       body: Stack(
         children: [
           AnimatedSwitcher(
+            key: Key("search_view_${viewModel.isSearching}"),
             duration: Durations.short3,
             child:
                 viewModel.isSearching
                     // -> search tab pages
                     ? AnimatedSwitcher(
-                      key: const Key("tabs"),
+                      key: const Key("search_tabs"),
                       duration: Durations.short3,
                       child: SearchTabPageComponent(
-                        key: Key("tab_${viewModel.activeTab.name}"),
+                        key: Key("search_tab_${viewModel.activeTab.name}"),
                         tab: viewModel.activeTab,
                         topOffset: topOffset,
                         bottomOffset: bottomOffset,

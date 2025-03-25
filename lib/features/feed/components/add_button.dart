@@ -22,9 +22,10 @@ class FeedAddButtonComponent extends StatelessWidget {
     const isActive = true;
 
     return Positioned(
-      top: MediaQuery.viewPaddingOf(context).top,
+      top: MediaQuery.viewPaddingOf(context).top + 3.0,
       right: 8.0,
       child: ContextMenuComponent(
+        offset: const Offset(.0, 2.0),
         showBackground: false,
         blurBackground: false,
         buttonBuilder: (context, isOpened, activate) {
@@ -107,7 +108,7 @@ class _Button extends StatelessWidget {
       dimension: AppBarComponent.height,
       child: Center(
         child: SizedBox.square(
-          dimension: 30.0,
+          dimension: 34.0,
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(20.0)),
             child: BackdropFilter(
@@ -119,9 +120,9 @@ class _Button extends StatelessWidget {
                 color: theme.colorScheme.surfaceContainer.withValues(alpha: .5),
                 child: Center(
                   child: SvgPicture.asset(
-                    Assets.icons.plusSemibold,
-                    width: 20.0,
-                    height: 20.0,
+                    Assets.icons.plus,
+                    width: 24.0,
+                    height: 24.0,
                     colorFilter: ColorFilter.mode(
                       theme.colorScheme.onSurface,
                       BlendMode.srcIn,

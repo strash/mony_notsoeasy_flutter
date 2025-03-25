@@ -83,8 +83,6 @@ class StatsView extends StatelessWidget {
           ),
 
           // TODO: фильтровать по категориям
-          // FIXME: если включены Expense, добавить новый Income, то он
-          // появляется в Expense
           // -> chart legend (categories)
           const SliverPadding(
             padding: EdgeInsets.only(top: 20.0),

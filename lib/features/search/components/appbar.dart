@@ -61,9 +61,11 @@ class SearchAppBarComponent extends StatelessWidget {
                       child: SizedBox.fromSize(
                         size: const Size.fromHeight(collapsedHeight),
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0,
-                            vertical: 5.0,
+                          padding: const EdgeInsets.fromLTRB(
+                            15.0,
+                            5.0,
+                            5.0,
+                            5.0,
                           ),
                           child: Stack(
                             fit: StackFit.expand,
