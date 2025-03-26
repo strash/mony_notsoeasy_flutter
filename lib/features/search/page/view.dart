@@ -1,3 +1,4 @@
+import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/search/components/components.dart";
@@ -24,9 +25,20 @@ class SearchView extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       extendBody: true,
       extendBodyBehindAppBar: true,
-      backgroundColor: theme.colorScheme.surface,
+      backgroundColor: const Color(0x00FFFFFF),
       body: Stack(
+        fit: StackFit.expand,
         children: [
+          // -> background
+          ClipSmoothRect(
+            radius: const SmoothBorderRadius.only(
+              topLeft: SmoothRadius(cornerRadius: 20.0, cornerSmoothing: .6),
+              topRight: SmoothRadius(cornerRadius: 20.0, cornerSmoothing: .6),
+            ),
+            child: ColoredBox(color: theme.colorScheme.surface),
+          ),
+
+          // -> content
           AnimatedSwitcher(
             key: Key("search_view_${viewModel.isSearching}"),
             duration: Durations.short3,

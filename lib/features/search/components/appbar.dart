@@ -37,7 +37,11 @@ class SearchAppBarComponent extends StatelessWidget {
     const fillColor = Color(0x00FFFFFF);
     const sigma = kTranslucentPanelBlurSigma;
 
-    return ClipRect(
+    return ClipSmoothRect(
+      radius: const SmoothBorderRadius.only(
+        topLeft: SmoothRadius(cornerRadius: 20.0, cornerSmoothing: .6),
+        topRight: SmoothRadius(cornerRadius: 20.0, cornerSmoothing: .6),
+      ),
       child: RepaintBoundary(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
