@@ -31,6 +31,10 @@ final class DomainTagService extends BaseDatabaseService {
     return dtos.map<TagModel>(_tagFactory.toModel).toList(growable: false);
   }
 
+  Future<int> searchCount({String? query}) async {
+    return await _tagRepo.searchCount(query: query);
+  }
+
   Future<int> count() async {
     return await _tagRepo.count();
   }

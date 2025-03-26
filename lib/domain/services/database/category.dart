@@ -28,6 +28,10 @@ final class DomainCategoryService extends BaseDatabaseService {
         .toList(growable: false);
   }
 
+  Future<int> searchCount({String? query}) async {
+    return await _categoryRepo.searchCount(query: query);
+  }
+
   Future<int> count() async {
     return await _categoryRepo.count();
   }

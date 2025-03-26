@@ -13,7 +13,6 @@ import "package:mony_app/i18n/strings.g.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 // TODO: добавить вибрации тут и там при тапе
-// TODO: бюджеты
 // TODO: вход по отпечатку
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

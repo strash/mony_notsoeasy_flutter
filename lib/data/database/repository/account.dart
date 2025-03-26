@@ -11,6 +11,8 @@ abstract base class AccountDatabaseRepository {
     required int offset,
   });
 
+  Future<int> searchCount({String? query});
+
   Future<int> count();
 
   Future<List<AccountBalanceDto>> getBalances({int? limit, int? offset});
@@ -82,6 +84,22 @@ ORDER BY
 LIMIT $limit OFFSET $offset;
 """, args);
       return maps.map(AccountDto.fromJson).toList(growable: false);
+    });
+  }
+
+  @override
+  Future<int> searchCount({String? query}) {
+    return resolve(() async {
+      final db = await database.db;
+      final List<String?> args = [];
+      final hasQuery = query != null && query.isNotEmpty;
+      if (hasQuery) args.add(queryToGlob(query));
+      final maps = await db.rawQuery("""
+SELECT COUNT(*) AS count FROM ${table}_fzf_view AS a_v
+${hasQuery ? "WHERE a_v.value GLOB ?" : ""};
+""", args);
+      if (maps.isEmpty) return 0;
+      return maps[0]["count"] as int? ?? 0;
     });
   }
 

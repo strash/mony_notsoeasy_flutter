@@ -1,4 +1,3 @@
-import "package:figma_squircle_updated/figma_squircle.dart";
 import "package:flutter/material.dart";
 import "package:mony_app/common/common.dart";
 import "package:mony_app/features/search/components/components.dart";
@@ -10,86 +9,49 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final viewPadding = MediaQuery.paddingOf(context);
-    final bottomOffset = MediaQuery.of(context).viewPadding.bottom + 50.0;
+    final bottomOffset = MediaQuery.paddingOf(context).bottom + 50.0;
 
     final viewModel = context.viewModel<SearchViewModel>();
-    final topOffset =
-        viewPadding.top +
-        20.0 +
-        (viewModel.isSearching
-            ? SearchAppBarComponent.maximizedHeight
-            : SearchAppBarComponent.collapsedHeight);
+    final isEmpty = switch (viewModel.activeTab) {
+      ESearchTab.transactions => viewModel.transactions.isEmpty,
+      ESearchTab.accounts => viewModel.accounts.isEmpty,
+      ESearchTab.categories => viewModel.categories.isEmpty,
+      ESearchTab.tags => viewModel.tags.isEmpty,
+    };
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBody: true,
       extendBodyBehindAppBar: true,
-      backgroundColor: const Color(0x00FFFFFF),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          // -> background
-          ClipSmoothRect(
-            radius: const SmoothBorderRadius.only(
-              topLeft: SmoothRadius(cornerRadius: 20.0, cornerSmoothing: .6),
-              topRight: SmoothRadius(cornerRadius: 20.0, cornerSmoothing: .6),
-            ),
-            child: ColoredBox(color: theme.colorScheme.surface),
-          ),
-
-          // -> content
-          AnimatedSwitcher(
-            key: Key("search_view_${viewModel.isSearching}"),
-            duration: Durations.short3,
-            child:
-                viewModel.isSearching
-                    // -> search tab pages
-                    ? AnimatedSwitcher(
-                      key: const Key("search_tabs"),
-                      duration: Durations.short3,
-                      child: SearchTabPageComponent(
-                        key: Key("search_tab_${viewModel.activeTab.name}"),
-                        tab: viewModel.activeTab,
-                        topOffset: topOffset,
-                        bottomOffset: bottomOffset,
-                      ),
-                    )
-                    // -> pages
-                    : CustomScrollView(
-                      key: const Key("pages"),
-                      physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics(),
-                      ),
-                      slivers: [
-                        // -> top offset
-                        SliverToBoxAdapter(child: SizedBox(height: topOffset)),
-
-                        // -> content
-                        SliverList.builder(
-                          itemCount: ESearchPage.values.length,
-                          itemBuilder: (context, index) {
-                            final item = ESearchPage.values.elementAt(index);
-
-                            return SearchPageButtonComponent(page: item);
-                          },
-                        ),
-
-                        // -> bottom offset
-                        SliverToBoxAdapter(
-                          child: SizedBox(height: bottomOffset),
-                        ),
-                      ],
-                    ),
-          ),
-
+      backgroundColor: theme.colorScheme.surface,
+      body: CustomScrollView(
+        controller: viewModel.getPageTabController(viewModel.activeTab),
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
+        slivers: [
           // -> appbar
-          const Positioned(
-            top: .0,
-            left: .0,
-            right: .0,
-            child: SearchAppBarComponent(),
-          ),
+          const SearchAppBarComponent(),
+
+          const SliverToBoxAdapter(child: SizedBox(height: 20.0)),
+
+          switch (viewModel.isSearching) {
+            // -> page buttons
+            false => SliverList.builder(
+              itemCount: ESearchPage.values.length,
+              itemBuilder: (context, index) {
+                final item = ESearchPage.values.elementAt(index);
+                return SearchPageButtonComponent(page: item);
+              },
+            ),
+
+            // -> search tab pages
+            true => const SearchTabPageComponent(),
+          },
+
+          // -> bottom offset
+          if (!isEmpty)
+            SliverToBoxAdapter(child: SizedBox(height: bottomOffset)),
         ],
       ),
     );

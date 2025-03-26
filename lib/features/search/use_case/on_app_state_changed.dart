@@ -45,6 +45,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final balances = await Future.wait(
           viewModel.accounts.map((e) => accountService.getBalance(id: e.id)),
         );
+        final searchCount = await accountService.searchCount(query: query);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: scrollPage,
@@ -52,6 +53,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
           viewModel.balances = balances.nonNulls.toList();
           viewModel.counts = counts;
+          viewModel.resultCount[ESearchTab.accounts] = searchCount;
         });
 
       case EventAccountUpdated() || EventAccountDeleted():
@@ -79,6 +81,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final balances = await Future.wait(
           viewModel.accounts.map((e) => accountService.getBalance(id: e.id)),
         );
+        final searchCount = await accountService.searchCount(query: query);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: page,
@@ -86,6 +89,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
           viewModel.balances = balances.nonNulls.toList();
           viewModel.counts = counts;
+          viewModel.resultCount[ESearchTab.accounts] = searchCount;
         });
 
       case EventAccountBalanceExchanged(value: final accounts):
@@ -136,6 +140,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             return categoryService.search(query: query, page: index);
           }),
         );
+        final searchCount = await categoryService.searchCount(query: query);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: scrollPage,
@@ -145,6 +150,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             return prev..addAll(curr);
           });
           viewModel.counts = counts;
+          viewModel.resultCount[ESearchTab.categories] = searchCount;
         });
 
       case EventCategoryUpdated() || EventCategoryDeleted():
@@ -164,6 +170,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final balances = await Future.wait(
           viewModel.balances.map((e) => accountService.getBalance(id: e.id)),
         );
+        final searchCount = await categoryService.searchCount(query: query);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: page,
@@ -174,6 +181,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           });
           viewModel.balances = balances.nonNulls.toList();
           viewModel.counts = counts;
+          viewModel.resultCount[ESearchTab.categories] = searchCount;
         });
 
       case EventTagCreated():
@@ -187,6 +195,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
             return tagService.search(query: query, page: index);
           }),
         );
+        final searchCount = await tagService.searchCount(query: query);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: scrollPage,
@@ -194,6 +203,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
           viewModel.tags = tags.fold([], (prev, curr) => prev..addAll(curr));
           viewModel.counts = counts;
+          viewModel.resultCount[ESearchTab.tags] = searchCount;
         });
 
       case EventTagUpdated() || EventTagDeleted():
@@ -207,6 +217,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         do {
           tags.add(await tagService.search(query: query, page: page++));
         } while (page <= scrollPage && (tags.lastOrNull?.isNotEmpty ?? false));
+        final searchCount = await tagService.searchCount(query: query);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: page,
@@ -214,6 +225,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           );
           viewModel.tags = tags.fold([], (prev, curr) => prev..addAll(curr));
           viewModel.counts = counts;
+          viewModel.resultCount[ESearchTab.tags] = searchCount;
         });
 
       case EventTransactionCreated():
@@ -230,6 +242,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final balances = await Future.wait(
           viewModel.balances.map((e) => accountService.getBalance(id: e.id)),
         );
+        final searchCount = await transactionService.searchCount(query: query);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: scrollPage,
@@ -240,6 +253,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           });
           viewModel.balances = balances.nonNulls.toList();
           viewModel.counts = counts;
+          viewModel.resultCount[ESearchTab.transactions] = searchCount;
         });
 
       case EventTransactionUpdated() || EventTransactionDeleted():
@@ -258,6 +272,7 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
         final balances = await Future.wait(
           viewModel.balances.map((e) => accountService.getBalance(id: e.id)),
         );
+        final searchCount = await transactionService.searchCount(query: query);
         viewModel.setProtectedState(() {
           viewModel.tabPageStates[tabIndex] = (
             scrollPage: page,
@@ -267,10 +282,24 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
           viewModel.transactions = transactions.fold([], (prev, curr) {
             return prev..addAll(curr);
           });
+          viewModel.resultCount[ESearchTab.transactions] = searchCount;
         });
 
       case EventDataImported():
         final counts = await _updateCounts(context);
+        final resultCount = {
+          for (final page in ESearchTab.values)
+            page: await switch (page) {
+              ESearchTab.transactions => transactionService.searchCount(
+                query: query,
+              ),
+              ESearchTab.accounts => accountService.searchCount(query: query),
+              ESearchTab.categories => categoryService.searchCount(
+                query: query,
+              ),
+              ESearchTab.tags => tagService.searchCount(query: query),
+            },
+        };
         for (final tab in ESearchTab.values) {
           final tabIndex = tab.index;
           final (:scrollPage, canLoadMore: _) = viewModel.tabPageStates
@@ -283,64 +312,56 @@ final class OnAppStateChanged extends UseCase<Future<void>, _TValue> {
                   return transactionService.search(query: query, page: index);
                 }),
               );
-              viewModel.setProtectedState(() {
-                viewModel.transactions = data
-                    .cast<List<TransactionModel>>()
-                    .fold([], (prev, curr) {
-                      return prev..addAll(curr);
-                    });
-              });
+              viewModel.transactions = data.cast<List<TransactionModel>>().fold(
+                [],
+                (prev, curr) => prev..addAll(curr),
+              );
             case ESearchTab.accounts:
               data = await Future.wait<List<AccountModel>>(
                 List.generate(scrollPage + 1, (index) {
                   return accountService.search(query: query, page: index);
                 }),
               );
-              viewModel.accounts = data.cast<List<AccountModel>>().fold(
-                [],
-                (prev, curr) => prev..addAll(curr),
-              );
               final balances = await Future.wait(
                 viewModel.accounts.map(
                   (e) => accountService.getBalance(id: e.id),
                 ),
               );
-              viewModel.setProtectedState(() {
-                viewModel.balances = balances.nonNulls.toList();
-              });
+              viewModel.accounts = data.cast<List<AccountModel>>().fold(
+                [],
+                (prev, curr) => prev..addAll(curr),
+              );
+              viewModel.balances = balances.nonNulls.toList();
             case ESearchTab.categories:
               data = await Future.wait<List<CategoryModel>>(
                 List.generate(scrollPage + 1, (index) {
                   return categoryService.search(query: query, page: index);
                 }),
               );
-              viewModel.setProtectedState(() {
-                viewModel.categories = data.cast<List<CategoryModel>>().fold(
-                  [],
-                  (prev, curr) => prev..addAll(curr),
-                );
-              });
+              viewModel.categories = data.cast<List<CategoryModel>>().fold(
+                [],
+                (prev, curr) => prev..addAll(curr),
+              );
             case ESearchTab.tags:
               data = await Future.wait<List<TagModel>>(
                 List.generate(scrollPage + 1, (index) {
                   return tagService.search(query: query, page: index);
                 }),
               );
-              viewModel.setProtectedState(() {
-                viewModel.tags = data.cast<List<TagModel>>().fold(
-                  [],
-                  (prev, curr) => prev..addAll(curr),
-                );
-              });
+              viewModel.tags = data.cast<List<TagModel>>().fold(
+                [],
+                (prev, curr) => prev..addAll(curr),
+              );
           }
-          viewModel.setProtectedState(() {
-            viewModel.tabPageStates[tabIndex] = (
-              scrollPage: scrollPage,
-              canLoadMore: data.lastOrNull?.isNotEmpty ?? false,
-            );
-          });
+          viewModel.tabPageStates[tabIndex] = (
+            scrollPage: scrollPage,
+            canLoadMore: data.lastOrNull?.isNotEmpty ?? false,
+          );
         }
-        viewModel.setProtectedState(() => viewModel.counts = counts);
+        viewModel.setProtectedState(() {
+          viewModel.counts = counts;
+          viewModel.resultCount = resultCount;
+        });
 
       case EventSettingsColorsVisibilityChanged(:final value):
         viewModel.setProtectedState(() {

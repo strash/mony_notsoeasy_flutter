@@ -28,6 +28,10 @@ final class DomainAccountService extends BaseDatabaseService {
         .toList(growable: false);
   }
 
+  Future<int> searchCount({String? query}) async {
+    return await _accountRepo.searchCount(query: query);
+  }
+
   Future<int> count() async {
     return await _accountRepo.count();
   }

@@ -44,6 +44,7 @@ class AppBarComponent extends StatelessWidget {
       );
     }
     return SliverPersistentHeader(
+      pinned: true,
       delegate: _AppBarDelegate(
         title: title,
         leading: leading,
@@ -53,7 +54,6 @@ class AppBarComponent extends StatelessWidget {
         showBackground: showBackground,
         automaticallyImplyLeading: automaticallyImplyLeading,
       ),
-      pinned: true,
     );
   }
 }
@@ -77,25 +77,41 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
     required this.automaticallyImplyLeading,
   });
 
-  double get handleExtent =>
-      showDragHandle ? BottomSheetHandleComponent.height : 0.0;
-
-  @override
-  double get maxExtent =>
-      viewPadding.top + AppBarComponent.height + handleExtent;
-
-  @override
-  double get minExtent =>
-      viewPadding.top + AppBarComponent.height + handleExtent;
-
-  @override
-  bool shouldRebuild(_AppBarDelegate oldDelegate) {
-    return true;
+  double get handleExtent {
+    return showDragHandle ? BottomSheetHandleComponent.height : 0.0;
   }
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool _) {
-    final t = shrinkOffset.remap(.0, maxExtent * .15, .0, 1.0);
+  double get maxExtent {
+    return viewPadding.top + AppBarComponent.height + handleExtent;
+  }
+
+  @override
+  double get minExtent {
+    return viewPadding.top + AppBarComponent.height + handleExtent;
+  }
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return oldDelegate is _AppBarDelegate &&
+        (leading != oldDelegate.leading ||
+            title != oldDelegate.title ||
+            trailing != oldDelegate.trailing ||
+            viewPadding != oldDelegate.viewPadding ||
+            showDragHandle != oldDelegate.showDragHandle ||
+            showBackground != oldDelegate.showBackground ||
+            automaticallyImplyLeading != oldDelegate.automaticallyImplyLeading);
+  }
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    final opacity = shrinkOffset
+        .remap(.0, maxExtent * .15, .0, 1.0)
+        .clamp(.0, 1.0);
 
     return _AppBar(
       leading: leading,
@@ -105,7 +121,7 @@ final class _AppBarDelegate extends SliverPersistentHeaderDelegate {
       showDragHandle: showDragHandle,
       showBackground: showBackground,
       automaticallyImplyLeading: automaticallyImplyLeading,
-      opacity: t.clamp(.0, 1.0),
+      opacity: opacity,
     );
   }
 }
@@ -136,11 +152,13 @@ class _AppBar extends StatefulWidget {
 }
 
 class _AppBarState extends State<_AppBar> {
-  double get handleExtent =>
-      widget.showDragHandle ? BottomSheetHandleComponent.height : 0.0;
+  double get handleExtent {
+    return widget.showDragHandle ? BottomSheetHandleComponent.height : 0.0;
+  }
 
-  double get minExtent =>
-      widget.viewPadding.top + AppBarComponent.height + handleExtent;
+  double get minExtent {
+    return widget.viewPadding.top + AppBarComponent.height + handleExtent;
+  }
 
   double _leadingMinWidth = .0;
   double _trailingMinWidth = .0;

@@ -47,6 +47,10 @@ final class DomainTransactionService extends BaseDatabaseService {
     return _composeTransactions(dtos: dtos);
   }
 
+  Future<int> searchCount({String? query}) {
+    return _transactionRepo.searchCount(query: query);
+  }
+
   Future<int> count() async {
     return await _transactionRepo.count();
   }

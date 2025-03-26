@@ -31,12 +31,26 @@ final class OnInputChanged extends UseCase<Future<void>, _TValue> {
     final categories = await categoryService.search(query: query, page: 0);
     final tags = await tagService.search(query: query, page: 0);
 
+    final resultCount = {
+      for (final page in ESearchTab.values)
+        page: await switch (page) {
+          ESearchTab.transactions => transactionService.searchCount(
+            query: query,
+          ),
+          ESearchTab.accounts => accountService.searchCount(query: query),
+          ESearchTab.categories => categoryService.searchCount(query: query),
+          ESearchTab.tags => tagService.searchCount(query: query),
+        },
+    };
+
     viewModel.setProtectedState(() {
       viewModel.transactions = transactions;
       viewModel.accounts = accounts;
       viewModel.balances = balances.nonNulls.toList();
       viewModel.categories = categories;
       viewModel.tags = tags;
+
+      viewModel.resultCount = resultCount;
     });
   }
 }

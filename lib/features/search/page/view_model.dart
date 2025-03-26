@@ -1,6 +1,7 @@
 import "dart:async";
 
 import "package:flutter/material.dart";
+import "package:intl/intl.dart";
 import "package:mony_app/app.dart";
 import "package:mony_app/app/app.dart";
 import "package:mony_app/common/extensions/extensions.dart";
@@ -45,7 +46,9 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
   late final StreamSubscription<Event> _appSub;
 
   final input = InputController();
+
   bool isSearching = false;
+
   ESearchTab activeTab = ESearchTab.defaultValue;
 
   final tabButtonsScrollController = ScrollController();
@@ -62,8 +65,21 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
     (scrollPage: 0, canLoadMore: true),
   );
 
+  bool get isActiveTabEmpty {
+    return switch (activeTab) {
+      ESearchTab.transactions => transactions.isEmpty,
+      ESearchTab.accounts => accounts.isEmpty,
+      ESearchTab.categories => categories.isEmpty,
+      ESearchTab.tags => tags.isEmpty,
+    };
+  }
+
   Map<ESearchPage, int> counts = {
     for (final page in ESearchPage.values) page: 0,
+  };
+
+  Map<ESearchTab, int> resultCount = {
+    for (final page in ESearchTab.values) page: 0,
   };
 
   List<TransactionModel> transactions = const [];
@@ -78,6 +94,12 @@ final class SearchViewModel extends ViewModelState<SearchPage> {
 
   ScrollController getPageTabController(ESearchTab tab) {
     return _pageTabScrollControllers.elementAt(tab.index).controller;
+  }
+
+  String getTabCountDescription(ESearchTab tab) {
+    final locale = Localizations.localeOf(context);
+    final formatter = NumberFormat.decimalPattern(locale.languageCode);
+    return formatter.format(resultCount[tab]);
   }
 
   void _onInputChanged() {

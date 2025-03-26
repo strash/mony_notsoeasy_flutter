@@ -11,6 +11,8 @@ abstract base class TagDatabaseRepository {
     List<String> excludeIds = const [],
   });
 
+  Future<int> searchCount({String? query});
+
   Future<int> count();
 
   Future<TagBalanceDto?> getBalance({required String id});
@@ -79,6 +81,22 @@ ORDER BY
 LIMIT $limit OFFSET $offset;
 """, args);
       return maps.map(TagDto.fromJson).toList(growable: false);
+    });
+  }
+
+  @override
+  Future<int> searchCount({String? query}) {
+    return resolve(() async {
+      final db = await database.db;
+      final List<String?> args = [];
+      final hasQuery = query != null && query.isNotEmpty;
+      if (hasQuery) args.add(queryToGlob(query));
+      final maps = await db.rawQuery("""
+SELECT COUNT(*) AS count FROM ${table}_fzf_view AS t_v
+${hasQuery ? "WHERE t_v.value GLOB ?" : ""};
+""", args);
+      if (maps.isEmpty) return 0;
+      return maps[0]["count"] as int? ?? 0;
     });
   }
 

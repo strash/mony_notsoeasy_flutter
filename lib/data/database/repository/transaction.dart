@@ -11,6 +11,8 @@ abstract base class TransactionDatabaseRepository {
     required int offset,
   });
 
+  Future<int> searchCount({String? query});
+
   Future<int> count();
 
   Future<List<TransactionDto>> getAll({
@@ -94,6 +96,22 @@ ORDER BY
 LIMIT $limit OFFSET $offset;
 """, args);
       return maps.map(TransactionDto.fromJson).toList(growable: false);
+    });
+  }
+
+  @override
+  Future<int> searchCount({String? query}) {
+    return resolve(() async {
+      final db = await database.db;
+      final List<String?> args = [];
+      final hasQuery = query != null && query.isNotEmpty;
+      if (hasQuery) args.add(queryToGlob(query));
+      final maps = await db.rawQuery("""
+SELECT COUNT(*) AS count FROM ${table}_fzf_view AS tr_v
+${hasQuery ? "WHERE tr_v.value GLOB ?" : ""};
+""", args);
+      if (maps.isEmpty) return 0;
+      return maps[0]["count"] as int? ?? 0;
     });
   }
 
