@@ -11,6 +11,7 @@ export "./event.dart";
 enum ENavBarTabItem {
   feed,
   stats,
+  budgets,
   settings;
 
   static int get length => ENavBarTabItem.values.length;
@@ -42,6 +43,7 @@ final class NavBarViewModel extends ViewModelState<NavBarPage>
         return switch (e) {
           ENavBarTabItem.feed => const FeedPage(),
           ENavBarTabItem.stats => const StatsPage(),
+          ENavBarTabItem.budgets => const BudgetsPage(),
           ENavBarTabItem.settings => const SettingsPage(),
         };
       })

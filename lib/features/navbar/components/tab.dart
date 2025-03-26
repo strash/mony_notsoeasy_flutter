@@ -52,6 +52,7 @@ extension on ENavBarTabItem {
     return switch (this) {
       ENavBarTabItem.feed => Assets.icons.walletPassFill,
       ENavBarTabItem.stats => Assets.icons.chartBarFill,
+      ENavBarTabItem.budgets => Assets.icons.boltSquareFill,
       ENavBarTabItem.settings => Assets.icons.gearshapeFill,
     };
   }

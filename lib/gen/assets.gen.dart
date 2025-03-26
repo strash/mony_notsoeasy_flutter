@@ -60,6 +60,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow.up.square.svg
   String get arrowUpSquare => 'assets/icons/arrow.up.square.svg';
 
+  /// File path: assets/icons/bolt.square.fill.svg
+  String get boltSquareFill => 'assets/icons/bolt.square.fill.svg';
+
   /// File path: assets/icons/calendar.svg
   String get calendar => 'assets/icons/calendar.svg';
 
@@ -301,6 +304,7 @@ class $AssetsIconsGen {
     arrowUpForwardSemibold,
     arrowUpForward,
     arrowUpSquare,
+    boltSquareFill,
     calendar,
     chartBarFill,
     checkmarkBold,

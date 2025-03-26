@@ -27,7 +27,8 @@ class NavBarView extends StatelessWidget {
     final theme = Theme.of(context);
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final viewModel = context.viewModel<NavBarViewModel>();
-    final margin = viewPadding.bottom + kBottomMargin;
+    const hPadding = 30.0;
+    final vPadding = viewPadding.bottom + kBottomMargin;
 
     return StreamBuilder<NavBarEvent>(
       stream: viewModel.subject.whereType<NavBarEventTabChanged>(),
@@ -53,9 +54,9 @@ class NavBarView extends StatelessWidget {
 
               // -> navbar
               Positioned(
-                left: margin,
-                right: margin,
-                bottom: margin,
+                left: hPadding,
+                right: hPadding,
+                bottom: vPadding,
                 child: SizedBox(
                   height: kTabHeight,
                   child: SeparatedComponent.list(
