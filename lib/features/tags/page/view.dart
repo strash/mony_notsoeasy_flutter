@@ -17,7 +17,6 @@ class TagsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<TagsViewModel>();
@@ -46,7 +45,9 @@ class TagsView extends StatelessWidget {
               hasScrollBody: false,
               child: Padding(
                 padding: EdgeInsets.only(bottom: bottomOffset),
-                child: EmptyStateComponent(color: theme.colorScheme.onSurface),
+                child: EmptyStateComponent(
+                  color: ColorScheme.of(context).onSurface,
+                ),
               ),
             )
           // -> tags

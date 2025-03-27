@@ -18,13 +18,13 @@ class FeedView extends StatelessWidget {
   }
 
   Color _emptyStateColor(BuildContext context, FeedPageState page) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
 
     return switch (page) {
-      FeedPageStateAllAccounts() => theme.colorScheme.onSurface,
+      FeedPageStateAllAccounts() => ColorScheme.of(context).onSurface,
       FeedPageStateSingleAccount(:final account) =>
-        (ex?.from(account.colorName).color ?? theme.colorScheme.onSurface),
+        (ex?.from(account.colorName).color ??
+            ColorScheme.of(context).onSurface),
     };
   }
 

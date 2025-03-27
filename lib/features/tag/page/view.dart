@@ -10,8 +10,6 @@ class TagView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final viewModel = context.viewModel<TagViewModel>();
     final keyPrefix = "tag_${viewModel.prefix}";
     final tag = viewModel.tag;
@@ -84,7 +82,7 @@ class TagView extends StatelessWidget {
             isColorsVisible: viewModel.isColorsVisible,
             isTagsVisible: viewModel.isTagsVisible,
             showFullDate: false,
-            emptyStateColor: theme.colorScheme.onSurfaceVariant,
+            emptyStateColor: ColorScheme.of(context).onSurfaceVariant,
             onTransactionPressed:
                 viewModel<OnTransactionWithContextMenuPressed>(),
             onTransactionMenuSelected:

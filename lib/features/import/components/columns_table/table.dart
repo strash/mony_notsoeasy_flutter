@@ -13,7 +13,6 @@ class EntryListComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final entry = viewModel.csv?.entries.elementAtOrNull(
       viewModel.currentEntryIndex,
@@ -23,7 +22,7 @@ class EntryListComponent extends StatelessWidget {
 
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: theme.colorScheme.surfaceContainer,
+        color: ColorScheme.of(context).surfaceContainer,
         shape: Smooth.border(20.0),
       ),
       child: Padding(

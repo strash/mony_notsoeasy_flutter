@@ -24,10 +24,9 @@ class AccountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
-    final color =
-        ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
+    final color = ex?.from(account.colorName).color ?? colorScheme.onSurface;
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
     const iconDimension = 50.0;
 
@@ -35,8 +34,8 @@ class AccountComponent extends StatelessWidget {
     final balance = this.balance;
 
     final colors = [
-      theme.colorScheme.surfaceContainerHighest,
-      theme.colorScheme.surfaceContainer,
+      colorScheme.surfaceContainerHighest,
+      colorScheme.surfaceContainer,
     ];
 
     return Row(
@@ -57,13 +56,13 @@ class AccountComponent extends StatelessWidget {
                 23.0,
                 showColors
                     ? BorderSide.none
-                    : BorderSide(color: theme.colorScheme.outlineVariant),
+                    : BorderSide(color: colorScheme.outlineVariant),
               ),
             ),
             child: Center(
               child: Text(
                 account.type.icon,
-                style: theme.textTheme.headlineMedium,
+                style: TextTheme.of(context).headlineMedium,
               ),
             ),
           ),
@@ -85,10 +84,8 @@ class AccountComponent extends StatelessWidget {
                     child: CurrencyTagComponent(
                       code: account.currency.code,
                       background:
-                          showColors
-                              ? color
-                              : theme.colorScheme.onSurfaceVariant,
-                      foreground: theme.colorScheme.surface,
+                          showColors ? color : colorScheme.onSurfaceVariant,
+                      foreground: colorScheme.surface,
                     ),
                   ),
 
@@ -102,7 +99,7 @@ class AccountComponent extends StatelessWidget {
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
                         height: 1.4,
-                        color: showColors ? color : theme.colorScheme.onSurface,
+                        color: showColors ? color : colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -121,7 +118,7 @@ class AccountComponent extends StatelessWidget {
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                     height: 1.4,
-                    color: theme.colorScheme.onSurfaceVariant,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),
@@ -139,8 +136,8 @@ class AccountComponent extends StatelessWidget {
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                     height: 1.4,
-                    color: theme.colorScheme.onSurfaceVariant,
-                    textStyle: theme.textTheme.bodyMedium,
+                    color: colorScheme.onSurfaceVariant,
+                    textStyle: TextTheme.of(context).bodyMedium,
                   ),
                 ),
             ],

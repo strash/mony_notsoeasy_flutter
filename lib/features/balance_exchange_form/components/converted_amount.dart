@@ -16,8 +16,6 @@ class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final viewModel = context.viewModel<BalanceExchangeFormViewModel>();
     final right = viewModel.rightBalance;
     final isColorsVisible = viewModel.isColorsVisible;
@@ -45,7 +43,7 @@ class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
                 autovalidateMode: AutovalidateMode.always,
                 style: GoogleFonts.golosText(
-                  color: theme.colorScheme.onSurface,
+                  color: ColorScheme.of(context).onSurface,
                   fontSize: 16.0,
                   fontWeight: FontWeight.w400,
                 ),
@@ -73,7 +71,7 @@ class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
               // -> currency tag
               if (right != null)
                 Positioned(
-                  left: 15.0,
+                  left: 12.0,
                   top: 17.0,
                   child: IgnorePointer(
                     child: CurrencyTagComponent(
@@ -81,8 +79,8 @@ class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
                       background:
                           isColorsVisible
                               ? viewModel.color(viewModel.rightAccount)
-                              : theme.colorScheme.onSurfaceVariant,
-                      foreground: theme.colorScheme.surface,
+                              : ColorScheme.of(context).onSurfaceVariant,
+                      foreground: ColorScheme.of(context).surface,
                     ),
                   ),
                 ),
@@ -109,7 +107,7 @@ class BalanceExchangeFormConvertedAmountComponent extends StatelessWidget {
                   width: 32.0,
                   height: 32.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.tertiary,
+                    ColorScheme.of(context).tertiary,
                     BlendMode.srcIn,
                   ),
                 ),

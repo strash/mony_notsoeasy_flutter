@@ -60,8 +60,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final accent = theme.colorScheme.secondary;
+    final colorScheme = ColorScheme.of(context);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -73,8 +72,10 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
           child: TweenAnimationBuilder<Color?>(
             duration: Durations.short2,
             tween: ColorTween(
-              begin: accent.withValues(alpha: 0.0),
-              end: accent.withValues(alpha: _isActive ? 1.0 : 0.0),
+              begin: colorScheme.secondary.withValues(alpha: 0.0),
+              end: colorScheme.secondary.withValues(
+                alpha: _isActive ? 1.0 : 0.0,
+              ),
             ),
             builder: (context, color, child) {
               final controller = _SelectValueProvider.of<T>(context);
@@ -82,14 +83,14 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
 
               return DecoratedBox(
                 decoration: ShapeDecoration(
-                  color: theme.colorScheme.surfaceContainer,
+                  color: colorScheme.surfaceContainer,
                   shape: Smooth.border(15.0, BorderSide(color: color!)),
                 ),
                 child: Padding(
                   padding:
                       (widget.activeEntryPadding != null && entry != null)
-                          ? widget.activeEntryPadding!
-                          : const EdgeInsets.only(left: 15.0, right: 7.0),
+                          ? widget.activeEntryPadding!.copyWith(right: 5.0)
+                          : const EdgeInsets.only(left: 15.0, right: 5.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -102,7 +103,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.golosText(
                                     fontSize: 16.0,
-                                    color: theme.colorScheme.onSurfaceVariant
+                                    color: colorScheme.onSurfaceVariant
                                         .withValues(alpha: .6),
                                   ),
                                   child: widget.placeholder ?? const Text(""),
@@ -110,7 +111,7 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                                 : DefaultTextStyle(
                                   style: GoogleFonts.golosText(
                                     fontSize: 16.0,
-                                    color: theme.colorScheme.onSurface,
+                                    color: colorScheme.onSurface,
                                     fontWeight: FontWeight.w500,
                                   ),
                                   child: entry,
@@ -122,7 +123,10 @@ class _SelectComponentState<T> extends State<SelectComponent<T>> {
                         Assets.icons.chevronUpChevronDown,
                         width: 24.0,
                         height: 24.0,
-                        colorFilter: ColorFilter.mode(accent, BlendMode.srcIn),
+                        colorFilter: ColorFilter.mode(
+                          colorScheme.secondary,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ],
                   ),

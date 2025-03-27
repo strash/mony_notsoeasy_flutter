@@ -14,7 +14,6 @@ class ImportMapCategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final categoryModel = viewModel.currentStep;
     if (categoryModel is! ImportModelCategory) {
@@ -38,7 +37,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
                 context.t.features.import.map_categories.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
-                  color: theme.colorScheme.onSurface,
+                  color: ColorScheme.of(context).onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -50,7 +49,7 @@ class ImportMapCategoriesPage extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   height: 1.3,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: ColorScheme.of(context).onSurfaceVariant,
                 ),
               ),
             ],

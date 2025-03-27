@@ -162,7 +162,6 @@ class _CalendarComponentState extends State<CalendarComponent> {
   @override
   Widget build(BuildContext context) {
     final loc = MaterialLocalizations.of(context);
-    final theme = Theme.of(context);
     const weekHeight = 26.0;
 
     return LayoutBuilder(
@@ -193,7 +192,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                             style: GoogleFonts.golosText(
                               fontSize: 13.0,
                               fontWeight: FontWeight.w600,
-                              color: theme.colorScheme.onSurfaceVariant,
+                              color: ColorScheme.of(context).onSurfaceVariant,
                             ),
                           );
                         })

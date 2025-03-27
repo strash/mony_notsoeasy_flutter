@@ -11,7 +11,6 @@ class AccountUnsettedItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final title = this.title;
 
     return Padding(
@@ -30,7 +29,7 @@ class AccountUnsettedItemComponent extends StatelessWidget {
               style: GoogleFonts.golosText(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
-                color: theme.colorScheme.onSurface,
+                color: ColorScheme.of(context).onSurface,
               ),
             ),
           ),
@@ -42,7 +41,7 @@ class AccountUnsettedItemComponent extends StatelessWidget {
             width: 24.0,
             height: 24.0,
             colorFilter: ColorFilter.mode(
-              theme.colorScheme.secondary,
+              ColorScheme.of(context).secondary,
               BlendMode.srcIn,
             ),
           ),

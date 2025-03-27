@@ -13,7 +13,7 @@ class StartAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
     final viewModel = context.viewModel<StartAccountViewModel>();
 
     return Scaffold(
@@ -31,7 +31,7 @@ class StartAccountView extends StatelessWidget {
                     width: 150.0,
                     height: 150.0,
                     colorFilter: ColorFilter.mode(
-                      theme.colorScheme.tertiaryContainer,
+                      colorScheme.tertiaryContainer,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -40,7 +40,7 @@ class StartAccountView extends StatelessWidget {
                     width: 150.0,
                     height: 150.0,
                     colorFilter: ColorFilter.mode(
-                      theme.colorScheme.secondary,
+                      colorScheme.secondary,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -60,7 +60,7 @@ class StartAccountView extends StatelessWidget {
                     context.t.features.start_account.title,
                     style: GoogleFonts.golosText(
                       fontSize: 20.0,
-                      color: theme.colorScheme.onSurface,
+                      color: colorScheme.onSurface,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -72,7 +72,7 @@ class StartAccountView extends StatelessWidget {
                     style: GoogleFonts.golosText(
                       fontSize: 15.0,
                       height: 1.3,
-                      color: theme.colorScheme.onSurfaceVariant,
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],
@@ -106,7 +106,7 @@ class StartAccountView extends StatelessWidget {
                           width: 22.0,
                           height: 22.0,
                           colorFilter: ColorFilter.mode(
-                            theme.colorScheme.onPrimary,
+                            colorScheme.onPrimary,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -124,7 +124,7 @@ class StartAccountView extends StatelessWidget {
                       Expanded(
                         child: FilledButton(
                           style: FilledButton.styleFrom(
-                            backgroundColor: theme.colorScheme.tertiary,
+                            backgroundColor: colorScheme.tertiary,
                           ),
                           onPressed:
                               !viewModel.isImportInProgress
@@ -144,7 +144,7 @@ class StartAccountView extends StatelessWidget {
                                 style: GoogleFonts.golosText(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w600,
-                                  color: theme.colorScheme.onTertiary,
+                                  color: colorScheme.onTertiary,
                                 ),
                               ),
                               const SizedBox(width: 8.0),
@@ -153,7 +153,7 @@ class StartAccountView extends StatelessWidget {
                                 width: 22.0,
                                 height: 22.0,
                                 colorFilter: ColorFilter.mode(
-                                  theme.colorScheme.onTertiary,
+                                  colorScheme.onTertiary,
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -166,7 +166,7 @@ class StartAccountView extends StatelessWidget {
                       Expanded(
                         child: FilledButton(
                           style: FilledButton.styleFrom(
-                            backgroundColor: theme.colorScheme.tertiary,
+                            backgroundColor: colorScheme.tertiary,
                           ),
                           onPressed:
                               !viewModel.isImportInProgress
@@ -186,7 +186,7 @@ class StartAccountView extends StatelessWidget {
                                 style: GoogleFonts.golosText(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w600,
-                                  color: theme.colorScheme.onTertiary,
+                                  color: colorScheme.onTertiary,
                                 ),
                               ),
                               const SizedBox(width: 8.0),
@@ -195,7 +195,7 @@ class StartAccountView extends StatelessWidget {
                                 width: 22.0,
                                 height: 22.0,
                                 colorFilter: ColorFilter.mode(
-                                  theme.colorScheme.onTertiary,
+                                  colorScheme.onTertiary,
                                   BlendMode.srcIn,
                                 ),
                               ),

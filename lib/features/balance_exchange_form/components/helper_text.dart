@@ -8,12 +8,10 @@ class BalanceExchangeFormHelperTextComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Text(
       text,
       style: GoogleFonts.golosText(
-        color: theme.colorScheme.onSurfaceVariant,
+        color: ColorScheme.of(context).onSurfaceVariant,
         fontSize: 13.0,
         height: 1.2,
         fontWeight: FontWeight.w400,

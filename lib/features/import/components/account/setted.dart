@@ -14,15 +14,15 @@ class AccountSettedItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
 
     final locale = Localizations.localeOf(context);
     final formatter = NumberFormat.compact(locale: locale.languageCode);
 
+    final colorScheme = ColorScheme.of(context);
     final color =
         ex?.from(EColorName.from(account.colorName)).color ??
-        theme.colorScheme.onSurface;
+        colorScheme.onSurface;
 
     final accountTypeDescription = context.t.models.account.type_description(
       context: account.type,
@@ -63,7 +63,7 @@ class AccountSettedItemComponent extends StatelessWidget {
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w500,
-                          color: theme.colorScheme.onSurfaceVariant,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ),
@@ -85,9 +85,9 @@ class AccountSettedItemComponent extends StatelessWidget {
               fontWeight: FontWeight.w500,
               color:
                   account.balance >= 0.0
-                      ? theme.colorScheme.secondary
-                      : theme.colorScheme.error,
-              textStyle: theme.textTheme.bodyMedium,
+                      ? colorScheme.secondary
+                      : colorScheme.error,
+              textStyle: TextTheme.of(context).bodyMedium,
             ),
           ),
         ],

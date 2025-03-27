@@ -5,7 +5,7 @@ import "package:mony_app/domain/domain.dart";
 
 class AccountCurrencyComponent extends StatelessWidget {
   final AccountBalanceModel balance;
-  final (String, String) currencyDescription;
+  final String currencyDescription;
   final Color color;
   final bool showColors;
 
@@ -19,7 +19,7 @@ class AccountCurrencyComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
 
     return SeparatedComponent.list(
       direction: Axis.horizontal,
@@ -31,7 +31,7 @@ class AccountCurrencyComponent extends StatelessWidget {
             fontSize: 18.0,
             fontWeight: FontWeight.w500,
             height: 1.4,
-            color: theme.colorScheme.onSurfaceVariant,
+            color: colorScheme.onSurfaceVariant,
           ),
         );
       },
@@ -40,32 +40,19 @@ class AccountCurrencyComponent extends StatelessWidget {
           padding: const EdgeInsets.only(top: 2.0),
           child: CurrencyTagComponent(
             code: balance.currency.code,
-            background: showColors ? color : theme.colorScheme.onSurfaceVariant,
-            foreground: theme.colorScheme.surface,
+            background: showColors ? color : colorScheme.onSurfaceVariant,
+            foreground: colorScheme.surface,
           ),
         ),
 
         Flexible(
-          child: Text.rich(
-            TextSpan(
-              text: currencyDescription.$2,
-              children: [
-                TextSpan(
-                  text: " ${currencyDescription.$1}",
-                  style: GoogleFonts.golosText(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500,
-                    height: 1.4,
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ],
-            ),
+          child: Text(
+            currencyDescription,
             style: GoogleFonts.golosText(
               fontSize: 18.0,
               fontWeight: FontWeight.w500,
               height: 1.4,
-              color: theme.colorScheme.onSurface,
+              color: colorScheme.onSurface,
             ),
           ),
         ),

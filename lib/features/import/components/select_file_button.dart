@@ -13,7 +13,6 @@ class SelectFileButtonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
 
     return FilledButton(
@@ -31,7 +30,7 @@ class SelectFileButtonComponent extends StatelessWidget {
             width: 22.0,
             height: 22.0,
             colorFilter: ColorFilter.mode(
-              theme.colorScheme.onTertiary,
+              ColorScheme.of(context).onTertiary,
               BlendMode.srcIn,
             ),
           ),

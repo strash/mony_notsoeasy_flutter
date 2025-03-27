@@ -13,7 +13,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
 
     final viewModel = context.viewModel<ImportViewModel>();
     final validation = viewModel.currentStep;
@@ -40,7 +40,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                 tr.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
-                  color: theme.colorScheme.onSurface,
+                  color: colorScheme.onSurface,
                   height: 1.4,
                   fontWeight: FontWeight.w500,
                 ),
@@ -52,7 +52,7 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                 description,
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -88,8 +88,8 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                                   height: 24.0,
                                   colorFilter: ColorFilter.mode(
                                     e.ok != null
-                                        ? theme.colorScheme.secondary
-                                        : theme.colorScheme.error,
+                                        ? colorScheme.secondary
+                                        : colorScheme.error,
                                     BlendMode.srcIn,
                                   ),
                                 ),
@@ -109,8 +109,8 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
                                         height: 1.4,
                                         color:
                                             e.ok != null
-                                                ? theme.colorScheme.onSurface
-                                                : theme.colorScheme.error,
+                                                ? colorScheme.onSurface
+                                                : colorScheme.error,
                                       ),
                                     ),
                                   ),

@@ -16,7 +16,6 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
     }
 
     final viewSize = MediaQuery.sizeOf(context);
-    final theme = Theme.of(context);
     final title = context.t.models.import.column_title(
       context: currentMappedColumn.column,
     );
@@ -50,7 +49,7 @@ final class OnColumnInfoPressed extends UseCase<void, dynamic> {
                     description,
                     style: GoogleFonts.golosText(
                       fontSize: 16.0,
-                      color: theme.colorScheme.onSurface,
+                      color: ColorScheme.of(context).onSurface,
                     ),
                   ),
                 ),

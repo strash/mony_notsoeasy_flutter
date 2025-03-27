@@ -12,7 +12,6 @@ class TransactionFormAmountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<TransactionFormViewModel>();
     final locale = Localizations.localeOf(context);
 
@@ -30,6 +29,8 @@ class TransactionFormAmountComponent extends StatelessWidget {
                 child: ListenableBuilder(
                   listenable: viewModel.typeController,
                   builder: (context, child) {
+                    final colorScheme = ColorScheme.of(context);
+
                     return AnimatedSwitcher(
                       duration: Durations.short4,
                       switchInCurve: Curves.easeInOut,
@@ -45,12 +46,11 @@ class TransactionFormAmountComponent extends StatelessWidget {
                         colorFilter: ColorFilter.mode(
                           viewModel.isColorsVisible
                               ? switch (viewModel.typeController.value) {
-                                ETransactionType.expense =>
-                                  theme.colorScheme.error,
+                                ETransactionType.expense => colorScheme.error,
                                 ETransactionType.income =>
-                                  theme.colorScheme.secondary,
+                                  colorScheme.secondary,
                               }
-                              : theme.colorScheme.onSurfaceVariant,
+                              : colorScheme.onSurfaceVariant,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -67,10 +67,10 @@ class TransactionFormAmountComponent extends StatelessWidget {
                     viewModel.amountDescription(locale.languageCode),
                     style: GoogleFonts.golosText(
                       fontSize: 50.0,
-                      color: theme.colorScheme.onSurface,
+                      color: ColorScheme.of(context).onSurface,
                       height: 1.0,
                       fontWeight: FontWeight.w400,
-                      textStyle: theme.textTheme.bodyMedium,
+                      textStyle: TextTheme.of(context).bodyMedium,
                     ),
                   );
                 },

@@ -15,7 +15,6 @@ class TransactionFormTagsComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     const height = 40.0;
 
     final viewModel = context.viewModel<TransactionFormViewModel>();
@@ -40,7 +39,7 @@ class TransactionFormTagsComponent extends StatelessWidget {
                     width: 24.0,
                     height: 24.0,
                     colorFilter: ColorFilter.mode(
-                      theme.colorScheme.secondary,
+                      ColorScheme.of(context).secondary,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -66,7 +65,7 @@ class TransactionFormTagsComponent extends StatelessWidget {
                           .tag_button_placeholder,
                       style: GoogleFonts.golosText(
                         fontSize: 17.0,
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: ColorScheme.of(context).onSurfaceVariant,
                       ),
                     ),
                   ),
@@ -123,7 +122,9 @@ class TransactionFormTagsComponent extends StatelessWidget {
                                         width: 16.0,
                                         height: 16.0,
                                         colorFilter: ColorFilter.mode(
-                                          theme.colorScheme.onSurfaceVariant,
+                                          ColorScheme.of(
+                                            context,
+                                          ).onSurfaceVariant,
                                           BlendMode.srcIn,
                                         ),
                                       ),

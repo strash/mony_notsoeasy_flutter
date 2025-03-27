@@ -20,14 +20,12 @@ class ContextMenuItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return DefaultTextStyle(
       style: GoogleFonts.golosText(
-        textStyle: theme.textTheme.bodyMedium,
+        textStyle: TextTheme.of(context).bodyMedium,
         fontSize: 17.0,
         decoration: TextDecoration.none,
-        color: theme.colorScheme.onSurface,
+        color: ColorScheme.of(context).onSurface,
       ),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -61,7 +59,7 @@ class ContextMenuItemComponent extends StatelessWidget {
                                     width: 26.0,
                                     height: 26.0,
                                     colorFilter: ColorFilter.mode(
-                                      theme.colorScheme.primary,
+                                      ColorScheme.of(context).primary,
                                       BlendMode.srcIn,
                                     ),
                                   )

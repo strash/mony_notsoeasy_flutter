@@ -93,7 +93,6 @@ class _SearchAppBarDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    final theme = Theme.of(context);
     final viewSize = MediaQuery.sizeOf(context);
 
     final viewModel = context.viewModel<SearchViewModel>();
@@ -116,9 +115,9 @@ class _SearchAppBarDelegate extends SliverPersistentHeaderDelegate {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: sigma, sigmaY: sigma),
                 child: ColoredBox(
-                  color: theme.colorScheme.surface.withValues(
-                    alpha: kTranslucentPanelOpacity,
-                  ),
+                  color: ColorScheme.of(
+                    context,
+                  ).surface.withValues(alpha: kTranslucentPanelOpacity),
                 ),
               ),
             ),

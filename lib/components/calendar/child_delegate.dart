@@ -28,7 +28,7 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
     CalendarController controller,
     DateTime date,
   ) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
     final isNow = DateTime.now().isSameDateAs(date);
 
     return ListenableBuilder(
@@ -44,8 +44,8 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
             child: DecoratedBox(
               decoration: ShapeDecoration(
                 color: switch (isActive) {
-                  true => theme.colorScheme.secondary,
-                  false => isNow ? theme.colorScheme.tertiaryContainer : null,
+                  true => colorScheme.secondary,
+                  false => isNow ? colorScheme.tertiaryContainer : null,
                 },
                 shape: Smooth.border(18.0),
               ),
@@ -59,8 +59,8 @@ final class CalendarChildDelegate extends ICalendarChildDelegate {
                     fontWeight: FontWeight.w500,
                     color:
                         isActive
-                            ? theme.colorScheme.onSecondary
-                            : theme.colorScheme.onSurface,
+                            ? colorScheme.onSecondary
+                            : colorScheme.onSurface,
                   ),
                 ),
               ),

@@ -24,7 +24,6 @@ class ImportCategorySectionComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final count = categories.fold<int>(0, (prev, e) {
       return prev + (e is ImportModelCategoryVariantEmpty ? 0 : 1);
     });
@@ -45,7 +44,7 @@ class ImportCategorySectionComponent extends StatelessWidget {
                     width: 20.0,
                     height: 20.0,
                     colorFilter: ColorFilter.mode(
-                      theme.colorScheme.secondary,
+                      ColorScheme.of(context).secondary,
                       BlendMode.srcIn,
                     ),
                   ),
@@ -61,7 +60,7 @@ class ImportCategorySectionComponent extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.tertiary,
+                  color: ColorScheme.of(context).tertiary,
                 ),
               ),
             ],

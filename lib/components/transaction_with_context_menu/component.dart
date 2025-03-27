@@ -116,7 +116,6 @@ class _TransactionWithContextMenuComponentState
         );
       },
       buttonProxyBuilder: (context, anim, status, dismiss) {
-        final theme = Theme.of(context);
         final t = Curves.easeInQuad.transform(anim);
         final scale = t.remap(.0, 1.0, 1.0, _scale);
 
@@ -129,7 +128,7 @@ class _TransactionWithContextMenuComponentState
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: DecoratedBox(
                 decoration: ShapeDecoration(
-                  color: theme.colorScheme.surface,
+                  color: ColorScheme.of(context).surface,
                   shape: Smooth.border(23.0),
                 ),
                 child: Padding(
@@ -148,8 +147,6 @@ class _TransactionWithContextMenuComponentState
         );
       },
       popupBuilder: (context, anim, status, dismiss) {
-        final theme = Theme.of(context);
-
         return SeparatedComponent.builder(
           mainAxisSize: MainAxisSize.min,
           separatorBuilder: (context, index) {
@@ -168,7 +165,7 @@ class _TransactionWithContextMenuComponentState
               icon: SvgPicture.asset(
                 item.icon,
                 colorFilter: ColorFilter.mode(
-                  theme.colorScheme.onSurface,
+                  ColorScheme.of(context).onSurface,
                   BlendMode.srcIn,
                 ),
               ),

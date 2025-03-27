@@ -11,8 +11,6 @@ class StatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final viewModel = context.viewModel<StatsViewModel>();
     final transactions = viewModel.transactions;
     const keyPrefix = "stats_feed";
@@ -101,7 +99,7 @@ class StatsView extends StatelessWidget {
               isColorsVisible: viewModel.isColorsVisible,
               isTagsVisible: viewModel.isTagsVisible,
               showFullDate: false,
-              emptyStateColor: theme.colorScheme.onSurfaceVariant,
+              emptyStateColor: ColorScheme.of(context).onSurfaceVariant,
               onTransactionPressed:
                   viewModel<OnTransactionWithContextMenuPressed>(),
               onTransactionMenuSelected:

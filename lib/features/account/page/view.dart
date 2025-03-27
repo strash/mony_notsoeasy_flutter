@@ -16,15 +16,14 @@ class AccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bottomOffset = NavBarView.bottomOffset(context);
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
 
     final viewModel = context.viewModel<AccountViewModel>();
     final account = viewModel.account;
     final balance = viewModel.balance;
 
     final color =
-        ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
+        ex?.from(account.colorName).color ?? ColorScheme.of(context).onSurface;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

@@ -24,7 +24,6 @@ class NavBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewPadding = MediaQuery.viewPaddingOf(context);
     final viewModel = context.viewModel<NavBarViewModel>();
     const hPadding = 30.0;
@@ -81,7 +80,8 @@ class NavBarView extends StatelessWidget {
                               tileMode: TileMode.repeated,
                             ),
                             child: ColoredBox(
-                              color: theme.colorScheme.surfaceContainerHigh
+                              color: ColorScheme.of(context)
+                                  .surfaceContainerHigh
                                   .withValues(alpha: kTranslucentPanelOpacity),
                               child: Row(
                                 children: ENavBarTabItem.values

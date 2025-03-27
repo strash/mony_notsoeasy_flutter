@@ -15,10 +15,10 @@ class _ColorGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
     final namedColor =
-        ex?.from(colorName).color ?? theme.colorScheme.surfaceContainer;
+        ex?.from(colorName).color ?? colorScheme.surfaceContainer;
     const borderRadius = BorderRadius.all(Radius.circular(100.0));
     const transparent = Color(0x00FFFFFF);
 
@@ -33,7 +33,7 @@ class _ColorGridItem extends StatelessWidget {
         child: TweenAnimationBuilder<Color?>(
           tween: ColorTween(
             begin: transparent,
-            end: isActive ? theme.colorScheme.tertiaryContainer : transparent,
+            end: isActive ? colorScheme.tertiaryContainer : transparent,
           ),
           duration: Durations.medium2,
           curve: Curves.easeInOut,
@@ -47,7 +47,7 @@ class _ColorGridItem extends StatelessWidget {
                     borderRadius: borderRadius,
                     border: Border.all(
                       width: isActive ? 2.0 : .0,
-                      color: color ?? theme.colorScheme.tertiary,
+                      color: color ?? colorScheme.tertiary,
                     ),
                   ),
                   child: Padding(
@@ -71,7 +71,7 @@ class _ColorGridItem extends StatelessWidget {
                       width: 26.0,
                       height: 26.0,
                       colorFilter: ColorFilter.mode(
-                        theme.colorScheme.surface,
+                        colorScheme.surface,
                         BlendMode.srcIn,
                       ),
                     ),

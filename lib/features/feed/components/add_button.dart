@@ -56,8 +56,6 @@ class FeedAddButtonComponent extends StatelessWidget {
           );
         },
         popupBuilder: (context, anim, status, dismiss) {
-          final theme = Theme.of(context);
-
           return SeparatedComponent.builder(
             itemCount: EFeedMenuItem.values.length,
             mainAxisSize: MainAxisSize.min,
@@ -80,7 +78,7 @@ class FeedAddButtonComponent extends StatelessWidget {
                 icon: SvgPicture.asset(
                   item.icon,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.onSurface,
+                    ColorScheme.of(context).onSurface,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -102,8 +100,6 @@ class _Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return SizedBox.square(
       dimension: AppBarComponent.height,
       child: Center(
@@ -117,14 +113,16 @@ class _Button extends StatelessWidget {
                 sigmaY: kTranslucentPanelBlurSigma,
               ),
               child: ColoredBox(
-                color: theme.colorScheme.surfaceContainer.withValues(alpha: .5),
+                color: ColorScheme.of(
+                  context,
+                ).surfaceContainer.withValues(alpha: .5),
                 child: Center(
                   child: SvgPicture.asset(
                     Assets.icons.plus,
                     width: 24.0,
                     height: 24.0,
                     colorFilter: ColorFilter.mode(
-                      theme.colorScheme.onSurface,
+                      ColorScheme.of(context).onSurface,
                       BlendMode.srcIn,
                     ),
                   ),

@@ -58,8 +58,6 @@ class _TransactionFormSymbolButtonComponentState
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: _isEnabled ? () => widget.onTap(context, widget.button) : null,
@@ -85,9 +83,9 @@ class _TransactionFormSymbolButtonComponentState
                   end:
                       _isEnabled
                           ? widget.button.color
-                          : theme.colorScheme.surfaceContainer.withValues(
-                            alpha: .5,
-                          ),
+                          : ColorScheme.of(
+                            context,
+                          ).surfaceContainer.withValues(alpha: .5),
                 ),
                 child: Center(
                   child: AnimatedOpacity(
@@ -101,7 +99,7 @@ class _TransactionFormSymbolButtonComponentState
                         style: GoogleFonts.golosText(
                           fontSize: 34.0,
                           fontWeight: FontWeight.w500,
-                          color: theme.colorScheme.onSurface,
+                          color: ColorScheme.of(context).onSurface,
                           decoration: TextDecoration.none,
                         ),
                       ),
@@ -114,8 +112,8 @@ class _TransactionFormSymbolButtonComponentState
                           height: 36.0,
                           colorFilter: ColorFilter.mode(
                             _isEnabled
-                                ? theme.colorScheme.surface
-                                : theme.colorScheme.onSurfaceVariant,
+                                ? ColorScheme.of(context).surface
+                                : ColorScheme.of(context).onSurfaceVariant,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -128,9 +126,11 @@ class _TransactionFormSymbolButtonComponentState
                       SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 0.6),
                     ),
                     child: ColoredBox(
-                      color: color ?? theme.colorScheme.surfaceContainer,
+                      color: color ?? ColorScheme.of(context).surfaceContainer,
                       child: ColoredBox(
-                        color: theme.colorScheme.primaryContainer.withValues(
+                        color: ColorScheme.of(
+                          context,
+                        ).primaryContainer.withValues(
                           alpha: _animation.value.remap(.0, 1.0, .0, .2),
                         ),
                         child: child,

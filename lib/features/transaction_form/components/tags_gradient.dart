@@ -11,8 +11,7 @@ class TransactionFormTagsGradientComponent extends StatelessWidget {
   });
 
   List<Color> _getColors(BuildContext context) {
-    final theme = Theme.of(context);
-    final color = theme.colorScheme.surface;
+    final color = ColorScheme.of(context).surface;
     return isLeft
         ? [color, color.withValues(alpha: .0)]
         : [color.withValues(alpha: .0), color];

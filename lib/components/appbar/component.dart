@@ -184,11 +184,10 @@ class _AppBarState extends State<_AppBar> {
   }
 
   TextStyle get _titleStyle {
-    final theme = Theme.of(context);
     return GoogleFonts.golosText(
       fontSize: 20.0,
       fontWeight: FontWeight.w500,
-      color: theme.colorScheme.onSurface,
+      color: ColorScheme.of(context).onSurface,
     );
   }
 

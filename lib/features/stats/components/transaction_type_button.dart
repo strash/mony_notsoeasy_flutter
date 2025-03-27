@@ -43,7 +43,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
 
     final viewModel = context.viewModel<StatsViewModel>();
     final account = viewModel.accountController.value;
@@ -55,14 +55,12 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
         onTap: () => viewModel<OnTransactionTypeSelected>()(context, type),
         child: DecoratedBox(
           decoration: ShapeDecoration(
-            color: theme.colorScheme.surfaceContainer,
+            color: colorScheme.surfaceContainer,
             shape: Smooth.border(
               15.0,
               BorderSide(
                 color:
-                    isActive
-                        ? theme.colorScheme.secondary
-                        : const Color(0x00FFFFFF),
+                    isActive ? colorScheme.secondary : const Color(0x00FFFFFF),
               ),
             ),
           ),
@@ -96,7 +94,7 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                         style: GoogleFonts.golosText(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w500,
-                          color: theme.colorScheme.onSurfaceVariant,
+                          color: colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ),
@@ -116,8 +114,8 @@ class StatsTransactionTypeButtonComponent extends StatelessWidget {
                       fontSize: 18.0,
                       height: 1.4,
                       fontWeight: FontWeight.w500,
-                      color: theme.colorScheme.onSurface,
-                      textStyle: theme.textTheme.bodyMedium,
+                      color: colorScheme.onSurface,
+                      textStyle: TextTheme.of(context).bodyMedium,
                     ),
                   ),
                 ),
@@ -139,10 +137,9 @@ extension on ETransactionType {
   }
 
   Color getColor(BuildContext context) {
-    final theme = Theme.of(context);
     return switch (this) {
-      ETransactionType.expense => theme.colorScheme.error,
-      ETransactionType.income => theme.colorScheme.secondary,
+      ETransactionType.expense => ColorScheme.of(context).error,
+      ETransactionType.income => ColorScheme.of(context).secondary,
     };
   }
 }

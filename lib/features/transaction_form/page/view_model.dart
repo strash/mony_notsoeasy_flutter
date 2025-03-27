@@ -92,7 +92,7 @@ final class TransactionFormViewModel
         return TransactionFormButtonTypeSymbol(
           value: value,
           displayedValue: value,
-          color: Theme.of(context).colorScheme.surfaceContainer,
+          color: ColorScheme.of(context).surfaceContainer,
           isEnabled: (newValue) {
             final trim = newValue.trim();
             return !regEx.hasMatch(trim) && trim.length != kMaxAmountLength;
@@ -103,7 +103,7 @@ final class TransactionFormViewModel
       TransactionFormButtonTypeSymbol(
         value: ".",
         displayedValue: decimalSeparator,
-        color: Theme.of(context).colorScheme.surfaceContainer,
+        color: ColorScheme.of(context).surfaceContainer,
         isEnabled: (value) {
           final trim = value.trim();
           return !trim.contains(".") && trim.length != kMaxAmountLength;
@@ -112,7 +112,7 @@ final class TransactionFormViewModel
       TransactionFormButtonTypeSymbol(
         value: "0",
         displayedValue: "0",
-        color: Theme.of(context).colorScheme.surfaceContainer,
+        color: ColorScheme.of(context).surfaceContainer,
         isEnabled: (value) {
           final trim = value.trim();
           return !regEx.hasMatch(trim) && trim.length != kMaxAmountLength;
@@ -120,7 +120,7 @@ final class TransactionFormViewModel
       ),
       TransactionFormButtonTypeAction(
         icon: Assets.icons.checkmarkBold,
-        color: Theme.of(context).colorScheme.secondary,
+        color: ColorScheme.of(context).secondary,
         isEnabled: (value) {
           final trim = value.trim();
           final hasCategory = switch (typeController.value) {

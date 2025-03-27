@@ -12,8 +12,8 @@ class StatsChartComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
+    final ex = Theme.of(context).extension<ColorExtension>();
 
     final viewModel = context.viewModel<StatsViewModel>();
     final transactions = viewModel.transactions;
@@ -26,12 +26,12 @@ class StatsChartComponent extends StatelessWidget {
       aspectRatio: 1.5,
       child: ChartComponent(
         config: ChartConfig(
-          gridColor: theme.colorScheme.onSurfaceVariant.withValues(alpha: .4),
-          gridSecondaryColor: theme.colorScheme.onSurfaceVariant.withValues(
+          gridColor: colorScheme.onSurfaceVariant.withValues(alpha: .4),
+          gridSecondaryColor: colorScheme.onSurfaceVariant.withValues(
             alpha: .2,
           ),
           showMedian: true,
-          medianLineColor: theme.colorScheme.primary,
+          medianLineColor: colorScheme.primary,
           medianPadding: const EdgeInsets.symmetric(
             horizontal: 4.5,
             vertical: 1.5,
@@ -40,7 +40,7 @@ class StatsChartComponent extends StatelessWidget {
           medianStyle: GoogleFonts.golosText(
             fontSize: 12.0,
             fontWeight: FontWeight.w600,
-            color: theme.colorScheme.onPrimary,
+            color: colorScheme.onPrimary,
           ),
           padding: switch (viewModel.activeTemporalView) {
             EChartTemporalView.year => 3.0,
@@ -55,12 +55,12 @@ class StatsChartComponent extends StatelessWidget {
           legendStyle: GoogleFonts.golosText(
             fontSize: 11.0,
             fontWeight: FontWeight.w500,
-            color: theme.colorScheme.onSurfaceVariant,
+            color: colorScheme.onSurfaceVariant,
           ),
           groupColor: (group) {
             final category = group as CategoryModel?;
             if (!viewModel.isColorsVisible || category == null || ex == null) {
-              return theme.colorScheme.tertiary;
+              return colorScheme.tertiary;
             }
             return ex.from(category.colorName).color;
           },

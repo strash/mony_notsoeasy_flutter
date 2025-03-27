@@ -135,8 +135,6 @@ class _TagWithContextMenuComponentState
         );
       },
       popupBuilder: (context, anim, status, dismiss) {
-        final theme = Theme.of(context);
-
         return SeparatedComponent.builder(
           mainAxisSize: MainAxisSize.min,
           separatorBuilder: (context, index) {
@@ -155,7 +153,7 @@ class _TagWithContextMenuComponentState
               icon: SvgPicture.asset(
                 item.icon,
                 colorFilter: ColorFilter.mode(
-                  theme.colorScheme.onSurface,
+                  ColorScheme.of(context).onSurface,
                   BlendMode.srcIn,
                 ),
               ),

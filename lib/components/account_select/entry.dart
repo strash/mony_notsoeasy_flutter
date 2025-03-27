@@ -11,10 +11,9 @@ class _AccountSelectEntryComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
-    final color =
-        ex?.from(account.colorName).color ?? theme.colorScheme.primary;
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
+    final color = ex?.from(account.colorName).color ?? colorScheme.primary;
 
     return SelectEntryComponent<AccountModel>(
       value: account,
@@ -32,22 +31,20 @@ class _AccountSelectEntryComponent extends StatelessWidget {
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
                     color:
-                        isColorsVisible
-                            ? color
-                            : theme.colorScheme.surfaceContainer,
+                        isColorsVisible ? color : colorScheme.surfaceContainer,
                     shape: Smooth.border(
                       14.0,
                       isColorsVisible
                           ? BorderSide.none
-                          : BorderSide(color: theme.colorScheme.outlineVariant),
+                          : BorderSide(color: colorScheme.outlineVariant),
                     ),
                   ),
                   child: Center(
                     child: Text(
                       account.type.icon,
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        height: .0,
-                      ),
+                      style: TextTheme.of(
+                        context,
+                      ).headlineSmall?.copyWith(height: .0),
                     ),
                   ),
                 ),
@@ -71,8 +68,8 @@ class _AccountSelectEntryComponent extends StatelessWidget {
                             background:
                                 isColorsVisible
                                     ? color
-                                    : theme.colorScheme.onSurfaceVariant,
-                            foreground: theme.colorScheme.surface,
+                                    : colorScheme.onSurfaceVariant,
+                            foreground: colorScheme.surface,
                           ),
                         ),
 
@@ -87,7 +84,7 @@ class _AccountSelectEntryComponent extends StatelessWidget {
                               color:
                                   isColorsVisible
                                       ? color
-                                      : theme.colorScheme.onSurface,
+                                      : colorScheme.onSurface,
                             ),
                           ),
                         ),
@@ -103,7 +100,7 @@ class _AccountSelectEntryComponent extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: style.copyWith(
                         fontSize: 14.0,
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ],

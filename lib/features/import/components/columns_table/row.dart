@@ -15,7 +15,7 @@ class EntryListRowComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final column =
         viewModel.mappedColumns
@@ -50,7 +50,7 @@ class EntryListRowComponent extends StatelessWidget {
                         fontSize: 16.0,
                         height: 1.4,
                         fontWeight: FontWeight.w600,
-                        color: theme.colorScheme.onSurface,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -65,8 +65,8 @@ class EntryListRowComponent extends StatelessWidget {
                       style: GoogleFonts.golosText(
                         fontSize: 16.0,
                         height: 1.4,
-                        color: theme.colorScheme.onSurface,
-                        textStyle: theme.textTheme.bodyMedium,
+                        color: colorScheme.onSurface,
+                        textStyle: TextTheme.of(context).bodyMedium,
                       ),
                     ),
                   ),
@@ -96,11 +96,11 @@ class EntryListRowComponent extends StatelessWidget {
                       ),
                       child: TweenAnimationBuilder<Color?>(
                         tween: ColorTween(
-                          begin: theme.colorScheme.secondary,
+                          begin: colorScheme.secondary,
                           end:
                               column?.columnKey == entry.key
-                                  ? theme.colorScheme.tertiary
-                                  : theme.colorScheme.secondary,
+                                  ? colorScheme.tertiary
+                                  : colorScheme.secondary,
                         ),
                         duration: Durations.short2,
                         child: Padding(
@@ -120,7 +120,7 @@ class EntryListRowComponent extends StatelessWidget {
                                 fontSize: 15.0,
                                 height: 1.4,
                                 fontWeight: FontWeight.w600,
-                                color: theme.colorScheme.onSecondary,
+                                color: colorScheme.onSecondary,
                               ),
                             ),
                           ),

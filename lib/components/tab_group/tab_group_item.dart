@@ -15,7 +15,7 @@ class TabGroupEntryComponent<T> extends StatefulWidget {
 
   static TextStyle style(BuildContext context) {
     return GoogleFonts.golosText(
-      textStyle: Theme.of(context).textTheme.bodyMedium,
+      textStyle: TextTheme.of(context).bodyMedium,
       fontSize: 15.0,
       fontWeight: FontWeight.w500,
       decoration: TextDecoration.none,
@@ -65,8 +65,6 @@ class _TabGroupEntryComponentState<T> extends State<TabGroupEntryComponent<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -78,11 +76,11 @@ class _TabGroupEntryComponentState<T> extends State<TabGroupEntryComponent<T>> {
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short4,
           tween: ColorTween(
-            begin: theme.colorScheme.onSurfaceVariant,
+            begin: ColorScheme.of(context).onSurfaceVariant,
             end:
                 widget.isActive
-                    ? theme.colorScheme.onSurface
-                    : theme.colorScheme.onSurfaceVariant,
+                    ? ColorScheme.of(context).onSurface
+                    : ColorScheme.of(context).onSurfaceVariant,
           ),
           builder: (context, color, child) {
             return Text(

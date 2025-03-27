@@ -17,7 +17,6 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     const gap = 6.0;
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
@@ -94,7 +93,9 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
                   child: ColoredBox(
-                    color: theme.colorScheme.surface.withValues(alpha: .8),
+                    color: ColorScheme.of(
+                      context,
+                    ).surface.withValues(alpha: .8),
                     child: Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -105,7 +106,7 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
                             width: 60.0,
                             height: 60.0,
                             colorFilter: ColorFilter.mode(
-                              theme.colorScheme.tertiary,
+                              ColorScheme.of(context).tertiary,
                               BlendMode.srcIn,
                             ),
                           ),
@@ -117,7 +118,7 @@ class TransactionFormKeyboadrComponent extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.golosText(
                               fontSize: 16.0,
-                              color: theme.colorScheme.onSurface,
+                              color: ColorScheme.of(context).onSurface,
                             ),
                           ),
                           const SizedBox(height: 15.0),

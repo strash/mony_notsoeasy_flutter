@@ -50,8 +50,6 @@ class CategoriesAddButtonComponent extends StatelessWidget {
         );
       },
       popupBuilder: (context, anim, status, dismiss) {
-        final theme = Theme.of(context);
-
         return SeparatedComponent.builder(
           mainAxisSize: MainAxisSize.min,
           itemCount: ETransactionType.values.length,
@@ -70,7 +68,7 @@ class CategoriesAddButtonComponent extends StatelessWidget {
               icon: SvgPicture.asset(
                 item.icon,
                 colorFilter: ColorFilter.mode(
-                  theme.colorScheme.onSurface,
+                  ColorScheme.of(context).onSurface,
                   BlendMode.srcIn,
                 ),
               ),
@@ -91,8 +89,6 @@ class _Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return SizedBox.square(
       dimension: AppBarComponent.height,
       child: Center(
@@ -101,7 +97,7 @@ class _Button extends StatelessWidget {
           width: 28.0,
           height: 28.0,
           colorFilter: ColorFilter.mode(
-            theme.colorScheme.primary,
+            ColorScheme.of(context).primary,
             BlendMode.srcIn,
           ),
         ),

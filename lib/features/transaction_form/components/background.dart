@@ -19,7 +19,6 @@ class TransactionFormBackgroundComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final brightness = MediaQuery.platformBrightnessOf(context);
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
@@ -35,8 +34,8 @@ class TransactionFormBackgroundComponent extends StatelessWidget {
       listenable: viewModel.typeController,
       builder: (context, child) {
         final color = switch (viewModel.typeController.value) {
-          ETransactionType.expense => theme.colorScheme.error,
-          ETransactionType.income => theme.colorScheme.secondary,
+          ETransactionType.expense => ColorScheme.of(context).error,
+          ETransactionType.income => ColorScheme.of(context).secondary,
         };
         final end = RadialGradient(
           center: Alignment.topCenter,

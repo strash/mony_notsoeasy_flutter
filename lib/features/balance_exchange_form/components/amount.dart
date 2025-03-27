@@ -12,7 +12,6 @@ class BalanceExchangeFormAmountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<BalanceExchangeFormViewModel>();
     final left = viewModel.leftBalance;
     final showColors = viewModel.isColorsVisible;
@@ -32,7 +31,7 @@ class BalanceExchangeFormAmountComponent extends StatelessWidget {
           maxLengthEnforcement: MaxLengthEnforcement.enforced,
           autovalidateMode: AutovalidateMode.always,
           style: GoogleFonts.golosText(
-            color: theme.colorScheme.onSurface,
+            color: ColorScheme.of(context).onSurface,
             fontSize: 16.0,
             fontWeight: FontWeight.w400,
           ),
@@ -46,7 +45,7 @@ class BalanceExchangeFormAmountComponent extends StatelessWidget {
 
         if (left != null)
           Positioned(
-            left: 15.0,
+            left: 12.0,
             top: 17.0,
             child: IgnorePointer(
               child: CurrencyTagComponent(
@@ -54,8 +53,8 @@ class BalanceExchangeFormAmountComponent extends StatelessWidget {
                 background:
                     showColors
                         ? viewModel.color(viewModel.leftAccount)
-                        : theme.colorScheme.onSurfaceVariant,
-                foreground: theme.colorScheme.surface,
+                        : ColorScheme.of(context).onSurfaceVariant,
+                foreground: ColorScheme.of(context).surface,
               ),
             ),
           ),

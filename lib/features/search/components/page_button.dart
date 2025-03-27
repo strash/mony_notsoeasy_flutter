@@ -13,8 +13,6 @@ class SearchPageButtonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final viewModel = context.viewModel<SearchViewModel>();
 
     return GestureDetector(
@@ -31,7 +29,7 @@ class SearchPageButtonComponent extends StatelessWidget {
               width: 28.0,
               height: 28.0,
               colorFilter: ColorFilter.mode(
-                theme.colorScheme.onSurfaceVariant,
+                ColorScheme.of(context).onSurfaceVariant,
                 BlendMode.srcIn,
               ),
             ),
@@ -42,7 +40,7 @@ class SearchPageButtonComponent extends StatelessWidget {
               context.t.features.search.page_title(context: page),
               style: GoogleFonts.golosText(
                 fontSize: 18.0,
-                color: theme.colorScheme.onSurface,
+                color: ColorScheme.of(context).onSurface,
               ),
             ),
             const Spacer(),
@@ -57,7 +55,7 @@ class SearchPageButtonComponent extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: ColorScheme.of(context).onSurfaceVariant,
                 ),
               ),
             ),

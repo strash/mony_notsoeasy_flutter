@@ -16,11 +16,9 @@ class CurrencyTagComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: background ?? theme.colorScheme.tertiaryContainer,
+        color: background ?? ColorScheme.of(context).tertiaryContainer,
         shape: Smooth.border(5.0),
       ),
       child: Padding(
@@ -31,8 +29,8 @@ class CurrencyTagComponent extends StatelessWidget {
             fontSize: 10.0,
             height: 1.0,
             fontWeight: FontWeight.w600,
-            color: foreground ?? theme.colorScheme.onTertiaryContainer,
-            textStyle: theme.textTheme.bodySmall,
+            color: foreground ?? ColorScheme.of(context).onTertiaryContainer,
+            textStyle: TextTheme.of(context).bodySmall,
           ),
         ),
       ),

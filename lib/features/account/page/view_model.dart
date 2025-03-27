@@ -29,16 +29,15 @@ final class AccountViewModel extends ViewModelState<AccountPage> {
 
   bool isColorsVisible = true;
 
-  (String, String) currencyDescription(FiatCurrency? currency) {
-    if (currency == null) return ("", "");
+  String currencyDescription(FiatCurrency? currency) {
+    if (currency == null) return "";
     final locale = Localizations.localeOf(context);
     final lang = NaturalLanguage.maybeFromCodeShort(locale.countryCode);
-    final symbol = currency.symbol ?? "";
     if (lang != null) {
       final base = BasicLocale(lang);
-      return (symbol, currency.maybeTranslation(base)?.toString() ?? "");
+      return currency.maybeTranslation(base)?.toString() ?? "";
     }
-    return (symbol, currency.name);
+    return currency.name;
   }
 
   void _onAppEvent(Event event) {

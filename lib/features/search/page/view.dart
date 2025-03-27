@@ -8,7 +8,6 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final bottomOffset = MediaQuery.paddingOf(context).bottom + 50.0;
 
     final viewModel = context.viewModel<SearchViewModel>();
@@ -23,7 +22,7 @@ class SearchView extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       extendBody: true,
       extendBodyBehindAppBar: true,
-      backgroundColor: theme.colorScheme.surface,
+      backgroundColor: ColorScheme.of(context).surface,
       body: CustomScrollView(
         controller: viewModel.getPageTabController(viewModel.activeTab),
         physics: const BouncingScrollPhysics(

@@ -18,8 +18,6 @@ class AppBarButtonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
@@ -37,7 +35,7 @@ class AppBarButtonComponent extends StatelessWidget {
                 width: 28.0,
                 height: 28.0,
                 colorFilter: ColorFilter.mode(
-                  color ?? theme.colorScheme.primary,
+                  color ?? ColorScheme.of(context).primary,
                   BlendMode.srcIn,
                 ),
               ),

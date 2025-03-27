@@ -66,7 +66,6 @@ class _TabGroupComponentState<T> extends State<TabGroupComponent<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final isLight =
         MediaQuery.platformBrightnessOf(context) == Brightness.light;
 
@@ -80,8 +79,8 @@ class _TabGroupComponentState<T> extends State<TabGroupComponent<T>> {
           ColoredBox(
             color:
                 isLight
-                    ? theme.colorScheme.surfaceContainer
-                    : theme.colorScheme.surfaceContainerLowest,
+                    ? ColorScheme.of(context).surfaceContainer
+                    : ColorScheme.of(context).surfaceContainerLowest,
             child: Padding(
               padding: _padding,
               child: SizedBox.fromSize(
@@ -99,11 +98,13 @@ class _TabGroupComponentState<T> extends State<TabGroupComponent<T>> {
               decoration: ShapeDecoration(
                 color:
                     isLight
-                        ? theme.colorScheme.surface
-                        : theme.colorScheme.surfaceContainer,
+                        ? ColorScheme.of(context).surface
+                        : ColorScheme.of(context).surfaceContainer,
                 shadows: [
                   BoxShadow(
-                    color: theme.colorScheme.shadow.withValues(alpha: .15),
+                    color: ColorScheme.of(
+                      context,
+                    ).shadow.withValues(alpha: .15),
                     blurRadius: 6.0,
                     spreadRadius: -1.0,
                     offset: const Offset(.0, 2.0),

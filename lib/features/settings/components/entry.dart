@@ -15,7 +15,7 @@ class SettingsEntryComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
 
     return GestureDetector(
       onTap: onTap,
@@ -36,8 +36,8 @@ class SettingsEntryComponent extends StatelessWidget {
                   fontSize: 16.0,
                   color:
                       onTap != null
-                          ? theme.colorScheme.onSurface
-                          : theme.colorScheme.onSurfaceVariant,
+                          ? colorScheme.onSurface
+                          : colorScheme.onSurfaceVariant,
                 ),
                 child: title,
               ),
@@ -48,7 +48,7 @@ class SettingsEntryComponent extends StatelessWidget {
                   style: GoogleFonts.golosText(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
-                    color: theme.colorScheme.onSurfaceVariant,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                   child: trailing!,
                 ),

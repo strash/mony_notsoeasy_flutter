@@ -31,8 +31,6 @@ class StatsCategoriesLegendComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final viewSize = MediaQuery.sizeOf(context);
     final stop = 50.0.remap(.0, viewSize.width, .0, 1.0);
 
@@ -107,7 +105,7 @@ class StatsCategoriesLegendComponent extends StatelessWidget {
                         fontSize: 14.0,
                         fontWeight: FontWeight.w500,
                         height: 1.0,
-                        color: theme.colorScheme.onSurface,
+                        color: ColorScheme.of(context).onSurface,
                       ),
                     ),
                     const SizedBox(height: 3.0),
@@ -119,7 +117,7 @@ class StatsCategoriesLegendComponent extends StatelessWidget {
                         fontSize: 13.0,
                         fontWeight: FontWeight.w500,
                         height: 1.3,
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: ColorScheme.of(context).onSurfaceVariant,
                       ),
                     ),
                   ],

@@ -34,7 +34,6 @@ class TransactionListComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final feed = transactions.toFeed();
@@ -47,7 +46,9 @@ class TransactionListComponent extends StatelessWidget {
           padding: EdgeInsets.only(bottom: bottomOffset),
           child: EmptyStateComponent(
             color:
-                isColorsVisible ? emptyStateColor : theme.colorScheme.onSurface,
+                isColorsVisible
+                    ? emptyStateColor
+                    : ColorScheme.of(context).onSurface,
           ),
         ),
       );

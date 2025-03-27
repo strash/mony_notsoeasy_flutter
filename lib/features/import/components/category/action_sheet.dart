@@ -16,8 +16,6 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Padding(
       padding: EdgeInsets.only(
         left: 15.0,
@@ -37,7 +35,7 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
                   width: 100.0,
                   height: 100.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.tertiaryContainer,
+                    ColorScheme.of(context).tertiaryContainer,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -46,7 +44,7 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
                   width: 100.0,
                   height: 100.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.secondary,
+                    ColorScheme.of(context).secondary,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -60,7 +58,7 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
             context.t.features.import.map_categories.action_sheet.title,
             style: GoogleFonts.golosText(
               fontSize: 20.0,
-              color: theme.colorScheme.onSurface,
+              color: ColorScheme.of(context).onSurface,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -72,7 +70,7 @@ class ImportCategoryActionBottomSheetComponent extends StatelessWidget {
             style: GoogleFonts.golosText(
               fontSize: 15.0,
               height: 1.3,
-              color: theme.colorScheme.onSurface,
+              color: ColorScheme.of(context).onSurface,
             ),
           ),
           const SizedBox(height: 40.0),

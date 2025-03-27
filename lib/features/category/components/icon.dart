@@ -20,14 +20,13 @@ class CategoryIconComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
-    final color =
-        ex?.from(category.colorName).color ?? theme.colorScheme.onSurface;
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
+    final color = ex?.from(category.colorName).color ?? colorScheme.onSurface;
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
     final colors = [
-      theme.colorScheme.surfaceContainerHighest,
-      theme.colorScheme.surfaceContainer,
+      colorScheme.surfaceContainerHighest,
+      colorScheme.surfaceContainer,
     ];
 
     return Column(
@@ -48,11 +47,14 @@ class CategoryIconComponent extends StatelessWidget {
                   30.0,
                   showColors
                       ? BorderSide.none
-                      : BorderSide(color: theme.colorScheme.outlineVariant),
+                      : BorderSide(color: colorScheme.outlineVariant),
                 ),
               ),
               child: Center(
-                child: Text(category.icon, style: theme.textTheme.displayLarge),
+                child: Text(
+                  category.icon,
+                  style: TextTheme.of(context).displayLarge,
+                ),
               ),
             ),
           ),
@@ -66,7 +68,7 @@ class CategoryIconComponent extends StatelessWidget {
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
-            color: showColors ? color : theme.colorScheme.onSurface,
+            color: showColors ? color : colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 2.0),
@@ -81,8 +83,8 @@ class CategoryIconComponent extends StatelessWidget {
               width: 16.0,
               height: 16.0,
               colorFilter: ColorFilter.mode(switch (category.transactionType) {
-                ETransactionType.expense => theme.colorScheme.error,
-                ETransactionType.income => theme.colorScheme.secondary,
+                ETransactionType.expense => colorScheme.error,
+                ETransactionType.income => colorScheme.secondary,
               }, BlendMode.srcIn),
             ),
             const SizedBox(width: 5.0),
@@ -96,7 +98,7 @@ class CategoryIconComponent extends StatelessWidget {
               style: GoogleFonts.golosText(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
-                color: theme.colorScheme.onSurfaceVariant,
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           ],

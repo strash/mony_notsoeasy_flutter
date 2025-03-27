@@ -20,14 +20,13 @@ class CategoryComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
-    final color =
-        ex?.from(category.colorName).color ?? theme.colorScheme.onSurface;
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
+    final color = ex?.from(category.colorName).color ?? colorScheme.onSurface;
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
     final colors = [
-      theme.colorScheme.surfaceContainerHighest,
-      theme.colorScheme.surfaceContainer,
+      colorScheme.surfaceContainerHighest,
+      colorScheme.surfaceContainer,
     ];
     const iconDimension = 50.0;
 
@@ -49,11 +48,14 @@ class CategoryComponent extends StatelessWidget {
                 15.0,
                 showColors
                     ? BorderSide.none
-                    : BorderSide(color: theme.colorScheme.outlineVariant),
+                    : BorderSide(color: colorScheme.outlineVariant),
               ),
             ),
             child: Center(
-              child: Text(category.icon, style: theme.textTheme.headlineMedium),
+              child: Text(
+                category.icon,
+                style: TextTheme.of(context).headlineMedium,
+              ),
             ),
           ),
         ),
@@ -75,7 +77,7 @@ class CategoryComponent extends StatelessWidget {
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                     height: 1.4,
-                    color: showColors ? color : theme.colorScheme.onSurface,
+                    color: showColors ? color : colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -90,8 +92,8 @@ class CategoryComponent extends StatelessWidget {
                     height: 16.0,
                     colorFilter: ColorFilter.mode(switch (category
                         .transactionType) {
-                      ETransactionType.expense => theme.colorScheme.error,
-                      ETransactionType.income => theme.colorScheme.secondary,
+                      ETransactionType.expense => colorScheme.error,
+                      ETransactionType.income => colorScheme.secondary,
                     }, BlendMode.srcIn),
                   ),
                   const SizedBox(width: 5.0),
@@ -106,7 +108,7 @@ class CategoryComponent extends StatelessWidget {
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
                         height: 1.4,
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ),

@@ -8,7 +8,6 @@ class BottomSheetHandleComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     const verticalPadding = 8.0;
 
     return Padding(
@@ -25,9 +24,9 @@ class BottomSheetHandleComponent extends StatelessWidget {
             height: 4.0,
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: theme.colorScheme.onSurfaceVariant.withValues(
-                  alpha: 0.5,
-                ),
+                color: ColorScheme.of(
+                  context,
+                ).onSurfaceVariant.withValues(alpha: 0.5),
                 shape: Smooth.border(2.0),
               ),
             ),

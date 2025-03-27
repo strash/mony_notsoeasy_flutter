@@ -16,7 +16,6 @@ class TransactionAmountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final locale = Localizations.localeOf(context);
 
     return Center(
@@ -35,9 +34,9 @@ class TransactionAmountComponent extends StatelessWidget {
             fontWeight: FontWeight.w600,
             color:
                 transaction.amount.isNegative
-                    ? theme.colorScheme.onSurface
-                    : theme.colorScheme.secondary,
-            textStyle: theme.textTheme.bodyMedium,
+                    ? ColorScheme.of(context).onSurface
+                    : ColorScheme.of(context).secondary,
+            textStyle: TextTheme.of(context).bodyMedium,
           ),
         ),
       ),

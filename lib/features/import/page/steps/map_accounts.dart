@@ -14,7 +14,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final accountModel = viewModel.currentStep;
     final tr = context.t.features.import.map_accounts;
@@ -37,7 +37,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
                 tr.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
-                  color: theme.colorScheme.onSurface,
+                  color: colorScheme.onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -49,7 +49,7 @@ class ImportMapAccountsComponent extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   height: 1.3,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -75,12 +75,10 @@ class ImportMapAccountsComponent extends StatelessWidget {
                 },
                 child: DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: theme.colorScheme.surfaceContainer.withValues(
-                      alpha: 0.5,
-                    ),
+                    color: colorScheme.surfaceContainer.withValues(alpha: 0.5),
                     shape: Smooth.border(
                       15.0,
-                      BorderSide(color: theme.colorScheme.outlineVariant),
+                      BorderSide(color: colorScheme.outlineVariant),
                     ),
                   ),
                   child:

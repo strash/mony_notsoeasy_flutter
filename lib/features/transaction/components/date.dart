@@ -9,7 +9,6 @@ class TransactionDateComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final now = DateTime.now();
     final locale = Localizations.localeOf(context);
     final dateFormatter = DateFormat(
@@ -26,7 +25,7 @@ class TransactionDateComponent extends StatelessWidget {
         style: GoogleFonts.golosText(
           fontSize: 16.0,
           fontWeight: FontWeight.w500,
-          color: theme.colorScheme.onSurfaceVariant,
+          color: ColorScheme.of(context).onSurfaceVariant,
         ),
       ),
     );

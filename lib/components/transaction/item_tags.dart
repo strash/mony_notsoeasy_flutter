@@ -11,7 +11,6 @@ class TransactionTagsComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     const height = 24.0;
     const gap = 5.0;
 
@@ -44,7 +43,7 @@ class TransactionTagsComponent extends StatelessWidget {
                   // -> tag
                   return DecoratedBox(
                     decoration: ShapeDecoration(
-                      color: theme.colorScheme.surfaceContainerHigh,
+                      color: ColorScheme.of(context).surfaceContainerHigh,
                       shape: Smooth.border(6.0),
                     ),
                     child: Padding(
@@ -57,7 +56,7 @@ class TransactionTagsComponent extends StatelessWidget {
                             fontSize: 13.0,
                             height: 1.0,
                             fontWeight: FontWeight.w500,
-                            color: theme.colorScheme.onTertiaryContainer,
+                            color: ColorScheme.of(context).onTertiaryContainer,
                           ),
                         ),
                       ),

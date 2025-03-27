@@ -8,8 +8,6 @@ class EntryListHeaderComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Row(
       children: [
         // -> columns
@@ -28,7 +26,7 @@ class EntryListHeaderComponent extends StatelessWidget {
                     fontSize: 14.0,
                     height: 1.3,
                     fontWeight: FontWeight.w600,
-                    color: theme.colorScheme.tertiary,
+                    color: ColorScheme.of(context).tertiary,
                   ),
                 ),
               ),
@@ -52,7 +50,7 @@ class EntryListHeaderComponent extends StatelessWidget {
                     fontSize: 14.0,
                     height: 1.3,
                     fontWeight: FontWeight.w600,
-                    color: theme.colorScheme.tertiary,
+                    color: ColorScheme.of(context).tertiary,
                   ),
                 ),
               ),

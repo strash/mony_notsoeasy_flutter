@@ -44,8 +44,6 @@ class _TimeWheelComponentState extends State<TimeWheelComponent> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return ShaderMask(
       shaderCallback: (rect) {
         return const LinearGradient(
@@ -75,11 +73,11 @@ class _TimeWheelComponentState extends State<TimeWheelComponent> {
               child: Text(
                 "$index".padLeft(2, "0"),
                 style: GoogleFonts.golosText(
-                  textStyle: theme.textTheme.bodyMedium,
+                  textStyle: TextTheme.of(context).bodyMedium,
                   fontSize: 20.0,
                   fontWeight: FontWeight.w500,
                   decoration: TextDecoration.none,
-                  color: theme.colorScheme.onSurface,
+                  color: ColorScheme.of(context).onSurface,
                   fontFeatures: [const FontFeature.tabularFigures()],
                 ),
               ),

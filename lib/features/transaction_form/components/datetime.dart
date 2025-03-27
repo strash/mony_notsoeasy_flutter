@@ -11,7 +11,6 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
     return GestureDetector(
@@ -23,7 +22,7 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
           decoration: ShapeDecoration(
             shape: Smooth.border(
               14.0,
-              BorderSide(color: theme.colorScheme.outlineVariant),
+              BorderSide(color: ColorScheme.of(context).outlineVariant),
             ),
           ),
           child: Padding(
@@ -45,7 +44,7 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w500,
-                          color: theme.colorScheme.onSurface,
+                          color: ColorScheme.of(context).onSurface,
                         ),
                       );
                     },
@@ -59,7 +58,7 @@ class TransactionFormDatetimeComponent extends StatelessWidget {
                   width: 20.0,
                   height: 20.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.secondary,
+                    ColorScheme.of(context).secondary,
                     BlendMode.srcIn,
                   ),
                 ),

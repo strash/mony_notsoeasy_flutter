@@ -14,8 +14,7 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
     final bottom = MediaQuery.viewPaddingOf(context).bottom;
 
     return SingleChildScrollView(
@@ -30,7 +29,7 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
             .map((e) {
               final color =
                   ex?.from(e.colorName).color ??
-                  theme.colorScheme.surfaceContainer;
+                  ColorScheme.of(context).surfaceContainer;
 
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -53,10 +52,9 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
                           ),
                           child: Text(
                             e.icon,
-                            style: theme.textTheme.bodyLarge?.copyWith(
-                              height: .0,
-                              fontSize: 18.0,
-                            ),
+                            style: TextTheme.of(
+                              context,
+                            ).bodyLarge?.copyWith(height: .0, fontSize: 18.0),
                           ),
                         ),
 
@@ -74,7 +72,7 @@ class ImportCategorySelectBottomSheetCotponent extends StatelessWidget {
                               style: GoogleFonts.golosText(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w500,
-                                color: theme.colorScheme.onSurface,
+                                color: ColorScheme.of(context).onSurface,
                               ),
                             ),
                           ),

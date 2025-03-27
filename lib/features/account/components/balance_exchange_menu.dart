@@ -13,8 +13,6 @@ class AccountBalanceExchangeMenuComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final viewModel = context.viewModel<AccountViewModel>();
     final isActive = viewModel.accountsCount > 1;
 
@@ -57,7 +55,7 @@ class AccountBalanceExchangeMenuComponent extends StatelessWidget {
                         width: 22.0,
                         height: 22.0,
                         colorFilter: ColorFilter.mode(
-                          theme.colorScheme.onPrimary,
+                          ColorScheme.of(context).onPrimary,
                           BlendMode.srcIn,
                         ),
                       ),

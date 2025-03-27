@@ -20,19 +20,18 @@ class ImportCategoryItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
     final Color bg;
     final Color border;
-    final Color text = theme.colorScheme.onSurface;
+    final Color text = colorScheme.onSurface;
     final String? icon;
     final String title;
 
     switch (category) {
       case ImportModelCategoryVariantModel(model: final model):
         final color =
-            ex?.from(model.colorName).color ??
-            theme.colorScheme.surfaceContainer;
+            ex?.from(model.colorName).color ?? colorScheme.surfaceContainer;
         bg = color.withValues(alpha: .25);
         border = color;
         icon = model.icon;
@@ -40,14 +39,14 @@ class ImportCategoryItemComponent extends StatelessWidget {
       case ImportModelCategoryVariantVO(vo: final vo):
         final color =
             ex?.from(EColorName.from(vo.colorName)).color ??
-            theme.colorScheme.surfaceContainer;
+            colorScheme.surfaceContainer;
         bg = color.withValues(alpha: .25);
         border = color;
         icon = vo.icon;
         title = vo.title;
       default:
-        bg = theme.colorScheme.surfaceContainer;
-        border = theme.colorScheme.surfaceContainer;
+        bg = colorScheme.surfaceContainer;
+        border = colorScheme.surfaceContainer;
         icon = null;
         title = category.originalTitle;
     }
@@ -74,10 +73,9 @@ class ImportCategoryItemComponent extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 3.0, bottom: 1.0),
                   child: Text(
                     icon,
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      height: .0,
-                      fontSize: 18.0,
-                    ),
+                    style: TextTheme.of(
+                      context,
+                    ).bodyLarge?.copyWith(height: .0, fontSize: 18.0),
                   ),
                 ),
 

@@ -45,10 +45,10 @@ final class BalanceExchangeFormViewModel
   List<AccountBalanceModel> balances = [];
 
   Color color(AccountModel? account) {
-    final theme = Theme.of(context);
-    if (account == null) return theme.colorScheme.onSurface;
-    final ex = theme.extension<ColorExtension>();
-    return ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
+    if (account == null) return ColorScheme.of(context).onSurface;
+    final ex = Theme.of(context).extension<ColorExtension>();
+    return ex?.from(account.colorName).color ??
+        ColorScheme.of(context).onSurface;
   }
 
   EBalanceExchangeMenuItem get action {

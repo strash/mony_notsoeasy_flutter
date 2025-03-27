@@ -10,8 +10,6 @@ class TransactionNoteComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return SeparatedComponent.list(
       separatorBuilder: (context, index) => const SizedBox(height: 10.0),
       children: [
@@ -22,7 +20,7 @@ class TransactionNoteComponent extends StatelessWidget {
             fontSize: 18.0,
             fontWeight: FontWeight.w500,
             height: 1.4,
-            color: theme.colorScheme.onSurfaceVariant,
+            color: ColorScheme.of(context).onSurfaceVariant,
           ),
         ),
 
@@ -33,7 +31,7 @@ class TransactionNoteComponent extends StatelessWidget {
             fontSize: 18.0,
             fontWeight: FontWeight.w500,
             height: 1.4,
-            color: theme.colorScheme.onSurface,
+            color: ColorScheme.of(context).onSurface,
           ),
         ),
       ],

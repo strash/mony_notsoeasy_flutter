@@ -42,7 +42,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
       context,
       showDragHandle: false,
       builder: (context, bottom) {
-        final theme = Theme.of(context);
+        final colorScheme = ColorScheme.of(context);
 
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -64,7 +64,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
                 emojiViewConfig: EmojiViewConfig(
                   emojiSizeMax: 38.0,
                   columns: 7,
-                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  backgroundColor: colorScheme.surface,
                   buttonMode: ButtonMode.CUPERTINO,
                   gridPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, bottom),
                 ),
@@ -74,12 +74,12 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
                     return _CategoryView(config, state, tab, page);
                   },
                   recentTabBehavior: RecentTabBehavior.NONE,
-                  backgroundColor: theme.colorScheme.surface,
-                  indicatorColor: theme.colorScheme.primary,
-                  iconColor: theme.colorScheme.primaryContainer,
-                  iconColorSelected: theme.colorScheme.primary,
+                  backgroundColor: colorScheme.surface,
+                  indicatorColor: colorScheme.primary,
+                  iconColor: colorScheme.primaryContainer,
+                  iconColorSelected: colorScheme.primary,
                   dividerColor: const Color(0x00FFFFFF),
-                  backspaceColor: theme.colorScheme.primary,
+                  backspaceColor: colorScheme.primary,
                 ),
                 bottomActionBarConfig: const BottomActionBarConfig(
                   enabled: false,
@@ -102,8 +102,7 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final secondary = theme.colorScheme.secondary;
+    final colorScheme = ColorScheme.of(context);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -113,14 +112,14 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
         child: TweenAnimationBuilder<Color?>(
           duration: Durations.short2,
           tween: ColorTween(
-            begin: secondary.withValues(alpha: 0.0),
-            end: secondary.withValues(alpha: _isActive ? 1.0 : 0.0),
+            begin: colorScheme.secondary.withValues(alpha: 0.0),
+            end: colorScheme.secondary.withValues(alpha: _isActive ? 1.0 : 0.0),
           ),
           builder: (context, color, child) {
             // -> background
             return DecoratedBox(
               decoration: ShapeDecoration(
-                color: theme.colorScheme.surfaceContainer,
+                color: colorScheme.surfaceContainer,
                 shape: Smooth.border(16.0, BorderSide(color: color!)),
               ),
               child: Padding(
@@ -132,10 +131,9 @@ class _EmojiPickerComponentState extends State<EmojiPickerComponent> {
                     return Center(
                       child: Text(
                         widget.controller.text,
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          fontSize: 30.0,
-                          height: .0,
-                        ),
+                        style: TextTheme.of(
+                          context,
+                        ).bodyLarge?.copyWith(fontSize: 30.0, height: .0),
                       ),
                     );
                   },

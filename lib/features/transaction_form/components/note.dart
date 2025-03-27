@@ -12,7 +12,6 @@ class TransactionFormNoteComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     const height = 40.0;
     final viewModel = context.viewModel<TransactionFormViewModel>();
 
@@ -33,7 +32,7 @@ class TransactionFormNoteComponent extends StatelessWidget {
                   width: 24.0,
                   height: 24.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.secondary,
+                    ColorScheme.of(context).secondary,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -55,8 +54,8 @@ class TransactionFormNoteComponent extends StatelessWidget {
                         fontSize: 17.0,
                         color:
                             note.isNotEmpty
-                                ? theme.colorScheme.onSurface
-                                : theme.colorScheme.onSurfaceVariant,
+                                ? ColorScheme.of(context).onSurface
+                                : ColorScheme.of(context).onSurfaceVariant,
                       ),
                       child: Text(
                         note.isNotEmpty

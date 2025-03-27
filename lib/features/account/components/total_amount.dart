@@ -20,8 +20,6 @@ class AccountTotalAmountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final locale = Localizations.localeOf(context);
     final dateRange = (
       balance.firstTransactionDate,
@@ -45,7 +43,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w500,
-            color: theme.colorScheme.onSurfaceVariant,
+            color: ColorScheme.of(context).onSurfaceVariant,
           ),
         ),
 
@@ -91,7 +89,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
                         style: GoogleFonts.golosText(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w500,
-                          color: theme.colorScheme.onSurfaceVariant,
+                          color: ColorScheme.of(context).onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -114,8 +112,8 @@ class AccountTotalAmountComponent extends StatelessWidget {
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                         height: 1.4,
-                        color: theme.colorScheme.onSurface,
-                        textStyle: theme.textTheme.bodyMedium,
+                        color: ColorScheme.of(context).onSurface,
+                        textStyle: TextTheme.of(context).bodyMedium,
                       ),
                     ),
                   ),
@@ -135,7 +133,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
               style: GoogleFonts.golosText(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w400,
-                color: theme.colorScheme.onSurfaceVariant,
+                color: ColorScheme.of(context).onSurfaceVariant,
               ),
             ),
 
@@ -146,7 +144,7 @@ class AccountTotalAmountComponent extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w400,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: ColorScheme.of(context).onSurfaceVariant,
                 ),
               ),
           ],
@@ -165,11 +163,9 @@ extension on ETransactionType {
   }
 
   Color getColor(BuildContext context) {
-    final theme = Theme.of(context);
-
     return switch (this) {
-      ETransactionType.expense => theme.colorScheme.error,
-      ETransactionType.income => theme.colorScheme.secondary,
+      ETransactionType.expense => ColorScheme.of(context).error,
+      ETransactionType.income => ColorScheme.of(context).secondary,
     };
   }
 }

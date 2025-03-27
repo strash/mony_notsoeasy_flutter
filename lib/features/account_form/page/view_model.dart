@@ -54,16 +54,15 @@ final class AccountFormViewModel extends ViewModelState<AccountFormPage> {
       ..sort((a, b) => a.code.compareTo(b.code));
   }
 
-  Iterable<(String, String)> get currencyDescriptions {
+  Iterable<String> get currencyDescriptions {
     return currencies.map((currency) {
       final locale = Localizations.localeOf(context);
       final lang = NaturalLanguage.maybeFromCodeShort(locale.countryCode);
-      final symbol = currency.symbol ?? "";
       if (lang != null) {
         final base = BasicLocale(lang);
-        return (symbol, currency.maybeTranslation(base)?.toString() ?? "");
+        return currency.maybeTranslation(base)?.toString() ?? "";
       }
-      return (symbol, currency.name);
+      return currency.name;
     });
   }
 

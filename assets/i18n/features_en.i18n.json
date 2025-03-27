@@ -16,6 +16,8 @@
 	"account_form": {
 		"title": "Account",
 		"title_input_placeholder": "account name",
+		"account_type_select_placeholder": "account type",
+		"currency_select_placeholder": "currency",
 		"balance_input_placeholder": "current balance",
 		"button_save": "Save"
 	},
@@ -226,6 +228,7 @@
 		}
 	},
 	"start": {
+		"app_name": "Mony",
 		"subtitle": "remembers where the money goes.",
 		"button_next": "Let's go!",
 		"privacy_policy": "Privacy Policy"

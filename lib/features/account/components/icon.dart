@@ -17,14 +17,13 @@ class AccountIconComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
-    final color =
-        ex?.from(account.colorName).color ?? theme.colorScheme.onSurface;
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
+    final color = ex?.from(account.colorName).color ?? colorScheme.onSurface;
     final color2 = Color.lerp(color, const Color(0xFFFFFFFF), .3)!;
     final colors = [
-      theme.colorScheme.surfaceContainerHighest,
-      theme.colorScheme.surfaceContainer,
+      colorScheme.surfaceContainerHighest,
+      colorScheme.surfaceContainer,
     ];
 
     return Column(
@@ -45,13 +44,13 @@ class AccountIconComponent extends StatelessWidget {
                   46.0,
                   showColors
                       ? BorderSide.none
-                      : BorderSide(color: theme.colorScheme.outlineVariant),
+                      : BorderSide(color: colorScheme.outlineVariant),
                 ),
               ),
               child: Center(
                 child: Text(
                   account.type.icon,
-                  style: theme.textTheme.displayLarge,
+                  style: TextTheme.of(context).displayLarge,
                 ),
               ),
             ),
@@ -66,7 +65,7 @@ class AccountIconComponent extends StatelessWidget {
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
-            color: showColors ? color : theme.colorScheme.onSurface,
+            color: showColors ? color : colorScheme.onSurface,
           ),
         ),
         const SizedBox(height: 2.0),
@@ -78,7 +77,7 @@ class AccountIconComponent extends StatelessWidget {
           style: GoogleFonts.golosText(
             fontSize: 16.0,
             fontWeight: FontWeight.w500,
-            color: theme.colorScheme.onSurfaceVariant,
+            color: colorScheme.onSurfaceVariant,
           ),
         ),
       ],

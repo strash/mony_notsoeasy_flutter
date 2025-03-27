@@ -13,8 +13,7 @@ class StatsCategoriesComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
 
     final viewModel = context.viewModel<StatsViewModel>();
     final categories = viewModel.categories;
@@ -24,7 +23,7 @@ class StatsCategoriesComponent extends StatelessWidget {
         e.$1,
         ex != null && viewModel.isColorsVisible
             ? ex.from(e.$2.colorName).color
-            : theme.colorScheme.tertiary,
+            : ColorScheme.of(context).tertiary,
       );
     });
 

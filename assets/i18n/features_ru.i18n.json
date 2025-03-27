@@ -16,6 +16,8 @@
 	"account_form": {
 		"title": "Счет",
 		"title_input_placeholder": "название счета",
+		"account_type_select_placeholder": "тип счета",
+		"currency_select_placeholder": "валюта",
 		"balance_input_placeholder": "текущий баланс",
 		"button_save": "Сохранить"
 	},
@@ -232,6 +234,7 @@
 		}
 	},
 	"start": {
+		"app_name": "Mony",
 		"subtitle": "помнит куда деньги подевались.",
 		"button_next": "Супер, дальше!",
 		"privacy_policy": "Политика обработки персональных данных"

@@ -18,8 +18,6 @@ class AccountTotalSumComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final locale = Localizations.localeOf(context);
 
     return SeparatedComponent.list(
@@ -31,7 +29,7 @@ class AccountTotalSumComponent extends StatelessWidget {
           style: GoogleFonts.golosText(
             fontSize: 18.0,
             fontWeight: FontWeight.w500,
-            color: theme.colorScheme.onSurfaceVariant,
+            color: ColorScheme.of(context).onSurfaceVariant,
           ),
         ),
 
@@ -47,8 +45,8 @@ class AccountTotalSumComponent extends StatelessWidget {
             fontSize: 18.0,
             fontWeight: FontWeight.w600,
             height: 1.4,
-            color: theme.colorScheme.onSurface,
-            textStyle: theme.textTheme.bodyMedium,
+            color: ColorScheme.of(context).onSurface,
+            textStyle: TextTheme.of(context).bodyMedium,
           ),
         ),
       ],

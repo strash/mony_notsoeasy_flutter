@@ -11,8 +11,7 @@ class CategoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
 
     final viewModel = context.viewModel<CategoryViewModel>();
     final keyPrefix = "category_${viewModel.prefix}";
@@ -103,7 +102,7 @@ class CategoryView extends StatelessWidget {
             showFullDate: false,
             emptyStateColor:
                 ex?.from(category.colorName).color ??
-                theme.colorScheme.onSurface,
+                ColorScheme.of(context).onSurface,
             onTransactionPressed:
                 viewModel<OnTransactionWithContextMenuPressed>(),
             onTransactionMenuSelected:

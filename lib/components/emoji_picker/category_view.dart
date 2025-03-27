@@ -64,7 +64,6 @@ final class _CategoryViewState extends State<_CategoryView> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final config = widget.config;
 
     return Padding(
@@ -88,7 +87,7 @@ final class _CategoryViewState extends State<_CategoryView> {
                     dimension: iconSize,
                     child: DecoratedBox(
                       decoration: ShapeDecoration(
-                        color: theme.colorScheme.surfaceContainer,
+                        color: ColorScheme.of(context).surfaceContainer,
                         shape: Smooth.border(16.0),
                       ),
                     ),
@@ -129,8 +128,8 @@ final class _CategoryViewState extends State<_CategoryView> {
                                   height: svgSize,
                                   colorFilter: ColorFilter.mode(
                                     Color.lerp(
-                                      theme.colorScheme.onSurfaceVariant,
-                                      theme.colorScheme.onSurface,
+                                      ColorScheme.of(context).onSurfaceVariant,
+                                      ColorScheme.of(context).onSurface,
                                       _getT(index),
                                     )!,
                                     BlendMode.srcIn,

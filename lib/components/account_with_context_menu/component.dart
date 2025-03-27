@@ -76,8 +76,6 @@ class _AccountWithContextMenuComponentState
   Widget _getMenuItem(EAccountContextMenuItem item, VoidCallback dismiss) {
     return Builder(
       builder: (context) {
-        final theme = Theme.of(context);
-
         return ContextMenuItemComponent(
           label: Text(
             context.t.components.account_with_context_menu.menu_item(
@@ -87,7 +85,7 @@ class _AccountWithContextMenuComponentState
           icon: SvgPicture.asset(
             item.icon,
             colorFilter: ColorFilter.mode(
-              theme.colorScheme.onSurface,
+              ColorScheme.of(context).onSurface,
               BlendMode.srcIn,
             ),
           ),
@@ -153,7 +151,6 @@ class _AccountWithContextMenuComponentState
         );
       },
       buttonProxyBuilder: (context, anim, status, dismiss) {
-        final theme = Theme.of(context);
         final t = Curves.easeInQuad.transform(anim);
         final scale = t.remap(.0, 1.0, 1.0, _scale);
 
@@ -166,7 +163,7 @@ class _AccountWithContextMenuComponentState
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: DecoratedBox(
                 decoration: ShapeDecoration(
-                  color: theme.colorScheme.surface,
+                  color: ColorScheme.of(context).surface,
                   shape: Smooth.border(23.0),
                 ),
                 child: Padding(

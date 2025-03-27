@@ -16,8 +16,6 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -45,7 +43,7 @@ class TransactionFormBottomSheetNoteComponent extends StatelessWidget {
             minLines: 1,
             maxLines: 10,
             style: GoogleFonts.golosText(
-              color: theme.colorScheme.onSurface,
+              color: ColorScheme.of(context).onSurface,
               fontSize: 16.0,
               fontWeight: FontWeight.w400,
             ),

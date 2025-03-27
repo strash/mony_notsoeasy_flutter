@@ -7,10 +7,8 @@ class ContextMenuSeparatorComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return ColoredBox(
-      color: theme.colorScheme.outline.withValues(alpha: isBig ? .1 : .2),
+      color: ColorScheme.of(context).outline.withValues(alpha: isBig ? .1 : .2),
       child: SizedBox.fromSize(size: Size.fromHeight(isBig ? 5.0 : 1.0)),
     );
   }

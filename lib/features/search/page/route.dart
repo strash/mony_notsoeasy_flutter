@@ -22,7 +22,6 @@ final class _Route extends ModalRoute {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    final theme = Theme.of(context);
     const curve = Curves.decelerate;
 
     return Stack(
@@ -30,7 +29,7 @@ final class _Route extends ModalRoute {
       children: [
         Opacity(
           opacity: curve.transform(animation.value),
-          child: ColoredBox(color: theme.colorScheme.scrim),
+          child: ColoredBox(color: ColorScheme.of(context).scrim),
         ),
 
         SlideTransition(

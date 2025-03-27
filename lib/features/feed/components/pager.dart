@@ -61,8 +61,6 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Positioned(
       top: MediaQuery.viewPaddingOf(context).top + 10.0,
       left: 0,
@@ -86,7 +84,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                   width: 95.0,
                   height: 34.0,
                   child: ColoredBox(
-                    color: theme.colorScheme.surfaceContainer.withValues(
+                    color: ColorScheme.of(context).surfaceContainer.withValues(
                       alpha: kTranslucentPanelOpacity,
                     ),
                     child: Stack(
@@ -105,8 +103,10 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                                 effect: ScrollingDotsEffect(
                                   dotWidth: 8.0,
                                   dotHeight: 8.0,
-                                  dotColor: theme.colorScheme.tertiaryContainer,
-                                  activeDotColor: theme.colorScheme.primary,
+                                  dotColor:
+                                      ColorScheme.of(context).tertiaryContainer,
+                                  activeDotColor:
+                                      ColorScheme.of(context).primary,
                                   activeDotScale: 1.0,
                                   spacing: 6.0,
                                   strokeWidth: .0,
@@ -130,7 +130,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                                 width: 15.0,
                                 height: 15.0,
                                 colorFilter: ColorFilter.mode(
-                                  theme.colorScheme.tertiary,
+                                  ColorScheme.of(context).tertiary,
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -143,7 +143,7 @@ class _FeedPagerComponentState extends State<FeedPagerComponent> {
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w500,
                                   height: 1.0,
-                                  color: theme.colorScheme.tertiary,
+                                  color: ColorScheme.of(context).tertiary,
                                 ),
                               ),
                               const SizedBox(width: 2.0),

@@ -9,13 +9,11 @@ class TransactionFormTagComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: theme.colorScheme.surfaceContainerHigh,
+          color: ColorScheme.of(context).surfaceContainerHigh,
           shape: Smooth.border(12.0),
         ),
         child: DefaultTextStyle(
@@ -23,7 +21,7 @@ class TransactionFormTagComponent extends StatelessWidget {
             fontSize: 16.0,
             height: 1.0,
             fontWeight: FontWeight.w500,
-            color: theme.colorScheme.onTertiaryContainer,
+            color: ColorScheme.of(context).onTertiaryContainer,
           ),
           child: builder(context),
         ),

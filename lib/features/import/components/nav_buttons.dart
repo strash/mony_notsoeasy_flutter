@@ -13,7 +13,6 @@ class NavigationButtonsComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final backEnabled =
         event is! ImportEventInitial &&
@@ -26,8 +25,8 @@ class NavigationButtonsComponent extends StatelessWidget {
         // -> button back
         FilledButton(
           style: FilledButton.styleFrom(
-            backgroundColor: theme.colorScheme.tertiary,
-            foregroundColor: theme.colorScheme.onTertiary,
+            backgroundColor: ColorScheme.of(context).tertiary,
+            foregroundColor: ColorScheme.of(context).onTertiary,
           ),
           onPressed:
               backEnabled
@@ -39,7 +38,7 @@ class NavigationButtonsComponent extends StatelessWidget {
               width: 22.0,
               height: 22.0,
               colorFilter: ColorFilter.mode(
-                theme.colorScheme.onTertiary,
+                ColorScheme.of(context).onTertiary,
                 BlendMode.srcIn,
               ),
             ),
@@ -64,7 +63,7 @@ class NavigationButtonsComponent extends StatelessWidget {
                   width: 22.0,
                   height: 22.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.onTertiary,
+                    ColorScheme.of(context).onTertiary,
                     BlendMode.srcIn,
                   ),
                 ),

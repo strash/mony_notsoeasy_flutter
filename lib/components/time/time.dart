@@ -81,7 +81,6 @@ class TimeComponent extends StatelessWidget {
         );
       },
       popupBuilder: (context, anim, status, proxyRect, _) {
-        final theme = Theme.of(context);
         final t = Curves.easeInOutSine.transform(anim);
 
         return Positioned.fromRect(
@@ -103,8 +102,9 @@ class TimeComponent extends StatelessWidget {
                             size: const Size.fromHeight(40.0),
                             child: DecoratedBox(
                               decoration: ShapeDecoration(
-                                color: theme.colorScheme.tertiaryContainer
-                                    .withValues(alpha: .5),
+                                color: ColorScheme.of(
+                                  context,
+                                ).tertiaryContainer.withValues(alpha: .5),
                                 shape: Smooth.border(10.0),
                               ),
                             ),
@@ -119,11 +119,11 @@ class TimeComponent extends StatelessWidget {
                           child: Text(
                             ":",
                             style: GoogleFonts.golosText(
-                              textStyle: theme.textTheme.bodyMedium,
+                              textStyle: TextTheme.of(context).bodyMedium,
                               fontSize: 20.0,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
-                              color: theme.colorScheme.onSurfaceVariant,
+                              color: ColorScheme.of(context).onSurfaceVariant,
                             ),
                           ),
                         ),
@@ -179,25 +179,23 @@ class _Proxy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return SizedBox(
       width: 90.0,
       height: 46.0,
       child: DecoratedBox(
         decoration: ShapeDecoration(
-          color: theme.colorScheme.surfaceContainer,
+          color: ColorScheme.of(context).surfaceContainer,
           shape: Smooth.border(14.0),
         ),
         child: Center(
           child: Text(
             time,
             style: GoogleFonts.golosText(
-              textStyle: theme.textTheme.bodyMedium,
+              textStyle: TextTheme.of(context).bodyMedium,
               fontSize: 18.0,
               fontWeight: FontWeight.w500,
               decoration: TextDecoration.none,
-              color: theme.colorScheme.onSurface,
+              color: ColorScheme.of(context).onSurface,
               fontFeatures: [const FontFeature.tabularFigures()],
             ),
           ),

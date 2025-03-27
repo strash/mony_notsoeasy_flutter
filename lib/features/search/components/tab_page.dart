@@ -14,15 +14,13 @@ class SearchTabPageComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final viewModel = context.viewModel<SearchViewModel>();
 
     // -> empty state
     if (viewModel.isActiveTabEmpty) {
       return SliverFillRemaining(
         hasScrollBody: false,
-        child: EmptyStateComponent(color: theme.colorScheme.onSurface),
+        child: EmptyStateComponent(color: ColorScheme.of(context).onSurface),
       );
     }
 

@@ -12,7 +12,7 @@ class NavBarTabComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
     final viewModel = context.viewModel<NavBarViewModel>();
     final tab = ENavBarTabItem.from(index);
 
@@ -23,11 +23,11 @@ class NavBarTabComponent extends StatelessWidget {
         duration: Durations.short3,
         curve: Curves.easeInOutQuad,
         tween: ColorTween(
-          begin: theme.colorScheme.onSurface,
+          begin: colorScheme.onSurface,
           end:
               viewModel.currentTab == tab
-                  ? theme.colorScheme.onSurface
-                  : theme.colorScheme.onSurfaceVariant,
+                  ? colorScheme.onSurface
+                  : colorScheme.onSurfaceVariant,
         ),
         builder: (context, color, child) {
           return Center(
@@ -36,7 +36,7 @@ class NavBarTabComponent extends StatelessWidget {
               width: 28.0,
               height: 28.0,
               colorFilter: ColorFilter.mode(
-                color ?? theme.colorScheme.onSurface,
+                color ?? colorScheme.onSurface,
                 BlendMode.srcIn,
               ),
             ),

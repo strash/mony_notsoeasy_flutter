@@ -16,8 +16,6 @@ class SelectEntryComponent<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: enabled ? () => Navigator.of(context).maybePop<T>(value) : null,
@@ -34,7 +32,7 @@ class SelectEntryComponent<T> extends StatelessWidget {
                   width: 20.0,
                   height: 20.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.secondary,
+                    ColorScheme.of(context).secondary,
                     BlendMode.srcIn,
                   ),
                 )
@@ -49,7 +47,7 @@ class SelectEntryComponent<T> extends StatelessWidget {
                   style: GoogleFonts.golosText(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
-                    color: theme.colorScheme.onSurface,
+                    color: ColorScheme.of(context).onSurface,
                   ),
                   child: child,
                 ),

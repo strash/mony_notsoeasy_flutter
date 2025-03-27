@@ -39,6 +39,7 @@ class AccountSelectComponent extends StatelessWidget {
     return SelectComponent<AccountModel>(
       controller: controller,
       placeholder: Text(context.t.components.account_select.placeholder),
+      activeEntryPadding: const EdgeInsets.only(left: 12.0),
       activeEntry: (controller) {
         return activeEntry ??
             _AccountSelectActiveEntryComponent(

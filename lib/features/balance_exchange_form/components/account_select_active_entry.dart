@@ -19,9 +19,9 @@ class BalanceExchangeFormAccountSelectActiveEntryComponent
     final value = controller.value;
     if (value == null) return const SizedBox();
 
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
-    final color = ex?.from(value.colorName).color ?? theme.colorScheme.primary;
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
+    final color = ex?.from(value.colorName).color ?? colorScheme.primary;
 
     final locale = Localizations.localeOf(context);
     final viewModel = context.viewModel<BalanceExchangeFormViewModel>();
@@ -34,9 +34,8 @@ class BalanceExchangeFormAccountSelectActiveEntryComponent
           padding: const EdgeInsets.only(top: 2.0, right: 6.0),
           child: CurrencyTagComponent(
             code: value.currency.code,
-            background:
-                isColorsVisible ? color : theme.colorScheme.onSurfaceVariant,
-            foreground: theme.colorScheme.surface,
+            background: isColorsVisible ? color : colorScheme.onSurfaceVariant,
+            foreground: colorScheme.surface,
           ),
         ),
 
@@ -47,7 +46,7 @@ class BalanceExchangeFormAccountSelectActiveEntryComponent
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: DefaultTextStyle.of(context).style.copyWith(
-              color: isColorsVisible ? color : theme.colorScheme.onSurface,
+              color: isColorsVisible ? color : colorScheme.onSurface,
             ),
           ),
         ),
@@ -66,7 +65,7 @@ class BalanceExchangeFormAccountSelectActiveEntryComponent
               textAlign: TextAlign.end,
               style: DefaultTextStyle.of(
                 context,
-              ).style.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              ).style.copyWith(color: colorScheme.onSurfaceVariant),
             ),
           ),
       ],

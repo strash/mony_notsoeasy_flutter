@@ -28,7 +28,6 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewSize = MediaQuery.sizeOf(context);
 
     return Padding(
@@ -70,7 +69,10 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
                                       .not_found,
                                   style: GoogleFonts.golosText(
                                     fontSize: 16.0,
-                                    color: theme.colorScheme.onSurfaceVariant,
+                                    color:
+                                        ColorScheme.of(
+                                          context,
+                                        ).onSurfaceVariant,
                                   ),
                                 ),
                               )
@@ -172,7 +174,7 @@ class TransactionFormBottomSheetTagsComponent extends StatelessWidget {
             maxLength: kMaxTitleLength,
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style: GoogleFonts.golosText(
-              color: theme.colorScheme.onSurface,
+              color: ColorScheme.of(context).onSurface,
               fontSize: 16.0,
               fontWeight: FontWeight.w400,
             ),

@@ -19,8 +19,6 @@ class TransactionSectionComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final now = DateTime.now();
     final locale = Localizations.localeOf(context);
     final dateFormatter = DateFormat(
@@ -44,7 +42,7 @@ class TransactionSectionComponent extends StatelessWidget {
             fontSize: 16.0,
             fontWeight: FontWeight.w500,
             height: 1.4,
-            color: theme.colorScheme.onSurfaceVariant,
+            color: ColorScheme.of(context).onSurfaceVariant,
           ),
         ),
 
@@ -69,8 +67,8 @@ class TransactionSectionComponent extends StatelessWidget {
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                     height: 1.4,
-                    color: theme.colorScheme.onSurfaceVariant,
-                    textStyle: theme.textTheme.bodyMedium,
+                    color: ColorScheme.of(context).onSurfaceVariant,
+                    textStyle: TextTheme.of(context).bodyMedium,
                   ),
                 ),
               ),

@@ -26,8 +26,6 @@ class StatsTotalAmountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     final locale = Localizations.localeOf(context);
 
     final viewModel = context.viewModel<StatsViewModel>();
@@ -54,8 +52,8 @@ class StatsTotalAmountComponent extends StatelessWidget {
                     fontSize: 28.0,
                     height: 1.4,
                     fontWeight: FontWeight.w500,
-                    color: theme.colorScheme.onSurface,
-                    textStyle: theme.textTheme.bodyMedium,
+                    color: ColorScheme.of(context).onSurface,
+                    textStyle: TextTheme.of(context).bodyMedium,
                   ),
                 ),
               ),
@@ -70,7 +68,7 @@ class StatsTotalAmountComponent extends StatelessWidget {
                   style: GoogleFonts.golosText(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w500,
-                    color: theme.colorScheme.onSurfaceVariant,
+                    color: ColorScheme.of(context).onSurfaceVariant,
                   ),
                 ),
               ),

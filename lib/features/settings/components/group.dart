@@ -20,7 +20,7 @@ class SettingsGroupComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -35,7 +35,7 @@ class SettingsGroupComponent extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: colorScheme.onSurfaceVariant,
                 ),
                 child: header!,
               ),
@@ -44,7 +44,7 @@ class SettingsGroupComponent extends StatelessWidget {
           // -> container
           DecoratedBox(
             decoration: ShapeDecoration(
-              color: background ?? theme.colorScheme.surfaceContainer,
+              color: background ?? colorScheme.surfaceContainer,
               shape: Smooth.border(15.0),
             ),
             child: SeparatedComponent.list(
@@ -52,9 +52,7 @@ class SettingsGroupComponent extends StatelessWidget {
               separatorBuilder: (context, index) {
                 return SizedBox.fromSize(
                   size: const Size.fromHeight(1.0),
-                  child: ColoredBox(
-                    color: theme.colorScheme.surfaceContainerLow,
-                  ),
+                  child: ColoredBox(color: colorScheme.surfaceContainerLow),
                 );
               },
               children: children,
@@ -68,7 +66,7 @@ class SettingsGroupComponent extends StatelessWidget {
               child: DefaultTextStyle(
                 style: GoogleFonts.golosText(
                   fontSize: 13.0,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: colorScheme.onSurfaceVariant,
                 ),
                 child: footer!,
               ),

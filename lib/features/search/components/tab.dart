@@ -38,7 +38,7 @@ class SearchTabComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -50,7 +50,7 @@ class SearchTabComponent extends StatelessWidget {
         builder: (context, value, child) {
           return DecoratedBox(
             decoration: ShapeDecoration(
-              color: theme.colorScheme.primary.withValues(alpha: value),
+              color: colorScheme.primary.withValues(alpha: value),
               shape: Smooth.border(15.0),
             ),
             child: Center(
@@ -64,8 +64,8 @@ class SearchTabComponent extends StatelessWidget {
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
                         color: Color.lerp(
-                          theme.colorScheme.onSurface,
-                          theme.colorScheme.onPrimary,
+                          colorScheme.onSurface,
+                          colorScheme.onPrimary,
                           value,
                         ),
                       ),
@@ -78,8 +78,8 @@ class SearchTabComponent extends StatelessWidget {
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
                         color: Color.lerp(
-                          theme.colorScheme.onSurfaceVariant,
-                          theme.colorScheme.onPrimary.withValues(alpha: .7),
+                          colorScheme.onSurfaceVariant,
+                          colorScheme.onPrimary.withValues(alpha: .7),
                           value,
                         ),
                       ),

@@ -20,15 +20,16 @@ void main() async {
   if (appFlavor == "prod_rustore_flavor" || appFlavor == "dev_rustore_flavor") {
     await RustoreReviewClient.initialize();
   }
+
   if (Platform.isAndroid) {
-    SystemChrome.setEnabledSystemUIMode(
+    await SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.edgeToEdge,
       overlays: SystemUiOverlay.values,
     );
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
     );
-    SystemChrome.setPreferredOrientations([
+    await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);

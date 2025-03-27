@@ -1,4 +1,4 @@
-import "package:flutter/widgets.dart";
+import "package:flutter/material.dart";
 import "package:mony_app/common/extensions/extensions.dart";
 import "package:mony_app/components/select/component.dart";
 import "package:mony_app/domain/models/account.dart";
@@ -14,15 +14,31 @@ class TypeSelectComponent extends StatelessWidget {
 
     return SelectComponent<EAccountType>(
       controller: viewModel.typeController,
-      placeholder: const Text("тип счета"),
+      placeholder: Text(
+        context.t.features.account_form.account_type_select_placeholder,
+      ),
+      activeEntryPadding: const EdgeInsets.only(left: 12.0),
       activeEntry: (controller) {
-        return controller.value != null
-            ? Text(
-              context.t.models.account.type_description(
-                context: controller.value ?? EAccountType.defaultValue,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+        final value = controller.value;
+
+        return value != null
+            ? Row(
+              children: [
+                Text(
+                  value.icon,
+                  style: TextTheme.of(
+                    context,
+                  ).bodyMedium?.copyWith(fontSize: 26.0, height: 1.0),
+                ),
+                const SizedBox(width: 10.0),
+                Flexible(
+                  child: Text(
+                    context.t.models.account.type_description(context: value),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
             )
             : null;
       },
@@ -32,8 +48,17 @@ class TypeSelectComponent extends StatelessWidget {
               return SelectEntryComponent<EAccountType>(
                 value: e,
                 equal: (lhs, rhs) => lhs != null && lhs == rhs,
-                child: Text(
-                  context.t.models.account.type_description(context: e),
+                child: Row(
+                  children: [
+                    Text(
+                      e.icon,
+                      style: TextTheme.of(
+                        context,
+                      ).bodyMedium?.copyWith(fontSize: 22.0, height: 1.0),
+                    ),
+                    const SizedBox(width: 10.0),
+                    Text(context.t.models.account.type_description(context: e)),
+                  ],
                 ),
               );
             })

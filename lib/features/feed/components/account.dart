@@ -26,8 +26,7 @@ class FeedAccountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
 
     final locale = Localizations.localeOf(context);
 
@@ -49,8 +48,8 @@ class FeedAccountComponent extends StatelessWidget {
                     child: DecoratedBox(
                       decoration: ShapeDecoration(
                         color: Color.lerp(
-                          theme.colorScheme.surface,
-                          theme.colorScheme.surfaceContainerHigh,
+                          ColorScheme.of(context).surface,
+                          ColorScheme.of(context).surfaceContainerHigh,
                           .5,
                         ),
                         shape: Smooth.border(20.0),
@@ -65,7 +64,7 @@ class FeedAccountComponent extends StatelessWidget {
                 // -> card
                 DecoratedBox(
                   decoration: ShapeDecoration(
-                    color: theme.colorScheme.surfaceContainerHigh,
+                    color: ColorScheme.of(context).surfaceContainerHigh,
                     shape: Smooth.border(30.0),
                   ),
                   child: Padding(
@@ -130,7 +129,7 @@ class FeedAccountComponent extends StatelessWidget {
                                   width: 24.0,
                                   height: 24.0,
                                   colorFilter: ColorFilter.mode(
-                                    theme.colorScheme.onSurfaceVariant,
+                                    ColorScheme.of(context).onSurfaceVariant,
                                     BlendMode.srcIn,
                                   ),
                                 ),
@@ -143,7 +142,10 @@ class FeedAccountComponent extends StatelessWidget {
                                       fontSize: 15.0,
                                       height: 1.0,
                                       fontWeight: FontWeight.w500,
-                                      color: theme.colorScheme.onSurfaceVariant,
+                                      color:
+                                          ColorScheme.of(
+                                            context,
+                                          ).onSurfaceVariant,
                                     ),
                                   ),
                                 ),

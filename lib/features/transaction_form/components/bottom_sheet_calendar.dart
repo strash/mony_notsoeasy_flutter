@@ -58,7 +58,6 @@ class _TransactionFormBottomSheetCalendarComponentState
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewSize = MediaQuery.sizeOf(context);
     const padding = EdgeInsets.symmetric(horizontal: 10.0);
     final itemWidth =
@@ -97,7 +96,7 @@ class _TransactionFormBottomSheetCalendarComponentState
                           fontSize: 20.0,
                           letterSpacing: -0.1,
                           fontWeight: FontWeight.w500,
-                          color: theme.colorScheme.onSurface,
+                          color: ColorScheme.of(context).onSurface,
                         ),
                       ),
                     ),
@@ -119,8 +118,8 @@ class _TransactionFormBottomSheetCalendarComponentState
                         fontWeight: FontWeight.w500,
                         color:
                             isSameMonth
-                                ? theme.colorScheme.onSurfaceVariant
-                                : theme.colorScheme.secondary,
+                                ? ColorScheme.of(context).onSurfaceVariant
+                                : ColorScheme.of(context).secondary,
                       ),
                       child: Text(
                         context.t.features.transaction_form.calendar_today,

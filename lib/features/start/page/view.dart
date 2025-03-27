@@ -11,15 +11,15 @@ class StartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
     final baseColor = ex!.from(EColorName.random()).color;
-    final bgColor = Color.lerp(baseColor, theme.colorScheme.surface, .7)!;
-    final fgColor = Color.lerp(baseColor, theme.colorScheme.onSurface, .5)!;
-    final linkColor = Color.lerp(baseColor, theme.colorScheme.primary, .8)!;
+    final bgColor = Color.lerp(baseColor, colorScheme.surface, .7)!;
+    final fgColor = Color.lerp(baseColor, colorScheme.onSurface, .5)!;
+    final linkColor = Color.lerp(baseColor, colorScheme.primary, .8)!;
     final colors = [
       baseColor,
-      Color.lerp(baseColor, theme.colorScheme.onSurface, .1)!,
+      Color.lerp(baseColor, colorScheme.onSurface, .1)!,
     ];
 
     final viewModel = context.viewModel<StartViewModel>();
@@ -45,7 +45,7 @@ class StartView extends StatelessWidget {
                           aspectRatio: 1.0,
                           child: DecoratedBox(
                             decoration: ShapeDecoration(
-                              color: theme.colorScheme.surface,
+                              color: colorScheme.surface,
                               shape: Smooth.border(35.0),
                             ),
                             child: Align(
@@ -79,7 +79,7 @@ class StartView extends StatelessWidget {
 
                       // -> name
                       Text(
-                        "Mony",
+                        context.t.features.start.app_name,
                         style: GoogleFonts.golosText(
                           fontSize: 30.0,
                           fontWeight: FontWeight.w600,

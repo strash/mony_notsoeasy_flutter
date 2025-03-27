@@ -80,7 +80,6 @@ class TypesTableComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final filteredMappedEntries = transactionsByType.entries
         .take(5)
         .map(_getFilteredEntries)
@@ -95,7 +94,7 @@ class TypesTableComponent extends StatelessWidget {
         TableRow(
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: theme.colorScheme.outline),
+              bottom: BorderSide(color: ColorScheme.of(context).outline),
             ),
           ),
           children: filteredMappedEntries.first.indexed
@@ -119,7 +118,7 @@ class TypesTableComponent extends StatelessWidget {
                       style: GoogleFonts.golosText(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w600,
-                        color: theme.colorScheme.tertiary,
+                        color: ColorScheme.of(context).tertiary,
                       ),
                     ),
                   ),
@@ -133,7 +132,9 @@ class TypesTableComponent extends StatelessWidget {
           return TableRow(
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(color: theme.colorScheme.outlineVariant),
+                bottom: BorderSide(
+                  color: ColorScheme.of(context).outlineVariant,
+                ),
               ),
             ),
             children: e.indexed
@@ -152,7 +153,7 @@ class TypesTableComponent extends StatelessWidget {
                         style: GoogleFonts.golosText(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
-                          color: theme.colorScheme.onSurface,
+                          color: ColorScheme.of(context).onSurface,
                         ),
                       ),
                     ),

@@ -24,15 +24,15 @@ class TransactionComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
     final categoryColor =
         ex?.from(transaction.category.colorName).color ??
-        theme.colorScheme.surfaceContainer;
+        colorScheme.surfaceContainer;
     final color = Color.lerp(categoryColor, const Color(0xFFFFFFFF), .3)!;
     final colors = [
-      theme.colorScheme.surfaceContainerHighest,
-      theme.colorScheme.surfaceContainer,
+      colorScheme.surfaceContainerHighest,
+      colorScheme.surfaceContainer,
     ];
     const iconDimension = 50.0;
 
@@ -56,13 +56,13 @@ class TransactionComponent extends StatelessWidget {
                 15.0,
                 showColors
                     ? BorderSide.none
-                    : BorderSide(color: theme.colorScheme.outlineVariant),
+                    : BorderSide(color: colorScheme.outlineVariant),
               ),
             ),
             child: Center(
               child: Text(
                 transaction.category.icon,
-                style: theme.textTheme.headlineMedium,
+                style: TextTheme.of(context).headlineMedium,
               ),
             ),
           ),
@@ -90,9 +90,7 @@ class TransactionComponent extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         height: 1.4,
                         color:
-                            showColors
-                                ? categoryColor
-                                : theme.colorScheme.onSurface,
+                            showColors ? categoryColor : colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -114,9 +112,9 @@ class TransactionComponent extends StatelessWidget {
                         height: 1.4,
                         color:
                             transaction.amount.isNegative
-                                ? theme.colorScheme.onSurface
-                                : theme.colorScheme.secondary,
-                        textStyle: theme.textTheme.bodyMedium,
+                                ? colorScheme.onSurface
+                                : colorScheme.secondary,
+                        textStyle: TextTheme.of(context).bodyMedium,
                       ),
                     ),
                   ),
@@ -152,7 +150,7 @@ class TransactionComponent extends StatelessWidget {
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w400,
                                       height: 1.4,
-                                      color: theme.colorScheme.onSurfaceVariant,
+                                      color: colorScheme.onSurfaceVariant,
                                     ),
                                   ),
                                 )

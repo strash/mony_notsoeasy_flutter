@@ -14,10 +14,9 @@ class TransactionFormCategoryComponent extends StatelessWidget {
     CategoryModel category,
     bool isColorsVisible,
   ) {
-    final theme = Theme.of(context);
-    final ex = theme.extension<ColorExtension>();
-    final color =
-        ex?.from(category.colorName).color ?? theme.colorScheme.onSurface;
+    final ex = Theme.of(context).extension<ColorExtension>();
+    final colorScheme = ColorScheme.of(context);
+    final color = ex?.from(category.colorName).color ?? colorScheme.onSurface;
 
     return Row(
       children: [
@@ -26,19 +25,20 @@ class TransactionFormCategoryComponent extends StatelessWidget {
           dimension: 36.0,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              color:
-                  isColorsVisible ? color : theme.colorScheme.surfaceContainer,
+              color: isColorsVisible ? color : colorScheme.surfaceContainer,
               shape: Smooth.border(
                 10.0,
                 isColorsVisible
                     ? BorderSide.none
-                    : BorderSide(color: theme.colorScheme.outlineVariant),
+                    : BorderSide(color: colorScheme.outlineVariant),
               ),
             ),
             child: Center(
               child: Text(
                 category.icon,
-                style: theme.textTheme.headlineSmall?.copyWith(height: .0),
+                style: TextTheme.of(
+                  context,
+                ).headlineSmall?.copyWith(height: .0),
               ),
             ),
           ),

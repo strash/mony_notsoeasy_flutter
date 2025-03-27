@@ -11,8 +11,6 @@ class PopupContainerComoponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return RepaintBoundary(
       child: ClipSmoothRect(
         radius: const SmoothBorderRadius.all(
@@ -24,9 +22,9 @@ class PopupContainerComoponent extends StatelessWidget {
             sigmaY: kTranslucentPanelBlurSigma,
           ),
           child: ColoredBox(
-            color: theme.colorScheme.surfaceContainer.withValues(
-              alpha: kTranslucentPanelOpacity,
-            ),
+            color: ColorScheme.of(
+              context,
+            ).surfaceContainer.withValues(alpha: kTranslucentPanelOpacity),
             child: builder(context),
           ),
         ),

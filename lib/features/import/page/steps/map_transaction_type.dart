@@ -14,7 +14,6 @@ class ImportMapTransactionTypePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<ImportViewModel>();
     final typeModel = viewModel.currentStep;
     if (typeModel is! ImportModelTransactionType) return const SizedBox();
@@ -32,7 +31,7 @@ class ImportMapTransactionTypePage extends StatelessWidget {
                 context.t.features.import.map_transaction_type.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
-                  color: theme.colorScheme.onSurface,
+                  color: ColorScheme.of(context).onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -44,7 +43,7 @@ class ImportMapTransactionTypePage extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   height: 1.3,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: ColorScheme.of(context).onSurfaceVariant,
                 ),
               ),
             ],

@@ -12,8 +12,6 @@ class EmptyStateComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return SeparatedComponent.list(
       separatorBuilder: (context, index) => const SizedBox(height: 10.0),
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,7 +35,7 @@ class EmptyStateComponent extends StatelessWidget {
           style: GoogleFonts.golosText(
             fontSize: 16.0,
             fontWeight: FontWeight.w500,
-            color: theme.colorScheme.tertiaryContainer,
+            color: ColorScheme.of(context).tertiaryContainer,
           ),
         ),
       ],

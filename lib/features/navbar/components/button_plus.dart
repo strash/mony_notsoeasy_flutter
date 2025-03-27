@@ -11,7 +11,6 @@ class NavBarButtonPlusComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<NavBarViewModel>();
 
     return GestureDetector(
@@ -21,7 +20,7 @@ class NavBarButtonPlusComponent extends StatelessWidget {
         width: NavBarView.kTabHeight * 1.618033,
         child: DecoratedBox(
           decoration: ShapeDecoration(
-            color: theme.colorScheme.primary,
+            color: ColorScheme.of(context).primary,
             shape: Smooth.border(NavBarView.kRadius),
           ),
           child: Center(
@@ -30,7 +29,7 @@ class NavBarButtonPlusComponent extends StatelessWidget {
               width: 32.0,
               height: 32.0,
               colorFilter: ColorFilter.mode(
-                theme.colorScheme.surface,
+                ColorScheme.of(context).surface,
                 BlendMode.srcIn,
               ),
             ),

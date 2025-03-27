@@ -55,8 +55,6 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
@@ -79,9 +77,9 @@ class _PopupOverlayComponentState extends State<PopupOverlayComponent>
                   sigmaY: remappedSigma,
                 ),
                 child: ColoredBox(
-                  color: theme.colorScheme.scrim.withValues(
-                    alpha: remappedAlpha,
-                  ),
+                  color: ColorScheme.of(
+                    context,
+                  ).scrim.withValues(alpha: remappedAlpha),
                 ),
               ),
             ),

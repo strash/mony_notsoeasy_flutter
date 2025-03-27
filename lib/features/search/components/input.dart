@@ -19,7 +19,6 @@ class SearchAppBarInputComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final isNotEmpty = controller.text.trim().isNotEmpty;
 
     return TextFormField(
@@ -43,7 +42,7 @@ class SearchAppBarInputComponent extends StatelessWidget {
             width: 22.0,
             height: 22.0,
             colorFilter: ColorFilter.mode(
-              theme.colorScheme.primary,
+              ColorScheme.of(context).primary,
               BlendMode.srcIn,
             ),
           ),
@@ -62,7 +61,7 @@ class SearchAppBarInputComponent extends StatelessWidget {
                   width: 24.0,
                   height: 24.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.onSurfaceVariant,
+                    ColorScheme.of(context).onSurfaceVariant,
                     BlendMode.srcIn,
                   ),
                 ),

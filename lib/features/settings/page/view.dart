@@ -13,7 +13,7 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
     final bottomOffset = NavBarView.bottomOffset(context);
 
     final viewModel = context.viewModel<SettingsViewModel>();
@@ -50,7 +50,7 @@ class SettingsView extends StatelessWidget {
                       ThemeMode.light => Assets.icons.sunMaxFill,
                       ThemeMode.dark => Assets.icons.moonFill,
                     },
-                    color: theme.colorScheme.secondary,
+                    color: colorScheme.secondary,
                   ),
                 ),
 
@@ -69,8 +69,8 @@ class SettingsView extends StatelessWidget {
                           style: DefaultTextStyle.of(context).style.copyWith(
                             color:
                                 viewModel.isColorsVisible
-                                    ? theme.colorScheme.secondary
-                                    : theme.colorScheme.tertiary,
+                                    ? colorScheme.secondary
+                                    : colorScheme.tertiary,
                           ),
                         );
                       },
@@ -93,7 +93,7 @@ class SettingsView extends StatelessWidget {
                       viewModel.isCentsVisible
                           ? SettingsEntryTrailingIconComponent(
                             icon: Assets.icons.checkmark,
-                            color: theme.colorScheme.secondary,
+                            color: colorScheme.secondary,
                           )
                           : null,
                 ),
@@ -106,7 +106,7 @@ class SettingsView extends StatelessWidget {
                       viewModel.isTagsVisible
                           ? SettingsEntryTrailingIconComponent(
                             icon: Assets.icons.checkmark,
-                            color: theme.colorScheme.secondary,
+                            color: colorScheme.secondary,
                           )
                           : null,
                 ),
@@ -135,7 +135,7 @@ class SettingsView extends StatelessWidget {
                           ),
                           style: DefaultTextStyle.of(
                             context,
-                          ).style.copyWith(color: theme.colorScheme.secondary),
+                          ).style.copyWith(color: colorScheme.secondary),
                         );
                       },
                     ),
@@ -161,7 +161,7 @@ class SettingsView extends StatelessWidget {
                           tr.language.value(context: viewModel.language),
                           style: DefaultTextStyle.of(
                             context,
-                          ).style.copyWith(color: theme.colorScheme.secondary),
+                          ).style.copyWith(color: colorScheme.secondary),
                         ),
                       );
                     },
@@ -197,7 +197,7 @@ class SettingsView extends StatelessWidget {
                           )
                           : SettingsEntryTrailingIconComponent(
                             icon: Assets.icons.squareAndArrowDown,
-                            color: theme.colorScheme.tertiary,
+                            color: colorScheme.tertiary,
                           ),
                 ),
 
@@ -207,7 +207,7 @@ class SettingsView extends StatelessWidget {
                   title: Text(tr.import_export.export_title),
                   trailing: SettingsEntryTrailingIconComponent(
                     icon: Assets.icons.squareAndArrowUp,
-                    color: theme.colorScheme.tertiary,
+                    color: colorScheme.tertiary,
                   ),
                 ),
               ],
@@ -225,7 +225,7 @@ class SettingsView extends StatelessWidget {
                   title: Text(tr.support.review_title),
                   trailing: SettingsEntryTrailingIconComponent(
                     icon: Assets.icons.star,
-                    color: theme.colorScheme.tertiary,
+                    color: colorScheme.tertiary,
                   ),
                 ),
 
@@ -235,7 +235,7 @@ class SettingsView extends StatelessWidget {
                   title: Text(tr.support.support_title),
                   trailing: SettingsEntryTrailingIconComponent(
                     icon: Assets.icons.envelope,
-                    color: theme.colorScheme.tertiary,
+                    color: colorScheme.tertiary,
                   ),
                 ),
               ],
@@ -260,7 +260,7 @@ class SettingsView extends StatelessWidget {
                   ),
                   trailing: SettingsEntryTrailingIconComponent(
                     icon: Assets.icons.link,
-                    color: theme.colorScheme.tertiary,
+                    color: colorScheme.tertiary,
                   ),
                 ),
               ],
@@ -282,7 +282,7 @@ class SettingsView extends StatelessWidget {
                       viewModel.confirmTransaction
                           ? SettingsEntryTrailingIconComponent(
                             icon: Assets.icons.checkmark,
-                            color: theme.colorScheme.secondary,
+                            color: colorScheme.secondary,
                           )
                           : null,
                 ),
@@ -295,7 +295,7 @@ class SettingsView extends StatelessWidget {
                       viewModel.confirmAccount
                           ? SettingsEntryTrailingIconComponent(
                             icon: Assets.icons.checkmark,
-                            color: theme.colorScheme.secondary,
+                            color: colorScheme.secondary,
                           )
                           : null,
                 ),
@@ -308,7 +308,7 @@ class SettingsView extends StatelessWidget {
                       viewModel.confirmCategory
                           ? SettingsEntryTrailingIconComponent(
                             icon: Assets.icons.checkmark,
-                            color: theme.colorScheme.secondary,
+                            color: colorScheme.secondary,
                           )
                           : null,
                 ),
@@ -319,7 +319,7 @@ class SettingsView extends StatelessWidget {
                       viewModel.confirmTag
                           ? SettingsEntryTrailingIconComponent(
                             icon: Assets.icons.checkmark,
-                            color: theme.colorScheme.secondary,
+                            color: colorScheme.secondary,
                           )
                           : null,
                 ),
@@ -332,7 +332,7 @@ class SettingsView extends StatelessWidget {
           SliverToBoxAdapter(
             child: SettingsGroupComponent(
               header: Text(tr.danger_zone.header),
-              background: theme.colorScheme.errorContainer,
+              background: colorScheme.errorContainer,
               children: [
                 SettingsEntryComponent(
                   onTap: () => viewModel<OnDeleteDataPressed>()(context),
@@ -343,7 +343,7 @@ class SettingsView extends StatelessWidget {
                           child: Text(
                             tr.danger_zone.title,
                             style: DefaultTextStyle.of(context).style.copyWith(
-                              color: theme.colorScheme.onErrorContainer,
+                              color: colorScheme.onErrorContainer,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

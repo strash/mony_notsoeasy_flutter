@@ -26,8 +26,6 @@ class SettingsStoresBottomSheetComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -68,7 +66,7 @@ class SettingsStoresBottomSheetComponent extends StatelessWidget {
                         context: item,
                       ),
                       style: GoogleFonts.golosText(
-                        color: theme.colorScheme.onSurface,
+                        color: ColorScheme.of(context).onSurface,
                         fontSize: 16.0,
                         height: 1.0,
                         fontWeight: FontWeight.w500,
@@ -82,7 +80,7 @@ class SettingsStoresBottomSheetComponent extends StatelessWidget {
                       width: 24.0,
                       height: 24.0,
                       colorFilter: ColorFilter.mode(
-                        theme.colorScheme.tertiary,
+                        ColorScheme.of(context).tertiary,
                         BlendMode.srcIn,
                       ),
                     ),

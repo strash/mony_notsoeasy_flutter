@@ -28,7 +28,6 @@ class BottomSheetComponent extends StatefulWidget {
   }) {
     final navigator = kAppNavigatorKey.currentState;
     if (navigator == null) return Future.value();
-    final theme = Theme.of(context);
 
     return navigator.push<T?>(
       ModalBottomSheetRoute<T>(
@@ -41,7 +40,7 @@ class BottomSheetComponent extends StatefulWidget {
         },
         useSafeArea: true,
         isScrollControlled: true,
-        modalBarrierColor: theme.colorScheme.scrim.withValues(alpha: 0.4),
+        modalBarrierColor: ColorScheme.of(context).scrim.withValues(alpha: 0.4),
         backgroundColor: Colors.transparent,
         showDragHandle: false,
         capturedThemes: InheritedTheme.capture(
@@ -83,14 +82,12 @@ class _BottomSheetComponentState extends State<BottomSheetComponent>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return ClipSmoothRect(
       radius: const SmoothBorderRadius.all(
         SmoothRadius(cornerRadius: 20.0, cornerSmoothing: 0.6),
       ),
       child: ColoredBox(
-        color: theme.colorScheme.surface,
+        color: ColorScheme.of(context).surface,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,

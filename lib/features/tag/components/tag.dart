@@ -11,7 +11,7 @@ class TagTagComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
 
     return Center(
       child: Column(
@@ -23,7 +23,7 @@ class TagTagComponent extends StatelessWidget {
           Flexible(
             child: DecoratedBox(
               decoration: ShapeDecoration(
-                color: theme.colorScheme.surfaceContainerHigh,
+                color: colorScheme.surfaceContainerHigh,
                 shape: Smooth.border(12.0),
               ),
               child: Padding(
@@ -38,7 +38,7 @@ class TagTagComponent extends StatelessWidget {
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                     height: 1.2,
-                    color: theme.colorScheme.onTertiaryContainer,
+                    color: colorScheme.onTertiaryContainer,
                   ),
                 ),
               ),
@@ -53,7 +53,7 @@ class TagTagComponent extends StatelessWidget {
             style: GoogleFonts.golosText(
               fontSize: 16.0,
               fontWeight: FontWeight.w500,
-              color: theme.colorScheme.onSurfaceVariant,
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ],

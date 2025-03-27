@@ -15,7 +15,6 @@ class AccountFormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final viewModel = context.viewModel<AccountFormViewModel>();
 
     return Column(
@@ -62,7 +61,7 @@ class AccountFormView extends StatelessWidget {
                         maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         autovalidateMode: AutovalidateMode.always,
                         style: GoogleFonts.golosText(
-                          color: theme.colorScheme.onSurface,
+                          color: ColorScheme.of(context).onSurface,
                           fontSize: 16.0,
                           fontWeight: FontWeight.w400,
                         ),
@@ -111,7 +110,7 @@ class AccountFormView extends StatelessWidget {
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   autovalidateMode: AutovalidateMode.always,
                   style: GoogleFonts.golosText(
-                    color: theme.colorScheme.onSurface,
+                    color: ColorScheme.of(context).onSurface,
                     fontSize: 16.0,
                     fontWeight: FontWeight.w400,
                   ),

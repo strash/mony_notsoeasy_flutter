@@ -12,8 +12,6 @@ class ImportLoadCsvComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Column(
@@ -27,7 +25,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
                 context.t.features.import.load_csv.title,
                 style: GoogleFonts.golosText(
                   fontSize: 20.0,
-                  color: theme.colorScheme.onSurface,
+                  color: ColorScheme.of(context).onSurface,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -39,7 +37,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
                 style: GoogleFonts.golosText(
                   fontSize: 15.0,
                   height: 1.3,
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: ColorScheme.of(context).onSurfaceVariant,
                 ),
               ),
             ],
@@ -60,7 +58,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
                   width: 22.0,
                   height: 22.0,
                   colorFilter: ColorFilter.mode(
-                    theme.colorScheme.error,
+                    ColorScheme.of(context).error,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -71,7 +69,7 @@ class ImportLoadCsvComponent extends StatelessWidget {
                     style: GoogleFonts.golosText(
                       fontSize: 15.0,
                       height: 1.3,
-                      color: theme.colorScheme.error,
+                      color: ColorScheme.of(context).error,
                     ),
                   ),
                 ),

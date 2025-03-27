@@ -23,8 +23,6 @@ class FeedAccountAmountComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Row(
@@ -40,8 +38,8 @@ class FeedAccountAmountComponent extends StatelessWidget {
                   fontSize: 40.0,
                   height: 1.2,
                   fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onSurface,
-                  textStyle: theme.textTheme.bodyMedium,
+                  color: ColorScheme.of(context).onSurface,
+                  textStyle: TextTheme.of(context).bodyMedium,
                 ),
               ),
             ),
@@ -82,9 +80,9 @@ class FeedAccountAmountComponent extends StatelessWidget {
                                     color:
                                         showColors
                                             ? item
-                                            : theme
-                                                .colorScheme
-                                                .tertiaryContainer,
+                                            : ColorScheme.of(
+                                              context,
+                                            ).tertiaryContainer,
                                     borderRadius: const BorderRadius.all(
                                       Radius.circular(10.0),
                                     ),
@@ -104,7 +102,7 @@ class FeedAccountAmountComponent extends StatelessWidget {
                             fontSize: 12.0,
                             height: 1.0,
                             fontWeight: FontWeight.w500,
-                            color: theme.colorScheme.onSurfaceVariant,
+                            color: ColorScheme.of(context).onSurfaceVariant,
                           ),
                         ),
                 ],
