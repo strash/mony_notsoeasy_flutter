@@ -73,7 +73,12 @@ class ImportView extends StatelessWidget {
                           ),
                           // just in case
                           null => const Center(
-                            child: CircularProgressIndicator.adaptive(),
+                            child: SizedBox.square(
+                              dimension: 24.0,
+                              child: CircularProgressIndicator.adaptive(
+                                strokeWidth: 3.0,
+                              ),
+                            ),
                           ),
                         },
                       ),

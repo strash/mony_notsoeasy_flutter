@@ -130,7 +130,12 @@ class ImportMapColumnsValidationComponent extends StatelessWidget {
 
         // -> loader
         if (event is ImportEventValidatingMappedColumns)
-          const Center(child: CircularProgressIndicator.adaptive()),
+          const Center(
+            child: SizedBox.square(
+              dimension: 24.0,
+              child: CircularProgressIndicator.adaptive(strokeWidth: 3.0),
+            ),
+          ),
       ],
     );
   }

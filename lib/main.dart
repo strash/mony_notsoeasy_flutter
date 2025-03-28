@@ -12,6 +12,7 @@ import "package:mony_app/domain/domain.dart";
 import "package:mony_app/i18n/strings.g.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
+// TODO: двигать дату статистики раз в день, если была крайняя дата
 // TODO: добавить вибрации тут и там при тапе
 // TODO: вход по отпечатку
 void main() async {

@@ -46,7 +46,12 @@ class ImportLoadCsvComponent extends StatelessWidget {
 
           // -> loader
           if (event is ImportEventLoadingCsv)
-            const Center(child: CircularProgressIndicator.adaptive()),
+            const Center(
+              child: SizedBox.square(
+                dimension: 24.0,
+                child: CircularProgressIndicator.adaptive(strokeWidth: 3.0),
+              ),
+            ),
 
           // -> error
           if (event is ImportEventErrorLoadingCsv)

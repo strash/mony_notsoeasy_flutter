@@ -60,7 +60,12 @@ final class NavigatorDelegate extends RouterDelegate<Object>
           builder: (context, fSnapshot) {
             Widget child = const Scaffold(
               resizeToAvoidBottomInset: false,
-              body: Center(child: CircularProgressIndicator.adaptive()),
+              body: Center(
+                child: SizedBox.square(
+                  dimension: 24.0,
+                  child: CircularProgressIndicator.adaptive(strokeWidth: 3.0),
+                ),
+              ),
             );
             if (fSnapshot.hasData) {
               final hasAccounts = fSnapshot.data!;
